@@ -2,16 +2,21 @@
   "name": "vb-erp",
   "version": "0.1.0",
   "private": true,
+  "proxy": "http://localhost:8000",
   "dependencies": {
     "@emotion/react": "^11.6.0",
     "@emotion/styled": "^11.6.0",
     "@mui/icons-material": "^5.1.0",
+    "@mui/lab": "^5.0.0-alpha.55",
     "@mui/material": "^5.1.0",
     "@reduxjs/toolkit": "^1.6.1",
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^11.2.7",
     "@testing-library/user-event": "^12.8.3",
     "axios": "^0.21.1",
+    "date-fns": "^2.25.0",
+    "enzyme-to-json": "^3.6.2",
+    "prettier": "^2.4.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-redux": "^7.2.4",
@@ -48,10 +53,15 @@
     ]
   },
   "devDependencies": {
+    "@testing-library/jest-dom": "^5.15.0",
+    "@wojtekmaj/enzyme-adapter-react-17": "^0.6.5",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-prettier": "^3.4.0",
     "husky": "^7.0.1",
-    "prettier": "^2.3.2",
-    "pretty-quick": "^3.1.1"
+    "jest": "^26.6.0",
+    "jest-enzyme": "^7.1.2",
+    "pretty-quick": "^3.1.1",
+    "react-test-renderer": "^17.0.2",
+    "redux-mock-store": "^1.5.4"
   }
 }
