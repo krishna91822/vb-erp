@@ -11,14 +11,10 @@ import Button from "@mui/material/Button";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-import { Link } from "react-router-dom";
 // import api from '../api/posts'
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 // import setPosts from './Main/actions'
-import "./Main.css";
-// import { fetchSpecificPO_SOW } from "../../store/CMS/POSOW-actions";
-import { fetchSpecificPO_SOW } from "../../store/CMS/CMSpoSow-main-actions";
 import { fetchPO_SOW_data } from "../../store/CMS/CMSpoSow-main-actions";
 
 export const StyledMenu = styled((props) => (
@@ -64,12 +60,13 @@ export const StyledMenu = styled((props) => (
   },
 }));
 
-const Main = () => {
+function InvoiceInfo() {
+  // const post = useSelector((state) => state.allPosts.posts);
   const dispatch = useDispatch();
 
   // const fetchPosts = async () => {
   //     const response = await api
-  //     .get('http://localhost:8000/getPoDetails')
+  //       .get('http://localhost:8000/getPoDetails')
   //     .catch( (err) =>{
   //       if (err.response) {
   //         console.log(err.response.data);
@@ -83,11 +80,13 @@ const Main = () => {
   //     dispatch(setPosts(response.data))
 
   //   }
+  // useEffect(() => {
+  //   fetchPosts();
+  // }, [])
   useEffect(() => {
     dispatch(fetchPO_SOW_data());
   }, []);
   const post = useSelector((state) => state.poSOWTabViewState.poSowData);
-  // console.log(post);
 
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
@@ -96,9 +95,6 @@ const Main = () => {
   };
   const handleClose = () => {
     setAnchorEl(null);
-  };
-  const handleRowOnClick = (row_id) => {
-    dispatch(fetchSpecificPO_SOW(row_id));
   };
   return (
     <>
@@ -143,12 +139,10 @@ const Main = () => {
       <div className="container">
         <div className="innerheader">
           <div>
-            <h3>PO/SOW's Information</h3>
+            <h3>Invoice Information</h3>
           </div>
           <div className="buttondiv">
-            <Link to="/capture_new_SOW">
-              <button className="button1">Capture PO/SOW </button>
-            </Link>
+            <button className="button1">Capture Invoice </button>
           </div>
         </div>
 
@@ -159,21 +153,17 @@ const Main = () => {
                 <TableCell>ID</TableCell>
                 <TableCell>Client Name</TableCell>
                 <TableCell>Project Name</TableCell>
-                <TableCell>PO/SOW Number</TableCell>
+                <TableCell>Project ID</TableCell>
+                <TableCell>PO/SOW Order</TableCell>
                 <TableCell>PO/SOW Amount</TableCell>
-                <TableCell>Client Sponsor</TableCell>
-                <TableCell>Action</TableCell>
-                <TableCell>Status</TableCell>
+                <TableCell>Invoice raised</TableCell>
+                <TableCell>Invoice Amount received</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
               {post.map((row) => (
                 <TableRow
-                  component={Link}
-                  to={`/POSOW_detail/${row._id}`}
-                  onClick={() => handleRowOnClick(row._id)}
                   key={row.name}
-                  style={{ textDecoration: "none" }}
                   sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                 >
                   <TableCell component="th" scope="row">
@@ -181,23 +171,11 @@ const Main = () => {
                   </TableCell>
                   <TableCell>{row.Client_Name}</TableCell>
                   <TableCell>{row.Project_Name}</TableCell>
+                  <TableCell>{row.ProjectID} </TableCell>
                   <TableCell>{row.PO_Number}</TableCell>
                   <TableCell>{row.PO_Amount}</TableCell>
-                  <TableCell>{row.Client_Sponser[0]}</TableCell>
-                  {row.Status === "Rejected" || row.Status === "Drafted" ? (
-                    <TableCell
-                      component={Link}
-                      to={`/SOW_details/edit/${row._id}`}
-                      style={{ textDecoration: "none" }}
-                    >
-                      EDIT
-                    </TableCell>
-                  ) : (
-                    <TableCell aria-disabled>Uneditable</TableCell>
-                  )}
-                  <TableCell>
-                    <strong>{row.Status}</strong>
-                  </TableCell>
+                  <TableCell>{row.Invoiceraised}</TableCell>
+                  <TableCell>{row.Invoiceamount}</TableCell>
                 </TableRow>
               ))}
             </TableBody>
@@ -206,6 +184,6 @@ const Main = () => {
       </div>
     </>
   );
-};
+}
 
-export default Main;
+export default InvoiceInfo;

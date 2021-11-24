@@ -46,7 +46,10 @@ export const CapturePO_SOW = (props) => {
   const dispatch = useDispatch();
   const params = useParams();
 
-  let filteredArr = useSelector((state) => state.SOW_state.dataByID);
+  // let filteredArr = useSelector((state) => state.SOW_state.dataByID);
+  let filteredArr = useSelector(
+    (state) => state.poSOWTabViewState.specificPOSOWdata
+  );
 
   const names = useSelector((state) => state.SOW_state.inputFieldsData.names);
   const projects = useSelector(
