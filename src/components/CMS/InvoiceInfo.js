@@ -15,7 +15,7 @@ import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 // import setPosts from './Main/actions'
-import { fetchPO_SOW_data } from "../../store/CMS/CMSpoSow-main-actions";
+import { fetchPO_SOW_data } from "../../store/CMS/POSOW-actions";
 
 export const StyledMenu = styled((props) => (
   <Menu
@@ -86,7 +86,7 @@ function InvoiceInfo() {
   useEffect(() => {
     dispatch(fetchPO_SOW_data());
   }, []);
-  const post = useSelector((state) => state.poSOWTabViewState.poSowData);
+  const post = useSelector((state) => state.CMS_state.poSowData);
 
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);

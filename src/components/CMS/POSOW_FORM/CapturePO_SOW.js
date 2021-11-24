@@ -46,33 +46,31 @@ export const CapturePO_SOW = (props) => {
   const dispatch = useDispatch();
   const params = useParams();
 
-  // let filteredArr = useSelector((state) => state.SOW_state.dataByID);
-  let filteredArr = useSelector(
-    (state) => state.poSOWTabViewState.specificPOSOWdata
-  );
+  // let filteredArr = useSelector((state) => state.CMS_state.dataByID);
+  let filteredArr = useSelector((state) => state.CMS_state.dataByID);
 
-  const names = useSelector((state) => state.SOW_state.inputFieldsData.names);
+  const names = useSelector((state) => state.CMS_state.inputFieldsData.names);
   const projects = useSelector(
-    (state) => state.SOW_state.inputFieldsData.projects
+    (state) => state.CMS_state.inputFieldsData.projects
   );
   const clientFinController = useSelector(
-    (state) => state.SOW_state.inputFieldsData.clientFinController
+    (state) => state.CMS_state.inputFieldsData.clientFinController
   );
   const targetedResources = useSelector(
-    (state) => state.SOW_state.inputFieldsData.targetedResources
+    (state) => state.CMS_state.inputFieldsData.targetedResources
   );
   const clientSponsors = useSelector(
-    (state) => state.SOW_state.inputFieldsData.clientSponsors
+    (state) => state.CMS_state.inputFieldsData.clientSponsors
   );
-  const types = useSelector((state) => state.SOW_state.inputFieldsData.types);
+  const types = useSelector((state) => state.CMS_state.inputFieldsData.types);
   const currencies = useSelector(
-    (state) => state.SOW_state.inputFieldsData.currencies
+    (state) => state.CMS_state.inputFieldsData.currencies
   );
   const DocumentTypes = useSelector(
-    (state) => state.SOW_state.inputFieldsData.DocumentTypes
+    (state) => state.CMS_state.inputFieldsData.DocumentTypes
   );
-  const popupController = useSelector((state) => state.SOW_state.popup);
-  const response_msg = useSelector((state) => state.SOW_state.response_message);
+  const popupController = useSelector((state) => state.CMS_state.popup);
+  const response_msg = useSelector((state) => state.CMS_state.response_message);
 
   let ReadPersonName = "";
   let ReadProjectName = "";

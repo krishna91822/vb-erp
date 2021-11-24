@@ -17,37 +17,30 @@ const routes = [
   {
     path: "/capture_new_SOW",
     component: POSOW_FORM,
-    title: "Not Found",
   },
   {
     path: "/POSOW",
     component: POSOW_tabView,
-    title: "Not Found",
   },
   {
     path: "/POSOW_detail/:id",
     component: POSOW_Read,
-    title: "Not Found",
   },
   {
     path: "/invoiceinfo",
     component: invoice_tabView,
-    title: "Not Found",
   },
   {
     path: "/capture_invoice",
     component: invoice_FORM,
-    title: "Not Found",
   },
   {
     path: "/invoice_details/:id",
     component: invoice_READ,
-    title: "Not Found",
   },
   {
     path: "/SOW_details/edit/:id",
     component: POSOW_EDIT,
-    title: "Not Found",
   },
   {
     path: "/templates",

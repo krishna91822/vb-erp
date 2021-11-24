@@ -18,8 +18,8 @@ import { useSelector, useDispatch } from "react-redux";
 // import setPosts from './Main/actions'
 import "./Main.css";
 // import { fetchSpecificPO_SOW } from "../../store/CMS/POSOW-actions";
-import { fetchSpecificPO_SOW } from "../../store/CMS/CMSpoSow-main-actions";
-import { fetchPO_SOW_data } from "../../store/CMS/CMSpoSow-main-actions";
+import { fetchSpecificPO_SOW } from "../../store/CMS/POSOW-actions";
+import { fetchPO_SOW_data } from "../../store/CMS/POSOW-actions";
 
 export const StyledMenu = styled((props) => (
   <Menu
@@ -86,7 +86,7 @@ const Main = () => {
   useEffect(() => {
     dispatch(fetchPO_SOW_data());
   }, []);
-  const post = useSelector((state) => state.poSOWTabViewState.poSowData);
+  const post = useSelector((state) => state.CMS_state.poSowData);
   // console.log(post);
 
   const [anchorEl, setAnchorEl] = React.useState(null);

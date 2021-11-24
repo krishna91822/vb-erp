@@ -11,7 +11,8 @@ import CloseIcon from "@mui/icons-material/Close";
 import Typography from "@mui/material/Typography";
 import { useDispatch, useSelector } from "react-redux";
 // import {PopUpOF} from "./actions";
-import { useNavigate } from "react-router-dom";
+import { Redirect } from "react-router";
+// import { useNavigate } from "react-router-dom";
 import { PoSowActions } from "../../../store/CMS/POSOW-slice";
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
@@ -53,22 +54,22 @@ BootstrapDialogTitle.propTypes = {
 };
 
 export default function CustomizedDialogs({ msg, sendForApproval }) {
-  const popupController = useSelector((state) => state.SOW_state.popup);
+  const popupController = useSelector((state) => state.CMS_state.popup);
   const [open, setOpen] = React.useState(popupController);
   const dispatch = useDispatch();
   // const navigate = useNavigate();
   // function refreshPage() {
   //     window.location.reload(true);
   //   }
-  // const routeChange = () =>{
-  //     let path = `/`;
-  //     navigate(path);
-
-  //   }
+  // const routeChange = () => {
+  //   let path = `/`;
+  //   navigate(path);
+  // };
 
   const handleClose = () => {
     dispatch(PoSowActions.PopUpOF());
     // routeChange();
+    // return <Redirect to="/" />;
   };
 
   return (

@@ -31,6 +31,7 @@ export const SOW_init_state = {
   },
   popup: false,
   response_message: "",
+  poSowData: [],
   dataByID: [
     {
       Client_Name: "",
@@ -60,6 +61,9 @@ const POSOW_Slice = createSlice({
     },
     PopUpOF(state, action) {
       state.popup = !state.popup;
+    },
+    setTabViewData(state, action) {
+      state.poSowData = action.payload;
     },
     SetSpecific(state, action) {
       state.dataByID = [...action.payload];
