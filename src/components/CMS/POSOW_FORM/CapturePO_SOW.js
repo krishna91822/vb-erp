@@ -11,6 +11,10 @@ import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import TextField from "@mui/material/TextField";
+import AddBoxIcon from "@mui/icons-material/AddBox";
+import DenseTable from "./Table";
+import FormDialog from "./AddEmpToPO";
+import SimpleGrow from "./EmpList";
 import "./CapturePO_SOW.css";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -225,7 +229,7 @@ export const CapturePO_SOW = (props) => {
   const handleSendForApprovalBtnOnClk = () => {
     dispatch(SendForApproval({ Status: filteredArr[0].Status }, params.id));
   };
-  const submitForm = async (event) => {
+  const submitForm = (event) => {
     event.preventDefault();
     let SelectedClientSponsors = [];
     let SelectedFinController = [];
@@ -282,7 +286,7 @@ export const CapturePO_SOW = (props) => {
                     variant="contained"
                     color="success"
                     type="submit"
-                    onClick={submitForm}
+                    onClick={(event) => submitForm(event)}
                     data-testid="UpdateBtn"
                   >
                     Update{" "}
@@ -292,7 +296,6 @@ export const CapturePO_SOW = (props) => {
                 <div></div>
               )}
             </div>
-            {/* {popupController ? <CustomizedDialogs msg={(props.editBtn && editTglCheckedState) ? "Updated Successfully" : "Saved Successfully"}/> : <div></div>} */}
             {popupController ? (
               <CustomizedDialogs msg={response_msg} />
             ) : (
@@ -338,7 +341,7 @@ export const CapturePO_SOW = (props) => {
                       variant="contained"
                       color="success"
                       type="submit"
-                      onClick={submitForm}
+                      onClick={(event) => submitForm(event)}
                       data-testid="saveBtn"
                     >
                       Save
@@ -512,6 +515,17 @@ export const CapturePO_SOW = (props) => {
                   </div>
                 </div>
               </div>
+              {filteredArr[0].Status === "Approved" &&
+              filteredArr[0].Type === "PO" ? (
+                <div>
+                  <hr className="projectInfoSeperator" />
+                  <SimpleGrow />
+                  <hr className="projectInfoSeperator" />
+                </div>
+              ) : (
+                <div></div>
+              )}
+
               <div className="DocheaderTitle">
                 <h3>Document information</h3>
               </div>

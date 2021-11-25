@@ -4,18 +4,31 @@ import { uiActions } from "../ui-slice";
 
 export const createNewPO_SOW = (formData) => {
   return async function (dispatch) {
-    const rqst = await axios.post(
-      "http://localhost:8000/savePoDetails",
-      formData
-    );
-    dispatch(PoSowActions.PopUpON("Saved Successfully"));
-    //  dispatch(
-    //     uiActions.showNotification({
-    //       status: "pending",
-    //       title: "Sending...",
-    //       message: "Sending data!",
-    //     })
-    //   );
+    try {
+      const response = await axios.post(
+        "http://localhost:8000/savePoDetails",
+        formData
+      );
+      if (response.status === 201) {
+        dispatch(PoSowActions.PopUpON("Saved Successfully"));
+      } else {
+        throw new Error("Could not Save data!");
+      }
+    } catch (error) {
+      // console.error(error.message);
+      // dispatch(PoSowActions.PopUpON("unsuccessfull"));
+      dispatch(uiActions.toggleLoader());
+      setTimeout(function () {
+        dispatch(uiActions.toggleLoader());
+        dispatch(
+          uiActions.showNotification({
+            status: "error",
+            title: "Error!",
+            message: "Fetching content data failed!",
+          })
+        );
+      }, 1000);
+    }
   };
 };
 export const UpdatePO_SOW = (formData, id) => {

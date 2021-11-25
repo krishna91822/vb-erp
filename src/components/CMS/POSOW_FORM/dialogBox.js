@@ -13,6 +13,7 @@ import { useDispatch, useSelector } from "react-redux";
 // import {PopUpOF} from "./actions";
 import { Redirect } from "react-router";
 // import { useNavigate } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { PoSowActions } from "../../../store/CMS/POSOW-slice";
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
@@ -57,19 +58,10 @@ export default function CustomizedDialogs({ msg, sendForApproval }) {
   const popupController = useSelector((state) => state.CMS_state.popup);
   const [open, setOpen] = React.useState(popupController);
   const dispatch = useDispatch();
-  // const navigate = useNavigate();
-  // function refreshPage() {
-  //     window.location.reload(true);
-  //   }
-  // const routeChange = () => {
-  //   let path = `/`;
-  //   navigate(path);
-  // };
-
+  let history = useHistory();
   const handleClose = () => {
     dispatch(PoSowActions.PopUpOF());
-    // routeChange();
-    // return <Redirect to="/" />;
+    history.push("/POSOW");
   };
 
   return (
