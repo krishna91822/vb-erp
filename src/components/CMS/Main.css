@@ -56,3 +56,13 @@ code {
   margin: 10px;
   margin-right: 28px;
 }
+.Pagination{
+  display: flex;
+  flex-direction:column;
+  text-align: right;
+}
+.numbering{
+  text-align: right;
+  margin-inline-start: 35%;
+}
+
