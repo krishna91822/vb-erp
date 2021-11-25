@@ -20,6 +20,9 @@ import "./Main.css";
 // import { fetchSpecificPO_SOW } from "../../store/CMS/POSOW-actions";
 import { fetchSpecificPO_SOW } from "../../store/CMS/POSOW-actions";
 import { fetchPO_SOW_data } from "../../store/CMS/POSOW-actions";
+import Typography from "@mui/material/Typography";
+import Pagination from "@mui/material/Pagination";
+import Stack from "@mui/material/Stack";
 
 export const StyledMenu = styled((props) => (
   <Menu
@@ -88,7 +91,8 @@ const Main = () => {
   }, []);
   const post = useSelector((state) => state.CMS_state.poSowData);
   // console.log(post);
-
+  const [currentpage, currentsetPage] = React.useState(1);
+  const [postPerPage,setPostPerPage]=React.useState(5);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -100,6 +104,12 @@ const Main = () => {
   const handleRowOnClick = (row_id) => {
     dispatch(fetchSpecificPO_SOW(row_id));
   };
+ const handleChange = (event, value) => {
+   currentsetPage(value);
+  };
+  const indexOfLastPost=currentpage * postPerPage;
+  const indexOfFirstPost=indexOfLastPost-postPerPage;
+  const currentPosts=post.slice(indexOfFirstPost,indexOfLastPost)
   return (
     <>
       <div className="sortbtn">
@@ -167,7 +177,7 @@ const Main = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {post.map((row) => (
+              {currentPosts.map((row) => (
                 <TableRow
                   component={Link}
                   to={`/POSOW_detail/${row._id}`}
@@ -203,6 +213,14 @@ const Main = () => {
             </TableBody>
           </Table>
         </TableContainer>
+        <Stack spacing={10}>
+          <div className="Pagination">
+            <Typography>Page: {currentpage}</Typography>
+            <div className="numbering">
+              <Pagination count={Math.ceil((post.length)/postPerPage)} page={currentpage} onChange={handleChange} />
+            </div>
+          </div>
+        </Stack>
       </div>
     </>
   );
