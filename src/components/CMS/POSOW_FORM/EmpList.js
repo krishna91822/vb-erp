@@ -32,23 +32,24 @@ export default function SimpleGrow() {
   };
 
   return (
-    <Box sx={{ height: checked ? 230 : 50 }}>
+    <Box sx={{ height: checked ? 300 : 50 }}>
       <FormControlLabel
         control={<Switch checked={checked} onChange={handleChange} />}
-        label="Show Employees"
+        label={<strong>View Assigned Employees</strong>}
+        sx={{ margin: "0.5rem" }}
       />
       <Box sx={{ display: "flex" }}>
         <Grow in={checked}>{DenseTable()}</Grow>
-
-        {/* <Grow in={checked}>{FormDialog()}</Grow> */}
-        {/* Conditionally applies the timeout prop to change the entry speed. */}
       </Box>
-
-      <Box sx={{ display: "flex" }}>
-        {/* <Grow in={checked}>{DenseTable()}</Grow> */}
-
-        <Grow in={checked}>{FormDialog()}</Grow>
-        {/* Conditionally applies the timeout prop to change the entry speed. */}
+      <Box
+        sx={{
+          display: "flex",
+          float: "right",
+          marginTop: "0.3rem",
+          marginRight: "0.5rem",
+        }}
+      >
+        <Grow in={checked}>{FormDialog({ edit: false })}</Grow>
       </Box>
     </Box>
   );

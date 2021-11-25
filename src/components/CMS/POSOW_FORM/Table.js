@@ -8,6 +8,7 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import CreateIcon from "@mui/icons-material/Create";
 import Button from "@mui/material/Button";
+import FormDialog from "./AddEmpToPO";
 
 function createData(emp_name, emp_id, start_date, end_date) {
   return { emp_name, emp_id, start_date, end_date };
@@ -23,7 +24,7 @@ const rows = [
 
 export default function DenseTable() {
   return (
-    <TableContainer component={Paper} style={{ height: 150 }}>
+    <TableContainer component={Paper} style={{ height: 200 }}>
       <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
         <TableHead>
           <TableRow>
@@ -60,22 +61,7 @@ export default function DenseTable() {
               <TableCell align="center">{row.start_date}</TableCell>
               <TableCell align="center">{row.end_date}</TableCell>
               <TableCell align="center">
-                <Button
-                  variant="contained"
-                  color="success"
-                  style={{
-                    maxWidth: "70px",
-                    maxHeight: "30px",
-                    minWidth: "30px",
-                    minHeight: "30px",
-                  }}
-                  type="button"
-                  // onClick={(event) => submitForm(event)}
-                  data-testid="UpdateBtn"
-                >
-                  <CreateIcon />
-                  Edit
-                </Button>
+                <FormDialog edit={true} />
               </TableCell>
               <TableCell align="center">
                 <Button

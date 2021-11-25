@@ -9,9 +9,10 @@ import DialogTitle from "@mui/material/DialogTitle";
 import AddBoxIcon from "@mui/icons-material/AddBox";
 import BasicDatePicker from "../invoice_FORM/date";
 import { useState, useEffect } from "react";
+import CreateIcon from "@mui/icons-material/Create";
 import "./CapturePO_SOW.css";
 
-export default function FormDialog() {
+export default function FormDialog(props) {
   const [open, setOpen] = React.useState(false);
 
   const handleClickOpen = () => {
@@ -55,9 +56,31 @@ export default function FormDialog() {
 
   return (
     <div>
-      <AddBoxIcon fontSize="large" onClick={handleClickOpen} />
+      {props.edit ? (
+        <Button
+          variant="contained"
+          color="success"
+          style={{
+            maxWidth: "70px",
+            maxHeight: "30px",
+            minWidth: "30px",
+            minHeight: "30px",
+          }}
+          type="button"
+          onClick={handleClickOpen}
+          data-testid="UpdateBtn"
+        >
+          <CreateIcon />
+          Edit
+        </Button>
+      ) : (
+        <AddBoxIcon fontSize="large" onClick={handleClickOpen} />
+      )}
+      {/* <AddBoxIcon fontSize="large" onClick={handleClickOpen} /> */}
       <Dialog open={open} onClose={handleClose}>
-        <DialogTitle>Assign Employee to this PO</DialogTitle>
+        <DialogTitle>
+          {props.edit ? "Update Details" : "Assign Employee to this PO"}
+        </DialogTitle>
         <DialogContent>
           {/* <DialogContentText>Add Employee</DialogContentText> */}
           <div className="AssignEmpParentDiv">
@@ -127,7 +150,7 @@ export default function FormDialog() {
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>
           <Button type="submit" onClick={(e) => handleAddOnClick(e)}>
-            ADD
+            {props.edit ? "Update" : "Assign"}
           </Button>
         </DialogActions>
       </Dialog>

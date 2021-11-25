@@ -92,7 +92,7 @@ const Main = () => {
   const post = useSelector((state) => state.CMS_state.poSowData);
   // console.log(post);
   const [currentpage, currentsetPage] = React.useState(1);
-  const [postPerPage,setPostPerPage]=React.useState(5);
+  const [postPerPage, setPostPerPage] = React.useState(5);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -104,12 +104,12 @@ const Main = () => {
   const handleRowOnClick = (row_id) => {
     dispatch(fetchSpecificPO_SOW(row_id));
   };
- const handleChange = (event, value) => {
-   currentsetPage(value);
+  const handleChange = (event, value) => {
+    currentsetPage(value);
   };
-  const indexOfLastPost=currentpage * postPerPage;
-  const indexOfFirstPost=indexOfLastPost-postPerPage;
-  const currentPosts=post.slice(indexOfFirstPost,indexOfLastPost)
+  const indexOfLastPost = currentpage * postPerPage;
+  const indexOfFirstPost = indexOfLastPost - postPerPage;
+  const currentPosts = post.slice(indexOfFirstPost, indexOfLastPost);
   return (
     <>
       <div className="sortbtn">
@@ -217,7 +217,11 @@ const Main = () => {
           <div className="Pagination">
             <Typography>Page: {currentpage}</Typography>
             <div className="numbering">
-              <Pagination count={Math.ceil((post.length)/postPerPage)} page={currentpage} onChange={handleChange} />
+              <Pagination
+                count={Math.ceil(post.length / postPerPage)}
+                page={currentpage}
+                onChange={handleChange}
+              />
             </div>
           </div>
         </Stack>
