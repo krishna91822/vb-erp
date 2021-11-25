@@ -1,0 +1,30 @@
+.main {
+  /* height: 1600px; */
+}
+
+.main ul {
+  margin: 0;
+  padding: 20px;
+}
+
+/*
+.container {
+  box-sizing: border-box;
+  overflow-y: scroll;
+  margin: calc(70px + 0px) 0px 0px calc(250px + 0px);
+  width: 100%;
+  padding: 10px;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #efefef;
+  border-radius: 20px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #efefef;
+} */
