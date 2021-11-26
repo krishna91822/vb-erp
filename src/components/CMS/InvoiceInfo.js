@@ -15,10 +15,11 @@ import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 // import setPosts from './Main/actions'
-import { fetchPO_SOW_data } from "../../store/CMS/POSOW-actions";
+import { fetchPO_SOW_data, sortProducts } from "../../store/CMS/POSOW-actions";
 import Typography from "@mui/material/Typography";
 import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
+import { Link } from "react-router-dom";
 
 export const StyledMenu = styled((props) => (
   <Menu
@@ -100,6 +101,10 @@ function InvoiceInfo() {
   const handleClose = () => {
     setAnchorEl(null);
   };
+  const handleSort = (product) => {
+    dispatch(sortProducts(product));
+    setAnchorEl(null);
+  };
   const handleChange = (event, value) => {
     currentsetPage(value);
   };
@@ -130,18 +135,18 @@ function InvoiceInfo() {
           open={open}
           onClose={handleClose}
         >
-          <MenuItem onClick={handleClose} disableRipple>
+          <MenuItem onClick={() => handleSort("id")} disableRipple>
             By ID
           </MenuItem>
 
-          <MenuItem onClick={handleClose} disableRipple>
+          <MenuItem onClick={() => handleSort("projectname")} disableRipple>
             By Project Name
           </MenuItem>
 
-          <MenuItem onClick={handleClose} disableRipple>
-            By Client Sponsor
+          <MenuItem onClick={() => handleSort("invoiceraised")} disableRipple>
+            By Invoice Raised
           </MenuItem>
-          <MenuItem onClick={handleClose} disableRipple>
+          <MenuItem onClick={() => handleSort("clientname")} disableRipple>
             By Client Name
           </MenuItem>
         </StyledMenu>
@@ -152,7 +157,9 @@ function InvoiceInfo() {
             <h3>Invoice Information</h3>
           </div>
           <div className="buttondiv">
-            <button className="button1">Capture Invoice </button>
+            <Link to="/capture_invoice">
+              <button className="button1">Capture Invoice </button>
+            </Link>
           </div>
         </div>
 
