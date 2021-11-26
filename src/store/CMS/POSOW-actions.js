@@ -52,3 +52,9 @@ export const fetchSpecificPO_SOW = (ROW_ID) => {
     dispatch(PoSowActions.SetSpecific([res.data]));
   };
 };
+export const sortProducts = (product) => {
+  return async function (dispatch) {
+    const res = await axios.get(`http://localhost:8000/sort/${product}`);
+    dispatch(PoSowActions.setTabViewData(res.data));
+  };
+};
