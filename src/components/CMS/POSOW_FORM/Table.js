@@ -7,22 +7,24 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import CreateIcon from "@mui/icons-material/Create";
+import { useDispatch, useSelector } from "react-redux";
 import Button from "@mui/material/Button";
 import FormDialog from "./AddEmpToPO";
 
-function createData(emp_name, emp_id, start_date, end_date) {
-  return { emp_name, emp_id, start_date, end_date };
-}
+// function createData(emp_name, emp_id, start_date, end_date) {
+//   return { emp_name, emp_id, start_date, end_date };
+// }
 
-const rows = [
-  createData("Alex", 159, "11 / 25 / 2021", "11 / 25 / 2021"),
-  createData("Ravi", 154, "11 / 25 / 2021", "11 / 25 / 2021"),
-  createData("Hari", 149, "11 / 25 / 2021", "11 / 25 / 2021"),
-  createData("Rama", 129, "11 / 25 / 2021", "11 / 25 / 2021"),
-  createData("Srikant", 153, "11 / 25 / 2021", "11 / 25 / 2021"),
-];
+// const rows = [
+//   createData("Alex", 159, "11 / 25 / 2021", "11 / 25 / 2021"),
+//   createData("Ravi", 154, "11 / 25 / 2021", "11 / 25 / 2021"),
+//   createData("Hari", 149, "11 / 25 / 2021", "11 / 25 / 2021"),
+//   createData("Rama", 129, "11 / 25 / 2021", "11 / 25 / 2021"),
+//   createData("Srikant", 153, "11 / 25 / 2021", "11 / 25 / 2021"),
+// ];
 
 export default function DenseTable() {
+  const rows = useSelector((state) => state.CMS_state.employees);
   return (
     <TableContainer component={Paper} style={{ height: 200 }}>
       <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">

@@ -10,6 +10,64 @@ const names = [
   "Yussuf Sh",
   "Ayushi S",
 ];
+const employees = [
+  {
+    emp_name: "Alex",
+    emp_id: 1994,
+    // emp: { emp_name: "Alex", emp_id: 1994 },
+    start_date: "11 / 25 / 2021",
+    end_date: "11 / 25 / 2021",
+    percentage_alloc: 15,
+  },
+  {
+    emp_name: "David",
+    emp_id: 1972,
+    // emp: { emp_name: "David", emp_id: 1972 },
+    start_date: "11 / 25 / 2021",
+    end_date: "11 / 25 / 2021",
+    percentage_alloc: 15,
+  },
+  {
+    emp_name: "yusuf",
+    emp_id: 1974,
+    // emp: { emp_name: "yusuf", emp_id: 1974 },
+    start_date: "11 / 25 / 2021",
+    end_date: "11 / 25 / 2021",
+    percentage_alloc: 20,
+  },
+  {
+    emp_name: "Aquib",
+    emp_id: 2008,
+    // emp: { emp_name: "Aquib", emp_id: 2008 },
+    start_date: "11 / 25 / 2021",
+    end_date: "11 / 25 / 2021",
+    percentage_alloc: 30,
+  },
+  {
+    emp_name: "yash DY",
+    emp_id: 1957,
+    // emp: { emp_name: "yash DY", emp_id: 1957 },
+    start_date: "11 / 25 / 2021",
+    end_date: "11 / 25 / 2021",
+    percentage_alloc: 10,
+  },
+  {
+    emp_name: "Ayushi",
+    emp_id: 1993,
+    // emp: { emp_name: "Ayushi", emp_id: 1993 },
+    start_date: "11 / 25 / 2021",
+    end_date: "11 / 25 / 2021",
+    percentage_alloc: 5,
+  },
+  {
+    emp_name: "Tanmay",
+    emp_id: 1994,
+    // emp: { emp_name: "Tanmay", emp_id: 1994 },
+    start_date: "11 / 25 / 2021",
+    end_date: "11 / 25 / 2021",
+    percentage_alloc: 5,
+  },
+];
 const projects = ["xyz23", "asd34", "abc56", "yusah98", "ydy APPs"];
 const clientFinController = ["ABC", "XYZ", "EFG"];
 const targetedResources = ["ABC", "XYZ", "EFG", "ZZZ"];
@@ -47,6 +105,17 @@ export const SOW_init_state = {
       Document_Name: "",
       Document_Type: "",
       Remarks: "",
+    },
+  ],
+  employees: employees,
+  specificEmpData: [
+    {
+      // emp: { emp_name: "Tanmay", emp_id: 1994 },
+      emp_name: "Tanmay",
+      emp_id: 1994,
+      start_date: "04 / 14 / 2021",
+      end_date: "05 / 14 / 2021",
+      percentage_alloc: 70,
     },
   ],
 };
