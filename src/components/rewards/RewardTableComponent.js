@@ -1,8 +1,19 @@
 import React from "react";
-import "../style/bodyStyle.css";
+import "./rewardTableStyle.css";
 import Button from "@mui/material/Button";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faTrashAlt,
+  faEdit,
+  faFile,
+  faSyncAlt,
+  faRocket,
+} from "@fortawesome/free-solid-svg-icons";
+import { useDispatch } from "react-redux";
+import { deleteRewardData } from "../../store/rewards-slice";
 
 function Body(props) {
+  const dispatch = useDispatch();
   return (
     <div className="main-body">
       <div className="middle-container">
@@ -24,7 +35,7 @@ function Body(props) {
             <p>Reward Type</p>
           </div>
           <div className="heading-assignee">
-            <p>Assignee's</p>
+            <p>Sponsors</p>
           </div>
           <div className="heading-reward-state">
             <p>Reward Date</p>
@@ -52,19 +63,22 @@ function Body(props) {
                 </div>
                 <div className="actions">
                   <div className="actions-icon">
-                    <i id="rocket" class="fas fa-rocket"></i>
+                    <FontAwesomeIcon icon={faRocket} />
                   </div>
                   <div className="actions-icon">
-                    <i id="refresh" class="fas fa-sync-alt"></i>
+                    <FontAwesomeIcon icon={faSyncAlt} />
                   </div>
                   <div className="actions-icon">
-                    <i id="file" class="far fa-file"></i>
+                    <FontAwesomeIcon icon={faFile} />
                   </div>
                   <div className="actions-icon">
-                    <i id="edit" class="far fa-edit"></i>
+                    <FontAwesomeIcon icon={faEdit} />
                   </div>
                   <div className="actions-icon">
-                    <i id="delete" class="fas fa-trash-alt"></i>
+                    <FontAwesomeIcon
+                      onClick={() => dispatch(deleteRewardData(d.id))}
+                      icon={faTrashAlt}
+                    />
                   </div>
                 </div>
               </div>

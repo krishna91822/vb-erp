@@ -1,5 +1,5 @@
 import React from "react";
-import "../style/paginationStyle.css";
+import "./paginationStyle.css";
 import Pagination from "@mui/material/Pagination";
 
 const PaginationPage = () => {
