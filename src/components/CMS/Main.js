@@ -18,7 +18,10 @@ import { useSelector, useDispatch } from "react-redux";
 // import setPosts from './Main/actions'
 import "./Main.css";
 // import { fetchSpecificPO_SOW } from "../../store/CMS/POSOW-actions";
-import { fetchSpecificPO_SOW } from "../../store/CMS/POSOW-actions";
+import {
+  fetchSpecificPO_SOW,
+  sortProducts,
+} from "../../store/CMS/POSOW-actions";
 import { fetchPO_SOW_data } from "../../store/CMS/POSOW-actions";
 import Typography from "@mui/material/Typography";
 import Pagination from "@mui/material/Pagination";
@@ -92,7 +95,7 @@ const Main = () => {
   const post = useSelector((state) => state.CMS_state.poSowData);
   // console.log(post);
   const [currentpage, currentsetPage] = React.useState(1);
-  const [postPerPage,setPostPerPage]=React.useState(5);
+  const [postPerPage, setPostPerPage] = React.useState(5);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -104,12 +107,16 @@ const Main = () => {
   const handleRowOnClick = (row_id) => {
     dispatch(fetchSpecificPO_SOW(row_id));
   };
- const handleChange = (event, value) => {
-   currentsetPage(value);
+  const handleSort = (product) => {
+    dispatch(sortProducts(product));
+    setAnchorEl(null);
   };
-  const indexOfLastPost=currentpage * postPerPage;
-  const indexOfFirstPost=indexOfLastPost-postPerPage;
-  const currentPosts=post.slice(indexOfFirstPost,indexOfLastPost)
+  const handleChange = (event, value) => {
+    currentsetPage(value);
+  };
+  const indexOfLastPost = currentpage * postPerPage;
+  const indexOfFirstPost = indexOfLastPost - postPerPage;
+  const currentPosts = post.slice(indexOfFirstPost, indexOfLastPost);
   return (
     <>
       <div className="sortbtn">
@@ -134,18 +141,18 @@ const Main = () => {
           open={open}
           onClose={handleClose}
         >
-          <MenuItem onClick={handleClose} disableRipple>
+          <MenuItem onClick={() => handleSort("id")} disableRipple>
             By ID
           </MenuItem>
 
-          <MenuItem onClick={handleClose} disableRipple>
+          <MenuItem onClick={() => handleSort("projectname")} disableRipple>
             By Project Name
           </MenuItem>
 
-          <MenuItem onClick={handleClose} disableRipple>
+          <MenuItem onClick={() => handleSort("clientsponser")} disableRipple>
             By Client Sponsor
           </MenuItem>
-          <MenuItem onClick={handleClose} disableRipple>
+          <MenuItem onClick={() => handleSort("clientname")} disableRipple>
             By Client Name
           </MenuItem>
         </StyledMenu>
@@ -217,7 +224,11 @@ const Main = () => {
           <div className="Pagination">
             <Typography>Page: {currentpage}</Typography>
             <div className="numbering">
-              <Pagination count={Math.ceil((post.length)/postPerPage)} page={currentpage} onChange={handleChange} />
+              <Pagination
+                count={Math.ceil(post.length / postPerPage)}
+                page={currentpage}
+                onChange={handleChange}
+              />
             </div>
           </div>
         </Stack>
