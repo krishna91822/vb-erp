@@ -10,62 +10,72 @@ const names = [
   "Yussuf Sh",
   "Ayushi S",
 ];
+const AllAvailableEmp = [
+  { emp_name: "Alex", emp_id: 1990 },
+  { emp_name: "David", emp_id: 1972 },
+  { emp_name: "yusuf", emp_id: 1974 },
+  { emp_name: "Aquib", emp_id: 2008 },
+  { emp_name: "yash DY", emp_id: 1957 },
+  { emp_name: "Ayushi", emp_id: 1993 },
+  { emp_name: "Tanmay", emp_id: 1994 },
+  { emp_name: "", emp_id: "" },
+];
 const employees = [
   {
-    emp_name: "Alex",
-    emp_id: 1994,
+    Employee_Name: "Alex",
+    Employee_Id: 1990,
     // emp: { emp_name: "Alex", emp_id: 1994 },
-    start_date: "11 / 25 / 2021",
-    end_date: "11 / 25 / 2021",
-    percentage_alloc: 15,
+    Start_Date: "11 / 15 / 2021",
+    End_Date: "11 / 25 / 2021",
+    Allocation_Rate: 15,
   },
   {
-    emp_name: "David",
-    emp_id: 1972,
+    Employee_Name: "David",
+    Employee_Id: 1972,
     // emp: { emp_name: "David", emp_id: 1972 },
-    start_date: "11 / 25 / 2021",
-    end_date: "11 / 25 / 2021",
-    percentage_alloc: 15,
+    Start_Date: "11 / 25 / 2021",
+    End_Date: "12 / 15 / 2021",
+    Allocation_Rate: 15,
   },
   {
-    emp_name: "yusuf",
-    emp_id: 1974,
+    Employee_Name: "yusuf",
+    Employee_Id: 1974,
     // emp: { emp_name: "yusuf", emp_id: 1974 },
-    start_date: "11 / 25 / 2021",
-    end_date: "11 / 25 / 2021",
-    percentage_alloc: 20,
+    Start_Date: "11 / 25 / 2021",
+    End_Date: "11 / 25 / 2021",
+    Allocation_Rate: 20,
   },
   {
-    emp_name: "Aquib",
-    emp_id: 2008,
+    Employee_Name: "Aquib",
+    Employee_Id: 2008,
     // emp: { emp_name: "Aquib", emp_id: 2008 },
-    start_date: "11 / 25 / 2021",
-    end_date: "11 / 25 / 2021",
-    percentage_alloc: 30,
+    Start_Date: "11 / 25 / 2021",
+    End_Date: "11 / 25 / 2021",
+    Allocation_Rate: 30,
   },
   {
-    emp_name: "yash DY",
-    emp_id: 1957,
+    Employee_Name: "yash DY",
+    Employee_Id: 1957,
     // emp: { emp_name: "yash DY", emp_id: 1957 },
-    start_date: "11 / 25 / 2021",
-    end_date: "11 / 25 / 2021",
-    percentage_alloc: 10,
+    Start_Date: "11 / 25 / 2021",
+    End_Date: "11 / 25 / 2021",
+    Allocation_Rate: 10,
   },
   {
-    emp_name: "Ayushi",
-    emp_id: 1993,
+    Employee_Name: "Ayushi",
+    Employee_Id: 1993,
     // emp: { emp_name: "Ayushi", emp_id: 1993 },
-    start_date: "11 / 25 / 2021",
-    end_date: "11 / 25 / 2021",
-    percentage_alloc: 5,
+    Start_Date: "11 / 25 / 2021",
+    End_Date: "11 / 25 / 2021",
+    Allocation_Rate: 5,
   },
   {
-    emp_name: "Tanmay",
-    emp_id: 1994,
+    Employee_Name: "Tanmay",
+    Employee_Id: 1994,
     // emp: { emp_name: "Tanmay", emp_id: 1994 },
-    start_date: "11 / 25 / 2021",
-    end_date: "11 / 25 / 2021",
-    percentage_alloc: 5,
+    Start_Date: "11 / 25 / 2021",
+    End_Date: "11 / 25 / 2021",
+    Allocation_Rate: 5,
   },
 ];
 const projects = ["xyz23", "asd34", "abc56", "yusah98", "ydy APPs"];
@@ -107,15 +117,16 @@ export const SOW_init_state = {
       Remarks: "",
     },
   ],
+  AllAvailableEmp: AllAvailableEmp,
   employees: employees,
   specificEmpData: [
     {
       // emp: { emp_name: "Tanmay", emp_id: 1994 },
-      emp_name: "Tanmay",
-      emp_id: 1994,
-      start_date: "04 / 14 / 2021",
-      end_date: "05 / 14 / 2021",
-      percentage_alloc: 70,
+      Employee_Name: "",
+      Employee_Id: "",
+      Start_Date: "",
+      End_Date: "",
+      Allocation_Rate: null,
     },
   ],
 };
@@ -134,8 +145,17 @@ const POSOW_Slice = createSlice({
     setTabViewData(state, action) {
       state.poSowData = action.payload;
     },
+    setPOEmpTabData(state, action) {
+      state.employees = action.payload;
+    },
     SetSpecific(state, action) {
       state.dataByID = [...action.payload];
+    },
+    setDefaultEmpDataOnedit(state, action) {
+      console.log("reached setDefaultEmpDataOnedit");
+      state.specificEmpData = state.employees.filter((employee) => {
+        return employee.Employee_Id == action.payload;
+      });
     },
   },
 });

@@ -1,6 +1,7 @@
 import axios from "../../helpers/axiosInstance";
 import { PoSowActions } from "./POSOW-slice";
 import { uiActions } from "../ui-slice";
+import { useDispatch } from "react-redux";
 
 export const createNewPO_SOW = (formData) => {
   return async function (dispatch) {
@@ -63,5 +64,52 @@ export const fetchSpecificPO_SOW = (ROW_ID) => {
       `http://localhost:8000/getPoDetailsByID/${ROW_ID}`
     );
     dispatch(PoSowActions.SetSpecific([res.data]));
+  };
+};
+export const fetchEmpOfThisPO = (PO_ID) => {
+  return async function (dispatch) {
+    const res = await axios.get(
+      `http://localhost:8000/getPoDetailsByID/${PO_ID}`
+    );
+    dispatch(PoSowActions.setPOEmpTabData(res.data));
+  };
+};
+export const GetDetailsOfThisEmp = (row_id) => {
+  const dispatch = useDispatch();
+  // return function (dispatch) {
+  //   console.log("reached GetDetailsOfThisEmp");
+  //   dispatch(PoSowActions.setDefaultEmpDataOnedit(row_id));
+  // };
+  console.log("reached GetDetailsOfThisEmp", row_id);
+  dispatch(PoSowActions.setDefaultEmpDataOnedit(row_id));
+};
+
+export const AddEmpToThisPO = (formData) => {
+  return async function (dispatch) {
+    try {
+      const response = await axios.post(
+        "http://localhost:8000/addAssignee",
+        formData
+      );
+      if (response.status === 201) {
+        dispatch(PoSowActions.PopUpON("Employee Added To This PO"));
+      } else {
+        throw new Error("Could not Save data!");
+      }
+    } catch (error) {
+      // console.error(error.message);
+      // dispatch(PoSowActions.PopUpON("unsuccessfull"));
+      dispatch(uiActions.toggleLoader());
+      setTimeout(function () {
+        dispatch(uiActions.toggleLoader());
+        dispatch(
+          uiActions.showNotification({
+            status: "error",
+            title: "Error!",
+            message: "Fetching content data failed!",
+          })
+        );
+      }, 1000);
+    }
   };
 };

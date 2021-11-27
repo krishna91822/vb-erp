@@ -12,14 +12,27 @@ import BasicDatePicker from "../invoice_FORM/date";
 import { useState, useEffect } from "react";
 import CreateIcon from "@mui/icons-material/Create";
 import { useDispatch, useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
 import ComboBox from "../../UI/AutoComplete";
+import { AddEmpToThisPO } from "../../../store/CMS/POSOW-actions";
+import { GetDetailsOfThisEmp } from "../../../store/CMS/POSOW-actions";
+import { PoSowActions } from "../../../store/CMS/POSOW-slice";
 import "./CapturePO_SOW.css";
 
 export default function FormDialog(props) {
+  const params = useParams();
+  const dispatch = useDispatch();
   const [open, setOpen] = React.useState(false);
 
   const handleClickOpen = () => {
     setOpen(true);
+  };
+  const handleClickOpenForEdit = () => {
+    setOpen(true);
+    if (props.edit) {
+      // GetDetailsOfThisEmp(props.row_id);
+      dispatch(PoSowActions.setDefaultEmpDataOnedit(props.row_id));
+    }
   };
 
   const handleClose = () => {
@@ -29,34 +42,29 @@ export default function FormDialog(props) {
   const specificEmpData = useSelector(
     (state) => state.CMS_state.specificEmpData
   );
-  const [StartDate, setStartDate] = useState(
-    props.edit ? new Date(specificEmpData[0].start_date) : new Date()
-  );
-  const [EndDate, setEndDate] = useState(
-    props.edit ? new Date(specificEmpData[0].end_date) : new Date()
-  );
-  const [selectedOption, setSelectedOption] = useState(
-    props.edit
-      ? {
-          emp_name: specificEmpData[0].emp_name,
-          emp_id: specificEmpData[0].emp_id,
-          start_date: "11 / 25 / 2021",
-          end_date: "11 / 25 / 2021",
-          percentage_alloc: 5,
-        }
-      : {
-          emp_name: "",
-          emp_id: "",
-          start_date: new Date(),
-          end_date: new Date(),
-          percentage_alloc: 5,
-        }
-  );
+  // console.log(specificEmpData);
+  const [StartDate, setStartDate] = useState(new Date());
+  const [EndDate, setEndDate] = useState(new Date());
+  const [selectedOption, setSelectedOption] = useState({
+    emp_name: "",
+    emp_id: "",
+  });
   // console.log(emp_name);
-  const [emp_id, setEmpId] = useState(
-    props.edit ? specificEmpData[0].emp_id : ""
-  );
+  const [emp_id, setEmpId] = useState("");
   const [percentageAlloc, setPercentageAlloc] = useState("");
+  useEffect(() => {
+    if (props.edit) {
+      setStartDate(new Date(specificEmpData[0].Start_Date));
+      setEndDate(new Date(specificEmpData[0].End_Date));
+      setSelectedOption({
+        emp_name: specificEmpData[0].Employee_Name,
+        emp_id: specificEmpData[0].Employee_Id,
+      });
+      setEmpId(specificEmpData[0].Employee_Id);
+      setPercentageAlloc(specificEmpData[0].Allocation_Rate);
+    }
+  }, [specificEmpData]);
+
   const handleStartDateChange = (newValue) => {
     setStartDate(newValue);
   };
@@ -81,13 +89,26 @@ export default function FormDialog(props) {
   const handleAddOnClick = (e) => {
     e.preventDefault();
     const DataToSend = {
+      Project_Id: params.id,
+
       Employee_Name: selectedOption.emp_name,
-      Allocation_Rate: percentageAlloc,
-      Start_Date: StartDate,
-      End_Date: EndDate,
-      emp_id: Number(emp_id),
+      Allocation_Rate: Number(percentageAlloc),
+      Start_Date:
+        StartDate.getMonth() +
+        "/" +
+        StartDate.getDate() +
+        "/" +
+        StartDate.getFullYear(),
+      End_Date:
+        EndDate.getMonth() +
+        "/" +
+        EndDate.getDate() +
+        "/" +
+        EndDate.getFullYear(),
+      Employee_Id: emp_id.toString(),
     };
     console.log(DataToSend);
+    dispatch(AddEmpToThisPO(DataToSend));
   };
   // const employees = [
   //   { emp_name: "Alex", emp_id: 1994 },
@@ -98,7 +119,7 @@ export default function FormDialog(props) {
   //   { emp_name: "Ayushi", emp_id: 1993 },
   //   { emp_name: "Tanmay", emp_id: 1994 },
   // ];
-  const employees = useSelector((state) => state.CMS_state.employees);
+  const employees = useSelector((state) => state.CMS_state.AllAvailableEmp);
   return (
     <div>
       {props.edit ? (
@@ -112,7 +133,7 @@ export default function FormDialog(props) {
             minHeight: "30px",
           }}
           type="button"
-          onClick={handleClickOpen}
+          onClick={handleClickOpenForEdit}
           data-testid="UpdateBtn"
         >
           <CreateIcon />

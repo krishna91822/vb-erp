@@ -24,7 +24,11 @@ import FormDialog from "./AddEmpToPO";
 // ];
 
 export default function DenseTable() {
+  const dispatch = useDispatch();
   const rows = useSelector((state) => state.CMS_state.employees);
+  // const handleRowOnClick = (row_id) => {
+  //   dispatch(GetDetailsOfThisEmp(row_id));
+  // };
   return (
     <TableContainer component={Paper} style={{ height: 200 }}>
       <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
@@ -43,6 +47,9 @@ export default function DenseTable() {
               <strong>End Date</strong>
             </TableCell>
             <TableCell align="center">
+              <strong>Allocation Rate</strong>
+            </TableCell>
+            <TableCell align="center">
               <strong>Option</strong>
             </TableCell>
             <TableCell align="center">
@@ -53,17 +60,19 @@ export default function DenseTable() {
         <TableBody>
           {rows.map((row) => (
             <TableRow
-              key={row.emp_name}
+              key={row.Employee_Id}
               sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+              // onClick={() => GetDetailsOfThisEmp(row.Employee_Id)}
             >
               <TableCell component="th" scope="row" align="center">
-                {row.emp_name}
+                {row.Employee_Name}
               </TableCell>
-              <TableCell align="center">{row.emp_id}</TableCell>
-              <TableCell align="center">{row.start_date}</TableCell>
-              <TableCell align="center">{row.end_date}</TableCell>
+              <TableCell align="center">{row.Employee_Id}</TableCell>
+              <TableCell align="center">{row.Start_Date}</TableCell>
+              <TableCell align="center">{row.End_Date}</TableCell>
+              <TableCell align="center">{row.Allocation_Rate}</TableCell>
               <TableCell align="center">
-                <FormDialog edit={true} />
+                <FormDialog edit={true} row_id={row.Employee_Id} />
               </TableCell>
               <TableCell align="center">
                 <Button
