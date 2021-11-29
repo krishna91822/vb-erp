@@ -4,6 +4,7 @@ const pmoSlice = createSlice({
   initialState: {
     projects: [],
     redirect: false,
+    updateModal: false,
     projectById: [],
     allocatedData: [
       {
@@ -103,6 +104,9 @@ const pmoSlice = createSlice({
     },
     redirectToProjectList: (state, action) => {
       state.redirect = !state.redirect;
+    },
+    setUpdateModal: (state, action) => {
+      state.updateModal = !state.updateModal;
     },
   },
 });

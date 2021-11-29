@@ -8,7 +8,7 @@ import {
   TableContainer,
   TableHead,
   TableRow,
-} from "@material-ui/core";
+} from "@mui/material";
 
 import { pmoActions } from "../../../store/pmo-slice";
 import { getAllProjects } from "../../../store/pmo-actions";
@@ -25,12 +25,14 @@ import {
   ProjectHead,
   EditButton,
 } from "./styles";
+import Tpagination from "../UI/Pagination";
 
 const ViewProjects = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const { path } = useRouteMatch();
   const { projects } = useSelector((state) => state.pmo);
+  const [page, setPage] = React.useState(0);
 
   useEffect(() => {
     dispatch(getAllProjects());
@@ -123,7 +125,7 @@ const ViewProjects = () => {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {projects.map((currElem) => (
+                {projects.slice(page * 5, page * 5 + 5).map((currElem) => (
                   <TableRow
                     key={currElem.id}
                     onClick={() => entryLink(currElem)}
@@ -152,6 +154,7 @@ const ViewProjects = () => {
               </TableBody>
             </Table>
           </TableContainer>
+          <Tpagination page={page} setPage={setPage} rows={projects} />
         </Container>
       </MainComponent>
     </>

@@ -10,9 +10,6 @@ export const EditViewSwitchStyled = styled.div`
   > * {
     margin: 0.5em 0 0.5em 0.5em;
   }
-  > button {
-    // margin-bottom: 0.7em;
-  }
   .Component-root-1 {
     margin: 0;
   }

@@ -1,4 +1,5 @@
 import styled from "styled-components";
+
 const size = {
   mobileM: "375px",
   mobileL: "540px",
@@ -7,6 +8,7 @@ const size = {
   laptopL: "1440px",
   desktop: "2560px",
 };
+
 export const device = {
   mobileM: `(max-width: ${size.mobileM})`,
   mobileL: `(max-width: ${size.mobileL})`,
@@ -16,10 +18,12 @@ export const device = {
   desktop: `(max-width: ${size.desktop})`,
   desktopL: `(max-width: ${size.desktop})`,
 };
+
 export const ResourceInformationHeading = styled.h3`
   padding: 0.8em 0;
   border-bottom: 0.1em solid black;
 `;
+
 export const Heading = styled.h1`
   font-size: ${(props) => (props.mainHead ? 20 : 15)}px;
   font-weight: 400;
@@ -27,7 +31,9 @@ export const Heading = styled.h1`
   margin-top: 0.5em;
   padding: 0.5em 1em;
 `;
+
 export const Container = styled.div``;
+
 export const AllElementsContainer = styled.div`
   padding: 0.5em;
   margin-top: 3.5em;
@@ -42,6 +48,7 @@ export const AllElementsContainer = styled.div`
   @media ${device.mobileL} {
   }
 `;
+
 export const ResourceForm = styled.div`
   width: 48%;
   display: flex;
@@ -54,6 +61,7 @@ export const ResourceForm = styled.div`
     width: 90%;
   }
 `;
+
 export const MultiElemContainer = styled.div`
   width: 48%;
   display: flex;
@@ -72,6 +80,7 @@ export const MultiElemContainer = styled.div`
     width: 90%;
   }
 `;
+
 export const AllocElemContainer = styled.div`
   display: flex;
   justify-content: space-between;

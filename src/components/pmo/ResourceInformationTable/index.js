@@ -6,8 +6,8 @@ import {
   TableContainer,
   TableRow,
   TableHead,
-} from "@material-ui/core";
-import DeleteIcon from "@material-ui/icons/Delete";
+} from "@mui/material";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 const ResourceInformationTable = ({ resources, removeResource, edit }) => {
   return (

@@ -1,4 +1,4 @@
-import Enzyme, { mount } from "enzyme";
+import Enzyme, { shallow } from "enzyme";
 import EnzymeAdapter from "@wojtekmaj/enzyme-adapter-react-17";
 
 import Allocation from "./index";
@@ -6,7 +6,7 @@ import Allocation from "./index";
 Enzyme.configure({ adapter: new EnzymeAdapter() });
 
 const setup = () => {
-  return mount(<Allocation />);
+  return shallow(<Allocation />);
 };
 
 const findByTestAttr = (wrapper, val) => {

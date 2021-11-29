@@ -5,65 +5,71 @@ import {
   FormControlLabel,
   FormGroup,
   Switch,
-  withStyles,
-} from "@material-ui/core";
+  styled,
+} from "@mui/material";
 
 import { EditViewSwitchStyled } from "./styles";
+import UpdateModal from "../UpdateModal";
 
-const IOSSwitch = withStyles((theme) => ({
-  root: {
-    width: 42,
-    height: 26,
+const IOSSwitch = styled((props) => (
+  <Switch focusVisibleClassName=".Mui-focusVisible" disableRipple {...props} />
+))(({ theme }) => ({
+  width: 42,
+  height: 26,
+  padding: 0,
+  "& .MuiSwitch-switchBase": {
     padding: 0,
-    margin: theme.spacing(1),
-  },
-  switchBase: {
-    padding: 1,
-    "&$checked": {
+    margin: 2,
+    transitionDuration: "300ms",
+    "&.Mui-checked": {
       transform: "translateX(16px)",
-      color: theme.palette.common.white,
-      "& + $track": {
-        backgroundColor: "#52d869",
+      color: "#fff",
+      "& + .MuiSwitch-track": {
+        backgroundColor: theme.palette.mode === "dark" ? "#2ECA45" : "#65C466",
         opacity: 1,
-        border: "none",
+        border: 0,
+      },
+      "&.Mui-disabled + .MuiSwitch-track": {
+        opacity: 0.5,
       },
     },
-    "&$focusVisible $thumb": {
-      color: "#52d869",
+    "&.Mui-focusVisible .MuiSwitch-thumb": {
+      color: "#33cf4d",
       border: "6px solid #fff",
     },
+    "&.Mui-disabled .MuiSwitch-thumb": {
+      color:
+        theme.palette.mode === "light"
+          ? theme.palette.grey[100]
+          : theme.palette.grey[600],
+    },
+    "&.Mui-disabled + .MuiSwitch-track": {
+      opacity: theme.palette.mode === "light" ? 0.7 : 0.3,
+    },
   },
-  thumb: {
-    width: 24,
-    height: 24,
+  "& .MuiSwitch-thumb": {
+    boxSizing: "border-box",
+    width: 22,
+    height: 22,
   },
-  track: {
+  "& .MuiSwitch-track": {
     borderRadius: 26 / 2,
-    border: `1px solid ${theme.palette.grey[400]}`,
-    backgroundColor: theme.palette.grey[50],
+    backgroundColor: theme.palette.mode === "light" ? "#E9E9EA" : "#39393D",
     opacity: 1,
-    transition: theme.transitions.create(["background-color", "border"]),
+    transition: theme.transitions.create(["background-color"], {
+      duration: 500,
+    }),
   },
-  checked: {},
-  focusVisible: {},
-}))(({ classes, ...props }) => {
-  return (
-    <Switch
-      focusVisibleClassName={classes.focusVisible}
-      disableRipple
-      classes={{
-        root: classes.root,
-        switchBase: classes.switchBase,
-        thumb: classes.thumb,
-        track: classes.track,
-        checked: classes.checked,
-      }}
-      {...props}
-    />
-  );
-});
+}));
 
-const EditViewSwitchs = ({ id, edit, setEdit, onUpdate }) => {
+const EditViewSwitchs = ({
+  id,
+  edit,
+  setEdit,
+  onUpdate,
+  setUpdateModal,
+  updateModal,
+}) => {
   const history = useHistory();
 
   const handleChange = ({ target }) => {
@@ -75,16 +81,24 @@ const EditViewSwitchs = ({ id, edit, setEdit, onUpdate }) => {
       history.push(`/pmo/projects/${id}`);
     }
   };
+  const onUpdateEditView = () => {
+    onUpdate(id);
+  };
 
   return (
     <EditViewSwitchStyled style={{ display: id ? "flex" : "none" }}>
+      <UpdateModal
+        setUpdateModal={setUpdateModal}
+        updateModal={updateModal}
+        id={id}
+      />
       <Button
         type="submit"
         variant="contained"
         size="small"
         color="primary"
         style={{ display: edit && id ? "block" : "none" }}
-        onClick={onUpdate}
+        onClick={onUpdateEditView}
       >
         Save
       </Button>
@@ -94,6 +108,7 @@ const EditViewSwitchs = ({ id, edit, setEdit, onUpdate }) => {
           control={
             <IOSSwitch checked={edit} onChange={handleChange} name="checkedB" />
           }
+          label=""
         />
       </FormGroup>
     </EditViewSwitchStyled>

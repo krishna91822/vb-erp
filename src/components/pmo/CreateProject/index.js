@@ -1,7 +1,13 @@
 import React, { useState, useLayoutEffect, useEffect } from "react";
 import { useParams, useLocation, useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { Button, TextField, Select, MenuItem } from "@material-ui/core";
+import {
+  Button,
+  TextField,
+  Select,
+  MenuItem,
+  FormHelperText,
+} from "@mui/material";
 
 import EditViewSwitchs from "../EditViewSwitch";
 import ResourceInformation from "../ResourceInformation";
@@ -22,6 +28,8 @@ import {
   getProjectById,
 } from "../../../store/pmo-actions";
 import { pmoActions } from "../../../store/pmo-slice";
+import validateForm from "./validateCreateForm";
+import validateResourceForm from "../ResourceInformation/validateResourceForm";
 
 const initialState = {
   project: {
@@ -59,6 +67,8 @@ const CreateProject = () => {
 
   const [edit, setEdit] = useState(false);
   const [state, setState] = useState(initialState);
+  const [errors, setErrors] = useState({});
+  const [resourceErrors, setResourceErrors] = useState({});
 
   const {
     project: {
@@ -91,7 +101,8 @@ const CreateProject = () => {
 
   useEffect(() => {
     if (redirect) {
-      const url = id ? `/pmo/projects/${id}` : "/pmo/projects";
+      // const url = id ? `/pmo/projects/${id}` : "/pmo/projects";
+      const url = "/pmo/projects";
       history.push(url);
       dispatch(pmoActions.redirectToProjectList());
     }
@@ -175,14 +186,20 @@ const CreateProject = () => {
   };
 
   const addResource = () => {
-    setState({
-      ...state,
-      resources: [
-        ...state.resources,
-        { ...resource, id: (resources.length + 1).toString() },
-      ],
-      resource: initialState.resource,
-    });
+    const validationErrors = validateResourceForm(state.resource);
+    const noErrors = Object.keys(validationErrors).length === 0;
+    setResourceErrors(validationErrors);
+
+    if (noErrors) {
+      setState({
+        ...state,
+        resources: [
+          ...state.resources,
+          { ...resource, id: (resources.length + 1).toString() },
+        ],
+        resource: initialState.resource,
+      });
+    }
   };
 
   const removeResource = (id) => {
@@ -195,27 +212,37 @@ const CreateProject = () => {
   };
 
   const handleSubmit = (e) => {
-    e.preventDefault();
-
     if (location.includes("createproject")) {
-      dispatch(
-        createProject({
-          ...state.project,
-          id: (projects.length + 1).toString(),
-          vbProjectId: `VB-${Date.now().toString()}`,
-          resources,
-        })
-      );
+      e.preventDefault();
+      const validationErrors = validateForm(state.project);
+      const noErrors = Object.keys(validationErrors).length === 0;
+      setErrors(validationErrors);
+
+      if (noErrors) {
+        dispatch(
+          createProject({
+            ...state.project,
+            id: (projects.length + 1).toString(),
+            vbProjectId: `VB-${Date.now().toString()}`,
+            resources,
+          })
+        );
+      }
     }
 
     if (location.includes("edit")) {
-      dispatch(
-        updateProject({
-          ...state.project,
-          vbProjectId: id,
-          resources,
-        })
-      );
+      const validationErrors = validateForm(state.project);
+      const noErrors = Object.keys(validationErrors).length === 0;
+      setErrors(validationErrors);
+      if (noErrors) {
+        dispatch(
+          updateProject({
+            ...state.project,
+            vbProjectId: id,
+            resources,
+          })
+        );
+      }
     }
   };
 
@@ -223,7 +250,7 @@ const CreateProject = () => {
     <>
       <PmoContainer>
         <HeadingStyle>
-          <p>user-Admin/Approver</p>
+          <p data-test="user">user-Admin/Approver</p>
           <Heading>
             <h2 data-test="page-title">PMO</h2>
             <EditViewSwitchs
@@ -259,6 +286,7 @@ const CreateProject = () => {
                 Client Name
               </label>
               <Select
+                error={errors.clientName ? true : false}
                 id="cn"
                 name="clientName"
                 value={clientName}
@@ -266,21 +294,27 @@ const CreateProject = () => {
                 size="small"
                 variant="outlined"
                 disabled={!edit}
-                style={{ width: "98.5%" }}
+                displayEmpty
+                style={{ margin: "0.3em", width: "98.5%" }}
                 onChange={handleProjectChange}
               >
-                <MenuItem value="clientName" disabled>
-                  Select Client Name
+                <MenuItem value="" disabled>
+                  <span style={{ color: "rgb(190, 190, 190)" }}>
+                    Select Client Name
+                  </span>
                 </MenuItem>
                 <MenuItem value="ValueBound">ValueBound</MenuItem>
               </Select>
+              <FormHelperText error sx={{ mx: 2 }}>
+                {errors.clientName}
+              </FormHelperText>
             </FormElementsStyled>
             <FormElementsStyled>
               <label htmlFor="pn" data-test="project-name-label">
                 Project Name
               </label>
               <TextField
-                required
+                error={errors.projectName ? true : false}
                 id="pn"
                 name="projectName"
                 data-test="project-name-input"
@@ -291,6 +325,7 @@ const CreateProject = () => {
                 value={projectName}
                 style={{ padding: "0.3em", width: "100%" }}
                 onChange={handleProjectChange}
+                helperText={errors.projectName}
               />
             </FormElementsStyled>
             <FormElementsStyled>
@@ -298,12 +333,13 @@ const CreateProject = () => {
                 Client Project Manager
               </label>
               <TextField
-                required
                 id="cpm"
                 name="clientProjectManager"
                 data-test="client-project-manager-input"
                 size="small"
                 variant="outlined"
+                error={errors.clientProjectManager ? true : false}
+                helperText={errors.clientProjectManager}
                 disabled={!edit}
                 value={clientProjectManager}
                 placeholder="Enter Client Project"
@@ -316,7 +352,6 @@ const CreateProject = () => {
                 Client Primary Contact
               </label>
               <TextField
-                required
                 type="number"
                 id="cpc"
                 name="clientPrimaryContact"
@@ -324,8 +359,10 @@ const CreateProject = () => {
                 size="small"
                 variant="outlined"
                 disabled={!edit}
+                error={errors.clientPrimaryContact ? true : false}
+                helperText={errors.clientPrimaryContact}
                 value={clientPrimaryContact}
-                placeholder="Enter domain/sector"
+                placeholder="Enter Client Primary Contact"
                 style={{ padding: "0.3em", width: "100%" }}
                 onChange={handleProjectChange}
               />
@@ -335,13 +372,14 @@ const CreateProject = () => {
                 Client Project Sponsor
               </label>
               <TextField
-                required
                 id="cps"
                 name="clientProjectSponsor"
                 data-test="client-project-sponsor-input"
                 size="small"
                 variant="outlined"
                 disabled={!edit}
+                error={errors.clientProjectSponsor ? true : false}
+                helperText={errors.clientProjectSponsor}
                 value={clientProjectSponsor}
                 placeholder="Enter Client Project Sponser"
                 style={{ padding: "0.3em", width: "100%" }}
@@ -353,7 +391,6 @@ const CreateProject = () => {
                 Domain/Sector
               </label>
               <TextField
-                required
                 id="ds"
                 name="domainSector"
                 data-test="domain-sector-input"
@@ -371,13 +408,14 @@ const CreateProject = () => {
                 Client Finance Controller
               </label>
               <TextField
-                required
                 id="cfc"
                 name="clientFinanceController"
                 data-test="client-finance-controller-input"
                 size="small"
                 variant="outlined"
                 disabled={!edit}
+                error={errors.clientFinanceController ? true : false}
+                helperText={errors.clientFinanceController}
                 value={clientFinanceController}
                 placeholder="Enter Client Finance Controller"
                 style={{ padding: "0.3em", width: "100%" }}
@@ -391,13 +429,14 @@ const CreateProject = () => {
                 </label>
                 <TextField
                   type="date"
-                  required
                   id="sd"
                   name="startDate"
                   data-test="start-date-input"
                   size="small"
                   variant="outlined"
                   disabled={!edit}
+                  error={errors.startDate ? true : false}
+                  helperText={errors.startDate}
                   value={startDate}
                   placeholder="enter name"
                   style={{ padding: "0.3em", width: "100%" }}
@@ -410,13 +449,14 @@ const CreateProject = () => {
                 </label>
                 <TextField
                   type="date"
-                  required
                   id="ed"
                   name="endDate"
                   data-test="end-date-input"
                   size="small"
                   variant="outlined"
                   disabled={!edit}
+                  error={errors.endDate ? true : false}
+                  helperText={errors.endDate}
                   value={endDate}
                   placeholder="enter name"
                   style={{ padding: "0.3em", width: "100%" }}
@@ -436,14 +476,17 @@ const CreateProject = () => {
                 value={vbProjectManager}
                 size="small"
                 variant="outlined"
+                displayEmpty
                 disabled={!edit}
                 style={{ margin: "0.3em", width: "98.5%" }}
                 onChange={handleProjectChange}
               >
-                <MenuItem value="1" disabled>
-                  enter desination
+                <MenuItem value="" disabled>
+                  <span style={{ color: "rgb(190, 190, 190)" }}>
+                    Select VB Project Manager
+                  </span>
                 </MenuItem>
-                <MenuItem value="2">ValueBound</MenuItem>
+                <MenuItem value="Valuebound">ValueBound</MenuItem>
               </Select>
             </FormElementsStyled>
             <FormElementsStyled>
@@ -459,9 +502,15 @@ const CreateProject = () => {
                 size="small"
                 variant="outlined"
                 disabled={!edit}
-                style={{ width: "100%" }}
+                displayEmpty
+                style={{ margin: "0.3em", width: "98.5%" }}
                 onChange={handleProjectChange}
               >
+                <MenuItem value="" disabled>
+                  <span style={{ color: "rgb(190, 190, 190)" }}>
+                    Select Project Status
+                  </span>
+                </MenuItem>
                 <MenuItem value="Un Assigned">Un Assigned</MenuItem>
                 <MenuItem value="Active">Active</MenuItem>
                 <MenuItem value="On Hold">On Hold</MenuItem>
@@ -477,6 +526,7 @@ const CreateProject = () => {
             handleResourceChange={handleResourceChange}
             addResource={addResource}
             removeResource={removeResource}
+            resourceErrors={resourceErrors}
           />
         </StyledHeader>
       </PmoContainer>

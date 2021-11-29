@@ -1,5 +1,5 @@
 import React from "react";
-import { TextField, Button } from "@material-ui/core";
+import { TextField, Button } from "@mui/material";
 import ResourceInformationTable from "../ResourceInformationTable";
 import {
   Heading,
@@ -10,6 +10,7 @@ import {
   MultiElemContainer,
   AllocElemContainer,
 } from "./styles";
+
 const ResourceInformation = ({
   edit,
   resource,
@@ -17,8 +18,10 @@ const ResourceInformation = ({
   handleResourceChange,
   addResource,
   removeResource,
+  resourceErrors,
 }) => {
   const { associateName, startDate, endDate, allocation, rackRate } = resource;
+
   return (
     <Container>
       <ResourceInformationHeading data-test="resource-head">
@@ -34,6 +37,8 @@ const ResourceInformation = ({
               variant="outlined"
               size="small"
               width="100%"
+              error={resourceErrors.associateName ? true : false}
+              helperText={resourceErrors.associateName}
               onChange={handleResourceChange}
               value={associateName}
               data-test="associate-input"
@@ -47,6 +52,8 @@ const ResourceInformation = ({
                 size="small"
                 type="date"
                 name="startDate"
+                error={resourceErrors.startDate ? true : false}
+                helperText={resourceErrors.startDate}
                 style={{}}
                 onChange={handleResourceChange}
                 value={startDate}
@@ -60,6 +67,8 @@ const ResourceInformation = ({
                 size="small"
                 type="date"
                 name="endDate"
+                error={resourceErrors.endDate ? true : false}
+                helperText={resourceErrors.endDate}
                 style={{ color: "blue" }}
                 onChange={handleResourceChange}
                 value={endDate}
@@ -85,6 +94,8 @@ const ResourceInformation = ({
                   placeholder="50%"
                   variant="outlined"
                   size="small"
+                  error={resourceErrors.allocation ? true : false}
+                  helperText={resourceErrors.allocation}
                   style={{ width: "30%" }}
                   onChange={handleResourceChange}
                   value={`${allocation}%`}
@@ -100,6 +111,8 @@ const ResourceInformation = ({
                 name="rackRate"
                 variant="outlined"
                 placeholder="Enter Rack Rate"
+                error={resourceErrors.rackRate ? true : false}
+                helperText={resourceErrors.rackRate}
                 onChange={handleResourceChange}
                 value={rackRate}
                 style={{ marginTop: 3 }}
@@ -107,15 +120,15 @@ const ResourceInformation = ({
               />
             </ResourceForm>
           </MultiElemContainer>
-          <ResourceForm style={{ justifyContent: "end" }}>
+          <ResourceForm style={{ justifyContent: "start" }}>
             <Button
               onClick={addResource}
               variant="contained"
               color="primary"
               style={{
-                margin: "2em",
+                margin: "3.5em 0em 0em",
                 width: "30%",
-                alignSelf: "center",
+                alignSelf: "flex-end",
               }}
             >
               Add
@@ -131,4 +144,5 @@ const ResourceInformation = ({
     </Container>
   );
 };
+
 export default ResourceInformation;

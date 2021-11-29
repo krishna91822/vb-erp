@@ -20,6 +20,7 @@ const Allocation = () => {
       setBench(false);
     }
   };
+
   return (
     <MainComponent>
       <AdminName data-test="admin-name">User:- Admin/Approver</AdminName>

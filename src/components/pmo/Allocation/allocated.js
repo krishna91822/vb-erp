@@ -10,12 +10,14 @@ import {
 } from "@material-ui/core";
 import { useSelector } from "react-redux";
 import { Container, MiniHead } from "./style";
+import Tpagination from "../UI/Pagination";
 const Allocated = () => {
   const data = useSelector((state) => state.pmo.allocatedData);
   const [associateName, setAssociateName] = useState("");
   const [projectAllocated, setProjectAllocated] = useState("");
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
+  const [page, setPage] = React.useState(0);
 
   const filterAssociateName = (event) => {
     const assName = event.target.value.toLowerCase();
@@ -43,6 +45,7 @@ const Allocated = () => {
       eachData.endDate.includes(endDate)
     );
   });
+
   return (
     <>
       <Container>
@@ -139,7 +142,7 @@ const Allocated = () => {
                   />
                 </TableCell>
               </TableRow>
-              {filteredData.map((currElem) => (
+              {filteredData.slice(page * 5, page * 5 + 5).map((currElem) => (
                 <TableRow key={currElem.id}>
                   <TableCell align="left">{currElem.id}</TableCell>
                   <TableCell align="left">{currElem.empId}</TableCell>
@@ -157,6 +160,7 @@ const Allocated = () => {
             </TableBody>
           </Table>
         </TableContainer>
+        <Tpagination page={page} setPage={setPage} rows={filteredData} />
       </Container>
     </>
   );

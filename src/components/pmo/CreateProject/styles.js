@@ -1,4 +1,5 @@
 import styled from "styled-components";
+
 const size = {
   mobileM: "375px",
   mobileL: "540px",
@@ -7,6 +8,7 @@ const size = {
   laptopL: "1440px",
   desktop: "2560px",
 };
+
 export const device = {
   mobileM: `(max-width: ${size.mobileM})`,
   mobileL: `(max-width: ${size.mobileL})`,
@@ -16,19 +18,23 @@ export const device = {
   desktop: `(max-width: ${size.desktop})`,
   desktopL: `(max-width: ${size.desktop})`,
 };
+
 export const HeadingStyle = styled.div`
   p {
     text-align: right;
   }
 `;
+
 export const PmoContainer = styled.div`
   margin: 0.5em;
   padding: 0.5em;
 `;
+
 export const StyledHeader = styled.form`
   padding: 0.5em;
   border: 0.1em solid black;
 `;
+
 export const FormHeadingStyled = styled.div`
   padding: 0.4em 0;
   display: flex;
@@ -37,17 +43,21 @@ export const FormHeadingStyled = styled.div`
   align-items: center;
   border-bottom: 0.1em solid black;
 `;
+
 export const FormContainerStyled = styled.div`
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
+
   @media ${device.tablet} {
     flex-direction: column;
   }
+
   @media ${device.mobileL} {
   }
 `;
+
 export const FormElementsStyled = styled.div`
   width: 48%;
   & > label {
@@ -65,6 +75,7 @@ export const FormElementsStyled = styled.div`
     width: 90%;
   }
 `;
+
 export const DateContainerStyled = styled.div`
   width: 48%;
   display: flex;
@@ -79,6 +90,7 @@ export const DateContainerStyled = styled.div`
     width: 90%;
   }
 `;
+
 export const DateElementStyled = styled.div`
   width: 48%;
   & > label {
@@ -94,6 +106,7 @@ export const DateElementStyled = styled.div`
     }
   }
 `;
+
 export const Heading = styled.div`
   display: flex;
   flex-wrap: wrap;

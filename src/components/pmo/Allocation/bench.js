@@ -11,12 +11,15 @@ import {
 } from "@material-ui/core";
 
 import { Container, MiniHead } from "./style";
+import Tpagination from "../UI/Pagination";
+
 const Bench = () => {
   const data = useSelector((state) => state.pmo.benchData);
   const [associateName, setAssociateName] = useState("");
   const [lastAllocatedProject, setLastAllocatedProject] = useState("");
   const [primaryCapabilities, setPrimaryCapabilities] = useState("");
   const [lastAllocatedDate, setLastAllocatedDate] = useState("");
+  const [page, setPage] = React.useState(0);
 
   const filterAssociateName = (event) => {
     const assName = event.target.value.toLowerCase();
@@ -50,6 +53,7 @@ const Bench = () => {
       eachData.lastallocationDate.includes(lastAllocatedDate)
     );
   });
+
   return (
     <>
       <Container>
@@ -143,7 +147,7 @@ const Bench = () => {
                   style={{ padding: "0px 8px", paddingBottom: "5px" }}
                 ></TableCell>
               </TableRow>
-              {filteredData.map((currElem) => (
+              {filteredData.slice(page * 5, page * 5 + 5).map((currElem) => (
                 <TableRow key={currElem.id}>
                   <TableCell align="left">{currElem.id}</TableCell>
                   <TableCell align="left">{currElem.empId}</TableCell>
@@ -165,6 +169,7 @@ const Bench = () => {
             </TableBody>
           </Table>
         </TableContainer>
+        <Tpagination page={page} setPage={setPage} rows={filteredData} />
       </Container>
     </>
   );

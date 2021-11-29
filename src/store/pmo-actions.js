@@ -36,7 +36,7 @@ export const updateProject = (projectInfo) => {
     };
     try {
       await saveData();
-      dispatch(pmoActions.redirectToProjectList());
+      dispatch(pmoActions.setUpdateModal());
     } catch (err) {
       console.log(err);
     }
