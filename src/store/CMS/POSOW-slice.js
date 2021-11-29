@@ -11,13 +11,13 @@ const names = [
   "Ayushi S",
 ];
 const AllAvailableEmp = [
-  { emp_name: "Alex", emp_id: 1990 },
-  { emp_name: "David", emp_id: 1972 },
-  { emp_name: "yusuf", emp_id: 1974 },
-  { emp_name: "Aquib", emp_id: 2008 },
-  { emp_name: "yash DY", emp_id: 1957 },
-  { emp_name: "Ayushi", emp_id: 1993 },
-  { emp_name: "Tanmay", emp_id: 1994 },
+  { emp_name: "Alex", emp_id: "1990" },
+  { emp_name: "David", emp_id: "1972" },
+  { emp_name: "yusuf", emp_id: "1974" },
+  { emp_name: "Aquib", emp_id: "2008" },
+  { emp_name: "yash DY", emp_id: "1957" },
+  { emp_name: "Ayushi", emp_id: "1993" },
+  { emp_name: "Tanmay", emp_id: "1994" },
   { emp_name: "", emp_id: "" },
 ];
 const employees = [
@@ -146,7 +146,9 @@ const POSOW_Slice = createSlice({
       state.poSowData = action.payload;
     },
     setPOEmpTabData(state, action) {
-      state.employees = action.payload;
+      state.employees = [...action.payload].filter((emp) => {
+        return emp.Status === "assign";
+      });
     },
     SetSpecific(state, action) {
       state.dataByID = [...action.payload];
@@ -154,7 +156,8 @@ const POSOW_Slice = createSlice({
     setDefaultEmpDataOnedit(state, action) {
       console.log("reached setDefaultEmpDataOnedit");
       state.specificEmpData = state.employees.filter((employee) => {
-        return employee.Employee_Id == action.payload;
+        // return employee.Employee_Id == action.payload;
+        return employee._id == action.payload;
       });
     },
   },

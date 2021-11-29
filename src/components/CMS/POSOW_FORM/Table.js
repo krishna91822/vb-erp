@@ -10,6 +10,7 @@ import CreateIcon from "@mui/icons-material/Create";
 import { useDispatch, useSelector } from "react-redux";
 import Button from "@mui/material/Button";
 import FormDialog from "./AddEmpToPO";
+import { UnAssignThisEmp } from "../../../store/CMS/POSOW-actions";
 
 // function createData(emp_name, emp_id, start_date, end_date) {
 //   return { emp_name, emp_id, start_date, end_date };
@@ -29,6 +30,9 @@ export default function DenseTable() {
   // const handleRowOnClick = (row_id) => {
   //   dispatch(GetDetailsOfThisEmp(row_id));
   // };
+  const handleUnassignBtnClick = (emp_id) => {
+    dispatch(UnAssignThisEmp(emp_id));
+  };
   return (
     <TableContainer component={Paper} style={{ height: 200 }}>
       <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
@@ -72,7 +76,7 @@ export default function DenseTable() {
               <TableCell align="center">{row.End_Date}</TableCell>
               <TableCell align="center">{row.Allocation_Rate}</TableCell>
               <TableCell align="center">
-                <FormDialog edit={true} row_id={row.Employee_Id} />
+                <FormDialog edit={true} row_id={row._id} />
               </TableCell>
               <TableCell align="center">
                 <Button
@@ -85,7 +89,9 @@ export default function DenseTable() {
                     backgroundColor: "maroon",
                   }}
                   type="button"
-                  // onClick={(event) => submitForm(event)}
+                  onClick={() => {
+                    handleUnassignBtnClick(row.Employee_Id);
+                  }}
                   data-testid="UpdateBtn"
                 >
                   Unassign

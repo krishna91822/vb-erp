@@ -66,6 +66,14 @@ export const fetchSpecificPO_SOW = (ROW_ID) => {
     dispatch(PoSowActions.SetSpecific([res.data]));
   };
 };
+export const fetchPOs_emp_data = (po_id) => {
+  return async function (dispatch) {
+    const res = await axios.get(
+      `http://localhost:8000/getAssignEmployee/${po_id}`
+    );
+    dispatch(PoSowActions.setPOEmpTabData(res.data));
+  };
+};
 export const fetchEmpOfThisPO = (PO_ID) => {
   return async function (dispatch) {
     const res = await axios.get(
@@ -99,6 +107,60 @@ export const AddEmpToThisPO = (formData) => {
     } catch (error) {
       // console.error(error.message);
       // dispatch(PoSowActions.PopUpON("unsuccessfull"));
+      dispatch(uiActions.toggleLoader());
+      setTimeout(function () {
+        dispatch(uiActions.toggleLoader());
+        dispatch(
+          uiActions.showNotification({
+            status: "error",
+            title: "Error!",
+            message: "Fetching content data failed!",
+          })
+        );
+      }, 1000);
+    }
+  };
+};
+export const UpdateEmpData = (formData, emp_id) => {
+  return async function (dispatch) {
+    try {
+      const response = await axios.patch(
+        `http://localhost:8000/updateDetails/${emp_id}`,
+        formData
+      );
+      if (response.status === 201) {
+        dispatch(PoSowActions.PopUpON("Updated"));
+      } else {
+        throw new Error("Could not Save data!");
+      }
+    } catch (error) {
+      dispatch(uiActions.toggleLoader());
+      setTimeout(function () {
+        dispatch(uiActions.toggleLoader());
+        dispatch(
+          uiActions.showNotification({
+            status: "error",
+            title: "Error!",
+            message: "Fetching content data failed!",
+          })
+        );
+      }, 1000);
+    }
+  };
+};
+
+export const UnAssignThisEmp = (emp_id) => {
+  return async function (dispatch) {
+    try {
+      const response = await axios.patch(
+        `http://localhost:8000/unassign/${emp_id}`
+      );
+      if (response.status === 201) {
+        dispatch(PoSowActions.PopUpON("Unassigned"));
+      } else {
+        throw new Error("Could not Save data!");
+      }
+    } catch (error) {
       dispatch(uiActions.toggleLoader());
       setTimeout(function () {
         dispatch(uiActions.toggleLoader());

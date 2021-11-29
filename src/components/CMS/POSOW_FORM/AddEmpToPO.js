@@ -15,7 +15,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import ComboBox from "../../UI/AutoComplete";
 import { AddEmpToThisPO } from "../../../store/CMS/POSOW-actions";
-import { GetDetailsOfThisEmp } from "../../../store/CMS/POSOW-actions";
+import {
+  GetDetailsOfThisEmp,
+  UpdateEmpData,
+} from "../../../store/CMS/POSOW-actions";
 import { PoSowActions } from "../../../store/CMS/POSOW-slice";
 import "./CapturePO_SOW.css";
 
@@ -23,6 +26,14 @@ export default function FormDialog(props) {
   const params = useParams();
   const dispatch = useDispatch();
   const [open, setOpen] = React.useState(false);
+
+  function formatDate(date) {
+    const currentMonth = date.getMonth() + 1;
+    const monthString = currentMonth >= 10 ? currentMonth : `0${currentMonth}`;
+    const currentDate = date.getDate();
+    const dateString = currentDate >= 10 ? currentDate : `0${currentDate}`;
+    return `${date.getFullYear()}-${monthString}-${currentDate}`;
+  }
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -52,8 +63,17 @@ export default function FormDialog(props) {
   // console.log(emp_name);
   const [emp_id, setEmpId] = useState("");
   const [percentageAlloc, setPercentageAlloc] = useState("");
+
   useEffect(() => {
     if (props.edit) {
+      // StartDate = new Date(specificEmpData[0].Start_Date);
+      // EndDate = new Date(specificEmpData[0].End_Date);
+      // selectedOption = {
+      //   emp_name: specificEmpData[0].Employee_Name,
+      //   emp_id: specificEmpData[0].Employee_Id,
+      // };
+      // emp_id = specificEmpData[0].Employee_Id;
+      // percentageAlloc = specificEmpData[0].Allocation_Rate;
       setStartDate(new Date(specificEmpData[0].Start_Date));
       setEndDate(new Date(specificEmpData[0].End_Date));
       setSelectedOption({
@@ -89,26 +109,32 @@ export default function FormDialog(props) {
   const handleAddOnClick = (e) => {
     e.preventDefault();
     const DataToSend = {
-      Project_Id: params.id,
+      PO_Id: params.id,
 
       Employee_Name: selectedOption.emp_name,
       Allocation_Rate: Number(percentageAlloc),
-      Start_Date:
-        StartDate.getMonth() +
-        "/" +
-        StartDate.getDate() +
-        "/" +
-        StartDate.getFullYear(),
-      End_Date:
-        EndDate.getMonth() +
-        "/" +
-        EndDate.getDate() +
-        "/" +
-        EndDate.getFullYear(),
+      Start_Date: formatDate(StartDate),
+      // (StartDate.getMonth() +1)
+      //  +
+      // "/" +
+      // (StartDate.getDate() + 1) +
+      // "/" +
+      // StartDate.getFullYear(),
+      End_Date: formatDate(EndDate),
+      // EndDate.getMonth() +
+      // 1 +
+      // "/" +
+      // (EndDate.getDate() + 1) +
+      // "/" +
+      // EndDate.getFullYear(),
       Employee_Id: emp_id.toString(),
     };
     console.log(DataToSend);
-    dispatch(AddEmpToThisPO(DataToSend));
+    if (props.edit) {
+      dispatch(UpdateEmpData(DataToSend, emp_id.toString()));
+    } else {
+      dispatch(AddEmpToThisPO(DataToSend));
+    }
   };
   // const employees = [
   //   { emp_name: "Alex", emp_id: 1994 },
@@ -170,6 +196,7 @@ export default function FormDialog(props) {
                 options={employees}
                 onChange={(event, value) => handleEmpNameChange(value)}
                 // onChange={(event, value) => console.log(value)}
+                disabled={props.edit ? true : false}
                 value={selectedOption}
                 getOptionLabel={(option) => option.emp_name}
                 isOptionEqualToValue={(option, value) =>

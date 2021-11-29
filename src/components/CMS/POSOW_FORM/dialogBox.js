@@ -10,6 +10,7 @@ import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
 import Typography from "@mui/material/Typography";
 import { useDispatch, useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
 // import {PopUpOF} from "./actions";
 import { Redirect } from "react-router";
 // import { useNavigate } from "react-router-dom";
@@ -58,10 +59,15 @@ export default function CustomizedDialogs({ msg, sendForApproval }) {
   const popupController = useSelector((state) => state.CMS_state.popup);
   const [open, setOpen] = React.useState(popupController);
   const dispatch = useDispatch();
+  const params = useParams();
   let history = useHistory();
   const handleClose = () => {
     dispatch(PoSowActions.PopUpOF());
-    history.push("/POSOW");
+    if (params.id === undefined) {
+      history.push("/POSOW");
+    } else {
+      history.push(`/POSOW_detail/${params.id}`);
+    }
   };
 
   return (
