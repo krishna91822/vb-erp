@@ -1,7 +1,7 @@
-import { configureStore } from '@reduxjs/toolkit';
+import { configureStore } from "@reduxjs/toolkit";
 
-import contentsSlice from './contents-slice';
-import uiSlice from './ui-slice';
+import contentsSlice from "./contents-slice";
+import uiSlice from "./ui-slice";
 
 export default configureStore({
   reducer: {

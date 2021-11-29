@@ -1,8 +1,8 @@
-import React from 'react';
+import React from "react";
 
-import { Box } from '@mui/material';
-import { ContentBox, ContentTypo } from './professionalReadable.styles';
-import { professionalConstant } from './professional.constant';
+import { Box } from "@mui/material";
+import { ContentBox, ContentTypo } from "./professionalReadable.styles";
+import { professionalConstant } from "./professional.constant";
 
 const ProfessionalReadable = ({ empData }) => {
   const {

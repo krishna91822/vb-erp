@@ -6,13 +6,13 @@ const INITIAL_STATE = {
 
 const uiReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
-    case 'UI_TOGGLE':
+    case "UI_TOGGLE":
       return {
         ...state,
         contentIsVisible: !state.contentIsVisible,
       };
 
-    case 'SHOW_NOTIFICATION':
+    case "SHOW_NOTIFICATION":
       return {
         ...state,
         notification: {
@@ -22,7 +22,7 @@ const uiReducer = (state = INITIAL_STATE, action) => {
         },
       };
 
-    case 'TOGGLE_LOADER':
+    case "TOGGLE_LOADER":
       return {
         ...state,
         loading: !state.loading,

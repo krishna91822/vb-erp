@@ -1,4 +1,4 @@
-export const networkText = {
+export const reviewText = {
   title: ["Name", "EmpID", "Email", "Position", "Location", "Department"],
   sortOption: [
     {

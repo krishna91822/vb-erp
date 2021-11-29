@@ -1,18 +1,28 @@
-import React from 'react';
-
-import { Container, Box, MenuItem } from '@mui/material';
-import { CustomGridBox, TitleTypo, CustomTextField } from './network.styles';
-import { useSelector } from 'react-redux';
-
-import { networtText } from './network.constant';
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import { Container, Box, MenuItem } from "@mui/material";
+import { CustomGridBox, TitleTypo, CustomTextField } from "./network.styles";
+import { networkText } from "./network.constant";
+import { TextField, Typography, Button } from "@mui/material";
+import SearchIcon from "@mui/icons-material/Search";
 
 const Network = ({ history, match }) => {
-  const allEmployees = useSelector((state) => state.employee.allEmployees);
-  const { title, sortOption } = networtText;
+  const [searchEmp, setSEmp] = useState("");
+  const [employees, setEmployees] = useState([]);
+  useEffect(() => {
+    axios
+      .get("http://localhost:5000/employee/search?", {
+        params: {
+          name: `${searchEmp}`,
+        },
+      })
+      .then((response) => setEmployees(response.data.data.results));
+  }, [searchEmp]);
+  const { title, sortOption } = networkText;
 
-  const [sort, setSort] = React.useState('empId');
+  const [sort, setSort] = React.useState("empId");
 
-  const handleChange = (event) => {
+  const sortHandleChange = (event) => {
     setSort(event.target.value);
   };
 
@@ -22,37 +32,60 @@ const Network = ({ history, match }) => {
 
   const sortOptions = [...sortOption];
 
+  const searchHandleChange = (event) => {
+    setSEmp(event.target.value);
+  };
+
   return (
-    <Box sx={{ width: '100%', pt: 3, pb: 3 }}>
+    <Box sx={{ width: "100%", pt: 3, pb: 3 }}>
       <Container
         sx={{
-          minHeight: 'calc(100vh - 50px)',
-          width: 'calc(100% - 48px)',
-          border: '2px solid',
-          borderColor: 'textColor.paletteGrey',
+          minHeight: "calc(100vh - 50px)",
+          width: "calc(100% - 48px)",
+          border: "2px solid",
+          borderColor: "textColor.paletteGrey",
           pb: 3,
         }}
       >
         <Box
           noValidate
-          autoComplete='off'
+          autoComplete="off"
           sx={{
-            width: '100%',
-            height: '56px',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'flex-end',
+            width: "100%",
+            height: "56px",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
             pt: 2,
           }}
         >
-          {' '}
+          {" "}
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "flex-end",
+              alignItems: "center",
+              padding: 1,
+            }}
+          >
+            <Typography sx={{ mr: 1 }}>Username</Typography>
+            <TextField
+              onChange={searchHandleChange}
+              id="outlined-search"
+              label="enter username"
+              size="small"
+              variant="outlined"
+              sx={{ width: "10vw", height: "40px" }}
+            />
+            <Button>{<SearchIcon fontSize="large" />}</Button>
+          </Box>
           <CustomTextField
-            label='Sort'
-            id='outlined-select-currency'
+            label="Sort"
+            id="outlined-select-currency"
             select
             value={sort}
-            onChange={handleChange}
-            sx={{ width: '25%' }}
+            onChange={sortHandleChange}
+            sx={{ width: "25%" }}
           >
             {sortOptions.map((option) => (
               <MenuItem key={option.value} value={option.value}>
@@ -61,13 +94,13 @@ const Network = ({ history, match }) => {
             ))}
           </CustomTextField>
         </Box>
-        <Box sx={{ width: '100%' }}>
+        <Box sx={{ width: "100%" }}>
           <CustomGridBox
             sx={{
               height: 60,
               mt: 3,
               mb: 3,
-              backgroundColor: 'textColor.light',
+              backgroundColor: "textColor.light",
             }}
           >
             {
@@ -77,7 +110,7 @@ const Network = ({ history, match }) => {
               ))
             }
           </CustomGridBox>
-          {allEmployees[0].map((item) => (
+          {employees.map((item) => (
             <CustomGridBox
               key={item.empId}
               sx={{

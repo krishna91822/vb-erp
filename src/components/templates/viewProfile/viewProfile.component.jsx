@@ -1,12 +1,12 @@
-import React from 'react';
+import React from "react";
 
-import { Container } from '@mui/material';
+import { Container } from "@mui/material";
 
-import { useSelector } from 'react-redux';
+import { useSelector } from "react-redux";
 
-import { useParams } from 'react-router-dom';
+import { useParams } from "react-router-dom";
 
-import ProfileContent from './../profileContent.component';
+import ProfileContent from "./../profileContent.component";
 
 const ViewProfile = () => {
   const allEmployees = useSelector((state) => state.employee.allEmployees);

@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from "react";
 
-import { Grid, TextField, Box, Chip } from '@mui/material';
+import { Grid, TextField, Box, Chip } from "@mui/material";
 
-import { personal } from './personal.constant';
+import { personal } from "./personal.constant";
 
 import {
   ListItem,
@@ -10,11 +10,11 @@ import {
   CustomTextFieldForChip,
   ContentBox,
   ContentTypo,
-} from './personalEditable.styles';
+} from "./personalEditable.styles";
 
-import { TitleTypo } from '../../UI/commonStyles';
-import { LocalizationProvider, DesktopDatePicker } from '@mui/lab';
-import AdapterDateFns from '@mui/lab/AdapterDateFns';
+import { TitleTypo } from "../../UI/commonStyles";
+import { LocalizationProvider, DesktopDatePicker } from "@mui/lab";
+import AdapterDateFns from "@mui/lab/AdapterDateFns";
 import {
   deepPurple,
   purple,
@@ -23,7 +23,7 @@ import {
   deepOrange,
   teal,
   blue,
-} from '@mui/material/colors';
+} from "@mui/material/colors";
 
 const PersonalEditable = ({ empData, setEmpData, newFields }) => {
   const {
@@ -46,22 +46,22 @@ const PersonalEditable = ({ empData, setEmpData, newFields }) => {
     blue[500],
   ];
 
-  const [hobbies, setHobbies] = useState('');
+  const [hobbies, setHobbies] = useState("");
   const [chipData, setChipData] = useState([...empHobbies]);
 
   useEffect(() => {
     chipData.length === 0
-      ? setEmpData({ ...empData, empHobbies: '' })
+      ? setEmpData({ ...empData, empHobbies: "" })
       : setEmpData({ ...empData, empHobbies: chipData });
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [chipData]);
 
   const keyPress = (event) => {
-    if (event.key === 'Enter') {
-      if (event.target.value.trim() === '') return setHobbies('');
+    if (event.key === "Enter") {
+      if (event.target.value.trim() === "") return setHobbies("");
       setChipData([...chipData, hobbies.trim()]);
-      setHobbies('');
+      setHobbies("");
     }
   };
 
@@ -84,26 +84,26 @@ const PersonalEditable = ({ empData, setEmpData, newFields }) => {
         item
         sm={5}
         sx={{
-          '& .MuiOutlinedInput-root .MuiOutlinedInput-input': {
+          "& .MuiOutlinedInput-root .MuiOutlinedInput-input": {
             minHeight: 200,
           },
-          '& .MuiFormControl-root': { minHeight: 200 },
-          '& .MuiOutlinedInput-notchedOutline': {
-            border: '2px solid',
-            borderColor: 'textColor.paletteGrey',
+          "& .MuiFormControl-root": { minHeight: 200 },
+          "& .MuiOutlinedInput-notchedOutline": {
+            border: "2px solid",
+            borderColor: "textColor.paletteGrey",
           },
         }}
       >
-        <TitleTypo sx={{ textTransform: 'capitalize', mb: 1, ml: 1 }}>
+        <TitleTypo sx={{ textTransform: "capitalize", mb: 1, ml: 1 }}>
           {personal.aboutMe}
         </TitleTypo>
         <TextField
-          id='outlined-multiline-flexible'
+          id="outlined-multiline-flexible"
           multiline
           maxRows={4}
           fullWidth
-          value={empAboutMe ? empAboutMe : ''}
-          name='empAboutMe'
+          value={empAboutMe ? empAboutMe : ""}
+          name="empAboutMe"
           onChange={handleChange}
         />
       </Grid>
@@ -112,13 +112,13 @@ const PersonalEditable = ({ empData, setEmpData, newFields }) => {
           <ContentBox>
             <ContentTypo>{personal.personalEmail}</ContentTypo>
             <CustomTextField
-              autoComplete='off'
+              autoComplete="off"
               required
-              id='outlined-basic'
-              variant='outlined'
-              value={empPersonalEmail ? empPersonalEmail : ''}
-              type='email'
-              name='empPersonalEmail'
+              id="outlined-basic"
+              variant="outlined"
+              value={empPersonalEmail ? empPersonalEmail : ""}
+              type="email"
+              name="empPersonalEmail"
               onChange={handleChange}
             />
           </ContentBox>
@@ -126,13 +126,13 @@ const PersonalEditable = ({ empData, setEmpData, newFields }) => {
             <ContentTypo>{personal.dob}</ContentTypo>
             <LocalizationProvider dateAdapter={AdapterDateFns}>
               <DesktopDatePicker
-                inputFormat='MM/dd/yyyy'
-                value={empDob ? empDob : ''}
+                inputFormat="MM/dd/yyyy"
+                value={empDob ? empDob : ""}
                 onChange={(newValue) => {
                   setEmpData({ ...empData, empDob: newValue });
                 }}
                 renderInput={(params) => (
-                  <CustomTextField {...params} name='empDob' />
+                  <CustomTextField {...params} name="empDob" />
                 )}
               />
             </LocalizationProvider>
@@ -141,13 +141,13 @@ const PersonalEditable = ({ empData, setEmpData, newFields }) => {
             <ContentTypo>{personal.hobbies}</ContentTypo>
             <Box
               noValidate
-              autoComplete='off'
+              autoComplete="off"
               sx={{
                 width: 1,
-                listStyle: 'none',
-                display: 'flex',
-                flexWrap: 'wrap',
-                alignItems: 'center',
+                listStyle: "none",
+                display: "flex",
+                flexWrap: "wrap",
+                alignItems: "center",
               }}
             >
               {chipData.map((data, i) => (
@@ -157,7 +157,7 @@ const PersonalEditable = ({ empData, setEmpData, newFields }) => {
                     onDelete={handleDelete(data)}
                     sx={{
                       backgroundColor: chipColor[i],
-                      color: '#fff',
+                      color: "#fff",
                       height: 30,
                       fontSize: 12,
                       fontWeight: 600,
@@ -168,8 +168,8 @@ const PersonalEditable = ({ empData, setEmpData, newFields }) => {
               <CustomTextFieldForChip
                 onKeyDown={keyPress}
                 value={hobbies}
-                type='text'
-                name='hobbies'
+                type="text"
+                name="hobbies"
                 onChange={handleChangeHobbies}
               />
             </Box>
@@ -177,39 +177,39 @@ const PersonalEditable = ({ empData, setEmpData, newFields }) => {
           <ContentBox>
             <ContentTypo>{personal.connections}</ContentTypo>
             <CustomTextField
-              autoComplete='off'
+              autoComplete="off"
               required
-              id='outlined-basic'
-              variant='outlined'
-              value={empConnections ? empConnections : ''}
-              type='text'
-              name='empConnections'
+              id="outlined-basic"
+              variant="outlined"
+              value={empConnections ? empConnections : ""}
+              type="text"
+              name="empConnections"
               onChange={handleChange}
             />
           </ContentBox>
           <ContentBox>
             <ContentTypo>{personal.currentAddress}</ContentTypo>
             <CustomTextField
-              autoComplete='off'
+              autoComplete="off"
               required
-              id='outlined-basic'
-              variant='outlined'
-              value={empCurrentAddress ? empCurrentAddress : ''}
-              type='text'
-              name='empCurrentAddress'
+              id="outlined-basic"
+              variant="outlined"
+              value={empCurrentAddress ? empCurrentAddress : ""}
+              type="text"
+              name="empCurrentAddress"
               onChange={handleChange}
             />
           </ContentBox>
           <ContentBox>
             <ContentTypo>{personal.residentialAddress}</ContentTypo>
             <CustomTextField
-              autoComplete='off'
+              autoComplete="off"
               required
-              id='outlined-basic'
-              variant='outlined'
-              value={empResidentialAddress ? empResidentialAddress : ''}
-              type='text'
-              name='empResidentialAddress'
+              id="outlined-basic"
+              variant="outlined"
+              value={empResidentialAddress ? empResidentialAddress : ""}
+              type="text"
+              name="empResidentialAddress"
               onChange={handleChange}
             />
           </ContentBox>

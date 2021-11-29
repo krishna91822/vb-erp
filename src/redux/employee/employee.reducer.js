@@ -7,25 +7,25 @@ const INITIAL_STATE = {
 
 const employeeReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
-    case 'SET_CURRENT_EMPLOYEE':
+    case "SET_CURRENT_EMPLOYEE":
       return {
         ...state,
         currentEmployee: action.payload,
       };
 
-    case 'TOGGLE_EDIT_MODE':
+    case "TOGGLE_EDIT_MODE":
       return {
         ...state,
         inEditMode: !state.inEditMode,
       };
 
-    case 'SET_ALL_EMPLOYEES':
+    case "SET_ALL_EMPLOYEES":
       return {
         ...state,
         allEmployees: [...state.allEmployees, action.payload],
       };
 
-    case 'CREATE_EMPLOYEE':
+    case "CREATE_EMPLOYEE":
       return {
         ...state,
         createEmployee: action.payload,

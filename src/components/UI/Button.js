@@ -1,5 +1,5 @@
 const Button = ({ type, ...props }) => (
-  <button type={type || 'button'} {...props}></button>
+  <button type={type || "button"} {...props}></button>
 );
 
 export default Button;

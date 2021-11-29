@@ -1,5 +1,5 @@
-import { TextField } from "@mui/material";
 import { styled } from "@mui/system";
+import { TextField } from "@mui/material";
 
 export const CustomGridBox = styled("div")(({ theme }) => ({
   width: "calc(100% - 8px)",
@@ -9,7 +9,6 @@ export const CustomGridBox = styled("div")(({ theme }) => ({
   alignItems: "center",
   justifyItems: "center",
 
-  border: "2px solid",
   borderColor: theme.palette.textColor.paletteGrey,
 }));
 

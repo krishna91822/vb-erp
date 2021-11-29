@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 
-import { Container } from '@mui/material';
+import { Container } from "@mui/material";
 
-import { connect } from 'react-redux';
+import { connect } from "react-redux";
 
-import EditMode from '../components/templates/editMode/editMode.component';
-import ProfileContent from '../components/templates/profileContent.component';
+import EditMode from "../components/templates/editMode/editMode.component";
+import ProfileContent from "../components/templates/profileContent.component";
 
 const Profile = (props) => {
   const [updateRequest, setUpdateRequest] = useState(props.currentEmployee);

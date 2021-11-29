@@ -1,11 +1,11 @@
-import axios from 'axios';
+import axios from "axios";
 
 const baseURL = process.env.REACT_APP_API_BASE_URL;
 
 let headers = {};
 
 const token =
-  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c';
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c";
 
 if (token) {
   headers.Authorization = `Bearer ${token}`;
@@ -30,7 +30,7 @@ axiosInstance.interceptors.response.use(
     }
 
     if (error.response.status === 403) {
-      window.location = '/login';
+      window.location = "/login";
     } else {
       return new Promise((resolve, reject) => {
         reject(error);
