@@ -31,6 +31,8 @@ import { pmoActions } from "../../../store/pmo-slice";
 import validateForm from "./validateCreateForm";
 import validateResourceForm from "../ResourceInformation/validateResourceForm";
 
+let initialSno = 0;
+
 const initialState = {
   project: {
     clientName: "",
@@ -59,7 +61,7 @@ const initialState = {
 const CreateProject = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
-  const { projects, redirect } = useSelector((state) => state.pmo);
+  const { redirect } = useSelector((state) => state.pmo);
   let { projectById } = useSelector((state) => state.pmo);
 
   const location = useLocation().pathname;
@@ -88,10 +90,14 @@ const CreateProject = () => {
     resources,
   } = state;
 
+  const clearProjectById = () => {
+    projectById = {};
+  };
+
   useLayoutEffect(() => {
     if (location.includes("createproject") || location.includes("edit")) {
       setEdit(true);
-      projectById = {};
+      clearProjectById();
     }
 
     if (id) {
@@ -195,10 +201,11 @@ const CreateProject = () => {
         ...state,
         resources: [
           ...state.resources,
-          { ...resource, id: (resources.length + 1).toString() },
+          { ...resource, id: (initialSno + 1).toString() },
         ],
         resource: initialState.resource,
       });
+      initialSno += 1;
     }
   };
 
@@ -212,29 +219,22 @@ const CreateProject = () => {
   };
 
   const handleSubmit = (e) => {
-    if (location.includes("createproject")) {
-      e.preventDefault();
-      const validationErrors = validateForm(state.project);
-      const noErrors = Object.keys(validationErrors).length === 0;
-      setErrors(validationErrors);
+    if (e) e.preventDefault();
+    const validationErrors = validateForm(state.project);
+    const noErrors = Object.keys(validationErrors).length === 0;
+    setErrors(validationErrors);
 
-      if (noErrors) {
+    if (noErrors) {
+      if (location.includes("createproject")) {
         dispatch(
           createProject({
             ...state.project,
-            id: (projects.length + 1).toString(),
             vbProjectId: `VB-${Date.now().toString()}`,
             resources,
           })
         );
       }
-    }
-
-    if (location.includes("edit")) {
-      const validationErrors = validateForm(state.project);
-      const noErrors = Object.keys(validationErrors).length === 0;
-      setErrors(validationErrors);
-      if (noErrors) {
+      if (location.includes("edit")) {
         dispatch(
           updateProject({
             ...state.project,

@@ -36,12 +36,12 @@ const ResourceInformationTable = ({ resources, removeResource, edit }) => {
         </TableHead>
         {resources.length > 0 && (
           <TableBody>
-            {resources.map((eachData) => (
+            {resources.map((eachData, index) => (
               <TableRow
                 key={eachData.id}
                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
               >
-                <TableCell align="left">{eachData.id}</TableCell>
+                <TableCell align="left">{index + 1}</TableCell>
                 <TableCell align="left">{eachData.associateName}</TableCell>
                 <TableCell align="left">{eachData.startDate}</TableCell>
                 <TableCell align="left">{eachData.endDate}</TableCell>

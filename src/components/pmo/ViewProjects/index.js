@@ -25,7 +25,7 @@ import {
   ProjectHead,
   EditButton,
 } from "./styles";
-import Tpagination from "../../UI/Pagination";
+import Tpagination from "../UI/Pagination";
 
 const ViewProjects = () => {
   const dispatch = useDispatch();
@@ -40,42 +40,31 @@ const ViewProjects = () => {
 
   const entryValue = (event) => {
     const SortingValue = event.target.value;
-    if (SortingValue === "Sort by ID") {
-      const sorteddata = [...projects].sort((a, b) =>
-        a.id > b.id ? 1 : b.id > a.id ? -1 : 0
-      );
-
-      dispatch(pmoActions.SortById(sorteddata));
-    }
 
     if (SortingValue === "Sort by Project ID") {
-      const sorteddata = [...projects]
-        .sort((a, b) => (a.id > b.id ? 1 : b.id > a.id ? -1 : 0))
-        .sort((a, b) =>
-          a.vbProjectId.toLowerCase() > b.vbProjectId.toLowerCase()
-            ? 1
-            : b.vbProjectId.toLowerCase() > a.vbProjectId.toLowerCase()
-            ? -1
-            : 0
-        );
+      const sorteddata = [...projects].sort((a, b) =>
+        a.vbProjectId.toLowerCase() > b.vbProjectId.toLowerCase()
+          ? 1
+          : b.vbProjectId.toLowerCase() > a.vbProjectId.toLowerCase()
+          ? -1
+          : 0
+      );
 
       dispatch(pmoActions.SortByProductID(sorteddata));
     }
 
     if (SortingValue === "Sort by Status") {
-      const sorteddata = [...projects]
-        .sort((a, b) => (a.id > b.id ? 1 : b.id > a.id ? -1 : 0))
-        .sort((a, b) =>
-          a.vbProjectStatus === null || b.vbProjectStatus === null
-            ? (a.vbProjectStatus === null) - (b.vbProjectStatus === null) ||
-              +(a.vbProjectStatus > b.vbProjectStatus) ||
-              -(a.vbProjectStatus < b.vbProjectStatus)
-            : a.vbProjectStatus.toLowerCase() < b.vbProjectStatus.toLowerCase()
-            ? -1
-            : b.vbProjectStatus.toLowerCase() < a.vbProjectStatus.toLowerCase()
-            ? 1
-            : 0
-        );
+      const sorteddata = [...projects].sort((a, b) =>
+        a.vbProjectStatus === null || b.vbProjectStatus === null
+          ? (a.vbProjectStatus === null) - (b.vbProjectStatus === null) ||
+            +(a.vbProjectStatus > b.vbProjectStatus) ||
+            -(a.vbProjectStatus < b.vbProjectStatus)
+          : a.vbProjectStatus.toLowerCase() < b.vbProjectStatus.toLowerCase()
+          ? -1
+          : b.vbProjectStatus.toLowerCase() < a.vbProjectStatus.toLowerCase()
+          ? 1
+          : 0
+      );
       dispatch(pmoActions.SortByStatus(sorteddata));
     }
   };
@@ -105,7 +94,6 @@ const ViewProjects = () => {
             <Options Value="Sort by" hidden>
               Sort by
             </Options>
-            <Options value="Sort by ID">Sort by ID</Options>
             <Options value="Sort by Project ID">Sort by Project ID</Options>
             <Options value="Sort by Status">Sort by Status</Options>
           </Dropdown>
@@ -125,32 +113,34 @@ const ViewProjects = () => {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {projects.slice(page * 5, page * 5 + 5).map((currElem) => (
-                  <TableRow
-                    key={currElem.id}
-                    onClick={() => entryLink(currElem)}
-                  >
-                    <TableCell align="left">{currElem.id}</TableCell>
-                    <TableCell align="left">{currElem.clientName}</TableCell>
-                    <TableCell align="left">{currElem.projectName}</TableCell>
-                    <TableCell align="left">{currElem.vbProjectId}</TableCell>
-                    <TableCell align="left">
-                      {currElem.vbProjectStatus || "----"}
-                    </TableCell>
-                    <TableCell align="left">
-                      <EditAction data-test="edit-profile-button">
-                        <Link
-                          to={`${path}/${currElem.vbProjectId}/edit`}
-                          onClick={stopClick}
-                        >
-                          <EditButton data-test="edit-profile-button">
-                            edit <i className="fas fa-edit"></i>
-                          </EditButton>
-                        </Link>
-                      </EditAction>
-                    </TableCell>
-                  </TableRow>
-                ))}
+                {projects
+                  .slice(page * 5, page * 5 + 5)
+                  .map((currElem, index) => (
+                    <TableRow
+                      key={currElem.vbProjectId}
+                      onClick={() => entryLink(currElem)}
+                    >
+                      <TableCell align="left">{index + 1}</TableCell>
+                      <TableCell align="left">{currElem.clientName}</TableCell>
+                      <TableCell align="left">{currElem.projectName}</TableCell>
+                      <TableCell align="left">{currElem.vbProjectId}</TableCell>
+                      <TableCell align="left">
+                        {currElem.vbProjectStatus || "----"}
+                      </TableCell>
+                      <TableCell align="left">
+                        <EditAction data-test="edit-profile-button">
+                          <Link
+                            to={`${path}/${currElem.vbProjectId}/edit`}
+                            onClick={stopClick}
+                          >
+                            <EditButton data-test="edit-profile-button">
+                              edit <i className="fas fa-edit"></i>
+                            </EditButton>
+                          </Link>
+                        </EditAction>
+                      </TableCell>
+                    </TableRow>
+                  ))}
               </TableBody>
             </Table>
           </TableContainer>

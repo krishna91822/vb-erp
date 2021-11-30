@@ -11,16 +11,21 @@ import {
 } from "@material-ui/core";
 
 import { Container, MiniHead } from "./style";
-import Tpagination from "../../UI/Pagination";
+import Tpagination from "../UI/Pagination";
 
 const Bench = () => {
-  const data = useSelector((state) => state.pmo.benchData);
+  const { benchData } = useSelector((state) => state.pmo);
   const [associateName, setAssociateName] = useState("");
   const [lastAllocatedProject, setLastAllocatedProject] = useState("");
   const [primaryCapabilities, setPrimaryCapabilities] = useState("");
   const [lastAllocatedDate, setLastAllocatedDate] = useState("");
   const [page, setPage] = React.useState(0);
+  const [empId, setEmpId] = useState("");
 
+  let data = benchData;
+  data = [...data].sort((a, b) =>
+    a.empId > b.empId ? 1 : b.empId > a.empId ? -1 : 0
+  );
   const filterAssociateName = (event) => {
     const assName = event.target.value.toLowerCase();
     setAssociateName(assName);
@@ -41,6 +46,11 @@ const Bench = () => {
     setLastAllocatedDate(lastAlloDate);
   };
 
+  const filterEmpId = (event) => {
+    const empAll = event.target.value.toUpperCase();
+    setEmpId(empAll);
+  };
+
   const filteredData = data.filter((eachData) => {
     return (
       eachData.associateName.toLowerCase().includes(associateName) &&
@@ -50,7 +60,8 @@ const Bench = () => {
       eachData.primaryCapabilities
         .toLowerCase()
         .includes(primaryCapabilities) &&
-      eachData.lastallocationDate.includes(lastAllocatedDate)
+      eachData.lastallocationDate.includes(lastAllocatedDate) &&
+      eachData.empId.toUpperCase().includes(empId)
     );
   });
 
@@ -94,7 +105,15 @@ const Bench = () => {
                 <TableCell
                   align="left"
                   style={{ padding: "0px 8px", paddingBottom: "5px" }}
-                ></TableCell>
+                >
+                  <TextField
+                    style={{ padding: "0px 8px", paddingBottom: "5px" }}
+                    type="text"
+                    placeholder="Emp Id"
+                    onChange={filterEmpId}
+                    value={empId}
+                  />
+                </TableCell>
                 <TableCell
                   align="left"
                   style={{ padding: "0px 8px", paddingBottom: "5px" }}

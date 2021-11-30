@@ -10,16 +10,20 @@ import {
 } from "@material-ui/core";
 import { useSelector } from "react-redux";
 import { Container, MiniHead } from "./style";
-import Tpagination from "../../UI/Pagination";
-
+import Tpagination from "../UI/Pagination";
 const Allocated = () => {
-  const data = useSelector((state) => state.pmo.allocatedData);
+  const { allocatedData } = useSelector((state) => state.pmo);
   const [associateName, setAssociateName] = useState("");
   const [projectAllocated, setProjectAllocated] = useState("");
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
   const [page, setPage] = React.useState(0);
+  const [empId, setEmpId] = useState("");
 
+  let data = allocatedData;
+  data = [...data].sort((a, b) =>
+    a.empId > b.empId ? 1 : b.empId > a.empId ? -1 : 0
+  );
   const filterAssociateName = (event) => {
     const assName = event.target.value.toLowerCase();
     setAssociateName(assName);
@@ -38,12 +42,18 @@ const Allocated = () => {
     setEndDate(event.target.value);
   };
 
+  const filterEmpId = (event) => {
+    const empAll = event.target.value.toUpperCase();
+    setEmpId(empAll);
+  };
+
   const filteredData = data.filter((eachData) => {
     return (
       eachData.associateName.toLowerCase().includes(associateName) &&
       eachData.projectAllocated.toLowerCase().includes(projectAllocated) &&
       eachData.startDate.includes(startDate) &&
-      eachData.endDate.includes(endDate)
+      eachData.endDate.includes(endDate) &&
+      eachData.empId.toUpperCase().includes(empId)
     );
   });
 
@@ -87,7 +97,15 @@ const Allocated = () => {
                 <TableCell
                   align="left"
                   style={{ padding: "0px 8px", paddingBottom: "5px" }}
-                ></TableCell>
+                >
+                  <TextField
+                    style={{ padding: "0px 8px", paddingBottom: "5px" }}
+                    type="text"
+                    placeholder="Emp Id"
+                    onChange={filterEmpId}
+                    value={empId}
+                  />
+                </TableCell>
                 <TableCell
                   align="left"
                   style={{ padding: "0px 8px", paddingBottom: "5px" }}
@@ -115,14 +133,11 @@ const Allocated = () => {
                 <TableCell
                   style={{ padding: "0px 8px", paddingBottom: "5px" }}
                   align="left"
-                >
-                  {"  "}
-                </TableCell>
+                ></TableCell>
                 <TableCell
                   style={{ padding: "0px 8px", paddingBottom: "5px" }}
                   align="left"
                 >
-                  {" "}
                   <TextField
                     style={{ padding: "0px 8px", paddingBottom: "5px" }}
                     type="date"
@@ -134,7 +149,6 @@ const Allocated = () => {
                   style={{ padding: "0px 8px", paddingBottom: "5px" }}
                   align="left"
                 >
-                  {" "}
                   <TextField
                     style={{ padding: "0px 8px", paddingBottom: "5px" }}
                     type="date"

@@ -36,7 +36,7 @@ const pmoSlice = createSlice({
       },
       {
         id: 4,
-        empId: "JWFK5",
+        empId: "AAAA1",
         associateName: "Daijiro",
         projectAllocated: "Eshops",
         startDate: "2020-04-12",
@@ -91,9 +91,6 @@ const pmoSlice = createSlice({
       state.projectById = action.payload;
     },
     updateProjectsList: (state, action) => {
-      state.projects = action.payload;
-    },
-    SortById: (state, action) => {
       state.projects = action.payload;
     },
     SortByProductID: (state, action) => {
