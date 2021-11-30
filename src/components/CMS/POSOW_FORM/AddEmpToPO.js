@@ -13,12 +13,8 @@ import { useState, useEffect } from "react";
 import CreateIcon from "@mui/icons-material/Create";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import ComboBox from "../../UI/AutoComplete";
 import { AddEmpToThisPO } from "../../../store/CMS/POSOW-actions";
-import {
-  GetDetailsOfThisEmp,
-  UpdateEmpData,
-} from "../../../store/CMS/POSOW-actions";
+import { UpdateEmpData } from "../../../store/CMS/POSOW-actions";
 import { PoSowActions } from "../../../store/CMS/POSOW-slice";
 import "./CapturePO_SOW.css";
 
@@ -30,9 +26,9 @@ export default function FormDialog(props) {
   function formatDate(date) {
     const currentMonth = date.getMonth() + 1;
     const monthString = currentMonth >= 10 ? currentMonth : `0${currentMonth}`;
-    const currentDate = date.getDate();
+    const currentDate = date.getDate() + 1;
     const dateString = currentDate >= 10 ? currentDate : `0${currentDate}`;
-    return `${date.getFullYear()}-${monthString}-${currentDate}`;
+    return `${monthString}/${dateString}/${date.getFullYear()}`;
   }
 
   const handleClickOpen = () => {
@@ -41,7 +37,6 @@ export default function FormDialog(props) {
   const handleClickOpenForEdit = () => {
     setOpen(true);
     if (props.edit) {
-      // GetDetailsOfThisEmp(props.row_id);
       dispatch(PoSowActions.setDefaultEmpDataOnedit(props.row_id));
     }
   };
@@ -53,29 +48,21 @@ export default function FormDialog(props) {
   const specificEmpData = useSelector(
     (state) => state.CMS_state.specificEmpData
   );
-  // console.log(specificEmpData);
+
   const [StartDate, setStartDate] = useState(new Date());
   const [EndDate, setEndDate] = useState(new Date());
   const [selectedOption, setSelectedOption] = useState({
     emp_name: "",
     emp_id: "",
   });
-  // console.log(emp_name);
+
   const [emp_id, setEmpId] = useState("");
   const [percentageAlloc, setPercentageAlloc] = useState("");
 
   useEffect(() => {
     if (props.edit) {
-      // StartDate = new Date(specificEmpData[0].Start_Date);
-      // EndDate = new Date(specificEmpData[0].End_Date);
-      // selectedOption = {
-      //   emp_name: specificEmpData[0].Employee_Name,
-      //   emp_id: specificEmpData[0].Employee_Id,
-      // };
-      // emp_id = specificEmpData[0].Employee_Id;
-      // percentageAlloc = specificEmpData[0].Allocation_Rate;
-      setStartDate(new Date(specificEmpData[0].Start_Date));
-      setEndDate(new Date(specificEmpData[0].End_Date));
+      setStartDate(formatDate(new Date(specificEmpData[0].Start_Date)));
+      setEndDate(formatDate(new Date(specificEmpData[0].End_Date)));
       setSelectedOption({
         emp_name: specificEmpData[0].Employee_Name,
         emp_id: specificEmpData[0].Employee_Id,
@@ -103,9 +90,10 @@ export default function FormDialog(props) {
       setEmpId("");
     }
   };
-  // const handleEmpIdChange = (e) => {
-  //   setEmpId(e.target.value);
-  // };
+  // may be required in future
+  const handleEmpIdChange = (e) => {
+    setEmpId(e.target.value);
+  };
   const handleAddOnClick = (e) => {
     e.preventDefault();
     const DataToSend = {
@@ -114,37 +102,18 @@ export default function FormDialog(props) {
       Employee_Name: selectedOption.emp_name,
       Allocation_Rate: Number(percentageAlloc),
       Start_Date: formatDate(StartDate),
-      // (StartDate.getMonth() +1)
-      //  +
-      // "/" +
-      // (StartDate.getDate() + 1) +
-      // "/" +
-      // StartDate.getFullYear(),
+
       End_Date: formatDate(EndDate),
-      // EndDate.getMonth() +
-      // 1 +
-      // "/" +
-      // (EndDate.getDate() + 1) +
-      // "/" +
-      // EndDate.getFullYear(),
+
       Employee_Id: emp_id.toString(),
     };
-    console.log(DataToSend);
     if (props.edit) {
       dispatch(UpdateEmpData(DataToSend, emp_id.toString()));
     } else {
       dispatch(AddEmpToThisPO(DataToSend));
     }
   };
-  // const employees = [
-  //   { emp_name: "Alex", emp_id: 1994 },
-  //   { emp_name: "David", emp_id: 1972 },
-  //   { emp_name: "yusuf", emp_id: 1974 },
-  //   { emp_name: "Aquib", emp_id: 2008 },
-  //   { emp_name: "yash DY", emp_id: 1957 },
-  //   { emp_name: "Ayushi", emp_id: 1993 },
-  //   { emp_name: "Tanmay", emp_id: 1994 },
-  // ];
+
   const employees = useSelector((state) => state.CMS_state.AllAvailableEmp);
   return (
     <div>
@@ -162,42 +131,32 @@ export default function FormDialog(props) {
           onClick={handleClickOpenForEdit}
           data-testid="UpdateBtn"
         >
-          <CreateIcon />
+          <CreateIcon data-test="edit-btn-icon" />
           Edit
         </Button>
       ) : (
-        <AddBoxIcon fontSize="large" onClick={handleClickOpen} />
+        <AddBoxIcon
+          fontSize="large"
+          onClick={handleClickOpen}
+          data-test="plus-icon-btn"
+        />
       )}
-      {/* <AddBoxIcon fontSize="large" onClick={handleClickOpen} /> */}
+
       <Dialog open={open} onClose={handleClose}>
-        <DialogTitle>
+        <DialogTitle data-test="dialog-box-title">
           {props.edit ? "Update Details" : "Assign Employee to this PO"}
         </DialogTitle>
         <DialogContent>
-          {/* <DialogContentText>Add Employee</DialogContentText> */}
           <div className="AssignEmpParentDiv">
-            {/* <div>
-              <TextField
-                autoFocus
-                margin="dense"
-                id="name"
-                label="Employee Name"
-                value={emp_name}
-                onChange={handleEmpNameChange}
-                type="text"
-                fullWidth
-                variant="standard"
-              />
-            </div> */}
             <div>
               <Autocomplete
                 disablePortal
                 id="combo-box-demo"
                 options={employees}
                 onChange={(event, value) => handleEmpNameChange(value)}
-                // onChange={(event, value) => console.log(value)}
                 disabled={props.edit ? true : false}
                 value={selectedOption}
+                data-test="EmpName-AutoCompleteTxtBox"
                 getOptionLabel={(option) => option.emp_name}
                 isOptionEqualToValue={(option, value) =>
                   option.emp_id === value.emp_id
@@ -216,6 +175,7 @@ export default function FormDialog(props) {
                 label="Employee ID"
                 value={emp_id}
                 // onChange={handleEmpIdChange}
+                // might be required
                 disabled={true}
                 type="text"
                 fullWidth

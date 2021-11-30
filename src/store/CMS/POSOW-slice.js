@@ -1,30 +1,30 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const names = [
-  "Harsha Bendi",
-  "John dave",
-  "Vimal K",
-  "Aquib",
-  "yash DY",
-  "tanmay k",
-  "Yussuf Sh",
-  "Ayushi S",
+  "Nasdaq",
+  "VMware",
+  "CYPRESS",
+  "Clarivate",
+  "EVERSANA",
+  "LORD",
+  "FarmJournalMEDIA",
+  "AMERICAN HERITAGE",
+  "TimeInc.",
 ];
 const AllAvailableEmp = [
-  { emp_name: "Alex", emp_id: "1990" },
-  { emp_name: "David", emp_id: "1972" },
-  { emp_name: "yusuf", emp_id: "1974" },
-  { emp_name: "Aquib", emp_id: "2008" },
-  { emp_name: "yash DY", emp_id: "1957" },
-  { emp_name: "Ayushi", emp_id: "1993" },
-  { emp_name: "Tanmay", emp_id: "1994" },
+  { emp_name: "AQUIB", emp_id: "1990" },
+  { emp_name: "YASH DY", emp_id: "1972" },
+  { emp_name: "AYUSHI", emp_id: "1974" },
+  { emp_name: "YUSUF", emp_id: "2008" },
+  { emp_name: "TANMAY K", emp_id: "1957" },
+  { emp_name: "BHASKAR GURURANI", emp_id: "1993" },
+  { emp_name: "RAHUL VERMA", emp_id: "1994" },
   { emp_name: "", emp_id: "" },
 ];
 const employees = [
   {
     Employee_Name: "Alex",
     Employee_Id: 1990,
-    // emp: { emp_name: "Alex", emp_id: 1994 },
     Start_Date: "11 / 15 / 2021",
     End_Date: "11 / 25 / 2021",
     Allocation_Rate: 15,
@@ -32,7 +32,6 @@ const employees = [
   {
     Employee_Name: "David",
     Employee_Id: 1972,
-    // emp: { emp_name: "David", emp_id: 1972 },
     Start_Date: "11 / 25 / 2021",
     End_Date: "12 / 15 / 2021",
     Allocation_Rate: 15,
@@ -40,7 +39,6 @@ const employees = [
   {
     Employee_Name: "yusuf",
     Employee_Id: 1974,
-    // emp: { emp_name: "yusuf", emp_id: 1974 },
     Start_Date: "11 / 25 / 2021",
     End_Date: "11 / 25 / 2021",
     Allocation_Rate: 20,
@@ -48,7 +46,6 @@ const employees = [
   {
     Employee_Name: "Aquib",
     Employee_Id: 2008,
-    // emp: { emp_name: "Aquib", emp_id: 2008 },
     Start_Date: "11 / 25 / 2021",
     End_Date: "11 / 25 / 2021",
     Allocation_Rate: 30,
@@ -56,7 +53,6 @@ const employees = [
   {
     Employee_Name: "yash DY",
     Employee_Id: 1957,
-    // emp: { emp_name: "yash DY", emp_id: 1957 },
     Start_Date: "11 / 25 / 2021",
     End_Date: "11 / 25 / 2021",
     Allocation_Rate: 10,
@@ -64,7 +60,6 @@ const employees = [
   {
     Employee_Name: "Ayushi",
     Employee_Id: 1993,
-    // emp: { emp_name: "Ayushi", emp_id: 1993 },
     Start_Date: "11 / 25 / 2021",
     End_Date: "11 / 25 / 2021",
     Allocation_Rate: 5,
@@ -72,7 +67,6 @@ const employees = [
   {
     Employee_Name: "Tanmay",
     Employee_Id: 1994,
-    // emp: { emp_name: "Tanmay", emp_id: 1994 },
     Start_Date: "11 / 25 / 2021",
     End_Date: "11 / 25 / 2021",
     Allocation_Rate: 5,
@@ -121,7 +115,6 @@ export const SOW_init_state = {
   employees: employees,
   specificEmpData: [
     {
-      // emp: { emp_name: "Tanmay", emp_id: 1994 },
       Employee_Name: "",
       Employee_Id: "",
       Start_Date: "",
@@ -156,7 +149,6 @@ const POSOW_Slice = createSlice({
     setDefaultEmpDataOnedit(state, action) {
       console.log("reached setDefaultEmpDataOnedit");
       state.specificEmpData = state.employees.filter((employee) => {
-        // return employee.Employee_Id == action.payload;
         return employee._id == action.payload;
       });
     },

@@ -6,37 +6,30 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import CreateIcon from "@mui/icons-material/Create";
+
 import { useDispatch, useSelector } from "react-redux";
 import Button from "@mui/material/Button";
 import FormDialog from "./AddEmpToPO";
 import { UnAssignThisEmp } from "../../../store/CMS/POSOW-actions";
 
-// function createData(emp_name, emp_id, start_date, end_date) {
-//   return { emp_name, emp_id, start_date, end_date };
-// }
-
-// const rows = [
-//   createData("Alex", 159, "11 / 25 / 2021", "11 / 25 / 2021"),
-//   createData("Ravi", 154, "11 / 25 / 2021", "11 / 25 / 2021"),
-//   createData("Hari", 149, "11 / 25 / 2021", "11 / 25 / 2021"),
-//   createData("Rama", 129, "11 / 25 / 2021", "11 / 25 / 2021"),
-//   createData("Srikant", 153, "11 / 25 / 2021", "11 / 25 / 2021"),
-// ];
-
 export default function DenseTable() {
   const dispatch = useDispatch();
   const rows = useSelector((state) => state.CMS_state.employees);
-  // const handleRowOnClick = (row_id) => {
-  //   dispatch(GetDetailsOfThisEmp(row_id));
-  // };
+
   const handleUnassignBtnClick = (emp_id) => {
     dispatch(UnAssignThisEmp(emp_id));
   };
+  function formatDate(date) {
+    const currentMonth = date.getMonth() + 1;
+    const monthString = currentMonth >= 10 ? currentMonth : `0${currentMonth}`;
+    const currentDate = date.getDate() + 1;
+    const dateString = currentDate >= 10 ? currentDate : `0${currentDate}`;
+    return `${monthString}/${dateString}/${date.getFullYear()}`;
+  }
   return (
     <TableContainer component={Paper} style={{ height: 200 }}>
       <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
-        <TableHead>
+        <TableHead data-test="emp-table-head">
           <TableRow>
             <TableCell align="center">
               <strong>Employee Name</strong>
@@ -72,11 +65,19 @@ export default function DenseTable() {
                 {row.Employee_Name}
               </TableCell>
               <TableCell align="center">{row.Employee_Id}</TableCell>
-              <TableCell align="center">{row.Start_Date}</TableCell>
-              <TableCell align="center">{row.End_Date}</TableCell>
+              <TableCell align="center">
+                {formatDate(new Date(row.Start_Date))}
+              </TableCell>
+              <TableCell align="center">
+                {formatDate(new Date(row.End_Date))}
+              </TableCell>
               <TableCell align="center">{row.Allocation_Rate}</TableCell>
               <TableCell align="center">
-                <FormDialog edit={true} row_id={row._id} />
+                <FormDialog
+                  edit={true}
+                  row_id={row._id}
+                  data-test="Add-emp-dialogBox"
+                />
               </TableCell>
               <TableCell align="center">
                 <Button
@@ -92,7 +93,7 @@ export default function DenseTable() {
                   onClick={() => {
                     handleUnassignBtnClick(row.Employee_Id);
                   }}
-                  data-testid="UpdateBtn"
+                  data-test="Unassign-emp-btn"
                 >
                   Unassign
                 </Button>

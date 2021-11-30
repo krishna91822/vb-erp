@@ -11,16 +11,12 @@ import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import TextField from "@mui/material/TextField";
-import AddBoxIcon from "@mui/icons-material/AddBox";
-import DenseTable from "./Table";
-import FormDialog from "./AddEmpToPO";
 import SimpleGrow from "./EmpList";
 import "./CapturePO_SOW.css";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { createNewPO_SOW } from "../../../store/CMS/POSOW-actions";
 import { UpdatePO_SOW } from "../../../store/CMS/POSOW-actions";
-// import { fetchSpecificPO_SOW } from "./actions";
 import { SendForApproval } from "../../../store/CMS/POSOW-actions";
 import CustomizedDialogs from "./dialogBox";
 
@@ -50,7 +46,6 @@ export const CapturePO_SOW = (props) => {
   const dispatch = useDispatch();
   const params = useParams();
 
-  // let filteredArr = useSelector((state) => state.CMS_state.dataByID);
   let filteredArr = useSelector((state) => state.CMS_state.dataByID);
 
   const names = useSelector((state) => state.CMS_state.inputFieldsData.names);
@@ -118,7 +113,7 @@ export const CapturePO_SOW = (props) => {
   );
 
   useEffect(() => {
-    if (props.editBtn && filteredArr !== "undefined") {
+    if (props.editBtn && filteredArr !== undefined) {
       setPersonName(filteredArr[0].Client_Name);
       setProjectName(filteredArr[0].Project_Name);
       setPO_number(filteredArr[0].PO_Number);
@@ -225,7 +220,6 @@ export const CapturePO_SOW = (props) => {
       setDocName("");
     }
   };
-  // console.log(uploadFile)
   const handleSendForApprovalBtnOnClk = () => {
     dispatch(SendForApproval({ Status: filteredArr[0].Status }, params.id));
   };
@@ -278,7 +272,7 @@ export const CapturePO_SOW = (props) => {
           <Container fixed>
             <div className="outermostHeader">
               <div>
-                <h2>PO/SOW</h2>
+                <h2 data-test="Doc Heading">PO/SOW</h2>
               </div>
               {props.editBtn && editTglCheckedState ? (
                 <div>
@@ -315,7 +309,7 @@ export const CapturePO_SOW = (props) => {
                 </div>
                 {props.editBtn ? (
                   <div>
-                    <h5>STATUS</h5>
+                    <h5 data-test="status-label">STATUS</h5>
                     <strong>{status}</strong>
                   </div>
                 ) : (
@@ -323,11 +317,16 @@ export const CapturePO_SOW = (props) => {
                 )}
                 {props.editBtn ? (
                   <div className="SaveButton">
-                    <strong className="editTxt">Edit mode</strong>
+                    <strong
+                      className="editTxt"
+                      data-test="editModeSwitch-label"
+                    >
+                      Edit mode
+                    </strong>
                     <label className="switch">
                       <input
                         type="checkbox"
-                        data-testid="EditToggleBtn"
+                        data-test="EditToggleBtn"
                         checked={editTglCheckedState}
                         onChange={handleEditTglChange}
                         disabled={status === "Drafted" ? false : true}
@@ -342,7 +341,7 @@ export const CapturePO_SOW = (props) => {
                       color="success"
                       type="submit"
                       onClick={(event) => submitForm(event)}
-                      data-testid="saveBtn"
+                      data-test="POSOW-save-btn"
                     >
                       Save
                     </Button>
@@ -369,6 +368,7 @@ export const CapturePO_SOW = (props) => {
                         disabled={
                           props.editBtn && !editTglCheckedState ? true : false
                         }
+                        data-test="client-name-dropdown"
                       >
                         {names.map((name) => (
                           <MenuItem
@@ -400,6 +400,7 @@ export const CapturePO_SOW = (props) => {
                         disabled={
                           props.editBtn && !editTglCheckedState ? true : false
                         }
+                        data-test="project-dropdown"
                       >
                         {projects.map((name) => (
                           <MenuItem
@@ -419,7 +420,9 @@ export const CapturePO_SOW = (props) => {
               <div className="CheckBoxInputs">
                 <div>
                   <div className="clientSponsorCBs">
-                    <h3>Client Sponsor</h3>
+                    <h3 data-test="client-sponsor-chkBox-label">
+                      Client Sponsor
+                    </h3>
                     <ul className="">
                       {clientSponsors.map((name, index) => {
                         return (
@@ -431,6 +434,7 @@ export const CapturePO_SOW = (props) => {
                                   id={`custom-checkbox-${index}`}
                                   name={name}
                                   value={name}
+                                  data-test="client ChkBox Input"
                                   disabled={
                                     props.editBtn && !editTglCheckedState
                                       ? true
@@ -450,7 +454,9 @@ export const CapturePO_SOW = (props) => {
                 </div>
                 <div>
                   <div className="ClientFinContChkBoxs">
-                    <h3>Client Finance Controller</h3>
+                    <h3 data-test="client-finController-chkBox-label">
+                      Client Finance Controller
+                    </h3>
                     <ul className="">
                       {clientFinController.map((name, index) => {
                         return (
@@ -462,6 +468,7 @@ export const CapturePO_SOW = (props) => {
                                   id={`custom-checkbox-${index}`}
                                   name={name}
                                   value={name}
+                                  data-test="client-finController-chkBox-input"
                                   onChange={() =>
                                     handleClientfinChkBoxOnChange(index)
                                   }
@@ -483,7 +490,9 @@ export const CapturePO_SOW = (props) => {
                 </div>
                 <div>
                   <div className="targetedResChkBoxs">
-                    <h3>Targeted Resources</h3>
+                    <h3 data-test="TargetedRes-chkBox-label">
+                      Targeted Resources
+                    </h3>
                     <ul className="">
                       {targetedResources.map((name, index) => {
                         return (
@@ -495,6 +504,7 @@ export const CapturePO_SOW = (props) => {
                                   id={`custom-checkbox-${index}`}
                                   name={name}
                                   value={name}
+                                  data-test="targetedRes-chkBox-input"
                                   disabled={
                                     props.editBtn && !editTglCheckedState
                                       ? true
@@ -515,7 +525,8 @@ export const CapturePO_SOW = (props) => {
                   </div>
                 </div>
               </div>
-              {filteredArr[0].Status === "Approved" &&
+              {props.editBtn &&
+              filteredArr[0].Status === "Approved" &&
               filteredArr[0].Type === "PO" ? (
                 <div>
                   <hr className="projectInfoSeperator" />
@@ -527,7 +538,7 @@ export const CapturePO_SOW = (props) => {
               )}
 
               <div className="DocheaderTitle">
-                <h3>Document information</h3>
+                <h3 data-test="doc-info-label">Document information</h3>
               </div>
               <hr className="projectInfoSeperator" />
               <div className="DocInfoinputBoxesRowOne">
@@ -545,6 +556,7 @@ export const CapturePO_SOW = (props) => {
                         onChange={handleTypeChange}
                         input={<OutlinedInput label="Name" />}
                         MenuProps={MenuProps}
+                        data-test="Doc-Type-dropdown"
                         disabled={
                           props.editBtn && !editTglCheckedState ? true : false
                         }
@@ -573,6 +585,7 @@ export const CapturePO_SOW = (props) => {
                       variant="outlined"
                       value={PO_number}
                       onChange={handlePoNumTxtBoxChange}
+                      data-test="po-sow-num"
                       disabled={
                         props.editBtn && !editTglCheckedState ? true : false
                       }
@@ -590,6 +603,7 @@ export const CapturePO_SOW = (props) => {
                       variant="outlined"
                       value={PO_amt}
                       onChange={handlePOAmtTxtBoxChange}
+                      data-test="po-sow-amt"
                       disabled={
                         props.editBtn && !editTglCheckedState ? true : false
                       }
@@ -610,6 +624,7 @@ export const CapturePO_SOW = (props) => {
                         onChange={handleCurrencyChange}
                         input={<OutlinedInput label="Name" />}
                         MenuProps={MenuProps}
+                        data-test="currency-dropdown"
                         disabled={
                           props.editBtn && !editTglCheckedState ? true : false
                         }
@@ -640,6 +655,7 @@ export const CapturePO_SOW = (props) => {
                       label="uploaded Doc"
                       variant="outlined"
                       value={DocName}
+                      data-test="uploaded-doc-name-txtBox"
                       disabled={true}
                     />
                   </div>
@@ -658,6 +674,7 @@ export const CapturePO_SOW = (props) => {
                         onChange={handleDocTypesChange}
                         input={<OutlinedInput label="Name" />}
                         MenuProps={MenuProps}
+                        data-test="doc-typeForUpload-dropdown"
                         disabled={
                           props.editBtn && !editTglCheckedState ? true : false
                         }
@@ -693,6 +710,7 @@ export const CapturePO_SOW = (props) => {
                         hidden
                         onChange={handleUploadBtnClick}
                         accept={DocTypes}
+                        data-test="upload-file-input"
                         disabled={DocTypes === "" ? true : false}
                       />
                     </Button>
@@ -702,6 +720,7 @@ export const CapturePO_SOW = (props) => {
                       target="_blank"
                       download
                       style={{ textDecoration: "none" }}
+                      data-test="download-link"
                     >
                       <Button
                         variant="contained"
@@ -729,6 +748,7 @@ export const CapturePO_SOW = (props) => {
                       rows={4}
                       value={remarks}
                       onChange={handleRemarksChange}
+                      data-test="comments-remarks-txtBox"
                       disabled={
                         props.editBtn && !editTglCheckedState ? true : false
                       }
@@ -742,6 +762,7 @@ export const CapturePO_SOW = (props) => {
                     style={{ backgroundColor: "03A9F4", color: "#FFFFFF" }}
                     onClick={handleSendForApprovalBtnOnClk}
                     disabled={editTglCheckedState ? true : false}
+                    data-test="sendForApproval-btn"
                   >
                     Send For Approval
                   </Button>

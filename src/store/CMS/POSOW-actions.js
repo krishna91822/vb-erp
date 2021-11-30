@@ -82,15 +82,15 @@ export const fetchEmpOfThisPO = (PO_ID) => {
     dispatch(PoSowActions.setPOEmpTabData(res.data));
   };
 };
-export const GetDetailsOfThisEmp = (row_id) => {
-  const dispatch = useDispatch();
-  // return function (dispatch) {
-  //   console.log("reached GetDetailsOfThisEmp");
-  //   dispatch(PoSowActions.setDefaultEmpDataOnedit(row_id));
-  // };
-  console.log("reached GetDetailsOfThisEmp", row_id);
-  dispatch(PoSowActions.setDefaultEmpDataOnedit(row_id));
-};
+// export const GetDetailsOfThisEmp = (row_id) => {
+//   const dispatch = useDispatch();
+// return function (dispatch) {
+//   console.log("reached GetDetailsOfThisEmp");
+//   dispatch(PoSowActions.setDefaultEmpDataOnedit(row_id));
+// };
+//   console.log("reached GetDetailsOfThisEmp", row_id);
+//   dispatch(PoSowActions.setDefaultEmpDataOnedit(row_id));
+// };
 
 export const AddEmpToThisPO = (formData) => {
   return async function (dispatch) {
