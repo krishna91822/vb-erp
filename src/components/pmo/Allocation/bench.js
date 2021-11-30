@@ -11,7 +11,7 @@ import {
 } from "@material-ui/core";
 
 import { Container, MiniHead } from "./style";
-import Tpagination from "../UI/Pagination";
+import Tpagination from "../../UI/Pagination";
 
 const Bench = () => {
   const { benchData } = useSelector((state) => state.pmo);

@@ -81,9 +81,6 @@ const EditViewSwitchs = ({
       history.push(`/pmo/projects/${id}`);
     }
   };
-  const onUpdateEditView = () => {
-    onUpdate(id);
-  };
 
   return (
     <EditViewSwitchStyled style={{ display: id ? "flex" : "none" }}>
@@ -98,7 +95,7 @@ const EditViewSwitchs = ({
         size="small"
         color="primary"
         style={{ display: edit && id ? "block" : "none" }}
-        onClick={onUpdateEditView}
+        onClick={onUpdate}
       >
         Save
       </Button>

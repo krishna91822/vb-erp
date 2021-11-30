@@ -61,12 +61,9 @@ const initialState = {
 const CreateProject = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
-  const { redirect } = useSelector((state) => state.pmo);
-  let { projectById } = useSelector((state) => state.pmo);
-
   const location = useLocation().pathname;
   const history = useHistory();
-
+  const { redirect, projectById } = useSelector((state) => state.pmo);
   const [edit, setEdit] = useState(false);
   const [state, setState] = useState(initialState);
   const [errors, setErrors] = useState({});
@@ -90,25 +87,23 @@ const CreateProject = () => {
     resources,
   } = state;
 
-  const clearProjectById = () => {
-    projectById = {};
-  };
-
   useLayoutEffect(() => {
     if (location.includes("createproject") || location.includes("edit")) {
       setEdit(true);
-      clearProjectById();
     }
 
     if (id) {
       dispatch(getProjectById(id));
     }
+
+    return () => {
+      dispatch(pmoActions.clearCreateProjectState());
+    };
   }, []);
 
   useEffect(() => {
     if (redirect) {
-      // const url = id ? `/pmo/projects/${id}` : "/pmo/projects";
-      const url = "/pmo/projects";
+      const url = id ? `/pmo/projects/${id}` : "/pmo/projects";
       history.push(url);
       dispatch(pmoActions.redirectToProjectList());
     }
@@ -219,7 +214,7 @@ const CreateProject = () => {
   };
 
   const handleSubmit = (e) => {
-    if (e) e.preventDefault();
+    e.preventDefault();
     const validationErrors = validateForm(state.project);
     const noErrors = Object.keys(validationErrors).length === 0;
     setErrors(validationErrors);

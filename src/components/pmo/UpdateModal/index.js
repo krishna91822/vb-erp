@@ -1,5 +1,4 @@
 import React from "react";
-import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
 import { pmoActions } from "../../../store/pmo-slice";
@@ -24,13 +23,12 @@ const style = {
 };
 
 export default function UpdateModal({ id }) {
-  const history = useHistory();
   const { updateModal } = useSelector((state) => state.pmo);
   const dispatch = useDispatch();
 
   const onOkHandle = () => {
     dispatch(pmoActions.setUpdateModal());
-    history.push(`/pmo/projects/${id}`);
+    dispatch(pmoActions.redirectToProjectList());
   };
 
   return (

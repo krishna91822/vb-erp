@@ -10,7 +10,8 @@ import {
 } from "@material-ui/core";
 import { useSelector } from "react-redux";
 import { Container, MiniHead } from "./style";
-import Tpagination from "../UI/Pagination";
+import Tpagination from "../../UI/Pagination";
+
 const Allocated = () => {
   const { allocatedData } = useSelector((state) => state.pmo);
   const [associateName, setAssociateName] = useState("");

@@ -25,7 +25,7 @@ import {
   ProjectHead,
   EditButton,
 } from "./styles";
-import Tpagination from "../UI/Pagination";
+import Tpagination from "../../UI/Pagination";
 
 const ViewProjects = () => {
   const dispatch = useDispatch();
