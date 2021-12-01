@@ -173,6 +173,7 @@ const ViewProjects = () => {
                         placeholder="Emp Id"
                         onChange={filterClientName}
                         value={clientName}
+                        inputProps={{ style: { fontSize: "small" } }}
                       />
                     </TableCell>
                     <TableCell align="left">
@@ -182,6 +183,7 @@ const ViewProjects = () => {
                         placeholder="Associate Name"
                         onChange={filterProjectName}
                         value={projectName}
+                        inputProps={{ style: { fontSize: "small" } }}
                       />
                     </TableCell>
                     <TableCell align="left">
@@ -191,6 +193,7 @@ const ViewProjects = () => {
                         placeholder="Project Allocated"
                         onChange={filterProjectId}
                         value={vbProjectId}
+                        inputProps={{ style: { fontSize: "small" } }}
                       />
                     </TableCell>
                     <TableCell align="left">
@@ -200,6 +203,7 @@ const ViewProjects = () => {
                         placeholder="Project Allocated"
                         onChange={filterStatus}
                         value={vbProjectStatus}
+                        inputProps={{ style: { fontSize: "small" } }}
                       />
                     </TableCell>
                     <TableCell align="left"></TableCell>
