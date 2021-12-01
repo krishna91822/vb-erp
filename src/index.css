@@ -73,3 +73,10 @@ Down
 ::-webkit-scrollbar-thumb:hover {
   background: #efefef;
 }
+
+.MuiDrawer-paper {
+  margin-left: 300px;
+  margin-top: 60px;
+  height: 40px;
+  width: 72% !important;
+}

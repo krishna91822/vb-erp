@@ -19,7 +19,7 @@ function App({ match, history }) {
   const dispatch = useDispatch();
 
   const baseURL = "http://localhost:5000/employee";
-  const currentEmployeeId = "VB6";
+  const currentEmployeeId = "VB2";
 
   useEffect(() => {
     axios.get(baseURL).then((response) => {

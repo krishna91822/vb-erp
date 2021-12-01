@@ -5,7 +5,7 @@ import WithSpinner from "../components/hoc/withSpinner/withSpinner.component";
 import ViewProfile from "./../components/templates/viewProfile/viewProfile.component";
 import Network from "../pages/network/network.component";
 import CreateProfile from "./../pages/createProfile/createProfile.component";
-import Review from "./../pages/review/review.component";
+import Review from "./../pages/review/review.component ";
 
 const ProfileWithSpinner = WithSpinner(Profile);
 const ViewProfileWithSpinner = WithSpinner(ViewProfile);
