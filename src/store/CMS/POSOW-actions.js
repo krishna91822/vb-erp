@@ -16,8 +16,6 @@ export const createNewPO_SOW = (formData) => {
         throw new Error("Could not Save data!");
       }
     } catch (error) {
-      // console.error(error.message);
-      // dispatch(PoSowActions.PopUpON("unsuccessfull"));
       dispatch(uiActions.toggleLoader());
       setTimeout(function () {
         dispatch(uiActions.toggleLoader());
@@ -74,22 +72,13 @@ export const fetchPOs_emp_data = (po_id) => {
     dispatch(PoSowActions.setPOEmpTabData(res.data));
   };
 };
-export const fetchEmpOfThisPO = (PO_ID) => {
-  return async function (dispatch) {
-    const res = await axios.get(
-      `http://localhost:8000/getPoDetailsByID/${PO_ID}`
-    );
-    dispatch(PoSowActions.setPOEmpTabData(res.data));
-  };
-};
-// export const GetDetailsOfThisEmp = (row_id) => {
-//   const dispatch = useDispatch();
-// return function (dispatch) {
-//   console.log("reached GetDetailsOfThisEmp");
-//   dispatch(PoSowActions.setDefaultEmpDataOnedit(row_id));
-// };
-//   console.log("reached GetDetailsOfThisEmp", row_id);
-//   dispatch(PoSowActions.setDefaultEmpDataOnedit(row_id));
+// export const fetchEmpOfThisPO = (PO_ID) => {
+//   return async function (dispatch) {
+//     const res = await axios.get(
+//       `http://localhost:8000/getPoDetailsByID/${PO_ID}`
+//     );
+//     dispatch(PoSowActions.setPOEmpTabData(res.data));
+//   };
 // };
 
 export const AddEmpToThisPO = (formData) => {
@@ -105,8 +94,6 @@ export const AddEmpToThisPO = (formData) => {
         throw new Error("Could not Save data!");
       }
     } catch (error) {
-      // console.error(error.message);
-      // dispatch(PoSowActions.PopUpON("unsuccessfull"));
       dispatch(uiActions.toggleLoader());
       setTimeout(function () {
         dispatch(uiActions.toggleLoader());
@@ -114,7 +101,7 @@ export const AddEmpToThisPO = (formData) => {
           uiActions.showNotification({
             status: "error",
             title: "Error!",
-            message: "Fetching content data failed!",
+            message: "Could not Save data!",
           })
         );
       }, 1000);
@@ -131,7 +118,7 @@ export const UpdateEmpData = (formData, emp_id) => {
       if (response.status === 201) {
         dispatch(PoSowActions.PopUpON("Updated"));
       } else {
-        throw new Error("Could not Save data!");
+        throw new Error("Could not update!");
       }
     } catch (error) {
       dispatch(uiActions.toggleLoader());
@@ -141,7 +128,7 @@ export const UpdateEmpData = (formData, emp_id) => {
           uiActions.showNotification({
             status: "error",
             title: "Error!",
-            message: "Fetching content data failed!",
+            message: "Could not update!",
           })
         );
       }, 1000);
@@ -158,7 +145,7 @@ export const UnAssignThisEmp = (emp_id) => {
       if (response.status === 201) {
         dispatch(PoSowActions.PopUpON("Unassigned"));
       } else {
-        throw new Error("Could not Save data!");
+        throw new Error("Could not Unassign!");
       }
     } catch (error) {
       dispatch(uiActions.toggleLoader());

@@ -149,7 +149,7 @@ const POSOW_Slice = createSlice({
     setDefaultEmpDataOnedit(state, action) {
       console.log("reached setDefaultEmpDataOnedit");
       state.specificEmpData = state.employees.filter((employee) => {
-        return employee._id == action.payload;
+        return employee._id === action.payload;
       });
     },
   },

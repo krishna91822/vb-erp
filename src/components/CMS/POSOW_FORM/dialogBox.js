@@ -11,10 +11,10 @@ import CloseIcon from "@mui/icons-material/Close";
 import Typography from "@mui/material/Typography";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-// import {PopUpOF} from "./actions";
-import { Redirect } from "react-router";
-// import { useNavigate } from "react-router-dom";
-import { useHistory } from "react-router-dom";
+
+import { Navigate, Redirect } from "react-router";
+import { useNavigate } from "react-router-dom";
+
 import { PoSowActions } from "../../../store/CMS/POSOW-slice";
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
@@ -60,13 +60,13 @@ export default function CustomizedDialogs({ msg, sendForApproval }) {
   const [open, setOpen] = React.useState(popupController);
   const dispatch = useDispatch();
   const params = useParams();
-  let history = useHistory();
+  let navigate = useNavigate();
   const handleClose = () => {
     dispatch(PoSowActions.PopUpOF());
     if (params.id === undefined) {
-      history.push("/POSOW");
+      navigate("/POSOW");
     } else {
-      history.push(`/POSOW_detail/${params.id}`);
+      navigate(`/POSOW_detail/${params.id}`);
     }
   };
 
@@ -84,10 +84,7 @@ export default function CustomizedDialogs({ msg, sendForApproval }) {
           Message
         </BootstrapDialogTitle>
         <DialogContent dividers>
-          <Typography gutterBottom>
-            {/* {sendForApproval?"Sent for Approvall":msg}     */}
-            {msg}
-          </Typography>
+          <Typography gutterBottom>{msg}</Typography>
         </DialogContent>
         <DialogActions>
           <Button autoFocus onClick={handleClose}>

@@ -18,6 +18,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { createNewPO_SOW } from "../../../store/CMS/POSOW-actions";
 import { UpdatePO_SOW } from "../../../store/CMS/POSOW-actions";
 import { SendForApproval } from "../../../store/CMS/POSOW-actions";
+import { uiActions } from "../../../store/ui-slice";
 import CustomizedDialogs from "./dialogBox";
 
 // materialUI stylings for select dropdowns.
@@ -308,9 +309,9 @@ export const CapturePO_SOW = (props) => {
                   <h3>Project information</h3>
                 </div>
                 {props.editBtn ? (
-                  <div>
+                  <div className="status">
                     <h5 data-test="status-label">STATUS</h5>
-                    <strong>{status}</strong>
+                    <strong>{" - " + "  " + status}</strong>
                   </div>
                 ) : (
                   <div></div>

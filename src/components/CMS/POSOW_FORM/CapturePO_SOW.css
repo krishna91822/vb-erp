@@ -9,6 +9,11 @@
 .SaveButton {
   margin: 1rem;
 }
+.status {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 hr.projectInfoSeperator {
   margin: 0.5rem;
   border: 2px solid gray;
@@ -24,6 +29,7 @@ hr.projectInfoSeperator {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+
   flex-wrap: wrap;
 }
 ul {
