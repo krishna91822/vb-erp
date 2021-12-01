@@ -262,7 +262,6 @@ export const CapturePO_SOW = (props) => {
     };
     const all_errors = validateForm(DataToSend);
     setErrors(all_errors);
-    console.log(errors);
     if (Object.keys(all_errors).length === 0) {
       if (props.editBtn && editTglCheckedState) {
         dispatch(UpdatePO_SOW(DataToSend, params.id));
