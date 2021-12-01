@@ -66,6 +66,7 @@ const Allocated = ({ pressed }) => {
 
   return (
     <>
+      <TextField type="text" placeholder="Emp Id" />
       <Container>
         <MiniHead data-test="main-heading">Allocation Information</MiniHead>
         <TableContainer>
