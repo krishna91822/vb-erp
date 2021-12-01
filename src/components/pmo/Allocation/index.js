@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import Allocated from "./allocated";
 import Bench from "./bench";
+import FilterListIcon from "@mui/icons-material/FilterList";
+
 import {
   HeadingStyle,
   Heading,
@@ -13,6 +15,7 @@ import {
 } from "./style";
 
 const Allocation = () => {
+  const [pressed, setPressed] = useState(false);
   const [bench, setBench] = useState(false);
   const ChangeAllocation = (event) => {
     const AllocatedValue = event.target.value;
@@ -22,7 +25,9 @@ const Allocation = () => {
       setBench(false);
     }
   };
-
+  const showfilter = () => {
+    setPressed(!pressed);
+  };
   return (
     <MainComponent>
       <HeadingStyle>
@@ -30,6 +35,10 @@ const Allocation = () => {
         <Heading>
           <ProjectHead data-test="main-heading">Allocations</ProjectHead>
           <SideButton>
+            <FilterListIcon
+              onClick={showfilter}
+              style={{ cursor: "pointer" }}
+            />
             <Dropdown data-test="sortby-dropdown" onChange={ChangeAllocation}>
               <Options Value="Sort by" hidden>
                 filter by
@@ -40,7 +49,11 @@ const Allocation = () => {
           </SideButton>
         </Heading>
 
-        {bench === false ? <Allocated /> : <Bench />}
+        {bench === false ? (
+          <Allocated pressed={pressed} />
+        ) : (
+          <Bench pressed={pressed} />
+        )}
       </HeadingStyle>
     </MainComponent>
   );

@@ -25,7 +25,7 @@ const ResourceInformationTable = ({ resources, removeResource, edit }) => {
           }}
         >
           <TableRow>
-            <TableCell align="left">SNo</TableCell>
+            <TableCell align="left">SNO</TableCell>
             <TableCell align="left">Associate Name</TableCell>
             <TableCell align="left">Start Date</TableCell>
             <TableCell align="left">End Date</TableCell>

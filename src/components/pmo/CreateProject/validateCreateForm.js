@@ -10,7 +10,7 @@ export default function validateForm(data) {
   if (!data.clientProjectManager.trim()) {
     errors.clientProjectManager = "Client Project Manager Required";
   }
-  if (data.clientPrimaryContact && data.clientPrimaryContact.length !== 10) {
+  if (data.clientPrimaryContact.toString().length !== 10) {
     errors.clientPrimaryContact = "Enter valid number";
   }
   if (!data.clientProjectSponsor.trim()) {
@@ -28,10 +28,10 @@ export default function validateForm(data) {
     errors.endDate = "End Date need to be grater than Start Date";
   }
   if (!data.vbProjectManager.trim()) {
-    errors.vbProjectManager = "vb Project Manager Required";
+    errors.vbProjectManager = "VB Project Manager Required";
   }
   if (!data.vbProjectStatus.trim()) {
-    errors.vbProjectStatus = "vb Project Status Required";
+    errors.vbProjectStatus = "Project Status Required";
   }
 
   return errors;

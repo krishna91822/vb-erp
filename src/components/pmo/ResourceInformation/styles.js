@@ -30,6 +30,9 @@ export const Heading = styled.h1`
   display: block;
   margin-top: 0.5em;
   padding: 0.5em 1em;
+  & > span {
+    color: red;
+  }
 `;
 
 export const Container = styled.div``;

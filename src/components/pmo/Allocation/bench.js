@@ -13,7 +13,7 @@ import {
 import { Container, MiniHead } from "./style";
 import Tpagination from "../../UI/Pagination";
 
-const Bench = () => {
+const Bench = ({ pressed }) => {
   const { benchData } = useSelector((state) => state.pmo);
   const [associateName, setAssociateName] = useState("");
   const [lastAllocatedProject, setLastAllocatedProject] = useState("");
@@ -73,118 +73,88 @@ const Bench = () => {
           <Table data-test="list-table">
             <TableHead>
               <TableRow>
-                <TableCell align="left" style={{ paddingBottom: "2px" }}>
-                  ID
-                </TableCell>
-                <TableCell align="left" style={{ paddingBottom: "2px" }}>
-                  EmpID
-                </TableCell>
-                <TableCell align="left" style={{ paddingBottom: "2px" }}>
-                  Associate Name
-                </TableCell>
-                <TableCell align="left" style={{ paddingBottom: "2px" }}>
-                  Last Allocated Project
-                </TableCell>
-                <TableCell align="left" style={{ paddingBottom: "2px" }}>
-                  Primary Capabilities
-                </TableCell>
-                <TableCell align="left" style={{ paddingBottom: "2px" }}>
-                  Last Allocation Date
-                </TableCell>
-                <TableCell align="left" style={{ paddingBottom: "2px" }}>
-                  Percentage Allocated
-                </TableCell>
+                <TableCell align="left">SNO</TableCell>
+                <TableCell align="left">EmpID</TableCell>
+                <TableCell align="left">Associate Name</TableCell>
+                <TableCell align="left">Last Allocated Project</TableCell>
+                <TableCell align="left">Primary Capabilities</TableCell>
+                <TableCell align="left">Last Allocation Date</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-              <TableRow style={{ backgroundColor: "rgb(227, 231, 231)" }}>
-                <TableCell
-                  align="left"
-                  style={{ padding: "0px 8px", paddingBottom: "5px" }}
-                ></TableCell>
-                <TableCell
-                  align="left"
-                  style={{ padding: "0px 8px", paddingBottom: "5px" }}
-                >
-                  <TextField
-                    style={{ padding: "0px 8px", paddingBottom: "5px" }}
-                    type="text"
-                    placeholder="Emp Id"
-                    onChange={filterEmpId}
-                    value={empId}
-                  />
-                </TableCell>
-                <TableCell
-                  align="left"
-                  style={{ padding: "0px 8px", paddingBottom: "5px" }}
-                >
-                  <TextField
-                    type="text"
-                    placeholder="Associate Name"
-                    onChange={filterAssociateName}
-                    value={associateName}
-                    style={{ padding: "0px 8px", paddingBottom: "5px" }}
-                  />
-                </TableCell>
-                <TableCell
-                  align="left"
-                  style={{ padding: "0px 8px", paddingBottom: "5px" }}
-                >
-                  <TextField
-                    style={{ padding: "0px 8px", paddingBottom: "5px" }}
-                    type="text"
-                    placeholder="Last Allocated Project"
-                    onChange={filterLastAllocatedProject}
-                    value={lastAllocatedProject}
-                  />
-                </TableCell>
-                <TableCell
-                  style={{ padding: "0px 8px", paddingBottom: "5px" }}
-                  align="left"
-                >
-                  <TextField
-                    style={{ padding: "0px 8px", paddingBottom: "5px" }}
-                    type="text"
-                    placeholder="Primary Capabilities"
-                    onChange={filterPrimaryCapabilities}
-                    value={primaryCapabilities}
-                  />
-                </TableCell>
-                <TableCell
-                  style={{ padding: "0px 8px", paddingBottom: "5px" }}
-                  align="left"
-                >
-                  <TextField
-                    style={{ padding: "0px 8px", paddingBottom: "5px" }}
-                    type="date"
-                    onChange={filterLastAllocatedDate}
-                    value={lastAllocatedDate}
-                  />
-                </TableCell>
-                <TableCell
-                  align="left"
-                  style={{ padding: "0px 8px", paddingBottom: "5px" }}
-                ></TableCell>
-              </TableRow>
-              {filteredData.slice(page * 5, page * 5 + 5).map((currElem) => (
-                <TableRow key={currElem.id}>
-                  <TableCell align="left">{currElem.id}</TableCell>
-                  <TableCell align="left">{currElem.empId}</TableCell>
-                  <TableCell align="left">{currElem.associateName}</TableCell>
+              {pressed && (
+                <TableRow>
+                  <TableCell align="left"></TableCell>
                   <TableCell align="left">
-                    {currElem.lastAllocatedProject}
+                    <TextField
+                      variant="standard"
+                      type="text"
+                      placeholder="Emp Id"
+                      onChange={filterEmpId}
+                      value={empId}
+                      inputProps={{ style: { fontSize: "small" } }}
+                    />
                   </TableCell>
                   <TableCell align="left">
-                    {currElem.primaryCapabilities}
+                    <TextField
+                      variant="standard"
+                      type="text"
+                      placeholder="Associate Name"
+                      onChange={filterAssociateName}
+                      value={associateName}
+                      inputProps={{ style: { fontSize: "small" } }}
+                    />
                   </TableCell>
                   <TableCell align="left">
-                    {currElem.lastallocationDate}
+                    <TextField
+                      variant="standard"
+                      type="text"
+                      placeholder="Last Allocated Project"
+                      onChange={filterLastAllocatedProject}
+                      value={lastAllocatedProject}
+                      inputProps={{ style: { fontSize: "small" } }}
+                    />
                   </TableCell>
                   <TableCell align="left">
-                    {currElem.percentAllocated}
+                    <TextField
+                      variant="standard"
+                      type="text"
+                      placeholder="Primary Capabilities"
+                      onChange={filterPrimaryCapabilities}
+                      value={primaryCapabilities}
+                      inputProps={{ style: { fontSize: "small" } }}
+                    />
+                  </TableCell>
+                  <TableCell align="left">
+                    <TextField
+                      variant="standard"
+                      type="date"
+                      onChange={filterLastAllocatedDate}
+                      value={lastAllocatedDate}
+                      inputProps={{ style: { fontSize: "small" } }}
+                    />
                   </TableCell>
                 </TableRow>
-              ))}
+              )}
+
+              {filteredData
+                .slice(page * 5, page * 5 + 5)
+                .map((currElem, index) => (
+                  <TableRow key={currElem.id}>
+                    <TableCell align="left">{index + 1}</TableCell>
+                    <TableCell align="left">{currElem.empId}</TableCell>
+                    <TableCell align="left">{currElem.associateName}</TableCell>
+                    <TableCell align="left">
+                      {currElem.lastAllocatedProject}
+                    </TableCell>
+                    <TableCell align="left">
+                      {currElem.primaryCapabilities}
+                    </TableCell>
+                    <TableCell align="left">
+                      {currElem.lastallocationDate}
+                    </TableCell>
+                  </TableRow>
+                ))}
             </TableBody>
           </Table>
         </TableContainer>

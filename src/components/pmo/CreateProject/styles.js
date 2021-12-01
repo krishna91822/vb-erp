@@ -73,6 +73,9 @@ export const FormElementsStyled = styled.div`
     margin-top: 0.5em;
     padding: 0.5em 1em;
   }
+  & > label > span {
+    color: red;
+  }
   .MuiOutlinedInput-input {
     padding: 0.7em 14px;
   }
@@ -81,6 +84,14 @@ export const FormElementsStyled = styled.div`
   }
   @media ${device.mobileL} {
     width: 90%;
+  }
+`;
+
+export const NumberStyle = styled.div`
+  input[type="number"]::-webkit-inner-spin-button,
+  input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
   }
 `;
 
@@ -105,6 +116,9 @@ export const DateElementStyled = styled.div`
     display: block;
     margin-top: 0.5em;
     padding: 0.5em 1em;
+  }
+  & > label > span {
+    color: red;
   }
   @media ${device.tablet} {
     width: 100%;

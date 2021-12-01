@@ -40,12 +40,8 @@ export const Container = styled.div`
     font-weight: 900;
   }
 
-  .MuiTableBody-root {
-    background-color: rgb(252, 250, 250);
-  }
-
   .MuiTableBody-root > .MuiTableRow-root:hover {
-    background-color: rgb(227, 231, 231);
+    background-color: rgb(252, 250, 250);
     cursor: pointer;
   }
 
