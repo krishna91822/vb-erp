@@ -21,7 +21,7 @@ export const device = {
 
 export const ResourceInformationHeading = styled.h3`
   padding: 0.8em 0;
-  border-bottom: 0.1em solid black;
+  border-bottom: 0.1em solid #afacacde;
 `;
 
 export const Heading = styled.h1`
@@ -30,6 +30,9 @@ export const Heading = styled.h1`
   display: block;
   margin-top: 0.5em;
   padding: 0.5em 1em;
+  & > span {
+    color: red;
+  }
 `;
 
 export const Container = styled.div``;
@@ -41,7 +44,7 @@ export const AllElementsContainer = styled.div`
   flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
-  border: 0.1em solid black;
+  border: 0.1em solid #afacacde;
   @media ${device.tablet} {
     flex-direction: column;
   }

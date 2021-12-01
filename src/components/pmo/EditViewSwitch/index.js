@@ -73,6 +73,7 @@ const EditViewSwitchs = ({
   const history = useHistory();
 
   const handleChange = ({ target }) => {
+    console.log(edit);
     if (target.checked) {
       setEdit(true);
       history.push(`/pmo/projects/${id}/edit`);
@@ -83,7 +84,9 @@ const EditViewSwitchs = ({
   };
 
   return (
-    <EditViewSwitchStyled style={{ display: id ? "flex" : "none" }}>
+    <EditViewSwitchStyled
+      style={{ display: id ? "flex" : "none", margin: "0" }}
+    >
       <UpdateModal
         setUpdateModal={setUpdateModal}
         updateModal={updateModal}

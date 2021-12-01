@@ -30,7 +30,9 @@ const ResourceInformation = ({
       {edit && (
         <AllElementsContainer>
           <ResourceForm>
-            <Heading>Associate Name</Heading>
+            <Heading>
+              Associate Name <span>*</span>
+            </Heading>
             <TextField
               placeholder="Enter Associate Name"
               name="associateName"
@@ -46,7 +48,9 @@ const ResourceInformation = ({
           </ResourceForm>
           <MultiElemContainer>
             <ResourceForm>
-              <Heading data-test="start-date">Start Date</Heading>
+              <Heading data-test="start-date">
+                Start Date <span>*</span>
+              </Heading>
               <TextField
                 variant="outlined"
                 size="small"
@@ -61,7 +65,9 @@ const ResourceInformation = ({
               />
             </ResourceForm>
             <ResourceForm>
-              <Heading data-test="end-date">End Date</Heading>
+              <Heading data-test="end-date">
+                End Date <span>*</span>
+              </Heading>
               <TextField
                 variant="outlined"
                 size="small"
@@ -78,7 +84,9 @@ const ResourceInformation = ({
           </MultiElemContainer>
           <MultiElemContainer>
             <ResourceForm style={{ justifyContent: "space-between" }}>
-              <Heading data-test="allocation">Allocation</Heading>
+              <Heading data-test="allocation">
+                Allocation <span>*</span>
+              </Heading>
               <AllocElemContainer>
                 <input
                   type="range"
@@ -104,7 +112,9 @@ const ResourceInformation = ({
               </AllocElemContainer>
             </ResourceForm>
             <ResourceForm>
-              <Heading data-test="rack-rate">Rack Rate</Heading>
+              <Heading data-test="rack-rate">
+                Rack Rate <span>*</span>
+              </Heading>
               <TextField
                 size="small"
                 type="number"

@@ -4,6 +4,8 @@ import Bench from "./bench";
 import FilterListIcon from "@mui/icons-material/FilterList";
 
 import {
+  HeadingStyle,
+  Heading,
   SideButton,
   Dropdown,
   Options,
@@ -28,22 +30,31 @@ const Allocation = () => {
   };
   return (
     <MainComponent>
-      <AdminName data-test="admin-name">User:- Admin/Approver</AdminName>
-      <br />
-      <SideButton>
-        <FilterListIcon onClick={showfilter} style={{ cursor: "pointer" }} />
-        <Dropdown data-test="sortby-dropdown" onChange={ChangeAllocation}>
-          <Options value="Sort by Allocated">Allocated</Options>
-          <Options value="Sort by on Bench">On Bench</Options>
-        </Dropdown>
-      </SideButton>
-      <ProjectHead data-test="main-heading">Allocations</ProjectHead>
+      <HeadingStyle>
+        <AdminName data-test="admin-name">User:- Admin/Approver</AdminName>
+        <Heading>
+          <ProjectHead data-test="main-heading">Allocations</ProjectHead>
+          <SideButton>
+            <FilterListIcon
+              onClick={showfilter}
+              style={{ cursor: "pointer" }}
+            />
+            <Dropdown data-test="sortby-dropdown" onChange={ChangeAllocation}>
+              <Options Value="Sort by" hidden>
+                filter by
+              </Options>
+              <Options value="Sort by Allocated">Allocated</Options>
+              <Options value="Sort by on Bench">On Bench</Options>
+            </Dropdown>
+          </SideButton>
+        </Heading>
 
-      {bench === false ? (
-        <Allocated pressed={pressed} />
-      ) : (
-        <Bench pressed={pressed} />
-      )}
+        {bench === false ? (
+          <Allocated pressed={pressed} />
+        ) : (
+          <Bench pressed={pressed} />
+        )}
+      </HeadingStyle>
     </MainComponent>
   );
 };
