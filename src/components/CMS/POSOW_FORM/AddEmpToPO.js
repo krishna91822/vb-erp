@@ -142,7 +142,7 @@ export default function FormDialog(props) {
         />
       )}
 
-      <Dialog open={open} onClose={handleClose}>
+      <Dialog open={open} onClose={handleClose} data-test="emp-dialogBox">
         <DialogTitle data-test="dialog-box-title">
           {props.edit ? "Update Details" : "Assign Employee to this PO"}
         </DialogTitle>

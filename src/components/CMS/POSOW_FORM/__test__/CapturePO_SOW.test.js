@@ -161,7 +161,7 @@ describe("Adding Emp dialog box", () => {
     wrapper = mount(
       <Provider store={store}>
         <MemoryRouter>
-          <FormDialog />
+          <FormDialog edit={false} open={true} />
         </MemoryRouter>
       </Provider>
     );
@@ -169,12 +169,7 @@ describe("Adding Emp dialog box", () => {
   test("testing add plus icon button", () => {
     expect(wrapper.find(`[data-test="plus-icon-btn"]`).exists()).toBe(true);
   });
-  // test("testing emp name autocomplete text box input", () => {
-  //   expect(
-  //     wrapper.find(`[data-test="EmpName-AutoCompleteTxtBox"]`).exists()
-  //   ).toBe(true);
-  // });
-  // test("testing edit button icon", () => {
-  //   expect(wrapper.find(`[data-test="edit-btn-icon"]`).exists()).toBe(true);
-  // });
+  test("testing emp dialog box", () => {
+    expect(wrapper.find(`[data-test="emp-dialogBox"]`).exists()).toBe(true);
+  });
 });
