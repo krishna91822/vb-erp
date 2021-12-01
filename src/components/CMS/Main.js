@@ -18,7 +18,10 @@ import { useSelector, useDispatch } from "react-redux";
 // import setPosts from './Main/actions'
 import "./Main.css";
 // import { fetchSpecificPO_SOW } from "../../store/CMS/POSOW-actions";
-import { fetchSpecificPO_SOW } from "../../store/CMS/POSOW-actions";
+import {
+  fetchSpecificPO_SOW,
+  sortProducts,
+} from "../../store/CMS/POSOW-actions";
 import { fetchPO_SOW_data } from "../../store/CMS/POSOW-actions";
 import Typography from "@mui/material/Typography";
 import Pagination from "@mui/material/Pagination";
@@ -104,6 +107,10 @@ const Main = () => {
   const handleRowOnClick = (row_id) => {
     dispatch(fetchSpecificPO_SOW(row_id));
   };
+  const handleSort = (product) => {
+    dispatch(sortProducts(product));
+    setAnchorEl(null);
+  };
   const handleChange = (event, value) => {
     currentsetPage(value);
   };
@@ -134,18 +141,18 @@ const Main = () => {
           open={open}
           onClose={handleClose}
         >
-          <MenuItem onClick={handleClose} disableRipple>
+          <MenuItem onClick={() => handleSort("id")} disableRipple>
             By ID
           </MenuItem>
 
-          <MenuItem onClick={handleClose} disableRipple>
+          <MenuItem onClick={() => handleSort("projectname")} disableRipple>
             By Project Name
           </MenuItem>
 
-          <MenuItem onClick={handleClose} disableRipple>
+          <MenuItem onClick={() => handleSort("clientsponser")} disableRipple>
             By Client Sponsor
           </MenuItem>
-          <MenuItem onClick={handleClose} disableRipple>
+          <MenuItem onClick={() => handleSort("clientname")} disableRipple>
             By Client Name
           </MenuItem>
         </StyledMenu>

@@ -175,3 +175,10 @@ export const UnAssignThisEmp = (emp_id) => {
     }
   };
 };
+
+export const sortProducts = (product) => {
+  return async function (dispatch) {
+    const res = await axios.get(`http://localhost:8000/sort/${product}`);
+    dispatch(PoSowActions.setTabViewData(res.data));
+  };
+};

@@ -15,7 +15,11 @@ import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 // import setPosts from './Main/actions'
-import { fetchPO_SOW_data } from "../../store/CMS/POSOW-actions";
+import { fetchPO_SOW_data, sortProducts } from "../../store/CMS/POSOW-actions";
+import Typography from "@mui/material/Typography";
+import Pagination from "@mui/material/Pagination";
+import Stack from "@mui/material/Stack";
+import { Link } from "react-router-dom";
 
 export const StyledMenu = styled((props) => (
   <Menu
@@ -87,7 +91,8 @@ function InvoiceInfo() {
     dispatch(fetchPO_SOW_data());
   }, []);
   const post = useSelector((state) => state.CMS_state.poSowData);
-
+  const [currentpage, currentsetPage] = React.useState(1);
+  const [postPerPage, setPostPerPage] = React.useState(5);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -96,6 +101,16 @@ function InvoiceInfo() {
   const handleClose = () => {
     setAnchorEl(null);
   };
+  const handleSort = (product) => {
+    dispatch(sortProducts(product));
+    setAnchorEl(null);
+  };
+  const handleChange = (event, value) => {
+    currentsetPage(value);
+  };
+  const indexOfLastPost = currentpage * postPerPage;
+  const indexOfFirstPost = indexOfLastPost - postPerPage;
+  const currentPosts = post.slice(indexOfFirstPost, indexOfLastPost);
   return (
     <>
       <div className="sortbtn">
@@ -120,18 +135,18 @@ function InvoiceInfo() {
           open={open}
           onClose={handleClose}
         >
-          <MenuItem onClick={handleClose} disableRipple>
+          <MenuItem onClick={() => handleSort("id")} disableRipple>
             By ID
           </MenuItem>
 
-          <MenuItem onClick={handleClose} disableRipple>
+          <MenuItem onClick={() => handleSort("projectname")} disableRipple>
             By Project Name
           </MenuItem>
 
-          <MenuItem onClick={handleClose} disableRipple>
-            By Client Sponsor
+          <MenuItem onClick={() => handleSort("invoiceraised")} disableRipple>
+            By Invoice Raised
           </MenuItem>
-          <MenuItem onClick={handleClose} disableRipple>
+          <MenuItem onClick={() => handleSort("clientname")} disableRipple>
             By Client Name
           </MenuItem>
         </StyledMenu>
@@ -142,7 +157,9 @@ function InvoiceInfo() {
             <h3>Invoice Information</h3>
           </div>
           <div className="buttondiv">
-            <button className="button1">Capture Invoice </button>
+            <Link to="/capture_invoice">
+              <button className="button1">Capture Invoice </button>
+            </Link>
           </div>
         </div>
 
@@ -161,7 +178,7 @@ function InvoiceInfo() {
               </TableRow>
             </TableHead>
             <TableBody>
-              {post.map((row) => (
+              {currentPosts.map((row) => (
                 <TableRow
                   key={row.name}
                   sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
@@ -181,6 +198,18 @@ function InvoiceInfo() {
             </TableBody>
           </Table>
         </TableContainer>
+        <Stack spacing={10}>
+          <div className="Pagination">
+            <Typography>Page: {currentpage}</Typography>
+            <div className="numbering">
+              <Pagination
+                count={Math.ceil(post.length / postPerPage)}
+                page={currentpage}
+                onChange={handleChange}
+              />
+            </div>
+          </div>
+        </Stack>
       </div>
     </>
   );
