@@ -12,12 +12,12 @@ import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import { Link } from "react-router-dom";
-// import api from '../api/posts'
+
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-// import setPosts from './Main/actions'
+
 import "./Main.css";
-// import { fetchSpecificPO_SOW } from "../../store/CMS/POSOW-actions";
+
 import {
   fetchSpecificPO_SOW,
   sortProducts,
@@ -73,27 +73,11 @@ export const StyledMenu = styled((props) => (
 const Main = () => {
   const dispatch = useDispatch();
 
-  // const fetchPosts = async () => {
-  //     const response = await api
-  //     .get('http://localhost:8000/getPoDetails')
-  //     .catch( (err) =>{
-  //       if (err.response) {
-  //         console.log(err.response.data);
-  //         console.log(err.response.status);
-  //         console.log(err.response.headers);
-  //       }
-  //        else {
-  //         console.log(`Error: ${err.message}`);
-  //       }
-  //     });
-  //     dispatch(setPosts(response.data))
-
-  //   }
   useEffect(() => {
     dispatch(fetchPO_SOW_data());
   }, []);
   const post = useSelector((state) => state.CMS_state.poSowData);
-  // console.log(post);
+
   const [currentpage, currentsetPage] = React.useState(1);
   const [postPerPage, setPostPerPage] = React.useState(5);
   const [anchorEl, setAnchorEl] = React.useState(null);

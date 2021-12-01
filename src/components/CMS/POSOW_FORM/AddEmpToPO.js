@@ -61,8 +61,8 @@ export default function FormDialog(props) {
 
   useEffect(() => {
     if (props.edit) {
-      setStartDate(formatDate(new Date(specificEmpData[0].Start_Date)));
-      setEndDate(formatDate(new Date(specificEmpData[0].End_Date)));
+      setStartDate(new Date(specificEmpData[0].Start_Date));
+      setEndDate(new Date(specificEmpData[0].End_Date));
       setSelectedOption({
         emp_name: specificEmpData[0].Employee_Name,
         emp_id: specificEmpData[0].Employee_Id,
@@ -101,9 +101,9 @@ export default function FormDialog(props) {
 
       Employee_Name: selectedOption.emp_name,
       Allocation_Rate: Number(percentageAlloc),
-      Start_Date: formatDate(new Date(StartDate)),
+      Start_Date: new Date(StartDate),
 
-      End_Date: formatDate(new Date(EndDate)),
+      End_Date: new Date(EndDate),
 
       Employee_Id: emp_id.toString(),
     };

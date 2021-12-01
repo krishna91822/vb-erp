@@ -19,6 +19,7 @@ import { createNewPO_SOW } from "../../../store/CMS/POSOW-actions";
 import { UpdatePO_SOW } from "../../../store/CMS/POSOW-actions";
 import { SendForApproval } from "../../../store/CMS/POSOW-actions";
 import { uiActions } from "../../../store/ui-slice";
+import validateForm from "./validateForm";
 import CustomizedDialogs from "./dialogBox";
 
 // materialUI stylings for select dropdowns.
@@ -89,7 +90,7 @@ export const CapturePO_SOW = (props) => {
   let usrChkdClientFinController = new Array(clientFinController.length).fill(
     false
   );
-
+  const [errors, setErrors] = useState({});
   const [personName, setPersonName] = React.useState(ReadPersonName);
   const [projectName, setProjectName] = React.useState(ReadProjectName);
   const [typeName, setTypeName] = React.useState(ReadType);
@@ -259,10 +260,17 @@ export const CapturePO_SOW = (props) => {
       Currency: CurrName,
       Remarks: remarks,
     };
-    if (props.editBtn && editTglCheckedState) {
-      dispatch(UpdatePO_SOW(DataToSend, params.id));
+    const all_errors = validateForm(DataToSend);
+    setErrors(all_errors);
+    console.log(errors);
+    if (Object.keys(all_errors).length === 0) {
+      if (props.editBtn && editTglCheckedState) {
+        dispatch(UpdatePO_SOW(DataToSend, params.id));
+      } else {
+        dispatch(createNewPO_SOW(DataToSend));
+      }
     } else {
-      dispatch(createNewPO_SOW(DataToSend));
+      alert("All fields are required!");
     }
   };
   return (
@@ -366,6 +374,7 @@ export const CapturePO_SOW = (props) => {
                         onChange={handleClientChange}
                         input={<OutlinedInput label="Name" />}
                         MenuProps={MenuProps}
+                        error={errors.Client_Name ? true : false}
                         disabled={
                           props.editBtn && !editTglCheckedState ? true : false
                         }
@@ -398,6 +407,7 @@ export const CapturePO_SOW = (props) => {
                         onChange={handleProjectChange}
                         input={<OutlinedInput label="Name" />}
                         MenuProps={MenuProps}
+                        error={errors.Project_Name ? true : false}
                         disabled={
                           props.editBtn && !editTglCheckedState ? true : false
                         }
@@ -558,6 +568,7 @@ export const CapturePO_SOW = (props) => {
                         input={<OutlinedInput label="Name" />}
                         MenuProps={MenuProps}
                         data-test="Doc-Type-dropdown"
+                        error={errors.Type ? true : false}
                         disabled={
                           props.editBtn && !editTglCheckedState ? true : false
                         }
@@ -587,6 +598,7 @@ export const CapturePO_SOW = (props) => {
                       value={PO_number}
                       onChange={handlePoNumTxtBoxChange}
                       data-test="po-sow-num"
+                      error={errors.PO_Number ? true : false}
                       disabled={
                         props.editBtn && !editTglCheckedState ? true : false
                       }
@@ -605,6 +617,7 @@ export const CapturePO_SOW = (props) => {
                       value={PO_amt}
                       onChange={handlePOAmtTxtBoxChange}
                       data-test="po-sow-amt"
+                      error={errors.PO_Amount ? true : false}
                       disabled={
                         props.editBtn && !editTglCheckedState ? true : false
                       }
@@ -626,6 +639,7 @@ export const CapturePO_SOW = (props) => {
                         input={<OutlinedInput label="Name" />}
                         MenuProps={MenuProps}
                         data-test="currency-dropdown"
+                        error={errors.Currency ? true : false}
                         disabled={
                           props.editBtn && !editTglCheckedState ? true : false
                         }
@@ -657,6 +671,7 @@ export const CapturePO_SOW = (props) => {
                       variant="outlined"
                       value={DocName}
                       data-test="uploaded-doc-name-txtBox"
+                      error={errors.Document_Name ? true : false}
                       disabled={true}
                     />
                   </div>
@@ -676,6 +691,7 @@ export const CapturePO_SOW = (props) => {
                         input={<OutlinedInput label="Name" />}
                         MenuProps={MenuProps}
                         data-test="doc-typeForUpload-dropdown"
+                        error={errors.Document_Type ? true : false}
                         disabled={
                           props.editBtn && !editTglCheckedState ? true : false
                         }
@@ -750,6 +766,7 @@ export const CapturePO_SOW = (props) => {
                       value={remarks}
                       onChange={handleRemarksChange}
                       data-test="comments-remarks-txtBox"
+                      error={errors.Remarks ? true : false}
                       disabled={
                         props.editBtn && !editTglCheckedState ? true : false
                       }

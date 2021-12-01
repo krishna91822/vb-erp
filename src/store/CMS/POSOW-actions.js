@@ -72,14 +72,6 @@ export const fetchPOs_emp_data = (po_id) => {
     dispatch(PoSowActions.setPOEmpTabData(res.data));
   };
 };
-// export const fetchEmpOfThisPO = (PO_ID) => {
-//   return async function (dispatch) {
-//     const res = await axios.get(
-//       `http://localhost:8000/getPoDetailsByID/${PO_ID}`
-//     );
-//     dispatch(PoSowActions.setPOEmpTabData(res.data));
-//   };
-// };
 
 export const AddEmpToThisPO = (formData) => {
   return async function (dispatch) {

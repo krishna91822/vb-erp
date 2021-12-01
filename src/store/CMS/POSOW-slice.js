@@ -12,13 +12,13 @@ const names = [
   "TimeInc.",
 ];
 const AllAvailableEmp = [
-  { emp_name: "AQUIB", emp_id: "1990" },
-  { emp_name: "YASH DY", emp_id: "1972" },
-  { emp_name: "AYUSHI", emp_id: "1974" },
-  { emp_name: "YUSUF", emp_id: "2008" },
-  { emp_name: "TANMAY K", emp_id: "1957" },
-  { emp_name: "BHASKAR GURURANI", emp_id: "1993" },
-  { emp_name: "RAHUL VERMA", emp_id: "1994" },
+  { emp_name: "dave", emp_id: "VB1990" },
+  { emp_name: "Alex", emp_id: "VB1972" },
+  { emp_name: "Josh", emp_id: "VB1974" },
+  { emp_name: "Ryan", emp_id: "VB2008" },
+  { emp_name: "Scott", emp_id: "VB1957" },
+  { emp_name: "Patt", emp_id: "VB1993" },
+  { emp_name: "Mandy", emp_id: "VB1994" },
   { emp_name: "", emp_id: "" },
 ];
 const employees = [
@@ -72,7 +72,7 @@ const employees = [
     Allocation_Rate: 5,
   },
 ];
-const projects = ["xyz23", "asd34", "abc56", "yusah98", "ydy APPs"];
+const projects = ["xyz23", "asd34", "abc56", "project y", "project x"];
 const clientFinController = ["ABC", "XYZ", "EFG"];
 const targetedResources = ["ABC", "XYZ", "EFG", "ZZZ"];
 const clientSponsors = ["ABC", "XYZ"];
