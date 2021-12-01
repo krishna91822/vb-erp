@@ -1,4 +1,4 @@
-import { Route, Switch } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 
 import routes from "./routes/index";
 import Layout from "./components/layout/Layout";
@@ -22,16 +22,16 @@ function App() {
       )}
       {loader && <PageLoader />}
       <Layout>
-        <Switch>
+        <Routes>
           {routes.map((route, index) => (
             <Route
               key={index}
               path={route.path}
               exact
-              render={(props) => <route.component {...props} />}
+              element={<route.component />}
             ></Route>
           ))}
-        </Switch>
+        </Routes>
       </Layout>
     </Fragment>
   );
