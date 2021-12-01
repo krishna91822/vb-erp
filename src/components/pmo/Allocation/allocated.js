@@ -20,6 +20,7 @@ const Allocated = ({ pressed }) => {
   const [endDate, setEndDate] = useState("");
   const [page, setPage] = React.useState(0);
   const [empId, setEmpId] = useState("");
+  const [percentageAllocation, setPercentageAllocation] = useState("");
 
   let data = allocatedData;
   data = [...data].sort((a, b) =>
@@ -47,6 +48,10 @@ const Allocated = ({ pressed }) => {
     const empAll = event.target.value.toUpperCase();
     setEmpId(empAll);
   };
+  const filterPercentage = (event) => {
+    const perc = event.target.value.toUpperCase();
+    setPercentageAllocation(perc);
+  };
 
   const filteredData = data.filter((eachData) => {
     return (
@@ -54,7 +59,8 @@ const Allocated = ({ pressed }) => {
       eachData.projectAllocated.toLowerCase().includes(projectAllocated) &&
       eachData.startDate.includes(startDate) &&
       eachData.endDate.includes(endDate) &&
-      eachData.empId.toUpperCase().includes(empId)
+      eachData.empId.toUpperCase().includes(empId) &&
+      eachData.percentAllocated.toUpperCase().includes(percentageAllocation)
     );
   });
 

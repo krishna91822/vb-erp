@@ -23,6 +23,7 @@ import {
   DateContainerStyled,
   PmoContainer,
   DateElementStyled,
+  NumberStyle,
 } from "./styles";
 import {
   createProject,
@@ -345,22 +346,26 @@ const CreateProject = () => {
               <label htmlFor="cpc" data-test="client-primary-contact-label">
                 Client Primary Contact
               </label>
-              <TextField
-                type="number"
-                id="cpc"
-                name="clientPrimaryContact"
-                data-test="client-primary-contact-input"
-                size="small"
-                variant="outlined"
-                onInput={(e) => (e.target.value = e.target.value.slice(0, 10))}
-                disabled={!edit}
-                error={errors.clientPrimaryContact ? true : false}
-                helperText={errors.clientPrimaryContact}
-                value={clientPrimaryContact}
-                placeholder="Enter Client Primary Contact"
-                style={{ padding: "0.3em", width: "100%" }}
-                onChange={handleProjectChange}
-              />
+              <NumberStyle>
+                <TextField
+                  type="number"
+                  id="cpc"
+                  name="clientPrimaryContact"
+                  data-test="client-primary-contact-input"
+                  size="small"
+                  variant="outlined"
+                  disabled={!edit}
+                  error={errors.clientPrimaryContact ? true : false}
+                  helperText={errors.clientPrimaryContact}
+                  value={clientPrimaryContact}
+                  placeholder="Enter Client Primary Contact"
+                  style={{ padding: "0.3em", width: "100%" }}
+                  onChange={handleProjectChange}
+                  onInput={(e) =>
+                    (e.target.value = e.target.value.slice(0, 10))
+                  }
+                />
+              </NumberStyle>
             </FormElementsStyled>
             <FormElementsStyled>
               <label htmlFor="cps" data-test="client-project-sponsor-label">
