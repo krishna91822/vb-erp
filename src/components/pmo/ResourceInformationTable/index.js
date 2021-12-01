@@ -20,7 +20,7 @@ const ResourceInformationTable = ({ resources, removeResource, edit }) => {
           style={{
             backgroundColor: "#EDEDED",
             borderWidth: 2,
-            borderColor: "#000000",
+            borderColor: "rgb(162 157 157)",
             borderStyle: "solid",
           }}
         >

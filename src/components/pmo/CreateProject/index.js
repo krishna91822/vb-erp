@@ -245,7 +245,7 @@ const CreateProject = () => {
     <>
       <PmoContainer>
         <HeadingStyle>
-          <p data-test="user">user-Admin/Approver</p>
+          <p data-test="user">User - Admin/Approver</p>
           <Heading>
             <h2 data-test="page-title">PMO</h2>
             <EditViewSwitchs
@@ -464,6 +464,7 @@ const CreateProject = () => {
                 VB Project Manager
               </label>
               <Select
+                error={errors.vbProjectManager ? true : false}
                 id="vpm"
                 name="vbProjectManager"
                 data-test="vb-project-manager-select"
@@ -483,12 +484,16 @@ const CreateProject = () => {
                 </MenuItem>
                 <MenuItem value="Valuebound">ValueBound</MenuItem>
               </Select>
+              <FormHelperText error sx={{ mx: 2 }}>
+                {errors.vbProjectManager}
+              </FormHelperText>
             </FormElementsStyled>
             <FormElementsStyled>
               <label htmlFor="vpm" data-test="project-status-label">
                 Project Status
               </label>
               <Select
+                error={errors.vbProjectStatus ? true : false}
                 id="vpm"
                 name="vbProjectStatus"
                 data-test="project-status-input"
@@ -511,6 +516,9 @@ const CreateProject = () => {
                 <MenuItem value="On Hold">On Hold</MenuItem>
                 <MenuItem value="Done">Done</MenuItem>
               </Select>
+              <FormHelperText error sx={{ mx: 2 }}>
+                {errors.vbProjectStatus}
+              </FormHelperText>
             </FormElementsStyled>
           </FormContainerStyled>
           <ResourceInformation

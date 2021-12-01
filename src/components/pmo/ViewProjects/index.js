@@ -8,19 +8,19 @@ import {
   TableContainer,
   TableHead,
   TableRow,
+  Button,
 } from "@mui/material";
-
 import { pmoActions } from "../../../store/pmo-slice";
 import { getAllProjects } from "../../../store/pmo-actions";
 import {
   MainComponent,
+  HeadingStyle,
+  Heading,
   Container,
   SideButton,
-  CreateprojectLink,
   EditAction,
   Dropdown,
   Options,
-  CreateProjectButton,
   AdminName,
   ProjectHead,
   EditButton,
@@ -80,25 +80,34 @@ const ViewProjects = () => {
   return (
     <>
       <MainComponent>
-        <AdminName data-test="admin-name">User:- Admin/Approver</AdminName>
-        <br />
-        <SideButton>
-          <CreateprojectLink>
-            <Link to="/pmo/createproject">
-              <CreateProjectButton data-test="create-project-button">
+        <HeadingStyle>
+          <AdminName data-test="admin-name">User - Admin/Approver</AdminName>
+          <Heading>
+            <ProjectHead data-test="main-heading">Projects</ProjectHead>
+            <SideButton>
+              <Button
+                variant="contained"
+                size="small"
+                style={{
+                  backgroundColor: "#e8833a",
+                  textTransform: "none",
+                }}
+                onClick={() => {
+                  history.push("/pmo/createproject");
+                }}
+              >
                 Create a project
-              </CreateProjectButton>
-            </Link>
-          </CreateprojectLink>
-          <Dropdown onChange={entryValue} data-test="sortby-dropdown">
-            <Options Value="Sort by" hidden>
-              Sort by
-            </Options>
-            <Options value="Sort by Project ID">Sort by Project ID</Options>
-            <Options value="Sort by Status">Sort by Status</Options>
-          </Dropdown>
-        </SideButton>
-        <ProjectHead data-test="main-heading">Projects</ProjectHead>
+              </Button>
+              <Dropdown onChange={entryValue} data-test="sortby-dropdown">
+                <Options Value="Sort by" hidden>
+                  Sort by
+                </Options>
+                <Options value="Sort by Project ID">Sort by Project ID</Options>
+                <Options value="Sort by Status">Sort by Status</Options>
+              </Dropdown>
+            </SideButton>
+          </Heading>
+        </HeadingStyle>
         <Container>
           <TableContainer>
             <Table data-test="list-table">

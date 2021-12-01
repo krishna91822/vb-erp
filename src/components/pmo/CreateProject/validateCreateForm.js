@@ -30,6 +30,9 @@ export default function validateForm(data) {
   if (!data.vbProjectManager.trim()) {
     errors.vbProjectManager = "vb Project Manager Required";
   }
+  if (!data.vbProjectStatus.trim()) {
+    errors.vbProjectStatus = "vb Project Status Required";
+  }
 
   return errors;
 }

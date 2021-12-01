@@ -19,20 +19,28 @@ export const device = {
   desktopL: `(max-width: ${size.desktop})`,
 };
 
+export const PmoContainer = styled.div`
+  padding: 5px 15px;
+`;
+
 export const HeadingStyle = styled.div`
   p {
     text-align: right;
   }
 `;
 
-export const PmoContainer = styled.div`
-  margin: 0.5em;
-  padding: 0.5em;
+export const Heading = styled.div`
+  height: 46px;
+  margin-top: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: flex-end;
 `;
 
 export const StyledHeader = styled.form`
   padding: 0.5em;
-  border: 0.1em solid black;
+  border: 0.1em solid #afacacde;
 `;
 
 export const FormHeadingStyled = styled.div`
@@ -41,7 +49,7 @@ export const FormHeadingStyled = styled.div`
   flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
-  border-bottom: 0.1em solid black;
+  border-bottom: 0.1em solid #afacacde;
 `;
 
 export const FormContainerStyled = styled.div`
@@ -105,11 +113,4 @@ export const DateElementStyled = styled.div`
       width: 100%;
     }
   }
-`;
-
-export const Heading = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  align-items: center;
 `;

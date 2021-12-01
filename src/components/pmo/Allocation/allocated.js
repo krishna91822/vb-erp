@@ -7,7 +7,7 @@ import {
   TableHead,
   TableRow,
   TextField,
-} from "@material-ui/core";
+} from "@mui/material";
 import { useSelector } from "react-redux";
 import { Container, MiniHead } from "./style";
 import Tpagination from "../../UI/Pagination";

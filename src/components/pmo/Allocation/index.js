@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import Allocated from "./allocated";
 import Bench from "./bench";
 import {
+  HeadingStyle,
+  Heading,
   SideButton,
   Dropdown,
   Options,
@@ -23,20 +25,23 @@ const Allocation = () => {
 
   return (
     <MainComponent>
-      <AdminName data-test="admin-name">User:- Admin/Approver</AdminName>
-      <br />
-      <SideButton>
-        <Dropdown data-test="sortby-dropdown" onChange={ChangeAllocation}>
-          <Options Value="Sort by" hidden>
-            filter by
-          </Options>
-          <Options value="Sort by Allocated">Allocated</Options>
-          <Options value="Sort by on Bench">On Bench</Options>
-        </Dropdown>
-      </SideButton>
-      <ProjectHead data-test="main-heading">Allocations</ProjectHead>
+      <HeadingStyle>
+        <AdminName data-test="admin-name">User:- Admin/Approver</AdminName>
+        <Heading>
+          <ProjectHead data-test="main-heading">Allocations</ProjectHead>
+          <SideButton>
+            <Dropdown data-test="sortby-dropdown" onChange={ChangeAllocation}>
+              <Options Value="Sort by" hidden>
+                filter by
+              </Options>
+              <Options value="Sort by Allocated">Allocated</Options>
+              <Options value="Sort by on Bench">On Bench</Options>
+            </Dropdown>
+          </SideButton>
+        </Heading>
 
-      {bench === false ? <Allocated /> : <Bench />}
+        {bench === false ? <Allocated /> : <Bench />}
+      </HeadingStyle>
     </MainComponent>
   );
 };
