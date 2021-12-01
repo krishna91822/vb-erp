@@ -101,16 +101,18 @@ export default function FormDialog(props) {
 
       Employee_Name: selectedOption.emp_name,
       Allocation_Rate: Number(percentageAlloc),
-      Start_Date: formatDate(StartDate),
+      Start_Date: formatDate(new Date(StartDate)),
 
-      End_Date: formatDate(EndDate),
+      End_Date: formatDate(new Date(EndDate)),
 
       Employee_Id: emp_id.toString(),
     };
     if (props.edit) {
       dispatch(UpdateEmpData(DataToSend, emp_id.toString()));
+      setOpen(false);
     } else {
       dispatch(AddEmpToThisPO(DataToSend));
+      setOpen(false);
     }
   };
 
