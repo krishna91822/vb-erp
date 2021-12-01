@@ -1,5 +1,7 @@
 import Templates from "../pages/Templates";
 import NotFound from "../pages/NotFound";
+import Clients from "../pages/Clients/Clients";
+import CreateClient from "../pages/Clients/CreateClient";
 
 const routes = [
   {
@@ -15,6 +17,16 @@ const routes = [
   {
     path: "/login",
     title: "Login",
+  },
+  {
+    path: "/cims",
+    component: Clients,
+    title: "Clients",
+  },
+  {
+    path: "/cims/create",
+    component: CreateClient,
+    title: "Create Client",
   },
   {
     path: "*",
