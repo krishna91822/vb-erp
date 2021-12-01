@@ -12,7 +12,7 @@ import { useSelector } from "react-redux";
 import { Container, MiniHead } from "./style";
 import Tpagination from "../../UI/Pagination";
 
-const Allocated = () => {
+const Allocated = ({ pressed }) => {
   const { allocatedData } = useSelector((state) => state.pmo);
   const [associateName, setAssociateName] = useState("");
   const [projectAllocated, setProjectAllocated] = useState("");
@@ -72,105 +72,63 @@ const Allocated = () => {
           <Table data-test="list-table">
             <TableHead>
               <TableRow>
-                <TableCell align="left" style={{ paddingBottom: "2px" }}>
-                  ID
-                </TableCell>
-                <TableCell align="left" style={{ paddingBottom: "2px" }}>
-                  EmpID
-                </TableCell>
-                <TableCell align="left" style={{ paddingBottom: "2px" }}>
-                  Associate Name
-                </TableCell>
-                <TableCell align="left" style={{ paddingBottom: "2px" }}>
-                  Project Allocated
-                </TableCell>
-                <TableCell align="left" style={{ paddingBottom: "2px" }}>
+                <TableCell align="left">ID</TableCell>
+                <TableCell align="left">EmpID</TableCell>
+                <TableCell align="left">Associate Name</TableCell>
+                <TableCell align="left">Project Allocated</TableCell>
+                <TableCell align="left" style={{ minWidth: "170px" }}>
                   Percentage Allocated
                 </TableCell>
-                <TableCell align="left" style={{ paddingBottom: "2px" }}>
-                  Start Date
-                </TableCell>
-                <TableCell align="left" style={{ paddingBottom: "2px" }}>
-                  End Date
-                </TableCell>
+                <TableCell align="left">Start Date</TableCell>
+                <TableCell align="left">End Date</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-              <TableRow style={{ backgroundColor: "rgb(227, 231, 231)" }}>
-                <TableCell
-                  align="left"
-                  style={{ padding: "0px 8px", paddingBottom: "5px" }}
-                ></TableCell>
-                <TableCell
-                  align="left"
-                  style={{ padding: "0px 8px", paddingBottom: "5px" }}
-                >
-                  <TextField
-                    style={{ padding: "0px 8px", paddingBottom: "5px" }}
-                    type="text"
-                    placeholder="Emp Id"
-                    onChange={filterEmpId}
-                    value={empId}
-                  />
-                </TableCell>
-                <TableCell
-                  align="left"
-                  style={{ padding: "0px 8px", paddingBottom: "5px" }}
-                >
-                  <TextField
-                    style={{ padding: "0px 8px", paddingBottom: "5px" }}
-                    type="text"
-                    placeholder="Associate Name"
-                    onChange={filterAssociateName}
-                    value={associateName}
-                  />
-                </TableCell>
-                <TableCell
-                  style={{ padding: "0px 8px", paddingBottom: "5px" }}
-                  align="left"
-                >
-                  <TextField
-                    style={{ padding: "0px 8px", paddingBottom: "5px" }}
-                    type="text"
-                    placeholder="Project Allocated"
-                    onChange={filterProjectAllocated}
-                    value={projectAllocated}
-                  />
-                </TableCell>
-                <TableCell
-                  style={{ padding: "0px 8px", paddingBottom: "5px" }}
-                  align="left"
-                >
-                  <TextField
-                    style={{ padding: "0px 8px", paddingBottom: "5px" }}
-                    type="number"
-                    onChange={filterPercentage}
-                    value={percentageAllocation}
-                  />
-                </TableCell>
-                <TableCell
-                  style={{ padding: "0px 8px", paddingBottom: "5px" }}
-                  align="left"
-                >
-                  <TextField
-                    style={{ padding: "0px 8px", paddingBottom: "5px" }}
-                    type="date"
-                    onChange={filterStartDate}
-                    value={startDate}
-                  />
-                </TableCell>
-                <TableCell
-                  style={{ padding: "0px 8px", paddingBottom: "5px" }}
-                  align="left"
-                >
-                  <TextField
-                    style={{ padding: "0px 8px", paddingBottom: "5px" }}
-                    type="date"
-                    onChange={filterEndDate}
-                    value={endDate}
-                  />
-                </TableCell>
-              </TableRow>
+              {pressed && (
+                <TableRow>
+                  <TableCell align="left"></TableCell>
+                  <TableCell align="left">
+                    <TextField
+                      type="text"
+                      placeholder="Emp Id"
+                      onChange={filterEmpId}
+                      value={empId}
+                    />
+                  </TableCell>
+                  <TableCell align="left">
+                    <TextField
+                      type="text"
+                      placeholder="Associate Name"
+                      onChange={filterAssociateName}
+                      value={associateName}
+                    />
+                  </TableCell>
+                  <TableCell align="left">
+                    <TextField
+                      type="text"
+                      placeholder="Project Allocated"
+                      onChange={filterProjectAllocated}
+                      value={projectAllocated}
+                    />
+                  </TableCell>
+                  <TableCell align="left"></TableCell>
+                  <TableCell align="left">
+                    <TextField
+                      type="date"
+                      onChange={filterStartDate}
+                      value={startDate}
+                    />
+                  </TableCell>
+                  <TableCell align="left">
+                    <TextField
+                      type="date"
+                      onChange={filterEndDate}
+                      value={endDate}
+                    />
+                  </TableCell>
+                </TableRow>
+              )}
+
               {filteredData
                 .slice(page * 5, page * 5 + 5)
                 .map((currElem, index) => (

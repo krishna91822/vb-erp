@@ -10,6 +10,7 @@ import {
   TableRow,
   TextField,
 } from "@mui/material";
+import FilterListIcon from "@mui/icons-material/FilterList";
 
 import { pmoActions } from "../../../store/pmo-slice";
 import { getAllProjects } from "../../../store/pmo-actions";
@@ -38,6 +39,7 @@ const ViewProjects = () => {
   const [projectName, setProjectName] = useState("");
   const [vbProjectId, setVbProjectId] = useState("");
   const [vbProjectStatus, setVbProjectStatus] = useState("");
+  const [pressed, setPressed] = useState(false);
   useEffect(() => {
     dispatch(getAllProjects());
   }, []);
@@ -108,7 +110,9 @@ const ViewProjects = () => {
       eachData.vbProjectStatus.toLowerCase().includes(vbProjectStatus)
     );
   });
-
+  const showfilter = () => {
+    setPressed(!pressed);
+  };
   return (
     <>
       <MainComponent>
@@ -116,6 +120,10 @@ const ViewProjects = () => {
         <br />
         <SideButton>
           <CreateprojectLink>
+            <FilterListIcon
+              onClick={showfilter}
+              style={{ cursor: "pointer" }}
+            />
             <Link to="/pmo/createproject">
               <CreateProjectButton data-test="create-project-button">
                 Create a project
@@ -145,64 +153,44 @@ const ViewProjects = () => {
                 </TableRow>
               </TableHead>
               <TableBody>
-                <TableRow style={{ backgroundColor: "rgb(227, 231, 231)" }}>
-                  <TableCell
-                    align="left"
-                    style={{ padding: "0px 8px", paddingBottom: "5px" }}
-                  ></TableCell>
-                  <TableCell
-                    align="left"
-                    style={{ padding: "0px 8px", paddingBottom: "5px" }}
-                  >
-                    <TextField
-                      style={{ padding: "0px 8px", paddingBottom: "5px" }}
-                      type="text"
-                      placeholder="Emp Id"
-                      onChange={filterClientName}
-                      value={clientName}
-                    />
-                  </TableCell>
-                  <TableCell
-                    align="left"
-                    style={{ padding: "0px 8px", paddingBottom: "5px" }}
-                  >
-                    <TextField
-                      style={{ padding: "0px 8px", paddingBottom: "5px" }}
-                      type="text"
-                      placeholder="Associate Name"
-                      onChange={filterProjectName}
-                      value={projectName}
-                    />
-                  </TableCell>
-                  <TableCell
-                    style={{ padding: "0px 8px", paddingBottom: "5px" }}
-                    align="left"
-                  >
-                    <TextField
-                      style={{ padding: "0px 8px", paddingBottom: "5px" }}
-                      type="text"
-                      placeholder="Project Allocated"
-                      onChange={filterProjectId}
-                      value={vbProjectId}
-                    />
-                  </TableCell>
-                  <TableCell
-                    style={{ padding: "0px 8px", paddingBottom: "5px" }}
-                    align="left"
-                  >
-                    <TextField
-                      style={{ padding: "0px 8px", paddingBottom: "5px" }}
-                      type="text"
-                      placeholder="Project Allocated"
-                      onChange={filterStatus}
-                      value={vbProjectStatus}
-                    />
-                  </TableCell>
-                  <TableCell
-                    style={{ padding: "0px 8px", paddingBottom: "5px" }}
-                    align="left"
-                  ></TableCell>
-                </TableRow>
+                {pressed && (
+                  <TableRow>
+                    <TableCell align="left"></TableCell>
+                    <TableCell align="left">
+                      <TextField
+                        type="text"
+                        placeholder="Emp Id"
+                        onChange={filterClientName}
+                        value={clientName}
+                      />
+                    </TableCell>
+                    <TableCell align="left">
+                      <TextField
+                        type="text"
+                        placeholder="Associate Name"
+                        onChange={filterProjectName}
+                        value={projectName}
+                      />
+                    </TableCell>
+                    <TableCell align="left">
+                      <TextField
+                        type="text"
+                        placeholder="Project Allocated"
+                        onChange={filterProjectId}
+                        value={vbProjectId}
+                      />
+                    </TableCell>
+                    <TableCell align="left">
+                      <TextField
+                        type="text"
+                        placeholder="Project Allocated"
+                        onChange={filterStatus}
+                        value={vbProjectStatus}
+                      />
+                    </TableCell>
+                    <TableCell align="left"></TableCell>
+                  </TableRow>
+                )}
                 {filteredData
                   .slice(page * 5, page * 5 + 5)
                   .map((currElem, index) => (
