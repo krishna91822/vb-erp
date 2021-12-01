@@ -464,7 +464,9 @@ export default function UseForm() {
           )
           .then((res) => {
             if (res.status === 200) {
-              dispatch(cimsActions.resetForm());
+              setTimeout(() => {
+                dispatch(cimsActions.resetForm());
+              }, 100);
               window.alert("Data added successfully!");
               navigate("/cims");
             } else
