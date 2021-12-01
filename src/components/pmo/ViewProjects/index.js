@@ -9,7 +9,7 @@ import {
   TableHead,
   TableRow,
   TextField,
-} from "@mui/material";
+} from "@material-ui/core";
 import FilterListIcon from "@mui/icons-material/FilterList";
 
 import { pmoActions } from "../../../store/pmo-slice";
