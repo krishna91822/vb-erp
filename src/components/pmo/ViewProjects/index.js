@@ -115,7 +115,6 @@ const ViewProjects = () => {
   };
   return (
     <>
-      <TextField id="standard-basic" type="text" placeholder="Emp Id" />
       <MainComponent>
         <AdminName data-test="admin-name">User:- Admin/Approver</AdminName>
         <br />
