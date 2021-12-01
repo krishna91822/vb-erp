@@ -7,12 +7,12 @@ import {
   TableHead,
   TableRow,
   TextField,
-} from "@material-ui/core";
+} from "@mui/material";
 import { useSelector } from "react-redux";
 import { Container, MiniHead } from "./style";
 import Tpagination from "../../UI/Pagination";
 
-const Allocated = () => {
+const Allocated = ({ pressed }) => {
   const { allocatedData } = useSelector((state) => state.pmo);
   const [associateName, setAssociateName] = useState("");
   const [projectAllocated, setProjectAllocated] = useState("");
@@ -20,6 +20,7 @@ const Allocated = () => {
   const [endDate, setEndDate] = useState("");
   const [page, setPage] = React.useState(0);
   const [empId, setEmpId] = useState("");
+  const [percentageAllocation, setPercentageAllocation] = useState("");
 
   let data = allocatedData;
   data = [...data].sort((a, b) =>
@@ -47,6 +48,10 @@ const Allocated = () => {
     const empAll = event.target.value.toUpperCase();
     setEmpId(empAll);
   };
+  const filterPercentage = (event) => {
+    const perc = event.target.value.toUpperCase();
+    setPercentageAllocation(perc);
+  };
 
   const filteredData = data.filter((eachData) => {
     return (
@@ -54,7 +59,8 @@ const Allocated = () => {
       eachData.projectAllocated.toLowerCase().includes(projectAllocated) &&
       eachData.startDate.includes(startDate) &&
       eachData.endDate.includes(endDate) &&
-      eachData.empId.toUpperCase().includes(empId)
+      eachData.empId.toUpperCase().includes(empId) &&
+      eachData.percentAllocated.toUpperCase().includes(percentageAllocation)
     );
   });
 
@@ -66,113 +72,98 @@ const Allocated = () => {
           <Table data-test="list-table">
             <TableHead>
               <TableRow>
-                <TableCell align="left" style={{ paddingBottom: "2px" }}>
-                  ID
-                </TableCell>
-                <TableCell align="left" style={{ paddingBottom: "2px" }}>
+                <TableCell align="left">SNO</TableCell>
+                <TableCell align="left" style={{ maxWidth: "100px" }}>
                   EmpID
                 </TableCell>
-                <TableCell align="left" style={{ paddingBottom: "2px" }}>
+                <TableCell align="left" style={{ minWidth: "140px" }}>
                   Associate Name
                 </TableCell>
-                <TableCell align="left" style={{ paddingBottom: "2px" }}>
+                <TableCell align="left" style={{ minWidth: "140px" }}>
                   Project Allocated
                 </TableCell>
-                <TableCell align="left" style={{ paddingBottom: "2px" }}>
+                <TableCell align="left" style={{ minWidth: "170px" }}>
                   Percentage Allocated
                 </TableCell>
-                <TableCell align="left" style={{ paddingBottom: "2px" }}>
+                <TableCell align="left" style={{ maxWidth: "130px" }}>
                   Start Date
                 </TableCell>
-                <TableCell align="left" style={{ paddingBottom: "2px" }}>
-                  End Date
-                </TableCell>
+                <TableCell align="left">End Date</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-              <TableRow style={{ backgroundColor: "rgb(227, 231, 231)" }}>
-                <TableCell
-                  align="left"
-                  style={{ padding: "0px 8px", paddingBottom: "5px" }}
-                ></TableCell>
-                <TableCell
-                  align="left"
-                  style={{ padding: "0px 8px", paddingBottom: "5px" }}
-                >
-                  <TextField
-                    style={{ padding: "0px 8px", paddingBottom: "5px" }}
-                    type="text"
-                    placeholder="Emp Id"
-                    onChange={filterEmpId}
-                    value={empId}
-                  />
-                </TableCell>
-                <TableCell
-                  align="left"
-                  style={{ padding: "0px 8px", paddingBottom: "5px" }}
-                >
-                  <TextField
-                    style={{ padding: "0px 8px", paddingBottom: "5px" }}
-                    type="text"
-                    placeholder="Associate Name"
-                    onChange={filterAssociateName}
-                    value={associateName}
-                  />
-                </TableCell>
-                <TableCell
-                  style={{ padding: "0px 8px", paddingBottom: "5px" }}
-                  align="left"
-                >
-                  <TextField
-                    style={{ padding: "0px 8px", paddingBottom: "5px" }}
-                    type="text"
-                    placeholder="Project Allocated"
-                    onChange={filterProjectAllocated}
-                    value={projectAllocated}
-                  />
-                </TableCell>
-                <TableCell
-                  style={{ padding: "0px 8px", paddingBottom: "5px" }}
-                  align="left"
-                ></TableCell>
-                <TableCell
-                  style={{ padding: "0px 8px", paddingBottom: "5px" }}
-                  align="left"
-                >
-                  <TextField
-                    style={{ padding: "0px 8px", paddingBottom: "5px" }}
-                    type="date"
-                    onChange={filterStartDate}
-                    value={startDate}
-                  />
-                </TableCell>
-                <TableCell
-                  style={{ padding: "0px 8px", paddingBottom: "5px" }}
-                  align="left"
-                >
-                  <TextField
-                    style={{ padding: "0px 8px", paddingBottom: "5px" }}
-                    type="date"
-                    onChange={filterEndDate}
-                    value={endDate}
-                  />
-                </TableCell>
-              </TableRow>
-              {filteredData.slice(page * 5, page * 5 + 5).map((currElem) => (
-                <TableRow key={currElem.id}>
-                  <TableCell align="left">{currElem.id}</TableCell>
-                  <TableCell align="left">{currElem.empId}</TableCell>
-                  <TableCell align="left">{currElem.associateName}</TableCell>
+              {pressed && (
+                <TableRow>
+                  <TableCell align="left"></TableCell>
                   <TableCell align="left">
-                    {currElem.projectAllocated}
+                    <TextField
+                      variant="standard"
+                      type="text"
+                      placeholder="Emp Id"
+                      onChange={filterEmpId}
+                      value={empId}
+                      inputProps={{ style: { fontSize: "small" } }}
+                    />
                   </TableCell>
                   <TableCell align="left">
-                    {currElem.percentAllocated}
+                    <TextField
+                      variant="standard"
+                      type="text"
+                      placeholder="Associate Name"
+                      onChange={filterAssociateName}
+                      value={associateName}
+                      inputProps={{ style: { fontSize: "small" } }}
+                    />
                   </TableCell>
-                  <TableCell align="left">{currElem.startDate}</TableCell>
-                  <TableCell align="left">{currElem.endDate}</TableCell>
+                  <TableCell align="left">
+                    <TextField
+                      variant="standard"
+                      type="text"
+                      placeholder="Project Allocated"
+                      onChange={filterProjectAllocated}
+                      value={projectAllocated}
+                      inputProps={{ style: { fontSize: "small" } }}
+                    />
+                  </TableCell>
+                  <TableCell align="left"></TableCell>
+                  <TableCell align="left">
+                    <TextField
+                      variant="standard"
+                      type="date"
+                      onChange={filterStartDate}
+                      value={startDate}
+                      inputProps={{ style: { fontSize: "small" } }}
+                    />
+                  </TableCell>
+                  <TableCell align="left">
+                    <TextField
+                      variant="standard"
+                      type="date"
+                      inputProps={{ style: { fontSize: "small" } }}
+                      onChange={filterEndDate}
+                      value={endDate}
+                    />
+                  </TableCell>
                 </TableRow>
-              ))}
+              )}
+
+              {filteredData
+                .slice(page * 5, page * 5 + 5)
+                .map((currElem, index) => (
+                  <TableRow key={currElem.id}>
+                    <TableCell align="left">{index + 1}</TableCell>
+                    <TableCell align="left">{currElem.empId}</TableCell>
+                    <TableCell align="left">{currElem.associateName}</TableCell>
+                    <TableCell align="left">
+                      {currElem.projectAllocated}
+                    </TableCell>
+                    <TableCell align="left">
+                      {currElem.percentAllocated}
+                    </TableCell>
+                    <TableCell align="left">{currElem.startDate}</TableCell>
+                    <TableCell align="left">{currElem.endDate}</TableCell>
+                  </TableRow>
+                ))}
             </TableBody>
           </Table>
         </TableContainer>

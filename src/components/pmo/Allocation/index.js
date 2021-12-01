@@ -1,7 +1,11 @@
 import React, { useState } from "react";
 import Allocated from "./allocated";
 import Bench from "./bench";
+import FilterListIcon from "@mui/icons-material/FilterList";
+
 import {
+  HeadingStyle,
+  Heading,
   SideButton,
   Dropdown,
   Options,
@@ -11,6 +15,7 @@ import {
 } from "./style";
 
 const Allocation = () => {
+  const [pressed, setPressed] = useState(false);
   const [bench, setBench] = useState(false);
   const ChangeAllocation = (event) => {
     const AllocatedValue = event.target.value;
@@ -20,23 +25,36 @@ const Allocation = () => {
       setBench(false);
     }
   };
-
+  const showfilter = () => {
+    setPressed(!pressed);
+  };
   return (
     <MainComponent>
-      <AdminName data-test="admin-name">User:- Admin/Approver</AdminName>
-      <br />
-      <SideButton>
-        <Dropdown data-test="sortby-dropdown" onChange={ChangeAllocation}>
-          <Options Value="Sort by" hidden>
-            filter by
-          </Options>
-          <Options value="Sort by Allocated">Allocated</Options>
-          <Options value="Sort by on Bench">On Bench</Options>
-        </Dropdown>
-      </SideButton>
-      <ProjectHead data-test="main-heading">Allocations</ProjectHead>
+      <HeadingStyle>
+        <AdminName data-test="admin-name">User:- Admin/Approver</AdminName>
+        <Heading>
+          <ProjectHead data-test="main-heading">Allocations</ProjectHead>
+          <SideButton>
+            <FilterListIcon
+              onClick={showfilter}
+              style={{ cursor: "pointer" }}
+            />
+            <Dropdown data-test="sortby-dropdown" onChange={ChangeAllocation}>
+              <Options Value="Sort by" hidden>
+                filter by
+              </Options>
+              <Options value="Sort by Allocated">Allocated</Options>
+              <Options value="Sort by on Bench">On Bench</Options>
+            </Dropdown>
+          </SideButton>
+        </Heading>
 
-      {bench === false ? <Allocated /> : <Bench />}
+        {bench === false ? (
+          <Allocated pressed={pressed} />
+        ) : (
+          <Bench pressed={pressed} />
+        )}
+      </HeadingStyle>
     </MainComponent>
   );
 };

@@ -1,6 +1,8 @@
 import React, { useState, useLayoutEffect, useEffect } from "react";
 import { useParams, useLocation, useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import { nanoid } from "nanoid";
+
 import {
   Button,
   TextField,
@@ -21,6 +23,7 @@ import {
   DateContainerStyled,
   PmoContainer,
   DateElementStyled,
+  NumberStyle,
 } from "./styles";
 import {
   createProject,
@@ -30,8 +33,6 @@ import {
 import { pmoActions } from "../../../store/pmo-slice";
 import validateForm from "./validateCreateForm";
 import validateResourceForm from "../ResourceInformation/validateResourceForm";
-
-let initialSno = 0;
 
 const initialState = {
   project: {
@@ -196,11 +197,10 @@ const CreateProject = () => {
         ...state,
         resources: [
           ...state.resources,
-          { ...resource, id: (initialSno + 1).toString() },
+          { ...resource, id: Date.now().toString() },
         ],
         resource: initialState.resource,
       });
-      initialSno += 1;
     }
   };
 
@@ -224,7 +224,7 @@ const CreateProject = () => {
         dispatch(
           createProject({
             ...state.project,
-            vbProjectId: `VB-${Date.now().toString()}`,
+            vbProjectId: nanoid(7).toUpperCase(),
             resources,
           })
         );
@@ -245,7 +245,7 @@ const CreateProject = () => {
     <>
       <PmoContainer>
         <HeadingStyle>
-          <p data-test="user">user-Admin/Approver</p>
+          <p data-test="user">User - Admin/Approver</p>
           <Heading>
             <h2 data-test="page-title">PMO</h2>
             <EditViewSwitchs
@@ -278,7 +278,7 @@ const CreateProject = () => {
           <FormContainerStyled>
             <FormElementsStyled>
               <label htmlFor="cn" data-test="client-name-label">
-                Client Name
+                Client Name <span>*</span>
               </label>
               <Select
                 error={errors.clientName ? true : false}
@@ -306,7 +306,7 @@ const CreateProject = () => {
             </FormElementsStyled>
             <FormElementsStyled>
               <label htmlFor="pn" data-test="project-name-label">
-                Project Name
+                Project Name <span>*</span>
               </label>
               <TextField
                 error={errors.projectName ? true : false}
@@ -325,7 +325,7 @@ const CreateProject = () => {
             </FormElementsStyled>
             <FormElementsStyled>
               <label htmlFor="cpm" data-test="client-project-manager-label">
-                Client Project Manager
+                Client Project Manager <span>*</span>
               </label>
               <TextField
                 id="cpm"
@@ -344,27 +344,32 @@ const CreateProject = () => {
             </FormElementsStyled>
             <FormElementsStyled>
               <label htmlFor="cpc" data-test="client-primary-contact-label">
-                Client Primary Contact
+                Client Primary Contact <span>*</span>
               </label>
-              <TextField
-                type="number"
-                id="cpc"
-                name="clientPrimaryContact"
-                data-test="client-primary-contact-input"
-                size="small"
-                variant="outlined"
-                disabled={!edit}
-                error={errors.clientPrimaryContact ? true : false}
-                helperText={errors.clientPrimaryContact}
-                value={clientPrimaryContact}
-                placeholder="Enter Client Primary Contact"
-                style={{ padding: "0.3em", width: "100%" }}
-                onChange={handleProjectChange}
-              />
+              <NumberStyle>
+                <TextField
+                  type="number"
+                  id="cpc"
+                  name="clientPrimaryContact"
+                  data-test="client-primary-contact-input"
+                  size="small"
+                  variant="outlined"
+                  disabled={!edit}
+                  error={errors.clientPrimaryContact ? true : false}
+                  helperText={errors.clientPrimaryContact}
+                  value={clientPrimaryContact}
+                  placeholder="Enter Client Primary Contact"
+                  style={{ padding: "0.3em", width: "100%" }}
+                  onChange={handleProjectChange}
+                  onInput={(e) =>
+                    (e.target.value = e.target.value.slice(0, 10))
+                  }
+                />
+              </NumberStyle>
             </FormElementsStyled>
             <FormElementsStyled>
               <label htmlFor="cps" data-test="client-project-sponsor-label">
-                Client Project Sponsor
+                Client Project Sponsor <span>*</span>
               </label>
               <TextField
                 id="cps"
@@ -400,7 +405,7 @@ const CreateProject = () => {
             </FormElementsStyled>
             <FormElementsStyled>
               <label htmlFor="cfc" data-test="client-finance-controller-label">
-                Client Finance Controller
+                Client Finance Controller <span>*</span>
               </label>
               <TextField
                 id="cfc"
@@ -420,7 +425,7 @@ const CreateProject = () => {
             <DateContainerStyled>
               <DateElementStyled>
                 <label htmlFor="sd" data-test="start-date-label">
-                  Start Date
+                  Start Date <span>*</span>
                 </label>
                 <TextField
                   type="date"
@@ -440,7 +445,7 @@ const CreateProject = () => {
               </DateElementStyled>
               <DateElementStyled>
                 <label htmlFor="ed" data-test="end-date-label">
-                  End Date
+                  End Date <span>*</span>
                 </label>
                 <TextField
                   type="date"
@@ -461,9 +466,10 @@ const CreateProject = () => {
             </DateContainerStyled>
             <FormElementsStyled>
               <label htmlFor="vpm" data-test="vb-project-manager-label">
-                VB Project Manager
+                VB Project Manager <span>*</span>
               </label>
               <Select
+                error={errors.vbProjectManager ? true : false}
                 id="vpm"
                 name="vbProjectManager"
                 data-test="vb-project-manager-select"
@@ -483,12 +489,16 @@ const CreateProject = () => {
                 </MenuItem>
                 <MenuItem value="Valuebound">ValueBound</MenuItem>
               </Select>
+              <FormHelperText error sx={{ mx: 2 }}>
+                {errors.vbProjectManager}
+              </FormHelperText>
             </FormElementsStyled>
             <FormElementsStyled>
               <label htmlFor="vpm" data-test="project-status-label">
-                Project Status
+                Project Status <span>*</span>
               </label>
               <Select
+                error={errors.vbProjectStatus ? true : false}
                 id="vpm"
                 name="vbProjectStatus"
                 data-test="project-status-input"
@@ -511,6 +521,9 @@ const CreateProject = () => {
                 <MenuItem value="On Hold">On Hold</MenuItem>
                 <MenuItem value="Done">Done</MenuItem>
               </Select>
+              <FormHelperText error sx={{ mx: 2 }}>
+                {errors.vbProjectStatus}
+              </FormHelperText>
             </FormElementsStyled>
           </FormContainerStyled>
           <ResourceInformation
