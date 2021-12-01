@@ -13,7 +13,7 @@ export default function Tpagination({ setPage, rows }) {
       style={{
         display: "float",
         position: "fixed",
-        bottom: "2em",
+        bottom: "0.5em",
         right: "2em",
         zIndex: "2",
       }}

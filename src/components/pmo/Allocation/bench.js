@@ -8,7 +8,7 @@ import {
   TableHead,
   TableRow,
   TextField,
-} from "@material-ui/core";
+} from "@mui/material";
 
 import { Container, MiniHead } from "./style";
 import Tpagination from "../../UI/Pagination";
@@ -73,7 +73,7 @@ const Bench = ({ pressed }) => {
           <Table data-test="list-table">
             <TableHead>
               <TableRow>
-                <TableCell align="left">ID</TableCell>
+                <TableCell align="left">SNO</TableCell>
                 <TableCell align="left">EmpID</TableCell>
                 <TableCell align="left">Associate Name</TableCell>
                 <TableCell align="left">Last Allocated Project</TableCell>
@@ -87,62 +87,74 @@ const Bench = ({ pressed }) => {
                   <TableCell align="left"></TableCell>
                   <TableCell align="left">
                     <TextField
+                      variant="standard"
                       type="text"
                       placeholder="Emp Id"
                       onChange={filterEmpId}
                       value={empId}
+                      inputProps={{ style: { fontSize: "small" } }}
                     />
                   </TableCell>
                   <TableCell align="left">
                     <TextField
+                      variant="standard"
                       type="text"
                       placeholder="Associate Name"
                       onChange={filterAssociateName}
                       value={associateName}
+                      inputProps={{ style: { fontSize: "small" } }}
                     />
                   </TableCell>
                   <TableCell align="left">
                     <TextField
+                      variant="standard"
                       type="text"
                       placeholder="Last Allocated Project"
                       onChange={filterLastAllocatedProject}
                       value={lastAllocatedProject}
+                      inputProps={{ style: { fontSize: "small" } }}
                     />
                   </TableCell>
                   <TableCell align="left">
                     <TextField
+                      variant="standard"
                       type="text"
                       placeholder="Primary Capabilities"
                       onChange={filterPrimaryCapabilities}
                       value={primaryCapabilities}
+                      inputProps={{ style: { fontSize: "small" } }}
                     />
                   </TableCell>
                   <TableCell align="left">
                     <TextField
+                      variant="standard"
                       type="date"
                       onChange={filterLastAllocatedDate}
                       value={lastAllocatedDate}
+                      inputProps={{ style: { fontSize: "small" } }}
                     />
                   </TableCell>
                 </TableRow>
               )}
 
-              {filteredData.slice(page * 5, page * 5 + 5).map((currElem) => (
-                <TableRow key={currElem.id}>
-                  <TableCell align="left">{currElem.id}</TableCell>
-                  <TableCell align="left">{currElem.empId}</TableCell>
-                  <TableCell align="left">{currElem.associateName}</TableCell>
-                  <TableCell align="left">
-                    {currElem.lastAllocatedProject}
-                  </TableCell>
-                  <TableCell align="left">
-                    {currElem.primaryCapabilities}
-                  </TableCell>
-                  <TableCell align="left">
-                    {currElem.lastallocationDate}
-                  </TableCell>
-                </TableRow>
-              ))}
+              {filteredData
+                .slice(page * 5, page * 5 + 5)
+                .map((currElem, index) => (
+                  <TableRow key={currElem.id}>
+                    <TableCell align="left">{index + 1}</TableCell>
+                    <TableCell align="left">{currElem.empId}</TableCell>
+                    <TableCell align="left">{currElem.associateName}</TableCell>
+                    <TableCell align="left">
+                      {currElem.lastAllocatedProject}
+                    </TableCell>
+                    <TableCell align="left">
+                      {currElem.primaryCapabilities}
+                    </TableCell>
+                    <TableCell align="left">
+                      {currElem.lastallocationDate}
+                    </TableCell>
+                  </TableRow>
+                ))}
             </TableBody>
           </Table>
         </TableContainer>

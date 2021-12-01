@@ -20,12 +20,12 @@ const ResourceInformationTable = ({ resources, removeResource, edit }) => {
           style={{
             backgroundColor: "#EDEDED",
             borderWidth: 2,
-            borderColor: "#000000",
+            borderColor: "rgb(162 157 157)",
             borderStyle: "solid",
           }}
         >
           <TableRow>
-            <TableCell align="left">SNo</TableCell>
+            <TableCell align="left">SNO</TableCell>
             <TableCell align="left">Associate Name</TableCell>
             <TableCell align="left">Start Date</TableCell>
             <TableCell align="left">End Date</TableCell>
