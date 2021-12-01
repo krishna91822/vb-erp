@@ -1,6 +1,8 @@
 import React, { useState, useLayoutEffect, useEffect } from "react";
 import { useParams, useLocation, useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import { nanoid } from "nanoid";
+
 import {
   Button,
   TextField,
@@ -30,8 +32,6 @@ import {
 import { pmoActions } from "../../../store/pmo-slice";
 import validateForm from "./validateCreateForm";
 import validateResourceForm from "../ResourceInformation/validateResourceForm";
-
-let initialSno = 0;
 
 const initialState = {
   project: {
@@ -196,11 +196,10 @@ const CreateProject = () => {
         ...state,
         resources: [
           ...state.resources,
-          { ...resource, id: (initialSno + 1).toString() },
+          { ...resource, id: Date.now().toString() },
         ],
         resource: initialState.resource,
       });
-      initialSno += 1;
     }
   };
 
@@ -224,7 +223,7 @@ const CreateProject = () => {
         dispatch(
           createProject({
             ...state.project,
-            vbProjectId: `VB-${Date.now().toString()}`,
+            vbProjectId: nanoid(7).toUpperCase(),
             resources,
           })
         );
@@ -353,6 +352,7 @@ const CreateProject = () => {
                 data-test="client-primary-contact-input"
                 size="small"
                 variant="outlined"
+                onInput={(e) => (e.target.value = e.target.value.slice(0, 10))}
                 disabled={!edit}
                 error={errors.clientPrimaryContact ? true : false}
                 helperText={errors.clientPrimaryContact}
