@@ -1,0 +1,32 @@
+* {
+  margin: 10px;
+}
+
+.textfield {
+  width: 800px;
+}
+
+.textfield1 {
+  width: 800px;
+}
+.check {
+  width: 400px;
+}
+
+#editbutton {
+  position: relative;
+  top: 18px;
+}
+
+.btn-container {
+  height: 50px;
+  padding: 10px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+#btn {
+  position: relative;
+  right: 10px;
+}
