@@ -20,6 +20,7 @@ const Allocated = () => {
   const [endDate, setEndDate] = useState("");
   const [page, setPage] = React.useState(0);
   const [empId, setEmpId] = useState("");
+  const [percentageAllocation, setPercentageAllocation] = useState("");
 
   let data = allocatedData;
   data = [...data].sort((a, b) =>
@@ -47,6 +48,10 @@ const Allocated = () => {
     const empAll = event.target.value.toUpperCase();
     setEmpId(empAll);
   };
+  const filterPercentage = (event) => {
+    const perc = event.target.value.toUpperCase();
+    setPercentageAllocation(perc);
+  };
 
   const filteredData = data.filter((eachData) => {
     return (
@@ -54,7 +59,8 @@ const Allocated = () => {
       eachData.projectAllocated.toLowerCase().includes(projectAllocated) &&
       eachData.startDate.includes(startDate) &&
       eachData.endDate.includes(endDate) &&
-      eachData.empId.toUpperCase().includes(empId)
+      eachData.empId.toUpperCase().includes(empId) &&
+      eachData.percentAllocated.toUpperCase().includes(percentageAllocation)
     );
   });
 
@@ -134,7 +140,14 @@ const Allocated = () => {
                 <TableCell
                   style={{ padding: "0px 8px", paddingBottom: "5px" }}
                   align="left"
-                ></TableCell>
+                >
+                  <TextField
+                    style={{ padding: "0px 8px", paddingBottom: "5px" }}
+                    type="number"
+                    onChange={filterPercentage}
+                    value={percentageAllocation}
+                  />
+                </TableCell>
                 <TableCell
                   style={{ padding: "0px 8px", paddingBottom: "5px" }}
                   align="left"
@@ -158,21 +171,23 @@ const Allocated = () => {
                   />
                 </TableCell>
               </TableRow>
-              {filteredData.slice(page * 5, page * 5 + 5).map((currElem) => (
-                <TableRow key={currElem.id}>
-                  <TableCell align="left">{currElem.id}</TableCell>
-                  <TableCell align="left">{currElem.empId}</TableCell>
-                  <TableCell align="left">{currElem.associateName}</TableCell>
-                  <TableCell align="left">
-                    {currElem.projectAllocated}
-                  </TableCell>
-                  <TableCell align="left">
-                    {currElem.percentAllocated}
-                  </TableCell>
-                  <TableCell align="left">{currElem.startDate}</TableCell>
-                  <TableCell align="left">{currElem.endDate}</TableCell>
-                </TableRow>
-              ))}
+              {filteredData
+                .slice(page * 5, page * 5 + 5)
+                .map((currElem, index) => (
+                  <TableRow key={currElem.id}>
+                    <TableCell align="left">{index + 1}</TableCell>
+                    <TableCell align="left">{currElem.empId}</TableCell>
+                    <TableCell align="left">{currElem.associateName}</TableCell>
+                    <TableCell align="left">
+                      {currElem.projectAllocated}
+                    </TableCell>
+                    <TableCell align="left">
+                      {currElem.percentAllocated}
+                    </TableCell>
+                    <TableCell align="left">{currElem.startDate}</TableCell>
+                    <TableCell align="left">{currElem.endDate}</TableCell>
+                  </TableRow>
+                ))}
             </TableBody>
           </Table>
         </TableContainer>

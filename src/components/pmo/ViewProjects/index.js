@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Link, useHistory, withRouter, useRouteMatch } from "react-router-dom";
 import {
@@ -8,6 +8,7 @@ import {
   TableContainer,
   TableHead,
   TableRow,
+  TextField,
 } from "@mui/material";
 
 import { pmoActions } from "../../../store/pmo-slice";
@@ -32,8 +33,11 @@ const ViewProjects = () => {
   const history = useHistory();
   const { path } = useRouteMatch();
   const { projects } = useSelector((state) => state.pmo);
-  const [page, setPage] = React.useState(0);
-
+  const [page, setPage] = useState(0);
+  const [clientName, setClientName] = useState("");
+  const [projectName, setProjectName] = useState("");
+  const [vbProjectId, setVbProjectId] = useState("");
+  const [vbProjectStatus, setVbProjectStatus] = useState("");
   useEffect(() => {
     dispatch(getAllProjects());
   }, []);
@@ -49,7 +53,6 @@ const ViewProjects = () => {
           ? -1
           : 0
       );
-
       dispatch(pmoActions.SortByProductID(sorteddata));
     }
 
@@ -76,6 +79,35 @@ const ViewProjects = () => {
   const stopClick = (e) => {
     e.stopPropagation();
   };
+
+  const filterClientName = (event) => {
+    const cName = event.target.value.toLowerCase();
+    setClientName(cName);
+  };
+
+  const filterProjectId = (event) => {
+    const pId = event.target.value.toLowerCase();
+    setVbProjectId(pId);
+  };
+
+  const filterProjectName = (event) => {
+    const pName = event.target.value.toLowerCase();
+    setProjectName(pName);
+  };
+
+  const filterStatus = (event) => {
+    const pStatus = event.target.value.toLowerCase();
+    setVbProjectStatus(pStatus);
+  };
+
+  const filteredData = projects.filter((eachData) => {
+    return (
+      eachData.clientName.toLowerCase().includes(clientName) &&
+      eachData.projectName.toLowerCase().includes(projectName) &&
+      eachData.vbProjectId.toLowerCase().includes(vbProjectId) &&
+      eachData.vbProjectStatus.toLowerCase().includes(vbProjectStatus)
+    );
+  });
 
   return (
     <>
@@ -113,7 +145,65 @@ const ViewProjects = () => {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {projects
+                <TableRow style={{ backgroundColor: "rgb(227, 231, 231)" }}>
+                  <TableCell
+                    align="left"
+                    style={{ padding: "0px 8px", paddingBottom: "5px" }}
+                  ></TableCell>
+                  <TableCell
+                    align="left"
+                    style={{ padding: "0px 8px", paddingBottom: "5px" }}
+                  >
+                    <TextField
+                      style={{ padding: "0px 8px", paddingBottom: "5px" }}
+                      type="text"
+                      placeholder="Emp Id"
+                      onChange={filterClientName}
+                      value={clientName}
+                    />
+                  </TableCell>
+                  <TableCell
+                    align="left"
+                    style={{ padding: "0px 8px", paddingBottom: "5px" }}
+                  >
+                    <TextField
+                      style={{ padding: "0px 8px", paddingBottom: "5px" }}
+                      type="text"
+                      placeholder="Associate Name"
+                      onChange={filterProjectName}
+                      value={projectName}
+                    />
+                  </TableCell>
+                  <TableCell
+                    style={{ padding: "0px 8px", paddingBottom: "5px" }}
+                    align="left"
+                  >
+                    <TextField
+                      style={{ padding: "0px 8px", paddingBottom: "5px" }}
+                      type="text"
+                      placeholder="Project Allocated"
+                      onChange={filterProjectId}
+                      value={vbProjectId}
+                    />
+                  </TableCell>
+                  <TableCell
+                    style={{ padding: "0px 8px", paddingBottom: "5px" }}
+                    align="left"
+                  >
+                    <TextField
+                      style={{ padding: "0px 8px", paddingBottom: "5px" }}
+                      type="text"
+                      placeholder="Project Allocated"
+                      onChange={filterStatus}
+                      value={vbProjectStatus}
+                    />
+                  </TableCell>
+                  <TableCell
+                    style={{ padding: "0px 8px", paddingBottom: "5px" }}
+                    align="left"
+                  ></TableCell>
+                </TableRow>
+                {filteredData
                   .slice(page * 5, page * 5 + 5)
                   .map((currElem, index) => (
                     <TableRow

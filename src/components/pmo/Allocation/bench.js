@@ -91,9 +91,6 @@ const Bench = () => {
                 <TableCell align="left" style={{ paddingBottom: "2px" }}>
                   Last Allocation Date
                 </TableCell>
-                <TableCell align="left" style={{ paddingBottom: "2px" }}>
-                  Percentage Allocated
-                </TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -161,30 +158,25 @@ const Bench = () => {
                     value={lastAllocatedDate}
                   />
                 </TableCell>
-                <TableCell
-                  align="left"
-                  style={{ padding: "0px 8px", paddingBottom: "5px" }}
-                ></TableCell>
               </TableRow>
-              {filteredData.slice(page * 5, page * 5 + 5).map((currElem) => (
-                <TableRow key={currElem.id}>
-                  <TableCell align="left">{currElem.id}</TableCell>
-                  <TableCell align="left">{currElem.empId}</TableCell>
-                  <TableCell align="left">{currElem.associateName}</TableCell>
-                  <TableCell align="left">
-                    {currElem.lastAllocatedProject}
-                  </TableCell>
-                  <TableCell align="left">
-                    {currElem.primaryCapabilities}
-                  </TableCell>
-                  <TableCell align="left">
-                    {currElem.lastallocationDate}
-                  </TableCell>
-                  <TableCell align="left">
-                    {currElem.percentAllocated}
-                  </TableCell>
-                </TableRow>
-              ))}
+              {filteredData
+                .slice(page * 5, page * 5 + 5)
+                .map((currElem, index) => (
+                  <TableRow key={currElem.id}>
+                    <TableCell align="left">{index + 1}</TableCell>
+                    <TableCell align="left">{currElem.empId}</TableCell>
+                    <TableCell align="left">{currElem.associateName}</TableCell>
+                    <TableCell align="left">
+                      {currElem.lastAllocatedProject}
+                    </TableCell>
+                    <TableCell align="left">
+                      {currElem.primaryCapabilities}
+                    </TableCell>
+                    <TableCell align="left">
+                      {currElem.lastallocationDate}
+                    </TableCell>
+                  </TableRow>
+                ))}
             </TableBody>
           </Table>
         </TableContainer>
