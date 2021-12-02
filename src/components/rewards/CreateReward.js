@@ -126,8 +126,8 @@ const CreateReward = () => {
             >
               <MenuItem value="daily">Daily</MenuItem>
               <MenuItem value="monthly">Monthly</MenuItem>
-              <MenuItem value="Yearly">Yearly</MenuItem>
-              <MenuItem value="ondemand">OnDemand</MenuItem>
+              <MenuItem value="yearly">Yearly</MenuItem>
+              <MenuItem value="on-demand">OnDemand</MenuItem>
             </Select>
           </FormControl>
         </Grid>
