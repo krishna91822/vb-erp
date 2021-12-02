@@ -107,6 +107,7 @@ const CreateProject = () => {
       const url = id ? `/pmo/projects/${id}` : "/pmo/projects";
       navigate(url);
       dispatch(pmoActions.redirectToProjectList());
+      setEdit(false);
     }
   }, [redirect]);
 

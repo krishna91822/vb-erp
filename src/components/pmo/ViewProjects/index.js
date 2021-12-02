@@ -11,6 +11,7 @@ import {
   TextField,
   Button,
 } from "@mui/material";
+import EditIcon from "@mui/icons-material/Edit";
 import FilterListIcon from "@mui/icons-material/FilterList";
 
 import { pmoActions } from "../../../store/pmo-slice";
@@ -128,9 +129,12 @@ const ViewProjects = () => {
               <Button
                 variant="contained"
                 size="small"
-                style={{
+                sx={{
                   backgroundColor: "#e8833a",
                   textTransform: "none",
+                  ":hover": {
+                    bgcolor: "#ff862e",
+                  },
                 }}
                 onClick={() => {
                   navigate("/pmo/createproject");
@@ -169,7 +173,7 @@ const ViewProjects = () => {
                       <TextField
                         variant="standard"
                         type="text"
-                        placeholder="Emp Id"
+                        placeholder="Client Name"
                         onChange={filterClientName}
                         value={clientName}
                         inputProps={{ style: { fontSize: "small" } }}
@@ -179,7 +183,7 @@ const ViewProjects = () => {
                       <TextField
                         variant="standard"
                         type="text"
-                        placeholder="Associate Name"
+                        placeholder="Project Name"
                         onChange={filterProjectName}
                         value={projectName}
                         inputProps={{ style: { fontSize: "small" } }}
@@ -189,7 +193,7 @@ const ViewProjects = () => {
                       <TextField
                         variant="standard"
                         type="text"
-                        placeholder="Project Allocated"
+                        placeholder="Project Id"
                         onChange={filterProjectId}
                         value={vbProjectId}
                         inputProps={{ style: { fontSize: "small" } }}
@@ -199,7 +203,7 @@ const ViewProjects = () => {
                       <TextField
                         variant="standard"
                         type="text"
-                        placeholder="Project Allocated"
+                        placeholder="Project Status"
                         onChange={filterStatus}
                         value={vbProjectStatus}
                         inputProps={{ style: { fontSize: "small" } }}
@@ -215,7 +219,7 @@ const ViewProjects = () => {
                       key={currElem.vbProjectId}
                       onClick={() => entryLink(currElem)}
                     >
-                      <TableCell align="left">{index + 1}</TableCell>
+                      <TableCell align="left">{index + page * 5 + 1}</TableCell>
                       <TableCell align="left">{currElem.clientName}</TableCell>
                       <TableCell align="left">{currElem.projectName}</TableCell>
                       <TableCell align="left">{currElem.vbProjectId}</TableCell>
@@ -225,11 +229,11 @@ const ViewProjects = () => {
                       <TableCell align="left">
                         <EditAction data-test="edit-profile-button">
                           <Link
-                            to={`/pmo/projects//${currElem.vbProjectId}/edit`}
+                            to={`/pmo/projects/${currElem.vbProjectId}/edit`}
                             onClick={stopClick}
                           >
                             <EditButton data-test="edit-profile-button">
-                              edit <i className="fas fa-edit"></i>
+                              edit <EditIcon />
                             </EditButton>
                           </Link>
                         </EditAction>
