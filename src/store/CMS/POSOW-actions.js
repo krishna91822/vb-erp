@@ -1,21 +1,33 @@
 import axios from "../../helpers/axiosInstance";
 import { PoSowActions } from "./POSOW-slice";
 import { uiActions } from "../ui-slice";
+import { useDispatch } from "react-redux";
 
 export const createNewPO_SOW = (formData) => {
   return async function (dispatch) {
-    const rqst = await axios.post(
-      "http://localhost:8000/savePoDetails",
-      formData
-    );
-    dispatch(PoSowActions.PopUpON("Saved Successfully"));
-    //  dispatch(
-    //     uiActions.showNotification({
-    //       status: "pending",
-    //       title: "Sending...",
-    //       message: "Sending data!",
-    //     })
-    //   );
+    try {
+      const response = await axios.post(
+        "http://localhost:8000/savePoDetails",
+        formData
+      );
+      if (response.status === 201) {
+        dispatch(PoSowActions.PopUpON("Saved Successfully"));
+      } else {
+        throw new Error("Could not Save data!");
+      }
+    } catch (error) {
+      dispatch(uiActions.toggleLoader());
+      setTimeout(function () {
+        dispatch(uiActions.toggleLoader());
+        dispatch(
+          uiActions.showNotification({
+            status: "error",
+            title: "Error!",
+            message: "Fetching content data failed!",
+          })
+        );
+      }, 1000);
+    }
   };
 };
 export const UpdatePO_SOW = (formData, id) => {
@@ -54,7 +66,7 @@ export const fetchSpecificPO_SOW = (ROW_ID) => {
 };
 export const sortProducts = (product) => {
   return async function (dispatch) {
-    const res = await axios.get(`http://localhost:8000/sort/${product}`);
+    const res = await axios.get(`/sort/${product}`);
     dispatch(PoSowActions.setTabViewData(res.data));
   };
 };
