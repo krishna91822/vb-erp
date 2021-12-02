@@ -11,6 +11,7 @@ import {
   TextField,
   Button,
 } from "@mui/material";
+import EditIcon from "@mui/icons-material/Edit";
 import FilterListIcon from "@mui/icons-material/FilterList";
 
 import { pmoActions } from "../../../store/pmo-slice";
@@ -233,7 +234,7 @@ const ViewProjects = () => {
                             onClick={stopClick}
                           >
                             <EditButton data-test="edit-profile-button">
-                              edit <i className="fas fa-edit"></i>
+                              edit <EditIcon />
                             </EditButton>
                           </Link>
                         </EditAction>
