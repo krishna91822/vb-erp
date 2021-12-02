@@ -7,10 +7,10 @@ export const createNewPO_SOW = (formData) => {
   return async function (dispatch) {
     try {
       const response = await axios.post(
-        "http://localhost:8000/savePoDetails",
+        "http://localhost:8000/poSow",
         formData
       );
-      if (response.status === 201) {
+      if (response.status === 200) {
         dispatch(PoSowActions.PopUpON("Saved Successfully"));
       } else {
         throw new Error("Could not Save data!");
@@ -33,43 +33,39 @@ export const createNewPO_SOW = (formData) => {
 export const UpdatePO_SOW = (formData, id) => {
   return async function (dispatch) {
     const rqst = await axios
-      .patch(`http://localhost:8000/updatePoDetails/${id}`, formData)
-      .then((res) => {
-        console.log(res.status);
-      })
+      .patch(`http://localhost:8000/poSow/${id}`, formData)
+      // .then((res) => {
+      //   console.log(res.status);
+      // })
       .then(dispatch(PoSowActions.PopUpON("Updated Successfully")));
   };
 };
 export const SendForApproval = (curr_status, id) => {
   return async function (dispatch) {
     const rqst = await axios
-      .patch(`http://localhost:8000/updatePoStatus/${id}`, curr_status)
-      .then((res) => {
-        console.log(res.status);
-      })
+      .patch(`http://localhost:8000/poSow/status/${id}`, curr_status)
+      // .then((res) => {
+      //   console.log(res.status);
+      // })
       .then(dispatch(PoSowActions.PopUpON("Sent for review")));
   };
 };
 export const fetchPO_SOW_data = () => {
   return async function (dispatch) {
-    const res = await axios.get("http://localhost:8000/getPoDetails");
-    dispatch(PoSowActions.setTabViewData(res.data));
+    const res = await axios.get("http://localhost:8000/poSow");
+    dispatch(PoSowActions.setTabViewData(res.data.data.results));
   };
 };
 export const fetchSpecificPO_SOW = (ROW_ID) => {
   return async function (dispatch) {
-    const res = await axios.get(
-      `http://localhost:8000/getPoDetailsByID/${ROW_ID}`
-    );
-    dispatch(PoSowActions.SetSpecific([res.data]));
+    const res = await axios.get(`http://localhost:8000/poSow/${ROW_ID}`);
+    dispatch(PoSowActions.SetSpecific([res.data.data]));
   };
 };
 export const fetchPOs_emp_data = (po_id) => {
   return async function (dispatch) {
-    const res = await axios.get(
-      `http://localhost:8000/getAssignEmployee/${po_id}`
-    );
-    dispatch(PoSowActions.setPOEmpTabData(res.data));
+    const res = await axios.get(`http://localhost:8000/assign/${po_id}`);
+    dispatch(PoSowActions.setPOEmpTabData(res.data.data.results));
   };
 };
 
@@ -77,7 +73,7 @@ export const AddEmpToThisPO = (formData) => {
   return async function (dispatch) {
     try {
       const response = await axios.post(
-        "http://localhost:8000/addAssignee",
+        "http://localhost:8000/assign",
         formData
       );
       if (response.status === 201) {
@@ -104,7 +100,7 @@ export const UpdateEmpData = (formData, emp_id) => {
   return async function (dispatch) {
     try {
       const response = await axios.patch(
-        `http://localhost:8000/updateDetails/${emp_id}`,
+        `http://localhost:8000/assign/${emp_id}`,
         formData
       );
       if (response.status === 201) {
@@ -132,7 +128,7 @@ export const UnAssignThisEmp = (emp_id) => {
   return async function (dispatch) {
     try {
       const response = await axios.patch(
-        `http://localhost:8000/unassign/${emp_id}`
+        `http://localhost:8000/assign/unassign/${emp_id}`
       );
       if (response.status === 201) {
         dispatch(PoSowActions.PopUpON("Unassigned"));
@@ -157,7 +153,7 @@ export const UnAssignThisEmp = (emp_id) => {
 
 export const sortProducts = (product) => {
   return async function (dispatch) {
-    const res = await axios.get(`http://localhost:8000/sort/${product}`);
-    dispatch(PoSowActions.setTabViewData(res.data));
+    const res = await axios.get(`http://localhost:8000/poSow/sort/${product}`);
+    dispatch(PoSowActions.setTabViewData(res.data.data.results));
   };
 };
