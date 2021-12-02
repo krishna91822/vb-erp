@@ -88,6 +88,16 @@ const CreateProject = () => {
     resources,
   } = state;
 
+  const handelAssociate = (value) => {
+    setState({
+      ...state,
+      resource: {
+        ...state.resource,
+        associateName: value,
+      },
+    });
+  };
+
   useLayoutEffect(() => {
     if (location.includes("createproject") || location.includes("edit")) {
       setEdit(true);
@@ -534,6 +544,7 @@ const CreateProject = () => {
             resources={resources}
             handleResourceChange={handleResourceChange}
             addResource={addResource}
+            handelAssociate={handelAssociate}
             removeResource={removeResource}
             resourceErrors={resourceErrors}
           />

@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import { TextField, Button } from "@mui/material";
 import ResourceInformationTable from "../ResourceInformationTable";
+import Autocomplete from "@mui/material/Autocomplete";
 import {
   Heading,
   Container,
@@ -19,8 +20,30 @@ const ResourceInformation = ({
   addResource,
   removeResource,
   resourceErrors,
+  handelAssociate,
 }) => {
   const { associateName, startDate, endDate, allocation, rackRate } = resource;
+  const [open, setOpen] = useState(false);
+
+  const handleOpen = (event) => {
+    const inputvalue = event.target.value;
+    if (inputvalue) {
+      if (inputvalue.length > 2) {
+        setOpen(true);
+      } else {
+        setOpen(false);
+      }
+    } else {
+      setOpen(false);
+    }
+  };
+  const top100Films = [
+    { label: "The Shawshank Redemption", year: 1994 },
+    { label: "The Godfather", year: 1972 },
+    { label: "The Godfather: Part II", year: 1974 },
+    { label: "The Dark Knight", year: 2008 },
+    { label: "12 Angry Men", year: 1957 },
+  ];
 
   return (
     <Container>
@@ -33,17 +56,24 @@ const ResourceInformation = ({
             <Heading>
               Associate Name <span>*</span>
             </Heading>
-            <TextField
-              placeholder="Enter Associate Name"
-              name="associateName"
-              variant="outlined"
-              size="small"
-              width="100%"
-              error={resourceErrors.associateName ? true : false}
-              helperText={resourceErrors.associateName}
-              onChange={handleResourceChange}
-              value={associateName}
-              data-test="associate-input"
+            <Autocomplete
+              id="free-solo-demo"
+              freeSolo
+              onInputChange={handleOpen}
+              onChange={(event, value) => {
+                value ? handelAssociate(value.label) : setOpen(false);
+              }}
+              options={top100Films}
+              open={open}
+              sx={{ width: 300 }}
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  placeholder="associate name"
+                  // onChange={handleResourceChange}
+                  value={associateName}
+                />
+              )}
             />
           </ResourceForm>
           <MultiElemContainer>
