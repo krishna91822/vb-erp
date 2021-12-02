@@ -132,24 +132,29 @@ const CreateReward = () => {
           </FormControl>
         </Grid>
         <br />
-        <Grid item>
-          <FormLabel children="Reward Sub Type" style={{ color: " black " }} />
-          <br />
-          <FormControl id="RType">
-            <Select
-              justify="justify"
-              className="textfield"
-              name="reward_subType"
-              value={subtype}
-              onChange={subtypeChange}
-            >
-              <MenuItem value="work-anniversary">Work Anniversary</MenuItem>
-              <MenuItem value="birthday-celebration">
-                Birthday Celebration
-              </MenuItem>
-            </Select>
-          </FormControl>
-        </Grid>
+        {type === "daily" && (
+          <Grid item>
+            <FormLabel
+              children="Reward Sub Type"
+              style={{ color: " black " }}
+            />
+            <br />
+            <FormControl id="RType">
+              <Select
+                justify="justify"
+                className="textfield"
+                name="reward_subType"
+                value={subtype}
+                onChange={subtypeChange}
+              >
+                <MenuItem value="work-anniversary">Work Anniversary</MenuItem>
+                <MenuItem value="birthday-celebration">
+                  Birthday Celebration
+                </MenuItem>
+              </Select>
+            </FormControl>
+          </Grid>
+        )}
         <br />
         <Grid item>
           <FormLabel children="Reward Sender" style={{ color: " black " }} />
@@ -225,29 +230,36 @@ const CreateReward = () => {
           </FormControl>
         </Grid>
         <br />
-        <Grid item>
-          <FormLabel children="Slack Channel" style={{ color: " black " }} />
-          <br />
-          <TextField
-            id="outlined-name"
-            className="textfield1"
-            name="slack_channel"
-            onChange={handleChangeForm}
-          />
-        </Grid>
+        {announcement === "public" && (
+          <Grid item>
+            <FormLabel children="Slack Channel" style={{ color: " black " }} />
+            <br />
+            <TextField
+              id="outlined-name"
+              className="textfield1"
+              name="slack_channel"
+              onChange={handleChangeForm}
+            />
+          </Grid>
+        )}
         <br />
-        <Grid item>
-          <FormLabel children="Channel Message" style={{ color: " black " }} />
-          <br />
-          <TextField
-            placeholder="Please Join Us"
-            multiline
-            className="textfield1"
-            name="channel_message"
-            onChange={handleChangeForm}
-            rows={2}
-          />
-        </Grid>
+        {announcement === "public" && (
+          <Grid item>
+            <FormLabel
+              children="Channel Message"
+              style={{ color: " black " }}
+            />
+            <br />
+            <TextField
+              placeholder="Please Join Us"
+              multiline
+              className="textfield1"
+              name="channel_message"
+              onChange={handleChangeForm}
+              rows={2}
+            />
+          </Grid>
+        )}
         <div className="btn-container">
           <Button
             id="btn"
