@@ -26,7 +26,7 @@ const ResourceInformation = ({
   const [open, setOpen] = useState(false);
 
   const handleOpen = (event) => {
-    const inputvalue = event.target.value;
+    let inputvalue = event.target.value;
     if (inputvalue) {
       if (inputvalue.length > 2) {
         setOpen(true);
@@ -65,7 +65,6 @@ const ResourceInformation = ({
               }}
               options={top100Films}
               open={open}
-              sx={{ width: 300 }}
               renderInput={(params) => (
                 <TextField
                   {...params}
@@ -73,6 +72,7 @@ const ResourceInformation = ({
                   value={associateName}
                   error={resourceErrors.associateName ? true : false}
                   helperText={resourceErrors.associateName}
+                  width="100%"
                 />
               )}
             />
@@ -89,7 +89,6 @@ const ResourceInformation = ({
                 name="startDate"
                 error={resourceErrors.startDate ? true : false}
                 helperText={resourceErrors.startDate}
-                style={{}}
                 onChange={handleResourceChange}
                 value={startDate}
                 data-test="start-date-input"

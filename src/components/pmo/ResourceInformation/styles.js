@@ -57,6 +57,9 @@ export const ResourceForm = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
+  .css-16awh2u-MuiAutocomplete-root .MuiOutlinedInput-root {
+    padding: 0px;
+  }
   @media ${device.tablet} {
     width: 80%;
   }
