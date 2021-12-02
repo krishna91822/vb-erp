@@ -25,24 +25,21 @@ const ResourceInformation = ({
   const { associateName, startDate, endDate, allocation, rackRate } = resource;
   const [open, setOpen] = useState(false);
 
-  const handleOpen = (event) => {
-    let inputvalue = event.target.value;
-    if (inputvalue) {
-      if (inputvalue.length > 2) {
-        setOpen(true);
-      } else {
-        setOpen(false);
-      }
+  const handleOpen = ({ target }) => {
+    let inputvalue = target.value;
+    if (inputvalue && inputvalue.length > 2) {
+      setOpen(true);
     } else {
       setOpen(false);
     }
   };
-  const top100Films = [
-    { label: "The Shawshank Redemption", year: 1994 },
-    { label: "The Godfather", year: 1972 },
-    { label: "The Godfather: Part II", year: 1974 },
-    { label: "The Dark Knight", year: 2008 },
-    { label: "12 Angry Men", year: 1957 },
+
+  const employeeData = [
+    { label: "Saad", empId: "VB0001" },
+    { label: "Atif", empId: "VB0002" },
+    { label: "Rupesh", empId: "VB0003" },
+    { label: "Narayan", empId: "VB0004" },
+    { label: "Abhiram", empId: "VB0005" },
   ];
 
   return (
@@ -61,9 +58,9 @@ const ResourceInformation = ({
               freeSolo
               onInputChange={handleOpen}
               onChange={(event, value) => {
-                value ? handelAssociate(value.label) : setOpen(false);
+                value ? handelAssociate(value) : setOpen(false);
               }}
-              options={top100Films}
+              options={employeeData}
               open={open}
               renderInput={(params) => (
                 <TextField

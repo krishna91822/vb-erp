@@ -55,6 +55,7 @@ const initialState = {
     endDate: "",
     allocation: "0",
     rackRate: "",
+    empId: "",
   },
   resources: [],
 };
@@ -87,16 +88,6 @@ const CreateProject = () => {
     resource,
     resources,
   } = state;
-
-  const handelAssociate = (value) => {
-    setState({
-      ...state,
-      resource: {
-        ...state.resource,
-        associateName: value,
-      },
-    });
-  };
 
   useLayoutEffect(() => {
     if (location.includes("createproject") || location.includes("edit")) {
@@ -196,6 +187,17 @@ const CreateProject = () => {
         },
       });
     }
+  };
+
+  const handelAssociate = (value) => {
+    setState({
+      ...state,
+      resource: {
+        ...state.resource,
+        associateName: value.label,
+        empId: value.empId,
+      },
+    });
   };
 
   const addResource = () => {
