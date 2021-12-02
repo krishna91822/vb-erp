@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Link, useHistory, withRouter, useRouteMatch } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
   Table,
   TableBody,
@@ -33,8 +33,8 @@ import Tpagination from "../../UI/Pagination";
 
 const ViewProjects = () => {
   const dispatch = useDispatch();
-  const history = useHistory();
-  const { path } = useRouteMatch();
+  const navigate = useNavigate();
+  // const { path } = useRouteMatch();
   const { projects } = useSelector((state) => state.pmo);
   const [page, setPage] = useState(0);
   const [clientName, setClientName] = useState("");
@@ -77,7 +77,7 @@ const ViewProjects = () => {
   };
 
   const entryLink = (currElem) => {
-    history.push(`${path}/${currElem.vbProjectId}`);
+    navigate(`/pmo/projects/${currElem.vbProjectId}`);
   };
 
   const stopClick = (e) => {
@@ -138,7 +138,7 @@ const ViewProjects = () => {
                   },
                 }}
                 onClick={() => {
-                  history.push("/pmo/createproject");
+                  navigate("/pmo/createproject");
                 }}
               >
                 Create a project
@@ -230,7 +230,7 @@ const ViewProjects = () => {
                       <TableCell align="left">
                         <EditAction data-test="edit-profile-button">
                           <Link
-                            to={`${path}/${currElem.vbProjectId}/edit`}
+                            to={`/pmo/projects/${currElem.vbProjectId}/edit`}
                             onClick={stopClick}
                           >
                             <EditButton data-test="edit-profile-button">
@@ -251,4 +251,4 @@ const ViewProjects = () => {
   );
 };
 
-export default withRouter(ViewProjects);
+export default ViewProjects;
