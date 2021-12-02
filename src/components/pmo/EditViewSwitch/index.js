@@ -1,5 +1,5 @@
 import React from "react";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import {
   Button,
   FormControlLabel,
@@ -70,16 +70,16 @@ const EditViewSwitchs = ({
   setUpdateModal,
   updateModal,
 }) => {
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const handleChange = ({ target }) => {
     console.log(edit);
     if (target.checked) {
       setEdit(true);
-      history.push(`/pmo/projects/${id}/edit`);
+      navigate(`/pmo/projects/${id}/edit`);
     } else {
       setEdit(false);
-      history.push(`/pmo/projects/${id}`);
+      navigate(`/pmo/projects/${id}`);
     }
   };
 

@@ -141,7 +141,7 @@ const Bench = ({ pressed }) => {
                 .slice(page * 5, page * 5 + 5)
                 .map((currElem, index) => (
                   <TableRow key={currElem.id}>
-                    <TableCell align="left">{index + 1}</TableCell>
+                    <TableCell align="left">{index + page * 5 + 1}</TableCell>
                     <TableCell align="left">{currElem.empId}</TableCell>
                     <TableCell align="left">{currElem.associateName}</TableCell>
                     <TableCell align="left">

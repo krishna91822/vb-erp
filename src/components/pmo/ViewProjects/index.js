@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Link, useHistory, withRouter, useRouteMatch } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
   Table,
   TableBody,
@@ -11,6 +11,7 @@ import {
   TextField,
   Button,
 } from "@mui/material";
+import EditIcon from "@mui/icons-material/Edit";
 import FilterListIcon from "@mui/icons-material/FilterList";
 
 import { pmoActions } from "../../../store/pmo-slice";
@@ -32,8 +33,8 @@ import Tpagination from "../../UI/Pagination";
 
 const ViewProjects = () => {
   const dispatch = useDispatch();
-  const history = useHistory();
-  const { path } = useRouteMatch();
+  const navigate = useNavigate();
+  // const { path } = useRouteMatch();
   const { projects } = useSelector((state) => state.pmo);
   const [page, setPage] = useState(0);
   const [clientName, setClientName] = useState("");
@@ -76,7 +77,7 @@ const ViewProjects = () => {
   };
 
   const entryLink = (currElem) => {
-    history.push(`${path}/${currElem.vbProjectId}`);
+    navigate(`/pmo/projects/${currElem.vbProjectId}`);
   };
 
   const stopClick = (e) => {
@@ -129,12 +130,15 @@ const ViewProjects = () => {
               <Button
                 variant="contained"
                 size="small"
-                style={{
+                sx={{
                   backgroundColor: "#e8833a",
                   textTransform: "none",
+                  ":hover": {
+                    bgcolor: "#ff862e",
+                  },
                 }}
                 onClick={() => {
-                  history.push("/pmo/createproject");
+                  navigate("/pmo/createproject");
                 }}
               >
                 Create a project
@@ -170,7 +174,7 @@ const ViewProjects = () => {
                       <TextField
                         variant="standard"
                         type="text"
-                        placeholder="Emp Id"
+                        placeholder="Client Name"
                         onChange={filterClientName}
                         value={clientName}
                         inputProps={{ style: { fontSize: "small" } }}
@@ -180,7 +184,7 @@ const ViewProjects = () => {
                       <TextField
                         variant="standard"
                         type="text"
-                        placeholder="Associate Name"
+                        placeholder="Project Name"
                         onChange={filterProjectName}
                         value={projectName}
                         inputProps={{ style: { fontSize: "small" } }}
@@ -190,7 +194,7 @@ const ViewProjects = () => {
                       <TextField
                         variant="standard"
                         type="text"
-                        placeholder="Project Allocated"
+                        placeholder="Project Id"
                         onChange={filterProjectId}
                         value={vbProjectId}
                         inputProps={{ style: { fontSize: "small" } }}
@@ -200,7 +204,7 @@ const ViewProjects = () => {
                       <TextField
                         variant="standard"
                         type="text"
-                        placeholder="Project Allocated"
+                        placeholder="Project Status"
                         onChange={filterStatus}
                         value={vbProjectStatus}
                         inputProps={{ style: { fontSize: "small" } }}
@@ -216,7 +220,7 @@ const ViewProjects = () => {
                       key={currElem.vbProjectId}
                       onClick={() => entryLink(currElem)}
                     >
-                      <TableCell align="left">{index + 1}</TableCell>
+                      <TableCell align="left">{index + page * 5 + 1}</TableCell>
                       <TableCell align="left">{currElem.clientName}</TableCell>
                       <TableCell align="left">{currElem.projectName}</TableCell>
                       <TableCell align="left">{currElem.vbProjectId}</TableCell>
@@ -226,11 +230,11 @@ const ViewProjects = () => {
                       <TableCell align="left">
                         <EditAction data-test="edit-profile-button">
                           <Link
-                            to={`${path}/${currElem.vbProjectId}/edit`}
+                            to={`/pmo/projects/${currElem.vbProjectId}/edit`}
                             onClick={stopClick}
                           >
                             <EditButton data-test="edit-profile-button">
-                              edit <i className="fas fa-edit"></i>
+                              edit <EditIcon />
                             </EditButton>
                           </Link>
                         </EditAction>
@@ -247,4 +251,4 @@ const ViewProjects = () => {
   );
 };
 
-export default withRouter(ViewProjects);
+export default ViewProjects;

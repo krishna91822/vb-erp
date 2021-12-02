@@ -1,5 +1,5 @@
 import React, { useState, useLayoutEffect, useEffect } from "react";
-import { useParams, useLocation, useHistory } from "react-router-dom";
+import { useParams, useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { nanoid } from "nanoid";
 
@@ -63,7 +63,7 @@ const CreateProject = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
   const location = useLocation().pathname;
-  const history = useHistory();
+  const navigate = useNavigate();
   const { redirect, projectById } = useSelector((state) => state.pmo);
   const [edit, setEdit] = useState(false);
   const [state, setState] = useState(initialState);
@@ -105,8 +105,9 @@ const CreateProject = () => {
   useEffect(() => {
     if (redirect) {
       const url = id ? `/pmo/projects/${id}` : "/pmo/projects";
-      history.push(url);
+      navigate(url);
       dispatch(pmoActions.redirectToProjectList());
+      setEdit(false);
     }
   }, [redirect]);
 
