@@ -1,31 +1,70 @@
-import React from "react";
+import React, { useState } from "react";
 import "./searchStyle.css";
-import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
-import FormControl from "@mui/material/FormControl";
-import Select from "@mui/material/Select";
 import TextField from "@mui/material/TextField";
 import { useDispatch } from "react-redux";
-import { getSearchData } from "../../store/rewards-slice";
+// import { rewardsActions } from "../../store/rewards-slice";
+import { filterData, searchData } from "../../store/rewards-actions";
 
 const Header = (props) => {
+  const currencies = [
+    {
+      value: "Draft",
+      label: "Draft",
+    },
+    {
+      value: "Launch",
+      label: "Launch",
+    },
+    {
+      value: "Default",
+      label: "Default",
+    },
+  ];
+
+  const [currency, setCurrency] = useState("");
+
+  const handleChange = (event) => {
+    setCurrency(event.target.value);
+    const filterValue = event.target.value;
+    dispatch(filterData(filterValue));
+  };
+
   const dispatch = useDispatch();
+
+  const getTextFieldData = (e) => {
+    if (e.key === "Enter") {
+      const data = e.target.value;
+      e.target.value = "";
+      dispatch(searchData(data));
+    }
+  };
+
   return (
     <div className="header">
       <div className="header-title">
         <TextField
-          onChange={(e) => dispatch(getSearchData(e.target.value))}
+          onKeyPress={getTextFieldData}
           id="searchbar"
           label="Search Rewards"
         />
       </div>
+
       <div className="header-sortby">
-        <FormControl id="sortby-form">
-          <InputLabel id="demo-simple-select-label">Sort By</InputLabel>
-          <Select label="sortby">
-            <MenuItem>Newest</MenuItem>
-          </Select>
-        </FormControl>
+        <TextField
+          id="outlined-select-currency"
+          select
+          label="Status"
+          value={currency}
+          onChange={handleChange}
+          className="filter-dropdown"
+        >
+          {currencies.map((option) => (
+            <MenuItem key={option.value} value={option.value}>
+              {option.label}
+            </MenuItem>
+          ))}
+        </TextField>
       </div>
     </div>
   );

@@ -8,6 +8,6 @@ export default configureStore({
   reducer: {
     contents: contentsSlice.reducer,
     ui: uiSlice.reducer,
-    reward: rewardSlice,
+    reward: rewardSlice.reducer,
   },
 });
