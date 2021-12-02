@@ -2,190 +2,239 @@ import React from "react";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import { Grid } from "@mui/material";
-import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
-import Checkbox from "@mui/material/Checkbox";
 import { FormLabel } from "@mui/material";
-import { useRef } from "react";
+import { useState } from "react";
 import "./rewardStyle.css";
 
 const CreateReward = () => {
-  const formData = useRef(null);
-  const [rtype, settype] = React.useState("");
-  const [rsend, setsender] = React.useState("");
-  const [rannouncement, setannouncement] = React.useState("");
-  const [ruser, setuser] = React.useState("");
+  const [type, setType] = React.useState("");
+  const [send, setSender] = React.useState("");
+  const [announcement, setAnnouncement] = React.useState("");
+  const [subtype, setSubType] = React.useState("");
+  const [receiver, setReceiver] = React.useState("");
 
+  const [formData, setFormData] = useState({});
+  const handleChangeForm = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
+  };
+  const receiverChange = (event) => {
+    setReceiver(event.target.value);
+    setFormData({
+      ...formData,
+      [event.target.name]: event.target.value,
+    });
+  };
   const typeChange = (event) => {
-    settype(event.target.value);
+    setType(event.target.value);
+    setFormData({
+      ...formData,
+      [event.target.name]: event.target.value,
+    });
+  };
+  const subtypeChange = (event) => {
+    setSubType(event.target.value);
+    setFormData({
+      ...formData,
+      [event.target.name]: event.target.value,
+    });
   };
   const senderChange = (event) => {
-    setsender(event.target.value);
+    setSender(event.target.value);
+    setFormData({
+      ...formData,
+      [event.target.name]: event.target.value,
+    });
   };
   const announcementChange = (event) => {
-    setannouncement(event.target.value);
-  };
-  const userChange = (event) => {
-    setuser(event.target.value);
+    setAnnouncement(event.target.value);
+    setFormData({
+      ...formData,
+      [event.target.name]: event.target.value,
+    });
   };
   const getFormData = (event) => {
     event.preventDefault();
-    console.log(event.target);
+    console.log(formData);
   };
-  const submitForm = (event) => {
-    event.preventDefault();
-    console.log(formData.current);
-  };
+
   return (
-    <Grid>
-      <form ref={formData}>
-        <FormLabel
-          className="title"
-          style={{ fontSize: " 2rem ", fontWeight: " 650 ", color: " black " }}
-          children="New Reward"
-        />
-        <br />
+    <Grid classes={{ root: { width: "100%" } }}>
+      <form>
+        <Grid item>
+          <FormLabel
+            className="title"
+            style={{
+              fontSize: " 2rem ",
+              fontWeight: " 650 ",
+              color: " black ",
+            }}
+            children="New Reward"
+          />
+          <br />
+        </Grid>
         <hr />
         <br />
-        <FormLabel children="Reward Name" style={{ color: " black " }} />
+        <Grid item>
+          <FormLabel
+            children="Reward Display Name"
+            style={{ color: " black " }}
+          />
+          <br />
+          <TextField
+            id="outlined-name"
+            name="reward_display_name"
+            onChange={handleChangeForm}
+            className="textfield1"
+          />
+        </Grid>
         <br />
-        <TextField
-          className="textfield1"
-          id="outlined-name"
-          label="Monthly Star at Valuebound"
-        />
+        <Grid item>
+          <FormLabel children="Reward Type" style={{ color: " black " }} />
+          <br />
+          <FormControl id="RType">
+            <Select
+              justify="justify"
+              className="textfield"
+              name="reward_type"
+              value={type}
+              onChange={typeChange}
+            >
+              <MenuItem value="daily">Daily</MenuItem>
+              <MenuItem value="monthly">Monthly</MenuItem>
+              <MenuItem value="Yearly">Yearly</MenuItem>
+              <MenuItem value="ondemand">OnDemand</MenuItem>
+            </Select>
+          </FormControl>
+        </Grid>
         <br />
-        <FormLabel
-          children="Reward Display Name"
-          style={{ color: " black " }}
-        />
+        <Grid item>
+          <FormLabel children="Reward Sub Type" style={{ color: " black " }} />
+          <br />
+          <FormControl id="RType">
+            <Select
+              justify="justify"
+              className="textfield"
+              name="reward_subType"
+              value={subtype}
+              onChange={subtypeChange}
+            >
+              <MenuItem value="work-anniversary">Work Anniversary</MenuItem>
+              <MenuItem value="birthday-celebration">
+                Birthday Celebration
+              </MenuItem>
+            </Select>
+          </FormControl>
+        </Grid>
         <br />
-        <TextField
-          id="outlined-name"
-          label="Monthly Star at Valuebound"
-          className="textfield1"
-        />
+        <Grid item>
+          <FormLabel children="Reward Sender" style={{ color: " black " }} />
+          <br />
+          <FormControl id="RSender">
+            <Select
+              justify="justify"
+              className="textfield"
+              name="reward_sender"
+              value={send}
+              onChange={senderChange}
+            >
+              <MenuItem value="ceo">CEO</MenuItem>
+              <MenuItem value="manager">Manager</MenuItem>
+              <MenuItem value="selected">:Selected</MenuItem>
+            </Select>
+          </FormControl>
+        </Grid>
         <br />
-        <FormLabel children="Reward Type" style={{ color: " black " }} />
+        <Grid item>
+          <FormLabel children="Reward Receiver" style={{ color: " black " }} />
+          <br />
+          <FormControl id="Rreceiver">
+            <Select
+              justify="justify"
+              className="textfield"
+              value={receiver}
+              name="reward_receiver"
+              onChange={receiverChange}
+            >
+              <MenuItem value="manager">Manager</MenuItem>
+              <MenuItem value="employee">Employee</MenuItem>
+              <MenuItem value="everyone">Everyone</MenuItem>
+              <MenuItem value="selected">:Selected</MenuItem>
+            </Select>
+          </FormControl>
+          &nbsp;
+          <Button id="editbutton" variant="contained">
+            Edit
+          </Button>
+        </Grid>
         <br />
-        <FormControl id="RType">
-          <InputLabel id="Demo">General</InputLabel>
-          <Select
-            justify="justify"
-            className="textfield"
-            value={rtype}
-            label="General"
-            onChange={typeChange}
-          >
-            <MenuItem value="sotm">Star Of the Month</MenuItem>
-            <MenuItem value="fv">Food Voucher</MenuItem>
-            <MenuItem value="mr">Membership Reward</MenuItem>
-          </Select>
-        </FormControl>
+        <Grid item>
+          <FormLabel children="Receiver Message" style={{ color: " black " }} />
+          <br />
+          <TextField
+            placeholder="Congratulations Receiver for a great sales cycle"
+            multiline
+            className="textfield1"
+            rows={3}
+            name="receiver_message"
+            onChange={handleChangeForm}
+          />
+        </Grid>
         <br />
-        <FormLabel children="Reward Sender" style={{ color: " black " }} />
+        <Grid item>
+          <FormLabel
+            children="Announcement Type"
+            style={{ color: " black " }}
+          />
+          <br />
+          <FormControl id="Atype">
+            <Select
+              className="textfield"
+              justify="justify"
+              value={announcement}
+              name="announcement_type"
+              onChange={announcementChange}
+            >
+              <MenuItem value="public">Public</MenuItem>
+              <MenuItem value="private">Private</MenuItem>
+            </Select>
+          </FormControl>
+        </Grid>
         <br />
-        <FormControl id="RSender">
-          <InputLabel id="Message Type">Message</InputLabel>
-          <Select
-            justify="justify"
-            className="textfield"
-            value={rsend}
-            label="Message"
-            onChange={senderChange}
-          >
-            <MenuItem value="per">Personal</MenuItem>
-            <MenuItem value="pri">Private</MenuItem>
-          </Select>
-        </FormControl>
+        <Grid item>
+          <FormLabel children="Slack Channel" style={{ color: " black " }} />
+          <br />
+          <TextField
+            id="outlined-name"
+            className="textfield1"
+            name="slack_channel"
+            onChange={handleChangeForm}
+          />
+        </Grid>
         <br />
-        <FormLabel children="Recipients" style={{ color: " black " }} />
-        <br />
-        <TextField
-          id="outlined-name"
-          label="-Selected"
-          className="textfield1"
-        />
-        &nbsp;
-        <Button id="editbutton" variant="contained">
-          Edit
-        </Button>
-        <br />
-        <FormLabel children="Receiver Message" style={{ color: " black " }} />
-        <FormControl id="RType">
-          <InputLabel id="Demo">Display</InputLabel>
-          <Select
-            justify="justify"
-            className="check"
-            value={ruser}
-            label="Display"
-            onChange={userChange}
-          >
-            <MenuItem value="sotm">
-              <Checkbox defaultChecked />
-              Yash
-            </MenuItem>
-            <MenuItem value="fv">
-              <Checkbox />
-              Vimal
-            </MenuItem>
-            <MenuItem value="mr">
-              <Checkbox />
-              Nikhil
-            </MenuItem>
-          </Select>
-        </FormControl>
-        <br />
-        <TextField
-          placeholder="Congratulations Receiver for a great sales cycle"
-          multiline
-          className="textfield1"
-          rows={3}
-          rowsMax={4}
-        />
-        <br />
-        <FormLabel children="Announcement Type" style={{ color: " black " }} />
-        <br />
-        <FormControl id="Atype">
-          <InputLabel id="Pdemo">Public</InputLabel>
-          <Select
-            className="textfield"
-            justify="justify"
-            className="textfield"
-            value={rannouncement}
-            label="Public"
-            onChange={announcementChange}
-          >
-            <MenuItem value="pub">Public</MenuItem>
-            <MenuItem value="pri">Private</MenuItem>
-          </Select>
-        </FormControl>
-        <br />
-        <FormLabel children="Slack Channel" style={{ color: " black " }} />
-        <br />
-        <TextField
-          id="outlined-name"
-          label="#demospolight"
-          className="textfield1"
-        />
-        <br />
-        <FormLabel children="Channel Message" style={{ color: " black " }} />
-        <br />
-        <TextField
-          placeholder="Please Join Us"
-          multiline
-          className="textfield1"
-          rows={2}
-          rowsMax={3}
-        />
+        <Grid item>
+          <FormLabel children="Channel Message" style={{ color: " black " }} />
+          <br />
+          <TextField
+            placeholder="Please Join Us"
+            multiline
+            className="textfield1"
+            name="channel_message"
+            onChange={handleChangeForm}
+            rows={2}
+          />
+        </Grid>
         <div className="btn-container">
           <Button
             id="btn"
             variant="contained"
             color="primary"
-            onClick={submitForm}
+            onClick={getFormData}
           >
             Save
           </Button>
