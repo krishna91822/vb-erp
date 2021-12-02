@@ -70,8 +70,9 @@ const ResourceInformation = ({
                 <TextField
                   {...params}
                   placeholder="associate name"
-                  // onChange={handleResourceChange}
                   value={associateName}
+                  error={resourceErrors.associateName ? true : false}
+                  helperText={resourceErrors.associateName}
                 />
               )}
             />
