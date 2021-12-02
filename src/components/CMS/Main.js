@@ -125,18 +125,18 @@ const Main = () => {
           open={open}
           onClose={handleClose}
         >
-          <MenuItem onClick={() => handleSort("id")} disableRipple>
+          <MenuItem onClick={() => handleSort("_id")} disableRipple>
             By ID
           </MenuItem>
 
-          <MenuItem onClick={() => handleSort("projectname")} disableRipple>
+          <MenuItem onClick={() => handleSort("Project_Name")} disableRipple>
             By Project Name
           </MenuItem>
 
-          <MenuItem onClick={() => handleSort("clientsponser")} disableRipple>
+          <MenuItem onClick={() => handleSort("Client_Sponser")} disableRipple>
             By Client Sponsor
           </MenuItem>
-          <MenuItem onClick={() => handleSort("clientname")} disableRipple>
+          <MenuItem onClick={() => handleSort("Client_Name")} disableRipple>
             By Client Name
           </MenuItem>
         </StyledMenu>
