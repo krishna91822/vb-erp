@@ -4,11 +4,12 @@ import axios from "../helpers/axiosInstance";
 
 export const getClientsData = () => {
   return async (dispatch) => {
+    dispatch(uiActions.toggleLoader());
     const fetchData = async () => {
-      const response = axios.get("/getContentsData");
+      const response = await axios.get("/cims");
 
       if (!response.ok) {
-        throw new Error("Could not fetch cart data!");
+        throw new Error("Could not fetch clients data!");
       }
 
       const data = await response.json();
@@ -18,15 +19,10 @@ export const getClientsData = () => {
 
     try {
       const data = await fetchData();
-      dispatch(
-        contentsActions.getContents({
-          contents: data.contents || [],
-        })
-      );
+      console.log(data);
+      dispatch(cimsActions.getClientsList(data.data || []));
     } catch (error) {
-      dispatch(uiActions.toggleLoader());
       setTimeout(function () {
-        dispatch(uiActions.toggleLoader());
         dispatch(
           uiActions.showNotification({
             status: "error",
@@ -35,6 +31,8 @@ export const getClientsData = () => {
           })
         );
       }, 3000);
+    } finally {
+      dispatch(uiActions.toggleLoader());
     }
   };
 };

@@ -53,6 +53,7 @@ const initialState = {
       "": [""],
     },
   },
+  clientsList: [],
 };
 
 const cimsSlice = createSlice({
@@ -85,6 +86,9 @@ const cimsSlice = createSlice({
       };
     },
     resetForm: () => initialState,
+    getClientsList(state, action) {
+      state.clientsList = action.payload;
+    },
   },
 });
 

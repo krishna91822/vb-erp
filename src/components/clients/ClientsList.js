@@ -62,7 +62,9 @@ function ClientsList() {
       })
       .then((data) => data)
       .then((list) => {
-        setclientsList(list.data);
+        if (list.data.code === 200 || list.data.status === "success")
+          setclientsList(list.data.data);
+        else console.log(list.data.error);
       });
   }, []);
 

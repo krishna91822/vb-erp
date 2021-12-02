@@ -50,7 +50,9 @@ export default function UseForm() {
   async function fetchData() {
     const response = await fetch("http://localhost:4000/countries");
     const data = await response.json();
-    dispatch(cimsActions.setCountries(data));
+    if (data.code === 200 || data.status === "success")
+      dispatch(cimsActions.setCountries(data.data));
+    else console.log(data.error);
   }
 
   useEffect(() => {
@@ -255,9 +257,10 @@ export default function UseForm() {
           },
         })
         .then((res) => {
-          if (res.data.status) dispatch(cimsActions.setLoc(res.data));
-          else if (!res.data.status && formData.city === "") {
-            window.alert("Invalid Pincode!");
+          if (res.data.code === 200 || res.data.status === "success")
+            dispatch(cimsActions.setLoc(res.data.data));
+          else {
+            window.alert(res.data.error[0].message);
             handelInvalidPincode();
           }
         });
@@ -327,9 +330,10 @@ export default function UseForm() {
 
   const handelAddressOnBlur = (e) => {
     setformvalue(e);
-    const data = e.target.value;
-    if (data.length > 1 && formData.pincode !== "" && errors.pincode === "") {
-      getAddressByPincode(data);
+    if (e.target.name === "pincode") {
+      const data = e.target.value;
+      if (data.length > 1 && formData.pincode !== "" && errors.pincode === "")
+        getAddressByPincode(data);
     }
   };
 
