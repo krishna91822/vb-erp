@@ -86,7 +86,6 @@ export const EditButton = styled.button`
   cursor: pointer;
 
   &:hover {
-    color: #db6a19;
-    text-decoration: underline;
+    color: #ff862e;
   }
 `;
