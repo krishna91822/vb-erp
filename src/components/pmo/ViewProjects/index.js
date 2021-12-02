@@ -173,7 +173,7 @@ const ViewProjects = () => {
                       <TextField
                         variant="standard"
                         type="text"
-                        placeholder="Emp Id"
+                        placeholder="Client Name"
                         onChange={filterClientName}
                         value={clientName}
                         inputProps={{ style: { fontSize: "small" } }}
@@ -183,7 +183,7 @@ const ViewProjects = () => {
                       <TextField
                         variant="standard"
                         type="text"
-                        placeholder="Associate Name"
+                        placeholder="Project Name"
                         onChange={filterProjectName}
                         value={projectName}
                         inputProps={{ style: { fontSize: "small" } }}
@@ -193,7 +193,7 @@ const ViewProjects = () => {
                       <TextField
                         variant="standard"
                         type="text"
-                        placeholder="Project Allocated"
+                        placeholder="Project Id"
                         onChange={filterProjectId}
                         value={vbProjectId}
                         inputProps={{ style: { fontSize: "small" } }}
@@ -203,7 +203,7 @@ const ViewProjects = () => {
                       <TextField
                         variant="standard"
                         type="text"
-                        placeholder="Project Allocated"
+                        placeholder="Project Status"
                         onChange={filterStatus}
                         value={vbProjectStatus}
                         inputProps={{ style: { fontSize: "small" } }}

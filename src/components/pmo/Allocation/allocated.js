@@ -125,7 +125,16 @@ const Allocated = ({ pressed }) => {
                       inputProps={{ style: { fontSize: "small" } }}
                     />
                   </TableCell>
-                  <TableCell align="left"></TableCell>
+                  <TableCell align="left">
+                    <TextField
+                      variant="standard"
+                      type="Number"
+                      placeholder="Percentage Allocated"
+                      onChange={filterPercentage}
+                      value={percentageAllocation}
+                      inputProps={{ style: { fontSize: "small" } }}
+                    />
+                  </TableCell>
                   <TableCell align="left">
                     <TextField
                       variant="standard"
