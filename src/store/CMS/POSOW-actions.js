@@ -76,7 +76,7 @@ export const AddEmpToThisPO = (formData) => {
         "http://localhost:8000/assign",
         formData
       );
-      if (response.status === 201) {
+      if (response.status === 200) {
         dispatch(PoSowActions.PopUpON("Employee Added To This PO"));
       } else {
         throw new Error("Could not Save data!");
@@ -103,7 +103,7 @@ export const UpdateEmpData = (formData, emp_id) => {
         `http://localhost:8000/assign/${emp_id}`,
         formData
       );
-      if (response.status === 201) {
+      if (response.status === 200) {
         dispatch(PoSowActions.PopUpON("Updated"));
       } else {
         throw new Error("Could not update!");
@@ -130,7 +130,7 @@ export const UnAssignThisEmp = (emp_id) => {
       const response = await axios.patch(
         `http://localhost:8000/assign/unassign/${emp_id}`
       );
-      if (response.status === 201) {
+      if (response.status === 200) {
         dispatch(PoSowActions.PopUpON("Unassigned"));
       } else {
         throw new Error("Could not Unassign!");

@@ -4,10 +4,7 @@ import { PoSowActions } from "./POSOW-slice";
 
 export const createNew_INVOICE = (formData) => {
   return async function (dispatch) {
-    const rqst = await axios.post(
-      "http://localhost:8000/savePoDetails",
-      formData
-    );
+    const rqst = await axios.post("http://localhost:8000/invoice", formData);
     dispatch(invoiceActions.PopUpON("Saved Successfully"));
     //  dispatch(
     //     uiActions.showNotification({
@@ -30,13 +27,13 @@ export const Update_INVOICE = (formData, id) => {
 };
 export const fetch_INVOICE_data = () => {
   return async function (dispatch) {
-    const res = await axios.get("getPoDetails");
+    const res = await axios.get("http://localhost:8000/invoice");
     dispatch(invoiceActions.setTabViewData(res.data));
   };
 };
 export const fetchSpecificINVOICE = (ROW_ID) => {
   return async function (dispatch) {
-    const res = await axios.get(`/getPoDetailsByID/${ROW_ID}`);
+    const res = await axios.get(`http://localhost:8000/invoice/${ROW_ID}`);
     dispatch(invoiceActions.SetSpecific([res.data]));
   };
 };
