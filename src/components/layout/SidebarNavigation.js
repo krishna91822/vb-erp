@@ -14,6 +14,7 @@ import GridViewIcon from "@mui/icons-material/GridView";
 import { styled } from "@mui/material/styles";
 import { Avatar } from "@mui/material";
 import { Grid } from "@mui/material";
+import { Link } from "react-router-dom";
 
 const boxStyles = {
   position: "fixed",
@@ -85,7 +86,7 @@ const SidebarNavigation = () => {
     },
     {
       name: "Tasks",
-      dropDown: ["Create Profile", "Reviews"],
+      dropDown: [{ name: "Create Profile" }, { name: "Reviews" }],
       open: openTasks,
       handle: handleClickTasks,
     },
@@ -97,7 +98,11 @@ const SidebarNavigation = () => {
     },
     {
       name: "PMO",
-      dropDown: ["Projects", "Create Project", "Allocations"],
+      dropDown: [
+        { name: "Projects" },
+        { name: "Create Projects" },
+        { name: "Allocations" },
+      ],
       open: openPMO,
       handle: handleClickPMO,
     },
@@ -106,13 +111,13 @@ const SidebarNavigation = () => {
     },
     {
       name: "CMS",
-      dropDown: ["PO/SOW", "Invoicing"],
+      dropDown: [{ name: "PO/SOW" }, { name: "Invoicing" }],
       open: openCMS,
       handle: handleClickCMS,
     },
     {
       name: "R&R",
-      dropDown: ["Catalog", "Reward"],
+      dropDown: [{ name: "Catalog" }, { name: "Reward", route: "/rewards" }],
       open: openRR,
       handle: handleClickRR,
     },
@@ -158,12 +163,18 @@ const SidebarNavigation = () => {
                   <Collapse in={menuItem.open} timeout="auto" unmountOnExit>
                     <List component="div" disablePadding>
                       {menuItem.dropDown.map((item) => (
-                        <CustomListItemButton sx={{ pl: 4 }}>
+                        // <Link to={item.route}>
+                        <CustomListItemButton
+                          component={Link}
+                          to={item.route}
+                          sx={{ pl: 4 }}
+                        >
                           <ListItemIcon>
                             <GridViewIcon style={{ color: "black" }} />
                           </ListItemIcon>
-                          <ListItemText primary={item} />
+                          <ListItemText primary={item.name} />
                         </CustomListItemButton>
+                        // </Link>
                       ))}
                     </List>
                   </Collapse>

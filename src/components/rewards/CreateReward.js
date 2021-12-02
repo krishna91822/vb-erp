@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import { Grid } from "@mui/material";
@@ -8,8 +8,15 @@ import Select from "@mui/material/Select";
 import { FormLabel } from "@mui/material";
 import { useState } from "react";
 import "./rewardStyle.css";
+import { useDispatch, useSelector } from "react-redux";
+import { addRewardData } from "../../store/rewards-actions";
+import { rewardsActions } from "../../store/rewards-slice";
+import { useNavigate } from "react-router-dom";
 
 const CreateReward = () => {
+  const dispatch = useDispatch();
+  let navigate = useNavigate();
+
   const [type, setType] = React.useState("");
   const [send, setSender] = React.useState("");
   const [announcement, setAnnouncement] = React.useState("");
@@ -17,6 +24,17 @@ const CreateReward = () => {
   const [receiver, setReceiver] = React.useState("");
 
   const [formData, setFormData] = useState({});
+  const updateRewardStatus = useSelector(
+    (state) => state.reward.updateRewardStatus
+  );
+
+  useEffect(() => {
+    if (updateRewardStatus) {
+      navigate("/rewards");
+      dispatch(rewardsActions.updateRewardStatus());
+    }
+  }, [dispatch, updateRewardStatus]);
+
   const handleChangeForm = (e) => {
     setFormData({
       ...formData,
@@ -60,6 +78,7 @@ const CreateReward = () => {
   };
   const getFormData = (event) => {
     event.preventDefault();
+    dispatch(addRewardData(formData));
     console.log(formData);
   };
 
@@ -162,7 +181,7 @@ const CreateReward = () => {
               onChange={receiverChange}
             >
               <MenuItem value="manager">Manager</MenuItem>
-              <MenuItem value="employee">Employee</MenuItem>
+              <MenuItem value="employees">Employee</MenuItem>
               <MenuItem value="everyone">Everyone</MenuItem>
               <MenuItem value="selected">:Selected</MenuItem>
             </Select>
