@@ -129,9 +129,12 @@ const ViewProjects = () => {
               <Button
                 variant="contained"
                 size="small"
-                style={{
+                sx={{
                   backgroundColor: "#e8833a",
                   textTransform: "none",
+                  ":hover": {
+                    bgcolor: "#ff862e",
+                  },
                 }}
                 onClick={() => {
                   history.push("/pmo/createproject");
@@ -216,7 +219,7 @@ const ViewProjects = () => {
                       key={currElem.vbProjectId}
                       onClick={() => entryLink(currElem)}
                     >
-                      <TableCell align="left">{index + 1}</TableCell>
+                      <TableCell align="left">{index + page * 5 + 1}</TableCell>
                       <TableCell align="left">{currElem.clientName}</TableCell>
                       <TableCell align="left">{currElem.projectName}</TableCell>
                       <TableCell align="left">{currElem.vbProjectId}</TableCell>
