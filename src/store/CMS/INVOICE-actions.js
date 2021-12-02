@@ -28,19 +28,22 @@ export const Update_INVOICE = (formData, id) => {
 export const fetch_INVOICE_data = () => {
   return async function (dispatch) {
     const res = await axios.get("http://localhost:8000/invoice");
+
     dispatch(invoiceActions.setTabViewData(res.data));
   };
 };
 export const fetchSpecificINVOICE = (ROW_ID) => {
   return async function (dispatch) {
     const res = await axios.get(`http://localhost:8000/invoice/${ROW_ID}`);
+    console.log(res.data);
     dispatch(invoiceActions.SetSpecific([res.data]));
   };
 };
-/* export const sortProducts = (product) => {
+export const sortProducts = (product) => {
   return async function (dispatch) {
-    const res = await axios.get(`/sort/${product}`);
-    dispatch(PoSowActions.setTabViewData(res.data));
+    const res = await axios.get(
+      `http://localhost:8000/invoice/sort/${product}`
+    );
+    dispatch(invoiceActions.setTabViewData(res.data));
   };
 };
- */

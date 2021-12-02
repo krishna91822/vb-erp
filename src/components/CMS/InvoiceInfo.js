@@ -15,12 +15,16 @@ import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 // import setPosts from './Main/actions'
-import { fetchPO_SOW_data, sortProducts } from "../../store/CMS/POSOW-actions";
+// import { sortProducts } from "../../store/CMS/POSOW-actions";
+import { fetch_INVOICE_data } from "../../store/CMS/INVOICE-actions";
 import Typography from "@mui/material/Typography";
 import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
 import { Link } from "react-router-dom";
-import { fetchSpecificINVOICE } from "../../store/CMS/INVOICE-actions";
+import {
+  fetchSpecificINVOICE,
+  sortProducts,
+} from "../../store/CMS/INVOICE-actions";
 
 export const StyledMenu = styled((props) => (
   <Menu
@@ -66,32 +70,13 @@ export const StyledMenu = styled((props) => (
 }));
 
 function InvoiceInfo() {
-  // const post = useSelector((state) => state.allPosts.posts);
   const dispatch = useDispatch();
 
-  // const fetchPosts = async () => {
-  //     const response = await api
-  //       .get('http://localhost:8000/getPoDetails')
-  //     .catch( (err) =>{
-  //       if (err.response) {
-  //         console.log(err.response.data);
-  //         console.log(err.response.status);
-  //         console.log(err.response.headers);
-  //       }
-  //        else {
-  //         console.log(`Error: ${err.message}`);
-  //       }
-  //     });
-  //     dispatch(setPosts(response.data))
-
-  //   }
-  // useEffect(() => {
-  //   fetchPosts();
-  // }, [])
   useEffect(() => {
-    dispatch(fetchPO_SOW_data());
+    dispatch(fetch_INVOICE_data());
   }, []);
-  const post = useSelector((state) => state.CMS_state.poSowData);
+  const post = useSelector((state) => state.INVOICE_state.invoiceData);
+
   const [currentpage, currentsetPage] = React.useState(1);
   const [postPerPage, setPostPerPage] = React.useState(5);
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -139,18 +124,18 @@ function InvoiceInfo() {
           open={open}
           onClose={handleClose}
         >
-          <MenuItem onClick={() => handleSort("id")} disableRipple>
+          <MenuItem onClick={() => handleSort("_id")} disableRipple>
             By ID
           </MenuItem>
 
-          <MenuItem onClick={() => handleSort("projectname")} disableRipple>
+          <MenuItem onClick={() => handleSort("Project_Name")} disableRipple>
             By Project Name
           </MenuItem>
 
-          <MenuItem onClick={() => handleSort("invoiceraised")} disableRipple>
+          <MenuItem onClick={() => handleSort("invoiceRaised")} disableRipple>
             By Invoice Raised
           </MenuItem>
-          <MenuItem onClick={() => handleSort("clientname")} disableRipple>
+          <MenuItem onClick={() => handleSort("Client_Name")} disableRipple>
             By Client Name
           </MenuItem>
         </StyledMenu>
@@ -194,13 +179,13 @@ function InvoiceInfo() {
                   <TableCell component="th" scope="row">
                     {row._id}
                   </TableCell>
-                  <TableCell>{row.Client_Name}</TableCell>
-                  <TableCell>{row.Project_Name}</TableCell>
-                  <TableCell>{row.ProjectID} </TableCell>
-                  <TableCell>{row.PO_Number}</TableCell>
-                  <TableCell>{row.PO_Amount}</TableCell>
-                  <TableCell>{row.Invoiceraised}</TableCell>
-                  <TableCell>{row.Invoiceamount}</TableCell>
+                  <TableCell>{row.PO_Id.Client_Name}</TableCell>
+                  <TableCell>{row.PO_Id.Project_Name}</TableCell>
+                  <TableCell>{row.PO_Id._id} </TableCell>
+                  <TableCell>{row.PO_Id.PO_Number}</TableCell>
+                  <TableCell>{row.PO_Id.PO_Amount}</TableCell>
+                  <TableCell>{row.invoice_raised}</TableCell>
+                  <TableCell>{row.invoice_amount_received}</TableCell>
                 </TableRow>
               ))}
             </TableBody>
