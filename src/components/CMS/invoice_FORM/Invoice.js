@@ -1,6 +1,7 @@
+/* eslint-disable prettier/prettier */
 import { useParams } from "react-router-dom";
 import "./Invoice.css";
-import data from "./Data.json";
+import { useDispatch, useSelector } from "react-redux";
 import {
   Grid,
   TextField,
@@ -17,100 +18,123 @@ import {
 import Dialog from "./dialog";
 import { useState } from "react";
 import Date from "./date";
+import React, { useEffect } from "react";
+import { createNew_INVOICE } from "../../../store/CMS/INVOICE-actions";
+import { Update_INVOICE } from "../../../store/CMS/INVOICE-actions";
+import { fetchSpecificINVOICE } from "../../../store/CMS/INVOICE-actions";
 
 function Invoice(props) {
+  console.log(props);
   const params = useParams();
-  const x = params.id - 1;
+  const dispatch = useDispatch();
+  let filteredArr = useSelector((state) => state.INVOICE_state.dataByID);
+  console.log(filteredArr[0]);
+  const names = useSelector(
+    (state) => state.INVOICE_state.inputFieldsData.names
+  );
+  const projects = useSelector(
+    (state) => state.INVOICE_state.inputFieldsData.projects
+  );
+  const clientFinController = useSelector(
+    (state) => state.INVOICE_state.inputFieldsData.clientFinController
+  );
 
-  const [clientname, setclientname] = useState(
-    props.readonly ? data.posts[x].clientname : ""
+  const clientSponsors = useSelector(
+    (state) => state.INVOICE_state.inputFieldsData.clientSponsors
   );
-  const [projectname, setprojectname] = useState(
-    props.readonly ? data.posts[x].Projectname : ""
+  const invoiceRaised = useSelector(
+    (state) => state.INVOICE_state.inputFieldsData.invoiceRaised
   );
-  const [clientsponsor, setclientsponsor] = useState(
-    props.readonly ? data.posts[x].ClientSponsor : ""
+  console.log(invoiceRaised);
+  const invoiceAmount = useSelector(
+    (state) => state.INVOICE_state.inputFieldsData.invoiceAmount
   );
-  const [clientfinancecontroller, setclientfinancecontroller] = useState(
-    props.readonly ? data.posts[x].ClientFinanceController : ""
+  const popupController = useSelector((state) => state.INVOICE_state.popup);
+  const response_msg = useSelector(
+    (state) => state.INVOICE_state.response_message
   );
-  const [poamount, setpoamount] = useState(
-    props.readonly ? data.posts[x].POAmount : ""
-  );
-  const [ponumber, setponumber] = useState(
-    props.readonly ? data.posts[x].PONumber : ""
-  );
-  const [invoiceraised, setinvoiceraised] = useState(
-    props.readonly ? data.posts[x].Invoiceraised : ""
-  );
-  const [invoiceamount, setinvoiceamount] = useState(
-    props.readonly ? data.posts[x].Invoiceamount : ""
-  );
-  const [vbbankacc, setvbbankacc] = useState(
-    props.readonly ? data.posts[x].VbBankAcc : ""
-  );
-  const [amtdate, setamtdate] = useState(
-    props.readonly ? data.posts[x].AmountReceivedDate : null
-  );
-  const [invoicereceived, setinvoicereceived] = useState(props.invoicereceived);
+  let ReadPersonName = "";
+  let ReadProjectName = "";
+  let ReadPO_num = "";
+  let ReadPO_amt = "";
+  let ReadClientFinController = "";
+  let Readclientsponsor = "";
+  let Readinvoiceraised = "";
+  let Readinvoiceamount = "";
 
-  const clientnamehandler = (e) => {
-    setclientname(e.target.value);
+  const [personName, setPersonName] = React.useState(ReadPersonName);
+  const [projectName, setProjectName] = React.useState(ReadProjectName);
+  const [PO_number, setPO_number] = React.useState(ReadPO_num);
+  const [PO_amt, setPOAmt] = React.useState(ReadPO_amt);
+  const [Client_Fin_controller, setClientFinController] = React.useState(
+    ReadClientFinController
+  );
+  const [ClientSponsor, setClientSponsor] = React.useState(Readclientsponsor);
+  const [invoice_raised, setInvoiceRaised] = React.useState(Readinvoiceraised);
+  const [invoice_amount, setinvoiceAmount] = React.useState(Readinvoiceamount);
+
+  useEffect(() => {
+    if (props.readonly && filteredArr !== "undefined") {
+      setPersonName(filteredArr[0].Client_Name);
+      console.log(filteredArr[0].Client_Name);
+      setProjectName(filteredArr[0].Project_Name);
+      setPO_number(filteredArr[0].PO_Number);
+      setPOAmt(filteredArr[0].PO_Amount);
+      setClientFinController(filteredArr[0].Client_Finance_Controller);
+      setClientSponsor(filteredArr[0].Client_Sponser);
+      setInvoiceRaised(filteredArr[0].invoiceRaised);
+      setinvoiceAmount(filteredArr[0].invoiceAmount);
+    }
+  }, [filteredArr]);
+
+  const handleClientChange = (event) => {
+    setPersonName(event.target.value);
   };
-  const projectnamehandler = (e) => {
-    setprojectname(e.target.value);
+  const handleProjectChange = (event) => {
+    setProjectName(event.target.value);
   };
-  const clientsponsorhandler = (e) => {
-    setclientsponsor(e.target.value);
+  const handlePoNumTxtBoxChange = (event) => {
+    setPO_number(event.target.value);
   };
-  const clientfinancecontrollerhandler = (e) => {
-    setclientfinancecontroller(e.target.value);
+  const handlePOAmtTxtBoxChange = (event) => {
+    setPOAmt(event.target.value);
   };
-  const poamounthandler = (e) => {
-    setpoamount(e.target.value);
+  const handleClientFinController = (event) => {
+    setClientFinController(event.target.value);
   };
-  const ponumberhandler = (e) => {
-    setponumber(e.target.value);
+  const handleClientSponsor = (event) => {
+    setClientSponsor(event.target.value);
   };
-  const invoiceraisedhandler = (e) => {
-    setinvoiceraised(e.target.value);
+  const handleInvoiceRaised = (event) => {
+    setInvoiceRaised(event.target.value);
   };
-  const invoiceamounthandler = (e) => {
-    setinvoiceamount(e.target.value);
+  const handleInvoiceAmount = (event) => {
+    setinvoiceAmount(event.target.value);
   };
-  const vbbankacchandler = (e) => {
-    setvbbankacc(e.target.value);
-  };
-  const amtdatehandler = (date) => {
-    setamtdate(date);
-  };
-  const invoicereceivedhandler = (e) => {
-    setinvoicereceived(!invoicereceived);
-  };
-  const submithandler = (event) => {
+  const submitForm = async (event) => {
     event.preventDefault();
-    const values = {
-      clientname: clientname,
-      projectname: projectname,
-      clientsponsor: clientsponsor,
-      clientfinancecontroller: clientfinancecontroller,
-      poamount: poamount,
-      ponumber: ponumber,
-      invoiceraised: invoiceraised,
-      invoiceamount: invoiceamount,
-      vbbankacc: vbbankacc,
-      amtdate: amtdate,
-      invoicereceived: invoicereceived,
-    };
-    console.log(values);
-    setamtdate(null);
-    setvbbankacc(0);
-  };
 
+    const DataToSend = {
+      Client_Name: personName,
+      Project_Name: projectName,
+      PO_Number: PO_number,
+      PO_Amount: PO_amt,
+      Client_Sponser: ClientSponsor,
+      Client_Finance_Controller: Client_Fin_controller,
+      invoiceRaised: invoice_raised,
+      invoiceAmount: invoice_amount,
+    };
+    console.log(DataToSend);
+    if (!props.invoicereceived) {
+      dispatch(Update_INVOICE(DataToSend, params.id));
+    } else {
+      dispatch(createNew_INVOICE(DataToSend));
+    }
+  };
   return (
     <div className="maincontainer">
       <h3>PO/SOW</h3>
-      <form onSubmit={submithandler}>
+      <form onSubmit={submitForm}>
         <Grid container>
           <Grid item lg={11} md={11} sm={12} xs={12}>
             <h4 className="heading">PO Information</h4>
@@ -120,7 +144,7 @@ function Invoice(props) {
               className="savebtn"
               variant="contained"
               color="success"
-              onClick={submithandler}
+              onClick={submitForm}
             />
           </Grid>
         </Grid>
@@ -134,13 +158,11 @@ function Invoice(props) {
               <FormControl fullWidth>
                 <Select
                   disabled={props.readonly}
-                  value={clientname}
-                  onChange={clientnamehandler}
+                  value={personName}
+                  onChange={handleClientChange}
                 >
-                  {data.posts.map((detail) => (
-                    <MenuItem value={detail.clientname}>
-                      {detail.clientname}
-                    </MenuItem>
+                  {names.map((detail) => (
+                    <MenuItem value={detail}>{detail}</MenuItem>
                   ))}
                 </Select>
               </FormControl>
@@ -153,13 +175,11 @@ function Invoice(props) {
               <FormControl fullWidth>
                 <Select
                   disabled={props.readonly}
-                  value={projectname}
-                  onChange={projectnamehandler}
+                  value={projectName}
+                  onChange={handleProjectChange}
                 >
-                  {data.posts.map((detail) => (
-                    <MenuItem value={detail.Projectname}>
-                      {detail.Projectname}
-                    </MenuItem>
+                  {projects.map((detail) => (
+                    <MenuItem value={detail}>{detail}</MenuItem>
                   ))}
                 </Select>
               </FormControl>
@@ -174,13 +194,11 @@ function Invoice(props) {
                   <FormControl fullWidth>
                     <Select
                       disabled={props.readonly}
-                      value={clientsponsor}
-                      onChange={clientsponsorhandler}
+                      value={ClientSponsor}
+                      onChange={handleClientSponsor}
                     >
-                      {data.posts.map((detail) => (
-                        <MenuItem value={detail.ClientSponsor}>
-                          {detail.ClientSponsor}
-                        </MenuItem>
+                      {clientSponsors.map((detail) => (
+                        <MenuItem value={detail}>{detail}</MenuItem>
                       ))}
                     </Select>
                   </FormControl>
@@ -193,13 +211,11 @@ function Invoice(props) {
                   <FormControl fullWidth>
                     <Select
                       disabled={props.readonly}
-                      value={clientfinancecontroller}
-                      onChange={clientfinancecontrollerhandler}
+                      value={Client_Fin_controller}
+                      onChange={handleClientFinController}
                     >
-                      {data.posts.map((detail) => (
-                        <MenuItem value={detail.ClientFinanceController}>
-                          {detail.ClientFinanceController}
-                        </MenuItem>
+                      {clientFinController.map((detail) => (
+                        <MenuItem value={detail}>{detail}</MenuItem>
                       ))}
                     </Select>
                   </FormControl>
@@ -210,17 +226,12 @@ function Invoice(props) {
                 <br />
                 <Box sx={{ minWidth: 120 }}>
                   <FormControl fullWidth>
-                    <Select
+                    <TextField
                       disabled={props.readonly}
-                      value={poamount}
-                      onChange={poamounthandler}
-                    >
-                      {data.posts.map((detail) => (
-                        <MenuItem value={detail.POAmount}>
-                          {detail.POAmount}
-                        </MenuItem>
-                      ))}
-                    </Select>
+                      value={PO_amt}
+                      onChange={handlePOAmtTxtBoxChange}
+                      label={"Enter PO Amount"}
+                    />
                   </FormControl>
                 </Box>
                 <span>USD</span>
@@ -230,17 +241,12 @@ function Invoice(props) {
                 <br />
                 <Box sx={{ minWidth: 120 }}>
                   <FormControl fullWidth>
-                    <Select
+                    <TextField
                       disabled={props.readonly}
-                      value={ponumber}
-                      onChange={ponumberhandler}
-                    >
-                      {data.posts.map((detail) => (
-                        <MenuItem value={detail.PONumber}>
-                          {detail.PONumber}
-                        </MenuItem>
-                      ))}
-                    </Select>
+                      value={PO_number}
+                      onChange={handlePoNumTxtBoxChange}
+                      label={"Enter PO Number"}
+                    />
                   </FormControl>
                 </Box>
               </Grid>
@@ -297,13 +303,11 @@ function Invoice(props) {
                 <FormControl fullWidth>
                   <Select
                     disabled={props.readonly}
-                    value={invoiceraised}
-                    onChange={invoiceraisedhandler}
+                    value={invoice_raised}
+                    onChange={handleInvoiceRaised}
                   >
-                    {data.posts.map((detail) => (
-                      <MenuItem value={detail.Invoiceraised}>
-                        {detail.Invoiceraised}
-                      </MenuItem>
+                    {invoiceRaised.map((detail) => (
+                      <MenuItem value={detail}>{detail}</MenuItem>
                     ))}
                   </Select>
                 </FormControl>
@@ -316,13 +320,11 @@ function Invoice(props) {
                 <FormControl fullWidth>
                   <Select
                     disabled={props.readonly}
-                    value={invoiceamount}
-                    onChange={invoiceamounthandler}
+                    value={invoice_amount}
+                    onChange={handleInvoiceAmount}
                   >
-                    {data.posts.map((detail) => (
-                      <MenuItem value={detail.Invoiceamount}>
-                        {detail.Invoiceamount}
-                      </MenuItem>
+                    {invoiceAmount.map((detail) => (
+                      <MenuItem value={detail}>{detail}</MenuItem>
                     ))}
                   </Select>
                 </FormControl>
@@ -333,7 +335,7 @@ function Invoice(props) {
           <Grid item lg={12} md={12} sm={122} xs={12}>
             <div className="invoicereceived">
               <span>Invoice Received</span>
-              <Switch defaultChecked onChange={invoicereceivedhandler} />
+              <Switch />
             </div>
           </Grid>
           <div className="gridcontainer">
@@ -342,16 +344,12 @@ function Invoice(props) {
               <br />
               <Box sx={{ minWidth: 120 }}>
                 <FormControl fullWidth>
-                  <Select
-                    disabled={props.readonly || !invoicereceived}
-                    value={vbbankacc}
-                    onChange={vbbankacchandler}
-                  >
-                    {data.posts.map((detail) => (
+                  <Select disabled={props.readonly || !props.invoicereceived}>
+                    {/* {data.posts.map((detail) => (
                       <MenuItem value={detail.VbBankAcc}>
                         {detail.VbBankAcc}
                       </MenuItem>
-                    ))}
+                    ))} */}
                   </Select>
                 </FormControl>
               </Box>
@@ -359,11 +357,7 @@ function Invoice(props) {
             <Grid item lg={12} md={12} sm={122} xs={12}>
               <label htmlFor="invoiceamount">Amount Received on</label>
               <br />
-              <Date
-                onChange={amtdatehandler}
-                value={amtdate}
-                disabled={props.readonly || !invoicereceived}
-              />
+              <Date disabled={props.readonly || !props.invoicereceived} />
             </Grid>
           </div>
         </Grid>

@@ -20,6 +20,7 @@ import Typography from "@mui/material/Typography";
 import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
 import { Link } from "react-router-dom";
+import { fetchSpecificINVOICE } from "../../store/CMS/INVOICE-actions";
 
 export const StyledMenu = styled((props) => (
   <Menu
@@ -108,6 +109,9 @@ function InvoiceInfo() {
   const handleChange = (event, value) => {
     currentsetPage(value);
   };
+  const handleRowOnClick = (row_id) => {
+    dispatch(fetchSpecificINVOICE(row_id));
+  };
   const indexOfLastPost = currentpage * postPerPage;
   const indexOfFirstPost = indexOfLastPost - postPerPage;
   const currentPosts = post.slice(indexOfFirstPost, indexOfLastPost);
@@ -180,7 +184,11 @@ function InvoiceInfo() {
             <TableBody>
               {currentPosts.map((row) => (
                 <TableRow
+                  component={Link}
+                  to={`/invoice_details/${row._id}`}
+                  onClick={() => handleRowOnClick(row._id)}
                   key={row.name}
+                  style={{ textDecoration: "none" }}
                   sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                 >
                   <TableCell component="th" scope="row">
