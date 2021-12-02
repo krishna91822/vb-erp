@@ -16,6 +16,7 @@ const targetedResources = ["ABC", "XYZ", "EFG", "ZZZ"];
 const clientSponsors = ["ABC", "XYZ"];
 const invoiceRaised = ["2567", "8743", "3753"];
 const invoiceAmount = ["9349", "8243", "9753"];
+const VbBankAcc = ["0987", "7654", "2958"];
 
 export const invoice_init_state = {
   inputFieldsData: {
@@ -26,6 +27,7 @@ export const invoice_init_state = {
     clientSponsors: clientSponsors,
     invoiceRaised: invoiceRaised,
     invoiceAmount: invoiceAmount,
+    VbBankAcc: VbBankAcc,
   },
   popup: false,
   response_message: "",
@@ -41,6 +43,8 @@ export const invoice_init_state = {
       PO_Amount: "",
       invoiceRaised: "",
       invoiceAmount: "",
+      VbBankAcc: "",
+      Date: "",
     },
   ],
 };

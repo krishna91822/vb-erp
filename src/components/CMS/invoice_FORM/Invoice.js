@@ -21,37 +21,29 @@ import Date from "./date";
 import React, { useEffect } from "react";
 import { createNew_INVOICE } from "../../../store/CMS/INVOICE-actions";
 import { Update_INVOICE } from "../../../store/CMS/INVOICE-actions";
-import { fetchSpecificINVOICE } from "../../../store/CMS/INVOICE-actions";
 
 function Invoice(props) {
-  console.log(props);
   const params = useParams();
   const dispatch = useDispatch();
   let filteredArr = useSelector((state) => state.INVOICE_state.dataByID);
-  console.log(filteredArr[0]);
-  const names = useSelector(
-    (state) => state.INVOICE_state.inputFieldsData.names
-  );
+  const names = useSelector((state) => state.INVOICE_state.inputFieldsData.names);
   const projects = useSelector(
     (state) => state.INVOICE_state.inputFieldsData.projects
   );
   const clientFinController = useSelector(
     (state) => state.INVOICE_state.inputFieldsData.clientFinController
   );
-
   const clientSponsors = useSelector(
     (state) => state.INVOICE_state.inputFieldsData.clientSponsors
   );
   const invoiceRaised = useSelector(
     (state) => state.INVOICE_state.inputFieldsData.invoiceRaised
   );
-  console.log(invoiceRaised);
   const invoiceAmount = useSelector(
     (state) => state.INVOICE_state.inputFieldsData.invoiceAmount
   );
-  const popupController = useSelector((state) => state.INVOICE_state.popup);
-  const response_msg = useSelector(
-    (state) => state.INVOICE_state.response_message
+  const VbBankAcc = useSelector(
+    (state) => state.INVOICE_state.inputFieldsData.VbBankAcc
   );
   let ReadPersonName = "";
   let ReadProjectName = "";
@@ -61,29 +53,31 @@ function Invoice(props) {
   let Readclientsponsor = "";
   let Readinvoiceraised = "";
   let Readinvoiceamount = "";
+  let ReadVbBankAcc = "";
+  let ReadDate = null;
 
   const [personName, setPersonName] = React.useState(ReadPersonName);
   const [projectName, setProjectName] = React.useState(ReadProjectName);
   const [PO_number, setPO_number] = React.useState(ReadPO_num);
   const [PO_amt, setPOAmt] = React.useState(ReadPO_amt);
-  const [Client_Fin_controller, setClientFinController] = React.useState(
-    ReadClientFinController
-  );
+  const [Client_Fin_controller, setClientFinController] = React.useState(ReadClientFinController);
   const [ClientSponsor, setClientSponsor] = React.useState(Readclientsponsor);
   const [invoice_raised, setInvoiceRaised] = React.useState(Readinvoiceraised);
   const [invoice_amount, setinvoiceAmount] = React.useState(Readinvoiceamount);
+  const [Vb_Bank_Acc, setVbbankacc] = React.useState(ReadVbBankAcc);
+  const [Date_, setDate] = React.useState(ReadDate);
 
   useEffect(() => {
-    if (props.readonly && filteredArr !== "undefined") {
+    if ( props.readonly && filteredArr !== "undefined") {
       setPersonName(filteredArr[0].Client_Name);
-      console.log(filteredArr[0].Client_Name);
       setProjectName(filteredArr[0].Project_Name);
       setPO_number(filteredArr[0].PO_Number);
       setPOAmt(filteredArr[0].PO_Amount);
       setClientFinController(filteredArr[0].Client_Finance_Controller);
       setClientSponsor(filteredArr[0].Client_Sponser);
-      setInvoiceRaised(filteredArr[0].invoiceRaised);
-      setinvoiceAmount(filteredArr[0].invoiceAmount);
+      setInvoiceRaised(filteredArr[0].invoiceRaised)
+      setinvoiceAmount(filteredArr[0].invoiceAmount)
+      setDate(filteredArr[0].Date)
     }
   }, [filteredArr]);
 
@@ -111,6 +105,12 @@ function Invoice(props) {
   const handleInvoiceAmount = (event) => {
     setinvoiceAmount(event.target.value);
   };
+  const handlevbbankacc = (event) => {
+    setVbbankacc(event.target.value);
+  };
+  const handleDate = (Date) => {
+    setDate(Date);
+  };
   const submitForm = async (event) => {
     event.preventDefault();
 
@@ -123,8 +123,9 @@ function Invoice(props) {
       Client_Finance_Controller: Client_Fin_controller,
       invoiceRaised: invoice_raised,
       invoiceAmount: invoice_amount,
+      VbBankAcc: Vb_Bank_Acc,
+      Date: Date_ 
     };
-    console.log(DataToSend);
     if (!props.invoicereceived) {
       dispatch(Update_INVOICE(DataToSend, params.id));
     } else {
@@ -162,7 +163,9 @@ function Invoice(props) {
                   onChange={handleClientChange}
                 >
                   {names.map((detail) => (
-                    <MenuItem value={detail}>{detail}</MenuItem>
+                    <MenuItem value={detail}>
+                      {detail}
+                    </MenuItem>
                   ))}
                 </Select>
               </FormControl>
@@ -179,7 +182,9 @@ function Invoice(props) {
                   onChange={handleProjectChange}
                 >
                   {projects.map((detail) => (
-                    <MenuItem value={detail}>{detail}</MenuItem>
+                    <MenuItem value={detail}>
+                      {detail}
+                    </MenuItem>
                   ))}
                 </Select>
               </FormControl>
@@ -198,7 +203,9 @@ function Invoice(props) {
                       onChange={handleClientSponsor}
                     >
                       {clientSponsors.map((detail) => (
-                        <MenuItem value={detail}>{detail}</MenuItem>
+                        <MenuItem value={detail}>
+                          {detail}
+                        </MenuItem>
                       ))}
                     </Select>
                   </FormControl>
@@ -215,7 +222,9 @@ function Invoice(props) {
                       onChange={handleClientFinController}
                     >
                       {clientFinController.map((detail) => (
-                        <MenuItem value={detail}>{detail}</MenuItem>
+                        <MenuItem value={detail}>
+                          {detail}
+                        </MenuItem>
                       ))}
                     </Select>
                   </FormControl>
@@ -232,6 +241,8 @@ function Invoice(props) {
                       onChange={handlePOAmtTxtBoxChange}
                       label={"Enter PO Amount"}
                     />
+          
+                    
                   </FormControl>
                 </Box>
                 <span>USD</span>
@@ -307,7 +318,9 @@ function Invoice(props) {
                     onChange={handleInvoiceRaised}
                   >
                     {invoiceRaised.map((detail) => (
-                      <MenuItem value={detail}>{detail}</MenuItem>
+                      <MenuItem value={detail}>
+                        {detail}
+                      </MenuItem>
                     ))}
                   </Select>
                 </FormControl>
@@ -324,7 +337,9 @@ function Invoice(props) {
                     onChange={handleInvoiceAmount}
                   >
                     {invoiceAmount.map((detail) => (
-                      <MenuItem value={detail}>{detail}</MenuItem>
+                      <MenuItem value={detail}>
+                        {detail}
+                      </MenuItem>
                     ))}
                   </Select>
                 </FormControl>
@@ -344,12 +359,16 @@ function Invoice(props) {
               <br />
               <Box sx={{ minWidth: 120 }}>
                 <FormControl fullWidth>
-                  <Select disabled={props.readonly || !props.invoicereceived}>
-                    {/* {data.posts.map((detail) => (
-                      <MenuItem value={detail.VbBankAcc}>
-                        {detail.VbBankAcc}
+                  <Select
+                    disabled={props.readonly || !props.invoicereceived}
+                    value={Vb_Bank_Acc}
+                    onChange={handlevbbankacc}
+                  >
+                     {VbBankAcc.map((detail) => (
+                      <MenuItem value={detail}>
+                        {detail}
                       </MenuItem>
-                    ))} */}
+                    ))} 
                   </Select>
                 </FormControl>
               </Box>
@@ -357,7 +376,12 @@ function Invoice(props) {
             <Grid item lg={12} md={12} sm={122} xs={12}>
               <label htmlFor="invoiceamount">Amount Received on</label>
               <br />
-              <Date disabled={props.readonly || !props.invoicereceived} />
+              <Date
+                onChange={handleDate}
+                value={Date_}
+                disabled={props.readonly || !props.invoicereceived}
+
+              />
             </Grid>
           </div>
         </Grid>
