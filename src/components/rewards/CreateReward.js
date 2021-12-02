@@ -25,7 +25,7 @@ const CreateReward = () => {
 
   const [formData, setFormData] = useState({});
   const updateRewardStatus = useSelector(
-    (state) => state.reward.updateRewardStatus
+    (state) => state.reward.updateRewardData
   );
 
   useEffect(() => {
