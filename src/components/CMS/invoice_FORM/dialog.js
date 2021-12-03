@@ -5,16 +5,23 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
+import { Navigate, Redirect } from "react-router";
+import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 
 export default function AlertDialog(props) {
   const [open, setOpen] = React.useState(false);
-
+  const isRedirect = useSelector((state) => state.CMS_state.redirect);
+  let navigate = useNavigate();
   const handleClickOpen = () => {
     setOpen(true);
   };
 
   const handleClose = () => {
     setOpen(false);
+    if (isRedirect) {
+      navigate("/invoiceinfo");
+    }
   };
 
   return (

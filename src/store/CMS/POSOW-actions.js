@@ -81,6 +81,7 @@ export const AddEmpToThisPO = (formData) => {
       );
       if (response.status === 200) {
         dispatch(PoSowActions.PopUpON("Employee Added To This PO"));
+        dispatch(PoSowActions.setRedirect(false));
       } else {
         throw new Error("Could not Save data!");
       }
@@ -108,6 +109,7 @@ export const UpdateEmpData = (formData, emp_id) => {
       );
       if (response.status === 200) {
         dispatch(PoSowActions.PopUpON("Updated"));
+        dispatch(PoSowActions.setRedirect(false));
       } else {
         throw new Error("Could not update!");
       }
@@ -135,6 +137,7 @@ export const UnAssignThisEmp = (emp_id) => {
       );
       if (response.status === 200) {
         dispatch(PoSowActions.PopUpON("Unassigned"));
+        dispatch(PoSowActions.setRedirect(false));
       } else {
         throw new Error("Could not Unassign!");
       }

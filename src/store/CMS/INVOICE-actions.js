@@ -6,6 +6,7 @@ export const createNew_INVOICE = (formData) => {
   return async function (dispatch) {
     const rqst = await axios.post("http://localhost:8000/invoice", formData);
     dispatch(invoiceActions.PopUpON("Saved Successfully"));
+    dispatch(PoSowActions.setRedirect(true));
     //  dispatch(
     //     uiActions.showNotification({
     //       status: "pending",
