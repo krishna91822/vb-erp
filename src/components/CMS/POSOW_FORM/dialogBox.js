@@ -57,13 +57,14 @@ BootstrapDialogTitle.propTypes = {
 
 export default function CustomizedDialogs({ msg, sendForApproval }) {
   const popupController = useSelector((state) => state.CMS_state.popup);
+  const isRedirect = useSelector((state) => state.CMS_state.redirect);
   const [open, setOpen] = React.useState(popupController);
   const dispatch = useDispatch();
   const params = useParams();
   let navigate = useNavigate();
   const handleClose = () => {
     dispatch(PoSowActions.PopUpOF());
-    if (params.id === undefined) {
+    if (isRedirect) {
       navigate("/POSOW");
     } else {
       navigate(`/POSOW_detail/${params.id}`);

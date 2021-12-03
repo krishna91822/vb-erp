@@ -92,6 +92,7 @@ export const SOW_init_state = {
     DocumentTypes: DocumentTypes,
   },
   popup: false,
+  redirect: false,
   response_message: "",
   poSowData: [],
   dataByID: [
@@ -134,6 +135,9 @@ const POSOW_Slice = createSlice({
     },
     PopUpOF(state, action) {
       state.popup = !state.popup;
+    },
+    setRedirect(state, action) {
+      state.redirect = action.payload;
     },
     setTabViewData(state, action) {
       state.poSowData = action.payload;

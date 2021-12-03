@@ -12,6 +12,7 @@ export const createNewPO_SOW = (formData) => {
       );
       if (response.status === 200) {
         dispatch(PoSowActions.PopUpON("Saved Successfully"));
+        dispatch(PoSowActions.setRedirect(true));
       } else {
         throw new Error("Could not Save data!");
       }
@@ -37,7 +38,8 @@ export const UpdatePO_SOW = (formData, id) => {
       // .then((res) => {
       //   console.log(res.status);
       // })
-      .then(dispatch(PoSowActions.PopUpON("Updated Successfully")));
+      .then(dispatch(PoSowActions.PopUpON("Updated Successfully")))
+      .then(dispatch(PoSowActions.setRedirect(true)));
   };
 };
 export const SendForApproval = (curr_status, id) => {
@@ -47,7 +49,8 @@ export const SendForApproval = (curr_status, id) => {
       // .then((res) => {
       //   console.log(res.status);
       // })
-      .then(dispatch(PoSowActions.PopUpON("Sent for review")));
+      .then(dispatch(PoSowActions.PopUpON("Sent for review")))
+      .then(dispatch(PoSowActions.setRedirect(true)));
   };
 };
 export const fetchPO_SOW_data = () => {
