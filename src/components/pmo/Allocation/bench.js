@@ -69,7 +69,12 @@ const Bench = ({ pressed }) => {
     <>
       <Container>
         <MiniHead data-test="main-heading">Bench Capacity</MiniHead>
-        <TableContainer>
+        <TableContainer
+          sx={{
+            border: "0.1em solid #afacacde",
+            borderRadius: "6px",
+          }}
+        >
           <Table data-test="list-table">
             <TableHead>
               <TableRow>
@@ -158,8 +163,8 @@ const Bench = ({ pressed }) => {
             </TableBody>
           </Table>
         </TableContainer>
-        <Tpagination page={page} setPage={setPage} rows={filteredData} />
       </Container>
+      <Tpagination page={page} setPage={setPage} rows={filteredData} />
     </>
   );
 };

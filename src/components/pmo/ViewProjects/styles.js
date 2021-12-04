@@ -32,12 +32,6 @@ export const ProjectHead = styled.h2`
   }
 `;
 export const Container = styled.div`
-  // border: 0.1rem solid #afacacde;
-  // padding: 0.3rem;
-  height: auto;
-  width: auto;
-  transition: 2s ease-out;
-
   .MuiTableHead-root {
     background-color: #c6d4d4;
     font-weight: 900;
@@ -59,8 +53,6 @@ export const Container = styled.div`
   }
 
   a {
-    // display: flex;
-    // justify-content: space-around;
     text-decoration: none;
     color: #e8833a;
     border: none;
@@ -68,7 +60,6 @@ export const Container = styled.div`
 
     &:hover {
       color: #ff862e;
-      // background-color: #ececec;
     }
   }
 

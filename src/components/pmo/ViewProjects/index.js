@@ -185,7 +185,7 @@ const ViewProjects = () => {
                   <TableCell
                     align="left"
                     sx={{
-                      width: "6px",
+                      width: "216px",
                       maxWidth: "216px",
                       minWidth: "216px",
                     }}

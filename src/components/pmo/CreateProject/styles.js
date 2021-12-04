@@ -32,11 +32,11 @@ export const HeadingStyle = styled.div`
 
 export const Heading = styled.div`
   height: 46px;
-  margin-top: 10px;
+  margin: 5px 0px;
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
-  align-items: flex-end;
+  align-items: center;
 `;
 
 export const StyledHeader = styled.form`
