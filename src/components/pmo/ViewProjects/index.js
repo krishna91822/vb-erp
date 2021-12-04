@@ -10,6 +10,7 @@ import {
   TableRow,
   TextField,
   Button,
+  Collapse,
 } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import FilterListIcon from "@mui/icons-material/FilterList";
@@ -153,7 +154,12 @@ const ViewProjects = () => {
           </Heading>
         </HeadingStyle>
         <Container>
-          <TableContainer>
+          <TableContainer
+            sx={{
+              border: "0.1em solid #afacacde",
+              borderRadius: "25px 25px 0 0",
+            }}
+          >
             <Table data-test="list-table">
               <TableHead>
                 <TableRow>
@@ -212,6 +218,14 @@ const ViewProjects = () => {
                     <TableCell align="left"></TableCell>
                   </TableRow>
                 )}
+                <Collapse
+                  in={pressed}
+                  timeout="auto"
+                  unmountOnExit
+                  sx={{ height: "0", visibility: "hidden" }}
+                >
+                  .
+                </Collapse>
                 {filteredData
                   .slice(page * 5, page * 5 + 5)
                   .map((currElem, index) => (
@@ -227,24 +241,33 @@ const ViewProjects = () => {
                         {currElem.vbProjectStatus || "----"}
                       </TableCell>
                       <TableCell align="left">
-                        <EditAction data-test="edit-profile-button">
-                          <Link
-                            to={`/pmo/projects/${currElem.vbProjectId}/edit`}
-                            onClick={stopClick}
+                        {/* <EditAction data-test="edit-profile-button"> */}
+                        <Link
+                          to={`/pmo/projects/${currElem.vbProjectId}/edit`}
+                          onClick={stopClick}
+                        >
+                          <Button
+                            variant="fab"
+                            color="purple"
+                            size="small"
+                            endIcon={<EditIcon />}
+                            sx={{ padding: "0" }}
                           >
-                            <EditButton data-test="edit-profile-button">
-                              edit <EditIcon />
-                            </EditButton>
-                          </Link>
-                        </EditAction>
+                            Edit
+                          </Button>
+                          {/* <EditButton data-test="edit-profile-button"> */}
+                          {/* <EditIcon /> */}
+                          {/* </EditButton> */}
+                        </Link>
+                        {/* </EditAction> */}
                       </TableCell>
                     </TableRow>
                   ))}
               </TableBody>
             </Table>
           </TableContainer>
-          <Tpagination page={page} setPage={setPage} rows={projects} />
         </Container>
+        <Tpagination page={page} setPage={setPage} rows={projects} />
       </MainComponent>
     </>
   );

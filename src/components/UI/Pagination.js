@@ -11,14 +11,19 @@ export default function Tpagination({ setPage, rows }) {
   return (
     <div
       style={{
-        display: "float",
-        position: "fixed",
-        bottom: "0.5em",
-        right: "2em",
-        zIndex: "2",
+        position: "sticky",
+        top: "85%",
       }}
     >
-      <Pagination count={count} onChange={handleChangePage} />
+      <div
+        style={{
+          width: "100%",
+          display: "flex",
+          flexDirection: "row-reverse",
+        }}
+      >
+        <Pagination count={count} onChange={handleChangePage} />
+      </div>
     </div>
   );
 }

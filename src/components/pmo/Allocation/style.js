@@ -9,6 +9,7 @@ export const MiniHead = styled.h3`
 
 export const MainComponent = styled.div`
   padding: 5px 15px;
+  min-width: 345px; //we need to remove this line
 `;
 export const HeadingStyle = styled.div`
   p {

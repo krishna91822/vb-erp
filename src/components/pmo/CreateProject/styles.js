@@ -21,6 +21,7 @@ export const device = {
 
 export const PmoContainer = styled.div`
   padding: 5px 15px;
+  min-width: 300px; //we need to remove this line
 `;
 
 export const HeadingStyle = styled.div`
@@ -123,7 +124,7 @@ export const DateElementStyled = styled.div`
   @media ${device.tablet} {
     width: 100%;
     & > * {
-      display: block;
+      // display: block;
       width: 100%;
     }
   }

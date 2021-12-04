@@ -2,6 +2,8 @@ import styled from "styled-components";
 
 export const MainComponent = styled.div`
   padding: 5px 15px;
+  min-width: 477px; //we need to remove this line
+  min-height: 85vh;
 `;
 export const HeadingStyle = styled.div`
   p {
@@ -10,7 +12,7 @@ export const HeadingStyle = styled.div`
 `;
 export const Heading = styled.div`
   height: 46px;
-  margin-top: 10px;
+  margin: 5px 0px;
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
@@ -30,19 +32,44 @@ export const ProjectHead = styled.h2`
   }
 `;
 export const Container = styled.div`
-  border: 0.1rem solid #afacacde;
-  padding: 0.3rem;
+  // border: 0.1rem solid #afacacde;
+  // padding: 0.3rem;
   height: auto;
   width: auto;
+  transition: 2s ease-out;
 
   .MuiTableHead-root {
-    background-color: rgb(227, 231, 231);
+    background-color: #c6d4d4;
     font-weight: 900;
   }
 
   .MuiTableBody-root > .MuiTableRow-root:hover {
-    background-color: rgb(252, 250, 250);
+    background-color: #f8f8f8;
     cursor: pointer;
+  }
+
+  th {
+    font-weight: 600;
+  }
+
+  tbody {
+    tr:nth-child(2n) {
+      background: #f8f8f8;
+    }
+  }
+
+  a {
+    // display: flex;
+    // justify-content: space-around;
+    text-decoration: none;
+    color: #e8833a;
+    border: none;
+    cursor: pointer;
+
+    &:hover {
+      color: #ff862e;
+      // background-color: #ececec;
+    }
   }
 
   @media (max-width: 450px) {
@@ -87,5 +114,6 @@ export const EditButton = styled.button`
 
   &:hover {
     color: #ff862e;
+    background-color: #ececec;
   }
 `;
