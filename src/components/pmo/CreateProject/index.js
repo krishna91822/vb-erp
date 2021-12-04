@@ -2,6 +2,8 @@ import React, { useState, useLayoutEffect, useEffect } from "react";
 import { useParams, useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { nanoid } from "nanoid";
+import "react-phone-number-input/style.css";
+import PhoneInput from "react-phone-number-input";
 
 import {
   Button,
@@ -127,7 +129,7 @@ const CreateProject = () => {
   const handleProjectChange = ({ target }) => {
     if (target.name === "endDate") {
       if (startDate > target.value) {
-        alert("End Date need to be grater than Start Date");
+        alert("End Date need to be greater than Start Date");
       } else {
         setState({
           ...state,
@@ -348,6 +350,12 @@ const CreateProject = () => {
                 Client Primary Contact <span>*</span>
               </label>
               <NumberStyle>
+                {/* <PhoneInput
+                  name="clientPrimaryContact"
+                  placeholder="Enter phone number"
+                  value={clientPrimaryContact}
+                  onChange={handleProjectChange}
+                /> */}
                 <TextField
                   type="number"
                   id="cpc"

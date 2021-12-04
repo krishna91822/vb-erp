@@ -2,7 +2,7 @@ import * as React from "react";
 import Pagination from "@mui/material/Pagination";
 
 export default function Tpagination({ setPage, rows }) {
-  const count = Math.ceil(rows.length / 5);
+  const count = Math.ceil(rows.length / 10);
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage - 1);
