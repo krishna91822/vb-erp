@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import { TextField, Button } from "@mui/material";
 import ResourceInformationTable from "../ResourceInformationTable";
+import Autocomplete from "@mui/material/Autocomplete";
 import {
   Heading,
   Container,
@@ -19,8 +20,29 @@ const ResourceInformation = ({
   addResource,
   removeResource,
   resourceErrors,
+  handelAssociate,
 }) => {
   const { associateName, startDate, endDate, allocation, rackRate } = resource;
+  const [open, setOpen] = useState(false);
+  const [tempVal, setTempVal] = useState(0);
+
+  const handleOpen = ({ target }) => {
+    let inputvalue = target.value;
+
+    if (inputvalue && inputvalue.length > 2) {
+      setOpen(true);
+    } else {
+      setOpen(false);
+    }
+  };
+
+  const employeeData = [
+    { associateName: "Saad", empId: "VB0001" },
+    { associateName: "Atif", empId: "VB0002" },
+    { associateName: "Rupesh", empId: "VB0003" },
+    { associateName: "Narayan", empId: "VB0004" },
+    { associateName: "Abhiram", empId: "VB0005" },
+  ];
 
   return (
     <Container>
@@ -33,17 +55,27 @@ const ResourceInformation = ({
             <Heading>
               Associate Name <span>*</span>
             </Heading>
-            <TextField
-              placeholder="Enter Associate Name"
-              name="associateName"
-              variant="outlined"
-              size="small"
-              width="100%"
-              error={resourceErrors.associateName ? true : false}
-              helperText={resourceErrors.associateName}
-              onChange={handleResourceChange}
-              value={associateName}
-              data-test="associate-input"
+            <Autocomplete
+              id="free-solo-demo"
+              freeSolo
+              key={tempVal}
+              onInputChange={handleOpen}
+              getOptionLabel={(option) => option.associateName}
+              onChange={(event, value) => {
+                value ? handelAssociate(value) : setOpen(false);
+              }}
+              options={employeeData}
+              open={open}
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  placeholder="associate name"
+                  value={associateName}
+                  error={resourceErrors.associateName ? true : false}
+                  helperText={resourceErrors.associateName}
+                  width="100%"
+                />
+              )}
             />
           </ResourceForm>
           <MultiElemContainer>
@@ -58,7 +90,6 @@ const ResourceInformation = ({
                 name="startDate"
                 error={resourceErrors.startDate ? true : false}
                 helperText={resourceErrors.startDate}
-                style={{}}
                 onChange={handleResourceChange}
                 value={startDate}
                 data-test="start-date-input"
@@ -132,7 +163,10 @@ const ResourceInformation = ({
           </MultiElemContainer>
           <ResourceForm style={{ justifyContent: "start" }}>
             <Button
-              onClick={addResource}
+              onClick={() => {
+                setTempVal(tempVal + 1);
+                addResource();
+              }}
               variant="contained"
               color="primary"
               style={{

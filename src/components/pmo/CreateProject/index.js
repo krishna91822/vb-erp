@@ -56,6 +56,7 @@ const initialState = {
     endDate: "",
     allocation: "0",
     rackRate: "",
+    empId: "",
   },
   resources: [],
 };
@@ -197,6 +198,18 @@ const CreateProject = () => {
         },
       });
     }
+  };
+
+  const handelAssociate = (value) => {
+    console.log(value);
+    setState({
+      ...state,
+      resource: {
+        ...state.resource,
+        associateName: value.associateName,
+        empId: value.empId,
+      },
+    });
   };
 
   const addResource = () => {
@@ -570,6 +583,7 @@ const CreateProject = () => {
             resources={resources}
             handleResourceChange={handleResourceChange}
             addResource={addResource}
+            handelAssociate={handelAssociate}
             removeResource={removeResource}
             resourceErrors={resourceErrors}
           />

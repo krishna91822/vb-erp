@@ -57,6 +57,12 @@ export const ResourceForm = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
+  .css-16awh2u-MuiAutocomplete-root .MuiOutlinedInput-root {
+    padding: 0px;
+  }
+  input[type="number"]::-webkit-inner-spin-button,
+  input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
   @media ${device.tablet} {
     width: 80%;
   }
