@@ -24,6 +24,7 @@ const ResourceInformation = ({
 }) => {
   const { associateName, startDate, endDate, allocation, rackRate } = resource;
   const [open, setOpen] = useState(false);
+  const [tempVal, setTempVal] = useState(0);
 
   const handleOpen = ({ target }) => {
     let inputvalue = target.value;
@@ -57,6 +58,7 @@ const ResourceInformation = ({
             <Autocomplete
               id="free-solo-demo"
               freeSolo
+              key={tempVal}
               onInputChange={handleOpen}
               getOptionLabel={(option) => option.associateName}
               onChange={(event, value) => {
@@ -161,7 +163,10 @@ const ResourceInformation = ({
           </MultiElemContainer>
           <ResourceForm style={{ justifyContent: "start" }}>
             <Button
-              onClick={addResource}
+              onClick={() => {
+                setTempVal(tempVal + 1);
+                addResource();
+              }}
               variant="contained"
               color="primary"
               style={{
