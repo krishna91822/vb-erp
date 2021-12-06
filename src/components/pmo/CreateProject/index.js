@@ -190,11 +190,12 @@ const CreateProject = () => {
   };
 
   const handelAssociate = (value) => {
+    console.log(value);
     setState({
       ...state,
       resource: {
         ...state.resource,
-        associateName: value.label,
+        associateName: value.associateName,
         empId: value.empId,
       },
     });

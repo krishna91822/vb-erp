@@ -27,6 +27,7 @@ const ResourceInformation = ({
 
   const handleOpen = ({ target }) => {
     let inputvalue = target.value;
+
     if (inputvalue && inputvalue.length > 2) {
       setOpen(true);
     } else {
@@ -35,11 +36,11 @@ const ResourceInformation = ({
   };
 
   const employeeData = [
-    { label: "Saad", empId: "VB0001" },
-    { label: "Atif", empId: "VB0002" },
-    { label: "Rupesh", empId: "VB0003" },
-    { label: "Narayan", empId: "VB0004" },
-    { label: "Abhiram", empId: "VB0005" },
+    { associateName: "Saad", empId: "VB0001" },
+    { associateName: "Atif", empId: "VB0002" },
+    { associateName: "Rupesh", empId: "VB0003" },
+    { associateName: "Narayan", empId: "VB0004" },
+    { associateName: "Abhiram", empId: "VB0005" },
   ];
 
   return (
@@ -57,6 +58,7 @@ const ResourceInformation = ({
               id="free-solo-demo"
               freeSolo
               onInputChange={handleOpen}
+              getOptionLabel={(option) => option.associateName}
               onChange={(event, value) => {
                 value ? handelAssociate(value) : setOpen(false);
               }}
