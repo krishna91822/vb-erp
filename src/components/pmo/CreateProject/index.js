@@ -115,7 +115,6 @@ const CreateProject = () => {
   }, [redirect]);
 
   useEffect(() => {
-    console.log(projectById);
     if (!isEmpty(projectById)) {
       setState({
         ...state,
@@ -129,7 +128,7 @@ const CreateProject = () => {
       ...state,
       resource: {
         ...state.resource,
-        associateName: value.label,
+        associateName: value.employeeName,
         empId: value.empId,
       },
     });

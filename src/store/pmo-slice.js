@@ -5,6 +5,7 @@ const initialState = {
   redirect: false,
   updateModal: false,
   projectById: {},
+  allEmployees: [],
   allocatedData: [
     {
       id: 1,
@@ -95,6 +96,9 @@ const pmoSlice = createSlice({
     },
     updateProjectsList: (state, action) => {
       state.projects = action.payload;
+    },
+    updateEmployeeList: (state, action) => {
+      state.allEmployees = action.payload;
     },
     SortByProductID: (state, action) => {
       state.projects = action.payload;
