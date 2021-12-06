@@ -48,8 +48,8 @@ const Allocation = () => {
             </Dropdown>
           </SideButton>
         </Heading>
-        {bench ? <Bench pressed={pressed} /> : <Allocated pressed={pressed} />}
       </HeadingStyle>
+      {bench ? <Bench pressed={pressed} /> : <Allocated pressed={pressed} />}
     </MainComponent>
   );
 };

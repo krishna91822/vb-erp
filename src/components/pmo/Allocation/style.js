@@ -9,6 +9,8 @@ export const MiniHead = styled.h3`
 
 export const MainComponent = styled.div`
   padding: 5px 15px;
+  min-width: 345px; //we need to remove this line
+  min-height: 85vh;
 `;
 export const HeadingStyle = styled.div`
   p {
@@ -17,11 +19,11 @@ export const HeadingStyle = styled.div`
 `;
 export const Heading = styled.div`
   height: 46px;
-  margin-top: 10px;
+  margin: 5px 0px;
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
-  align-items: flex-end;
+  align-items: center;
 `;
 
 export const AdminName = styled.p`
@@ -37,14 +39,20 @@ export const ProjectHead = styled.h2`
   }
 `;
 export const Container = styled.div`
-  border: 0.1rem solid rgb(227, 231, 231);
-  padding: 0.3rem;
-  height: auto;
-  width: auto;
+  border-top: 0.1rem solid rgb(227, 231, 231);
 
   .MuiTableHead-root {
-    background-color: rgb(227, 231, 231);
+    background-color: #c6d4d4;
     font-weight: 900;
+  }
+  th {
+    font-weight: 600;
+  }
+
+  tbody {
+    tr:nth-child(2n) {
+      background: #f8f8f8;
+    }
   }
 
   @media (max-width: 450px) {

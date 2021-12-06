@@ -39,7 +39,7 @@ export const Container = styled.div``;
 
 export const AllElementsContainer = styled.div`
   padding: 0.5em;
-  margin-top: 3.5em;
+  margin-top: 1.7em;
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;

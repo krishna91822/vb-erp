@@ -21,6 +21,7 @@ export const device = {
 
 export const PmoContainer = styled.div`
   padding: 5px 15px;
+  min-width: 300px; //we need to remove this line
 `;
 
 export const HeadingStyle = styled.div`
@@ -31,11 +32,11 @@ export const HeadingStyle = styled.div`
 
 export const Heading = styled.div`
   height: 46px;
-  margin-top: 10px;
+  margin: 5px 0px;
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
-  align-items: flex-end;
+  align-items: center;
 `;
 
 export const StyledHeader = styled.form`
@@ -76,9 +77,7 @@ export const FormElementsStyled = styled.div`
   & > label > span {
     color: red;
   }
-  .MuiOutlinedInput-input {
-    padding: 0.7em 14px;
-  }
+
   @media ${device.tablet} {
     width: 80%;
   }
@@ -122,7 +121,6 @@ export const DateElementStyled = styled.div`
   @media ${device.tablet} {
     width: 100%;
     & > * {
-      display: block;
       width: 100%;
     }
   }

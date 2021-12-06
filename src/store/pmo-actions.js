@@ -13,8 +13,16 @@ export const createProject = (projectInfo) => {
       }
       return response;
     };
+    // const saveResource = async () => {
+    //   const response = await axios.post(`${baseUrl}/projects`, projectInfo);
+    //   if (response.status === "failure") {
+    //     throw new Error(response.data.message);
+    //   }
+    //   return response;
+    // };
     try {
       await saveData();
+      // await saveResource();
       dispatch(pmoActions.redirectToProjectList());
     } catch (err) {
       console.log(err);
