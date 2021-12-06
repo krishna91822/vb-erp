@@ -17,6 +17,7 @@ import {
 const Allocation = () => {
   const [pressed, setPressed] = useState(false);
   const [bench, setBench] = useState(false);
+
   const ChangeAllocation = (event) => {
     const AllocatedValue = event.target.value;
     if (AllocatedValue === "Sort by on Bench") {
@@ -25,9 +26,11 @@ const Allocation = () => {
       setBench(false);
     }
   };
+
   const showfilter = () => {
     setPressed(!pressed);
   };
+
   return (
     <MainComponent>
       <HeadingStyle>
@@ -40,20 +43,12 @@ const Allocation = () => {
               style={{ cursor: "pointer" }}
             />
             <Dropdown data-test="sortby-dropdown" onChange={ChangeAllocation}>
-              <Options Value="Sort by" hidden>
-                filter by
-              </Options>
               <Options value="Sort by Allocated">Allocated</Options>
               <Options value="Sort by on Bench">On Bench</Options>
             </Dropdown>
           </SideButton>
         </Heading>
-
-        {bench === false ? (
-          <Allocated pressed={pressed} />
-        ) : (
-          <Bench pressed={pressed} />
-        )}
+        {bench ? <Bench pressed={pressed} /> : <Allocated pressed={pressed} />}
       </HeadingStyle>
     </MainComponent>
   );
