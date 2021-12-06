@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import { TextField, Button } from "@mui/material";
 import ResourceInformationTable from "../ResourceInformationTable";
+import Autocomplete from "@mui/material/Autocomplete";
 import {
   Heading,
   Container,
@@ -19,9 +20,27 @@ const ResourceInformation = ({
   addResource,
   removeResource,
   resourceErrors,
+  handelAssociate,
 }) => {
   const { associateName, startDate, endDate, allocation, rackRate } = resource;
+  const [open, setOpen] = useState(false);
 
+  const handleOpen = ({ target }) => {
+    let inputvalue = target.value;
+    if (inputvalue && inputvalue.length > 2) {
+      setOpen(true);
+    } else {
+      setOpen(false);
+    }
+  };
+
+  const employeeData = [
+    { label: "Saad", empId: "VB0001" },
+    { label: "Atif", empId: "VB0002" },
+    { label: "Rupesh", empId: "VB0003" },
+    { label: "Narayan", empId: "VB0004" },
+    { label: "Abhiram", empId: "VB0005" },
+  ];
   return (
     <Container>
       <ResourceInformationHeading data-test="resource-head">
@@ -33,17 +52,25 @@ const ResourceInformation = ({
             <Heading>
               Associate Name <span>*</span>
             </Heading>
-            <TextField
-              placeholder="Enter Associate Name"
-              name="associateName"
-              variant="outlined"
-              size="small"
-              width="100%"
-              error={resourceErrors.associateName ? true : false}
-              helperText={resourceErrors.associateName}
-              onChange={handleResourceChange}
-              value={associateName}
-              data-test="associate-input"
+            <Autocomplete
+              id="free-solo-demo"
+              freeSolo
+              onInputChange={handleOpen}
+              onChange={(event, value) => {
+                value ? handelAssociate(value) : setOpen(false);
+              }}
+              options={employeeData}
+              open={open}
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  placeholder="associate name"
+                  value={associateName}
+                  error={resourceErrors.associateName ? true : false}
+                  helperText={resourceErrors.associateName}
+                  width="100%"
+                />
+              )}
             />
           </ResourceForm>
           <MultiElemContainer>

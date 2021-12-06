@@ -88,11 +88,8 @@ export const FormElementsStyled = styled.div`
 `;
 
 export const NumberStyle = styled.div`
-  input[type="number"]::-webkit-inner-spin-button,
-  input[type="number"]::-webkit-outer-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
-  }
+  width: 100%;
+  height: 45px;
 `;
 
 export const DateContainerStyled = styled.div`

@@ -216,10 +216,7 @@ const ViewProjects = () => {
                 {filteredData
                   .slice(page * 5, page * 5 + 5)
                   .map((currElem, index) => (
-                    <TableRow
-                      key={currElem.vbProjectId}
-                      onClick={() => entryLink(currElem)}
-                    >
+                    <TableRow key={index} onClick={() => entryLink(currElem)}>
                       <TableCell align="left">{index + page * 5 + 1}</TableCell>
                       <TableCell align="left">{currElem.clientName}</TableCell>
                       <TableCell align="left">{currElem.projectName}</TableCell>

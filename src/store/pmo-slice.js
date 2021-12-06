@@ -4,7 +4,7 @@ const initialState = {
   projects: [],
   redirect: false,
   updateModal: false,
-  projectById: [],
+  projectById: {},
   allocatedData: [
     {
       id: 1,
