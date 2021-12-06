@@ -27,9 +27,11 @@ const ResourceInformation = ({
 }) => {
   const { associateName, startDate, endDate, allocation, rackRate } = resource;
   const [open, setOpen] = useState(false);
+  const [tempVal, setTempVal] = useState(0);
   const dispatch = useDispatch();
   const handleOpen = ({ target }) => {
     let inputvalue = target.value;
+
     if (inputvalue && inputvalue.length > 2) {
       setOpen(true);
     } else {
@@ -56,12 +58,12 @@ const ResourceInformation = ({
             <Autocomplete
               id="free-solo-demo"
               freeSolo
+              key={tempVal}
               onInputChange={handleOpen}
-              onChange={(event, value) => {
-                console.log(value);
-                return value ? handelAssociate(value) : setOpen(false);
-              }}
               getOptionLabel={(option) => option.employeeName}
+              onChange={(event, value) => {
+                value ? handelAssociate(value) : setOpen(false);
+              }}
               options={allEmployees}
               open={open}
               renderInput={(params) => (
@@ -88,7 +90,6 @@ const ResourceInformation = ({
                 name="startDate"
                 error={resourceErrors.startDate ? true : false}
                 helperText={resourceErrors.startDate}
-                style={{}}
                 onChange={handleResourceChange}
                 value={startDate}
                 data-test="start-date-input"
@@ -162,7 +163,10 @@ const ResourceInformation = ({
           </MultiElemContainer>
           <ResourceForm style={{ justifyContent: "start" }}>
             <Button
-              onClick={addResource}
+              onClick={() => {
+                setTempVal(tempVal + 1);
+                addResource();
+              }}
               variant="contained"
               color="primary"
               style={{

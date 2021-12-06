@@ -163,9 +163,12 @@ const SidebarNavigation = () => {
                           >
                             <CustomListItemButton sx={{ pl: 4 }}>
                               <ListItemIcon>
-                                <GridViewIcon style={{ color: "black" }} />
+                                <GridViewIcon
+                                  style={{
+                                    color: "black",
+                                  }}
+                                />
                               </ListItemIcon>
-
                               <ListItemText primary={item.name} />
                             </CustomListItemButton>
                           </Link>

@@ -10,9 +10,11 @@ import {
   TableRow,
   TextField,
   Button,
+  Collapse,
 } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import FilterListIcon from "@mui/icons-material/FilterList";
+import FilterListOffIcon from "@mui/icons-material/FilterListOff";
 
 import { pmoActions } from "../../../store/pmo-slice";
 import { getAllProjects } from "../../../store/pmo-actions";
@@ -34,7 +36,6 @@ import Tpagination from "../../UI/Pagination";
 const ViewProjects = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  // const { path } = useRouteMatch();
   const { projects } = useSelector((state) => state.pmo);
   const [page, setPage] = useState(0);
   const [clientName, setClientName] = useState("");
@@ -42,6 +43,7 @@ const ViewProjects = () => {
   const [vbProjectId, setVbProjectId] = useState("");
   const [vbProjectStatus, setVbProjectStatus] = useState("");
   const [pressed, setPressed] = useState(false);
+  const rowsPerPage = 10;
   useEffect(() => {
     dispatch(getAllProjects());
   }, []);
@@ -123,10 +125,17 @@ const ViewProjects = () => {
           <Heading>
             <ProjectHead data-test="main-heading">Projects</ProjectHead>
             <SideButton>
-              <FilterListIcon
-                onClick={showfilter}
-                style={{ cursor: "pointer" }}
-              />
+              {!pressed ? (
+                <FilterListIcon
+                  onClick={showfilter}
+                  style={{ cursor: "pointer" }}
+                />
+              ) : (
+                <FilterListOffIcon
+                  onClick={showfilter}
+                  style={{ cursor: "pointer" }}
+                />
+              )}
               <Button
                 variant="contained"
                 size="small"
@@ -154,16 +163,75 @@ const ViewProjects = () => {
           </Heading>
         </HeadingStyle>
         <Container>
-          <TableContainer>
+          <TableContainer
+            sx={{
+              border: "0.1em solid #afacacde",
+              borderRadius: "6px",
+            }}
+          >
             <Table data-test="list-table">
               <TableHead>
                 <TableRow>
-                  <TableCell align="left">SNO</TableCell>
-                  <TableCell align="left">Client Name</TableCell>
-                  <TableCell align="left">Project Name</TableCell>
-                  <TableCell align="left">Project ID</TableCell>
-                  <TableCell align="left">Status</TableCell>
-                  <TableCell align="left">Actions</TableCell>
+                  <TableCell
+                    align="center"
+                    sx={{
+                      width: "100px",
+                      maxWidth: "100px",
+                      minWidth: "100px",
+                    }}
+                  >
+                    SNO
+                  </TableCell>
+                  <TableCell
+                    align="left"
+                    sx={{
+                      width: "216px",
+                      maxWidth: "216px",
+                      minWidth: "216px",
+                    }}
+                  >
+                    Client Name
+                  </TableCell>
+                  <TableCell
+                    align="left"
+                    sx={{
+                      width: "210px",
+                      maxWidth: "210px",
+                      minWidth: "210px",
+                    }}
+                  >
+                    Project Name
+                  </TableCell>
+                  <TableCell
+                    align="left"
+                    sx={{
+                      width: "146px",
+                      maxWidth: "146px",
+                      minWidth: "146px",
+                    }}
+                  >
+                    Project ID
+                  </TableCell>
+                  <TableCell
+                    align="left"
+                    sx={{
+                      width: "156px",
+                      maxWidth: "156px",
+                      minWidth: "156px",
+                    }}
+                  >
+                    Status
+                  </TableCell>
+                  <TableCell
+                    align="left"
+                    sx={{
+                      width: "136px",
+                      maxWidth: "136px",
+                      minWidth: "136px",
+                    }}
+                  >
+                    Actions
+                  </TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -213,11 +281,14 @@ const ViewProjects = () => {
                     <TableCell align="left"></TableCell>
                   </TableRow>
                 )}
+                {/* </Collapse> */}
                 {filteredData
-                  .slice(page * 5, page * 5 + 5)
+                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                   .map((currElem, index) => (
                     <TableRow key={index} onClick={() => entryLink(currElem)}>
-                      <TableCell align="left">{index + page * 5 + 1}</TableCell>
+                      <TableCell align="center">
+                        {index + page * rowsPerPage + 1}
+                      </TableCell>
                       <TableCell align="left">{currElem.clientName}</TableCell>
                       <TableCell align="left">{currElem.projectName}</TableCell>
                       <TableCell align="left">{currElem.vbProjectId}</TableCell>
@@ -225,24 +296,28 @@ const ViewProjects = () => {
                         {currElem.vbProjectStatus || "----"}
                       </TableCell>
                       <TableCell align="left">
-                        <EditAction data-test="edit-profile-button">
-                          <Link
-                            to={`/pmo/projects/${currElem.vbProjectId}/edit`}
-                            onClick={stopClick}
+                        <Link
+                          to={`/pmo/projects/${currElem.vbProjectId}/edit`}
+                          onClick={stopClick}
+                        >
+                          <Button
+                            variant="fab"
+                            color="purple"
+                            size="small"
+                            endIcon={<EditIcon />}
+                            sx={{ padding: "0" }}
                           >
-                            <EditButton data-test="edit-profile-button">
-                              edit <EditIcon />
-                            </EditButton>
-                          </Link>
-                        </EditAction>
+                            Edit
+                          </Button>
+                        </Link>
                       </TableCell>
                     </TableRow>
                   ))}
               </TableBody>
             </Table>
           </TableContainer>
-          <Tpagination page={page} setPage={setPage} rows={projects} />
         </Container>
+        <Tpagination page={page} setPage={setPage} rows={projects} />
       </MainComponent>
     </>
   );

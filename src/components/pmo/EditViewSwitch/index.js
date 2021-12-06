@@ -73,7 +73,6 @@ const EditViewSwitchs = ({
   const navigate = useNavigate();
 
   const handleChange = ({ target }) => {
-    console.log(edit);
     if (target.checked) {
       setEdit(true);
       navigate(`/pmo/projects/${id}/edit`, { replace: true });

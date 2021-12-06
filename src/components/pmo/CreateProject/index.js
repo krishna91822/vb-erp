@@ -12,6 +12,7 @@ import {
   Select,
   MenuItem,
   FormHelperText,
+  Autocomplete,
 } from "@mui/material";
 
 import EditViewSwitchs from "../EditViewSwitch";
@@ -58,6 +59,7 @@ const initialState = {
     endDate: "",
     allocation: "0",
     rackRate: "",
+    empId: "",
   },
   resources: [],
 };
@@ -72,6 +74,7 @@ const CreateProject = () => {
   const [state, setState] = useState(initialState);
   const [errors, setErrors] = useState({});
   const [resourceErrors, setResourceErrors] = useState({});
+  const [open, setOpen] = useState(false);
 
   const {
     project: {
@@ -90,6 +93,15 @@ const CreateProject = () => {
     resource,
     resources,
   } = state;
+
+  const clientData = [
+    { clientName: "Saad", clientPrimaryContact: 8765678904 },
+    { clientName: "Saad hasan", clientPrimaryContact: 9087456435 },
+    { clientName: "Atif", clientPrimaryContact: 7567865349 },
+    { clientName: "Rupesh", clientPrimaryContact: 9876785432 },
+    { clientName: "Narayan Dubey", clientPrimaryContact: 9876785439 },
+    { clientName: "Abhiram", clientPrimaryContact: 9085674325 },
+  ];
 
   useLayoutEffect(() => {
     if (location.includes("createproject") || location.includes("edit")) {
@@ -136,7 +148,7 @@ const CreateProject = () => {
   const handleProjectChange = ({ target }) => {
     if (target.name === "endDate") {
       if (startDate > target.value) {
-        alert("End Date need to be grater than Start Date");
+        alert("End Date need to be greater than Start Date");
       } else {
         setState({
           ...state,
@@ -249,12 +261,30 @@ const CreateProject = () => {
     }
   };
 
+  const handleOpen = ({ target }) => {
+    let inputvalue = target.value;
+    if (inputvalue && inputvalue.length > 2) {
+      setOpen(true);
+    } else {
+      setOpen(false);
+    }
+  };
   const handlePhoneNumber = (number) => {
     setState({
       ...state,
       project: {
         ...state.project,
         clientPrimaryContact: number,
+      },
+    });
+  };
+  const handleAutoselect = (value) => {
+    setState({
+      ...state,
+      project: {
+        ...state.project,
+        clientName: value.clientName,
+        clientPrimaryContact: value.clientPrimaryContact,
       },
     });
   };
@@ -298,29 +328,34 @@ const CreateProject = () => {
               <label htmlFor="cn" data-test="client-name-label">
                 Client Name <span>*</span>
               </label>
-              <Select
-                error={errors.clientName ? true : false}
-                id="cn"
+              <Autocomplete
                 name="clientName"
-                value={clientName}
+                id="cn"
                 data-test="client-name-input"
-                size="small"
-                variant="outlined"
                 disabled={!edit}
-                displayEmpty
-                style={{ margin: "0.3em", width: "98.5%" }}
-                onChange={handleProjectChange}
-              >
-                <MenuItem value="" disabled>
-                  <span style={{ color: "rgb(190, 190, 190)" }}>
-                    Select Client Name
-                  </span>
-                </MenuItem>
-                <MenuItem value="ValueBound">ValueBound</MenuItem>
-              </Select>
-              <FormHelperText error sx={{ mx: 2 }}>
-                {errors.clientName}
-              </FormHelperText>
+                freeSolo
+                size="small"
+                onInputChange={handleOpen}
+                getOptionLabel={(option) => option.clientName}
+                onChange={(event, value) => {
+                  value ? handleAutoselect(value) : setOpen(false);
+                }}
+                style={{ margin: "0.3em", width: "97.9%" }}
+                options={clientData}
+                open={open}
+                inputValue={clientName}
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    placeholder="Enter Client name"
+                    name="clientName"
+                    error={errors.clientName ? true : false}
+                    helperText={errors.clientName}
+                    width="100%"
+                    onChange={handleProjectChange}
+                  />
+                )}
+              />
             </FormElementsStyled>
             <FormElementsStyled>
               <label htmlFor="pn" data-test="project-name-label">
@@ -366,7 +401,7 @@ const CreateProject = () => {
               </label>
               <NumberStyle>
                 <PhoneInput
-                  disabled={!edit}
+                  disabled
                   error={errors.clientPrimaryContact ? true : false}
                   helperText={errors.clientPrimaryContact}
                   onChange={(e) => handlePhoneNumber(e)}
@@ -551,9 +586,9 @@ const CreateProject = () => {
             resources={resources}
             handleResourceChange={handleResourceChange}
             addResource={addResource}
+            handelAssociate={handelAssociate}
             removeResource={removeResource}
             resourceErrors={resourceErrors}
-            handelAssociate={handelAssociate}
           />
         </StyledHeader>
       </PmoContainer>

@@ -25,6 +25,13 @@ export const createProject = (projectInfo) => {
       }
       return response;
     };
+    // const saveResource = async () => {
+    //   const response = await axios.post(`${baseUrl}/projects`, projectInfo);
+    //   if (response.status === "failure") {
+    //     throw new Error(response.data.message);
+    //   }
+    //   return response;
+    // };
     try {
       const data = await saveProjects();
       // console.log(data, "datafrombackend");
