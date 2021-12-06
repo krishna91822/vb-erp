@@ -77,9 +77,7 @@ export const FormElementsStyled = styled.div`
   & > label > span {
     color: red;
   }
-  .MuiOutlinedInput-input {
-    padding: 0.7em 14px;
-  }
+
   @media ${device.tablet} {
     width: 80%;
   }
@@ -124,7 +122,6 @@ export const DateElementStyled = styled.div`
   @media ${device.tablet} {
     width: 100%;
     & > * {
-      // display: block;
       width: 100%;
     }
   }

@@ -236,14 +236,6 @@ const ViewProjects = () => {
               </TableHead>
               <TableBody>
                 {pressed && (
-                  // <Collapse
-                  //   in={pressed}
-                  //   component="tr"
-                  //   timeout="auto"
-                  //   unmountOnExit
-                  //   // sx={{ maxHeight: "3px", visibility: "hidden" }}
-                  //   style={{ display: "block" }}
-                  // >
                   <TableRow>
                     <TableCell align="left"></TableCell>
                     <TableCell align="left">
@@ -304,7 +296,6 @@ const ViewProjects = () => {
                         {currElem.vbProjectStatus || "----"}
                       </TableCell>
                       <TableCell align="left">
-                        {/* <EditAction data-test="edit-profile-button"> */}
                         <Link
                           to={`/pmo/projects/${currElem.vbProjectId}/edit`}
                           onClick={stopClick}
@@ -318,11 +309,7 @@ const ViewProjects = () => {
                           >
                             Edit
                           </Button>
-                          {/* <EditButton data-test="edit-profile-button"> */}
-                          {/* <EditIcon /> */}
-                          {/* </EditButton> */}
                         </Link>
-                        {/* </EditAction> */}
                       </TableCell>
                     </TableRow>
                   ))}

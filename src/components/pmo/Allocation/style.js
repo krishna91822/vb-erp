@@ -40,9 +40,6 @@ export const ProjectHead = styled.h2`
 `;
 export const Container = styled.div`
   border-top: 0.1rem solid rgb(227, 231, 231);
-  // padding: 0.3rem;
-  // height: auto;
-  // width: auto;
 
   .MuiTableHead-root {
     background-color: #c6d4d4;
