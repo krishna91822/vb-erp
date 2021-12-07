@@ -91,9 +91,9 @@ const CreateReward = () => {
             style={{
               fontSize: " 2rem ",
               fontWeight: " 650 ",
-              color: " black ",
+              color: " Red ",
             }}
-            children="New Reward"
+            children="Edit Reward"
           />
           <br />
         </Grid>
