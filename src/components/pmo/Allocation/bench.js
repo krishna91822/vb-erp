@@ -18,7 +18,7 @@ const Bench = ({ pressed }) => {
   const [associateName, setAssociateName] = useState("");
   const [lastAllocatedProject, setLastAllocatedProject] = useState("");
   const [primaryCapabilities, setPrimaryCapabilities] = useState("");
-  const [lastAllocatedDate, setLastAllocatedDate] = useState("");
+  const [remainingBandwidth, setRemainingBandwidth] = useState("");
   const [page, setPage] = React.useState(0);
   const [empId, setEmpId] = useState("");
 
@@ -41,9 +41,8 @@ const Bench = ({ pressed }) => {
     setPrimaryCapabilities(primcapabilty);
   };
 
-  const filterLastAllocatedDate = (event) => {
-    const lastAlloDate = event.target.value;
-    setLastAllocatedDate(lastAlloDate);
+  const filterRemainingBandwidth = (event) => {
+    setRemainingBandwidth(event.target.value);
   };
 
   const filterEmpId = (event) => {
@@ -60,7 +59,7 @@ const Bench = ({ pressed }) => {
       eachData.primaryCapabilities
         .toLowerCase()
         .includes(primaryCapabilities) &&
-      eachData.lastallocationDate.includes(lastAllocatedDate) &&
+      eachData.remainingBandwidth.includes(remainingBandwidth) &&
       eachData.empId.toUpperCase().includes(empId)
     );
   });
@@ -83,7 +82,7 @@ const Bench = ({ pressed }) => {
                 <TableCell align="left">Associate Name</TableCell>
                 <TableCell align="left">Last Allocated Project</TableCell>
                 <TableCell align="left">Primary Capabilities</TableCell>
-                <TableCell align="left">Last Allocation Date</TableCell>
+                <TableCell align="left">Remaining Bandwidth</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -133,9 +132,10 @@ const Bench = ({ pressed }) => {
                   <TableCell align="left">
                     <TextField
                       variant="standard"
-                      type="date"
-                      onChange={filterLastAllocatedDate}
-                      value={lastAllocatedDate}
+                      type="number"
+                      placeholder="Bandwidth"
+                      onChange={filterRemainingBandwidth}
+                      value={remainingBandwidth}
                       inputProps={{ style: { fontSize: "small" } }}
                     />
                   </TableCell>
@@ -156,7 +156,7 @@ const Bench = ({ pressed }) => {
                       {currElem.primaryCapabilities}
                     </TableCell>
                     <TableCell align="left">
-                      {currElem.lastallocationDate}
+                      {currElem.remainingBandwidth}
                     </TableCell>
                   </TableRow>
                 ))}

@@ -40,10 +40,16 @@ export const ProjectHead = styled.h2`
 `;
 export const Container = styled.div`
   border-top: 0.1rem solid rgb(227, 231, 231);
+  .MuiTableContainer-root {
+    height: calc(100vh - 300px);
+  }
 
   .MuiTableHead-root {
     background-color: #c6d4d4;
     font-weight: 900;
+    position: sticky;
+    top: 0%;
+    z-index: 2;
   }
   th {
     font-weight: 600;

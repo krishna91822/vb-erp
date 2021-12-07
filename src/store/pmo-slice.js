@@ -52,7 +52,7 @@ const initialState = {
       lastAllocatedProject: "Metaverse",
       primaryCapabilities: "backend",
       lastallocationDate: "2021-11-25",
-      percentAllocated: "25%",
+      remainingBandwidth: "25%",
     },
     {
       id: 2,
@@ -61,7 +61,7 @@ const initialState = {
       lastAllocatedProject: "Web-Sever",
       primaryCapabilities: "web-frontEnd",
       lastallocationDate: "2020-05-27",
-      percentAllocated: "100%",
+      remainingBandwidth: "100%",
     },
     {
       id: 3,
@@ -70,7 +70,7 @@ const initialState = {
       lastAllocatedProject: "Eshops",
       primaryCapabilities: "PHP",
       lastallocationDate: "2020-05-27",
-      percentAllocated: "75%",
+      remainingBandwidth: "75%",
     },
     {
       id: 4,
@@ -79,7 +79,7 @@ const initialState = {
       lastAllocatedProject: "Eshops",
       primaryCapabilities: "Javascipt",
       lastallocationDate: "2020-05-27",
-      percentAllocated: "50%",
+      remainingBandwidth: "50%",
     },
   ],
 };
