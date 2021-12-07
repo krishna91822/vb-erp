@@ -1,21 +1,27 @@
-import React from "react";
+import React from 'react';
 
-import { Grid, Box } from "@mui/material";
+import { Grid, Box } from '@mui/material';
 
 import {
   CustomTextField,
   ContentBox,
   ContentTypo,
-} from "./skillEditable.styles";
+} from './skillEditable.styles';
 
-import { skillConstant } from "./skill.constant";
+import { skillConstant } from './skill.constant';
 
 const SkillEditable = ({ empData, setEmpData }) => {
   const { empPrimaryCapability, empSkillSet, empCertifications } = empData;
 
   const handleChange = (event) => {
     const { value, name } = event.target;
-    setEmpData({ ...empData, [name]: value });
+    if (
+      name === 'empPrimaryCapability' ||
+      name === 'empSkillSet' ||
+      name === 'empCertifications'
+    ) {
+      setEmpData({ ...empData, [name]: value.split(',') });
+    }
   };
 
   return (
@@ -25,41 +31,40 @@ const SkillEditable = ({ empData, setEmpData }) => {
           <ContentBox>
             <ContentTypo>{skillConstant.primaryCapability}</ContentTypo>
             <CustomTextField
-              autoComplete="off"
+              autoComplete='off'
               required
-              id="outlined-basic"
-              variant="outlined"
-              value={empPrimaryCapability ? empPrimaryCapability : ""}
-              name="empPrimaryCapability"
+              id='outlined-basic'
+              variant='outlined'
+              value={empPrimaryCapability ? empPrimaryCapability : ''}
+              name='empPrimaryCapability'
               onChange={handleChange}
-              type="text"
+              type='text'
             />
           </ContentBox>
-
           <ContentBox>
             <ContentTypo>{skillConstant.skillSet}</ContentTypo>
             <CustomTextField
-              autoComplete="off"
+              autoComplete='off'
               required
-              id="outlined-basic"
-              variant="outlined"
-              value={empSkillSet ? empSkillSet : ""}
-              name="empSkillSet"
+              id='outlined-basic'
+              variant='outlined'
+              value={empSkillSet ? empSkillSet : ''}
+              name='empSkillSet'
               onChange={handleChange}
-              type="text"
+              type='text'
             />
           </ContentBox>
           <ContentBox>
             <ContentTypo>{skillConstant.certification}</ContentTypo>
             <CustomTextField
-              autoComplete="off"
+              autoComplete='off'
               required
-              id="outlined-basic"
-              variant="outlined"
-              value={empCertifications ? empCertifications : ""}
-              name="empCertifications"
+              id='outlined-basic'
+              variant='outlined'
+              value={empCertifications ? empCertifications : ''}
+              name='empCertifications'
               onChange={handleChange}
-              type="text"
+              type='text'
             />
           </ContentBox>
         </Box>

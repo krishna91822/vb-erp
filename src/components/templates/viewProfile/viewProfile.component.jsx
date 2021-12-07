@@ -1,24 +1,37 @@
-import React from "react";
+import React, { useEffect, useState } from 'react';
 
-import { Container } from "@mui/material";
+import { Container } from '@mui/material';
 
-import { useSelector } from "react-redux";
+import { useParams } from 'react-router-dom';
 
-import { useParams } from "react-router-dom";
+import ProfileContent from './../profileContent.component';
+import WithSpinner from '../../hoc/withSpinner/withSpinner.component';
 
-import ProfileContent from "./../profileContent.component";
+import axiosInstance from './../../../helpers/axiosInstance';
+
+const ProfilContentWithSpinner = WithSpinner(ProfileContent);
 
 const ViewProfile = () => {
-  const allEmployees = useSelector((state) => state.employee.allEmployees);
+  const [loading, setLoading] = useState(true);
+  const [viewedEmployee, setViewedEmployee] = useState({});
 
   const { empId } = useParams();
-  const filteredEmployee = allEmployees[0].filter(
-    (item) => item.empId === empId
-  );
+  useEffect(() => {
+    axiosInstance
+      .get(`/employees?empId=${empId}`)
+      .then((response) => {
+        setViewedEmployee({ ...response.data.employees[0] });
+        setLoading(false);
+      })
+      .catch((err) => console.error(err));
+  }, [empId]);
 
   return (
     <Container sx={{ pb: 3, pt: 5 }}>
-      <ProfileContent currentEmployee={filteredEmployee[0]} />
+      <ProfilContentWithSpinner
+        currentEmployee={viewedEmployee}
+        isLoading={loading}
+      />
     </Container>
   );
 };

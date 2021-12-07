@@ -1,9 +1,9 @@
-import React from "react";
+import React from 'react';
 
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import { useDispatch, useSelector } from "react-redux";
-import { showNotification } from "./../../redux/ui/ui.actions";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { useDispatch, useSelector } from 'react-redux';
+import { showNotification } from './../../redux/ui/ui.actions';
 
 const Notification = (props) => {
   const notification = useSelector((state) => state.ui.notification);
@@ -14,18 +14,18 @@ const Notification = (props) => {
     if (notification) dispatch(showNotification(null));
   };
 
-  if (props.status === "success") {
-    toast.success("Success", {
+  if (props.status === 'success') {
+    toast.success('Success', {
       position: toast.POSITION.TOP_CENTER,
       onClose: afterToast,
-      theme: "dark",
+      theme: 'dark',
     });
   }
-  if (props.status === "error") {
-    toast.error("OOPS Looks like something Happened!", {
+  if (props.status === 'error') {
+    toast.error('OOPS Looks like something Happened!', {
       position: toast.POSITION.TOP_CENTER,
       onClose: afterToast,
-      theme: "dark",
+      theme: 'dark',
     });
   }
 

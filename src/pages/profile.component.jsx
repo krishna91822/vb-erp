@@ -1,30 +1,35 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from 'react';
 
-import { Container } from "@mui/material";
+import { Container } from '@mui/material';
 
-import { connect } from "react-redux";
+import { useSelector } from 'react-redux';
 
-import EditMode from "../components/templates/editMode/editMode.component";
-import ProfileContent from "../components/templates/profileContent.component";
+import EditMode from '../components/templates/editMode/editMode.component';
+import ProfileContent from '../components/templates/profileContent.component';
 
-const Profile = (props) => {
-  const [updateRequest, setUpdateRequest] = useState(props.currentEmployee);
+const Profile = () => {
+  const { currentEmployee } = useSelector((state) => state.employee);
+  const { inEditMode } = useSelector((state) => state.employee);
+
+  const [updateRequest, setUpdateRequest] = useState(currentEmployee);
+
+  useEffect(() => {}, [inEditMode]);
 
   return (
     <Container sx={{ pb: 3 }}>
-      <EditMode updateRequest={updateRequest} />
+      <EditMode
+        setUpdateRequest={setUpdateRequest}
+        updateRequest={updateRequest}
+        inEditMode={inEditMode}
+      />
       <ProfileContent
         updateRequest={updateRequest}
         setUpdateRequest={setUpdateRequest}
-        {...props}
+        currentEmployee={currentEmployee}
+        inEditMode={inEditMode}
       />
     </Container>
   );
 };
 
-const mapStateToProps = ({ employee: { inEditMode, currentEmployee } }) => ({
-  currentEmployee,
-  inEditMode,
-});
-
-export default connect(mapStateToProps)(Profile);
+export default Profile;

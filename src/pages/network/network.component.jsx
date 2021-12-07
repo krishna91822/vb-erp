@@ -1,33 +1,39 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
-import { Container, Box, MenuItem } from "@mui/material";
-import { CustomGridBox, TitleTypo, CustomTextField } from "./network.styles";
-import { networkText } from "./network.constant";
-import { TextField, Typography, Button } from "@mui/material";
-import SearchIcon from "@mui/icons-material/Search";
+import React, { useState, useEffect } from 'react';
+import { Container, Box, MenuItem } from '@mui/material';
+import {
+  CustomGridBox,
+  TitleTypo,
+  CustomTextField,
+  ContentTypo,
+} from './network.styles';
+import { networkText } from './network.constant';
+import { TextField } from '@mui/material';
 
-const Network = ({ history, match }) => {
-  const [searchEmp, setSEmp] = useState("");
+import axiosInstance from './../../helpers/axiosInstance';
+
+import { useNavigate } from 'react-router-dom';
+
+const Network = () => {
+  const navigate = useNavigate();
+
+  const [searchEmp, setSEmp] = useState('');
   const [employees, setEmployees] = useState([]);
-  useEffect(() => {
-    axios
-      .get("http://localhost:5000/employee/search?", {
-        params: {
-          name: `${searchEmp}`,
-        },
-      })
-      .then((response) => setEmployees(response.data.data.results));
-  }, [searchEmp]);
-  const { title, sortOption } = networkText;
+  const [sort, setSort] = React.useState('empId');
 
-  const [sort, setSort] = React.useState("empId");
+  useEffect(() => {
+    axiosInstance
+      .get(`/employees?search=${searchEmp}&sort=${sort}`)
+      .then((response) => setEmployees(response.data.employees))
+      .catch((err) => console.error(err));
+  }, [searchEmp, sort]);
+  const { title, sortOption } = networkText;
 
   const sortHandleChange = (event) => {
     setSort(event.target.value);
   };
 
-  const handleClick = (item) => {
-    history.push(`my-profile/${item.empId}`);
+  const handleEmployeeClick = (item) => {
+    navigate(`../my-profile/${item.empId}`);
   };
 
   const sortOptions = [...sortOption];
@@ -37,55 +43,55 @@ const Network = ({ history, match }) => {
   };
 
   return (
-    <Box sx={{ width: "100%", pt: 3, pb: 3 }}>
+    <Box sx={{ width: '100%', pt: 3, pb: 3 }}>
       <Container
         sx={{
-          minHeight: "calc(100vh - 50px)",
-          width: "calc(100% - 48px)",
-          border: "2px solid",
-          borderColor: "textColor.paletteGrey",
+          minHeight: 'calc(100vh - 50px)',
+          width: 'calc(100% - 48px)',
+          border: '2px solid',
+          borderColor: 'textColor.paletteGrey',
           pb: 3,
         }}
       >
         <Box
           noValidate
-          autoComplete="off"
+          autoComplete='off'
           sx={{
-            width: "100%",
-            height: "56px",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
+            width: '100%',
+            height: '56px',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
             pt: 2,
           }}
         >
-          {" "}
+          {' '}
           <Box
             sx={{
-              display: "flex",
-              justifyContent: "flex-end",
-              alignItems: "center",
+              display: 'flex',
+              justifyContent: 'flex-end',
+              alignItems: 'center',
               padding: 1,
             }}
           >
-            <Typography sx={{ mr: 1 }}>Username</Typography>
+            {/* <Typography sx={{ mr: 1 }}>Username</Typography> */}
             <TextField
               onChange={searchHandleChange}
-              id="outlined-search"
-              label="enter username"
-              size="small"
-              variant="outlined"
-              sx={{ width: "10vw", height: "40px" }}
+              placeholder='Search employee'
+              id='outlined-search'
+              size='small'
+              variant='outlined'
+              sx={{ width: '100%', height: '40px' }}
             />
-            <Button>{<SearchIcon fontSize="large" />}</Button>
+            {/* <Button>{<SearchIcon fontSize='large' />}</Button> */}
           </Box>
           <CustomTextField
-            label="Sort"
-            id="outlined-select-currency"
+            label='Sort'
+            id='outlined-select-currency'
             select
             value={sort}
             onChange={sortHandleChange}
-            sx={{ width: "25%" }}
+            sx={{ width: '25%' }}
           >
             {sortOptions.map((option) => (
               <MenuItem key={option.value} value={option.value}>
@@ -94,13 +100,13 @@ const Network = ({ history, match }) => {
             ))}
           </CustomTextField>
         </Box>
-        <Box sx={{ width: "100%" }}>
+        <Box sx={{ width: '100%' }}>
           <CustomGridBox
             sx={{
               height: 60,
-              mt: 3,
-              mb: 3,
-              backgroundColor: "textColor.light",
+              mt: 2,
+              mb: 2,
+              backgroundColor: 'textColor.light',
             }}
           >
             {
@@ -114,18 +120,19 @@ const Network = ({ history, match }) => {
             <CustomGridBox
               key={item.empId}
               sx={{
-                mt: 1,
-                mb: 1,
+                mt: 0.5,
+                mb: 0.5,
                 height: 40,
+                cursor: 'pointer',
               }}
-              onClick={(e) => handleClick(item)}
+              onClick={(e) => handleEmployeeClick(item)}
             >
-              <TitleTypo>{item.empName}</TitleTypo>
-              <TitleTypo>{item.empId}</TitleTypo>
-              <TitleTypo>{item.empEmail}</TitleTypo>
-              <TitleTypo>{item.empDesignation}</TitleTypo>
-              <TitleTypo>{item.empCurrentAddress}</TitleTypo>
-              <TitleTypo>{item.empDepartment}</TitleTypo>
+              <ContentTypo>{item.empName}</ContentTypo>
+              <ContentTypo>{item.empId}</ContentTypo>
+              <ContentTypo>{item.empEmail}</ContentTypo>
+              <ContentTypo>{item.empDesignation}</ContentTypo>
+              <ContentTypo>{item.empCurrentAddress}</ContentTypo>
+              <ContentTypo>{item.empDepartment}</ContentTypo>
             </CustomGridBox>
           ))}
         </Box>

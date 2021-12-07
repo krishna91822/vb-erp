@@ -1,11 +1,15 @@
-import { configureStore } from "@reduxjs/toolkit";
+import { configureStore } from '@reduxjs/toolkit';
+import logger from 'redux-logger';
 
-import contentsSlice from "./contents-slice";
-import uiSlice from "./ui-slice";
+import uiSlice from './ui-slice';
+import employeeSlice from './employeeSlice';
+
+const middleware = [logger];
 
 export default configureStore({
   reducer: {
-    contents: contentsSlice.reducer,
     ui: uiSlice.reducer,
+    employee: employeeSlice,
   },
+  middleware: [...middleware],
 });

@@ -1,14 +1,14 @@
-import React from "react";
+import React from 'react';
 
-import { Box } from "@mui/material";
+import { Box } from '@mui/material';
 import {
   ContentBox,
   ContentTypo,
   ContentTypoList,
   ListItem,
-} from "./skillReadable.styles";
+} from './skillReadable.styles';
 
-import { skillConstant } from "./skill.constant";
+import { skillConstant } from './skill.constant';
 
 const SkillReadable = ({ empData }) => {
   const { empPrimaryCapability, empSkillSet, empCertifications } = empData;
@@ -22,7 +22,7 @@ const SkillReadable = ({ empData }) => {
             ? empPrimaryCapability.map((data) => (
                 <ListItem key={data}>{data},</ListItem>
               ))
-            : ""}
+            : ''}
         </ContentTypoList>
       </ContentBox>
       <ContentBox>
@@ -33,7 +33,7 @@ const SkillReadable = ({ empData }) => {
               ? empSkillSet.map((data) => (
                   <ListItem key={data}>{data},</ListItem>
                 ))
-              : ""}
+              : ''}
           </ContentTypoList>
         </ContentTypoList>
       </ContentBox>
@@ -45,7 +45,7 @@ const SkillReadable = ({ empData }) => {
               ? empCertifications.map((data) => (
                   <ListItem key={data}>{data},</ListItem>
                 ))
-              : ""}
+              : ''}
           </ContentTypoList>
         </ContentTypoList>
       </ContentBox>

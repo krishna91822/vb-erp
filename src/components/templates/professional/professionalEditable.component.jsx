@@ -1,21 +1,21 @@
-import React from "react";
+import React from 'react';
 
-import { Grid, Box } from "@mui/material";
+import { Grid, Box } from '@mui/material';
 
 import {
   CustomTextField,
   ContentBox,
   ContentTypo,
-} from "./professionalEditable.styles";
+} from './professionalEditable.styles';
 
-import { professionalConstant } from "./professional.constant";
+import { professionalConstant } from './professional.constant';
 
 const ProfessionalEditable = ({ empData, setEmpData }) => {
   const {
-    empDepartment,
-    empDesignation,
+    // empDepartment,
+    // empDesignation,
+    // empReportingManager,
     empBand,
-    empReportingManager,
     empGraduation,
     empGraduationUniversity,
     empPostGraduation,
@@ -31,70 +31,69 @@ const ProfessionalEditable = ({ empData, setEmpData }) => {
     <Grid container spacing={0} sx={{ minHeight: 150 }}>
       <Grid item sm={7}>
         <Box sx={{ ml: 4, mb: 5 }}>
-          <ContentBox>
+          {/* <ContentBox>
             <ContentTypo>{professionalConstant.department}</ContentTypo>
             <CustomTextField
-              autoComplete="off"
+              autoComplete='off'
               required
-              id="outlined-basic"
-              variant="outlined"
-              value={empDepartment ? empDepartment : ""}
-              name="empDepartment"
+              id='outlined-basic'
+              variant='outlined'
+              value={empDepartment ? empDepartment : ''}
+              name='empDepartment'
               onChange={handleChange}
-              type="text"
+              type='text'
             />
           </ContentBox>
-
           <ContentBox>
             <ContentTypo>{professionalConstant.designation}</ContentTypo>
             <CustomTextField
-              autoComplete="off"
+              autoComplete='off'
               required
-              id="outlined-basic"
-              variant="outlined"
-              value={empDesignation ? empDesignation : ""}
-              name="empDesignation"
+              id='outlined-basic'
+              variant='outlined'
+              value={empDesignation ? empDesignation : ''}
+              name='empDesignation'
               onChange={handleChange}
-              type="text"
+              type='text'
             />
-          </ContentBox>
+          </ContentBox> */}
           <ContentBox>
             <ContentTypo>{professionalConstant.band}</ContentTypo>
             <CustomTextField
-              autoComplete="off"
+              autoComplete='off'
               required
-              id="outlined-basic"
-              variant="outlined"
-              value={empBand ? empBand : ""}
-              name="empBand"
+              id='outlined-basic'
+              variant='outlined'
+              value={empBand ? empBand : ''}
+              name='empBand'
               onChange={handleChange}
-              type="text"
+              type='text'
             />
           </ContentBox>
-          <ContentBox>
+          {/* <ContentBox>
             <ContentTypo>{professionalConstant.reportingManager}</ContentTypo>
             <CustomTextField
-              autoComplete="off"
+              autoComplete='off'
               required
-              id="outlined-basic"
-              variant="outlined"
-              value={empReportingManager ? empReportingManager : ""}
-              name="empReportingManager"
+              id='outlined-basic'
+              variant='outlined'
+              value={empReportingManager ? empReportingManager : ''}
+              name='empReportingManager'
               onChange={handleChange}
-              type="text"
+              type='text'
             />
-          </ContentBox>
+          </ContentBox> */}
           <ContentBox>
             <ContentTypo>{professionalConstant.graduation}</ContentTypo>
             <CustomTextField
-              autoComplete="off"
+              autoComplete='off'
               required
-              id="outlined-basic"
-              variant="outlined"
-              value={empGraduation ? empGraduation : ""}
-              name="empGraduation"
+              id='outlined-basic'
+              variant='outlined'
+              value={empGraduation ? empGraduation : ''}
+              name='empGraduation'
               onChange={handleChange}
-              type="text"
+              type='text'
             />
           </ContentBox>
           <ContentBox>
@@ -102,42 +101,42 @@ const ProfessionalEditable = ({ empData, setEmpData }) => {
               {professionalConstant.graduationUniversity}
             </ContentTypo>
             <CustomTextField
-              autoComplete="off"
+              autoComplete='off'
               required
-              id="outlined-basic"
-              variant="outlined"
-              value={empGraduationUniversity ? empGraduationUniversity : ""}
-              name="empGraduationUniversity"
+              id='outlined-basic'
+              variant='outlined'
+              value={empGraduationUniversity ? empGraduationUniversity : ''}
+              name='empGraduationUniversity'
               onChange={handleChange}
-              type="text"
+              type='text'
             />
           </ContentBox>
           <ContentBox>
             <ContentTypo>{professionalConstant.postGraduation}</ContentTypo>
             <CustomTextField
-              autoComplete="off"
+              autoComplete='off'
               required
-              id="outlined-basic"
-              variant="outlined"
-              value={empPostGraduation ? empPostGraduation : ""}
-              name="empPostGraduation"
+              id='outlined-basic'
+              variant='outlined'
+              value={empPostGraduation ? empPostGraduation : ''}
+              name='empPostGraduation'
               onChange={handleChange}
-              type="text"
+              type='text'
             />
           </ContentBox>
           <ContentBox>
             <ContentTypo>{professionalConstant.PgUniversity}</ContentTypo>
             <CustomTextField
-              autoComplete="off"
+              autoComplete='off'
               required
-              id="outlined-basic"
-              variant="outlined"
+              id='outlined-basic'
+              variant='outlined'
               value={
-                empPostGraduationUniversity ? empPostGraduationUniversity : ""
+                empPostGraduationUniversity ? empPostGraduationUniversity : ''
               }
-              name="empPostGraduationUniversity"
+              name='empPostGraduationUniversity'
               onChange={handleChange}
-              type="text"
+              type='text'
             />
           </ContentBox>
         </Box>

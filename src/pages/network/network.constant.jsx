@@ -1,21 +1,21 @@
 export const networkText = {
-  title: ["Name", "EmpID", "Email", "Position", "Location", "Department"],
+  title: ['Name', 'EmpID', 'Email', 'Position', 'Location', 'Department'],
   sortOption: [
     {
-      value: "empId",
-      label: "By EmpID",
+      value: 'empId',
+      label: 'By EmpID',
     },
     {
-      value: "position",
-      label: "By Position",
+      value: 'empPosition',
+      label: 'By Position',
     },
     {
-      value: "location",
-      label: "By Location",
+      value: 'empCurrentAddress',
+      label: 'By Location',
     },
     {
-      value: "department",
-      label: "By Department",
+      value: 'empDepartment',
+      label: 'By Department',
     },
   ],
 };

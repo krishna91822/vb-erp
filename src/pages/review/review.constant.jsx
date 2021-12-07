@@ -1,21 +1,25 @@
 export const reviewText = {
-  title: ["Name", "EmpID", "Email", "Position", "Location", "Department"],
+  title: ['req id', 'requester name', 'requested on', 'request type', 'status'],
   sortOption: [
     {
-      value: "empId",
-      label: "By EmpID",
+      value: 'reqId',
+      label: 'By ReqId',
     },
     {
-      value: "position",
-      label: "By Position",
+      value: 'reqName',
+      label: 'By Requester Name ',
     },
     {
-      value: "location",
-      label: "By Location",
+      value: 'createdAt',
+      label: 'By Requested On',
     },
     {
-      value: "department",
-      label: "By Department",
+      value: 'reqType',
+      label: 'By Requested Type',
+    },
+    {
+      value: 'status',
+      label: 'By Status',
     },
   ],
 };

@@ -1,60 +1,51 @@
-import { Fragment, useEffect, useState } from "react";
+import { Fragment, useEffect, useState } from 'react';
 
-import { Route, Switch, withRouter } from "react-router-dom";
+import { Route, Routes } from 'react-router-dom';
 
-import routes from "./routes/routes";
+import routes from './routes/routes';
 
-import Layout from "./components/layout/Layout";
+import Layout from './components/layout/Layout';
 
-import { useDispatch } from "react-redux";
-import {
-  setCurrentEmployee,
-  setAllEmployees,
-} from "./redux/employee/employee.actions";
+import { useDispatch } from 'react-redux';
+import { setCurrentEmployee } from './store/employeeSlice';
 
-import axios from "axios";
+import axiosInstance from './helpers/axiosInstance';
 
-function App({ match, history }) {
+function App() {
   const [loading, setLoading] = useState(true);
   const dispatch = useDispatch();
 
-  const baseURL = "http://localhost:5000/employee";
-  const currentEmployeeId = "VB2";
-
   useEffect(() => {
-    axios.get(baseURL).then((response) => {
-      //set current employee and all employees
-      if (response) {
-        dispatch(setAllEmployees(response.data));
-        dispatch(
-          setCurrentEmployee(
-            response.data.find((res) => res.empId === currentEmployeeId)
-          )
-        );
-        setLoading(false);
-      }
-    });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    axiosInstance
+      .get('/employees')
+      .then((response) => {
+        if (response) {
+          dispatch(
+            setCurrentEmployee(
+              response.data.employees.find((item) => item.empId === 1)
+            )
+          );
+          setLoading(false);
+        }
+      })
+      .catch((err) => console.log(err));
+  }, [dispatch]);
 
   return (
     <Fragment>
       <Layout>
-        <Switch>
+        <Routes>
           {routes.map((route, index) => (
             <Route
               key={index}
               path={route.path}
-              exact
-              render={(props) => (
-                <route.component isLoading={loading} {...props} />
-              )}
-            ></Route>
+              element={<route.component isLoading={loading} />}
+            />
           ))}
-        </Switch>
+        </Routes>
       </Layout>
     </Fragment>
   );
 }
 
-export default withRouter(App);
+export default App;

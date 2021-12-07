@@ -1,15 +1,15 @@
-import React from "react";
+import React from 'react';
 
-import { Box } from "@mui/material";
-import { ContentBox, ContentTypo } from "./professionalReadable.styles";
-import { professionalConstant } from "./professional.constant";
+import { Box } from '@mui/material';
+import { ContentBox, ContentTypo } from './professionalReadable.styles';
+import { professionalConstant } from './professional.constant';
 
 const ProfessionalReadable = ({ empData }) => {
   const {
-    empDepartment,
-    empDesignation,
+    // empDepartment,
+    // empDesignation,
+    // empReportingManager,
     empBand,
-    empReportingManager,
     empGraduation,
     empGraduationUniversity,
     empPostGraduation,
@@ -17,22 +17,22 @@ const ProfessionalReadable = ({ empData }) => {
   } = empData;
   return (
     <Box>
-      <ContentBox>
+      {/* <ContentBox>
         <ContentTypo>{professionalConstant.department}</ContentTypo>
         <ContentTypo>{empDepartment}</ContentTypo>
       </ContentBox>
       <ContentBox>
         <ContentTypo>{professionalConstant.designation}</ContentTypo>
         <ContentTypo>{empDesignation.toUpperCase()}</ContentTypo>
-      </ContentBox>
+      </ContentBox> */}
       <ContentBox>
         <ContentTypo>{professionalConstant.band}</ContentTypo>
         <ContentTypo>{empBand}</ContentTypo>
       </ContentBox>
-      <ContentBox>
+      {/* <ContentBox>
         <ContentTypo>{professionalConstant.reportingManager}</ContentTypo>
         <ContentTypo>{empReportingManager}</ContentTypo>
-      </ContentBox>
+      </ContentBox> */}
       <ContentBox>
         <ContentTypo>{professionalConstant.graduation}</ContentTypo>
         <ContentTypo>{empGraduation.toUpperCase()}</ContentTypo>
