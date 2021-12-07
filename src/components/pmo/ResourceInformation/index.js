@@ -1,7 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { TextField, Button } from "@mui/material";
 import ResourceInformationTable from "../ResourceInformationTable";
 import Autocomplete from "@mui/material/Autocomplete";
+import { useDispatch, useSelector } from "react-redux";
+
+import { getAllEmployees } from "../../../store/pmo-actions";
 import {
   Heading,
   Container,
@@ -25,7 +28,7 @@ const ResourceInformation = ({
   const { associateName, startDate, endDate, allocation, rackRate } = resource;
   const [open, setOpen] = useState(false);
   const [tempVal, setTempVal] = useState(0);
-
+  const dispatch = useDispatch();
   const handleOpen = ({ target }) => {
     let inputvalue = target.value;
 
@@ -35,14 +38,11 @@ const ResourceInformation = ({
       setOpen(false);
     }
   };
+  useEffect(() => {
+    dispatch(getAllEmployees());
+  }, []);
 
-  const employeeData = [
-    { associateName: "Saad", empId: "VB0001" },
-    { associateName: "Atif", empId: "VB0002" },
-    { associateName: "Rupesh", empId: "VB0003" },
-    { associateName: "Narayan", empId: "VB0004" },
-    { associateName: "Abhiram", empId: "VB0005" },
-  ];
+  const { allEmployees } = useSelector((state) => state.pmo);
 
   return (
     <Container>
@@ -60,11 +60,11 @@ const ResourceInformation = ({
               freeSolo
               key={tempVal}
               onInputChange={handleOpen}
-              getOptionLabel={(option) => option.associateName}
+              getOptionLabel={(option) => option.employeeName}
               onChange={(event, value) => {
                 value ? handelAssociate(value) : setOpen(false);
               }}
-              options={employeeData}
+              options={allEmployees}
               open={open}
               renderInput={(params) => (
                 <TextField

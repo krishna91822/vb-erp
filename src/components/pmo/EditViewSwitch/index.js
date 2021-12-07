@@ -75,10 +75,10 @@ const EditViewSwitchs = ({
   const handleChange = ({ target }) => {
     if (target.checked) {
       setEdit(true);
-      navigate(`/pmo/projects/${id}/edit`);
+      navigate(`/pmo/projects/${id}/edit`, { replace: true });
     } else {
       setEdit(false);
-      navigate(`/pmo/projects/${id}`);
+      navigate(`/pmo/projects/${id}`, { replace: true });
     }
   };
 

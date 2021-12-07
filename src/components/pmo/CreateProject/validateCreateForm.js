@@ -10,7 +10,8 @@ export default function validateForm(data) {
   if (!data.clientProjectManager.trim()) {
     errors.clientProjectManager = "Client Project Manager Required";
   }
-  if (data.clientPrimaryContact.toString().length !== 10) {
+  if (!data.clientPrimaryContact) {
+    console.log(data.clientPrimaryContact.toString().length, "hai");
     errors.clientPrimaryContact = "Enter valid number";
   }
   if (!data.clientProjectSponsor.trim()) {

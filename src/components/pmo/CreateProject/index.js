@@ -1,7 +1,10 @@
 import React, { useState, useLayoutEffect, useEffect } from "react";
 import { useParams, useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import { isEmpty } from "lodash";
 import { nanoid } from "nanoid";
+import PhoneInput from "react-phone-input-2";
+import "react-phone-input-2/lib/style.css";
 
 import {
   Button,
@@ -117,25 +120,31 @@ const CreateProject = () => {
   useEffect(() => {
     if (redirect) {
       const url = id ? `/pmo/projects/${id}` : "/pmo/projects";
-      navigate(url);
+      navigate(url, { replace: true });
       dispatch(pmoActions.redirectToProjectList());
       setEdit(false);
     }
   }, [redirect]);
 
   useEffect(() => {
-    if (projectById.length) {
-      const projectInfo = { ...projectById[0] };
-      delete projectInfo.resources;
-
+    if (!isEmpty(projectById)) {
       setState({
         ...state,
-        project: projectInfo,
-        resources: projectById[0].resources,
+        project: projectById.project,
+        resources: projectById.resources,
       });
     }
   }, [projectById]);
-
+  const handelAssociate = (value) => {
+    setState({
+      ...state,
+      resource: {
+        ...state.resource,
+        associateName: value.employeeName,
+        empId: value.empId,
+      },
+    });
+  };
   const handleProjectChange = ({ target }) => {
     if (target.name === "endDate") {
       if (startDate > target.value) {
@@ -200,18 +209,6 @@ const CreateProject = () => {
     }
   };
 
-  const handelAssociate = (value) => {
-    console.log(value);
-    setState({
-      ...state,
-      resource: {
-        ...state.resource,
-        associateName: value.associateName,
-        empId: value.empId,
-      },
-    });
-  };
-
   const addResource = () => {
     const validationErrors = validateResourceForm(state.resource);
     const noErrors = Object.keys(validationErrors).length === 0;
@@ -248,8 +245,7 @@ const CreateProject = () => {
       if (location.includes("createproject")) {
         dispatch(
           createProject({
-            ...state.project,
-            vbProjectId: nanoid(7).toUpperCase(),
+            project: { ...state.project, vbProjectId: nanoid(7).toUpperCase() },
             resources,
           })
         );
@@ -257,8 +253,7 @@ const CreateProject = () => {
       if (location.includes("edit")) {
         dispatch(
           updateProject({
-            ...state.project,
-            vbProjectId: id,
+            project: { ...state.project, vbProjectId: id },
             resources,
           })
         );
@@ -274,7 +269,15 @@ const CreateProject = () => {
       setOpen(false);
     }
   };
-
+  const handlePhoneNumber = (number) => {
+    setState({
+      ...state,
+      project: {
+        ...state.project,
+        clientPrimaryContact: number,
+      },
+    });
+  };
   const handleAutoselect = (value) => {
     setState({
       ...state,
@@ -397,23 +400,23 @@ const CreateProject = () => {
                 Client Primary Contact <span>*</span>
               </label>
               <NumberStyle>
-                <TextField
-                  type="number"
-                  id="cpc"
-                  name="clientPrimaryContact"
-                  data-test="client-primary-contact-input"
-                  size="small"
-                  variant="outlined"
+                <PhoneInput
                   disabled
                   error={errors.clientPrimaryContact ? true : false}
                   helperText={errors.clientPrimaryContact}
-                  value={clientPrimaryContact}
-                  placeholder="Enter Client Primary Contact"
-                  style={{ padding: "0.3em", width: "100%" }}
-                  onChange={handleProjectChange}
-                  onInput={(e) =>
-                    (e.target.value = e.target.value.slice(0, 10))
-                  }
+                  onChange={(e) => handlePhoneNumber(e)}
+                  value={clientPrimaryContact.toString()}
+                  name="clientPrimaryContact"
+                  placeholder="Contact Number"
+                  inputProps={{
+                    name: "phone",
+                    autoFocus: true,
+                  }}
+                  inputStyle={{
+                    height: "44px",
+                    width: "98%",
+                  }}
+                  style={{ marginLeft: "4px" }}
                 />
               </NumberStyle>
             </FormElementsStyled>
