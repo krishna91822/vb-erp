@@ -191,11 +191,13 @@ function Invoice(props) {
   const filterinvoiceArr = allINVOICE.filter((val) => {
     return poId === val.PO_Id._id;
   });
-  console.log(filterinvoiceArr);
-  const totalinvoiceamount = filterinvoiceArr.map((val) => {
-    sum = sum + val.invoice_amount_received;
+  let count = 0;
+  useEffect(() => {
+    const totalinvoiceamount = filterinvoiceArr.map((val) => {
+      count = count + val.invoice_amount_received;
+    });
+    setsum(count);
   });
-  console.log(invoice_raised);
   return (
     <div className="maincontainer">
       <h3>Invoice</h3>
