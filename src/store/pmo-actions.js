@@ -34,7 +34,6 @@ export const createProject = (projectInfo) => {
     // };
     try {
       const data = await saveProjects();
-      // console.log(data, "datafrombackend");
       await saveResources(data.data._id);
       dispatch(pmoActions.redirectToProjectList());
     } catch (err) {
@@ -103,7 +102,6 @@ export const getAllEmployees = () => {
     };
     try {
       const data = await getData();
-      console.log(data);
       dispatch(pmoActions.updateEmployeeList(data.data));
     } catch (err) {
       console.log(err);
@@ -131,14 +129,7 @@ export const getProjectById = (projectId) => {
     };
     try {
       const data = await getData();
-      console.log(data.data[0]._id);
       const resourceData = await getResourceData(data.data[0]._id);
-      console.log(
-        data,
-        "projectData",
-        resourceData.data[0].resources,
-        "resourceData"
-      );
       const allData = {
         project: data.data[0],
         resources: resourceData.data[0].resources,
