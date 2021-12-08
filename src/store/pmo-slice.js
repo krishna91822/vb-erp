@@ -53,6 +53,8 @@ const initialState = {
       primaryCapabilities: "backend",
       lastallocationDate: "2021-11-25",
       remainingBandwidth: "25%",
+      startDate: "2020-12-02",
+      endDate: "2020-05-27",
     },
     {
       id: 2,
@@ -62,6 +64,8 @@ const initialState = {
       primaryCapabilities: "web-frontEnd",
       lastallocationDate: "2020-05-27",
       remainingBandwidth: "100%",
+      startDate: "2020-11-12",
+      endDate: "2020-05-27",
     },
     {
       id: 3,
@@ -71,6 +75,8 @@ const initialState = {
       primaryCapabilities: "PHP",
       lastallocationDate: "2020-05-27",
       remainingBandwidth: "75%",
+      startDate: "2020-08-20",
+      endDate: "2021-05-27",
     },
     {
       id: 4,
@@ -80,6 +86,8 @@ const initialState = {
       primaryCapabilities: "Javascipt",
       lastallocationDate: "2020-05-27",
       remainingBandwidth: "50%",
+      startDate: "2020-12-02",
+      endDate: "2020-05-27",
     },
   ],
 };
