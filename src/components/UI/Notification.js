@@ -19,7 +19,7 @@ const Notification = (props) => {
     });
   }
   if (props.status === "error") {
-    toast.error("OOPS Looks like something Happened!", {
+    toast.error(props.message, {
       position: toast.POSITION.TOP_CENTER,
       onClose: afterToast,
       theme: "dark",

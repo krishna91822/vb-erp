@@ -1,6 +1,6 @@
 .FormContainer {
   position: sticky;
-  height: 80%;
+  height: 82%;
   overflow-y: scroll;
   border: 2px solid rgb(216, 213, 213);
   border-radius: 0.5rem;
@@ -76,6 +76,7 @@
 .react-tel-input .form-control {
   padding-top: 11px;
   padding-bottom: 10px;
+  width: 100%;
 }
 
 .react-tel-input .special-label {

@@ -22,3 +22,10 @@
 .ListContainer::-webkit-scrollbar-thumb:hover {
   background: grey;
 }
+.table-row {
+  cursor: pointer;
+}
+
+.edit-btn {
+  color: yellow;
+}

@@ -1,11 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialFields = {
-  designation: "",
-  brandname: "",
-  clientname: "",
-  domain: "",
-  baselocation: "",
+const addressFields = {
   addressLine1: "",
   addressLine2: "",
   pincode: "",
@@ -14,46 +9,63 @@ const initialFields = {
   district: "",
   city: "",
   landmark: "",
+};
+
+const contactFields = {
+  title: "",
+  firstName: "",
+  lastName: "",
+  email: "",
+  contactNumber: "",
+  otherContactNumber: "",
+};
+
+const initialFields = {
+  designation: "",
+  brandName: "",
+  clientName: "",
+  domain: "",
+  baseLocation: "",
+  gstNumber: "",
+  panNumber: "",
+  companyType: "",
+  registeredAddress: { ...addressFields },
+  communicationAddress: { ...addressFields },
   contacts: {
-    primaryContact: {
-      title: "",
-      firstName: "",
-      lastName: "",
-      email: "",
-      contactNumber: "",
-      otherContactNumber: "",
-    },
-    secondaryContact: {
-      title: "",
-      firstName: "",
-      lastName: "",
-      email: "",
-      contactNumber: "",
-      otherContactNumber: "",
-    },
-    tertiaryContact: {
-      title: "",
-      firstName: "",
-      lastName: "",
-      email: "",
-      contactNumber: "",
-      otherContactNumber: "",
-    },
+    primaryContact: { ...contactFields },
+    secondaryContact: { ...contactFields },
+    tertiaryContact: { ...contactFields },
+  },
+};
+
+const locFields = {
+  state: "",
+  districts: {
+    "": [""],
   },
 };
 
 const initialState = {
-  form: { ...JSON.parse(JSON.stringify(initialFields)), country: "India-in" },
+  form: {
+    ...JSON.parse(JSON.stringify(initialFields)),
+    registeredAddress: {
+      ...JSON.parse(JSON.stringify(initialFields)).registeredAddress,
+      country: "India-in",
+    },
+    communicationAddress: {
+      ...JSON.parse(JSON.stringify(initialFields)).communicationAddress,
+      country: "India-in",
+    },
+    companyType: "GST Registered",
+  },
   errors: JSON.parse(JSON.stringify(initialFields)),
   countries: {},
-  ccode: "in",
-  loc: {
-    state: "",
-    districts: {
-      "": [""],
-    },
-  },
+  RegCcode: "in",
+  ComCcode: "in",
+  locReg: { ...locFields },
+  locCom: { ...locFields },
   clientsList: [],
+  editMode: true,
 };
 
 const cimsSlice = createSlice({
@@ -69,25 +81,72 @@ const cimsSlice = createSlice({
     setCountries(state, action) {
       state.countries = action.payload;
     },
-    setCcode(state, action) {
-      state.ccode = action.payload;
+    setRegCcode(state, action) {
+      state.RegCcode = action.payload;
     },
-    setLoc(state, action) {
+    setComCcode(state, action) {
+      state.ComCcode = action.payload;
+    },
+    setLocReg(state, action) {
       const data = action.payload;
-      const stateName = data["state"];
-      const districtName = Object.keys(data["districts"])[0];
-      const cityName = data["districts"][districtName][0];
-      state.loc = data;
+      const stateName = state.form.registeredAddress.state
+        ? state.form.registeredAddress.state
+        : data["state"];
+      const districtName = state.form.registeredAddress.district
+        ? state.form.registeredAddress.district
+        : Object.keys(data["districts"])[0];
+      const cityName = state.form.registeredAddress.city
+        ? state.form.registeredAddress.city
+        : data["districts"][districtName][0];
+      state.locReg = data;
       state.form = {
         ...state.form,
-        state: stateName,
-        district: districtName,
-        city: cityName,
+        registeredAddress: {
+          ...state.form.registeredAddress,
+          state: stateName,
+          district: districtName,
+          city: cityName,
+        },
+      };
+    },
+    setLocCom(state, action) {
+      const data = action.payload;
+      const stateName = state.form.communicationAddress.state
+        ? state.form.communicationAddress.state
+        : data["state"];
+      const districtName = state.form.communicationAddress.district
+        ? state.form.communicationAddress.district
+        : Object.keys(data["districts"])[0];
+      const cityName = state.form.communicationAddress.city
+        ? state.form.communicationAddress.city
+        : data["districts"][districtName][0];
+      state.locCom = data;
+      state.form = {
+        ...state.form,
+        communicationAddress: {
+          ...state.form.communicationAddress,
+          state: stateName,
+          district: districtName,
+          city: cityName,
+        },
       };
     },
     resetForm: () => initialState,
     getClientsList(state, action) {
       state.clientsList = action.payload;
+    },
+    getClientData(state, action) {
+      state.form = action.payload;
+    },
+    toggleEditMode(state, action) {
+      state.editMode = action.payload;
+    },
+    resetComAddress(state, action) {
+      state.locCom = { ...locFields };
+      state.form = {
+        ...state.form,
+        communicationAddress: { ...addressFields, country: "India-in" },
+      };
     },
   },
 });

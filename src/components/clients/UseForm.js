@@ -3,7 +3,13 @@ import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
 import { cimsActions } from "../../store/cims-slice";
 import { useNavigate } from "react-router-dom";
+import { uiActions } from "../../store/ui-slice";
 
+const companyTypes = [
+  { id: "GSTRegistered", label: "GST Registered" },
+  { id: "GSTUnregistered", label: "GST Unregistered" },
+  { id: "overseas", label: "Overseas" },
+];
 const contactSchema = {
   title: "",
   firstName: "",
@@ -20,7 +26,7 @@ const initialContacts = [
 ];
 
 const fields = [
-  { id: "title", label: "Title *" },
+  { id: "title", label: "Designation *" },
   { id: "firstName", label: "First name *" },
   { id: "lastName", label: "Last name *" },
   { id: "email", label: "Email address *" },
@@ -35,16 +41,20 @@ const addressFields = [
   { name: "pincode", label: "Postal/Pin Code *" },
   { name: "state", label: "State *" },
   { name: "district", label: "District *" },
-  { name: "city", label: "City *" },
+  { name: "city", label: "Area *" },
   { name: "landmark", label: "Landmark" },
 ];
 
 export default function UseForm() {
-  const navigate = useNavigate();
   const formData = useSelector((state) => state.cims.form);
   const errors = useSelector((state) => state.cims.errors);
-  const ccode = useSelector((state) => state.cims.ccode);
-  const loc = useSelector((state) => state.cims.loc);
+  const RegCcode = useSelector((state) => state.cims.RegCcode);
+  const ComCcode = useSelector((state) => state.cims.ComCcode);
+  const locReg = useSelector((state) => state.cims.locReg);
+  const locCom = useSelector((state) => state.cims.locCom);
+  const countries = useSelector((state) => state.cims.countries);
+
+  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   async function fetchData() {
@@ -187,87 +197,22 @@ export default function UseForm() {
       temp.designation = fieldValues.designation
         ? ""
         : "This field is required.";
-    if ("brandname" in fieldValues)
-      temp.brandname = fieldValues.brandname ? "" : "This field is required.";
-    if ("clientname" in fieldValues)
-      temp.clientname = fieldValues.clientname ? "" : "This field is required.";
+    if ("brandName" in fieldValues)
+      temp.brandName = fieldValues.brandName ? "" : "This field is required.";
+    if ("clientName" in fieldValues)
+      temp.clientName = fieldValues.clientName ? "" : "This field is required.";
     if ("domain" in fieldValues)
       temp.domain = fieldValues.domain ? "" : "This field is required.";
-    if ("baselocation" in fieldValues)
-      temp.baselocation = fieldValues.baselocation
+    if ("baseLocation" in fieldValues)
+      temp.baseLocation = fieldValues.baseLocation
         ? ""
         : "This field is required.";
-    if ("addressLine1" in fieldValues)
-      temp.addressLine1 = fieldValues.addressLine1
-        ? ""
-        : "This field is required.";
-    if ("pincode" in fieldValues) {
-      temp.pincode = fieldValues.pincode ? "" : "This field is required.";
-      if (fieldValues.pincode) {
-        temp.pincode = /^.{2,}$/.test(fieldValues.pincode)
-          ? ""
-          : "Pincode should have minimum 2 characters.";
-        if (errors.state)
-          temp.state = temp.pincode ? "This field is required." : "";
-        if (errors.district)
-          temp.district = temp.pincode ? "This field is required." : "";
-        if (errors.city)
-          temp.city = temp.pincode ? "This field is required." : "";
-      }
-    }
-    if ("country" in fieldValues) {
-      temp.country =
-        fieldValues.country || formData.country
-          ? ""
-          : "This field is required.";
-    }
-    if ("state" in fieldValues)
-      temp.state = fieldValues.state ? "" : "This field is required.";
-    if ("district" in fieldValues)
-      temp.district =
-        fieldValues.district || formData.district
-          ? ""
-          : "This field is required.";
-    if ("city" in fieldValues)
-      temp.city =
-        fieldValues.city || formData.city ? "" : "This field is required.";
     setTimeout(() => {
       dispatch(cimsActions.setErrors({ ...temp }));
     }, 100);
   };
 
-  const handelInvalidPincode = () => {
-    let new_form = JSON.parse(JSON.stringify(formData));
-    new_form["city"] = "";
-    new_form["district"] = "";
-    new_form["state"] = "";
-    new_form["pincode"] = "";
-    dispatch(cimsActions.createForm(new_form));
-  };
-
   // End handel errors
-
-  const getAddressByPincode = async (pincode) => {
-    try {
-      await axios
-        .get("http://localhost:4000/location", {
-          headers: {
-            pincode: pincode,
-            country: ccode,
-          },
-        })
-        .then((res) => {
-          if (res.data.code === 200 || res.data.status === "success")
-            dispatch(cimsActions.setLoc(res.data.data));
-          else {
-            window.alert(res.data.error[0].message);
-            handelInvalidPincode();
-          }
-        });
-    } catch (error) {
-      console.log(error);
-    }
-  };
 
   const handelSetAddOthers = (new_form) => {
     if (
@@ -307,11 +252,6 @@ export default function UseForm() {
     e.target.id
       ? (new_form["contacts"][e.target.name][e.target.id] = e.target.value)
       : (new_form[e.target.name] = e.target.value);
-    if (e.target.name === "pincode") {
-      new_form["city"] = "";
-      new_form["district"] = "";
-      new_form["state"] = "";
-    }
     if (
       e.target.name === "primaryContact" ||
       e.target.name === "secondaryContact"
@@ -328,32 +268,154 @@ export default function UseForm() {
     dispatch(cimsActions.createForm(new_form));
   };
 
-  const handelAddressOnBlur = (e) => {
-    setformvalue(e);
+  const validateAddress = (addType, fieldValues) => {
+    let temp = JSON.parse(JSON.stringify(errors));
+    if ("addressLine1" in fieldValues)
+      temp[addType].addressLine1 = fieldValues.addressLine1
+        ? ""
+        : "This field is required.";
+    if ("pincode" in fieldValues) {
+      temp[addType].pincode = fieldValues.pincode
+        ? ""
+        : "This field is required.";
+      if (fieldValues.pincode) {
+        temp[addType].pincode = /^.{2,}$/.test(fieldValues.pincode)
+          ? ""
+          : "Pincode should have minimum 2 characters.";
+        if (errors[addType].state)
+          temp[addType].state = temp[addType].pincode
+            ? "This field is required."
+            : "";
+        if (errors[addType].district)
+          temp[addType].district = temp[addType].pincode
+            ? "This field is required."
+            : "";
+        if (errors[addType].city)
+          temp[addType].city = temp[addType].pincode
+            ? "This field is required."
+            : "";
+      }
+    }
+    if ("country" in fieldValues) {
+      temp[addType].country =
+        fieldValues.country || formData[addType].country
+          ? ""
+          : "This field is required.";
+    }
+    if ("state" in fieldValues)
+      temp[addType].state = fieldValues.state ? "" : "This field is required.";
+    if ("district" in fieldValues)
+      temp[addType].district =
+        fieldValues.district || formData[addType].district
+          ? ""
+          : "This field is required.";
+    if ("city" in fieldValues)
+      temp[addType].city =
+        fieldValues.city || formData[addType].city
+          ? ""
+          : "This field is required.";
+    setTimeout(() => {
+      dispatch(cimsActions.setErrors({ ...temp }));
+    }, 100);
+  };
+
+  const setAddress = (e, addType) => {
+    let new_form = JSON.parse(JSON.stringify(formData));
     if (e.target.name === "pincode") {
-      const data = e.target.value;
-      if (data.length > 1 && formData.pincode !== "" && errors.pincode === "")
-        getAddressByPincode(data);
+      new_form[addType]["city"] = "";
+      new_form[addType]["district"] = "";
+      new_form[addType]["state"] = "";
+    }
+    new_form[addType][e.target.name] = e.target.value;
+    validateAddress(addType, { [e.target.name]: e.target.value });
+    dispatch(cimsActions.createForm(new_form));
+  };
+
+  const handelInvalidPincode = (addType) => {
+    let new_form = JSON.parse(JSON.stringify(formData));
+    new_form[addType]["city"] = "";
+    new_form[addType]["district"] = "";
+    new_form[addType]["state"] = "";
+    new_form[addType]["pincode"] = "";
+    dispatch(cimsActions.createForm(new_form));
+  };
+
+  const getAddressByPincode = async (addType, pincode) => {
+    try {
+      await axios
+        .get("http://localhost:4000/location", {
+          headers: {
+            pincode: pincode,
+            country: addType === "registeredAddress" ? RegCcode : ComCcode,
+          },
+        })
+        .then((res) => {
+          if (res.data.code === 200 || res.data.status === "success")
+            addType === "registeredAddress"
+              ? dispatch(cimsActions.setLocReg(res.data.data))
+              : dispatch(cimsActions.setLocCom(res.data.data));
+          else {
+            const errMsg = res.data.error[0].message;
+            dispatch(
+              uiActions.showNotification({
+                status: "error",
+                title: "Error!",
+                message: errMsg,
+              })
+            );
+            // window.alert(res.data.error[0].message);
+            handelInvalidPincode(addType);
+          }
+        });
+    } catch (error) {
+      console.log(error);
     }
   };
 
-  const handelCountry = (e) => {
+  const handelAddressOnBlur = (e, addType) => {
+    setAddress(e, addType);
+    if (e.target.name === "pincode") {
+      const data = e.target.value;
+      if (
+        data.length > 1 &&
+        formData[addType].pincode !== "" &&
+        errors[addType].pincode === ""
+      )
+        getAddressByPincode(addType, data);
+    }
+  };
+
+  const handelCountry = (e, addType) => {
     let new_form = JSON.parse(JSON.stringify(formData));
     const data = e.target.value;
     const name = e.target.name;
     if (name === "country") {
-      dispatch(cimsActions.setCcode(data.split("-")[1]));
-      new_form["city"] = "";
-      new_form["district"] = "";
-      new_form["state"] = "";
-      new_form["pincode"] = "";
+      addType === "registeredAddress"
+        ? dispatch(cimsActions.setRegCcode(data.split("-")[1]))
+        : dispatch(cimsActions.setComCcode(data.split("-")[1]));
+      new_form[addType]["city"] = "";
+      new_form[addType]["district"] = "";
+      new_form[addType]["state"] = "";
+      new_form[addType]["pincode"] = "";
     }
-    new_form[name] = data;
+    new_form[addType][name] = data;
     if (name === "district" && data !== "") {
-      new_form["state"] = loc.state;
-      new_form["city"] = loc["districts"][data][0];
+      const loc = addType === "registeredAddress" ? locReg : locCom;
+      new_form[addType]["state"] = loc.state;
+      new_form[addType]["city"] = loc["districts"][data][0];
     }
     dispatch(cimsActions.createForm(new_form));
+  };
+
+  const handelComAddress = (checked) => {
+    if (checked) {
+      dispatch(cimsActions.setLocCom({ ...locReg }));
+      let new_form = JSON.parse(JSON.stringify(formData));
+      new_form["communicationAddress"] = { ...new_form["registeredAddress"] };
+      dispatch(cimsActions.createForm(new_form));
+    } else {
+      dispatch(cimsActions.resetComAddress());
+    }
   };
 
   const handleAddOthers = () => {
@@ -404,6 +466,13 @@ export default function UseForm() {
                 );
               })
               .every((x) => x);
+          } else if (
+            key === "registeredAddress" ||
+            key === "communicationAddress"
+          ) {
+            return Object.values(temp[key]).every((x) => x === "");
+          } else if (key === "gstNumber" || key === "panNumber") {
+            return temp["gstNumber"] === "" || temp["panNumber"] === "";
           } else {
             return temp[key] === "";
           }
@@ -423,10 +492,19 @@ export default function UseForm() {
                   .every((x) => x);
               })
               .every((x) => x);
-          }
-          if (key === "addressLine2" || key === "landmark") {
-            return true;
-          }
+          } else if (
+            key === "registeredAddress" ||
+            key === "communicationAddress"
+          ) {
+            return addressFields
+              .map((field) =>
+                field.name === "addressLine2" || field.name === "landmark"
+                  ? true
+                  : data[key][field.name] !== ""
+              )
+              .every((x) => x);
+          } else if (key === "gstNumber" || key === "panNumber")
+            return data["gstNumber"] !== "" || data["panNumber"] !== "";
           return data[key] !== "";
         })
         .every((x) => x) &&
@@ -459,7 +537,7 @@ export default function UseForm() {
         await axios
           .post(
             "http://localhost:4000/cims",
-            { formData },
+            { ...formData },
             {
               headers: {
                 authorization: `bearer ${token}`,
@@ -467,16 +545,55 @@ export default function UseForm() {
             }
           )
           .then((res) => {
-            if (res.status === 200) {
+            console.log(res);
+            if (res.data.status === "success" || res.data.code === 200) {
               setTimeout(() => {
                 dispatch(cimsActions.resetForm());
               }, 100);
               window.alert("Data added successfully!");
               navigate("/cims");
-            } else
+            } else {
               window.alert(
                 "Error occured while adding the data!\nPlease contact the maintenance team."
               );
+              console.log(res.data);
+            }
+          });
+      } catch (error) {
+        console.log(error);
+      }
+    } else window.alert("Some data missing!");
+  };
+
+  const updateForm = async (e) => {
+    e.preventDefault();
+    if (validateOnSubmit()) {
+      const token = localStorage.getItem("authorization");
+      try {
+        await axios
+          .patch(
+            "http://localhost:4000/cims",
+            { ...formData },
+            {
+              headers: {
+                authorization: `bearer ${token}`,
+              },
+            }
+          )
+          .then((res) => {
+            console.log(res);
+            if (res.data.status === "success" || res.data.code === 200) {
+              setTimeout(() => {
+                dispatch(cimsActions.resetForm());
+              }, 100);
+              window.alert("Data updated successfully!");
+              navigate("/cims");
+            } else {
+              window.alert(
+                "Error occured while updating the data!\nPlease contact the maintenance team."
+              );
+              console.log(res.data);
+            }
           });
       } catch (error) {
         console.log(error);
@@ -508,5 +625,15 @@ export default function UseForm() {
     handelAddressOnBlur,
     validateOnSubmit,
     handelMobile,
+
+    RegCcode,
+    ComCcode,
+    locReg,
+    locCom,
+    countries,
+    setAddress,
+    companyTypes,
+    handelComAddress,
+    updateForm,
   };
 }

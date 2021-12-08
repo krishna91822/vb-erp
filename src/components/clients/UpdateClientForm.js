@@ -8,10 +8,10 @@ import "../../assets/styles/FormStyles.css";
 import { cimsActions } from "../../store/cims-slice";
 import { useDispatch, useSelector } from "react-redux";
 
-function CreateClientForm() {
+function UpdateClientForm() {
   const dispatch = useDispatch();
   const editMode = useSelector((state) => state.cims.editMode);
-  const { authStore, submitForm, validateOnSubmit } = UseForm();
+  const { authStore, updateForm, validateOnSubmit } = UseForm();
 
   useEffect(() => {
     authStore();
@@ -37,14 +37,15 @@ function CreateClientForm() {
                 </Button>
               </Link>
               <Button
-                onClick={submitForm}
+                ml={4}
+                onClick={updateForm}
                 type="submit"
                 variant="contained"
                 color="success"
                 id="save-btn"
                 disabled={!validateOnSubmit()}
               >
-                Save
+                Update
               </Button>
             </div>
           </div>
@@ -55,4 +56,4 @@ function CreateClientForm() {
   );
 }
 
-export default CreateClientForm;
+export default UpdateClientForm;

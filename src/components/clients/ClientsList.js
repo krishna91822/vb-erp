@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { styled } from "@mui/material/styles";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -9,19 +9,10 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import Button from "@mui/material/Button";
 import EditIcon from "@mui/icons-material/Edit";
-import axios from "axios";
 import PageHeader from "./PageHeader";
 import "../../assets/styles/ListStyles.css";
 
-function EditButton() {
-  return (
-    <div>
-      <Button variant="fab" color="purple" endIcon={<EditIcon />}>
-        Edit
-      </Button>
-    </div>
-  );
-}
+import ClientHelpers from "./ClientHelpers";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -43,62 +34,69 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-function ClientsList() {
-  const [clientsList, setclientsList] = useState([]);
+const columns = [];
 
-  useEffect(async () => {
-    await axios
-      .post("http://localhost:4000/login")
-      .then((data) => data)
-      .then((tokenObject) => {
-        localStorage.setItem("authorization", tokenObject.data.Token);
-      });
-    const token = localStorage.getItem("authorization");
-    await axios
-      .get("http://localhost:4000/cims", {
-        headers: {
-          authorization: `bearer ${token}`,
-        },
-      })
-      .then((data) => data)
-      .then((list) => {
-        if (list.data.code === 200 || list.data.status === "success")
-          setclientsList(list.data.data);
-        else console.log(list.data.error);
-      });
-  }, []);
+function ClientsList() {
+  const { clientsList, handleClientData } = ClientHelpers();
+
+  function EditButton(clientId) {
+    return (
+      <div>
+        <Button
+          variant="fab"
+          className="edit-btn"
+          endIcon={<EditIcon color="warning" />}
+          onMouseDown={() => {
+            handleClientData(clientId, true);
+          }}
+        >
+          Edit
+        </Button>
+      </div>
+    );
+  }
 
   return (
     <div>
       <PageHeader />
       <div className="ListContainer">
         <TableContainer component={Paper} align="right">
-          <Table sx={{ maxWidth: "100%" }} aria-label="customized table">
+          <Table sx={{ maxWidth: "100%" }}>
             <TableHead>
               <TableRow>
-                <StyledTableCell>ID</StyledTableCell>
-                <StyledTableCell align="left">CompanyUID</StyledTableCell>
-                <StyledTableCell align="left">Company Name</StyledTableCell>
-                <StyledTableCell align="left">Primary Contact</StyledTableCell>
-                <StyledTableCell align="left">Action</StyledTableCell>
+                <StyledTableCell align="center">ID</StyledTableCell>
+                <StyledTableCell align="center">Company Name</StyledTableCell>
+                <StyledTableCell align="center">
+                  Primary Contact
+                </StyledTableCell>
+                <StyledTableCell align="center">Status</StyledTableCell>
+                <StyledTableCell align="center">Action</StyledTableCell>
               </TableRow>
             </TableHead>
             <TableBody>
               {clientsList.map((client, idx) => (
-                <StyledTableRow key={client.id}>
-                  <StyledTableCell component="th" scope="client">
-                    {idx + 1}
+                <StyledTableRow
+                  onClick={() => {
+                    handleClientData(client._id, false);
+                  }}
+                  className="table-row"
+                  key={client._id}
+                >
+                  <StyledTableCell align="center">{idx + 1}</StyledTableCell>
+                  <StyledTableCell align="center">
+                    {client.brandName}
                   </StyledTableCell>
-                  <StyledTableCell align="left">{client._id}</StyledTableCell>
-                  <StyledTableCell align="left">
-                    {client.brandname}
-                  </StyledTableCell>
-                  <StyledTableCell align="left">
+                  <StyledTableCell align="center">
                     {client.contacts.primaryContact
                       ? client.contacts.primaryContact.title
                       : ""}
                   </StyledTableCell>
-                  <StyledTableCell align="left">{EditButton()}</StyledTableCell>
+                  <StyledTableCell align="center">
+                    {client.status ? "Active" : "Inactive"}
+                  </StyledTableCell>
+                  <StyledTableCell align="center">
+                    {EditButton(client._id)}
+                  </StyledTableCell>
                 </StyledTableRow>
               ))}
             </TableBody>
