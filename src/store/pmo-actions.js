@@ -120,7 +120,7 @@ export const getProjectById = (projectId) => {
     };
     const getResourceData = async (projId) => {
       const response = await axios.get(
-        `${baseUrl}/allocations?project_id=${projId}`
+        `${baseUrl}/allocations?projectId=${projId}`
       );
       if (response.status === "failure") {
         throw new Error(response.data.message);
@@ -132,7 +132,7 @@ export const getProjectById = (projectId) => {
       const resourceData = await getResourceData(data.data[0]._id);
       const allData = {
         project: data.data[0],
-        resources: resourceData.data[0].resources,
+        resources: resourceData.data,
       };
       dispatch(pmoActions.updateProjectById(allData));
     } catch (err) {

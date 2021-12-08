@@ -1,15 +1,11 @@
 import styled from "styled-components";
 
 export const MainComponent = styled.div`
-  padding: 5px 15px;
-  min-width: 477px; //we need to remove this line
-  min-height: 85vh;
+  /* padding: 5px 15px; */
+  /* min-width: 477px; //we need to remove this line */
+  /* min-height: 85vh; */
 `;
-export const HeadingStyle = styled.div`
-  p {
-    text-align: right;
-  }
-`;
+export const HeadingStyle = styled.div``;
 export const Heading = styled.div`
   height: 46px;
   margin: 5px 0px;
@@ -32,9 +28,15 @@ export const ProjectHead = styled.h2`
   }
 `;
 export const Container = styled.div`
+  .MuiTableContainer-root {
+    height: calc(100vh - 250px);
+  }
   .MuiTableHead-root {
     background-color: #c6d4d4;
     font-weight: 900;
+    position: sticky;
+    top: 0%;
+    z-index: 2;
   }
 
   .MuiTableBody-root > .MuiTableRow-root:hover {
@@ -73,7 +75,7 @@ export const SideButton = styled.div`
   justify-content: space-between;
   align-items: center;
   & > * {
-    margin: 0.5em 0 0.5em 0.5em;
+    margin: 0 6px;
   }
   @media (max-width: 450px) {
     margin-right: 1rem;
@@ -85,6 +87,7 @@ export const Dropdown = styled.select`
   border-radius: 0.2rem;
   border: 2px solid blue;
   outline: none;
+  transition: 0.2s ease-in;
   &:hover {
     border: 2px Solid #e8833a;
   }
