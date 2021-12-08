@@ -59,6 +59,7 @@ const ResourceInformation = ({
               id="free-solo-demo"
               freeSolo
               key={tempVal}
+              size="small"
               onInputChange={handleOpen}
               getOptionLabel={(option) => option.employeeName}
               onChange={(event, value) => {
@@ -66,19 +67,21 @@ const ResourceInformation = ({
               }}
               options={allEmployees}
               open={open}
+              style={{ width: "100%" }}
               renderInput={(params) => (
                 <TextField
                   {...params}
                   placeholder="associate name"
                   value={associateName}
                   error={resourceErrors.associateName ? true : false}
-                  helperText={resourceErrors.associateName}
-                  width="100%"
                 />
               )}
             />
           </ResourceForm>
-          <MultiElemContainer>
+          <MultiElemContainer
+            sColor={!startDate ? "#a2a2a2" : "black"}
+            eColor={!endDate ? "#a2a2a2" : "black"}
+          >
             <ResourceForm>
               <Heading data-test="start-date">
                 Start Date <span>*</span>
@@ -89,7 +92,6 @@ const ResourceInformation = ({
                 type="date"
                 name="startDate"
                 error={resourceErrors.startDate ? true : false}
-                helperText={resourceErrors.startDate}
                 onChange={handleResourceChange}
                 value={startDate}
                 data-test="start-date-input"
@@ -105,7 +107,6 @@ const ResourceInformation = ({
                 type="date"
                 name="endDate"
                 error={resourceErrors.endDate ? true : false}
-                helperText={resourceErrors.endDate}
                 style={{ color: "blue" }}
                 onChange={handleResourceChange}
                 value={endDate}
@@ -134,7 +135,6 @@ const ResourceInformation = ({
                   variant="outlined"
                   size="small"
                   error={resourceErrors.allocation ? true : false}
-                  helperText={resourceErrors.allocation}
                   style={{ width: "30%" }}
                   onChange={handleResourceChange}
                   value={`${allocation}%`}
@@ -153,7 +153,6 @@ const ResourceInformation = ({
                 variant="outlined"
                 placeholder="Enter Rack Rate"
                 error={resourceErrors.rackRate ? true : false}
-                helperText={resourceErrors.rackRate}
                 onChange={handleResourceChange}
                 value={rackRate}
                 style={{ marginTop: 3 }}

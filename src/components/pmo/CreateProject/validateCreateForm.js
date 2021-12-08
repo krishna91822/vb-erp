@@ -11,7 +11,6 @@ export default function validateForm(data) {
     errors.clientProjectManager = "Client Project Manager Required";
   }
   if (!data.clientPrimaryContact) {
-    console.log(data.clientPrimaryContact.toString().length, "hai");
     errors.clientPrimaryContact = "Enter valid number";
   }
   if (!data.clientProjectSponsor.trim()) {

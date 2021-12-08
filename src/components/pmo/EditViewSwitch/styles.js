@@ -8,7 +8,7 @@ export const EditViewSwitchStyled = styled.div`
   align-items: center;
 
   > * {
-    margin: 0.5em 0 0.5em 0.5em;
+    margin-left: 0.5em;
   }
   .Component-root-1 {
     margin: 0;
