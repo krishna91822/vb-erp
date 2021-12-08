@@ -12,7 +12,7 @@ export default function Tpagination({ setPage, rows }) {
     <div
       style={{
         position: "sticky",
-        top: "85%",
+        bottom: "0",
       }}
     >
       <div
