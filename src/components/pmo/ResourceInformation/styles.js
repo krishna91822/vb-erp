@@ -63,6 +63,7 @@ export const ResourceForm = styled.div`
   input[type="number"]::-webkit-inner-spin-button,
   input[type="number"]::-webkit-outer-spin-button {
     -webkit-appearance: none;
+  }
   @media ${device.tablet} {
     width: 80%;
   }
@@ -77,7 +78,6 @@ export const MultiElemContainer = styled.div`
   flex-direction: colmun;
   flex-wrap: wrap;
   justify-content: space-between;
-  align-item: center;
   @media ${device.tablet} {
     flex-direction: column;
     width: 80%;

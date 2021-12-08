@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Allocated from "./allocated";
 import Bench from "./bench";
 import FilterListIcon from "@mui/icons-material/FilterList";
+import FilterListOffIcon from "@mui/icons-material/FilterListOff";
 
 import {
   HeadingStyle,
@@ -38,10 +39,17 @@ const Allocation = () => {
         <Heading>
           <ProjectHead data-test="main-heading">Allocations</ProjectHead>
           <SideButton>
-            <FilterListIcon
-              onClick={showfilter}
-              style={{ cursor: "pointer" }}
-            />
+            {!pressed ? (
+              <FilterListIcon
+                onClick={showfilter}
+                style={{ cursor: "pointer" }}
+              />
+            ) : (
+              <FilterListOffIcon
+                onClick={showfilter}
+                style={{ cursor: "pointer" }}
+              />
+            )}
             <Dropdown data-test="sortby-dropdown" onChange={ChangeAllocation}>
               <Options value="Sort by Allocated">Allocated</Options>
               <Options value="Sort by on Bench">On Bench</Options>
