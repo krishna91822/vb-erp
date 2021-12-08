@@ -29,7 +29,6 @@ import {
   ProjectHead,
 } from "./styles";
 import Tpagination from "../../UI/Pagination";
-let filterdProjectsArray = [];
 const ViewProjects = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -40,7 +39,7 @@ const ViewProjects = () => {
   const [vbProjectId, setVbProjectId] = useState("");
   const [vbProjectStatus, setVbProjectStatus] = useState("");
   const [pressed, setPressed] = useState(false);
-  const [filterProjects, setFilterProjects] = useState("Projects");
+  const [filterProjects, setFilterProjects] = useState("Current Projects");
   const rowsPerPage = 10;
   useEffect(() => {
     dispatch(getAllProjects());
@@ -48,14 +47,8 @@ const ViewProjects = () => {
 
   const FilterProjects = (event) => {
     if (event.target.value === "Past Projects") {
-      filterdProjectsArray = projects.filter(
-        (eachProject) => eachProject.vbProjectStatus === "Done"
-      );
       setFilterProjects("Past Projects");
     } else {
-      filterdProjectsArray = projects.filter(
-        (eachProject) => eachProject.vbProjectStatus !== "Done"
-      );
       setFilterProjects("Current Projects");
     }
   };
@@ -118,7 +111,7 @@ const ViewProjects = () => {
     setVbProjectStatus(pStatus);
   };
 
-  const filteredData = filterdProjectsArray.filter((eachData) => {
+  const filteredData = projects.filter((eachData) => {
     return (
       eachData.clientName.toLowerCase().includes(clientName) &&
       eachData.projectName.toLowerCase().includes(projectName) &&
@@ -129,6 +122,7 @@ const ViewProjects = () => {
   const showfilter = () => {
     setPressed(!pressed);
   };
+
   return (
     <>
       <MainComponent>
@@ -343,11 +337,7 @@ const ViewProjects = () => {
             </Table>
           </TableContainer>
         </Container>
-        <Tpagination
-          page={page}
-          setPage={setPage}
-          rows={filterdProjectsArray}
-        />
+        <Tpagination page={page} setPage={setPage} rows={projects} />
       </MainComponent>
     </>
   );
