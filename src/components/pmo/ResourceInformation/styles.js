@@ -25,26 +25,29 @@ export const ResourceInformationHeading = styled.h3`
 `;
 
 export const Heading = styled.h1`
-  font-size: ${(props) => (props.mainHead ? 20 : 15)}px;
+  font-size: 16px;
   font-weight: 400;
   display: block;
-  margin-top: 0.5em;
-  padding: 0.5em 1em;
+  margin: 10px 0 7px;
+  // padding: 0.5em 1em;
   & > span {
     color: red;
   }
 `;
 
-export const Container = styled.div``;
+export const Container = styled.div`
+  margin-top: 15px;
+`;
 
 export const AllElementsContainer = styled.div`
-  padding: 0.5em;
-  margin-top: 1.7em;
+  padding: 0 0.5em 0.5em;
+  margin-top: 10px;
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
   border: 0.1em solid #afacacde;
+  border-radius: 5px;
   @media ${device.tablet} {
     flex-direction: column;
   }
@@ -57,12 +60,10 @@ export const ResourceForm = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  .css-16awh2u-MuiAutocomplete-root .MuiOutlinedInput-root {
-    padding: 0px;
-  }
   input[type="number"]::-webkit-inner-spin-button,
   input[type="number"]::-webkit-outer-spin-button {
     -webkit-appearance: none;
+  }
   @media ${device.tablet} {
     width: 80%;
   }
@@ -77,7 +78,12 @@ export const MultiElemContainer = styled.div`
   flex-direction: colmun;
   flex-wrap: wrap;
   justify-content: space-between;
-  align-item: center;
+  & input[name="startDate"] {
+    color: ${(props) => props.sColor};
+  }
+  & input[name="endDate"] {
+    color: ${(props) => props.eColor};
+  }
   @media ${device.tablet} {
     flex-direction: column;
     width: 80%;

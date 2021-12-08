@@ -20,7 +20,7 @@ export const device = {
 };
 
 export const PmoContainer = styled.div`
-  padding: 5px 15px;
+  // padding: 5px 15px;
   min-width: 300px; //we need to remove this line
 `;
 
@@ -42,6 +42,8 @@ export const Heading = styled.div`
 export const StyledHeader = styled.form`
   padding: 0.5em;
   border: 0.1em solid #afacacde;
+  border-radius: 5px;
+  /* box-shadow: 0px 0px 15px black; */
 `;
 
 export const FormHeadingStyled = styled.div`
@@ -71,8 +73,8 @@ export const FormElementsStyled = styled.div`
   width: 48%;
   & > label {
     display: block;
-    margin-top: 0.5em;
-    padding: 0.5em 1em;
+    margin: 10px 0 7px;
+    // padding: 0.5em 1em;
   }
   & > label > span {
     color: red;
@@ -87,10 +89,10 @@ export const FormElementsStyled = styled.div`
 `;
 
 export const NumberStyle = styled.div`
-  input[type="number"]::-webkit-inner-spin-button,
-  input[type="number"]::-webkit-outer-spin-button {
-    -webkit-appearance: none;
-  }
+  // input::-webkit-input-placeholder {
+  //   font-weight: 100;
+  //   color: #a2a2a2;
+  // }
 `;
 
 export const DateContainerStyled = styled.div`
@@ -106,18 +108,25 @@ export const DateContainerStyled = styled.div`
   @media ${device.mobileL} {
     width: 90%;
   }
+  & input[name="startDate"] {
+    color: ${(props) => props.sColor};
+  }
+  & input[name="endDate"] {
+    color: ${(props) => props.eColor};
+  }
 `;
 
 export const DateElementStyled = styled.div`
   width: 48%;
   & > label {
     display: block;
-    margin-top: 0.5em;
-    padding: 0.5em 1em;
+    margin: 10px 0 7px;
+    // padding: 0.5em 1em;
   }
   & > label > span {
     color: red;
   }
+
   @media ${device.tablet} {
     width: 100%;
     & > * {

@@ -334,13 +334,14 @@ const CreateProject = () => {
                 data-test="client-name-input"
                 disabled={!edit}
                 freeSolo
+                disableClearable
                 size="small"
                 onInputChange={handleOpen}
                 getOptionLabel={(option) => option.clientName}
                 onChange={(event, value) => {
                   value ? handleAutoselect(value) : setOpen(false);
                 }}
-                style={{ margin: "0.3em", width: "97.9%" }}
+                style={{ width: "100%" }}
                 options={clientData}
                 open={open}
                 inputValue={clientName}
@@ -350,7 +351,6 @@ const CreateProject = () => {
                     placeholder="Enter Client name"
                     name="clientName"
                     error={errors.clientName ? true : false}
-                    helperText={errors.clientName}
                     width="100%"
                     onChange={handleProjectChange}
                   />
@@ -371,9 +371,8 @@ const CreateProject = () => {
                 disabled={!edit}
                 placeholder="Enter Project Name"
                 value={projectName}
-                style={{ padding: "0.3em", width: "100%" }}
+                style={{ width: "100%" }}
                 onChange={handleProjectChange}
-                helperText={errors.projectName}
               />
             </FormElementsStyled>
             <FormElementsStyled>
@@ -387,11 +386,10 @@ const CreateProject = () => {
                 size="small"
                 variant="outlined"
                 error={errors.clientProjectManager ? true : false}
-                helperText={errors.clientProjectManager}
                 disabled={!edit}
                 value={clientProjectManager}
                 placeholder="Enter Client Project"
-                style={{ padding: "0.3em", width: "100%" }}
+                style={{ width: "100%" }}
                 onChange={handleProjectChange}
               />
             </FormElementsStyled>
@@ -403,20 +401,20 @@ const CreateProject = () => {
                 <PhoneInput
                   disabled
                   error={errors.clientPrimaryContact ? true : false}
-                  helperText={errors.clientPrimaryContact}
                   onChange={(e) => handlePhoneNumber(e)}
-                  value={clientPrimaryContact.toString()}
+                  value={clientPrimaryContact.toString() || "+91"}
                   name="clientPrimaryContact"
-                  placeholder="Contact Number"
+                  // placeholder="Contact Number"
                   inputProps={{
                     name: "phone",
                     autoFocus: true,
                   }}
                   inputStyle={{
-                    height: "44px",
-                    width: "98%",
+                    height: "40px",
+                    width: "100%",
+                    fontSize: "inherit",
+                    color: "#a2a2a2",
                   }}
-                  style={{ marginLeft: "4px" }}
                 />
               </NumberStyle>
             </FormElementsStyled>
@@ -432,10 +430,9 @@ const CreateProject = () => {
                 variant="outlined"
                 disabled={!edit}
                 error={errors.clientProjectSponsor ? true : false}
-                helperText={errors.clientProjectSponsor}
                 value={clientProjectSponsor}
                 placeholder="Enter Client Project Sponser"
-                style={{ padding: "0.3em", width: "100%" }}
+                style={{ width: "100%" }}
                 onChange={handleProjectChange}
               />
             </FormElementsStyled>
@@ -452,7 +449,7 @@ const CreateProject = () => {
                 disabled={!edit}
                 value={domainSector}
                 placeholder="Enter Domain/Sector"
-                style={{ padding: "0.3em", width: "100%" }}
+                style={{ width: "100%" }}
                 onChange={handleProjectChange}
               />
             </FormElementsStyled>
@@ -468,14 +465,16 @@ const CreateProject = () => {
                 variant="outlined"
                 disabled={!edit}
                 error={errors.clientFinanceController ? true : false}
-                helperText={errors.clientFinanceController}
                 value={clientFinanceController}
                 placeholder="Enter Client Finance Controller"
-                style={{ padding: "0.3em", width: "100%" }}
+                style={{ width: "100%" }}
                 onChange={handleProjectChange}
               />
             </FormElementsStyled>
-            <DateContainerStyled>
+            <DateContainerStyled
+              sColor={!startDate ? "#a2a2a2" : "black"}
+              eColor={!endDate ? "#a2a2a2" : "black"}
+            >
               <DateElementStyled>
                 <label htmlFor="sd" data-test="start-date-label">
                   Start Date <span>*</span>
@@ -489,10 +488,8 @@ const CreateProject = () => {
                   variant="outlined"
                   disabled={!edit}
                   error={errors.startDate ? true : false}
-                  helperText={errors.startDate}
                   value={startDate}
-                  placeholder="enter name"
-                  style={{ padding: "0.3em", width: "100%" }}
+                  style={{ width: "100%" }}
                   onChange={handleProjectChange}
                 />
               </DateElementStyled>
@@ -509,10 +506,8 @@ const CreateProject = () => {
                   variant="outlined"
                   disabled={!edit}
                   error={errors.endDate ? true : false}
-                  helperText={errors.endDate}
                   value={endDate}
-                  placeholder="enter name"
-                  style={{ padding: "0.3em", width: "100%" }}
+                  style={{ width: "100%" }}
                   onChange={handleProjectChange}
                 />
               </DateElementStyled>
@@ -532,7 +527,7 @@ const CreateProject = () => {
                 variant="outlined"
                 displayEmpty
                 disabled={!edit}
-                style={{ margin: "0.3em", width: "98.5%" }}
+                style={{ width: "100%" }}
                 onChange={handleProjectChange}
               >
                 <MenuItem value="" disabled>
@@ -542,9 +537,6 @@ const CreateProject = () => {
                 </MenuItem>
                 <MenuItem value="Valuebound">ValueBound</MenuItem>
               </Select>
-              <FormHelperText error sx={{ mx: 2 }}>
-                {errors.vbProjectManager}
-              </FormHelperText>
             </FormElementsStyled>
             <FormElementsStyled>
               <label htmlFor="vpm" data-test="project-status-label">
@@ -561,7 +553,7 @@ const CreateProject = () => {
                 variant="outlined"
                 disabled={!edit}
                 displayEmpty
-                style={{ margin: "0.3em", width: "98.5%" }}
+                style={{ width: "100%" }}
                 onChange={handleProjectChange}
               >
                 <MenuItem value="" disabled>
@@ -574,9 +566,6 @@ const CreateProject = () => {
                 <MenuItem value="On Hold">On Hold</MenuItem>
                 <MenuItem value="Done">Done</MenuItem>
               </Select>
-              <FormHelperText error sx={{ mx: 2 }}>
-                {errors.vbProjectStatus}
-              </FormHelperText>
             </FormElementsStyled>
           </FormContainerStyled>
           <ResourceInformation
