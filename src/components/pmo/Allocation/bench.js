@@ -12,15 +12,17 @@ import {
 
 import { Container, MiniHead } from "./style";
 import Tpagination from "../../UI/Pagination";
+import BenchModal from "./BenchModal";
 
 const Bench = ({ pressed }) => {
   const { benchData } = useSelector((state) => state.pmo);
   const [associateName, setAssociateName] = useState("");
-  const [lastAllocatedProject, setLastAllocatedProject] = useState("");
   const [primaryCapabilities, setPrimaryCapabilities] = useState("");
-  const [lastAllocatedDate, setLastAllocatedDate] = useState("");
-  const [page, setPage] = React.useState(0);
+  const [remainingBandwidth, setRemainingBandwidth] = useState("");
+  const [page, setPage] = useState(0);
   const [empId, setEmpId] = useState("");
+  const [modalDetails, setModalDetails] = useState(false);
+  const [entryData, setEntryData] = useState({});
 
   let data = benchData;
   data = [...data].sort((a, b) =>
@@ -31,19 +33,13 @@ const Bench = ({ pressed }) => {
     setAssociateName(assName);
   };
 
-  const filterLastAllocatedProject = (event) => {
-    const lastAllocatedPro = event.target.value.toLowerCase();
-    setLastAllocatedProject(lastAllocatedPro);
-  };
-
   const filterPrimaryCapabilities = (event) => {
     const primcapabilty = event.target.value.toLowerCase();
     setPrimaryCapabilities(primcapabilty);
   };
 
-  const filterLastAllocatedDate = (event) => {
-    const lastAlloDate = event.target.value;
-    setLastAllocatedDate(lastAlloDate);
+  const filterRemainingBandwidth = (event) => {
+    setRemainingBandwidth(event.target.value);
   };
 
   const filterEmpId = (event) => {
@@ -54,19 +50,26 @@ const Bench = ({ pressed }) => {
   const filteredData = data.filter((eachData) => {
     return (
       eachData.associateName.toLowerCase().includes(associateName) &&
-      eachData.lastAllocatedProject
-        .toLowerCase()
-        .includes(lastAllocatedProject) &&
       eachData.primaryCapabilities
         .toLowerCase()
         .includes(primaryCapabilities) &&
-      eachData.lastallocationDate.includes(lastAllocatedDate) &&
+      eachData.remainingBandwidth.includes(remainingBandwidth) &&
       eachData.empId.toUpperCase().includes(empId)
     );
   });
 
+  const entryLink = (elem) => {
+    setEntryData(elem);
+    setModalDetails(true);
+  };
+
   return (
     <>
+      <BenchModal
+        modalDetails={modalDetails}
+        setModalDetails={setModalDetails}
+        entryData={entryData}
+      />
       <Container>
         <MiniHead data-test="main-heading">Bench Capacity</MiniHead>
         <TableContainer
@@ -78,12 +81,56 @@ const Bench = ({ pressed }) => {
           <Table data-test="list-table">
             <TableHead>
               <TableRow>
-                <TableCell align="left">SNO</TableCell>
-                <TableCell align="left">EmpID</TableCell>
-                <TableCell align="left">Associate Name</TableCell>
-                <TableCell align="left">Last Allocated Project</TableCell>
-                <TableCell align="left">Primary Capabilities</TableCell>
-                <TableCell align="left">Last Allocation Date</TableCell>
+                <TableCell
+                  align="left"
+                  sx={{
+                    width: "100px",
+                    maxWidth: "180px",
+                    minWidth: "180px",
+                  }}
+                >
+                  SNO
+                </TableCell>
+                <TableCell
+                  align="left"
+                  sx={{
+                    width: "100px",
+                    maxWidth: "180px",
+                    minWidth: "180px",
+                  }}
+                >
+                  EmpID
+                </TableCell>
+                <TableCell
+                  align="left"
+                  sx={{
+                    width: "100px",
+                    maxWidth: "180px",
+                    minWidth: "180px",
+                  }}
+                >
+                  Associate Name
+                </TableCell>
+                <TableCell
+                  align="left"
+                  sx={{
+                    width: "100px",
+                    maxWidth: "180px",
+                    minWidth: "180px",
+                  }}
+                >
+                  Primary Capabilities
+                </TableCell>
+                <TableCell
+                  align="left"
+                  sx={{
+                    width: "100px",
+                    maxWidth: "180px",
+                    minWidth: "180px",
+                  }}
+                >
+                  Remaining Bandwidth
+                </TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -110,16 +157,7 @@ const Bench = ({ pressed }) => {
                       inputProps={{ style: { fontSize: "small" } }}
                     />
                   </TableCell>
-                  <TableCell align="left">
-                    <TextField
-                      variant="standard"
-                      type="text"
-                      placeholder="Last Allocated Project"
-                      onChange={filterLastAllocatedProject}
-                      value={lastAllocatedProject}
-                      inputProps={{ style: { fontSize: "small" } }}
-                    />
-                  </TableCell>
+
                   <TableCell align="left">
                     <TextField
                       variant="standard"
@@ -133,9 +171,10 @@ const Bench = ({ pressed }) => {
                   <TableCell align="left">
                     <TextField
                       variant="standard"
-                      type="date"
-                      onChange={filterLastAllocatedDate}
-                      value={lastAllocatedDate}
+                      type="number"
+                      placeholder="Bandwidth"
+                      onChange={filterRemainingBandwidth}
+                      value={remainingBandwidth}
                       inputProps={{ style: { fontSize: "small" } }}
                     />
                   </TableCell>
@@ -145,18 +184,19 @@ const Bench = ({ pressed }) => {
               {filteredData
                 .slice(page * 5, page * 5 + 5)
                 .map((currElem, index) => (
-                  <TableRow key={currElem.id}>
+                  <TableRow
+                    key={currElem.id}
+                    onClick={() => entryLink(currElem)}
+                    style={{ cursor: "pointer" }}
+                  >
                     <TableCell align="left">{index + page * 5 + 1}</TableCell>
                     <TableCell align="left">{currElem.empId}</TableCell>
                     <TableCell align="left">{currElem.associateName}</TableCell>
                     <TableCell align="left">
-                      {currElem.lastAllocatedProject}
-                    </TableCell>
-                    <TableCell align="left">
                       {currElem.primaryCapabilities}
                     </TableCell>
                     <TableCell align="left">
-                      {currElem.lastallocationDate}
+                      {currElem.remainingBandwidth}
                     </TableCell>
                   </TableRow>
                 ))}

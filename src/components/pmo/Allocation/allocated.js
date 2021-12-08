@@ -77,23 +77,76 @@ const Allocated = ({ pressed }) => {
           <Table data-test="list-table">
             <TableHead>
               <TableRow>
-                <TableCell align="left">SNO</TableCell>
-                <TableCell align="left" style={{ maxWidth: "100px" }}>
+                <TableCell
+                  align="left"
+                  sx={{
+                    width: "100px",
+                    maxWidth: "100px",
+                    minWidth: "100px",
+                  }}
+                >
+                  SNO
+                </TableCell>
+                <TableCell
+                  align="left"
+                  sx={{
+                    width: "100px",
+                    maxWidth: "140px",
+                    minWidth: "140px",
+                  }}
+                >
                   EmpID
                 </TableCell>
-                <TableCell align="left" style={{ minWidth: "140px" }}>
+                <TableCell
+                  align="left"
+                  sx={{
+                    width: "100px",
+                    maxWidth: "180px",
+                    minWidth: "180px",
+                  }}
+                >
                   Associate Name
                 </TableCell>
-                <TableCell align="left" style={{ minWidth: "140px" }}>
+                <TableCell
+                  align="left"
+                  sx={{
+                    width: "100px",
+                    maxWidth: "180px",
+                    minWidth: "180px",
+                  }}
+                >
                   Project Allocated
                 </TableCell>
-                <TableCell align="left" style={{ minWidth: "170px" }}>
+                <TableCell
+                  align="left"
+                  sx={{
+                    width: "100px",
+                    maxWidth: "180px",
+                    minWidth: "180px",
+                  }}
+                >
                   Percentage Allocated
                 </TableCell>
-                <TableCell align="left" style={{ maxWidth: "130px" }}>
+                <TableCell
+                  align="left"
+                  sx={{
+                    width: "100px",
+                    maxWidth: "180px",
+                    minWidth: "180px",
+                  }}
+                >
                   Start Date
                 </TableCell>
-                <TableCell align="left">End Date</TableCell>
+                <TableCell
+                  align="left"
+                  sx={{
+                    width: "100px",
+                    maxWidth: "180px",
+                    minWidth: "180px",
+                  }}
+                >
+                  End Date
+                </TableCell>
               </TableRow>
             </TableHead>
             <TableBody>

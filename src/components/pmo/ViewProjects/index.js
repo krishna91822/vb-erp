@@ -10,7 +10,6 @@ import {
   TableRow,
   TextField,
   Button,
-  Collapse,
 } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import FilterListIcon from "@mui/icons-material/FilterList";
@@ -24,15 +23,12 @@ import {
   Heading,
   Container,
   SideButton,
-  EditAction,
   Dropdown,
   Options,
   AdminName,
   ProjectHead,
-  EditButton,
 } from "./styles";
 import Tpagination from "../../UI/Pagination";
-
 const ViewProjects = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -43,10 +39,19 @@ const ViewProjects = () => {
   const [vbProjectId, setVbProjectId] = useState("");
   const [vbProjectStatus, setVbProjectStatus] = useState("");
   const [pressed, setPressed] = useState(false);
+  const [filterProjects, setFilterProjects] = useState("Current Projects");
   const rowsPerPage = 10;
   useEffect(() => {
     dispatch(getAllProjects());
   }, []);
+
+  const FilterProjects = (event) => {
+    if (event.target.value === "Past Projects") {
+      setFilterProjects("Past Projects");
+    } else {
+      setFilterProjects("Current Projects");
+    }
+  };
 
   const entryValue = (event) => {
     const SortingValue = event.target.value;
@@ -117,6 +122,7 @@ const ViewProjects = () => {
   const showfilter = () => {
     setPressed(!pressed);
   };
+
   return (
     <>
       <MainComponent>
@@ -138,7 +144,7 @@ const ViewProjects = () => {
               )}
               <Button
                 variant="contained"
-                size="small"
+                // size="small"
                 sx={{
                   backgroundColor: "#e8833a",
                   textTransform: "none",
@@ -159,6 +165,19 @@ const ViewProjects = () => {
                 <Options value="Sort by Project ID">Sort by Project ID</Options>
                 <Options value="Sort by Status">Sort by Status</Options>
               </Dropdown>
+              <Dropdown
+                onChange={FilterProjects}
+                style={{ width: "120px" }}
+                data-test="sortby-dropdown"
+              >
+                <Options Value="Filter Projects" hidden>
+                  {filterProjects}
+                </Options>
+                <Options value="Current Projects" selected>
+                  Active
+                </Options>
+                <Options value="Past Projects">Past</Options>
+              </Dropdown>
             </SideButton>
           </Heading>
         </HeadingStyle>
@@ -166,14 +185,16 @@ const ViewProjects = () => {
           <TableContainer
             sx={{
               border: "0.1em solid #afacacde",
-              borderRadius: "6px",
+              borderRadius: "5px",
             }}
+            // style={{ height: `calc("100vh" - "140px")` }}
+            // style={{ height: "50vh", overflow: "auto" }}
           >
             <Table data-test="list-table">
               <TableHead>
                 <TableRow>
                   <TableCell
-                    align="center"
+                    align="left"
                     sx={{
                       width: "100px",
                       maxWidth: "100px",
@@ -281,12 +302,11 @@ const ViewProjects = () => {
                     <TableCell align="left"></TableCell>
                   </TableRow>
                 )}
-                {/* </Collapse> */}
                 {filteredData
                   .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                   .map((currElem, index) => (
                     <TableRow key={index} onClick={() => entryLink(currElem)}>
-                      <TableCell align="center">
+                      <TableCell align="left">
                         {index + page * rowsPerPage + 1}
                       </TableCell>
                       <TableCell align="left">{currElem.clientName}</TableCell>
