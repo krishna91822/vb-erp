@@ -2,7 +2,6 @@ import React, { useState, useLayoutEffect, useEffect } from "react";
 import { useParams, useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { isEmpty } from "lodash";
-import { nanoid } from "nanoid";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
 
@@ -11,7 +10,6 @@ import {
   TextField,
   Select,
   MenuItem,
-  FormHelperText,
   Autocomplete,
 } from "@mui/material";
 
@@ -88,11 +86,11 @@ const CreateProject = () => {
       endDate,
       vbProjectManager,
       vbProjectStatus,
-      vbProjectId,
     },
     resource,
     resources,
   } = state;
+
   const clientData = [
     { clientName: "Saad", clientPrimaryContact: 8765678904 },
     { clientName: "Saad hasan", clientPrimaryContact: 9087456435 },

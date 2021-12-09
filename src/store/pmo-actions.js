@@ -25,8 +25,8 @@ export const createProject = (projectInfo) => {
       }
       return response;
     };
-    // const saveResource = async () => {
-    //   const response = await axios.post(`${baseUrl}/projects`, projectInfo);
+    // const saveResources = async () => {
+    //   const response = await axios.post(`${baseUrl}/allocations`, projectInfo);
     //   if (response.status === "failure") {
     //     throw new Error(response.data.message);
     //   }
@@ -88,10 +88,10 @@ export const updateProject = (projectInfo) => {
     }
   };
 };
-export const getAllProjects = () => {
+export const getAllProjects = (type) => {
   return async (dispatch) => {
     const getData = async () => {
-      const response = await axios.get(`${baseUrl}/projects`);
+      const response = await axios.get(`${baseUrl}/projects/${type}`);
       if (response.status === "failure") {
         throw new Error(response.data.message);
       }

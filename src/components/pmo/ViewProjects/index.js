@@ -39,18 +39,15 @@ const ViewProjects = () => {
   const [vbProjectId, setVbProjectId] = useState("");
   const [vbProjectStatus, setVbProjectStatus] = useState("");
   const [pressed, setPressed] = useState(false);
-  const [filterProjects, setFilterProjects] = useState("Current Projects");
+  const [filterProjects, setFilterProjects] = useState("active");
   const rowsPerPage = 10;
+
   useEffect(() => {
-    dispatch(getAllProjects());
-  }, []);
+    dispatch(getAllProjects(filterProjects));
+  }, [filterProjects]);
 
   const FilterProjects = (event) => {
-    if (event.target.value === "Past Projects") {
-      setFilterProjects("Past Projects");
-    } else {
-      setFilterProjects("Current Projects");
-    }
+    setFilterProjects(event.target.value);
   };
 
   const entryValue = (event) => {
@@ -173,10 +170,10 @@ const ViewProjects = () => {
                 <Options Value="Filter Projects" hidden>
                   {filterProjects}
                 </Options>
-                <Options value="Current Projects" selected>
+                <Options value="active" selected>
                   Active
                 </Options>
-                <Options value="Past Projects">Past</Options>
+                <Options value="done">Past</Options>
               </Dropdown>
             </SideButton>
           </Heading>
