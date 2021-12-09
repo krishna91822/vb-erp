@@ -66,6 +66,8 @@ const initialState = {
   locCom: { ...locFields },
   clientsList: [],
   editMode: true,
+  navigateBack: true,
+  brandFocus: false,
 };
 
 const cimsSlice = createSlice({
@@ -86,6 +88,12 @@ const cimsSlice = createSlice({
     },
     setComCcode(state, action) {
       state.ComCcode = action.payload;
+    },
+    setNavigateBack(state, action) {
+      state.navigateBack = action.payload;
+    },
+    setBrandFocus(state, action) {
+      state.brandFocus = action.payload;
     },
     setLocReg(state, action) {
       const data = action.payload;

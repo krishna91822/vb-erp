@@ -77,6 +77,7 @@ export default function ClientHelpers() {
   }, []);
 
   const handleClientData = async (clientId, mode) => {
+    dispatch(cimsActions.resetForm());
     const token = localStorage.getItem("authorization");
     await axios
       .get("http://localhost:4000/getclientinfo", {
@@ -84,6 +85,7 @@ export default function ClientHelpers() {
       })
       .then((clientdata) => clientdata)
       .then((clientInfo) => {
+        dispatch(cimsActions.setNavigateBack(false));
         dispatch(cimsActions.getClientData(clientInfo.data.data[0]));
         const cccode =
           clientInfo.data.data[0].communicationAddress.country.split("-")[1];

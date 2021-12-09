@@ -7,13 +7,17 @@ import Form from "./Form";
 import "../../assets/styles/FormStyles.css";
 import { cimsActions } from "../../store/cims-slice";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 function UpdateClientForm() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const editMode = useSelector((state) => state.cims.editMode);
+  const navigateBack = useSelector((state) => state.cims.navigateBack);
   const { authStore, updateForm, validateOnSubmit } = UseForm();
 
   useEffect(() => {
+    if (navigateBack) navigate("/cims");
     authStore();
   }, []);
 

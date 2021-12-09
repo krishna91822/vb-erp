@@ -53,6 +53,7 @@ export default function UseForm() {
   const locReg = useSelector((state) => state.cims.locReg);
   const locCom = useSelector((state) => state.cims.locCom);
   const countries = useSelector((state) => state.cims.countries);
+  const brandFocus = useSelector((state) => state.cims.brandFocus);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -248,6 +249,8 @@ export default function UseForm() {
 
   const setformvalue = (e) => {
     let new_form = JSON.parse(JSON.stringify(formData));
+    if (e.target.name === "brandName")
+      dispatch(cimsActions.setBrandFocus(true));
     e.target.id
       ? (new_form["contacts"][e.target.name][e.target.id] = e.target.value)
       : (new_form[e.target.name] = e.target.value);
@@ -267,29 +270,27 @@ export default function UseForm() {
     dispatch(cimsActions.createForm(new_form));
   };
 
+  console.log(brandFocus);
   const handelBrandName = async (e) => {
     const brand = e.target.value;
-    console.log(brand);
-    console.log(formData._id ?? "");
     setformvalue(e);
-    const token = localStorage.getItem("authorization");
-    await axios
-      .get("http://localhost:4000/duplicates", {
-        headers: {
-          authorization: `bearer ${token}`,
-          brandname: brand,
-          id: formData._id ?? "",
-        },
-      })
-      .then((res) => {
-        console.log(res);
-        if (res.data.code !== 200) {
-          window.alert(res.data.message);
-          let new_form = JSON.parse(JSON.stringify(formData));
-          new_form.brandName = "";
-          dispatch(cimsActions.createForm(new_form));
-        }
-      });
+    if (brand) {
+      const token = localStorage.getItem("authorization");
+      await axios
+        .get("http://localhost:4000/duplicates", {
+          headers: {
+            authorization: `bearer ${token}`,
+            brandname: brand,
+            id: formData._id ?? "",
+          },
+        })
+        .then((res) => {
+          console.log(res);
+          res.data.code !== 200
+            ? window.alert(res.data.message)
+            : dispatch(cimsActions.setBrandFocus(false));
+        });
+    }
   };
 
   const validateAddress = (addType, fieldValues) => {
@@ -387,7 +388,6 @@ export default function UseForm() {
                 message: errMsg,
               })
             );
-            // window.alert(res.data.error[0].message);
             handelInvalidPincode(addType);
           }
         });
@@ -549,7 +549,8 @@ export default function UseForm() {
               .every((x) => x === false)
           );
         })
-        .every((x) => x)
+        .every((x) => x) &&
+      !brandFocus
     );
   };
 
