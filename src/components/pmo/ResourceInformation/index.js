@@ -25,7 +25,13 @@ const ResourceInformation = ({
   resourceErrors,
   handelAssociate,
 }) => {
-  const { associateName, startDate, endDate, allocation, rackRate } = resource;
+  const {
+    employeeName,
+    allocationStartDate,
+    allocationEndDate,
+    allocationPercentage,
+    rackRate,
+  } = resource;
   const [open, setOpen] = useState(false);
   const [tempVal, setTempVal] = useState(0);
   const dispatch = useDispatch();
@@ -72,15 +78,15 @@ const ResourceInformation = ({
                 <TextField
                   {...params}
                   placeholder="associate name"
-                  value={associateName}
+                  value={employeeName}
                   error={resourceErrors.associateName ? true : false}
                 />
               )}
             />
           </ResourceForm>
           <MultiElemContainer
-            sColor={!startDate ? "#a2a2a2" : "black"}
-            eColor={!endDate ? "#a2a2a2" : "black"}
+            sColor={!allocationStartDate ? "#a2a2a2" : "black"}
+            eColor={!allocationEndDate ? "#a2a2a2" : "black"}
           >
             <ResourceForm>
               <Heading data-test="start-date">
@@ -90,10 +96,10 @@ const ResourceInformation = ({
                 variant="outlined"
                 size="small"
                 type="date"
-                name="startDate"
+                name="allocationStartDate"
                 error={resourceErrors.startDate ? true : false}
                 onChange={handleResourceChange}
-                value={startDate}
+                value={allocationStartDate}
                 data-test="start-date-input"
               />
             </ResourceForm>
@@ -105,11 +111,11 @@ const ResourceInformation = ({
                 variant="outlined"
                 size="small"
                 type="date"
-                name="endDate"
+                name="allocationEndDate"
                 error={resourceErrors.endDate ? true : false}
                 style={{ color: "blue" }}
                 onChange={handleResourceChange}
-                value={endDate}
+                value={allocationEndDate}
                 data-test="end-date-input"
               />
             </ResourceForm>
@@ -124,8 +130,8 @@ const ResourceInformation = ({
                   type="range"
                   min="1"
                   max="100"
-                  name="allocation"
-                  value={allocation}
+                  name="allocationPercentage"
+                  value={allocationPercentage}
                   onChange={handleResourceChange}
                   style={{ width: "60%" }}
                 />
@@ -137,7 +143,7 @@ const ResourceInformation = ({
                   error={resourceErrors.allocation ? true : false}
                   style={{ width: "30%" }}
                   onChange={handleResourceChange}
-                  value={`${allocation}%`}
+                  value={`${allocationPercentage}%`}
                   data-test="allocation-input"
                 />
               </AllocElemContainer>

@@ -51,15 +51,23 @@ const ResourceInformationTable = ({ resources, removeResource, edit }) => {
                   sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                 >
                   <TableCell align="left">{index + 1}</TableCell>
-                  <TableCell align="left">{eachData.associateName}</TableCell>
-                  <TableCell align="left">{eachData.startDate}</TableCell>
-                  <TableCell align="left">{eachData.endDate}</TableCell>
-                  <TableCell align="left">{eachData.allocation}</TableCell>
+                  <TableCell align="left">
+                    {eachData.empId.employeeName || eachData.employeeName}
+                  </TableCell>
+                  <TableCell align="left">
+                    {eachData.allocationStartDate}
+                  </TableCell>
+                  <TableCell align="left">
+                    {eachData.allocationEndDate}
+                  </TableCell>
+                  <TableCell align="left">
+                    {eachData.allocationPercentage}
+                  </TableCell>
                   <TableCell align="left">{eachData.rackRate}</TableCell>
                   {edit && (
                     <TableCell
                       align="center"
-                      onClick={() => removeResource(eachData.id)}
+                      onClick={() => removeResource(eachData.empId.empId)}
                       style={{ cursor: "pointer" }}
                     >
                       <DeleteIcon />
