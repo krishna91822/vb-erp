@@ -153,6 +153,7 @@ function Invoice(props) {
   const invoicereceivedhandler = (e) => {
     setinvoicereceived(!invoicereceived);
   };
+
   useEffect(() => {
     if (projectName && !params.id) {
       const filtered = allPOSOWs.filter((val) => {
@@ -187,8 +188,9 @@ function Invoice(props) {
     }
   };
   const filterinvoiceArr = allINVOICE.filter((val) => {
-    return poId === val.PO_Id._id;
+    return poId === val.purchase_orders._id;
   });
+  console.log(filterinvoiceArr);
   let count = 0;
   useEffect(() => {
     const totalinvoiceamount = filterinvoiceArr.map((val) => {
@@ -394,12 +396,16 @@ function Invoice(props) {
                       </TableCell>
                       <TableCell>
                         {filterinvoiceArr.map((detail) => (
-                          <TableRow>{detail.PO_Id.Client_Name}</TableRow>
+                          <TableRow>
+                            {detail.purchase_orders.Client_Name}
+                          </TableRow>
                         ))}
                       </TableCell>
                       <TableCell>
                         {filterinvoiceArr.map((detail) => (
-                          <TableRow>{detail.PO_Id.PO_Number}</TableRow>
+                          <TableRow>
+                            {detail.purchase_orders.PO_Number}
+                          </TableRow>
                         ))}
                       </TableCell>
                       <TableCell>

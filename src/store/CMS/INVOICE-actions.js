@@ -7,13 +7,6 @@ export const createNew_INVOICE = (formData) => {
     const rqst = await axios.post("http://localhost:8000/invoice", formData);
     dispatch(invoiceActions.PopUpON("Saved Successfully"));
     dispatch(PoSowActions.setRedirect(true));
-    //  dispatch(
-    //     uiActions.showNotification({
-    //       status: "pending",
-    //       title: "Sending...",
-    //       message: "Sending data!",
-    //     })
-    //   );
   };
 };
 export const Update_INVOICE = (formData, id) => {
@@ -26,25 +19,17 @@ export const Update_INVOICE = (formData, id) => {
       .then(dispatch(invoiceActions.PopUpON("Updated Successfully")));
   };
 };
-export const fetch_INVOICE_data = () => {
+export const fetch_INVOICE_data = (sortBy) => {
   return async function (dispatch) {
-    const res = await axios.get("http://localhost:8000/invoice");
+    const res = await axios.get(`http://localhost:8000/invoice/sort/${sortBy}`);
 
-    dispatch(invoiceActions.setTabViewData(res.data));
+    dispatch(invoiceActions.setTabViewData(res.data.data));
   };
 };
 export const fetchSpecificINVOICE = (ROW_ID) => {
   return async function (dispatch) {
     const res = await axios.get(`http://localhost:8000/invoice/${ROW_ID}`);
-    console.log(res.data);
-    dispatch(invoiceActions.SetSpecific([res.data]));
-  };
-};
-export const sortProducts = (product) => {
-  return async function (dispatch) {
-    const res = await axios.get(
-      `http://localhost:8000/invoice/sort/${product}`
-    );
-    dispatch(invoiceActions.setTabViewData(res.data));
+    console.log(res.data.data);
+    dispatch(invoiceActions.SetSpecific([res.data.data]));
   };
 };

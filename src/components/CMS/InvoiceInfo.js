@@ -73,10 +73,10 @@ function InvoiceInfo() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(fetch_INVOICE_data());
+    dispatch(fetch_INVOICE_data("Id"));
   }, []);
   const post = useSelector((state) => state.INVOICE_state.invoiceData);
-
+  console.log(post);
   const [currentpage, currentsetPage] = React.useState(1);
   const [postPerPage, setPostPerPage] = React.useState(5);
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -88,7 +88,8 @@ function InvoiceInfo() {
     setAnchorEl(null);
   };
   const handleSort = (product) => {
-    dispatch(sortProducts(product));
+    // dispatch(sortProducts(product));
+    dispatch(fetch_INVOICE_data(product));
     setAnchorEl(null);
   };
   const handleChange = (event, value) => {
@@ -124,16 +125,12 @@ function InvoiceInfo() {
           open={open}
           onClose={handleClose}
         >
-          <MenuItem onClick={() => handleSort("_id")} disableRipple>
-            By ID
-          </MenuItem>
-
           <MenuItem onClick={() => handleSort("Project_Name")} disableRipple>
             By Project Name
           </MenuItem>
 
-          <MenuItem onClick={() => handleSort("invoiceRaised")} disableRipple>
-            By Invoice Raised
+          <MenuItem onClick={() => handleSort("invoice_raised")} disableRipple>
+            By invoice raised
           </MenuItem>
           <MenuItem onClick={() => handleSort("Client_Name")} disableRipple>
             By Client Name
@@ -178,10 +175,10 @@ function InvoiceInfo() {
                   <TableCell component="th" scope="row">
                     {row._id}
                   </TableCell>
-                  <TableCell>{row.PO_Id.Client_Name}</TableCell>
-                  <TableCell>{row.PO_Id.Project_Name}</TableCell>
-                  <TableCell>{row.PO_Id.PO_Number}</TableCell>
-                  <TableCell>{row.PO_Id.PO_Amount}</TableCell>
+                  <TableCell>{row.purchase_orders.Client_Name}</TableCell>
+                  <TableCell>{row.purchase_orders.Project_Name}</TableCell>
+                  <TableCell>{row.purchase_orders.PO_Number}</TableCell>
+                  <TableCell>{row.purchase_orders.PO_Amount}</TableCell>
                   <TableCell>{row.invoice_raised}</TableCell>
                   <TableCell>{row.invoice_amount_received}</TableCell>
                 </TableRow>
