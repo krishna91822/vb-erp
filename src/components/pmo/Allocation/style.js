@@ -39,6 +39,9 @@ export const ProjectHead = styled.h2`
   }
 `;
 export const Container = styled.div`
+  .MuiTableBody-root > .MuiTableRow-root:hover {
+    background-color: #f8f8f8;
+  }
   border-top: 0.1rem solid rgb(227, 231, 231);
   .MuiTableContainer-root {
     height: calc(100vh - 300px);

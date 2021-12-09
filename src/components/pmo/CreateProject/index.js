@@ -51,7 +51,6 @@ const initialState = {
     endDate: "",
     vbProjectManager: "",
     vbProjectStatus: "",
-    vbProjectId: "",
   },
   resource: {
     associateName: "",
@@ -93,7 +92,7 @@ const CreateProject = () => {
     resource,
     resources,
   } = state;
-
+  console.log(state);
   const clientData = [
     { clientName: "Saad", clientPrimaryContact: 8765678904 },
     { clientName: "Saad hasan", clientPrimaryContact: 9087456435 },
@@ -245,7 +244,7 @@ const CreateProject = () => {
       if (location.includes("createproject")) {
         dispatch(
           createProject({
-            project: { ...state.project, vbProjectId: nanoid(7).toUpperCase() },
+            project: { ...state.project },
             resources,
           })
         );
