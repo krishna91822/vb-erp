@@ -5,11 +5,7 @@ import { cimsActions } from "../../store/cims-slice";
 import { useNavigate } from "react-router-dom";
 import { uiActions } from "../../store/ui-slice";
 
-const companyTypes = [
-  { id: "GSTRegistered", label: "GST Registered" },
-  { id: "GSTUnregistered", label: "GST Unregistered" },
-  { id: "overseas", label: "Overseas" },
-];
+const companyTypes = ["GST Registered", "GST Unregistered", "Overseas"];
 const contactSchema = {
   title: "",
   firstName: "",
@@ -207,11 +203,34 @@ export default function UseForm() {
       temp.baseLocation = fieldValues.baseLocation
         ? ""
         : "This field is required.";
+    if ("gstNumber" in fieldValues) {
+      temp.gstNumber = fieldValues.gstNumber ? "" : "This field is required.";
+      if (fieldValues.gstNumber)
+        temp.gstNumber =
+          /^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}Z[0-9A-Z]{1}$/.test(
+            fieldValues.gstNumber
+          )
+            ? ""
+            : "Invalid GST Number.";
+    }
+    if ("panNumber" in fieldValues) {
+      temp.panNumber = fieldValues.panNumber ? "" : "This field is required.";
+      if (fieldValues.panNumber)
+        temp.panNumber = /^[A-Z]{5}[0-9]{4}[A-Z]{1}$/.test(
+          fieldValues.panNumber
+        )
+          ? ""
+          : "Invalid PAN Number.";
+    }
+    if ("companyType" in fieldValues) {
+      fieldValues.companyType === "GST Registered"
+        ? (temp.panNumber = "")
+        : (temp.gstNumber = "");
+    }
     setTimeout(() => {
       dispatch(cimsActions.setErrors({ ...temp }));
     }, 100);
   };
-
   // End handel errors
 
   const handelSetAddOthers = (new_form) => {
@@ -254,6 +273,10 @@ export default function UseForm() {
     e.target.id
       ? (new_form["contacts"][e.target.name][e.target.id] = e.target.value)
       : (new_form[e.target.name] = e.target.value);
+    if (e.target.name === "companyType")
+      e.target.value === "GST Registered"
+        ? (new_form["panNumber"] = "")
+        : (new_form["gstNumber"] = "");
     if (
       e.target.name === "primaryContact" ||
       e.target.name === "secondaryContact"
@@ -270,7 +293,6 @@ export default function UseForm() {
     dispatch(cimsActions.createForm(new_form));
   };
 
-  console.log(brandFocus);
   const handelBrandName = async (e) => {
     const brand = e.target.value;
     setformvalue(e);
@@ -414,9 +436,13 @@ export default function UseForm() {
     const data = e.target.value;
     const name = e.target.name;
     if (name === "country") {
-      addType === "registeredAddress"
-        ? dispatch(cimsActions.setRegCcode(data.split("-")[1]))
-        : dispatch(cimsActions.setComCcode(data.split("-")[1]));
+      if (addType === "registeredAddress") {
+        const code = data.split("-")[1];
+        code === "in"
+          ? (new_form["companyType"] = "GST Registered")
+          : (new_form["companyType"] = "Overseas");
+        dispatch(cimsActions.setRegCcode(code));
+      } else dispatch(cimsActions.setComCcode(data.split("-")[1]));
       new_form[addType]["city"] = "";
       new_form[addType]["district"] = "";
       new_form[addType]["state"] = "";

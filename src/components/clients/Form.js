@@ -191,8 +191,8 @@ export default function Form() {
               onBlur={(e) => setformvalue(e)}
             >
               {companyTypes.map((option) => (
-                <MenuItem key={option.id} value={option.label}>
-                  {option.label}
+                <MenuItem key={option} value={option}>
+                  {option}
                 </MenuItem>
               ))}
             </TextField>
@@ -218,6 +218,11 @@ export default function Form() {
                     ? "gstNumber"
                     : "panNumber"
                 ]
+              }
+              placeholder={
+                formData.companyType === "GST Registered"
+                  ? "NNAAAAANNNNAXZX"
+                  : "AAAAANNNNA"
               }
               onChange={(e) => setformvalue(e)}
               onBlur={(e) => setformvalue(e)}
