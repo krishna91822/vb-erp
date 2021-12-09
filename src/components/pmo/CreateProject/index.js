@@ -2,7 +2,6 @@ import React, { useState, useLayoutEffect, useEffect } from "react";
 import { useParams, useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { isEmpty } from "lodash";
-import { nanoid } from "nanoid";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
 
@@ -11,7 +10,6 @@ import {
   TextField,
   Select,
   MenuItem,
-  FormHelperText,
   Autocomplete,
 } from "@mui/material";
 
@@ -53,10 +51,10 @@ const initialState = {
     vbProjectStatus: "",
   },
   resource: {
-    associateName: "",
-    startDate: "",
-    endDate: "",
-    allocation: "0",
+    employeeName: "",
+    allocationStartDate: "",
+    allocationEndDate: "",
+    allocationPercentage: "0",
     rackRate: "",
     empId: "",
   },
@@ -92,7 +90,7 @@ const CreateProject = () => {
     resource,
     resources,
   } = state;
-  console.log(state);
+
   const clientData = [
     { clientName: "Saad", clientPrimaryContact: 8765678904 },
     { clientName: "Saad hasan", clientPrimaryContact: 9087456435 },
@@ -139,8 +137,8 @@ const CreateProject = () => {
       ...state,
       resource: {
         ...state.resource,
-        associateName: value.employeeName,
-        empId: value.empId,
+        employeeName: value.employeeName,
+        empId: value._id,
       },
     });
   };
@@ -207,7 +205,6 @@ const CreateProject = () => {
       });
     }
   };
-
   const addResource = () => {
     const validationErrors = validateResourceForm(state.resource);
     const noErrors = Object.keys(validationErrors).length === 0;
@@ -216,17 +213,16 @@ const CreateProject = () => {
     if (noErrors) {
       setState({
         ...state,
-        resources: [
-          ...state.resources,
-          { ...resource, id: Date.now().toString() },
-        ],
+        resources: [...state.resources, { ...resource }],
         resource: initialState.resource,
       });
     }
   };
 
   const removeResource = (id) => {
-    const filterResources = resources.filter((resource) => resource.id !== id);
+    const filterResources = resources.filter(
+      (resource) => resource.empId.empId !== id
+    );
     setState({
       ...state,
       resources: filterResources,

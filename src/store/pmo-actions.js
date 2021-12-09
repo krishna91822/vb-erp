@@ -16,7 +16,7 @@ export const createProject = (projectInfo) => {
     };
     const saveResources = async (id) => {
       const Allresources = {
-        project_id: id,
+        projectId: id,
         resources: projectInfo.resources,
       };
       const response = await axios.post(`${baseUrl}/allocations`, Allresources);
@@ -54,19 +54,34 @@ export const updateProject = (projectInfo) => {
       return response;
     };
     // const saveResources = async (id) => {
-    //   const resources = {
+    //   const Allresources = {
     //     projectId: id,
-    //     resources: projectInfo.resources,
+    //     empId: projectInfo.resources[0].empId,
+    //     allocationStartDate: projectInfo.resources[0].allocationEndDate,
+    //     allocationEndDate: projectInfo.resources[0].allocationEndDate,
+    //     allocationPercentage: projectInfo.resources[0].allocationPercentage,
+    //     rackRate: projectInfo.resources[0].rackRate,
     //   };
-    //   const response = await axios.post(`${baseUrl}/resources`, resources);
+    //   const response = await axios.post(`${baseUrl}/allocations`, Allresources);
     //   if (response.status === "failure") {
     //     throw new Error(response.data.message);
     //   }
     //   return response;
     // };
+    const saveResources = async (id) => {
+      const resources = {
+        projectId: id,
+        resources: projectInfo.resources,
+      };
+      const response = await axios.post(`${baseUrl}/allocations`, resources);
+      if (response.status === "failure") {
+        throw new Error(response.data.message);
+      }
+      return response;
+    };
     try {
       const data = await saveProjects();
-      // await saveResources(data._id);
+      await saveResources(data.data._id);
       dispatch(pmoActions.setUpdateModal());
     } catch (err) {
       console.log(err);
