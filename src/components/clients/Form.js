@@ -120,7 +120,7 @@ export default function Form() {
           <Grid item xs={12} sm={6} md={4}>
             <div className="right-float-fields">
               <Box sx={{ minWidth: 120 }}>
-                <FormControl fullWidth>
+                <FormControl size="small" fullWidth>
                   <InputLabel id="label">Client Name *</InputLabel>
                   <Select
                     name="clientName"
@@ -132,7 +132,6 @@ export default function Form() {
                       error: true,
                       helperText: errors.clientName,
                     })}
-                    size="small"
                     input={<OutlinedInput label="Select a Client name" />}
                   >
                     <MenuItem value={"client 1"}>client 1</MenuItem>
