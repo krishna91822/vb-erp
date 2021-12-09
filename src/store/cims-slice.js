@@ -23,7 +23,6 @@ const contactFields = {
 const initialFields = {
   designation: "",
   brandName: "",
-  clientName: "",
   domain: "",
   baseLocation: "",
   gstNumber: "",

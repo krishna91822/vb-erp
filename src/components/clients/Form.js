@@ -39,7 +39,7 @@ export default function Form() {
     <div className="form-body">
       <form>
         <Grid container spacing={2} mb={3}>
-          <Grid item xs={12} md={8}>
+          <Grid item xs={12} md={6}>
             <TextField
               label="Legal Name"
               variant="outlined"
@@ -57,7 +57,7 @@ export default function Form() {
               })}
             />
           </Grid>
-          <Grid item xs={12} sm={6} md={4}>
+          <Grid item xs={12} sm={6}>
             <div className="align-form-fields">
               <TextField
                 label="Brand Name"
@@ -77,7 +77,7 @@ export default function Form() {
               />
             </div>
           </Grid>
-          <Grid item xs={12} sm={6} md={4}>
+          <Grid item xs={12} sm={6}>
             <div className="right-float-fields">
               <TextField
                 label="Domain/Sector"
@@ -97,7 +97,7 @@ export default function Form() {
               />
             </div>
           </Grid>
-          <Grid item xs={12} sm={6} md={4}>
+          <Grid item xs={12} sm={6}>
             <div className="align-form-fields">
               <TextField
                 label="Base Location"
@@ -115,31 +115,6 @@ export default function Form() {
                   helperText: errors.baseLocation,
                 })}
               />
-            </div>
-          </Grid>
-          <Grid item xs={12} sm={6} md={4}>
-            <div className="right-float-fields">
-              <Box sx={{ minWidth: 120 }}>
-                <FormControl size="small" fullWidth>
-                  <InputLabel id="label">Client Name *</InputLabel>
-                  <Select
-                    name="clientName"
-                    value={formData.clientName}
-                    disabled={!editMode}
-                    onChange={(e) => setformvalue(e)}
-                    onBlur={(e) => setformvalue(e)}
-                    {...(errors.clientName && {
-                      error: true,
-                      helperText: errors.clientName,
-                    })}
-                    input={<OutlinedInput label="Select a Client name" />}
-                  >
-                    <MenuItem value={"client 1"}>client 1</MenuItem>
-                    <MenuItem value={"client 2"}>client 2</MenuItem>
-                    <MenuItem value={"client 3"}>client 3</MenuItem>
-                  </Select>
-                </FormControl>
-              </Box>
             </div>
           </Grid>
         </Grid>

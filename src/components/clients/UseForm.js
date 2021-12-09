@@ -195,8 +195,6 @@ export default function UseForm() {
         : "This field is required.";
     if ("brandName" in fieldValues)
       temp.brandName = fieldValues.brandName ? "" : "This field is required.";
-    if ("clientName" in fieldValues)
-      temp.clientName = fieldValues.clientName ? "" : "This field is required.";
     if ("domain" in fieldValues)
       temp.domain = fieldValues.domain ? "" : "This field is required.";
     if ("baseLocation" in fieldValues)

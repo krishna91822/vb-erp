@@ -69,6 +69,7 @@ function ClientsList() {
                 <StyledTableCell align="center">
                   Primary Contact
                 </StyledTableCell>
+                <StyledTableCell align="center">Location</StyledTableCell>
                 <StyledTableCell align="center">Status</StyledTableCell>
                 <StyledTableCell align="center">Action</StyledTableCell>
               </TableRow>
@@ -87,9 +88,10 @@ function ClientsList() {
                     {client.brandName}
                   </StyledTableCell>
                   <StyledTableCell align="center">
-                    {client.contacts.primaryContact
-                      ? client.contacts.primaryContact.title
-                      : ""}
+                    {`${client.contacts.primaryContact.firstName} ${client.contacts.primaryContact.lastName}`}
+                  </StyledTableCell>
+                  <StyledTableCell align="center">
+                    {client.communicationAddress.country.split("-")[0]}
                   </StyledTableCell>
                   <StyledTableCell align="center">
                     {client.status ? "Active" : "Inactive"}
