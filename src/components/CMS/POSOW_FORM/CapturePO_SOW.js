@@ -12,6 +12,7 @@ import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import TextField from "@mui/material/TextField";
 import SimpleGrow from "./EmpList";
+import BasicDatePicker from "../invoice_FORM/date";
 import "./CapturePO_SOW.css";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -91,6 +92,7 @@ export const CapturePO_SOW = (props) => {
     false
   );
   const [errors, setErrors] = useState({});
+  const [selectedDate, setPOSOWEndDate] = useState(null);
   const [personName, setPersonName] = React.useState(ReadPersonName);
   const [projectName, setProjectName] = React.useState(ReadProjectName);
   const [typeName, setTypeName] = React.useState(ReadType);
@@ -126,6 +128,7 @@ export const CapturePO_SOW = (props) => {
       setDocName(filteredArr[0].Document_Name);
       setStatus(filteredArr[0].Status);
       setDocTypes(filteredArr[0].Document_Type);
+      setPOSOWEndDate(new Date(filteredArr[0].POSOW_endDate));
 
       let fetchedTargetedRes = filteredArr[0].Targetted_Resources;
       fetchedTargetedRes.map((readElem) => {
@@ -176,6 +179,9 @@ export const CapturePO_SOW = (props) => {
   const handleCurrencyChange = (event) => {
     setCurrName(event.target.value);
   };
+  const handleDateChange = (changedDate) => {
+    setPOSOWEndDate(changedDate);
+  };
   const handleDocTypesChange = (event) => {
     setDocTypes(event.target.value);
   };
@@ -193,6 +199,7 @@ export const CapturePO_SOW = (props) => {
       setPOAmt(PO_amt);
     }
   };
+
   const handleEditTglChange = (e) => {
     seteditTglCheckedState(!editTglCheckedState);
   };
@@ -257,6 +264,7 @@ export const CapturePO_SOW = (props) => {
       Document_Name: DocName,
       PO_Number: PO_number,
       PO_Amount: PO_amt,
+      POSOW_endDate: new Date(selectedDate),
       Currency: CurrName,
       Remarks: remarks,
     };
@@ -289,7 +297,7 @@ export const CapturePO_SOW = (props) => {
                     color="success"
                     type="submit"
                     onClick={(event) => submitForm(event)}
-                    data-testid="UpdateBtn"
+                    data-test="UpdateBtn"
                   >
                     Update{" "}
                   </Button>
@@ -299,7 +307,9 @@ export const CapturePO_SOW = (props) => {
               )}
             </div>
             {popupController ? (
-              <CustomizedDialogs msg={response_msg} />
+              <div data-test="ResponseMsgDialogBox">
+                <CustomizedDialogs msg={response_msg} />
+              </div>
             ) : (
               <div></div>
             )}
@@ -318,7 +328,9 @@ export const CapturePO_SOW = (props) => {
                 {props.editBtn ? (
                   <div className="status">
                     <h5 data-test="status-label">STATUS</h5>
-                    <strong>{" - " + "  " + status}</strong>
+                    <strong data-testid="status">
+                      {" - " + "  " + status}
+                    </strong>
                   </div>
                 ) : (
                   <div></div>
@@ -335,6 +347,7 @@ export const CapturePO_SOW = (props) => {
                       <input
                         type="checkbox"
                         data-test="EditToggleBtn"
+                        data-testid="EditToggleBtn"
                         checked={editTglCheckedState}
                         onChange={handleEditTglChange}
                         disabled={status === "Drafted" ? false : true}
@@ -350,6 +363,7 @@ export const CapturePO_SOW = (props) => {
                       type="submit"
                       onClick={(event) => submitForm(event)}
                       data-test="POSOW-save-btn"
+                      data-testid="save-btn"
                     >
                       Save
                     </Button>
@@ -378,6 +392,9 @@ export const CapturePO_SOW = (props) => {
                           props.editBtn && !editTglCheckedState ? true : false
                         }
                         data-test="client-name-dropdown"
+                        inputProps={{
+                          "data-testid": "clientNameDropdown-ChangeTest",
+                        }}
                       >
                         {names.map((name) => (
                           <MenuItem
@@ -404,13 +421,16 @@ export const CapturePO_SOW = (props) => {
                       <Select
                         value={projectName}
                         onChange={handleProjectChange}
-                        input={<OutlinedInput label="Name" />}
+                        input={<OutlinedInput label="Projects" />}
                         MenuProps={MenuProps}
                         error={errors.Project_Name ? true : false}
                         disabled={
                           props.editBtn && !editTglCheckedState ? true : false
                         }
                         data-test="project-dropdown"
+                        inputProps={{
+                          "data-testid": "projectDropdown-ChangeTest",
+                        }}
                       >
                         {projects.map((name) => (
                           <MenuItem
@@ -445,6 +465,7 @@ export const CapturePO_SOW = (props) => {
                                   name={name}
                                   value={name}
                                   data-test="client ChkBox Input"
+                                  data-testid={`clientSponers${index}`}
                                   disabled={
                                     props.editBtn && !editTglCheckedState
                                       ? true
@@ -479,6 +500,7 @@ export const CapturePO_SOW = (props) => {
                                   name={name}
                                   value={name}
                                   data-test="client-finController-chkBox-input"
+                                  data-testid={`clientfinCont${index}`}
                                   onChange={() =>
                                     handleClientfinChkBoxOnChange(index)
                                   }
@@ -515,6 +537,7 @@ export const CapturePO_SOW = (props) => {
                                   name={name}
                                   value={name}
                                   data-test="targetedRes-chkBox-input"
+                                  data-testid={`targetedRes${index}`}
                                   disabled={
                                     props.editBtn && !editTglCheckedState
                                       ? true
@@ -567,6 +590,7 @@ export const CapturePO_SOW = (props) => {
                         input={<OutlinedInput label="Name" />}
                         MenuProps={MenuProps}
                         data-test="Doc-Type-dropdown"
+                        inputProps={{ "data-testid": "Doc-Type-dropdown" }}
                         error={errors.Type ? true : false}
                         disabled={
                           props.editBtn && !editTglCheckedState ? true : false
@@ -596,6 +620,7 @@ export const CapturePO_SOW = (props) => {
                       variant="outlined"
                       value={PO_number}
                       onChange={handlePoNumTxtBoxChange}
+                      inputProps={{ "data-testid": "po-sow-num" }}
                       data-test="po-sow-num"
                       error={errors.PO_Number ? true : false}
                       disabled={
@@ -615,7 +640,7 @@ export const CapturePO_SOW = (props) => {
                       variant="outlined"
                       value={PO_amt}
                       onChange={handlePOAmtTxtBoxChange}
-                      data-test="po-sow-amt"
+                      inputProps={{ "data-testid": "po-sow-amt" }}
                       error={errors.PO_Amount ? true : false}
                       disabled={
                         props.editBtn && !editTglCheckedState ? true : false
@@ -635,9 +660,13 @@ export const CapturePO_SOW = (props) => {
                       <Select
                         value={CurrName}
                         onChange={handleCurrencyChange}
-                        input={<OutlinedInput label="Name" />}
+                        input={<OutlinedInput label="Currency" />}
+                        variant="outlined"
                         MenuProps={MenuProps}
                         data-test="currency-dropdown"
+                        inputProps={{
+                          "data-testid": "currencyDropdown-onChangeTest",
+                        }}
                         error={errors.Currency ? true : false}
                         disabled={
                           props.editBtn && !editTglCheckedState ? true : false
@@ -654,6 +683,26 @@ export const CapturePO_SOW = (props) => {
                         ))}
                       </Select>
                     </FormControl>
+                  </div>
+                </div>
+              </div>
+              <div className="newRowtwo">
+                <div className="PO-endDate">
+                  <label>
+                    <strong>{typeName + " End Date"}</strong>
+                  </label>
+                  <div>
+                    <BasicDatePicker
+                      label={typeName + " End Date"}
+                      inputFormat="MM/dd/yyyy"
+                      value={selectedDate}
+                      onChange={handleDateChange}
+                      // inputProps={{ "data-testid": "BasicdatePicker" }}
+                      disabled={
+                        props.editBtn && !editTglCheckedState ? true : false
+                      }
+                      data-testid="BasicdatePicker"
+                    />
                   </div>
                 </div>
               </div>
@@ -682,14 +731,17 @@ export const CapturePO_SOW = (props) => {
                   <div>
                     <FormControl sx={{ m: 1, width: 300 }}>
                       <InputLabel id="demo-multiple-name-label">
-                        Types
+                        Select Doc type
                       </InputLabel>
                       <Select
                         value={DocTypes}
                         onChange={handleDocTypesChange}
-                        input={<OutlinedInput label="Name" />}
+                        input={<OutlinedInput label="Select Doc type" />}
                         MenuProps={MenuProps}
                         data-test="doc-typeForUpload-dropdown"
+                        inputProps={{
+                          "data-testid": "UploadDocTypeDropdown",
+                        }}
                         error={errors.Document_Type ? true : false}
                         disabled={
                           props.editBtn && !editTglCheckedState ? true : false
@@ -727,6 +779,7 @@ export const CapturePO_SOW = (props) => {
                         onChange={handleUploadBtnClick}
                         accept={DocTypes}
                         data-test="upload-file-input"
+                        data-testid="upload-file-input-ClickTest"
                         disabled={DocTypes === "" ? true : false}
                       />
                     </Button>
@@ -765,6 +818,7 @@ export const CapturePO_SOW = (props) => {
                       value={remarks}
                       onChange={handleRemarksChange}
                       data-test="comments-remarks-txtBox"
+                      inputProps={{ "data-testid": "RemarksTxtBox" }}
                       error={errors.Remarks ? true : false}
                       disabled={
                         props.editBtn && !editTglCheckedState ? true : false
@@ -780,6 +834,7 @@ export const CapturePO_SOW = (props) => {
                     onClick={handleSendForApprovalBtnOnClk}
                     disabled={editTglCheckedState ? true : false}
                     data-test="sendForApproval-btn"
+                    data-testid="sendForApproval-btn-ClickTest"
                   >
                     Send For Approval
                   </Button>

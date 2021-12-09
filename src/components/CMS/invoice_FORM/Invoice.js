@@ -138,10 +138,8 @@ function Invoice(props) {
     setinvoicereceived(!invoicereceived);
   };
   useEffect(() => {
-    console.log("po number useffect", projectName);
     if (projectName && !params.id) {
       const filtered = allPOSOWs.filter((val) => {
-        console.log(val);
         return projectName === val.Project_Name;
       });
       setPO_number(filtered[0].PO_Number);

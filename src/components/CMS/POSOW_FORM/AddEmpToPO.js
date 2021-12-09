@@ -5,7 +5,6 @@ import Autocomplete from "@mui/material/Autocomplete";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
-import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import AddBoxIcon from "@mui/icons-material/AddBox";
 import BasicDatePicker from "../invoice_FORM/date";
@@ -22,14 +21,6 @@ export default function FormDialog(props) {
   const params = useParams();
   const dispatch = useDispatch();
   const [open, setOpen] = React.useState(false);
-
-  function formatDate(date) {
-    const currentMonth = date.getMonth() + 1;
-    const monthString = currentMonth >= 10 ? currentMonth : `0${currentMonth}`;
-    const currentDate = date.getDate() + 1;
-    const dateString = currentDate >= 10 ? currentDate : `0${currentDate}`;
-    return `${monthString}/${dateString}/${date.getFullYear()}`;
-  }
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -131,7 +122,7 @@ export default function FormDialog(props) {
           }}
           type="button"
           onClick={handleClickOpenForEdit}
-          data-testid="UpdateBtn"
+          data-testid="editBtn"
         >
           <CreateIcon data-test="edit-btn-icon" />
           Edit
@@ -140,11 +131,11 @@ export default function FormDialog(props) {
         <AddBoxIcon
           fontSize="large"
           onClick={handleClickOpen}
-          data-test="plus-icon-btn"
+          data-testid="plus-icon-btn"
         />
       )}
 
-      <Dialog open={open} onClose={handleClose} data-test="emp-dialogBox">
+      <Dialog open={open} onClose={handleClose} data-testid="formDialog">
         <DialogTitle data-test="dialog-box-title">
           {props.edit ? "Update Details" : "Assign Employee to this PO"}
         </DialogTitle>
@@ -223,7 +214,11 @@ export default function FormDialog(props) {
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>
-          <Button type="submit" onClick={(e) => handleAddOnClick(e)}>
+          <Button
+            type="submit"
+            onClick={(e) => handleAddOnClick(e)}
+            data-testid="formSubmitBtn"
+          >
             {props.edit ? "Update" : "Assign"}
           </Button>
         </DialogActions>

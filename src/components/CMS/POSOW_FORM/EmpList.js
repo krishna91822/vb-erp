@@ -45,7 +45,13 @@ export default function SimpleGrow() {
   return (
     <Box sx={{ height: checked ? 300 : 50 }}>
       <FormControlLabel
-        control={<Switch checked={checked} onChange={handleChange} />}
+        control={
+          <Switch
+            checked={checked}
+            onChange={handleChange}
+            data-testid="empListGrowin"
+          />
+        }
         label={<strong>View Assigned Employees</strong>}
         sx={{ margin: "0.5rem" }}
       />

@@ -14,6 +14,7 @@ import GridViewIcon from "@mui/icons-material/GridView";
 import { styled } from "@mui/material/styles";
 import { Avatar } from "@mui/material";
 import { Grid } from "@mui/material";
+import { Link } from "react-router-dom";
 
 const boxStyles = {
   position: "fixed",
@@ -106,7 +107,17 @@ const SidebarNavigation = () => {
     },
     {
       name: "CMS",
-      dropDown: ["PO/SOW", "Invoicing"],
+      dropDown: [
+        <Link to="/POSOW" style={{ textDecoration: "none", color: "black" }}>
+          PO/SOW
+        </Link>,
+        <Link
+          to="/invoiceinfo"
+          style={{ textDecoration: "none", color: "black" }}
+        >
+          Invoicing
+        </Link>,
+      ],
       open: openCMS,
       handle: handleClickCMS,
     },

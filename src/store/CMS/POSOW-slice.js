@@ -72,7 +72,18 @@ const employees = [
     Allocation_Rate: 5,
   },
 ];
-const projects = ["xyz23", "asd34", "abc56", "project y", "project x"];
+const projects = [
+  "xyz23",
+  "asd34",
+  "abc56",
+  "project y",
+  "project x",
+  "project delta",
+  "project omicron",
+  "project lemda",
+  "project alpha",
+  "project theta",
+];
 const clientFinController = ["ABC", "XYZ", "EFG"];
 const targetedResources = ["ABC", "XYZ", "EFG", "ZZZ"];
 const clientSponsors = ["ABC", "XYZ"];
@@ -102,7 +113,7 @@ export const SOW_init_state = {
       Client_Sponser: [""],
       Client_Finance_Controller: [""],
       Targetted_Resources: ["", ""],
-      Status: "",
+      Status: "Drafted",
       Type: "",
       PO_Number: "",
       PO_Amount: 0,
