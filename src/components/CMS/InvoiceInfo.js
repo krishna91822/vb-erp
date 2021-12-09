@@ -159,7 +159,6 @@ function InvoiceInfo() {
                 <TableCell>ID</TableCell>
                 <TableCell>Client Name</TableCell>
                 <TableCell>Project Name</TableCell>
-                <TableCell>Project ID</TableCell>
                 <TableCell>PO/SOW Order</TableCell>
                 <TableCell>PO/SOW Amount</TableCell>
                 <TableCell>Invoice raised</TableCell>
@@ -181,7 +180,6 @@ function InvoiceInfo() {
                   </TableCell>
                   <TableCell>{row.PO_Id.Client_Name}</TableCell>
                   <TableCell>{row.PO_Id.Project_Name}</TableCell>
-                  <TableCell>{row.PO_Id._id} </TableCell>
                   <TableCell>{row.PO_Id.PO_Number}</TableCell>
                   <TableCell>{row.PO_Id.PO_Amount}</TableCell>
                   <TableCell>{row.invoice_raised}</TableCell>
