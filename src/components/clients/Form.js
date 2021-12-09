@@ -20,9 +20,15 @@ import { useSelector } from "react-redux";
 
 export default function Form() {
   const editMode = useSelector((state) => state.cims.editMode);
-  const { formData, setformvalue, errors, companyTypes, handelComAddress } =
-    UseForm();
-  console.log(formData);
+  const {
+    formData,
+    setformvalue,
+    errors,
+    companyTypes,
+    handelComAddress,
+    handelBrandName,
+  } = UseForm();
+
   const [checked, setChecked] = useState(false);
   const handelAddressCheckbox = (e) => {
     setChecked(e.target.checked);
@@ -34,9 +40,8 @@ export default function Form() {
       <form>
         <Grid container spacing={2} mb={3}>
           <Grid item xs={12} md={8}>
-            <Typography>Legal Name of the entity</Typography>
             <TextField
-              label="Enter Legal Name"
+              label="Legal Name"
               variant="outlined"
               name="designation"
               fullWidth
@@ -54,9 +59,8 @@ export default function Form() {
           </Grid>
           <Grid item xs={12} sm={6} md={4}>
             <div className="align-form-fields">
-              <Typography>Brand Name</Typography>
               <TextField
-                label="Enter Name"
+                label="Brand Name"
                 variant="outlined"
                 name="brandName"
                 fullWidth
@@ -65,7 +69,7 @@ export default function Form() {
                 value={formData.brandName}
                 size="small"
                 onChange={(e) => setformvalue(e)}
-                onBlur={(e) => setformvalue(e)}
+                onBlur={(e) => handelBrandName(e)}
                 {...(errors.brandName && {
                   error: true,
                   helperText: errors.brandName,
@@ -75,9 +79,8 @@ export default function Form() {
           </Grid>
           <Grid item xs={12} sm={6} md={4}>
             <div className="right-float-fields">
-              <Typography>Domain/Sector</Typography>
               <TextField
-                label="Enter Domain/Sector"
+                label="Domain/Sector"
                 variant="outlined"
                 name="domain"
                 fullWidth
@@ -96,9 +99,8 @@ export default function Form() {
           </Grid>
           <Grid item xs={12} sm={6} md={4}>
             <div className="align-form-fields">
-              <Typography>Base Location</Typography>
               <TextField
-                label="Enter Location"
+                label="Base Location"
                 variant="outlined"
                 name="baseLocation"
                 fullWidth
@@ -117,15 +119,13 @@ export default function Form() {
           </Grid>
           <Grid item xs={12} sm={6} md={4}>
             <div className="right-float-fields">
-              <Typography>Active Client</Typography>
               <Box sx={{ minWidth: 120 }}>
                 <FormControl fullWidth>
-                  <InputLabel id="label">Select a Client name</InputLabel>
+                  <InputLabel id="label">Client Name *</InputLabel>
                   <Select
                     name="clientName"
                     value={formData.clientName}
                     disabled={!editMode}
-                    required
                     onChange={(e) => setformvalue(e)}
                     onBlur={(e) => setformvalue(e)}
                     {...(errors.clientName && {
@@ -150,37 +150,34 @@ export default function Form() {
               Company Address
             </Typography>
           </Grid>
-          <Grid item xs={12} md={6}>
-            <Grid container spacing={2} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
-              <Grid item xs={12}>
-                <Typography align="center">Registered address</Typography>
-              </Grid>
-              <AddressFields type="registeredAddress" />
-            </Grid>
-            <Grid item xs={12} ml>
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    checked={checked}
-                    onChange={(e) => handelAddressCheckbox(e)}
-                  />
-                }
-                label="Is Communication address same as Registered address"
-                variant="subtitle1"
-                disabled={!editMode}
-              />
-            </Grid>
+          <Grid item xs={12}>
+            <Typography variant="h6">Registered address</Typography>
           </Grid>
-          <Grid item xs={12} md={6}>
-            <Grid container spacing={2} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
-              <Grid item xs={12}>
-                <Typography align="center">Communication address</Typography>
-              </Grid>
-              <AddressFields type="communicationAddress" />
-            </Grid>
+          <AddressFields type="registeredAddress" />
+          <Grid item xs={12} ml mb={2}>
+            <FormControlLabel
+              control={
+                <Checkbox
+                  checked={checked}
+                  onChange={(e) => handelAddressCheckbox(e)}
+                />
+              }
+              label="Is Communication address same as Registered address"
+              variant="subtitle1"
+              disabled={!editMode}
+            />
           </Grid>
+          <Grid item xs={12}>
+            <Typography variant="h6">Communication address</Typography>
+          </Grid>
+          <AddressFields type="communicationAddress" />
         </Grid>
-        <Grid container spacing={2} mb={3}>
+        <Grid item xs={12} mt={2}>
+          <Typography align="center" variant="h5">
+            Tax details
+          </Typography>
+        </Grid>
+        <Grid container spacing={2} mt={1} mb={3}>
           <Grid item md={6}>
             <TextField
               name="companyType"
@@ -240,6 +237,11 @@ export default function Form() {
               })}
             />
           </Grid>
+        </Grid>
+        <Grid item xs={12} mt={3}>
+          <Typography align="center" variant="h5">
+            Contacts
+          </Typography>
         </Grid>
         <ContactForm />
       </form>

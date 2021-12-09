@@ -152,7 +152,7 @@ export default function AddressFields() {
         <TabContext value={value}>
           <Box
             sx={{
-              borderTop: 2,
+              border: 1,
               borderBottom: 2,
               borderColor: "divider",
             }}
