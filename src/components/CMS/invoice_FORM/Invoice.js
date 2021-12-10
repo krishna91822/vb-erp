@@ -102,6 +102,7 @@ function Invoice(props) {
   const [Vb_Bank_Acc, setVbbankacc] = React.useState(ReadVbBankAcc);
   const [Date_, setDate] = React.useState(ReadDate);
   const [invoicereceived, setinvoicereceived] = useState(props.invoicereceived);
+  const [filterinvoiceArr, setfilterinvoiceArr] = useState([]);
   let [sum, setsum] = useState(0);
 
   useEffect(() => {
@@ -159,6 +160,16 @@ function Invoice(props) {
       const filtered = allPOSOWs.filter((val) => {
         return projectName === val.Project_Name;
       });
+      const filterinvoiceData = allINVOICE.filter((val) => {
+        return poId === val.purchase_orders._id;
+      });
+      setfilterinvoiceArr([...filterinvoiceData]);
+      let count = 0;
+      const totalinvoiceamount = filterinvoiceArr.map((val) => {
+        count = count + val.invoice_amount_received;
+      });
+      setsum(count);
+
       setPO_number(filtered[0].PO_Number);
       setPersonName(filtered[0].Client_Name);
       setClientSponsorArr(filtered[0].Client_Sponser);
@@ -187,17 +198,17 @@ function Invoice(props) {
       dispatch(createNew_INVOICE(DataToSend));
     }
   };
-  const filterinvoiceArr = allINVOICE.filter((val) => {
-    return poId === val.purchase_orders._id;
-  });
-  console.log(filterinvoiceArr);
+  // const filterinvoiceArr = allINVOICE.filter((val) => {
+  //   return poId === val.purchase_orders._id;
+  // });
+  // console.log(filterinvoiceArr);
   let count = 0;
-  useEffect(() => {
-    const totalinvoiceamount = filterinvoiceArr.map((val) => {
-      count = count + val.invoice_amount_received;
-    });
-    setsum(count);
-  });
+  // useEffect(() => {
+  //   const totalinvoiceamount = filterinvoiceArr.map((val) => {
+  //     count = count + val.invoice_amount_received;
+  //   });
+  //   setsum(count);
+  // });
   return (
     <div className="maincontainer">
       <h3>Invoice</h3>
