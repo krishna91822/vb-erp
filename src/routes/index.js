@@ -35,7 +35,7 @@ const routes = [
     component: invoice_FORM,
   },
   {
-    path: "invoice/detail/:id",
+    path: "/invoice/detail/:id",
     component: invoice_READ,
   },
   {
