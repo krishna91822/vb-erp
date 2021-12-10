@@ -15,31 +15,31 @@ const routes = [
     title: "Templates",
   },
   {
-    path: "/capture_new_SOW",
+    path: "/posow/create",
     component: POSOW_FORM,
   },
   {
-    path: "/POSOW",
+    path: "/posow",
     component: POSOW_tabView,
   },
   {
-    path: "/POSOW_detail/:id",
+    path: "/posow/detail/:id",
     component: POSOW_Read,
   },
   {
-    path: "/invoiceinfo",
+    path: "/invoices",
     component: invoice_tabView,
   },
   {
-    path: "/capture_invoice",
+    path: "/invoice/create-invoice",
     component: invoice_FORM,
   },
   {
-    path: "/invoice_details/:id",
+    path: "invoice/detail/:id",
     component: invoice_READ,
   },
   {
-    path: "/SOW_details/edit/:id",
+    path: "/posow/edit/:id",
     component: POSOW_EDIT,
   },
   {

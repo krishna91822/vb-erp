@@ -145,7 +145,7 @@ function InvoiceInfo() {
             <h3 data-test="MainHeading">Invoice Information</h3>
           </div>
           <div className="buttondiv">
-            <Link to="/capture_invoice">
+            <Link to="/invoice/create-invoice">
               <button className="button1" data-test="Capture-po-sow">
                 Capture Invoice{" "}
               </button>
@@ -174,7 +174,7 @@ function InvoiceInfo() {
               {currentPosts.map((row, index) => (
                 <TableRow
                   component={Link}
-                  to={`/invoice_details/${row._id}`}
+                  to={`/invoice/detail/${row._id}`}
                   onClick={() => handleRowOnClick(row._id)}
                   key={row.name}
                   style={{ textDecoration: "none" }}

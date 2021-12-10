@@ -105,16 +105,14 @@ const SidebarNavigation = () => {
     {
       name: "CIMS",
     },
+
     {
       name: "CMS",
       dropDown: [
-        <Link to="/POSOW" style={{ textDecoration: "none", color: "black" }}>
+        <Link to="/posow" style={{ textDecoration: "none", color: "black" }}>
           PO/SOW
         </Link>,
-        <Link
-          to="/invoiceinfo"
-          style={{ textDecoration: "none", color: "black" }}
-        >
+        <Link to="/invoices" style={{ textDecoration: "none", color: "black" }}>
           Invoicing
         </Link>,
       ],

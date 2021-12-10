@@ -153,7 +153,7 @@ export const Main = () => {
             <h3 data-test="MainHeading">PO/SOW's Information</h3>
           </div>
           <div className="buttondiv">
-            <Link to="/capture_new_SOW">
+            <Link to="/posow/create">
               <button className="button1" data-test="Capture-po-sow">
                 Capture PO/SOW{" "}
               </button>
@@ -184,7 +184,7 @@ export const Main = () => {
               {currentPosts.map((row, index) => (
                 <TableRow
                   component={Link}
-                  to={`/POSOW_detail/${row._id}`}
+                  to={`/posow/detail/${row._id}`}
                   onClick={() => handleRowOnClick(row._id)}
                   key={row.name}
                   style={{ textDecoration: "none" }}
@@ -207,7 +207,7 @@ export const Main = () => {
                   {row.Status === "Rejected" || row.Status === "Drafted" ? (
                     <TableCell
                       component={Link}
-                      to={`/SOW_details/edit/${row._id}`}
+                      to={`/posow/edit/${row._id}`}
                       style={{ textDecoration: "none" }}
                     >
                       <Button className="editbtn">EDIT</Button>
