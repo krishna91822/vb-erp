@@ -179,6 +179,7 @@ export default function FormDialog(props) {
               <label>Start Date</label>
               <br />
               <BasicDatePicker
+                maxDate="POSOW"
                 label="Start Date"
                 inputFormat="MM/dd/yyyy"
                 value={StartDate}
@@ -190,6 +191,7 @@ export default function FormDialog(props) {
               <label>End Date</label>
               <br />
               <BasicDatePicker
+                maxDate="POSOW"
                 label="End Date"
                 inputFormat="MM/dd/yyyy"
                 value={EndDate}
