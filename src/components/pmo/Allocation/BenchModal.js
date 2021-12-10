@@ -7,7 +7,8 @@ const style = {
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  width: 400,
+  width: "900px",
+  height: "500px",
   bgcolor: "background.paper",
   border: "2px solid #000",
   boxShadow: 24,
@@ -49,10 +50,22 @@ export default function BenchModal({
               }}
             />
             <Typography variant="h6">Details:-</Typography>
-            <Typography>{`name = ${entryData.associateName},`}</Typography>
+            {entryData.projects &&
+              entryData.projects.map((currElem, index) => (
+                <div key={index}>
+                  <p>======================</p>
+                  <Typography>{`project name = ${currElem.projectName},`}</Typography>
+                  <Typography>{`rack rate = ${currElem.rackRate},`}</Typography>
+                  <Typography>{`last start date = ${currElem.allocationStartDate},`}</Typography>
+                  <Typography>{`last end date = ${currElem.allocationEndDate}`}</Typography>
+                  <p>======================</p>
+                </div>
+              ))}
+
+            {/* <Typography>{`name = ${entryData.associateName},`}</Typography>
             <Typography>{`last allocated project = ${entryData.lastAllocatedProject},`}</Typography>
             <Typography>{`last start date = ${entryData.startDate},`}</Typography>
-            <Typography>{`last end date = ${entryData.endDate},`}</Typography>
+            <Typography>{`last end date = ${entryData.endDate},`}</Typography> */}
           </Box>
         </Fade>
       </Modal>

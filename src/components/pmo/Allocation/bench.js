@@ -1,5 +1,6 @@
-import React, { useState } from "react";
-import { useSelector } from "react-redux";
+import React, { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { getOnBench } from "../../../store/pmo-actions";
 import {
   Table,
   TableBody,
@@ -16,27 +17,34 @@ import BenchModal from "./BenchModal";
 
 const Bench = ({ pressed }) => {
   const { benchData } = useSelector((state) => state.pmo);
+  const dispatch = useDispatch();
   const [associateName, setAssociateName] = useState("");
-  const [primaryCapabilities, setPrimaryCapabilities] = useState("");
+  // const [primaryCapabilities, setPrimaryCapabilities] = useState("");
   const [remainingBandwidth, setRemainingBandwidth] = useState("");
   const [page, setPage] = useState(0);
   const [empId, setEmpId] = useState("");
   const [modalDetails, setModalDetails] = useState(false);
   const [entryData, setEntryData] = useState({});
 
+  useEffect(() => {
+    dispatch(getOnBench());
+  }, []);
+
   let data = benchData;
   data = [...data].sort((a, b) =>
     a.empId > b.empId ? 1 : b.empId > a.empId ? -1 : 0
   );
+  console.log(benchData, "bench");
+
   const filterAssociateName = (event) => {
     const assName = event.target.value.toLowerCase();
     setAssociateName(assName);
   };
 
-  const filterPrimaryCapabilities = (event) => {
-    const primcapabilty = event.target.value.toLowerCase();
-    setPrimaryCapabilities(primcapabilty);
-  };
+  // const filterPrimaryCapabilities = (event) => {
+  //   const primcapabilty = event.target.value.toLowerCase();
+  //   setPrimaryCapabilities(primcapabilty);
+  // };
 
   const filterRemainingBandwidth = (event) => {
     setRemainingBandwidth(event.target.value);
@@ -49,11 +57,11 @@ const Bench = ({ pressed }) => {
 
   const filteredData = data.filter((eachData) => {
     return (
-      eachData.associateName.toLowerCase().includes(associateName) &&
-      eachData.primaryCapabilities
-        .toLowerCase()
-        .includes(primaryCapabilities) &&
-      eachData.remainingBandwidth.includes(remainingBandwidth) &&
+      eachData.employeeName.toLowerCase().includes(associateName) &&
+      // eachData.primaryCapabilities
+      //   .toLowerCase()
+      //   .includes(primaryCapabilities) &&
+      eachData.remainingAllocation.toString().includes(remainingBandwidth) &&
       eachData.empId.toUpperCase().includes(empId)
     );
   });
@@ -111,7 +119,7 @@ const Bench = ({ pressed }) => {
                 >
                   Associate Name
                 </TableCell>
-                <TableCell
+                {/* <TableCell
                   align="left"
                   sx={{
                     width: "100px",
@@ -120,7 +128,7 @@ const Bench = ({ pressed }) => {
                   }}
                 >
                   Primary Capabilities
-                </TableCell>
+                </TableCell> */}
                 <TableCell
                   align="left"
                   sx={{
@@ -158,7 +166,7 @@ const Bench = ({ pressed }) => {
                     />
                   </TableCell>
 
-                  <TableCell align="left">
+                  {/* <TableCell align="left">
                     <TextField
                       variant="standard"
                       type="text"
@@ -167,7 +175,7 @@ const Bench = ({ pressed }) => {
                       value={primaryCapabilities}
                       inputProps={{ style: { fontSize: "small" } }}
                     />
-                  </TableCell>
+                  </TableCell> */}
                   <TableCell align="left">
                     <TextField
                       variant="standard"
@@ -191,12 +199,12 @@ const Bench = ({ pressed }) => {
                   >
                     <TableCell align="left">{index + page * 5 + 1}</TableCell>
                     <TableCell align="left">{currElem.empId}</TableCell>
-                    <TableCell align="left">{currElem.associateName}</TableCell>
-                    <TableCell align="left">
+                    <TableCell align="left">{currElem.employeeName}</TableCell>
+                    {/* <TableCell align="left">
                       {currElem.primaryCapabilities}
-                    </TableCell>
+                    </TableCell> */}
                     <TableCell align="left">
-                      {currElem.remainingBandwidth}
+                      {currElem.remainingAllocation}
                     </TableCell>
                   </TableRow>
                 ))}
