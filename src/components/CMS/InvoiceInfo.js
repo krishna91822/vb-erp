@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import * as React from "react";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -112,6 +113,8 @@ function InvoiceInfo() {
           disableElevation
           onClick={handleClick}
           endIcon={<KeyboardArrowDownIcon />}
+          data-test="SortByButton"
+          className="sort-by-button"
         >
           Sort by
         </Button>
@@ -143,17 +146,23 @@ function InvoiceInfo() {
       <div className="container">
         <div className="innerheader">
           <div>
-            <h3>Invoice Information</h3>
+            <h3 data-test="MainHeading">Invoice Information</h3>
           </div>
           <div className="buttondiv">
             <Link to="/capture_invoice">
-              <button className="button1">Capture Invoice </button>
+              <button className="button1" data-test="Capture-po-sow">
+                Capture Invoice{" "}
+              </button>
             </Link>
           </div>
         </div>
 
         <TableContainer component={Paper}>
-          <Table sx={{ minWidth: 650 }} aria-label="simple table">
+          <Table
+            sx={{ minWidth: 650 }}
+            aria-label="simple table"
+            className="Table-row-po-sow"
+          >
             <TableHead className="tablehead">
               <TableRow>
                 <TableCell>ID</TableCell>
@@ -165,8 +174,8 @@ function InvoiceInfo() {
                 <TableCell>Invoice Amount received</TableCell>
               </TableRow>
             </TableHead>
-            <TableBody>
-              {currentPosts.map((row) => (
+            <TableBody className="table-row-posow">
+              {currentPosts.map((row, index) => (
                 <TableRow
                   component={Link}
                   to={`/invoice_details/${row._id}`}
@@ -175,8 +184,13 @@ function InvoiceInfo() {
                   style={{ textDecoration: "none" }}
                   sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                 >
-                  <TableCell component="th" scope="row">
-                    {row._id}
+                  <TableCell
+                    component="th"
+                    scope="row"
+                    className="table-cell"
+                    data-test="clickable-row"
+                  >
+                    {postPerPage * (currentpage - 1) + (index + 1)}
                   </TableCell>
                   <TableCell>{row.PO_Id.Client_Name}</TableCell>
                   <TableCell>{row.PO_Id.Project_Name}</TableCell>
