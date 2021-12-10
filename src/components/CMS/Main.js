@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import * as React from "react";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -12,7 +13,6 @@ import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import { Link } from "react-router-dom";
-
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
@@ -70,14 +70,13 @@ export const StyledMenu = styled((props) => (
   },
 }));
 
-const Main = () => {
+export const Main = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(fetchPO_SOW_data());
   }, []);
   const post = useSelector((state) => state.CMS_state.poSowData);
-
   const [currentpage, currentsetPage] = React.useState(1);
   const [postPerPage, setPostPerPage] = React.useState(5);
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -113,6 +112,8 @@ const Main = () => {
           disableElevation
           onClick={handleClick}
           endIcon={<KeyboardArrowDownIcon />}
+          data-test="SortByButton"
+          className="sort-by-button"
         >
           Sort by
         </Button>
@@ -124,8 +125,13 @@ const Main = () => {
           anchorEl={anchorEl}
           open={open}
           onClose={handleClose}
+          data-test="StyledMenu"
         >
-          <MenuItem onClick={() => handleSort("_id")} disableRipple>
+          <MenuItem
+            onClick={() => handleSort("_id")}
+            disableRipple
+            className="menu-by-id"
+          >
             By ID
           </MenuItem>
 
@@ -144,18 +150,25 @@ const Main = () => {
       <div className="container">
         <div className="innerheader">
           <div>
-            <h3>PO/SOW's Information</h3>
+            <h3 data-test="MainHeading">PO/SOW's Information</h3>
           </div>
           <div className="buttondiv">
             <Link to="/capture_new_SOW">
-              <button className="button1">Capture PO/SOW </button>
+              <button className="button1" data-test="Capture-po-sow">
+                Capture PO/SOW{" "}
+              </button>
             </Link>
           </div>
         </div>
 
         <TableContainer component={Paper}>
-          <Table sx={{ minWidth: 650 }} aria-label="simple table">
-            <TableHead className="tablehead">
+          <Table
+            sx={{ minWidth: 650 }}
+            aria-label="simple table"
+            className="Table-row-po-sow"
+            data-test="row-click-1"
+          >
+            <TableHead className="tablehead" data-test="row-click0">
               <TableRow>
                 <TableCell>ID</TableCell>
                 <TableCell>Client Name</TableCell>
@@ -167,8 +180,8 @@ const Main = () => {
                 <TableCell>Status</TableCell>
               </TableRow>
             </TableHead>
-            <TableBody>
-              {currentPosts.map((row) => (
+            <TableBody className="table-row-posow" data-test="row-click1">
+              {currentPosts.map((row, index) => (
                 <TableRow
                   component={Link}
                   to={`/POSOW_detail/${row._id}`}
@@ -176,9 +189,15 @@ const Main = () => {
                   key={row.name}
                   style={{ textDecoration: "none" }}
                   sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                  data-test="row-click2"
                 >
-                  <TableCell component="th" scope="row">
-                    {row._id}
+                  <TableCell
+                    component="th"
+                    scope="row"
+                    className="table-cell"
+                    data-test="row-click3"
+                  >
+                    {postPerPage * (currentpage - 1) + (index + 1)}
                   </TableCell>
                   <TableCell>{row.Client_Name}</TableCell>
                   <TableCell>{row.Project_Name}</TableCell>
@@ -191,10 +210,14 @@ const Main = () => {
                       to={`/SOW_details/edit/${row._id}`}
                       style={{ textDecoration: "none" }}
                     >
-                      EDIT
+                      <Button className="editbtn">EDIT</Button>
                     </TableCell>
                   ) : (
-                    <TableCell aria-disabled>Uneditable</TableCell>
+                    <TableCell aria-disabled>
+                      <Button className="editbtn" disabled>
+                        EDIT
+                      </Button>
+                    </TableCell>
                   )}
                   <TableCell>
                     <strong>{row.Status}</strong>
@@ -220,5 +243,3 @@ const Main = () => {
     </>
   );
 };
-
-export default Main;
