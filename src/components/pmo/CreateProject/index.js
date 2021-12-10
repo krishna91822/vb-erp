@@ -149,8 +149,8 @@ const CreateProject = () => {
       const current_date = `${currentDate.getFullYear()}-${
         currentDate.getMonth() + 1
       }-${currentDate.getDate()}`;
-      if (startDate < current_date) {
-        alert("start date should not before today's date");
+      if (target.value < current_date) {
+        alert("Start date cannot be earlier than today's date");
       } else {
         setState({
           ...state,
@@ -160,9 +160,7 @@ const CreateProject = () => {
           },
         });
       }
-    }
-
-    if (target.name === "endDate") {
+    } else if (target.name === "endDate") {
       if (startDate > target.value) {
         alert("End Date need to be greater than Start Date");
       } else {
@@ -186,7 +184,7 @@ const CreateProject = () => {
   };
 
   const handleResourceChange = ({ target }) => {
-    if (target.name === "startDate") {
+    if (target.name === "allocationStartDate") {
       if (target.value < startDate || target.value > endDate) {
         alert("Start Date need to be in range");
       } else if (startDate === "" || endDate === "") {
@@ -200,7 +198,7 @@ const CreateProject = () => {
           },
         });
       }
-    } else if (target.name === "endDate") {
+    } else if (target.name === "allocationEndDate") {
       if (target.value > endDate || target.value < startDate) {
         alert("End Date need to be in range");
       } else if (target.value < resource.startDate) {
@@ -242,15 +240,16 @@ const CreateProject = () => {
     if (location.includes("edit") && id) {
       console.log(id, "edit remove Resource");
       dispatch(deleteResource(id));
+    } else {
+      const filterResources = resources.filter(
+        (resource) => resource.empId.empId !== id
+      );
+      setState({
+        ...state,
+        resources: filterResources,
+        resource: initialState.resource,
+      });
     }
-    const filterResources = resources.filter(
-      (resource) => resource.empId.empId !== id
-    );
-    setState({
-      ...state,
-      resources: filterResources,
-      resource: initialState.resource,
-    });
   };
 
   const handleSubmit = (e) => {

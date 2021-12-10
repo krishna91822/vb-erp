@@ -101,12 +101,22 @@ const pmoSlice = createSlice({
     },
     updateProjectById: (state, action) => {
       state.projectById = action.payload;
+      // console.log(state.projectById, " pmo-slice");
     },
     updateProjectsList: (state, action) => {
       state.projects = action.payload;
     },
     updateEmployeeList: (state, action) => {
       state.allEmployees = action.payload;
+    },
+    removeAllocation: (state, action) => {
+      // console.log(state.projectById, "state.projectById");
+      // console.log(action.payload._id, " action.payload");
+      // const filterResources = state.projectById.resources.filter(
+      //   (resource) => resource._id !== action.payload._id
+      // );
+      // console.log(action.payload, "removeAllocation");
+      // console.log(filterResources, "removeAllocation");
     },
     SortByProductID: (state, action) => {
       state.projects = action.payload;

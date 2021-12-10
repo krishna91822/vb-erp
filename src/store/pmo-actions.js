@@ -25,13 +25,6 @@ export const createProject = (projectInfo) => {
       }
       return response;
     };
-    // const saveResources = async () => {
-    //   const response = await axios.post(`${baseUrl}/allocations`, projectInfo);
-    //   if (response.status === "failure") {
-    //     throw new Error(response.data.message);
-    //   }
-    //   return response;
-    // };
     try {
       const data = await saveProjects();
       await saveResources(data.data._id);
@@ -53,21 +46,6 @@ export const updateProject = (projectInfo) => {
       }
       return response;
     };
-    // const saveResources = async (id) => {
-    //   const Allresources = {
-    //     projectId: id,
-    //     empId: projectInfo.resources[0].empId,
-    //     allocationStartDate: projectInfo.resources[0].allocationEndDate,
-    //     allocationEndDate: projectInfo.resources[0].allocationEndDate,
-    //     allocationPercentage: projectInfo.resources[0].allocationPercentage,
-    //     rackRate: projectInfo.resources[0].rackRate,
-    //   };
-    //   const response = await axios.post(`${baseUrl}/allocations`, Allresources);
-    //   if (response.status === "failure") {
-    //     throw new Error(response.data.message);
-    //   }
-    //   return response;
-    // };
     const saveResources = async (id) => {
       const resources = {
         projectId: id,
@@ -159,7 +137,6 @@ export const getProjectById = (projectId) => {
 export const deleteResource = (id) => {
   return async (dispatch) => {
     const deleteResourceById = async () => {
-      console.log(id, "this is delete resource");
       const response = await axios.delete(`${baseUrl}/allocations/${id}`);
       if (response.status === "failure") {
         throw new Error(response.data.message);
@@ -168,8 +145,7 @@ export const deleteResource = (id) => {
     };
     try {
       const data = await deleteResourceById();
-      console.log(data, "data from pmo-action");
-      // dispatch(pmoActions.updateEmployeeList(data.data));
+      dispatch(pmoActions.removeAllocation(data.data));
     } catch (err) {
       console.log(err);
     }
