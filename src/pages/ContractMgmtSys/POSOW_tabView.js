@@ -1,4 +1,4 @@
-import Main from "../../components/CMS/Main";
+import { Main } from "../../components/CMS/Main";
 
 const POSOW_tabView = () => {
   return <Main />;
