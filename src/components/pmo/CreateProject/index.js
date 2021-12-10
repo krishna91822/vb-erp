@@ -31,6 +31,7 @@ import {
   createProject,
   updateProject,
   getProjectById,
+  deleteResource,
 } from "../../../store/pmo-actions";
 import { pmoActions } from "../../../store/pmo-slice";
 import validateForm from "./validateCreateForm";
@@ -143,6 +144,24 @@ const CreateProject = () => {
     });
   };
   const handleProjectChange = ({ target }) => {
+    if (target.name === "startDate") {
+      const currentDate = new Date();
+      const current_date = `${currentDate.getFullYear()}-${
+        currentDate.getMonth() + 1
+      }-${currentDate.getDate()}`;
+      if (startDate < current_date) {
+        alert("start date should not before today's date");
+      } else {
+        setState({
+          ...state,
+          project: {
+            ...state.project,
+            [target.name]: target.value,
+          },
+        });
+      }
+    }
+
     if (target.name === "endDate") {
       if (startDate > target.value) {
         alert("End Date need to be greater than Start Date");
@@ -220,6 +239,10 @@ const CreateProject = () => {
   };
 
   const removeResource = (id) => {
+    if (location.includes("edit") && id) {
+      console.log(id, "edit remove Resource");
+      dispatch(deleteResource(id));
+    }
     const filterResources = resources.filter(
       (resource) => resource.empId.empId !== id
     );

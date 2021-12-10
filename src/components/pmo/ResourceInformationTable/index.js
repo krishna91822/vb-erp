@@ -67,7 +67,10 @@ const ResourceInformationTable = ({ resources, removeResource, edit }) => {
                   {edit && (
                     <TableCell
                       align="center"
-                      onClick={() => removeResource(eachData.empId.empId)}
+                      onClick={() => {
+                        console.log(eachData);
+                        removeResource(eachData._id);
+                      }}
                       style={{ cursor: "pointer" }}
                     >
                       <DeleteIcon />

@@ -155,3 +155,23 @@ export const getProjectById = (projectId) => {
     }
   };
 };
+
+export const deleteResource = (id) => {
+  return async (dispatch) => {
+    const deleteResourceById = async () => {
+      console.log(id, "this is delete resource");
+      const response = await axios.delete(`${baseUrl}/allocations/${id}`);
+      if (response.status === "failure") {
+        throw new Error(response.data.message);
+      }
+      return response;
+    };
+    try {
+      const data = await deleteResourceById();
+      console.log(data, "data from pmo-action");
+      // dispatch(pmoActions.updateEmployeeList(data.data));
+    } catch (err) {
+      console.log(err);
+    }
+  };
+};
