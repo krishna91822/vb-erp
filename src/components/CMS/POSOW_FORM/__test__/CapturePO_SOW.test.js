@@ -214,16 +214,6 @@ describe("Adding Emp dialog box", () => {
     const editformDialog = getByTestId(component, "editBtn");
     fireEvent.click(editformDialog);
   });
-  test("submit/update button should trigger onclick event", () => {
-    const component = setup();
-    // const editformDialog = getByTestId(component, "editBtn");
-    // fireEvent.click(editformDialog);
-    // const formDialog = getByTestId(component, "formDialog");
-    // fireEvent.click(formDialog);
-    const formSubmitBtn = getByTestId(component, "formSubmitBtn");
-
-    fireEvent.click(formSubmitBtn);
-  });
 });
 describe("testing on change/click on capture new PO/SOW page", () => {
   const setup = () => {

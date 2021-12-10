@@ -277,7 +277,7 @@ export const CapturePO_SOW = (props) => {
         dispatch(createNewPO_SOW(DataToSend));
       }
     } else {
-      alert("All fields are required!");
+      alert("Error\nThere may be some missing inputs or bad inputs");
     }
   };
   return (
@@ -623,6 +623,7 @@ export const CapturePO_SOW = (props) => {
                       inputProps={{ "data-testid": "po-sow-num" }}
                       data-test="po-sow-num"
                       error={errors.PO_Number ? true : false}
+                      helperText={errors.PO_Number ? errors.PO_Number : ""}
                       disabled={
                         props.editBtn && !editTglCheckedState ? true : false
                       }
@@ -642,6 +643,7 @@ export const CapturePO_SOW = (props) => {
                       onChange={handlePOAmtTxtBoxChange}
                       inputProps={{ "data-testid": "po-sow-amt" }}
                       error={errors.PO_Amount ? true : false}
+                      helperText={errors.PO_Number ? errors.PO_Amount : ""}
                       disabled={
                         props.editBtn && !editTglCheckedState ? true : false
                       }
@@ -693,11 +695,11 @@ export const CapturePO_SOW = (props) => {
                   </label>
                   <div>
                     <BasicDatePicker
+                      maxDate="POSOW"
                       label={typeName + " End Date"}
                       inputFormat="MM/dd/yyyy"
                       value={selectedDate}
                       onChange={handleDateChange}
-                      // inputProps={{ "data-testid": "BasicdatePicker" }}
                       disabled={
                         props.editBtn && !editTglCheckedState ? true : false
                       }

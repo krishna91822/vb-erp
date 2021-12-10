@@ -1,6 +1,12 @@
 export default function validateForm(data) {
   let errors = {};
 
+  function isAlphaNumeric(testVal) {
+    var val = testVal;
+    var RegEx = /^[a-z0-9]+$/i;
+    var Valid = RegEx.test(val);
+    return Valid;
+  }
   if (!data.Client_Name.trim()) {
     errors.Client_Name = "Client Name is Required";
   }
@@ -19,14 +25,22 @@ export default function validateForm(data) {
   if (!data.PO_Number) {
     errors.PO_Number = "PO number is required";
   }
+  if (data.PO_Number) {
+    if (!isAlphaNumeric(data.PO_Number)) {
+      errors.PO_Number = "special characters not allowed";
+    }
+  }
   if (!data.PO_Amount) {
     errors.PO_Amount = "PO amount is required";
   }
   if (!data.Currency.trim()) {
     errors.Currency = "Currency name is required";
   }
-  if (!data.Remarks.trim()) {
-    errors.Remarks = "Remarks are required";
+  // if (!data.Remarks.trim()) {
+  //   errors.Remarks = "Remarks are required";
+  // }
+  if (!data.POSOW_endDate) {
+    errors.Remarks = "POSOW end date is required are required";
   }
   if (data.Client_Sponser.length === 0) {
     errors.Client_Sponser = "At least one client sponsor needs to be selected";

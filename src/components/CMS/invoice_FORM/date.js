@@ -8,6 +8,7 @@ export default function BasicDatePicker(props) {
   return (
     <LocalizationProvider dateAdapter={AdapterDateFns}>
       <DatePicker
+        maxDate={props.maxDate === "POSOW" ? undefined : new Date()}
         value={props.value}
         onChange={props.onChange}
         disabled={props.disabled}

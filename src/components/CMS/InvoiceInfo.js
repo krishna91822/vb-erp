@@ -76,7 +76,6 @@ function InvoiceInfo() {
     dispatch(fetch_INVOICE_data("Id"));
   }, []);
   const post = useSelector((state) => state.INVOICE_state.invoiceData);
-  console.log(post);
   const [currentpage, currentsetPage] = React.useState(1);
   const [postPerPage, setPostPerPage] = React.useState(5);
   const [anchorEl, setAnchorEl] = React.useState(null);
