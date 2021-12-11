@@ -101,6 +101,23 @@ export const getAllEmployees = () => {
     }
   };
 };
+export const getAllClientData = () => {
+  return async (dispatch) => {
+    const getData = async () => {
+      const response = await axios.get(`${baseUrl}/cims/filter`);
+      if (response.status === "failure") {
+        throw new Error(response.data.message);
+      }
+      return response;
+    };
+    try {
+      const data = await getData();
+      dispatch(pmoActions.updateClientList(data.data));
+    } catch (err) {
+      console.log(err);
+    }
+  };
+};
 
 export const getProjectById = (projectId) => {
   return async (dispatch) => {

@@ -32,6 +32,7 @@ import {
   updateProject,
   getProjectById,
   deleteResource,
+  getAllClientData,
 } from "../../../store/pmo-actions";
 import { pmoActions } from "../../../store/pmo-slice";
 import validateForm from "./validateCreateForm";
@@ -67,7 +68,9 @@ const CreateProject = () => {
   const dispatch = useDispatch();
   const location = useLocation().pathname;
   const navigate = useNavigate();
-  const { redirect, projectById } = useSelector((state) => state.pmo);
+  const { redirect, projectById, allClients } = useSelector(
+    (state) => state.pmo
+  );
   const [edit, setEdit] = useState(false);
   const [state, setState] = useState(initialState);
   const [errors, setErrors] = useState({});
@@ -92,16 +95,9 @@ const CreateProject = () => {
     resources,
   } = state;
 
-  const clientData = [
-    { clientName: "Saad", clientPrimaryContact: 8765678904 },
-    { clientName: "Saad hasan", clientPrimaryContact: 9087456435 },
-    { clientName: "Atif", clientPrimaryContact: 7567865349 },
-    { clientName: "Rupesh", clientPrimaryContact: 9876785432 },
-    { clientName: "Narayan Dubey", clientPrimaryContact: 9876785439 },
-    { clientName: "Abhiram", clientPrimaryContact: 9085674325 },
-  ];
-
+  const clientData = allClients;
   useLayoutEffect(() => {
+    dispatch(getAllClientData());
     if (location.includes("createproject") || location.includes("edit")) {
       setEdit(true);
     }
@@ -238,7 +234,6 @@ const CreateProject = () => {
 
   const removeResource = (id) => {
     if (location.includes("edit") && id) {
-      console.log(id, "edit remove Resource");
       dispatch(deleteResource(id));
     } else {
       const filterResources = resources.filter(
@@ -300,8 +295,8 @@ const CreateProject = () => {
       ...state,
       project: {
         ...state.project,
-        clientName: value.clientName,
-        clientPrimaryContact: value.clientPrimaryContact,
+        clientName: value.brandName,
+        clientPrimaryContact: value.contacts.primaryContact.contactNumber,
       },
     });
   };
@@ -354,7 +349,7 @@ const CreateProject = () => {
                 disableClearable
                 size="small"
                 onInputChange={handleOpen}
-                getOptionLabel={(option) => option.clientName}
+                getOptionLabel={(option) => option.brandName}
                 onChange={(event, value) => {
                   value ? handleAutoselect(value) : setOpen(false);
                 }}

@@ -6,6 +6,7 @@ const initialState = {
   updateModal: false,
   projectById: {},
   allEmployees: [],
+  allClients: [],
   allocatedData: [
     {
       id: 1,
@@ -108,6 +109,9 @@ const pmoSlice = createSlice({
     },
     updateEmployeeList: (state, action) => {
       state.allEmployees = action.payload;
+    },
+    updateClientList: (state, action) => {
+      state.allClients = action.payload;
     },
     removeAllocation: (state, action) => {
       // console.log(state.projectById, "state.projectById");
