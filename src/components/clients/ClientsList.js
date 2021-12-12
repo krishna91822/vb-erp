@@ -71,6 +71,7 @@ function ClientsList() {
                 </StyledTableCell>
                 <StyledTableCell align="center">Location</StyledTableCell>
                 <StyledTableCell align="center">Status</StyledTableCell>
+                <StyledTableCell align="center">Registered On</StyledTableCell>
                 <StyledTableCell align="center">Action</StyledTableCell>
               </TableRow>
             </TableHead>
@@ -95,6 +96,9 @@ function ClientsList() {
                   </StyledTableCell>
                   <StyledTableCell align="center">
                     {client.status ? "Active" : "Inactive"}
+                  </StyledTableCell>
+                  <StyledTableCell align="center">
+                    {client.createdAt.slice(0, 10)}
                   </StyledTableCell>
                   <StyledTableCell align="center">
                     {EditButton(client._id)}

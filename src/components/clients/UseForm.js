@@ -4,6 +4,13 @@ import { useSelector, useDispatch } from "react-redux";
 import { cimsActions } from "../../store/cims-slice";
 import { useNavigate } from "react-router-dom";
 import { uiActions } from "../../store/ui-slice";
+import {
+  fetchCountries,
+  handelDuplicates,
+  getAddressByPincode,
+  addNewClient,
+  updateClient,
+} from "../../store/cims-actions";
 
 const companyTypes = ["GST Registered", "GST Unregistered", "Overseas"];
 const contactSchema = {
@@ -53,16 +60,8 @@ export default function UseForm() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  async function fetchData() {
-    const response = await fetch("http://localhost:4000/countries");
-    const data = await response.json();
-    if (data.code === 200 || data.status === "success")
-      dispatch(cimsActions.setCountries(data.data));
-    else console.log(data.error);
-  }
-
-  useEffect(() => {
-    fetchData();
+  useEffect(async () => {
+    dispatch(fetchCountries());
   }, []);
 
   const [anchorEl, setAnchorEl] = useState(null);
@@ -293,23 +292,10 @@ export default function UseForm() {
 
   const handelBrandName = async (e) => {
     const brand = e.target.value;
+    const id = formData._id ?? "";
     setformvalue(e);
     if (brand) {
-      const token = localStorage.getItem("authorization");
-      await axios
-        .get("http://localhost:4000/duplicates", {
-          headers: {
-            authorization: `bearer ${token}`,
-            brandname: brand,
-            id: formData._id ?? "",
-          },
-        })
-        .then((res) => {
-          console.log(res);
-          res.data.code !== 200
-            ? window.alert(res.data.message)
-            : dispatch(cimsActions.setBrandFocus(false));
-        });
+      dispatch(handelDuplicates(brand, id));
     }
   };
 
@@ -376,56 +362,17 @@ export default function UseForm() {
     dispatch(cimsActions.createForm(new_form));
   };
 
-  const handelInvalidPincode = (addType) => {
-    let new_form = JSON.parse(JSON.stringify(formData));
-    new_form[addType]["city"] = "";
-    new_form[addType]["district"] = "";
-    new_form[addType]["state"] = "";
-    new_form[addType]["pincode"] = "";
-    dispatch(cimsActions.createForm(new_form));
-  };
-
-  const getAddressByPincode = async (addType, pincode) => {
-    try {
-      await axios
-        .get("http://localhost:4000/location", {
-          headers: {
-            pincode: pincode,
-            country: addType === "registeredAddress" ? RegCcode : ComCcode,
-          },
-        })
-        .then((res) => {
-          if (res.data.code === 200 || res.data.status === "success")
-            addType === "registeredAddress"
-              ? dispatch(cimsActions.setLocReg(res.data.data))
-              : dispatch(cimsActions.setLocCom(res.data.data));
-          else {
-            const errMsg = res.data.error[0].message;
-            dispatch(
-              uiActions.showNotification({
-                status: "error",
-                title: "Error!",
-                message: errMsg,
-              })
-            );
-            handelInvalidPincode(addType);
-          }
-        });
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   const handelAddressOnBlur = (e, addType) => {
     setAddress(e, addType);
     if (e.target.name === "pincode") {
       const data = e.target.value;
+      const ccode = addType === "registeredAddress" ? RegCcode : ComCcode;
       if (
         data.length > 1 &&
         formData[addType].pincode !== "" &&
         errors[addType].pincode === ""
       )
-        getAddressByPincode(addType, data);
+        dispatch(getAddressByPincode(addType, data, ccode));
     }
   };
 
@@ -581,72 +528,22 @@ export default function UseForm() {
   const submitForm = async (e) => {
     e.preventDefault();
     if (validateOnSubmit()) {
-      const token = localStorage.getItem("authorization");
-      try {
-        await axios
-          .post(
-            "http://localhost:4000/cims",
-            { ...formData },
-            {
-              headers: {
-                authorization: `bearer ${token}`,
-              },
-            }
-          )
-          .then((res) => {
-            console.log(res);
-            if (res.data.status === "success" || res.data.code === 200) {
-              setTimeout(() => {
-                dispatch(cimsActions.resetForm());
-              }, 100);
-              window.alert("Data added successfully!");
-              navigate("/cims");
-            } else {
-              window.alert(
-                "Error occured while adding the data!\nPlease contact the maintenance team."
-              );
-              console.log(res.data);
-            }
-          });
-      } catch (error) {
-        console.log(error);
-      }
+      dispatch(addNewClient(formData));
+      setTimeout(function () {
+        navigate("/cims");
+        dispatch(uiActions.toggleLoader());
+      }, 1000);
     } else window.alert("Some data missing!");
   };
 
   const updateForm = async (e) => {
     e.preventDefault();
     if (validateOnSubmit()) {
-      const token = localStorage.getItem("authorization");
-      try {
-        await axios
-          .patch(
-            "http://localhost:4000/cims",
-            { ...formData },
-            {
-              headers: {
-                authorization: `bearer ${token}`,
-              },
-            }
-          )
-          .then((res) => {
-            console.log(res);
-            if (res.data.status === "success" || res.data.code === 200) {
-              setTimeout(() => {
-                dispatch(cimsActions.resetForm());
-              }, 100);
-              window.alert("Data updated successfully!");
-              navigate("/cims");
-            } else {
-              window.alert(
-                "Error occured while updating the data!\nPlease contact the maintenance team."
-              );
-              console.log(res.data);
-            }
-          });
-      } catch (error) {
-        console.log(error);
-      }
+      dispatch(updateClient(formData));
+      setTimeout(function () {
+        navigate("/cims");
+        dispatch(uiActions.toggleLoader());
+      }, 1000);
     } else window.alert("Some data missing!");
   };
 

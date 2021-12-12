@@ -142,7 +142,7 @@ const cimsSlice = createSlice({
     getClientsList(state, action) {
       state.clientsList = action.payload;
     },
-    getClientData(state, action) {
+    setClientData(state, action) {
       state.form = action.payload;
     },
     toggleEditMode(state, action) {
@@ -153,6 +153,19 @@ const cimsSlice = createSlice({
       state.form = {
         ...state.form,
         communicationAddress: { ...addressFields, country: "India-in" },
+      };
+    },
+    handelInvalidPincode(state, action) {
+      const add = action.payload;
+      state.form = {
+        ...state.form,
+        [add]: {
+          ...state.form[add],
+          city: "",
+          district: "",
+          state: "",
+          pincode: "",
+        },
       };
     },
   },
