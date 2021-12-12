@@ -25,7 +25,11 @@ function CreateClientForm() {
 
   return (
     <>
-      <PageHeader />
+      <Grid container m={1}>
+        <Grid item>
+          <Typography variant="h4">CIMS</Typography>
+        </Grid>
+      </Grid>
       <div className="FormContainer">
         <div className="form-header">
           <Grid container m={2} spacing={1}>
