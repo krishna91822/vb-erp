@@ -16,7 +16,10 @@ import FilterListIcon from "@mui/icons-material/FilterList";
 import FilterListOffIcon from "@mui/icons-material/FilterListOff";
 
 import { pmoActions } from "../../../store/pmo-slice";
-import { getAllProjects } from "../../../store/pmo-actions";
+import {
+  getAllProjects,
+  getAllFilterProjects,
+} from "../../../store/pmo-actions";
 import {
   MainComponent,
   HeadingStyle,
@@ -34,12 +37,18 @@ const ViewProjects = () => {
   const navigate = useNavigate();
   const { projects } = useSelector((state) => state.pmo);
   const [page, setPage] = useState(0);
-  const [clientName, setClientName] = useState("");
-  const [projectName, setProjectName] = useState("");
-  const [vbProjectId, setVbProjectId] = useState("");
-  const [vbProjectStatus, setVbProjectStatus] = useState("");
+  // const [clientName, setClientName] = useState("");
+  // const [projectName, setProjectName] = useState("");
+  // const [vbProjectId, setVbProjectId] = useState("");
+  // const [vbProjectStatus, setVbProjectStatus] = useState("");
   const [pressed, setPressed] = useState(false);
   const [filterProjects, setFilterProjects] = useState("active");
+  const [filters, setFilters] = useState({
+    clientName: "",
+    projectName: "",
+    vbProjectId: "",
+    vbProjectStatus: "",
+  });
   const rowsPerPage = 10;
 
   useEffect(() => {
@@ -88,36 +97,43 @@ const ViewProjects = () => {
     e.stopPropagation();
   };
 
-  const filterClientName = (event) => {
-    const cName = event.target.value.toLowerCase();
-    setClientName(cName);
-  };
+  // const filterClientName = (event) => {
+  //   const cName = event.target.value.toLowerCase();
+  //   setClientName(cName);
+  // };
 
-  const filterProjectId = (event) => {
-    const pId = event.target.value.toLowerCase();
-    setVbProjectId(pId);
-  };
+  // const filterProjectId = (event) => {
+  //   const pId = event.target.value.toLowerCase();
+  //   setVbProjectId(pId);
+  // };
 
-  const filterProjectName = (event) => {
-    const pName = event.target.value.toLowerCase();
-    setProjectName(pName);
-  };
+  // const filterProjectName = (event) => {
+  //   const pName = event.target.value.toLowerCase();
+  //   setProjectName(pName);
+  // };
 
-  const filterStatus = (event) => {
-    const pStatus = event.target.value.toLowerCase();
-    setVbProjectStatus(pStatus);
-  };
+  // const filterStatus = (event) => {
+  //   const pStatus = event.target.value.toLowerCase();
+  //   setVbProjectStatus(pStatus);
+  // };
 
-  const filteredData = projects.filter((eachData) => {
-    return (
-      eachData.clientName.toLowerCase().includes(clientName) &&
-      eachData.projectName.toLowerCase().includes(projectName) &&
-      eachData.vbProjectId.toLowerCase().includes(vbProjectId) &&
-      eachData.vbProjectStatus.toLowerCase().includes(vbProjectStatus)
-    );
-  });
+  // const filteredData = projects.filter((eachData) => {
+  //   return (
+  //     eachData.clientName.toLowerCase().includes(clientName) &&
+  //     eachData.projectName.toLowerCase().includes(projectName) &&
+  //     eachData.vbProjectId.toLowerCase().includes(vbProjectId) &&
+  //     eachData.vbProjectStatus.toLowerCase().includes(vbProjectStatus)
+  //   );
+  // });
   const showfilter = () => {
     setPressed(!pressed);
+  };
+
+  const filterData = (event) => {
+    setFilters({ ...filters, [event.target.name]: event.target.value });
+    if (event.key === "Enter") {
+      dispatch(getAllFilterProjects(filterProjects, filters));
+    }
   };
 
   return (
@@ -261,8 +277,10 @@ const ViewProjects = () => {
                         variant="standard"
                         type="text"
                         placeholder="Client Name"
-                        onChange={filterClientName}
-                        value={clientName}
+                        name="clientName"
+                        onChange={filterData}
+                        onKeyPress={filterData}
+                        value={filters.clientName}
                         inputProps={{ style: { fontSize: "small" } }}
                       />
                     </TableCell>
@@ -271,8 +289,10 @@ const ViewProjects = () => {
                         variant="standard"
                         type="text"
                         placeholder="Project Name"
-                        onChange={filterProjectName}
-                        value={projectName}
+                        name="projectName"
+                        onChange={filterData}
+                        onKeyPress={filterData}
+                        value={filters.projectName}
                         inputProps={{ style: { fontSize: "small" } }}
                       />
                     </TableCell>
@@ -281,8 +301,10 @@ const ViewProjects = () => {
                         variant="standard"
                         type="text"
                         placeholder="Project Id"
-                        onChange={filterProjectId}
-                        value={vbProjectId}
+                        name="vbProjectId"
+                        onChange={filterData}
+                        onKeyPress={filterData}
+                        value={filters.vbProjectId}
                         inputProps={{ style: { fontSize: "small" } }}
                       />
                     </TableCell>
@@ -291,15 +313,17 @@ const ViewProjects = () => {
                         variant="standard"
                         type="text"
                         placeholder="Project Status"
-                        onChange={filterStatus}
-                        value={vbProjectStatus}
+                        name="vbProjectStatus"
+                        onChange={filterData}
+                        onKeyPress={filterData}
+                        value={filters.vbProjectStatus}
                         inputProps={{ style: { fontSize: "small" } }}
                       />
                     </TableCell>
                     <TableCell align="left"></TableCell>
                   </TableRow>
                 )}
-                {filteredData
+                {projects
                   .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                   .map((currElem, index) => (
                     <TableRow key={index} onClick={() => entryLink(currElem)}>
