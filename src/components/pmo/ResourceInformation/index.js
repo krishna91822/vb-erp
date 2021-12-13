@@ -129,7 +129,7 @@ const ResourceInformation = ({
                 <input
                   type="range"
                   min="1"
-                  max={allEmployees.totalAllocation}
+                  max="100"
                   name="allocationPercentage"
                   value={allocationPercentage}
                   onChange={handleResourceChange}

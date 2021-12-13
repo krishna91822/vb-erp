@@ -232,19 +232,18 @@ const CreateProject = () => {
     }
   };
 
-  const removeResource = (id) => {
+  const removeResource = (empId, id) => {
     if (location.includes("edit") && id) {
       dispatch(deleteResource(id));
-    } else {
-      const filterResources = resources.filter(
-        (resource) => resource.empId.empId !== id
-      );
-      setState({
-        ...state,
-        resources: filterResources,
-        resource: initialState.resource,
-      });
     }
+    const filterResources = resources.filter(
+      (resource) => resource.empId !== empId
+    );
+    setState({
+      ...state,
+      resources: filterResources,
+      resource: initialState.resource,
+    });
   };
 
   const handleSubmit = (e) => {
@@ -354,7 +353,7 @@ const CreateProject = () => {
                   value ? handleAutoselect(value) : setOpen(false);
                 }}
                 style={{ width: "100%" }}
-                options={clientData}
+                options={clientData || []}
                 open={open}
                 inputValue={clientName}
                 renderInput={(params) => (
