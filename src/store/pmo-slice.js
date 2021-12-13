@@ -7,6 +7,7 @@ const initialState = {
   projectById: {},
   allEmployees: [],
   allClients: [],
+  allClients: [],
   allocatedData: [
     {
       id: 1,
@@ -135,6 +136,12 @@ const pmoSlice = createSlice({
       state.redirect = initialState.redirect;
       state.updateModal = initialState.updateModal;
       state.projectById = initialState.projectById;
+    },
+    updateAllocatedData: (state, action) => {
+      state.allocatedData = action.payload;
+    },
+    updatebenchData: (state, action) => {
+      state.benchData = action.payload;
     },
   },
 });
