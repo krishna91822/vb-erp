@@ -30,7 +30,7 @@ const icon = (
 export default function SimpleGrow() {
   const dispatch = useDispatch();
   const params = useParams();
-  let popup = useSelector((state) => state.CMS_state.popup);
+  const notificationControl = useSelector((state) => state.ui.notification);
   const [checked, setChecked] = React.useState(false);
 
   const handleChange = () => {
@@ -40,7 +40,7 @@ export default function SimpleGrow() {
     if (checked) {
       dispatch(fetchPOs_emp_data(params.id));
     }
-  }, [checked, popup]);
+  }, [checked, notificationControl]);
 
   return (
     <Box sx={{ height: checked ? 300 : 50 }}>

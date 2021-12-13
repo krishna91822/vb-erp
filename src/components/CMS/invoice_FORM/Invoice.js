@@ -28,21 +28,32 @@ import AccordionDetails from "@mui/material/AccordionDetails";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import Dialog from "./dialog";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Date from "./date";
 import React, { useEffect } from "react";
 import { createNew_INVOICE } from "../../../store/CMS/INVOICE-actions";
 import { Update_INVOICE } from "../../../store/CMS/INVOICE-actions";
 import { fetchPO_SOW_data } from "../../../store/CMS/POSOW-actions";
+import { PoSowActions } from "../../../store/CMS/POSOW-slice";
 
 function Invoice(props) {
   const params = useParams();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const isRedirect = useSelector((state) => state.CMS_state.redirect);
+  useEffect(() => {
+    if (isRedirect) {
+      navigate("/invoices");
+      dispatch(PoSowActions.setRedirect(false));
+    }
+  }, [isRedirect]);
   useEffect(() => {
     dispatch(fetchPO_SOW_data());
   }, []);
+
   const allPOSOWs = useSelector((state) => state.CMS_state.poSowData);
   const allINVOICE = useSelector((state) => state.INVOICE_state.invoiceData);
-  console.log(allINVOICE);
+
   const allProjects = allPOSOWs.map((val) => {
     return val.Project_Name;
   });
@@ -51,7 +62,7 @@ function Invoice(props) {
   });
 
   let filteredArr = useSelector((state) => state.INVOICE_state.dataByID);
-  console.log(filteredArr);
+
   const names = useSelector(
     (state) => state.INVOICE_state.inputFieldsData.names
   );
@@ -102,7 +113,7 @@ function Invoice(props) {
   const [Vb_Bank_Acc, setVbbankacc] = React.useState(ReadVbBankAcc);
   const [Date_, setDate] = React.useState(ReadDate);
   const [invoicereceived, setinvoicereceived] = useState(props.invoicereceived);
-  const [filterinvoiceArr, setfilterinvoiceArr] = useState([]);
+  // const [filterinvoiceArr, setfilterinvoiceArr] = useState([]);
   let [sum, setsum] = useState(0);
 
   useEffect(() => {
@@ -160,15 +171,6 @@ function Invoice(props) {
       const filtered = allPOSOWs.filter((val) => {
         return projectName === val.Project_Name;
       });
-      const filterinvoiceData = allINVOICE.filter((val) => {
-        return poId === val.purchase_orders._id;
-      });
-      setfilterinvoiceArr([...filterinvoiceData]);
-      let count = 0;
-      const totalinvoiceamount = filterinvoiceArr.map((val) => {
-        count = count + val.invoice_amount_received;
-      });
-      setsum(count);
 
       setPO_number(filtered[0].PO_Number);
       setPersonName(filtered[0].Client_Name);
@@ -198,17 +200,18 @@ function Invoice(props) {
       dispatch(createNew_INVOICE(DataToSend));
     }
   };
-  // const filterinvoiceArr = allINVOICE.filter((val) => {
-  //   return poId === val.purchase_orders._id;
-  // });
+  const filterinvoiceArr = allINVOICE.filter((val) => {
+    return poId === val.purchase_orders._id;
+  });
+  // setfilterinvoiceArr([...filterinvoiceData]);
   // console.log(filterinvoiceArr);
   let count = 0;
-  // useEffect(() => {
-  //   const totalinvoiceamount = filterinvoiceArr.map((val) => {
-  //     count = count + val.invoice_amount_received;
-  //   });
-  //   setsum(count);
-  // });
+  useEffect(() => {
+    const totalinvoiceamount = filterinvoiceArr.map((val) => {
+      count = count + val.invoice_amount_received;
+    });
+    setsum(count);
+  });
   return (
     <div className="maincontainer">
       <h3>Invoice</h3>
@@ -218,12 +221,14 @@ function Invoice(props) {
             <h4 className="heading">PO Information</h4>
           </Grid>
           <Grid item lg={1} md={1} sm={12} xs={12}>
-            <Dialog
-              className="savebtn"
+            <Button
               variant="contained"
               color="success"
-              onClick={submitForm}
-            />
+              type="submit"
+              onClick={(event) => submitForm(event)}
+            >
+              SAVE
+            </Button>
           </Grid>
         </Grid>
 

@@ -19,9 +19,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { createNewPO_SOW } from "../../../store/CMS/POSOW-actions";
 import { UpdatePO_SOW } from "../../../store/CMS/POSOW-actions";
 import { SendForApproval } from "../../../store/CMS/POSOW-actions";
-import { uiActions } from "../../../store/ui-slice";
+import { PoSowActions } from "../../../store/CMS/POSOW-slice";
+import { useNavigate } from "react-router-dom";
 import validateForm from "./validateForm";
-import CustomizedDialogs from "./dialogBox";
 
 // materialUI stylings for select dropdowns.
 const ITEM_HEIGHT = 48;
@@ -48,8 +48,16 @@ export const CapturePO_SOW = (props) => {
 
   const dispatch = useDispatch();
   const params = useParams();
+  let navigate = useNavigate();
 
   let filteredArr = useSelector((state) => state.CMS_state.dataByID);
+  const isRedirect = useSelector((state) => state.CMS_state.redirect);
+  useEffect(() => {
+    if (isRedirect) {
+      navigate("/posow");
+      dispatch(PoSowActions.setRedirect(false));
+    }
+  }, [isRedirect]);
 
   const names = useSelector((state) => state.CMS_state.inputFieldsData.names);
   const projects = useSelector(
@@ -71,8 +79,6 @@ export const CapturePO_SOW = (props) => {
   const DocumentTypes = useSelector(
     (state) => state.CMS_state.inputFieldsData.DocumentTypes
   );
-  const popupController = useSelector((state) => state.CMS_state.popup);
-  const response_msg = useSelector((state) => state.CMS_state.response_message);
 
   let ReadPersonName = "";
   let ReadProjectName = "";
@@ -203,6 +209,7 @@ export const CapturePO_SOW = (props) => {
   const handleEditTglChange = (e) => {
     seteditTglCheckedState(!editTglCheckedState);
   };
+
   const handleClientOnChange = (position) => {
     const updatedCheckedState = ClientSponsorCheckedState.map((item, index) =>
       index === position ? !item : item
@@ -306,13 +313,6 @@ export const CapturePO_SOW = (props) => {
                 <div></div>
               )}
             </div>
-            {popupController ? (
-              <div data-test="ResponseMsgDialogBox">
-                <CustomizedDialogs msg={response_msg} />
-              </div>
-            ) : (
-              <div></div>
-            )}
             <Box
               sx={{
                 bgcolor: "white",

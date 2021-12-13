@@ -12,7 +12,7 @@ const Notification = (props) => {
   };
 
   if (props.status === "success") {
-    toast.success("Success", {
+    toast.success(props.message, {
       position: toast.POSITION.TOP_CENTER,
       onClose: afterToast,
       theme: "dark",

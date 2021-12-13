@@ -1,12 +1,36 @@
 import axios from "../../helpers/axiosInstance";
 import { invoiceActions } from "./INVOICE-slice";
 import { PoSowActions } from "./POSOW-slice";
+import { uiActions } from "../ui-slice";
 
 export const createNew_INVOICE = (formData) => {
   return async function (dispatch) {
-    const rqst = await axios.post("http://localhost:8000/invoice", formData);
-    dispatch(invoiceActions.PopUpON("Saved Successfully"));
-    dispatch(PoSowActions.setRedirect(true));
+    try {
+      const response = await axios.post(
+        "http://localhost:8000/invoice",
+        formData
+      );
+      if (response.status === 201) {
+        dispatch(
+          uiActions.showNotification({
+            status: "success",
+            title: "Success!",
+            message: "Saved Successfully!",
+          })
+        );
+        dispatch(PoSowActions.setRedirect(true));
+      } else {
+        throw new Error("Could not Save data!");
+      }
+    } catch (error) {
+      dispatch(
+        uiActions.showNotification({
+          status: "error",
+          title: "Error",
+          message: "Could not save data",
+        })
+      );
+    }
   };
 };
 export const Update_INVOICE = (formData, id) => {
@@ -21,15 +45,43 @@ export const Update_INVOICE = (formData, id) => {
 };
 export const fetch_INVOICE_data = (sortBy) => {
   return async function (dispatch) {
-    const res = await axios.get(`http://localhost:8000/invoice/sort/${sortBy}`);
-
-    dispatch(invoiceActions.setTabViewData(res.data.data));
+    try {
+      const res = await axios.get(
+        `http://localhost:8000/invoice/sort/${sortBy}`
+      );
+      if (res.status === 200) {
+        dispatch(invoiceActions.setTabViewData(res.data.data.results));
+      } else {
+        throw new Error("Could'nt fetch data!");
+      }
+    } catch (error) {
+      dispatch(
+        uiActions.showNotification({
+          status: "error",
+          title: "Error",
+          message: "Could'nt fetch data",
+        })
+      );
+    }
   };
 };
 export const fetchSpecificINVOICE = (ROW_ID) => {
   return async function (dispatch) {
-    const res = await axios.get(`http://localhost:8000/invoice/${ROW_ID}`);
-    console.log(res.data.data);
-    dispatch(invoiceActions.SetSpecific([res.data.data]));
+    try {
+      const res = await axios.get(`http://localhost:8000/invoice/${ROW_ID}`);
+      if (res.status === 200) {
+        dispatch(invoiceActions.SetSpecific([res.data.data]));
+      } else {
+        throw new Error("Could'nt fetch data!");
+      }
+    } catch (error) {
+      dispatch(
+        uiActions.showNotification({
+          status: "error",
+          title: "Error",
+          message: "Could'nt fetch data",
+        })
+      );
+    }
   };
 };

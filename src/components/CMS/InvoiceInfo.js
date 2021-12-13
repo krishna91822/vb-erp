@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 import * as React from "react";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -12,11 +11,8 @@ import Button from "@mui/material/Button";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-// import api from '../api/posts'
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-// import setPosts from './Main/actions'
-// import { sortProducts } from "../../store/CMS/POSOW-actions";
 import { fetch_INVOICE_data } from "../../store/CMS/INVOICE-actions";
 import Typography from "@mui/material/Typography";
 import Pagination from "@mui/material/Pagination";
