@@ -131,7 +131,6 @@ export const handelClientData = (clientId, mode, errors) => {
 
       if (response.data.code === 200 || response.data.status === "success") {
         const data = response.data.data;
-        console.log(data);
 
         addType === "communicationAddress"
           ? dispatch(cimsActions.setLocCom(data))
@@ -293,6 +292,44 @@ export const updateClient = (formData) => {
       dispatch(uiActions.toggleLoader());
       const data = await postData();
       dispatch(cimsActions.resetForm());
+      dispatch(
+        uiActions.showNotification({
+          status: "success",
+          title: "Success!",
+          message: data.message,
+        })
+      );
+    } catch (error) {
+      setTimeout(function () {
+        dispatch(
+          uiActions.showNotification({
+            status: "error",
+            title: "Error!",
+            message: error.message,
+          })
+        );
+      }, 1000);
+    }
+  };
+};
+
+export const changeActiveStatus = (clientId) => {
+  return async (dispatch) => {
+    const fetchData = async () => {
+      const response = await axios.patch(`/cims/status?id=${clientId}`);
+      if (response.data.code === 200 || response.data.status === "success") {
+        const data = response.data;
+
+        return data;
+      }
+      throw new Error(
+        response.data.error || "Something went wrong! Please try again..."
+      );
+    };
+
+    try {
+      dispatch(uiActions.toggleLoader());
+      const data = await fetchData();
       dispatch(
         uiActions.showNotification({
           status: "success",

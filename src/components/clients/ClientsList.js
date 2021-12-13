@@ -1,14 +1,26 @@
-import React from "react";
+import React, { useState } from "react";
 import { styled } from "@mui/material/styles";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
+import {
+  Table,
+  TableBody,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Paper,
+  IconButton,
+  Menu,
+  MenuItem,
+  ListItemIcon,
+  ListItemText,
+  Divider,
+} from "@mui/material";
 import TableCell, { tableCellClasses } from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
-import Paper from "@mui/material/Paper";
-import Button from "@mui/material/Button";
-import EditIcon from "@mui/icons-material/Edit";
+import {
+  Edit as EditIcon,
+  MoreVert as MoreVertIcon,
+  Delete as DeleteIcon,
+  Restore as RestoreIcon,
+} from "@mui/icons-material";
 import PageHeader from "./PageHeader";
 import "../../assets/styles/ListStyles.css";
 
@@ -34,25 +46,86 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-const columns = [];
-
 function ClientsList() {
-  const { clientsList, handleClientData } = ClientHelpers();
+  const { clientsList, handleClientData, handelActiveStatus } = ClientHelpers();
 
-  function EditButton(clientId) {
+  const [clientId, setClientId] = useState();
+  const [clientStatus, setClientStatus] = useState();
+  const [anchorEl, setAnchorEl] = useState(null);
+  const open = Boolean(anchorEl);
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const handelMenu = (id, status) => {
+    setClientId(id);
+    setClientStatus(status);
+  };
+
+  function menuIcon() {
     return (
-      <div>
-        <Button
-          variant="fab"
-          className="edit-btn"
-          endIcon={<EditIcon color="warning" />}
-          onMouseDown={() => {
-            handleClientData(clientId, true);
+      <>
+        <IconButton
+          aria-label="actions"
+          id="actions-button"
+          aria-controls="actions"
+          aria-expanded={open ? "true" : undefined}
+          aria-haspopup="true"
+          onClick={handleClick}
+        >
+          <MoreVertIcon />
+        </IconButton>
+
+        <Menu
+          id="actions"
+          MenuListProps={{
+            "aria-labelledby": "actions-button",
+          }}
+          anchorEl={anchorEl}
+          open={open}
+          onClose={handleClose}
+          PaperProps={{
+            style: {
+              width: "16ch",
+            },
           }}
         >
-          Edit
-        </Button>
-      </div>
+          <MenuItem
+            onClick={() => {
+              handleClose();
+              handleClientData(clientId, true);
+            }}
+            disableRipple
+          >
+            <ListItemIcon>
+              <EditIcon color="warning" />
+            </ListItemIcon>
+            <ListItemText>Edit</ListItemText>
+          </MenuItem>
+          <Divider />
+          <MenuItem
+            onClick={() => {
+              handleClose();
+              handelActiveStatus(clientId);
+            }}
+            disableRipple
+          >
+            <ListItemIcon>
+              {clientStatus ? (
+                <DeleteIcon color="error" />
+              ) : (
+                <RestoreIcon color="success" />
+              )}
+            </ListItemIcon>
+            <ListItemText>
+              {clientStatus ? "Deactivate" : "Activate"}
+            </ListItemText>
+          </MenuItem>
+        </Menu>
+      </>
     );
   }
 
@@ -77,31 +150,60 @@ function ClientsList() {
             </TableHead>
             <TableBody>
               {clientsList.map((client, idx) => (
-                <StyledTableRow
-                  onClick={() => {
-                    handleClientData(client._id, false);
-                  }}
-                  className="table-row"
-                  key={client._id}
-                >
-                  <StyledTableCell align="center">{idx + 1}</StyledTableCell>
-                  <StyledTableCell align="center">
+                <StyledTableRow className="table-row" key={client._id}>
+                  <StyledTableCell
+                    onClick={() => {
+                      handleClientData(client._id, false);
+                    }}
+                    align="center"
+                  >
+                    {idx + 1}
+                  </StyledTableCell>
+                  <StyledTableCell
+                    onClick={() => {
+                      handleClientData(client._id, false);
+                    }}
+                    align="center"
+                  >
                     {client.brandName}
                   </StyledTableCell>
-                  <StyledTableCell align="center">
+                  <StyledTableCell
+                    onClick={() => {
+                      handleClientData(client._id, false);
+                    }}
+                    align="center"
+                  >
                     {`${client.contacts.primaryContact.firstName} ${client.contacts.primaryContact.lastName}`}
                   </StyledTableCell>
-                  <StyledTableCell align="center">
+                  <StyledTableCell
+                    onClick={() => {
+                      handleClientData(client._id, false);
+                    }}
+                    align="center"
+                  >
                     {client.communicationAddress.country.split("-")[0]}
                   </StyledTableCell>
-                  <StyledTableCell align="center">
+                  <StyledTableCell
+                    onClick={() => {
+                      handleClientData(client._id, false);
+                    }}
+                    align="center"
+                  >
                     {client.status ? "Active" : "Inactive"}
                   </StyledTableCell>
-                  <StyledTableCell align="center">
+                  <StyledTableCell
+                    onClick={() => {
+                      handleClientData(client._id, false);
+                    }}
+                    align="center"
+                  >
                     {client.createdAt.slice(0, 10)}
                   </StyledTableCell>
-                  <StyledTableCell align="center">
-                    {EditButton(client._id)}
+                  <StyledTableCell
+                    onClick={() => handelMenu(client._id, client.status)}
+                    align="center"
+                  >
+                    {menuIcon()}
                   </StyledTableCell>
                 </StyledTableRow>
               ))}

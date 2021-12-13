@@ -5,6 +5,7 @@ import {
   fetchCountries,
   getClientsData,
   handelClientData,
+  changeActiveStatus,
 } from "../../store/cims-actions";
 import { uiActions } from "../../store/ui-slice";
 
@@ -27,5 +28,14 @@ export default function ClientHelpers() {
       dispatch(uiActions.toggleLoader());
     }, 3000);
   };
-  return { clientsList, handleClientData };
+
+  const handelActiveStatus = async (clientId) => {
+    dispatch(changeActiveStatus(clientId));
+    setTimeout(() => {
+      dispatch(getClientsData());
+      dispatch(uiActions.toggleLoader());
+    }, 3000);
+  };
+
+  return { clientsList, handleClientData, handelActiveStatus };
 }
