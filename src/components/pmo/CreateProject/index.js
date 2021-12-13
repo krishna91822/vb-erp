@@ -31,6 +31,8 @@ import {
   createProject,
   updateProject,
   getProjectById,
+  deleteResource,
+  getAllClientData,
 } from "../../../store/pmo-actions";
 import { pmoActions } from "../../../store/pmo-slice";
 import validateForm from "./validateCreateForm";
@@ -66,7 +68,9 @@ const CreateProject = () => {
   const dispatch = useDispatch();
   const location = useLocation().pathname;
   const navigate = useNavigate();
-  const { redirect, projectById } = useSelector((state) => state.pmo);
+  const { redirect, projectById, allClients } = useSelector(
+    (state) => state.pmo
+  );
   const [edit, setEdit] = useState(false);
   const [state, setState] = useState(initialState);
   const [errors, setErrors] = useState({});
@@ -91,16 +95,9 @@ const CreateProject = () => {
     resources,
   } = state;
 
-  const clientData = [
-    { clientName: "Saad", clientPrimaryContact: 8765678904 },
-    { clientName: "Saad hasan", clientPrimaryContact: 9087456435 },
-    { clientName: "Atif", clientPrimaryContact: 7567865349 },
-    { clientName: "Rupesh", clientPrimaryContact: 9876785432 },
-    { clientName: "Narayan Dubey", clientPrimaryContact: 9876785439 },
-    { clientName: "Abhiram", clientPrimaryContact: 9085674325 },
-  ];
-
+  const clientData = allClients;
   useLayoutEffect(() => {
+    dispatch(getAllClientData());
     if (location.includes("createproject") || location.includes("edit")) {
       setEdit(true);
     }
@@ -143,7 +140,23 @@ const CreateProject = () => {
     });
   };
   const handleProjectChange = ({ target }) => {
-    if (target.name === "endDate") {
+    if (target.name === "startDate") {
+      const currentDate = new Date();
+      const current_date = `${currentDate.getFullYear()}-${
+        currentDate.getMonth() + 1
+      }-${currentDate.getDate()}`;
+      if (target.value < current_date) {
+        alert("Start date cannot be earlier than today's date");
+      } else {
+        setState({
+          ...state,
+          project: {
+            ...state.project,
+            [target.name]: target.value,
+          },
+        });
+      }
+    } else if (target.name === "endDate") {
       if (startDate > target.value) {
         alert("End Date need to be greater than Start Date");
       } else {
@@ -167,7 +180,7 @@ const CreateProject = () => {
   };
 
   const handleResourceChange = ({ target }) => {
-    if (target.name === "startDate") {
+    if (target.name === "allocationStartDate") {
       if (target.value < startDate || target.value > endDate) {
         alert("Start Date need to be in range");
       } else if (startDate === "" || endDate === "") {
@@ -181,7 +194,7 @@ const CreateProject = () => {
           },
         });
       }
-    } else if (target.name === "endDate") {
+    } else if (target.name === "allocationEndDate") {
       if (target.value > endDate || target.value < startDate) {
         alert("End Date need to be in range");
       } else if (target.value < resource.startDate) {
@@ -219,9 +232,12 @@ const CreateProject = () => {
     }
   };
 
-  const removeResource = (id) => {
+  const removeResource = (empId, id) => {
+    if (location.includes("edit") && id) {
+      dispatch(deleteResource(id));
+    }
     const filterResources = resources.filter(
-      (resource) => resource.empId.empId !== id
+      (resource) => resource.empId !== empId
     );
     setState({
       ...state,
@@ -278,8 +294,8 @@ const CreateProject = () => {
       ...state,
       project: {
         ...state.project,
-        clientName: value.clientName,
-        clientPrimaryContact: value.clientPrimaryContact,
+        clientName: value.brandName,
+        clientPrimaryContact: value.contacts.primaryContact.contactNumber,
       },
     });
   };
@@ -332,12 +348,12 @@ const CreateProject = () => {
                 disableClearable
                 size="small"
                 onInputChange={handleOpen}
-                getOptionLabel={(option) => option.clientName}
+                getOptionLabel={(option) => option.brandName}
                 onChange={(event, value) => {
                   value ? handleAutoselect(value) : setOpen(false);
                 }}
                 style={{ width: "100%" }}
-                options={clientData}
+                options={clientData || []}
                 open={open}
                 inputValue={clientName}
                 renderInput={(params) => (
