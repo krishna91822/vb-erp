@@ -23,16 +23,7 @@ const ResourceInformationTable = ({ resources, removeResource, edit }) => {
         style={{ flexWrap: "wrap", marginTop: 5 }}
       >
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
-          <TableHead
-            style={
-              {
-                // backgroundColor: "#EDEDED",
-                // borderWidth: 2,
-                // borderColor: "rgb(162 157 157)",
-                // borderStyle: "solid",
-              }
-            }
-          >
+          <TableHead>
             <TableRow>
               <TableCell align="left">SNO</TableCell>
               <TableCell align="left">Associate Name</TableCell>
@@ -67,7 +58,9 @@ const ResourceInformationTable = ({ resources, removeResource, edit }) => {
                   {edit && (
                     <TableCell
                       align="center"
-                      onClick={() => removeResource(eachData.empId.empId)}
+                      onClick={() => {
+                        removeResource(eachData.empId, eachData._id);
+                      }}
                       style={{ cursor: "pointer" }}
                     >
                       <DeleteIcon />
