@@ -3,6 +3,8 @@ import NotFound from "../pages/NotFound";
 import Projects from "../pages/pmo/Projects";
 import CreateProject from "../pages/pmo/CreateProject";
 import Allocations from "../pages/pmo/Allocations";
+import CreateReward from "../pages/Rewards/CreateReward";
+import RewardsList from "../pages/Rewards/RewardsList";
 
 const routes = [
   {
@@ -36,8 +38,18 @@ const routes = [
     component: Allocations,
   },
   {
+    path: "/rewards/create",
+    component: CreateReward,
+    title: "Create Reward",
+  },
+  {
     path: "/login",
     title: "Login",
+  },
+  {
+    path: "/rewards",
+    component: RewardsList,
+    title: "Rewards",
   },
   {
     path: "*",
