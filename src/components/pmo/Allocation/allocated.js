@@ -17,16 +17,18 @@ import Tpagination from "../../UI/Pagination";
 const Allocated = ({ pressed }) => {
   const { allocatedData } = useSelector((state) => state.pmo);
   const dispatch = useDispatch();
-  const [associateName, setAssociateName] = useState("");
-  const [projectAllocated, setProjectAllocated] = useState("");
-  const [startDate, setStartDate] = useState("");
-  const [endDate, setEndDate] = useState("");
-  const [page, setPage] = React.useState(0);
-  const [empId, setEmpId] = useState("");
-  const [percentageAllocation, setPercentageAllocation] = useState("");
+
+  const [filters, setFilters] = useState({
+    empId: "",
+    projectAllocated: "",
+    allocationPercentage: "",
+    employeeName: "",
+    startDate: "",
+    endDate: "",
+  });
 
   useEffect(() => {
-    dispatch(getAllocatedData());
+    dispatch(getAllocatedData(filters));
   }, []);
 
   let data = allocatedData;
@@ -34,44 +36,12 @@ const Allocated = ({ pressed }) => {
     a.empId.empId > b.empId.empId ? 1 : b.empId.empId > a.empId.empId ? -1 : 0
   );
 
-  const filterAssociateName = (event) => {
-    const assName = event.target.value.toLowerCase();
-    setAssociateName(assName);
+  const filterData = (event) => {
+    setFilters({ ...filters, [event.target.name]: event.target.value });
+    if (event.key === "Enter") {
+      dispatch(getAllocatedData(filters));
+    }
   };
-
-  const filterProjectAllocated = (event) => {
-    const proAll = event.target.value.toLowerCase();
-    setProjectAllocated(proAll);
-  };
-
-  const filterStartDate = (event) => {
-    setStartDate(event.target.value);
-  };
-
-  const filterEndDate = (event) => {
-    setEndDate(event.target.value);
-  };
-
-  const filterEmpId = (event) => {
-    const empAll = event.target.value.toUpperCase();
-    setEmpId(empAll);
-  };
-
-  const filterPercentage = (event) => {
-    const perc = event.target.value;
-    setPercentageAllocation(perc);
-  };
-
-  const filteredData = data.filter((eachData) => {
-    return (
-      eachData.empId.employeeName.toLowerCase().includes(associateName) &&
-      eachData.projectId.projectName.toLowerCase().includes(projectAllocated) &&
-      eachData.allocationStartDate.includes(startDate) &&
-      eachData.allocationEndDate.includes(endDate) &&
-      eachData.empId.empId.toUpperCase().includes(empId) &&
-      eachData.allocationPercentage.toString().includes(percentageAllocation)
-    );
-  });
 
   return (
     <>
@@ -167,8 +137,10 @@ const Allocated = ({ pressed }) => {
                       variant="standard"
                       type="text"
                       placeholder="Emp Id"
-                      onChange={filterEmpId}
-                      value={empId}
+                      name="empId"
+                      onChange={filterData}
+                      onKeyPress={filterData}
+                      value={filters.empId}
                       inputProps={{ style: { fontSize: "small" } }}
                     />
                   </TableCell>
@@ -177,8 +149,10 @@ const Allocated = ({ pressed }) => {
                       variant="standard"
                       type="text"
                       placeholder="Associate Name"
-                      onChange={filterAssociateName}
-                      value={associateName}
+                      name="employeeName"
+                      onChange={filterData}
+                      onKeyPress={filterData}
+                      value={filters.employeeName}
                       inputProps={{ style: { fontSize: "small" } }}
                     />
                   </TableCell>
@@ -187,8 +161,10 @@ const Allocated = ({ pressed }) => {
                       variant="standard"
                       type="text"
                       placeholder="Project Allocated"
-                      onChange={filterProjectAllocated}
-                      value={projectAllocated}
+                      name="projectAllocated"
+                      onChange={filterData}
+                      onKeyPress={filterData}
+                      value={filters.projectAllocated}
                       inputProps={{ style: { fontSize: "small" } }}
                     />
                   </TableCell>
@@ -197,8 +173,10 @@ const Allocated = ({ pressed }) => {
                       variant="standard"
                       type="Number"
                       placeholder="Percentage Allocated"
-                      onChange={filterPercentage}
-                      value={percentageAllocation}
+                      name="allocationPercentage"
+                      onChange={filterData}
+                      onKeyPress={filterData}
+                      value={filters.allocationPercentage}
                       inputProps={{ style: { fontSize: "small" } }}
                     />
                   </TableCell>
@@ -206,8 +184,10 @@ const Allocated = ({ pressed }) => {
                     <TextField
                       variant="standard"
                       type="date"
-                      onChange={filterStartDate}
-                      value={startDate}
+                      name="allocationStartDate"
+                      onChange={filterData}
+                      onKeyPress={filterData}
+                      value={filters.startDate}
                       inputProps={{ style: { fontSize: "small" } }}
                     />
                   </TableCell>
@@ -216,41 +196,41 @@ const Allocated = ({ pressed }) => {
                       variant="standard"
                       type="date"
                       inputProps={{ style: { fontSize: "small" } }}
-                      onChange={filterEndDate}
-                      value={endDate}
+                      name="allocationEndDate"
+                      onChange={filterData}
+                      onKeyPress={filterData}
+                      value={filters.endDate}
                     />
                   </TableCell>
                 </TableRow>
               )}
 
-              {filteredData
-                .slice(page * 5, page * 5 + 5)
-                .map((currElem, index) => (
-                  <TableRow key={index}>
-                    <TableCell align="left">{index + page * 5 + 1}</TableCell>
-                    <TableCell align="left">{currElem.empId.empId}</TableCell>
-                    <TableCell align="left">
-                      {currElem.empId.employeeName}
-                    </TableCell>
-                    <TableCell align="left">
-                      {currElem.projectId.projectName}
-                    </TableCell>
-                    <TableCell align="left">
-                      {currElem.allocationPercentage}
-                    </TableCell>
-                    <TableCell align="left">
-                      {currElem.allocationStartDate}
-                    </TableCell>
-                    <TableCell align="left">
-                      {currElem.allocationEndDate}
-                    </TableCell>
-                  </TableRow>
-                ))}
+              {data.map((currElem, index) => (
+                <TableRow key={index}>
+                  <TableCell align="left">{index + 1}</TableCell>
+                  <TableCell align="left">{currElem.empId.empId}</TableCell>
+                  <TableCell align="left">
+                    {currElem.empId.employeeName}
+                  </TableCell>
+                  <TableCell align="left">
+                    {currElem.projectId.projectName}
+                  </TableCell>
+                  <TableCell align="left">
+                    {currElem.allocationPercentage}
+                  </TableCell>
+                  <TableCell align="left">
+                    {currElem.allocationStartDate}
+                  </TableCell>
+                  <TableCell align="left">
+                    {currElem.allocationEndDate}
+                  </TableCell>
+                </TableRow>
+              ))}
             </TableBody>
           </Table>
         </TableContainer>
       </Container>
-      <Tpagination page={page} setPage={setPage} rows={filteredData} />
+      {/* <Tpagination page={page} setPage={setPage} rows={filteredData} /> */}
     </>
   );
 };

@@ -84,6 +84,31 @@ export const getAllProjects = (type) => {
   };
 };
 
+export const getAllFilterProjects = (type, filters) => {
+  return async (dispatch) => {
+    const getData = async () => {
+      let url = `${baseUrl}/projects/${type}?limit=10`;
+      if (filters.clientName) url += `&clientName=${filters.clientName}`;
+      if (filters.projectName) url += `&projectName=${filters.projectName}`;
+      if (filters.vbProjectId) url += `&vbProjectId=${filters.vbProjectId}`;
+      if (filters.vbProjectStatus)
+        url += `&vbProjectStatus=${filters.vbProjectStatus}`;
+      console.log(url, "url");
+      const response = await axios.get(url);
+      if (response.status === "failure") {
+        throw new Error(response.data.message);
+      }
+      return response;
+    };
+    try {
+      const data = await getData();
+      dispatch(pmoActions.updateProjectsList(data.data));
+    } catch (err) {
+      console.log(err);
+    }
+  };
+};
+
 export const getAllEmployees = () => {
   return async (dispatch) => {
     const getData = async () => {
@@ -101,6 +126,7 @@ export const getAllEmployees = () => {
     }
   };
 };
+
 export const getAllClientData = () => {
   return async (dispatch) => {
     const getData = async () => {
@@ -118,10 +144,22 @@ export const getAllClientData = () => {
     }
   };
 };
-export const getAllocatedData = () => {
+
+export const getAllocatedData = (filters) => {
   return async (dispatch) => {
     const getData = async () => {
-      const response = await axios.get(`${baseUrl}/allocations`);
+      let url = `${baseUrl}/allocations?limit=10`;
+      if (filters.empId) url += `&empId=${filters.empId}`;
+      if (filters.employeeName) url += `&employeeName=${filters.employeeName}`;
+      if (filters.projectAllocated)
+        url += `&allocatedProject=${filters.projectAllocated}`;
+      if (filters.startDate) url += `&allocationStartDate=${filters.startDate}`;
+      if (filters.endDate) url += `&allocationEndDate=${filters.endDate}`;
+      if (filters.allocationPercentage)
+        url += `&allocationPercentage=${filters.allocationPercentage}`;
+
+      const response = await axios.get(url);
+
       if (response.status === "failure") {
         throw new Error(response.data.message);
       }
@@ -130,17 +168,23 @@ export const getAllocatedData = () => {
     try {
       const data = await getData();
       dispatch(pmoActions.updateAllocatedData(data.data));
-      console.log(data.data, "rupesh");
     } catch (err) {
       console.log(err);
     }
   };
 };
 
-export const getOnBench = () => {
+export const getOnBench = (filters) => {
   return async (dispatch) => {
     const getData = async () => {
-      const response = await axios.get(`${baseUrl}/allocations/onbench`);
+      let url = `${baseUrl}/allocations/onbench?limit=10`;
+      if (filters.empId) url += `&empId=${filters.empId}`;
+      if (filters.employeeName) url += `&employeeName=${filters.employeeName}`;
+      if (filters.remainingAllocation)
+        url += `&remainingAllocation=${filters.remainingAllocation}`;
+
+      const response = await axios.get(url);
+
       if (response.status === "failure") {
         throw new Error(response.data.message);
       }
@@ -149,7 +193,6 @@ export const getOnBench = () => {
     try {
       const data = await getData();
       dispatch(pmoActions.updatebenchData(data.data));
-      console.log(data.data, "rupesh");
     } catch (err) {
       console.log(err);
     }

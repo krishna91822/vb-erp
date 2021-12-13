@@ -49,19 +49,20 @@ export default function BenchModal({
                 top: "0",
               }}
             />
-            <Typography variant="h6">Details:-</Typography>
-            {entryData.projects &&
-              entryData.projects.map((currElem, index) => (
-                <div key={index}>
-                  <p>======================</p>
-                  <Typography>{`project name = ${currElem.projectName},`}</Typography>
-                  <Typography>{`rack rate = ${currElem.rackRate},`}</Typography>
-                  <Typography>{`last start date = ${currElem.allocationStartDate},`}</Typography>
-                  <Typography>{`last end date = ${currElem.allocationEndDate}`}</Typography>
-                  <p>======================</p>
-                </div>
-              ))}
-
+            <ol>
+              <Typography variant="h6">{`${entryData.empId}/${entryData.employeeName}`}</Typography>
+              {entryData.projects &&
+                entryData.projects.map((currElem, index) => (
+                  <div key={index}>
+                    <Typography style={{ padding: "10px" }}>
+                      <li
+                        style={{ paddingBottom: "5px" }}
+                      >{`project name = ${currElem.projectName}, rack rate = ${currElem.rackRate}, start date = ${currElem.allocationStartDate}, end date = ${currElem.allocationEndDate}`}</li>
+                      <hr />
+                    </Typography>
+                  </div>
+                ))}
+            </ol>
             {/* <Typography>{`name = ${entryData.associateName},`}</Typography>
             <Typography>{`last allocated project = ${entryData.lastAllocatedProject},`}</Typography>
             <Typography>{`last start date = ${entryData.startDate},`}</Typography>
