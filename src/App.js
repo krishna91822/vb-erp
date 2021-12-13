@@ -1,15 +1,15 @@
-import { Fragment, useEffect, useState } from 'react';
+import { Fragment, useEffect, useState } from "react";
 
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes } from "react-router-dom";
 
-import routes from './routes/routes';
+import routes from "./routes/routes";
 
-import Layout from './components/layout/Layout';
+import Layout from "./components/layout/Layout";
 
-import { useDispatch } from 'react-redux';
-import { setCurrentEmployee } from './store/employeeSlice';
+import { useDispatch } from "react-redux";
+import { setCurrentEmployee } from "./store/employeeSlice";
 
-import axiosInstance from './helpers/axiosInstance';
+import axiosInstance from "./helpers/axiosInstance";
 
 function App() {
   const [loading, setLoading] = useState(true);
@@ -17,12 +17,12 @@ function App() {
 
   useEffect(() => {
     axiosInstance
-      .get('/employees')
+      .get("/employees")
       .then((response) => {
         if (response) {
           dispatch(
             setCurrentEmployee(
-              response.data.employees.find((item) => item.role === 'admin')
+              response.data.employees.find((item) => item.role === "admin")
             )
           );
           setLoading(false);
