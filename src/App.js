@@ -22,7 +22,7 @@ function App() {
         if (response) {
           dispatch(
             setCurrentEmployee(
-              response.data.employees.find((item) => item.empId === 1)
+              response.data.employees.find((item) => item.role === 'admin')
             )
           );
           setLoading(false);

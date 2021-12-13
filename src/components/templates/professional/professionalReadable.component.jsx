@@ -6,33 +6,19 @@ import { professionalConstant } from './professional.constant';
 
 const ProfessionalReadable = ({ empData }) => {
   const {
-    // empDepartment,
-    // empDesignation,
-    // empReportingManager,
     empBand,
     empGraduation,
     empGraduationUniversity,
     empPostGraduation,
     empPostGraduationUniversity,
+    professionalDetails,
   } = empData;
   return (
     <Box>
-      {/* <ContentBox>
-        <ContentTypo>{professionalConstant.department}</ContentTypo>
-        <ContentTypo>{empDepartment}</ContentTypo>
-      </ContentBox>
-      <ContentBox>
-        <ContentTypo>{professionalConstant.designation}</ContentTypo>
-        <ContentTypo>{empDesignation.toUpperCase()}</ContentTypo>
-      </ContentBox> */}
       <ContentBox>
         <ContentTypo>{professionalConstant.band}</ContentTypo>
         <ContentTypo>{empBand}</ContentTypo>
       </ContentBox>
-      {/* <ContentBox>
-        <ContentTypo>{professionalConstant.reportingManager}</ContentTypo>
-        <ContentTypo>{empReportingManager}</ContentTypo>
-      </ContentBox> */}
       <ContentBox>
         <ContentTypo>{professionalConstant.graduation}</ContentTypo>
         <ContentTypo>{empGraduation.toUpperCase()}</ContentTypo>
@@ -49,6 +35,18 @@ const ProfessionalReadable = ({ empData }) => {
         <ContentTypo>{professionalConstant.PgUniversity}</ContentTypo>
         <ContentTypo>{empPostGraduationUniversity}</ContentTypo>
       </ContentBox>
+      {professionalDetails.map((field) => (
+        <ContentBox key={field._id}>
+          <ContentTypo>{field.fieldName}</ContentTypo>
+          {field.fieldType === 'date' ? (
+            <ContentTypo>
+              {new Date(field.fieldValue).toDateString().slice(4)}
+            </ContentTypo>
+          ) : (
+            <ContentTypo>{field.fieldValue}</ContentTypo>
+          )}
+        </ContentBox>
+      ))}
     </Box>
   );
 };

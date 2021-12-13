@@ -5,7 +5,7 @@ const baseURL = process.env.REACT_APP_API_BASE_URL;
 let headers = {};
 
 const token =
-  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxYTkzMDc2MTc4ODI3MTFjMjhlZTliZSIsImlhdCI6MTYzODUxNDMzMCwiZXhwIjoxNjQ2MjkwMzMwfQ.aouUE8Hq_ANNJYeV4qPOLaHttPYyf7KOV4j8xBSvBDc';
+  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxYjUzMmU2ZmEyOTliZGI1ZjdkYTIxMSIsImlhdCI6MTYzOTI2NDk5OSwiZXhwIjoxNjQ3MDQwOTk5fQ.IPt4dr5ty4Ji02w4piMv8fOWBn1pMAS195zg7RUcAg8';
 
 if (token) {
   headers.Authorization = `Bearer ${token}`;

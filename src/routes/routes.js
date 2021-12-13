@@ -1,5 +1,5 @@
 import NotFound from '../pages/NotFound';
-import Profile from './../pages/profile.component';
+import Profile from '../pages/myProfile/profile.component';
 import WithSpinner from '../components/hoc/withSpinner/withSpinner.component';
 import ViewProfile from './../components/templates/viewProfile/viewProfile.component';
 import Network from '../pages/network/network.component';

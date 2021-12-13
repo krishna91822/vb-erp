@@ -25,6 +25,7 @@ const PersonalReadable = ({ empData }) => {
     empAboutMe,
     empCurrentAddress,
     empResidentialAddress,
+    personalDetails,
   } = empData;
 
   const chipColors = [
@@ -120,6 +121,18 @@ const PersonalReadable = ({ empData }) => {
             <ContentTypo>{personal.residentialAddress}</ContentTypo>
             <ContentTypo>{empResidentialAddress}</ContentTypo>
           </ContentBox>
+          {personalDetails.map((field) => (
+            <ContentBox key={field._id}>
+              <ContentTypo>{field.fieldName}</ContentTypo>
+              {field.fieldType === 'date' ? (
+                <ContentTypo>
+                  {new Date(field.fieldValue).toDateString().slice(4)}
+                </ContentTypo>
+              ) : (
+                <ContentTypo>{field.fieldValue}</ContentTypo>
+              )}
+            </ContentBox>
+          ))}
         </Box>
       </Grid>
     </Grid>

@@ -11,7 +11,12 @@ import {
 import { skillConstant } from './skill.constant';
 
 const SkillReadable = ({ empData }) => {
-  const { empPrimaryCapability, empSkillSet, empCertifications } = empData;
+  const {
+    empPrimaryCapability,
+    empSkillSet,
+    empCertifications,
+    skillsDetails,
+  } = empData;
 
   return (
     <Box>
@@ -20,9 +25,9 @@ const SkillReadable = ({ empData }) => {
         <ContentTypoList>
           {!!empPrimaryCapability
             ? empPrimaryCapability.map((data) => (
-                <ListItem key={data}>{data},</ListItem>
+                <ListItem key={data}>{data}</ListItem>
               ))
-            : ''}
+            : null}
         </ContentTypoList>
       </ContentBox>
       <ContentBox>
@@ -31,9 +36,9 @@ const SkillReadable = ({ empData }) => {
           <ContentTypoList>
             {!!empSkillSet
               ? empSkillSet.map((data) => (
-                  <ListItem key={data}>{data},</ListItem>
+                  <ListItem key={data}>{data}</ListItem>
                 ))
-              : ''}
+              : null}
           </ContentTypoList>
         </ContentTypoList>
       </ContentBox>
@@ -43,12 +48,24 @@ const SkillReadable = ({ empData }) => {
           <ContentTypoList>
             {!!empCertifications
               ? empCertifications.map((data) => (
-                  <ListItem key={data}>{data},</ListItem>
+                  <ListItem key={data}>{data}</ListItem>
                 ))
-              : ''}
+              : null}
           </ContentTypoList>
         </ContentTypoList>
       </ContentBox>
+      {skillsDetails.map((field) => (
+        <ContentBox key={field._id}>
+          <ContentTypo>{field.fieldName}</ContentTypo>
+          {field.fieldType === 'date' ? (
+            <ContentTypo>
+              {new Date(field.fieldValue).toDateString().slice(4)}
+            </ContentTypo>
+          ) : (
+            <ContentTypo>{field.fieldValue}</ContentTypo>
+          )}
+        </ContentBox>
+      ))}
     </Box>
   );
 };

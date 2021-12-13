@@ -1,6 +1,7 @@
 import React from 'react';
 
-import { Grid, Box } from '@mui/material';
+import { Grid, Box, TextField } from '@mui/material';
+import ClearIcon from '@mui/icons-material/Clear';
 
 import {
   CustomTextField,
@@ -9,18 +10,37 @@ import {
 } from './professionalEditable.styles';
 
 import { professionalConstant } from './professional.constant';
+import { DesktopDatePicker, LocalizationProvider } from '@mui/lab';
+import AdapterDateFns from '@mui/lab/AdapterDateFns';
 
-const ProfessionalEditable = ({ empData, setEmpData }) => {
+const ProfessionalEditable = ({
+  empData,
+  setEmpData,
+  professionalDetails,
+  setProfessionalDetails,
+}) => {
   const {
-    // empDepartment,
-    // empDesignation,
-    // empReportingManager,
     empBand,
     empGraduation,
     empGraduationUniversity,
     empPostGraduation,
     empPostGraduationUniversity,
   } = empData;
+
+  const handleNewFieldChange = (event, index) => {
+    const updates = professionalDetails.map((professionalDetail, i) =>
+      index === i
+        ? { ...professionalDetail, fieldValue: event.target.value }
+        : professionalDetail
+    );
+    setProfessionalDetails(updates);
+  };
+
+  const removeFields = (index) => {
+    const filteredFields = [...professionalDetails];
+    filteredFields.splice(index, 1);
+    setProfessionalDetails(filteredFields);
+  };
 
   const handleChange = (event) => {
     const { value, name } = event.target;
@@ -31,32 +51,6 @@ const ProfessionalEditable = ({ empData, setEmpData }) => {
     <Grid container spacing={0} sx={{ minHeight: 150 }}>
       <Grid item sm={7}>
         <Box sx={{ ml: 4, mb: 5 }}>
-          {/* <ContentBox>
-            <ContentTypo>{professionalConstant.department}</ContentTypo>
-            <CustomTextField
-              autoComplete='off'
-              required
-              id='outlined-basic'
-              variant='outlined'
-              value={empDepartment ? empDepartment : ''}
-              name='empDepartment'
-              onChange={handleChange}
-              type='text'
-            />
-          </ContentBox>
-          <ContentBox>
-            <ContentTypo>{professionalConstant.designation}</ContentTypo>
-            <CustomTextField
-              autoComplete='off'
-              required
-              id='outlined-basic'
-              variant='outlined'
-              value={empDesignation ? empDesignation : ''}
-              name='empDesignation'
-              onChange={handleChange}
-              type='text'
-            />
-          </ContentBox> */}
           <ContentBox>
             <ContentTypo>{professionalConstant.band}</ContentTypo>
             <CustomTextField
@@ -70,19 +64,6 @@ const ProfessionalEditable = ({ empData, setEmpData }) => {
               type='text'
             />
           </ContentBox>
-          {/* <ContentBox>
-            <ContentTypo>{professionalConstant.reportingManager}</ContentTypo>
-            <CustomTextField
-              autoComplete='off'
-              required
-              id='outlined-basic'
-              variant='outlined'
-              value={empReportingManager ? empReportingManager : ''}
-              name='empReportingManager'
-              onChange={handleChange}
-              type='text'
-            />
-          </ContentBox> */}
           <ContentBox>
             <ContentTypo>{professionalConstant.graduation}</ContentTypo>
             <CustomTextField
@@ -139,6 +120,61 @@ const ProfessionalEditable = ({ empData, setEmpData }) => {
               type='text'
             />
           </ContentBox>
+          {professionalDetails.map((field, index) => (
+            <ContentBox key={index} sx={{ position: 'relative' }}>
+              <ContentTypo>{field.fieldName}</ContentTypo>
+              {field.fieldType === 'date' ? (
+                <LocalizationProvider dateAdapter={AdapterDateFns}>
+                  <DesktopDatePicker
+                    inputFormat='dd/MM/yyyy'
+                    value={field.fieldValue ? field.fieldValue : null}
+                    onChange={(newValue) => {
+                      const updates = professionalDetails.map(
+                        (professionalDetail, i) =>
+                          index === i
+                            ? {
+                                ...professionalDetail,
+                                fieldValue: newValue,
+                              }
+                            : professionalDetail
+                      );
+                      setProfessionalDetails(updates);
+                    }}
+                    renderInput={(params) => (
+                      <CustomTextField {...params} name='fieldValue' />
+                    )}
+                  />
+                </LocalizationProvider>
+              ) : (
+                <TextField
+                  autoComplete='off'
+                  required
+                  id='outlined-basic'
+                  variant='outlined'
+                  value={field.fieldValue}
+                  type={field.fieldType}
+                  name={field.fieldName}
+                  onChange={(event) => handleNewFieldChange(event, index)}
+                  sx={{
+                    '& .MuiOutlinedInput-root': {
+                      width: '80%',
+                      height: '40px',
+                    },
+                  }}
+                />
+              )}
+
+              <ClearIcon
+                onClick={() => removeFields(index)}
+                sx={{
+                  fontSize: '20px',
+                  cursor: 'pointer',
+                  position: 'absolute',
+                  right: '30px',
+                }}
+              />
+            </ContentBox>
+          ))}
         </Box>
       </Grid>
     </Grid>

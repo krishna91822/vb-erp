@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 
 import { LocalizationProvider, DesktopDatePicker } from '@mui/lab';
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
@@ -40,23 +40,26 @@ import { useSelector } from 'react-redux';
 
 import axiosInstance from './../../helpers/axiosInstance';
 
-const CreateProfile = () => {
+const CreateProfile = ({
+  editEmployeeData,
+  toggleEditEmployee,
+  setToggleEditEmployee,
+}) => {
   const { currentEmployee } = useSelector((state) => state.employee);
 
-  //just for ref will remove after validation
   const empInitial = {
     empName: '',
     empEmail: '',
     empDepartment: '',
     empDesignation: '',
-    empDoj: '',
+    empDoj: null,
     empReportingManager: '',
     empAboutMe: '',
     empBand: '',
     empCertifications: '',
     empConnections: '',
     empCurrentAddress: '',
-    empDob: '',
+    empDob: null,
     empGraduation: '',
     empGraduationUniversity: '',
     empHobbies: '',
@@ -68,7 +71,9 @@ const CreateProfile = () => {
     empSkillSet: '',
   };
 
-  const [employee, setEmployee] = useState(empInitial);
+  const [employee, setEmployee] = useState(
+    editEmployeeData ? editEmployeeData : empInitial
+  );
 
   const [tab, setTab] = useState(0);
 
@@ -86,68 +91,74 @@ const CreateProfile = () => {
 
   const types = [...addFieldOptions];
 
-  const [field, setField] = useState({
-    name: '',
-    value: '',
-    type: '',
-    tab: tab,
-  });
+  //new fields data according to tabs
+  const newFieldTemplate = {
+    fieldName: '',
+    fieldValue: '',
+    fieldType: '',
+  };
+  const [personalDetails, setPersonalDetails] = useState([]);
+  const [professionalDetails, setProfessionalDetails] = useState([]);
+  const [skillsDetails, setSkillsDetails] = useState([]);
 
-  useEffect(() => {
-    setField({ ...field, tab: tab });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [tab]);
-
-  const [type, setType] = useState('');
-  const valueField = (type) => {
-    if (type === '') {
-      return '';
-    } else if (type === 'date') {
+  //render value input field according to types
+  const [newFieldData, setNewFieldData] = useState(newFieldTemplate);
+  const InputvalueFieldRender = (type) => {
+    if (type === 'date') {
       return (
         <LocalizationProvider dateAdapter={AdapterDateFns}>
           <DesktopDatePicker
             inputFormat='dd/MM/yyyy'
+            value={newFieldData.fieldValue ? newFieldData.fieldValue : null}
             onChange={(newValue) => {
-              setField({ ...field, value: newValue });
+              setNewFieldData({
+                ...newFieldData,
+                fieldValue: newValue,
+              });
             }}
             renderInput={(params) => (
-              <CustomTextField {...params} name='date' />
+              <CustomTextField {...params} name='fieldValue' />
             )}
           />
         </LocalizationProvider>
       );
-    } else {
+    } else if (type === 'text' || type === 'number') {
       return (
         <CustomTextField
-          value={field.value}
+          value={newFieldData.fieldValue}
           type={type}
-          name='value'
-          onChange={(e) => setField({ ...field, value: e.target.value })}
+          name='fieldValue'
+          onChange={(event) => handleFieldChange(event)}
           placeholder='Enter value'
         />
       );
+    } else {
+      return;
     }
   };
 
-  //new fields
-  const [newTextFields, setNewTextField] = useState([]);
+  const handleFieldChange = (event) => {
+    setNewFieldData({
+      ...newFieldData,
+      [event.target.name]: event.target.value,
+    });
+  };
 
-  const handleNewFieldClick = (event) => {
-    setNewTextField([...newTextFields, field]);
-    setField({ name: '', value: '', type: '' });
-    setType('');
+  const handleCreateNewField = () => {
+    if (
+      newFieldData.fieldName === '' ||
+      newFieldData.fieldValue === '' ||
+      newFieldData.fieldType === ''
+    ) {
+      return;
+    }
+    if (tab === 0) setPersonalDetails([...personalDetails, newFieldData]);
+    if (tab === 1)
+      setProfessionalDetails([...professionalDetails, newFieldData]);
+    if (tab === 2) setSkillsDetails([...skillsDetails, newFieldData]);
+    setNewFieldData(newFieldTemplate);
     handleClose();
   };
-
-  const handleChange = (event) => {
-    setType(event.target.value);
-    setField({ ...field, type: event.target.value });
-  };
-
-  // useEffect(() => {
-  //   console.log(newAddedFields);
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [newAddedFields]);
 
   const handleConfirm = (event) => {
     if (
@@ -158,12 +169,31 @@ const CreateProfile = () => {
     ) {
       alert('Fields are empty');
     } else {
+      // Profile - Update;
+      let creatEmployee;
+      editEmployeeData
+        ? (creatEmployee = {
+            reqName: currentEmployee.empName,
+            reqType: 'profile-update',
+            employeeDetails: {
+              ...employee,
+              personalDetails,
+              professionalDetails,
+              skillsDetails,
+            },
+          })
+        : (creatEmployee = {
+            reqName: currentEmployee.empName,
+            reqType: 'profile-creation',
+            employeeDetails: {
+              ...employee,
+              personalDetails,
+              professionalDetails,
+              skillsDetails,
+            },
+          });
       axiosInstance
-        .post('/reviews', {
-          reqName: currentEmployee.empName,
-          reqType: 'profile-creation',
-          employeeDetails: { ...employee },
-        })
+        .post('/reviews', creatEmployee)
         .then(function (response) {
           setEmployee(empInitial);
           handleOpenModal();
@@ -217,21 +247,24 @@ const CreateProfile = () => {
             <PersonalEditable
               empData={employee}
               setEmpData={setEmployee}
-              newFields={newTextFields}
+              personalDetails={personalDetails}
+              setPersonalDetails={setPersonalDetails}
             />
           </TabPanelCustom>
           <TabPanelCustom value={tab} index={1}>
             <ProfessionalEditable
               empData={employee}
               setEmpData={setEmployee}
-              newFields={newTextFields}
+              professionalDetails={professionalDetails}
+              setProfessionalDetails={setProfessionalDetails}
             />
           </TabPanelCustom>
           <TabPanelCustom value={tab} index={2}>
             <SkillEditable
               empData={employee}
               setEmpData={setEmployee}
-              newFields={newTextFields}
+              skillsDetails={skillsDetails}
+              setSkillsDetails={setSkillsDetails}
             />
           </TabPanelCustom>
         </Container>
@@ -255,14 +288,20 @@ const CreateProfile = () => {
                 required
                 id='outlined-basic'
                 variant='outlined'
-                value={field.name}
+                // value={field.name}
                 type='text'
-                name='name'
-                onChange={(e) => setField({ ...field, name: e.target.value })}
+                name='fieldName'
+                onChange={(event) => handleFieldChange(event)}
                 placeholder='Add a title'
               />
-              {valueField(type)}
-              <CustomTextField select value={type} onChange={handleChange}>
+              {/* render input according to type */}
+              {InputvalueFieldRender(newFieldData.fieldType)}
+              <CustomTextField
+                select
+                value={newFieldData.fieldType}
+                onChange={(event) => handleFieldChange(event)}
+                name='fieldType'
+              >
                 {types.map((option) => (
                   <MenuItem key={option.value} value={option.value}>
                     {option.label}
@@ -272,7 +311,7 @@ const CreateProfile = () => {
             </Box>
             <GreenButton
               variant='contained'
-              onClick={handleNewFieldClick}
+              onClick={() => handleCreateNewField()}
               sx={{ width: '40%', mt: 1 }}
             >
               Add field

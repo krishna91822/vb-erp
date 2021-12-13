@@ -26,7 +26,9 @@ import {
   SubTitleTypo,
 } from './../../UI/commonStyles';
 
-const ProfileInfoEditable = ({ tab, setTab, employee, setEmployee }) => {
+const ProfileInfoEditable = (props) => {
+  const { tab, setTab, employee, setEmployee } = props;
+
   const {
     empName,
     empEmail,
@@ -35,6 +37,7 @@ const ProfileInfoEditable = ({ tab, setTab, employee, setEmployee }) => {
     empDoj,
     empReportingManager,
   } = employee;
+
   const handleChange = (event, newValue) => {
     const { value, name } = event.target;
     setEmployee({ ...employee, [name]: value });
@@ -139,22 +142,6 @@ const ProfileInfoEditable = ({ tab, setTab, employee, setEmployee }) => {
           }}
         >
           <CustomGridBox sx={{ mt: 1, mb: 1 }}>
-            {/* <FieldBox>
-              <ContentBoldTypo sx={{ textTransform: 'capitalize', pl: 1 }}>
-                {profileInfoConstant.employeeId}
-              </ContentBoldTypo>
-              <CustomTextField
-                disabled
-                autoComplete='off'
-                required
-                id='outlined-basic'
-                variant='outlined'
-                value={empId}
-                type='text'
-                name='empId'
-                onChange={handleChange}
-              />
-            </FieldBox> */}
             <FieldBox>
               <ContentBoldTypo sx={{ textTransform: 'capitalize', pl: 1 }}>
                 {profileInfoConstant.emailId}
@@ -207,7 +194,7 @@ const ProfileInfoEditable = ({ tab, setTab, employee, setEmployee }) => {
               <LocalizationProvider dateAdapter={AdapterDateFns}>
                 <DesktopDatePicker
                   inputFormat='dd/MM/yyyy'
-                  value={empDoj}
+                  value={empDoj ? empDoj : null}
                   onChange={(newValue) => {
                     setEmployee({ ...employee, empDoj: newValue });
                   }}

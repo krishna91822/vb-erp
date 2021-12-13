@@ -9,16 +9,16 @@ import { toggleEditMode } from '../../../store/employeeSlice';
 
 import axiosInstance from './../../../helpers/axiosInstance';
 
-const EditMode = ({ setUpdateRequest, updateRequest }) => {
+const EditMode = ({ updateRequest, handleOpen }) => {
   const { inEditMode } = useSelector((state) => state.employee);
   const dispatch = useDispatch();
 
   const [open, setOpen] = useState(false);
-  const handleClose = () => {
+  const handleToggleClose = () => {
     dispatch(toggleEditMode());
     setOpen(false);
   };
-  const handleOpen = () => setOpen(true);
+  const handleToggleOpen = () => setOpen(true);
 
   const handleSubmit = () => {
     console.log({ ...updateRequest });
@@ -29,7 +29,7 @@ const EditMode = ({ setUpdateRequest, updateRequest }) => {
         employeeDetails: { ...updateRequest },
       })
       .then(function (response) {
-        handleOpen();
+        handleToggleOpen();
       })
       .catch(function (error) {
         console.log(error);
@@ -54,16 +54,23 @@ const EditMode = ({ setUpdateRequest, updateRequest }) => {
           <Button
             sx={{ marginRight: '2rem' }}
             variant='contained'
+            onClick={handleOpen}
+          >
+            add Custom Field
+          </Button>
+          <Button
+            sx={{ marginRight: '2rem' }}
+            variant='contained'
             onClick={handleSubmit}
           >
             {editModeConstant.SubmitRequest}
           </Button>
-          <Modal open={open} onClose={handleClose}>
+          <Modal open={open} onClose={handleToggleClose}>
             <ModalBoxItem>
               <Typography id='modal-modal-description' sx={{ mt: 2 }}>
                 {editModeConstant.modalMessage}
               </Typography>
-              <Button variant='contained' onClick={handleClose}>
+              <Button variant='contained' onClick={handleToggleClose}>
                 {editModeConstant.modalBtn}
               </Button>
             </ModalBoxItem>

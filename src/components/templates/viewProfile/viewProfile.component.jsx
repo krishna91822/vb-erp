@@ -1,15 +1,18 @@
 import React, { useEffect, useState } from 'react';
 
-import { Container } from '@mui/material';
+import { Box, Container } from '@mui/material';
 
 import { useParams } from 'react-router-dom';
 
-import ProfileContent from './../profileContent.component';
+import { CustomSwitch, TitleTypo } from './viewProfile.styles';
+
+import ProfileContent from '../profileContent/profileContent.component';
 import WithSpinner from '../../hoc/withSpinner/withSpinner.component';
+import CreateProfile from './../../../pages/createProfile/createProfile.component';
 
 import axiosInstance from './../../../helpers/axiosInstance';
 
-const ProfilContentWithSpinner = WithSpinner(ProfileContent);
+const ProfileContentWithSpinner = WithSpinner(ProfileContent);
 
 const ViewProfile = () => {
   const [loading, setLoading] = useState(true);
@@ -26,12 +29,34 @@ const ViewProfile = () => {
       .catch((err) => console.error(err));
   }, [empId]);
 
+  const [editEmployee, setEditEmployee] = React.useState(false);
+
+  const handleSwitchChange = (event) => {
+    setEditEmployee(event.target.checked);
+  };
+
   return (
-    <Container sx={{ pb: 3, pt: 5 }}>
-      <ProfilContentWithSpinner
-        currentEmployee={viewedEmployee}
-        isLoading={loading}
-      />
+    <Container sx={{ pb: 3, pt: 3 }}>
+      <Box sx={{ display: 'flex', p: 2 }}>
+        <TitleTypo sx={{ textTransform: 'capitalize', pr: 1 }}>
+          Edit Employee
+        </TitleTypo>
+        <CustomSwitch
+          checked={editEmployee}
+          onChange={handleSwitchChange}
+          inputProps={{ 'aria-label': 'controlled' }}
+        />
+      </Box>
+      {editEmployee ? (
+        <CreateProfile editEmployeeData={viewedEmployee} />
+      ) : (
+        <ProfileContentWithSpinner
+          currentEmployee={viewedEmployee}
+          toggleEditEmployee={editEmployee}
+          setToggleEditEmployee={setEditEmployee}
+          isLoading={loading}
+        />
+      )}
     </Container>
   );
 };

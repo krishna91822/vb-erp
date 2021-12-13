@@ -11,18 +11,43 @@ import {
 
 import CloseIcon from '@mui/icons-material/Close';
 
-import { Container, Box, MenuItem, Modal } from '@mui/material';
+import {
+  Container,
+  Box,
+  MenuItem,
+  Modal,
+  Pagination,
+  TextField,
+} from '@mui/material';
 
 import { reviewText } from './review.constant';
-import ProfileContent from '../../components/templates/profileContent.component';
+import ProfileContent from '../../components/templates/profileContent/profileContent.component';
 
 import axiosInstance from './../../helpers/axiosInstance';
 
 const Review = () => {
   const { title, sortOption } = reviewText;
+
+  const [paginationInfo, setPaginationInfo] = useState({
+    page: 1,
+    limit: 10,
+    totalPage: 0,
+  });
+  const handlePagination = (event, value) => {
+    setPaginationInfo({
+      ...paginationInfo,
+      page: value,
+    });
+  };
+
+  const [searchEmp, setSearchEmp] = useState('');
   const [reviewData, setReviewData] = useState([]);
   const [reviewItemData, setReviewItemData] = useState({});
   const [sort, setSort] = useState('reqId');
+
+  const searchHandleChange = (event) => {
+    setSearchEmp(event.target.value);
+  };
 
   //modal
   const [openModalForReview, setOpenModalForReview] = useState(false);
@@ -34,13 +59,27 @@ const Review = () => {
 
   useEffect(() => {
     axiosInstance
-      .get(`/reviews?sort=${sort}`)
+      .get(
+        `/reviews?search=${searchEmp}&sort=${sort},-reqId&page=${paginationInfo.page}&limit=${paginationInfo.limit}`
+      )
       .then((response) => {
         setReviewData(response.data.reviews);
-        console.log(response.data.reviews.length);
+
+        response.results < paginationInfo.limit && paginationInfo.page === 1
+          ? setPaginationInfo({
+              ...paginationInfo,
+              totalPage: 1,
+            })
+          : setPaginationInfo({
+              ...paginationInfo,
+              totalPage: Math.ceil(
+                response.totalDocuments / paginationInfo.limit
+              ),
+            });
       })
       .catch((err) => console.log(err));
-  }, [reviewItemData, sort]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [reviewItemData, sort, paginationInfo.page, searchEmp]);
 
   const handleClickReviewItem = async (item) => {
     axiosInstance
@@ -114,9 +153,19 @@ const Review = () => {
             pt: 2,
           }}
         >
-          <TitleTypo sx={{ textTransform: 'capitalize', mb: 0.5 }}>
-            My Reviews
-          </TitleTypo>
+          <Box sx={{ width: '80%', display: 'flex', alignItems: 'center' }}>
+            <TitleTypo sx={{ textTransform: 'capitalize', mb: 0.5, mr: 2 }}>
+              My Reviews
+            </TitleTypo>
+            <TextField
+              onChange={searchHandleChange}
+              placeholder='Search By Req Name'
+              id='outlined-search'
+              size='small'
+              variant='outlined'
+              sx={{ width: '30%', height: '40px' }}
+            />
+          </Box>
           <CustomTextField
             label='Sort'
             id='outlined-select-currency'
@@ -175,6 +224,17 @@ const Review = () => {
               {renderChildStatus(item.status)}
             </CustomGridBox>
           ))}
+        </Box>
+        {/* pagination */}
+        <Box sx={{ width: 1, display: 'flex', justifyContent: 'center' }}>
+          <Pagination
+            count={paginationInfo.totalPage}
+            page={paginationInfo.page}
+            onChange={handlePagination}
+            showFirstButton
+            showLastButton
+            color='primary'
+          />
         </Box>
       </Container>
       <Modal open={openModalForReview} onClose={handleCloseModalForReview}>

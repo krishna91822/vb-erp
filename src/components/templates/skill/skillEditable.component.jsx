@@ -1,6 +1,7 @@
 import React from 'react';
 
-import { Grid, Box } from '@mui/material';
+import { Grid, Box, TextField } from '@mui/material';
+import ClearIcon from '@mui/icons-material/Clear';
 
 import {
   CustomTextField,
@@ -9,9 +10,31 @@ import {
 } from './skillEditable.styles';
 
 import { skillConstant } from './skill.constant';
+import { DesktopDatePicker, LocalizationProvider } from '@mui/lab';
+import AdapterDateFns from '@mui/lab/AdapterDateFns';
 
-const SkillEditable = ({ empData, setEmpData }) => {
+const SkillEditable = ({
+  empData,
+  setEmpData,
+  skillsDetails,
+  setSkillsDetails,
+}) => {
   const { empPrimaryCapability, empSkillSet, empCertifications } = empData;
+
+  const handleNewFieldChange = (event, index) => {
+    const updates = skillsDetails.map((skillsDetail, i) =>
+      index === i
+        ? { ...skillsDetail, fieldValue: event.target.value }
+        : skillsDetail
+    );
+    setSkillsDetails(updates);
+  };
+
+  const removeFields = (index) => {
+    const filteredFields = [...skillsDetails];
+    filteredFields.splice(index, 1);
+    setSkillsDetails(filteredFields);
+  };
 
   const handleChange = (event) => {
     const { value, name } = event.target;
@@ -67,6 +90,60 @@ const SkillEditable = ({ empData, setEmpData }) => {
               type='text'
             />
           </ContentBox>
+          {skillsDetails.map((field, index) => (
+            <ContentBox key={index} sx={{ position: 'relative' }}>
+              <ContentTypo>{field.fieldName}</ContentTypo>
+              {field.fieldType === 'date' ? (
+                <LocalizationProvider dateAdapter={AdapterDateFns}>
+                  <DesktopDatePicker
+                    inputFormat='dd/MM/yyyy'
+                    value={field.fieldValue ? field.fieldValue : null}
+                    onChange={(newValue) => {
+                      const updates = skillsDetails.map((skillsDetail, i) =>
+                        index === i
+                          ? {
+                              ...skillsDetail,
+                              fieldValue: newValue,
+                            }
+                          : skillsDetail
+                      );
+                      setSkillsDetails(updates);
+                    }}
+                    renderInput={(params) => (
+                      <CustomTextField {...params} name='fieldValue' />
+                    )}
+                  />
+                </LocalizationProvider>
+              ) : (
+                <TextField
+                  autoComplete='off'
+                  required
+                  id='outlined-basic'
+                  variant='outlined'
+                  value={field.fieldValue}
+                  type={field.fieldType}
+                  name={field.fieldName}
+                  onChange={(event) => handleNewFieldChange(event, index)}
+                  sx={{
+                    '& .MuiOutlinedInput-root': {
+                      width: '80%',
+                      height: '40px',
+                    },
+                  }}
+                />
+              )}
+
+              <ClearIcon
+                onClick={() => removeFields(index)}
+                sx={{
+                  fontSize: '20px',
+                  cursor: 'pointer',
+                  position: 'absolute',
+                  right: '30px',
+                }}
+              />
+            </ContentBox>
+          ))}
         </Box>
       </Grid>
     </Grid>

@@ -98,7 +98,7 @@ const ProfileInfoReadable = ({ value, setValue, currentEmployee }) => {
         <Box sx={{ width: '100%' }}>
           <StyledTabs value={value} onChange={handleChange}>
             <StyledTab icon={<LocalCafeIcon />} label='Personal' />
-            <StyledTab icon={<ImportContactsIcon />} label='Profesional' />
+            <StyledTab icon={<ImportContactsIcon />} label='professional' />
             <StyledTab icon={<BadgeIcon />} label='Skills And Qualifications' />
           </StyledTabs>
         </Box>

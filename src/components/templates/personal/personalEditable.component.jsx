@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
 import { Grid, TextField, Box, Chip } from '@mui/material';
+import ClearIcon from '@mui/icons-material/Clear';
 
 import { personal } from './personal.constant';
 
@@ -25,10 +26,12 @@ import {
   blue,
 } from '@mui/material/colors';
 
-const PersonalEditable = ({ empData, setEmpData, newFields }) => {
+const PersonalEditable = (props) => {
+  const { empData, setEmpData, personalDetails, setPersonalDetails } = props;
+
   const {
     empConnections,
-    empHobbies,
+    // empHobbies,
     empPersonalEmail,
     empDob,
     empAboutMe,
@@ -46,31 +49,46 @@ const PersonalEditable = ({ empData, setEmpData, newFields }) => {
     blue[500],
   ];
 
-  const [hobbies, setHobbies] = useState('');
-  const [chipData, setChipData] = useState([...empHobbies]);
+  // const [hobbies, setHobbies] = useState('');
+  const [chipData, setChipData] = useState([]);
+
+  const handleNewFieldChange = (event, index) => {
+    const updates = personalDetails.map((personalDetail, i) =>
+      index === i
+        ? { ...personalDetail, fieldValue: event.target.value }
+        : personalDetail
+    );
+    setPersonalDetails(updates);
+  };
+
+  const removeFields = (index) => {
+    const filteredFields = [...personalDetails];
+    filteredFields.splice(index, 1);
+    setPersonalDetails(filteredFields);
+  };
 
   useEffect(() => {
-    chipData.length === 0
-      ? setEmpData({ ...empData, empHobbies: '' })
-      : setEmpData({ ...empData, empHobbies: chipData });
-
+    if (chipData.length !== 0) setEmpData({ ...empData, empHobbies: chipData });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [chipData]);
 
   const keyPress = (event) => {
     if (event.key === 'Enter') {
-      if (event.target.value.trim() === '') return setHobbies('');
-      setChipData([...chipData, hobbies.trim()]);
-      setHobbies('');
+      if (event.target.value.trim() === '') return;
+      setChipData([...chipData, event.target.value.trim()]);
+      event.target.value = '';
     }
   };
 
-  const handleChangeHobbies = (event) => {
-    setHobbies(event.target.value);
-  };
+  // const handleChangeHobbies = (event) => {
+  //   setHobbies(event.target.value);
+  // };
 
-  const handleDelete = (chipToDelete) => () => {
-    setChipData((chips) => chips.filter((chip) => chip !== chipToDelete));
+  const handleDelete = (i) => {
+    // setChipData((chips) => chips.filter((chip) => chip !== chipToDelete));
+    const filteredHobbies = [...chipData];
+    filteredHobbies.splice(i, 1);
+    setChipData(filteredHobbies);
   };
 
   const handleChange = (event) => {
@@ -127,7 +145,7 @@ const PersonalEditable = ({ empData, setEmpData, newFields }) => {
             <LocalizationProvider dateAdapter={AdapterDateFns}>
               <DesktopDatePicker
                 inputFormat='MM/dd/yyyy'
-                value={empDob ? empDob : ''}
+                value={empDob ? empDob : null}
                 onChange={(newValue) => {
                   setEmpData({ ...empData, empDob: newValue });
                 }}
@@ -155,7 +173,7 @@ const PersonalEditable = ({ empData, setEmpData, newFields }) => {
                     <ListItem key={i}>
                       <Chip
                         label={data}
-                        onDelete={handleDelete(data)}
+                        onDelete={() => handleDelete(i)}
                         sx={{
                           backgroundColor: chipColor[i],
                           color: '#fff',
@@ -169,10 +187,8 @@ const PersonalEditable = ({ empData, setEmpData, newFields }) => {
                 : ''}
               <CustomTextFieldForChip
                 onKeyDown={keyPress}
-                value={hobbies}
                 type='text'
-                name='hobbies'
-                onChange={handleChangeHobbies}
+                // onChange={handleChangeHobbies}
               />
             </Box>
           </ContentBox>
@@ -215,6 +231,59 @@ const PersonalEditable = ({ empData, setEmpData, newFields }) => {
               onChange={handleChange}
             />
           </ContentBox>
+          {personalDetails.map((field, index) => (
+            <ContentBox key={index} sx={{ position: 'relative' }}>
+              <ContentTypo>{field.fieldName}</ContentTypo>
+              {field.fieldType === 'date' ? (
+                <LocalizationProvider dateAdapter={AdapterDateFns}>
+                  <DesktopDatePicker
+                    inputFormat='dd/MM/yyyy'
+                    value={field.fieldValue ? field.fieldValue : null}
+                    onChange={(newValue) => {
+                      const updates = personalDetails.map((personalDetail, i) =>
+                        index === i
+                          ? {
+                              ...personalDetail,
+                              fieldValue: newValue,
+                            }
+                          : personalDetail
+                      );
+                      setPersonalDetails(updates);
+                    }}
+                    renderInput={(params) => (
+                      <CustomTextField {...params} name='fieldValue' />
+                    )}
+                  />
+                </LocalizationProvider>
+              ) : (
+                <TextField
+                  autoComplete='off'
+                  required
+                  id='outlined-basic'
+                  variant='outlined'
+                  value={field.fieldValue}
+                  type={field.fieldType}
+                  name={field.fieldName}
+                  onChange={(event) => handleNewFieldChange(event, index)}
+                  sx={{
+                    '& .MuiOutlinedInput-root': {
+                      width: '80%',
+                      height: '40px',
+                    },
+                  }}
+                />
+              )}
+              <ClearIcon
+                onClick={() => removeFields(index)}
+                sx={{
+                  fontSize: '20px',
+                  cursor: 'pointer',
+                  position: 'absolute',
+                  right: '30px',
+                }}
+              />
+            </ContentBox>
+          ))}
         </Box>
       </Grid>
     </Grid>
