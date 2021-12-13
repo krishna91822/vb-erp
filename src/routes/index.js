@@ -1,5 +1,7 @@
 import Templates from "../pages/Templates";
 import NotFound from "../pages/NotFound";
+import CreateReward from "../pages/Rewards/CreateReward";
+import RewardsList from "../pages/Rewards/RewardsList";
 
 const routes = [
   {
@@ -13,8 +15,18 @@ const routes = [
     title: "Templates",
   },
   {
+    path: "/rewards/create",
+    component: CreateReward,
+    title: "Create Reward",
+  },
+  {
     path: "/login",
     title: "Login",
+  },
+  {
+    path: "/rewards",
+    component: RewardsList,
+    title: "Rewards",
   },
   {
     path: "*",

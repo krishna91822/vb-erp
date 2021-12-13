@@ -1,0 +1,294 @@
+.main-body {
+  border-top: 1px solid grey;
+  width: 98%;
+  height: 78%;
+  margin: auto;
+  margin-top: 2px;
+  padding: 2px;
+}
+
+.middle-container {
+  border-bottom: 2px solid;
+  width: 96%;
+  height: 70px;
+  margin: auto;
+  display: flex;
+  justify-content: space-between;
+  padding: 2px;
+}
+
+.middle-title {
+  width: 500px;
+  height: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.middle-title p {
+  font-size: 25px;
+  font-weight: 700;
+}
+
+.middle-button {
+  width: 300px;
+  height: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.table-container {
+  width: 99%;
+  height: 500px;
+  margin: auto;
+  margin-top: 30px;
+  padding: 2px;
+}
+
+.heading-row-container {
+  width: 98%;
+  height: 40px;
+  margin: auto;
+  display: flex;
+  justify-content: space-evenly;
+  padding: 2px;
+  background-color: rgb(241, 244, 247);
+  border-radius: 5px;
+}
+
+.multiple-rows-container {
+  border-bottom: 1px solid grey;
+  width: 98%;
+  height: 40px;
+  margin: auto;
+  display: flex;
+  justify-content: space-evenly;
+  padding: 2px;
+}
+
+.heading-id {
+  width: 8%;
+  height: auto;
+  margin: 1px;
+  display: flex;
+  align-items: center;
+}
+
+.heading-id p {
+  font-weight: 600;
+}
+
+.heading-rewardname {
+  width: 20%;
+  height: auto;
+  margin: 1px;
+  display: flex;
+  align-items: center;
+}
+
+.heading-rewardname p {
+  font-weight: 600;
+}
+
+.heading-reward {
+  width: 20%;
+  height: auto;
+  margin: 1px;
+  display: flex;
+  align-items: center;
+}
+
+.heading-reward p {
+  font-weight: 600;
+}
+
+.heading-assignee {
+  width: 12%;
+  height: auto;
+  margin: 1px;
+  display: flex;
+  align-items: center;
+}
+
+.heading-assignee p {
+  font-weight: 600;
+}
+
+.heading-reward-state {
+  width: 12%;
+  height: auto;
+  margin: 1px;
+  display: flex;
+  align-items: center;
+}
+
+.heading-reward-state p {
+  font-weight: 600;
+}
+
+.heading-actions {
+  width: 20%;
+  height: auto;
+  margin: 1px;
+  display: flex;
+  align-items: center;
+}
+
+.heading-actions p {
+  font-weight: 600;
+}
+
+.data-row-container {
+  width: 100%;
+  height: 380px;
+  margin: auto;
+  margin-top: 2px;
+  margin-top: 10px;
+  overflow: auto;
+}
+
+.data-row-container #error-message {
+  width: 120px;
+  padding: 10px;
+  margin: auto;
+  color: red;
+  font-weight: 700;
+}
+
+.id {
+  width: 8%;
+  height: auto;
+  margin: 1px;
+  display: flex;
+  align-items: center;
+}
+
+.rewardname {
+  width: 20%;
+  height: auto;
+  margin: 1px;
+  display: flex;
+  align-items: center;
+}
+
+.reward {
+  width: 20%;
+  height: auto;
+  margin: 1px;
+  display: flex;
+  align-items: center;
+}
+.assignee {
+  width: 12%;
+  height: auto;
+  margin: 1px;
+  display: flex;
+  align-items: center;
+}
+.reward-state {
+  width: 12%;
+  height: auto;
+  margin: 1px;
+  display: flex;
+  align-items: center;
+}
+.actions {
+  width: 20%;
+  height: 32px;
+  margin: 1px;
+  display: flex;
+  justify-content: space-evenly;
+  padding: 2px;
+}
+
+.actions-icon {
+  width: 19%;
+  height: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.actions-icon i {
+  font-size: 20px;
+}
+
+#rocket {
+  color: blue;
+}
+#refresh {
+  color: green;
+}
+#file {
+  color: yellowgreen;
+}
+#edit {
+  color: orange;
+}
+#delete {
+  color: red;
+}
+
+@media (min-width: 555px) and (max-width: 613px) {
+  .reward-state {
+    width: 16%;
+  }
+  .heading-reward-state {
+    width: 16%;
+  }
+}
+
+@media (max-width: 554px) {
+  .id {
+    width: 5%;
+  }
+  .id p {
+    font-size: 13px;
+  }
+  .heading-id {
+    width: 5%;
+  }
+  .heading-id p {
+    font-size: 14px;
+  }
+  .reward {
+    width: 13%;
+  }
+  .reward p {
+    font-size: 13px;
+  }
+  .heading-reward {
+    width: 13%;
+  }
+  .heading-reward p {
+    font-size: 14px;
+  }
+  .reward-state {
+    width: 13%;
+  }
+  .reward-state p {
+    font-size: 13px;
+  }
+  .heading-reward-state {
+    width: 13%;
+  }
+  .heading-reward-state p {
+    font-size: 14px;
+  }
+  .assignee {
+    width: 13%;
+  }
+  .assignee p {
+    font-size: 13px;
+  }
+  .heading-assignee {
+    width: 13%;
+  }
+  .heading-assignee p {
+    font-size: 14px;
+  }
+  .actions-icon i {
+    font-size: 15px;
+  }
+}
