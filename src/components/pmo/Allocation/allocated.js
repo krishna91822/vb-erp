@@ -1,4 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { getAllocatedData } from "../../../store/pmo-actions";
+
 import {
   Table,
   TableBody,
@@ -8,12 +10,13 @@ import {
   TableRow,
   TextField,
 } from "@mui/material";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { Container, MiniHead } from "./style";
 import Tpagination from "../../UI/Pagination";
 
 const Allocated = ({ pressed }) => {
   const { allocatedData } = useSelector((state) => state.pmo);
+  const dispatch = useDispatch();
   const [associateName, setAssociateName] = useState("");
   const [projectAllocated, setProjectAllocated] = useState("");
   const [startDate, setStartDate] = useState("");
@@ -22,10 +25,15 @@ const Allocated = ({ pressed }) => {
   const [empId, setEmpId] = useState("");
   const [percentageAllocation, setPercentageAllocation] = useState("");
 
+  useEffect(() => {
+    dispatch(getAllocatedData());
+  }, []);
+
   let data = allocatedData;
   data = [...data].sort((a, b) =>
-    a.empId > b.empId ? 1 : b.empId > a.empId ? -1 : 0
+    a.empId.empId > b.empId.empId ? 1 : b.empId.empId > a.empId.empId ? -1 : 0
   );
+
   const filterAssociateName = (event) => {
     const assName = event.target.value.toLowerCase();
     setAssociateName(assName);
@@ -48,19 +56,20 @@ const Allocated = ({ pressed }) => {
     const empAll = event.target.value.toUpperCase();
     setEmpId(empAll);
   };
+
   const filterPercentage = (event) => {
-    const perc = event.target.value.toUpperCase();
+    const perc = event.target.value;
     setPercentageAllocation(perc);
   };
 
   const filteredData = data.filter((eachData) => {
     return (
-      eachData.associateName.toLowerCase().includes(associateName) &&
-      eachData.projectAllocated.toLowerCase().includes(projectAllocated) &&
-      eachData.startDate.includes(startDate) &&
-      eachData.endDate.includes(endDate) &&
-      eachData.empId.toUpperCase().includes(empId) &&
-      eachData.percentAllocated.toUpperCase().includes(percentageAllocation)
+      eachData.empId.employeeName.toLowerCase().includes(associateName) &&
+      eachData.projectId.projectName.toLowerCase().includes(projectAllocated) &&
+      eachData.allocationStartDate.includes(startDate) &&
+      eachData.allocationEndDate.includes(endDate) &&
+      eachData.empId.empId.toUpperCase().includes(empId) &&
+      eachData.allocationPercentage.toString().includes(percentageAllocation)
     );
   });
 
@@ -217,18 +226,24 @@ const Allocated = ({ pressed }) => {
               {filteredData
                 .slice(page * 5, page * 5 + 5)
                 .map((currElem, index) => (
-                  <TableRow key={currElem.id}>
+                  <TableRow key={index}>
                     <TableCell align="left">{index + page * 5 + 1}</TableCell>
-                    <TableCell align="left">{currElem.empId}</TableCell>
-                    <TableCell align="left">{currElem.associateName}</TableCell>
+                    <TableCell align="left">{currElem.empId.empId}</TableCell>
                     <TableCell align="left">
-                      {currElem.projectAllocated}
+                      {currElem.empId.employeeName}
                     </TableCell>
                     <TableCell align="left">
-                      {currElem.percentAllocated}
+                      {currElem.projectId.projectName}
                     </TableCell>
-                    <TableCell align="left">{currElem.startDate}</TableCell>
-                    <TableCell align="left">{currElem.endDate}</TableCell>
+                    <TableCell align="left">
+                      {currElem.allocationPercentage}
+                    </TableCell>
+                    <TableCell align="left">
+                      {currElem.allocationStartDate}
+                    </TableCell>
+                    <TableCell align="left">
+                      {currElem.allocationEndDate}
+                    </TableCell>
                   </TableRow>
                 ))}
             </TableBody>

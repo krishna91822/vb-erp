@@ -123,6 +123,43 @@ export const getAllEmployees = () => {
     }
   };
 };
+export const getAllocatedData = () => {
+  return async (dispatch) => {
+    const getData = async () => {
+      const response = await axios.get(`${baseUrl}/allocations`);
+      if (response.status === "failure") {
+        throw new Error(response.data.message);
+      }
+      return response;
+    };
+    try {
+      const data = await getData();
+      dispatch(pmoActions.updateAllocatedData(data.data));
+      console.log(data.data, "rupesh");
+    } catch (err) {
+      console.log(err);
+    }
+  };
+};
+
+export const getOnBench = () => {
+  return async (dispatch) => {
+    const getData = async () => {
+      const response = await axios.get(`${baseUrl}/allocations/onbench`);
+      if (response.status === "failure") {
+        throw new Error(response.data.message);
+      }
+      return response;
+    };
+    try {
+      const data = await getData();
+      dispatch(pmoActions.updatebenchData(data.data));
+      console.log(data.data, "rupesh");
+    } catch (err) {
+      console.log(err);
+    }
+  };
+};
 
 export const getProjectById = (projectId) => {
   return async (dispatch) => {
