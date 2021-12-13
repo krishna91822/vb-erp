@@ -1,17 +1,17 @@
-import React, { useState, useEffect } from 'react';
-import { Container, Box, MenuItem, Pagination } from '@mui/material';
+import React, { useState, useEffect } from "react";
+import { Container, Box, MenuItem, Pagination } from "@mui/material";
 import {
   CustomGridBox,
   TitleTypo,
   CustomTextField,
   ContentTypo,
-} from './network.styles';
-import { networkText } from './network.constant';
-import { TextField } from '@mui/material';
+} from "./network.styles";
+import { networkText } from "./network.constant";
+import { TextField } from "@mui/material";
 
-import axiosInstance from './../../helpers/axiosInstance';
+import axiosInstance from "./../../helpers/axiosInstance";
 
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 
 const Network = () => {
   const navigate = useNavigate();
@@ -28,9 +28,9 @@ const Network = () => {
     });
   };
 
-  const [searchEmp, setSearchEmp] = useState('');
+  const [searchEmp, setSearchEmp] = useState("");
   const [employees, setEmployees] = useState([]);
-  const [sort, setSort] = React.useState('empId');
+  const [sort, setSort] = React.useState("empId");
 
   useEffect(() => {
     axiosInstance
@@ -72,53 +72,53 @@ const Network = () => {
   };
 
   return (
-    <Box sx={{ width: '100%', pt: 3, pb: 3 }}>
+    <Box sx={{ width: "100%", pt: 3, pb: 3 }}>
       <Container
         sx={{
-          minHeight: 'calc(100vh - 50px)',
-          width: 'calc(100% - 48px)',
-          border: '2px solid',
-          borderColor: 'textColor.paletteGrey',
+          minHeight: "calc(100vh - 50px)",
+          width: "calc(100% - 48px)",
+          border: "2px solid",
+          borderColor: "textColor.paletteGrey",
           pb: 3,
         }}
       >
         <Box
           noValidate
-          autoComplete='off'
+          autoComplete="off"
           sx={{
-            width: '100%',
-            height: '56px',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'space-between',
+            width: "100%",
+            height: "56px",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
             pt: 2,
           }}
         >
-          {' '}
+          {" "}
           <Box
             sx={{
-              display: 'flex',
-              justifyContent: 'flex-end',
-              alignItems: 'center',
+              display: "flex",
+              justifyContent: "flex-end",
+              alignItems: "center",
               padding: 1,
             }}
           >
             <TextField
               onChange={searchHandleChange}
-              placeholder='Search employee'
-              id='outlined-search'
-              size='small'
-              variant='outlined'
-              sx={{ width: '100%', height: '40px' }}
+              placeholder="Search employee"
+              id="outlined-search"
+              size="small"
+              variant="outlined"
+              sx={{ width: "100%", height: "40px" }}
             />
           </Box>
           <CustomTextField
-            label='Sort'
-            id='outlined-select-currency'
+            label="Sort"
+            id="outlined-select-currency"
             select
             value={sort}
             onChange={sortHandleChange}
-            sx={{ width: '25%' }}
+            sx={{ width: "25%" }}
           >
             {sortOptions.map((option) => (
               <MenuItem key={option.value} value={option.value}>
@@ -127,13 +127,13 @@ const Network = () => {
             ))}
           </CustomTextField>
         </Box>
-        <Box sx={{ width: '100%' }}>
+        <Box sx={{ width: "100%" }}>
           <CustomGridBox
             sx={{
               height: 60,
               mt: 2,
               mb: 2,
-              backgroundColor: 'textColor.light',
+              backgroundColor: "textColor.light",
             }}
           >
             {
@@ -150,7 +150,7 @@ const Network = () => {
                 mt: 0.5,
                 mb: 0.5,
                 height: 40,
-                cursor: 'pointer',
+                cursor: "pointer",
               }}
               onClick={(e) => handleEmployeeClick(item)}
             >
@@ -164,14 +164,14 @@ const Network = () => {
           ))}
         </Box>
         {/* pagination */}
-        <Box sx={{ width: 1, display: 'flex', justifyContent: 'center' }}>
+        <Box sx={{ width: 1, display: "flex", justifyContent: "center" }}>
           <Pagination
             count={paginationInfo.totalPage}
             page={paginationInfo.page}
             onChange={handlePagination}
             showFirstButton
             showLastButton
-            color='primary'
+            color="primary"
           />
         </Box>
       </Container>

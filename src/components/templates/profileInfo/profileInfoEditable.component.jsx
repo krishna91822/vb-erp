@@ -1,30 +1,30 @@
-import React from 'react';
+import React from "react";
 
-import { Grid, Avatar, LinearProgress, Box, TextField } from '@mui/material';
+import { Grid, Avatar, LinearProgress, Box, TextField } from "@mui/material";
 
-import PersonIcon from '@mui/icons-material/Person';
-import LocalCafeIcon from '@mui/icons-material/LocalCafe';
-import ImportContactsIcon from '@mui/icons-material/ImportContacts';
-import BadgeIcon from '@mui/icons-material/Badge';
+import PersonIcon from "@mui/icons-material/Person";
+import LocalCafeIcon from "@mui/icons-material/LocalCafe";
+import ImportContactsIcon from "@mui/icons-material/ImportContacts";
+import BadgeIcon from "@mui/icons-material/Badge";
 
-import { profileInfoConstant } from './profileInfo.constant';
+import { profileInfoConstant } from "./profileInfo.constant";
 
 import {
   CustomTextField,
   CustomGridBox,
   FieldBox,
   ContentBoldTypo,
-} from './personalInfoEditable.styles';
+} from "./personalInfoEditable.styles";
 
-import { LocalizationProvider, DesktopDatePicker } from '@mui/lab';
-import AdapterDateFns from '@mui/lab/AdapterDateFns';
+import { LocalizationProvider, DesktopDatePicker } from "@mui/lab";
+import AdapterDateFns from "@mui/lab/AdapterDateFns";
 
 import {
   StyledTabs,
   StyledTab,
   TitleTypo,
   SubTitleTypo,
-} from './../../UI/commonStyles';
+} from "./../../UI/commonStyles";
 
 const ProfileInfoEditable = (props) => {
   const { tab, setTab, employee, setEmployee } = props;
@@ -50,7 +50,7 @@ const ProfileInfoEditable = (props) => {
   const profileProgress = (employee) => {
     const totalFields = Object.keys(employee).length;
     const completedFields = Object.values(employee).filter(
-      (d) => d !== null && d !== 'none' && d !== ''
+      (d) => d !== null && d !== "none" && d !== ""
     ).length;
     const percentage = Math.floor((completedFields / totalFields) * 100);
     return percentage;
@@ -61,161 +61,161 @@ const ProfileInfoEditable = (props) => {
       container
       spacing={0}
       sx={{
-        minHeight: '100px',
-        borderBottom: '2px solid',
-        borderColor: 'textColor.paletteGrey',
+        minHeight: "100px",
+        borderBottom: "2px solid",
+        borderColor: "textColor.paletteGrey",
       }}
     >
       <Grid item sm={4}>
         <Box
           sx={{
-            width: '100%',
-            display: 'flex',
-            alignItems: 'center',
-            flexDirection: 'column',
-            padding: '20px 0',
+            width: "100%",
+            display: "flex",
+            alignItems: "center",
+            flexDirection: "column",
+            padding: "20px 0",
           }}
         >
           <Avatar
             sx={{
               width: 80,
               height: 80,
-              backgroundColor: 'textColor.light',
+              backgroundColor: "textColor.light",
             }}
           >
             <PersonIcon
-              sx={{ height: '60%', width: '55%', color: 'textColor.lightDark' }}
+              sx={{ height: "60%", width: "55%", color: "textColor.lightDark" }}
             />
           </Avatar>
-          <TitleTypo sx={{ mt: 1, textTransform: 'capitalize' }}>
+          <TitleTypo sx={{ mt: 1, textTransform: "capitalize" }}>
             <TextField
-              id='standard-basic'
-              placeholder='Username'
-              variant='standard'
-              type='text'
-              name='empName'
+              id="standard-basic"
+              placeholder="Username"
+              variant="standard"
+              type="text"
+              name="empName"
               value={empName}
               onChange={handleChange}
               sx={{
-                '& .MuiInput-input': {
-                  color: 'textColor',
+                "& .MuiInput-input": {
+                  color: "textColor",
                   fontSize: 16,
                   fontWeight: 600,
-                  textAlign: 'center',
+                  textAlign: "center",
                 },
               }}
             />
           </TitleTypo>
-          <Box sx={{ width: '75%', margin: '8px 0' }}>
+          <Box sx={{ width: "75%", margin: "8px 0" }}>
             <LinearProgress
-              variant='determinate'
+              variant="determinate"
               value={profileProgress(employee)}
-              color='primary'
+              color="primary"
               sx={{
                 height: 5,
                 borderRadius: 50,
               }}
             />
           </Box>
-          <SubTitleTypo sx={{ textTransform: 'lowercase' }}>
+          <SubTitleTypo sx={{ textTransform: "lowercase" }}>
             {profileProgress(employee)}
             {profileInfoConstant.profilePercentage}
           </SubTitleTypo>
         </Box>
       </Grid>
       <Grid item sm={8}>
-        <Box sx={{ width: '100%' }}>
+        <Box sx={{ width: "100%" }}>
           <StyledTabs value={tab} onChange={handleTabChange}>
-            <StyledTab icon={<LocalCafeIcon />} label='Personal' />
-            <StyledTab icon={<ImportContactsIcon />} label='Profesional' />
-            <StyledTab icon={<BadgeIcon />} label='Skills And Qualifications' />
+            <StyledTab icon={<LocalCafeIcon />} label="Personal" />
+            <StyledTab icon={<ImportContactsIcon />} label="Profesional" />
+            <StyledTab icon={<BadgeIcon />} label="Skills And Qualifications" />
           </StyledTabs>
         </Box>
         <Box
           sx={{
-            width: 'calc(100% - 20px)',
+            width: "calc(100% - 20px)",
             minHeight: 90,
-            border: '2px solid',
-            borderColor: 'textColor.paletteGrey',
+            border: "2px solid",
+            borderColor: "textColor.paletteGrey",
             mt: 1,
             mb: 1,
           }}
         >
           <CustomGridBox sx={{ mt: 1, mb: 1 }}>
             <FieldBox>
-              <ContentBoldTypo sx={{ textTransform: 'capitalize', pl: 1 }}>
+              <ContentBoldTypo sx={{ textTransform: "capitalize", pl: 1 }}>
                 {profileInfoConstant.emailId}
               </ContentBoldTypo>
               <CustomTextField
-                autoComplete='off'
+                autoComplete="off"
                 required
-                id='outlined-basic'
-                variant='outlined'
+                id="outlined-basic"
+                variant="outlined"
                 value={empEmail}
-                type='text'
-                name='empEmail'
+                type="text"
+                name="empEmail"
                 onChange={handleChange}
               />
             </FieldBox>
             <FieldBox>
-              <ContentBoldTypo sx={{ textTransform: 'capitalize', pl: 1 }}>
+              <ContentBoldTypo sx={{ textTransform: "capitalize", pl: 1 }}>
                 {profileInfoConstant.department}
               </ContentBoldTypo>
               <CustomTextField
-                autoComplete='off'
+                autoComplete="off"
                 required
-                id='outlined-basic'
-                variant='outlined'
+                id="outlined-basic"
+                variant="outlined"
                 value={empDepartment}
-                type='text'
-                name='empDepartment'
+                type="text"
+                name="empDepartment"
                 onChange={handleChange}
               />
             </FieldBox>
             <FieldBox>
-              <ContentBoldTypo sx={{ textTransform: 'capitalize', pl: 1 }}>
+              <ContentBoldTypo sx={{ textTransform: "capitalize", pl: 1 }}>
                 {profileInfoConstant.designation}
               </ContentBoldTypo>
               <CustomTextField
-                autoComplete='off'
+                autoComplete="off"
                 required
-                id='outlined-basic'
-                variant='outlined'
+                id="outlined-basic"
+                variant="outlined"
                 value={empDesignation}
-                type='text'
-                name='empDesignation'
+                type="text"
+                name="empDesignation"
                 onChange={handleChange}
               />
             </FieldBox>
             <FieldBox>
-              <ContentBoldTypo sx={{ textTransform: 'capitalize', pl: 1 }}>
+              <ContentBoldTypo sx={{ textTransform: "capitalize", pl: 1 }}>
                 {profileInfoConstant.dateOfJoining}
               </ContentBoldTypo>
               <LocalizationProvider dateAdapter={AdapterDateFns}>
                 <DesktopDatePicker
-                  inputFormat='dd/MM/yyyy'
+                  inputFormat="dd/MM/yyyy"
                   value={empDoj ? empDoj : null}
                   onChange={(newValue) => {
                     setEmployee({ ...employee, empDoj: newValue });
                   }}
                   renderInput={(params) => (
-                    <CustomTextField {...params} name='empDoj' />
+                    <CustomTextField {...params} name="empDoj" />
                   )}
                 />
               </LocalizationProvider>
             </FieldBox>
             <FieldBox>
-              <ContentBoldTypo sx={{ textTransform: 'capitalize', pl: 1 }}>
+              <ContentBoldTypo sx={{ textTransform: "capitalize", pl: 1 }}>
                 {profileInfoConstant.reportingManager}
               </ContentBoldTypo>
               <CustomTextField
-                autoComplete='off'
+                autoComplete="off"
                 required
-                id='outlined-basic'
-                variant='outlined'
+                id="outlined-basic"
+                variant="outlined"
                 value={empReportingManager}
-                type='text'
-                name='empReportingManager'
+                type="text"
+                name="empReportingManager"
                 onChange={handleChange}
               />
             </FieldBox>

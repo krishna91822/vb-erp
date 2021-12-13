@@ -1,14 +1,14 @@
 export const addFieldOptions = [
   {
-    value: 'text',
-    label: 'alphaNumeric',
+    value: "text",
+    label: "alphaNumeric",
   },
   {
-    value: 'number',
-    label: 'Number',
+    value: "number",
+    label: "Number",
   },
   {
-    value: 'date',
-    label: 'Date',
+    value: "date",
+    label: "Date",
   },
 ];

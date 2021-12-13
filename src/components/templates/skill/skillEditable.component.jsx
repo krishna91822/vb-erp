@@ -1,17 +1,17 @@
-import React from 'react';
+import React from "react";
 
-import { Grid, Box, TextField } from '@mui/material';
-import ClearIcon from '@mui/icons-material/Clear';
+import { Grid, Box, TextField } from "@mui/material";
+import ClearIcon from "@mui/icons-material/Clear";
 
 import {
   CustomTextField,
   ContentBox,
   ContentTypo,
-} from './skillEditable.styles';
+} from "./skillEditable.styles";
 
-import { skillConstant } from './skill.constant';
-import { DesktopDatePicker, LocalizationProvider } from '@mui/lab';
-import AdapterDateFns from '@mui/lab/AdapterDateFns';
+import { skillConstant } from "./skill.constant";
+import { DesktopDatePicker, LocalizationProvider } from "@mui/lab";
+import AdapterDateFns from "@mui/lab/AdapterDateFns";
 
 const SkillEditable = ({
   empData,
@@ -39,11 +39,11 @@ const SkillEditable = ({
   const handleChange = (event) => {
     const { value, name } = event.target;
     if (
-      name === 'empPrimaryCapability' ||
-      name === 'empSkillSet' ||
-      name === 'empCertifications'
+      name === "empPrimaryCapability" ||
+      name === "empSkillSet" ||
+      name === "empCertifications"
     ) {
-      setEmpData({ ...empData, [name]: value.split(',') });
+      setEmpData({ ...empData, [name]: value.split(",") });
     }
   };
 
@@ -54,49 +54,49 @@ const SkillEditable = ({
           <ContentBox>
             <ContentTypo>{skillConstant.primaryCapability}</ContentTypo>
             <CustomTextField
-              autoComplete='off'
+              autoComplete="off"
               required
-              id='outlined-basic'
-              variant='outlined'
-              value={empPrimaryCapability ? empPrimaryCapability : ''}
-              name='empPrimaryCapability'
+              id="outlined-basic"
+              variant="outlined"
+              value={empPrimaryCapability ? empPrimaryCapability : ""}
+              name="empPrimaryCapability"
               onChange={handleChange}
-              type='text'
+              type="text"
             />
           </ContentBox>
           <ContentBox>
             <ContentTypo>{skillConstant.skillSet}</ContentTypo>
             <CustomTextField
-              autoComplete='off'
+              autoComplete="off"
               required
-              id='outlined-basic'
-              variant='outlined'
-              value={empSkillSet ? empSkillSet : ''}
-              name='empSkillSet'
+              id="outlined-basic"
+              variant="outlined"
+              value={empSkillSet ? empSkillSet : ""}
+              name="empSkillSet"
               onChange={handleChange}
-              type='text'
+              type="text"
             />
           </ContentBox>
           <ContentBox>
             <ContentTypo>{skillConstant.certification}</ContentTypo>
             <CustomTextField
-              autoComplete='off'
+              autoComplete="off"
               required
-              id='outlined-basic'
-              variant='outlined'
-              value={empCertifications ? empCertifications : ''}
-              name='empCertifications'
+              id="outlined-basic"
+              variant="outlined"
+              value={empCertifications ? empCertifications : ""}
+              name="empCertifications"
               onChange={handleChange}
-              type='text'
+              type="text"
             />
           </ContentBox>
           {skillsDetails.map((field, index) => (
-            <ContentBox key={index} sx={{ position: 'relative' }}>
+            <ContentBox key={index} sx={{ position: "relative" }}>
               <ContentTypo>{field.fieldName}</ContentTypo>
-              {field.fieldType === 'date' ? (
+              {field.fieldType === "date" ? (
                 <LocalizationProvider dateAdapter={AdapterDateFns}>
                   <DesktopDatePicker
-                    inputFormat='dd/MM/yyyy'
+                    inputFormat="dd/MM/yyyy"
                     value={field.fieldValue ? field.fieldValue : null}
                     onChange={(newValue) => {
                       const updates = skillsDetails.map((skillsDetail, i) =>
@@ -110,24 +110,24 @@ const SkillEditable = ({
                       setSkillsDetails(updates);
                     }}
                     renderInput={(params) => (
-                      <CustomTextField {...params} name='fieldValue' />
+                      <CustomTextField {...params} name="fieldValue" />
                     )}
                   />
                 </LocalizationProvider>
               ) : (
                 <TextField
-                  autoComplete='off'
+                  autoComplete="off"
                   required
-                  id='outlined-basic'
-                  variant='outlined'
+                  id="outlined-basic"
+                  variant="outlined"
                   value={field.fieldValue}
                   type={field.fieldType}
                   name={field.fieldName}
                   onChange={(event) => handleNewFieldChange(event, index)}
                   sx={{
-                    '& .MuiOutlinedInput-root': {
-                      width: '80%',
-                      height: '40px',
+                    "& .MuiOutlinedInput-root": {
+                      width: "80%",
+                      height: "40px",
                     },
                   }}
                 />
@@ -136,10 +136,10 @@ const SkillEditable = ({
               <ClearIcon
                 onClick={() => removeFields(index)}
                 sx={{
-                  fontSize: '20px',
-                  cursor: 'pointer',
-                  position: 'absolute',
-                  right: '30px',
+                  fontSize: "20px",
+                  cursor: "pointer",
+                  position: "absolute",
+                  right: "30px",
                 }}
               />
             </ContentBox>

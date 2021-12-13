@@ -1,16 +1,16 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from "react";
 
-import { Box, Container } from '@mui/material';
+import { Box, Container } from "@mui/material";
 
-import { useParams } from 'react-router-dom';
+import { useParams } from "react-router-dom";
 
-import { CustomSwitch, TitleTypo } from './viewProfile.styles';
+import { CustomSwitch, TitleTypo } from "./viewProfile.styles";
 
-import ProfileContent from '../profileContent/profileContent.component';
-import WithSpinner from '../../hoc/withSpinner/withSpinner.component';
-import CreateProfile from './../../../pages/createProfile/createProfile.component';
+import ProfileContent from "../profileContent/profileContent.component";
+import WithSpinner from "../../hoc/withSpinner/withSpinner.component";
+import CreateProfile from "./../../../pages/createProfile/createProfile.component";
 
-import axiosInstance from './../../../helpers/axiosInstance';
+import axiosInstance from "./../../../helpers/axiosInstance";
 
 const ProfileContentWithSpinner = WithSpinner(ProfileContent);
 
@@ -37,14 +37,14 @@ const ViewProfile = () => {
 
   return (
     <Container sx={{ pb: 3, pt: 3 }}>
-      <Box sx={{ display: 'flex', p: 2 }}>
-        <TitleTypo sx={{ textTransform: 'capitalize', pr: 1 }}>
+      <Box sx={{ display: "flex", p: 2 }}>
+        <TitleTypo sx={{ textTransform: "capitalize", pr: 1 }}>
           Edit Employee
         </TitleTypo>
         <CustomSwitch
           checked={editEmployee}
           onChange={handleSwitchChange}
-          inputProps={{ 'aria-label': 'controlled' }}
+          inputProps={{ "aria-label": "controlled" }}
         />
       </Box>
       {editEmployee ? (

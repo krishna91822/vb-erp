@@ -1,17 +1,17 @@
-import React from 'react';
+import React from "react";
 
-import { Grid, Box, TextField } from '@mui/material';
-import ClearIcon from '@mui/icons-material/Clear';
+import { Grid, Box, TextField } from "@mui/material";
+import ClearIcon from "@mui/icons-material/Clear";
 
 import {
   CustomTextField,
   ContentBox,
   ContentTypo,
-} from './professionalEditable.styles';
+} from "./professionalEditable.styles";
 
-import { professionalConstant } from './professional.constant';
-import { DesktopDatePicker, LocalizationProvider } from '@mui/lab';
-import AdapterDateFns from '@mui/lab/AdapterDateFns';
+import { professionalConstant } from "./professional.constant";
+import { DesktopDatePicker, LocalizationProvider } from "@mui/lab";
+import AdapterDateFns from "@mui/lab/AdapterDateFns";
 
 const ProfessionalEditable = ({
   empData,
@@ -54,27 +54,27 @@ const ProfessionalEditable = ({
           <ContentBox>
             <ContentTypo>{professionalConstant.band}</ContentTypo>
             <CustomTextField
-              autoComplete='off'
+              autoComplete="off"
               required
-              id='outlined-basic'
-              variant='outlined'
-              value={empBand ? empBand : ''}
-              name='empBand'
+              id="outlined-basic"
+              variant="outlined"
+              value={empBand ? empBand : ""}
+              name="empBand"
               onChange={handleChange}
-              type='text'
+              type="text"
             />
           </ContentBox>
           <ContentBox>
             <ContentTypo>{professionalConstant.graduation}</ContentTypo>
             <CustomTextField
-              autoComplete='off'
+              autoComplete="off"
               required
-              id='outlined-basic'
-              variant='outlined'
-              value={empGraduation ? empGraduation : ''}
-              name='empGraduation'
+              id="outlined-basic"
+              variant="outlined"
+              value={empGraduation ? empGraduation : ""}
+              name="empGraduation"
               onChange={handleChange}
-              type='text'
+              type="text"
             />
           </ContentBox>
           <ContentBox>
@@ -82,51 +82,51 @@ const ProfessionalEditable = ({
               {professionalConstant.graduationUniversity}
             </ContentTypo>
             <CustomTextField
-              autoComplete='off'
+              autoComplete="off"
               required
-              id='outlined-basic'
-              variant='outlined'
-              value={empGraduationUniversity ? empGraduationUniversity : ''}
-              name='empGraduationUniversity'
+              id="outlined-basic"
+              variant="outlined"
+              value={empGraduationUniversity ? empGraduationUniversity : ""}
+              name="empGraduationUniversity"
               onChange={handleChange}
-              type='text'
+              type="text"
             />
           </ContentBox>
           <ContentBox>
             <ContentTypo>{professionalConstant.postGraduation}</ContentTypo>
             <CustomTextField
-              autoComplete='off'
+              autoComplete="off"
               required
-              id='outlined-basic'
-              variant='outlined'
-              value={empPostGraduation ? empPostGraduation : ''}
-              name='empPostGraduation'
+              id="outlined-basic"
+              variant="outlined"
+              value={empPostGraduation ? empPostGraduation : ""}
+              name="empPostGraduation"
               onChange={handleChange}
-              type='text'
+              type="text"
             />
           </ContentBox>
           <ContentBox>
             <ContentTypo>{professionalConstant.PgUniversity}</ContentTypo>
             <CustomTextField
-              autoComplete='off'
+              autoComplete="off"
               required
-              id='outlined-basic'
-              variant='outlined'
+              id="outlined-basic"
+              variant="outlined"
               value={
-                empPostGraduationUniversity ? empPostGraduationUniversity : ''
+                empPostGraduationUniversity ? empPostGraduationUniversity : ""
               }
-              name='empPostGraduationUniversity'
+              name="empPostGraduationUniversity"
               onChange={handleChange}
-              type='text'
+              type="text"
             />
           </ContentBox>
           {professionalDetails.map((field, index) => (
-            <ContentBox key={index} sx={{ position: 'relative' }}>
+            <ContentBox key={index} sx={{ position: "relative" }}>
               <ContentTypo>{field.fieldName}</ContentTypo>
-              {field.fieldType === 'date' ? (
+              {field.fieldType === "date" ? (
                 <LocalizationProvider dateAdapter={AdapterDateFns}>
                   <DesktopDatePicker
-                    inputFormat='dd/MM/yyyy'
+                    inputFormat="dd/MM/yyyy"
                     value={field.fieldValue ? field.fieldValue : null}
                     onChange={(newValue) => {
                       const updates = professionalDetails.map(
@@ -141,24 +141,24 @@ const ProfessionalEditable = ({
                       setProfessionalDetails(updates);
                     }}
                     renderInput={(params) => (
-                      <CustomTextField {...params} name='fieldValue' />
+                      <CustomTextField {...params} name="fieldValue" />
                     )}
                   />
                 </LocalizationProvider>
               ) : (
                 <TextField
-                  autoComplete='off'
+                  autoComplete="off"
                   required
-                  id='outlined-basic'
-                  variant='outlined'
+                  id="outlined-basic"
+                  variant="outlined"
                   value={field.fieldValue}
                   type={field.fieldType}
                   name={field.fieldName}
                   onChange={(event) => handleNewFieldChange(event, index)}
                   sx={{
-                    '& .MuiOutlinedInput-root': {
-                      width: '80%',
-                      height: '40px',
+                    "& .MuiOutlinedInput-root": {
+                      width: "80%",
+                      height: "40px",
                     },
                   }}
                 />
@@ -167,10 +167,10 @@ const ProfessionalEditable = ({
               <ClearIcon
                 onClick={() => removeFields(index)}
                 sx={{
-                  fontSize: '20px',
-                  cursor: 'pointer',
-                  position: 'absolute',
-                  right: '30px',
+                  fontSize: "20px",
+                  cursor: "pointer",
+                  position: "absolute",
+                  right: "30px",
                 }}
               />
             </ContentBox>

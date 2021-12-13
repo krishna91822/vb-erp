@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 
-import { LocalizationProvider, DesktopDatePicker } from '@mui/lab';
-import AdapterDateFns from '@mui/lab/AdapterDateFns';
+import { LocalizationProvider, DesktopDatePicker } from "@mui/lab";
+import AdapterDateFns from "@mui/lab/AdapterDateFns";
 
 import {
   Box,
@@ -11,12 +11,12 @@ import {
   Modal,
   Paper,
   Typography,
-} from '@mui/material';
+} from "@mui/material";
 
 import {
   createProfileConstant,
   addFieldOptions,
-} from './createProfile.constant';
+} from "./createProfile.constant";
 
 import {
   ContainerStyle,
@@ -28,17 +28,17 @@ import {
   modalStyle,
   CustomTextField,
   ModalBoxItem,
-} from './createProfile.styles';
+} from "./createProfile.styles";
 
-import ProfileInfoEditable from './../../components/templates/profileInfo/profileInfoEditable.component';
-import TabPanelCustom from './../../components/templates/tabPanelCustom.component';
-import PersonalEditable from '../../components/templates/personal/personalEditable.component';
-import ProfessionalEditable from '../../components/templates/professional/professionalEditable.component';
-import SkillEditable from '../../components/templates/skill/skillEditable.component';
+import ProfileInfoEditable from "./../../components/templates/profileInfo/profileInfoEditable.component";
+import TabPanelCustom from "./../../components/templates/tabPanelCustom.component";
+import PersonalEditable from "../../components/templates/personal/personalEditable.component";
+import ProfessionalEditable from "../../components/templates/professional/professionalEditable.component";
+import SkillEditable from "../../components/templates/skill/skillEditable.component";
 
-import { useSelector } from 'react-redux';
+import { useSelector } from "react-redux";
 
-import axiosInstance from './../../helpers/axiosInstance';
+import axiosInstance from "./../../helpers/axiosInstance";
 
 const CreateProfile = ({
   editEmployeeData,
@@ -48,27 +48,27 @@ const CreateProfile = ({
   const { currentEmployee } = useSelector((state) => state.employee);
 
   const empInitial = {
-    empName: '',
-    empEmail: '',
-    empDepartment: '',
-    empDesignation: '',
+    empName: "",
+    empEmail: "",
+    empDepartment: "",
+    empDesignation: "",
     empDoj: null,
-    empReportingManager: '',
-    empAboutMe: '',
-    empBand: '',
-    empCertifications: '',
-    empConnections: '',
-    empCurrentAddress: '',
+    empReportingManager: "",
+    empAboutMe: "",
+    empBand: "",
+    empCertifications: "",
+    empConnections: "",
+    empCurrentAddress: "",
     empDob: null,
-    empGraduation: '',
-    empGraduationUniversity: '',
-    empHobbies: '',
-    empPersonalEmail: '',
-    empPostGraduation: '',
-    empPostGraduationUniversity: '',
-    empPrimaryCapability: '',
-    empResidentialAddress: '',
-    empSkillSet: '',
+    empGraduation: "",
+    empGraduationUniversity: "",
+    empHobbies: "",
+    empPersonalEmail: "",
+    empPostGraduation: "",
+    empPostGraduationUniversity: "",
+    empPrimaryCapability: "",
+    empResidentialAddress: "",
+    empSkillSet: "",
   };
 
   const [employee, setEmployee] = useState(
@@ -93,9 +93,9 @@ const CreateProfile = ({
 
   //new fields data according to tabs
   const newFieldTemplate = {
-    fieldName: '',
-    fieldValue: '',
-    fieldType: '',
+    fieldName: "",
+    fieldValue: "",
+    fieldType: "",
   };
   const [personalDetails, setPersonalDetails] = useState([]);
   const [professionalDetails, setProfessionalDetails] = useState([]);
@@ -104,11 +104,11 @@ const CreateProfile = ({
   //render value input field according to types
   const [newFieldData, setNewFieldData] = useState(newFieldTemplate);
   const InputvalueFieldRender = (type) => {
-    if (type === 'date') {
+    if (type === "date") {
       return (
         <LocalizationProvider dateAdapter={AdapterDateFns}>
           <DesktopDatePicker
-            inputFormat='dd/MM/yyyy'
+            inputFormat="dd/MM/yyyy"
             value={newFieldData.fieldValue ? newFieldData.fieldValue : null}
             onChange={(newValue) => {
               setNewFieldData({
@@ -117,19 +117,19 @@ const CreateProfile = ({
               });
             }}
             renderInput={(params) => (
-              <CustomTextField {...params} name='fieldValue' />
+              <CustomTextField {...params} name="fieldValue" />
             )}
           />
         </LocalizationProvider>
       );
-    } else if (type === 'text' || type === 'number') {
+    } else if (type === "text" || type === "number") {
       return (
         <CustomTextField
           value={newFieldData.fieldValue}
           type={type}
-          name='fieldValue'
+          name="fieldValue"
           onChange={(event) => handleFieldChange(event)}
-          placeholder='Enter value'
+          placeholder="Enter value"
         />
       );
     } else {
@@ -146,9 +146,9 @@ const CreateProfile = ({
 
   const handleCreateNewField = () => {
     if (
-      newFieldData.fieldName === '' ||
-      newFieldData.fieldValue === '' ||
-      newFieldData.fieldType === ''
+      newFieldData.fieldName === "" ||
+      newFieldData.fieldValue === "" ||
+      newFieldData.fieldType === ""
     ) {
       return;
     }
@@ -162,19 +162,19 @@ const CreateProfile = ({
 
   const handleConfirm = (event) => {
     if (
-      employee.empName === '' ||
-      employee.empEmail === '' ||
-      employee.empDoj === '' ||
-      employee.empDob === ''
+      employee.empName === "" ||
+      employee.empEmail === "" ||
+      employee.empDoj === "" ||
+      employee.empDob === ""
     ) {
-      alert('Fields are empty');
+      alert("Fields are empty");
     } else {
       // Profile - Update;
       let creatEmployee;
       editEmployeeData
         ? (creatEmployee = {
             reqName: currentEmployee.empName,
-            reqType: 'profile-update',
+            reqType: "profile-update",
             employeeDetails: {
               ...employee,
               personalDetails,
@@ -184,7 +184,7 @@ const CreateProfile = ({
           })
         : (creatEmployee = {
             reqName: currentEmployee.empName,
-            reqType: 'profile-creation',
+            reqType: "profile-creation",
             employeeDetails: {
               ...employee,
               personalDetails,
@@ -193,7 +193,7 @@ const CreateProfile = ({
             },
           });
       axiosInstance
-        .post('/reviews', creatEmployee)
+        .post("/reviews", creatEmployee)
         .then(function (response) {
           setEmployee(empInitial);
           handleOpenModal();
@@ -209,25 +209,25 @@ const CreateProfile = ({
   return (
     <BoxStyle>
       <ContainerStyleTop>
-        <TitleTypo sx={{ textTransform: 'capitalize', mb: 0.5 }}>
+        <TitleTypo sx={{ textTransform: "capitalize", mb: 0.5 }}>
           {createProfileConstant.user}
         </TitleTypo>
         <Box
           sx={{
-            display: 'flex',
+            display: "flex",
             width: 1,
-            alignItems: 'center',
-            justifyContent: 'space-between',
+            alignItems: "center",
+            justifyContent: "space-between",
           }}
         >
-          <TitleTypo sx={{ textTransform: 'capitalize', fontSize: 24, ml: 2 }}>
+          <TitleTypo sx={{ textTransform: "capitalize", fontSize: 24, ml: 2 }}>
             {createProfileConstant.createUser}
           </TitleTypo>
           <Box>
-            <GreenButton onClick={handleConfirm} variant='contained'>
+            <GreenButton onClick={handleConfirm} variant="contained">
               {createProfileConstant.confirm}
             </GreenButton>
-            <BlueButton onClick={handleOpen} variant='contained'>
+            <BlueButton onClick={handleOpen} variant="contained">
               {createProfileConstant.addCustomField}
             </BlueButton>
           </Box>
@@ -242,7 +242,7 @@ const CreateProfile = ({
             setEmployee={setEmployee}
           />
         </Container>
-        <Container sx={{ width: 'calc(100% - 16px)' }}>
+        <Container sx={{ width: "calc(100% - 16px)" }}>
           <TabPanelCustom value={tab} index={0}>
             <PersonalEditable
               empData={employee}
@@ -273,26 +273,26 @@ const CreateProfile = ({
         <Modal
           open={open}
           onClose={handleClose}
-          aria-labelledby='modal-modal-title'
-          aria-describedby='modal-modal-description'
+          aria-labelledby="modal-modal-title"
+          aria-describedby="modal-modal-description"
         >
           <Paper elevation={3} sx={modalStyle}>
             <Box
               sx={{
-                display: 'flex',
-                alignItems: 'center',
+                display: "flex",
+                alignItems: "center",
               }}
             >
               <CustomTextField
-                autoComplete='off'
+                autoComplete="off"
                 required
-                id='outlined-basic'
-                variant='outlined'
+                id="outlined-basic"
+                variant="outlined"
                 // value={field.name}
-                type='text'
-                name='fieldName'
+                type="text"
+                name="fieldName"
                 onChange={(event) => handleFieldChange(event)}
-                placeholder='Add a title'
+                placeholder="Add a title"
               />
               {/* render input according to type */}
               {InputvalueFieldRender(newFieldData.fieldType)}
@@ -300,7 +300,7 @@ const CreateProfile = ({
                 select
                 value={newFieldData.fieldType}
                 onChange={(event) => handleFieldChange(event)}
-                name='fieldType'
+                name="fieldType"
               >
                 {types.map((option) => (
                   <MenuItem key={option.value} value={option.value}>
@@ -310,9 +310,9 @@ const CreateProfile = ({
               </CustomTextField>
             </Box>
             <GreenButton
-              variant='contained'
+              variant="contained"
               onClick={() => handleCreateNewField()}
-              sx={{ width: '40%', mt: 1 }}
+              sx={{ width: "40%", mt: 1 }}
             >
               Add field
             </GreenButton>
@@ -321,20 +321,20 @@ const CreateProfile = ({
       </div>
       <Modal open={openModal} onClose={handleCloseModal}>
         <ModalBoxItem>
-          <Typography id='modal-modal-description' sx={{ mt: 2 }}>
+          <Typography id="modal-modal-description" sx={{ mt: 2 }}>
             {createProfileConstant.modalMessageSuccess}
           </Typography>
-          <Button variant='contained' onClick={handleCloseModal}>
+          <Button variant="contained" onClick={handleCloseModal}>
             {createProfileConstant.modalBtn}
           </Button>
         </ModalBoxItem>
       </Modal>
       <Modal open={openModalError} onClose={handleCloseModalError}>
         <ModalBoxItem>
-          <Typography id='modal-modal-description' sx={{ mt: 2 }}>
+          <Typography id="modal-modal-description" sx={{ mt: 2 }}>
             {createProfileConstant.modalMessageFail}
           </Typography>
-          <Button variant='contained' onClick={handleCloseModalError}>
+          <Button variant="contained" onClick={handleCloseModalError}>
             {createProfileConstant.modalBtnTryAgain}
           </Button>
         </ModalBoxItem>

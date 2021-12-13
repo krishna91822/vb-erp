@@ -1,26 +1,26 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 
-import { Box, Container, Modal, Paper, MenuItem } from '@mui/material';
+import { Box, Container, Modal, Paper, MenuItem } from "@mui/material";
 
-import ProfileInfoReadable from '../profileInfo/profileInfoReadable.component';
-import TabPanelCustom from '../tabPanelCustom.component';
-import PersonalReadable from '../personal/personalReadable.component';
-import PersonalEditable from '../personal/personalEditable.component';
-import ProfessionalReadable from '../professional/professionalReadable.component';
-import ProfessionalEditable from '../professional/professionalEditable.component';
-import SkillReadable from '../skill/skillReadable.component';
-import SkillEditable from '../skill/skillEditable.component';
+import ProfileInfoReadable from "../profileInfo/profileInfoReadable.component";
+import TabPanelCustom from "../tabPanelCustom.component";
+import PersonalReadable from "../personal/personalReadable.component";
+import PersonalEditable from "../personal/personalEditable.component";
+import ProfessionalReadable from "../professional/professionalReadable.component";
+import ProfessionalEditable from "../professional/professionalEditable.component";
+import SkillReadable from "../skill/skillReadable.component";
+import SkillEditable from "../skill/skillEditable.component";
 
 import {
   modalStyle,
   CustomTextField,
   GreenButton,
-} from './profileContent.styles';
+} from "./profileContent.styles";
 
-import { addFieldOptions } from './profileContent.constant';
+import { addFieldOptions } from "./profileContent.constant";
 
-import { LocalizationProvider, DesktopDatePicker } from '@mui/lab';
-import AdapterDateFns from '@mui/lab/AdapterDateFns';
+import { LocalizationProvider, DesktopDatePicker } from "@mui/lab";
+import AdapterDateFns from "@mui/lab/AdapterDateFns";
 
 const ProfileContent = (props) => {
   const {
@@ -50,9 +50,9 @@ const ProfileContent = (props) => {
   };
 
   const newFieldTemplate = {
-    fieldName: '',
-    fieldValue: '',
-    fieldType: '',
+    fieldName: "",
+    fieldValue: "",
+    fieldType: "",
   };
 
   const types = [...addFieldOptions];
@@ -60,11 +60,11 @@ const ProfileContent = (props) => {
   const [newFieldData, setNewFieldData] = useState(newFieldTemplate);
 
   const InputvalueFieldRender = (type) => {
-    if (type === 'date') {
+    if (type === "date") {
       return (
         <LocalizationProvider dateAdapter={AdapterDateFns}>
           <DesktopDatePicker
-            inputFormat='dd/MM/yyyy'
+            inputFormat="dd/MM/yyyy"
             value={newFieldData.fieldValue ? newFieldData.fieldValue : null}
             onChange={(newValue) => {
               setNewFieldData({
@@ -73,19 +73,19 @@ const ProfileContent = (props) => {
               });
             }}
             renderInput={(params) => (
-              <CustomTextField {...params} name='fieldValue' />
+              <CustomTextField {...params} name="fieldValue" />
             )}
           />
         </LocalizationProvider>
       );
-    } else if (type === 'text' || type === 'number') {
+    } else if (type === "text" || type === "number") {
       return (
         <CustomTextField
           value={newFieldData.fieldValue}
           type={type}
-          name='fieldValue'
+          name="fieldValue"
           onChange={(event) => handleFieldChange(event)}
-          placeholder='Enter value'
+          placeholder="Enter value"
         />
       );
     } else {
@@ -95,9 +95,9 @@ const ProfileContent = (props) => {
 
   const handleCreateNewField = () => {
     if (
-      newFieldData.fieldName === '' ||
-      newFieldData.fieldValue === '' ||
-      newFieldData.fieldType === ''
+      newFieldData.fieldName === "" ||
+      newFieldData.fieldValue === "" ||
+      newFieldData.fieldType === ""
     ) {
       return;
     }
@@ -112,9 +112,9 @@ const ProfileContent = (props) => {
   return (
     <Box
       sx={{
-        minHeight: 'calc( 100% - 80px )',
-        border: '2px solid',
-        borderColor: 'textColor.paletteGrey',
+        minHeight: "calc( 100% - 80px )",
+        border: "2px solid",
+        borderColor: "textColor.paletteGrey",
       }}
     >
       <Container>
@@ -124,7 +124,7 @@ const ProfileContent = (props) => {
           currentEmployee={currentEmployee}
         />
       </Container>
-      <Container sx={{ width: 'calc(100% - 16px)' }}>
+      <Container sx={{ width: "calc(100% - 16px)" }}>
         <TabPanelCustom value={value} index={0}>
           {inEditMode ? (
             <PersonalEditable
@@ -166,26 +166,26 @@ const ProfileContent = (props) => {
         <Modal
           open={open ? open : false}
           onClose={handleClose}
-          aria-labelledby='modal-modal-title'
-          aria-describedby='modal-modal-description'
+          aria-labelledby="modal-modal-title"
+          aria-describedby="modal-modal-description"
         >
           <Paper elevation={3} sx={modalStyle}>
             <Box
               sx={{
-                display: 'flex',
-                alignItems: 'center',
+                display: "flex",
+                alignItems: "center",
               }}
             >
               <CustomTextField
-                autoComplete='off'
+                autoComplete="off"
                 required
-                id='outlined-basic'
-                variant='outlined'
+                id="outlined-basic"
+                variant="outlined"
                 // value={field.name}
-                type='text'
-                name='fieldName'
+                type="text"
+                name="fieldName"
                 onChange={(event) => handleFieldChange(event)}
-                placeholder='Add a title'
+                placeholder="Add a title"
               />
               {/* render input according to type */}
               {InputvalueFieldRender(newFieldData.fieldType)}
@@ -193,7 +193,7 @@ const ProfileContent = (props) => {
                 select
                 value={newFieldData.fieldType}
                 onChange={(event) => handleFieldChange(event)}
-                name='fieldType'
+                name="fieldType"
               >
                 {types.map((option) => (
                   <MenuItem key={option.value} value={option.value}>
@@ -203,9 +203,9 @@ const ProfileContent = (props) => {
               </CustomTextField>
             </Box>
             <GreenButton
-              variant='contained'
+              variant="contained"
               onClick={() => handleCreateNewField()}
-              sx={{ width: '40%', mt: 1 }}
+              sx={{ width: "40%", mt: 1 }}
             >
               Add field
             </GreenButton>

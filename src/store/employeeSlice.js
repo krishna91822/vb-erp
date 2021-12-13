@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice } from "@reduxjs/toolkit";
 
 const INITIAL_STATE = {
   currentEmployee: null,
@@ -7,7 +7,7 @@ const INITIAL_STATE = {
 };
 
 export const employeeSlice = createSlice({
-  name: 'employee',
+  name: "employee",
   initialState: INITIAL_STATE,
   reducers: {
     setCurrentEmployee: (state, action) => {

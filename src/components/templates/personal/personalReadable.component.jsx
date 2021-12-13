@@ -1,11 +1,11 @@
-import React, { memo } from 'react';
+import React, { memo } from "react";
 
-import { Grid, TextField, Box, Chip } from '@mui/material';
+import { Grid, TextField, Box, Chip } from "@mui/material";
 
-import { ListItem, ContentBox, ContentTypo } from './personalReadable.styles';
-import { personal } from './personal.constant';
+import { ListItem, ContentBox, ContentTypo } from "./personalReadable.styles";
+import { personal } from "./personal.constant";
 
-import { TitleTypo } from '../../UI/commonStyles';
+import { TitleTypo } from "../../UI/commonStyles";
 import {
   deepPurple,
   pink,
@@ -14,7 +14,7 @@ import {
   teal,
   amber,
   deepOrange,
-} from '@mui/material/colors';
+} from "@mui/material/colors";
 
 const PersonalReadable = ({ empData }) => {
   const {
@@ -44,21 +44,21 @@ const PersonalReadable = ({ empData }) => {
         item
         sm={5}
         sx={{
-          '& .MuiOutlinedInput-root .MuiOutlinedInput-input': {
+          "& .MuiOutlinedInput-root .MuiOutlinedInput-input": {
             minHeight: 200,
           },
-          '& .MuiFormControl-root': { minHeight: 200 },
-          '& .MuiOutlinedInput-notchedOutline': {
-            border: '2px solid',
-            borderColor: 'textColor.paletteGrey',
+          "& .MuiFormControl-root": { minHeight: 200 },
+          "& .MuiOutlinedInput-notchedOutline": {
+            border: "2px solid",
+            borderColor: "textColor.paletteGrey",
           },
         }}
       >
-        <TitleTypo sx={{ textTransform: 'capitalize', mb: 1, ml: 1 }}>
+        <TitleTypo sx={{ textTransform: "capitalize", mb: 1, ml: 1 }}>
           {personal.aboutMe}
         </TitleTypo>
         <TextField
-          id='outlined-multiline-flexible'
+          id="outlined-multiline-flexible"
           multiline
           maxRows={4}
           fullWidth
@@ -77,7 +77,7 @@ const PersonalReadable = ({ empData }) => {
           <ContentBox>
             <ContentTypo>{personal.dob}</ContentTypo>
             <ContentTypo>
-              {empDob ? new Date(empDob).toDateString().slice(4) : ''}
+              {empDob ? new Date(empDob).toDateString().slice(4) : ""}
             </ContentTypo>
           </ContentBox>
           <ContentBox>
@@ -85,19 +85,19 @@ const PersonalReadable = ({ empData }) => {
             <ContentTypo>
               <Box
                 sx={{
-                  listStyle: 'none',
-                  display: 'flex',
-                  flexWrap: 'wrap',
+                  listStyle: "none",
+                  display: "flex",
+                  flexWrap: "wrap",
                 }}
               >
-                {empHobbies.length !== 0 && empHobbies[0] !== ''
+                {empHobbies.length !== 0 && empHobbies[0] !== ""
                   ? empHobbies.map((data, i) => (
                       <ListItem key={i}>
                         <Chip
                           label={data}
                           sx={{
                             backgroundColor: chipColors[i],
-                            color: '#fff',
+                            color: "#fff",
                             height: 30,
                             fontSize: 12,
                             fontWeight: 600,
@@ -105,7 +105,7 @@ const PersonalReadable = ({ empData }) => {
                         />
                       </ListItem>
                     ))
-                  : ''}
+                  : ""}
               </Box>
             </ContentTypo>
           </ContentBox>
@@ -124,7 +124,7 @@ const PersonalReadable = ({ empData }) => {
           {personalDetails.map((field) => (
             <ContentBox key={field._id}>
               <ContentTypo>{field.fieldName}</ContentTypo>
-              {field.fieldType === 'date' ? (
+              {field.fieldType === "date" ? (
                 <ContentTypo>
                   {new Date(field.fieldValue).toDateString().slice(4)}
                 </ContentTypo>

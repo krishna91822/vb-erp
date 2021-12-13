@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from "react";
 
-import { Container } from '@mui/material';
+import { Container } from "@mui/material";
 
-import { useSelector } from 'react-redux';
+import { useSelector } from "react-redux";
 
-import EditMode from '../../components/templates/editMode/editMode.component';
-import ProfileContent from '../../components/templates/profileContent/profileContent.component';
+import EditMode from "../../components/templates/editMode/editMode.component";
+import ProfileContent from "../../components/templates/profileContent/profileContent.component";
 
 const Profile = () => {
   const { currentEmployee } = useSelector((state) => state.employee);

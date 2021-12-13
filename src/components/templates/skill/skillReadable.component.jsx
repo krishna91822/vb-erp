@@ -1,14 +1,14 @@
-import React from 'react';
+import React from "react";
 
-import { Box } from '@mui/material';
+import { Box } from "@mui/material";
 import {
   ContentBox,
   ContentTypo,
   ContentTypoList,
   ListItem,
-} from './skillReadable.styles';
+} from "./skillReadable.styles";
 
-import { skillConstant } from './skill.constant';
+import { skillConstant } from "./skill.constant";
 
 const SkillReadable = ({ empData }) => {
   const {
@@ -57,7 +57,7 @@ const SkillReadable = ({ empData }) => {
       {skillsDetails.map((field) => (
         <ContentBox key={field._id}>
           <ContentTypo>{field.fieldName}</ContentTypo>
-          {field.fieldType === 'date' ? (
+          {field.fieldType === "date" ? (
             <ContentTypo>
               {new Date(field.fieldValue).toDateString().slice(4)}
             </ContentTypo>
