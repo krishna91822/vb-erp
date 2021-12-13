@@ -1,8 +1,8 @@
 export default function validateResourceForm(data) {
   let errors = {};
 
-  if (!data.employeeName.trim()) {
-    errors.employeeName = "Associate Name Required";
+  if (!data.empName.trim()) {
+    errors.empName = "Associate Name Required";
   }
 
   if (!data.allocationStartDate.trim()) {

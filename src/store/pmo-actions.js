@@ -25,13 +25,6 @@ export const createProject = (projectInfo) => {
       }
       return response;
     };
-    // const saveResources = async () => {
-    //   const response = await axios.post(`${baseUrl}/allocations`, projectInfo);
-    //   if (response.status === "failure") {
-    //     throw new Error(response.data.message);
-    //   }
-    //   return response;
-    // };
     try {
       const data = await saveProjects();
       await saveResources(data.data._id);
@@ -53,21 +46,6 @@ export const updateProject = (projectInfo) => {
       }
       return response;
     };
-    // const saveResources = async (id) => {
-    //   const Allresources = {
-    //     projectId: id,
-    //     empId: projectInfo.resources[0].empId,
-    //     allocationStartDate: projectInfo.resources[0].allocationEndDate,
-    //     allocationEndDate: projectInfo.resources[0].allocationEndDate,
-    //     allocationPercentage: projectInfo.resources[0].allocationPercentage,
-    //     rackRate: projectInfo.resources[0].rackRate,
-    //   };
-    //   const response = await axios.post(`${baseUrl}/allocations`, Allresources);
-    //   if (response.status === "failure") {
-    //     throw new Error(response.data.message);
-    //   }
-    //   return response;
-    // };
     const saveResources = async (id) => {
       const resources = {
         projectId: id,
@@ -109,7 +87,7 @@ export const getAllProjects = (type) => {
 export const getAllEmployees = () => {
   return async (dispatch) => {
     const getData = async () => {
-      const response = await axios.get(`${baseUrl}/employees`);
+      const response = await axios.get(`${baseUrl}/employees/filteremp`);
       if (response.status === "failure") {
         throw new Error(response.data.message);
       }
@@ -135,7 +113,6 @@ export const getAllocatedData = () => {
     try {
       const data = await getData();
       dispatch(pmoActions.updateAllocatedData(data.data));
-      console.log(data.data, "rupesh");
     } catch (err) {
       console.log(err);
     }
@@ -154,7 +131,26 @@ export const getOnBench = () => {
     try {
       const data = await getData();
       dispatch(pmoActions.updatebenchData(data.data));
-      console.log(data.data, "rupesh");
+    } catch (err) {
+      console.log(err);
+    }
+  };
+};
+
+export const getPercentageAllocated = (empId) => {
+  return async (dispatch) => {
+    const getData = async () => {
+      const response = await axios.get(
+        `${baseUrl}/allocations/totalallocation?empId=${empId}`
+      );
+      if (response.status === "failure") {
+        throw new Error(response.data.message);
+      }
+      return response;
+    };
+    try {
+      const data = await getData();
+      dispatch(pmoActions.updatePercentageAllocated(data.data));
     } catch (err) {
       console.log(err);
     }

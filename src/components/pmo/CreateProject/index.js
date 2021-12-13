@@ -31,6 +31,7 @@ import {
   createProject,
   updateProject,
   getProjectById,
+  getPercentageAllocated,
 } from "../../../store/pmo-actions";
 import { pmoActions } from "../../../store/pmo-slice";
 import validateForm from "./validateCreateForm";
@@ -51,7 +52,7 @@ const initialState = {
     vbProjectStatus: "",
   },
   resource: {
-    employeeName: "",
+    empName: "",
     allocationStartDate: "",
     allocationEndDate: "",
     allocationPercentage: "0",
@@ -66,7 +67,8 @@ const CreateProject = () => {
   const dispatch = useDispatch();
   const location = useLocation().pathname;
   const navigate = useNavigate();
-  const { redirect, projectById } = useSelector((state) => state.pmo);
+  const { redirect, projectById, allEmployees, percentageAllocated } =
+    useSelector((state) => state.pmo);
   const [edit, setEdit] = useState(false);
   const [state, setState] = useState(initialState);
   const [errors, setErrors] = useState({});
@@ -128,17 +130,22 @@ const CreateProject = () => {
       setState({
         ...state,
         project: projectById.project,
-        resources: projectById.resources,
+        resources: projectById.resources.map((eachResource) => ({
+          ...eachResource,
+          empId: eachResource.empId.empId,
+          empName: eachResource.empId.empName,
+        })),
       });
     }
   }, [projectById]);
   const handelAssociate = (value) => {
+    dispatch(getPercentageAllocated(value.empId));
     setState({
       ...state,
       resource: {
         ...state.resource,
-        employeeName: value.employeeName,
-        empId: value._id,
+        empName: value.empName,
+        empId: value.empId,
       },
     });
   };
@@ -221,7 +228,7 @@ const CreateProject = () => {
 
   const removeResource = (id) => {
     const filterResources = resources.filter(
-      (resource) => resource.empId.empId !== id
+      (resource) => resource.empId !== id
     );
     setState({
       ...state,
@@ -573,6 +580,8 @@ const CreateProject = () => {
             handelAssociate={handelAssociate}
             removeResource={removeResource}
             resourceErrors={resourceErrors}
+            allEmployees={allEmployees}
+            percentageAllocated={percentageAllocated}
           />
         </StyledHeader>
       </PmoContainer>

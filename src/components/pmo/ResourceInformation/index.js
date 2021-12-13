@@ -24,9 +24,11 @@ const ResourceInformation = ({
   removeResource,
   resourceErrors,
   handelAssociate,
+  allEmployees,
+  percentageAllocated,
 }) => {
   const {
-    employeeName,
+    empName,
     allocationStartDate,
     allocationEndDate,
     allocationPercentage,
@@ -48,8 +50,10 @@ const ResourceInformation = ({
     dispatch(getAllEmployees());
   }, []);
 
-  const { allEmployees } = useSelector((state) => state.pmo);
-
+  const resourcesIds = resources.map((eachRes) => eachRes.empId);
+  const filteredEmployees = allEmployees
+    ? allEmployees.filter((eachEmp) => !resourcesIds.includes(eachEmp.empId))
+    : [];
   return (
     <Container>
       <ResourceInformationHeading data-test="resource-head">
@@ -67,18 +71,18 @@ const ResourceInformation = ({
               key={tempVal}
               size="small"
               onInputChange={handleOpen}
-              getOptionLabel={(option) => option.employeeName}
+              getOptionLabel={(option) => option.empName}
               onChange={(event, value) => {
                 value ? handelAssociate(value) : setOpen(false);
               }}
-              options={allEmployees}
+              options={filteredEmployees}
               open={open}
               style={{ width: "100%" }}
               renderInput={(params) => (
                 <TextField
                   {...params}
                   placeholder="associate name"
-                  value={employeeName}
+                  value={empName}
                   error={resourceErrors.associateName ? true : false}
                 />
               )}
@@ -129,7 +133,7 @@ const ResourceInformation = ({
                 <input
                   type="range"
                   min="1"
-                  max="100"
+                  max={100 - percentageAllocated}
                   name="allocationPercentage"
                   value={allocationPercentage}
                   onChange={handleResourceChange}

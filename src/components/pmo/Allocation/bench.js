@@ -34,7 +34,6 @@ const Bench = ({ pressed }) => {
   data = [...data].sort((a, b) =>
     a.empId > b.empId ? 1 : b.empId > a.empId ? -1 : 0
   );
-  console.log(benchData, "bench");
 
   const filterAssociateName = (event) => {
     const assName = event.target.value.toLowerCase();
@@ -54,15 +53,12 @@ const Bench = ({ pressed }) => {
     const empAll = event.target.value.toUpperCase();
     setEmpId(empAll);
   };
-
+  console.log(data);
   const filteredData = data.filter((eachData) => {
     return (
-      eachData.employeeName.toLowerCase().includes(associateName) &&
-      // eachData.primaryCapabilities
-      //   .toLowerCase()
-      //   .includes(primaryCapabilities) &&
+      eachData.empName.toLowerCase().includes(associateName) &&
       eachData.remainingAllocation.toString().includes(remainingBandwidth) &&
-      eachData.empId.toUpperCase().includes(empId)
+      eachData.empId.toString().includes(empId)
     );
   });
 
@@ -199,7 +195,7 @@ const Bench = ({ pressed }) => {
                   >
                     <TableCell align="left">{index + page * 5 + 1}</TableCell>
                     <TableCell align="left">{currElem.empId}</TableCell>
-                    <TableCell align="left">{currElem.employeeName}</TableCell>
+                    <TableCell align="left">{currElem.empName}</TableCell>
                     {/* <TableCell align="left">
                       {currElem.primaryCapabilities}
                     </TableCell> */}

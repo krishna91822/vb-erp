@@ -61,14 +61,13 @@ const Allocated = ({ pressed }) => {
     const perc = event.target.value;
     setPercentageAllocation(perc);
   };
-
   const filteredData = data.filter((eachData) => {
     return (
-      eachData.empId.employeeName.toLowerCase().includes(associateName) &&
+      eachData.empId.empName.toLowerCase().includes(associateName) &&
       eachData.projectId.projectName.toLowerCase().includes(projectAllocated) &&
       eachData.allocationStartDate.includes(startDate) &&
       eachData.allocationEndDate.includes(endDate) &&
-      eachData.empId.empId.toUpperCase().includes(empId) &&
+      eachData.empId.empId.toString().includes(empId) &&
       eachData.allocationPercentage.toString().includes(percentageAllocation)
     );
   });
@@ -229,9 +228,7 @@ const Allocated = ({ pressed }) => {
                   <TableRow key={index}>
                     <TableCell align="left">{index + page * 5 + 1}</TableCell>
                     <TableCell align="left">{currElem.empId.empId}</TableCell>
-                    <TableCell align="left">
-                      {currElem.empId.employeeName}
-                    </TableCell>
+                    <TableCell align="left">{currElem.empId.empName}</TableCell>
                     <TableCell align="left">
                       {currElem.projectId.projectName}
                     </TableCell>
