@@ -6,10 +6,11 @@ const initialState = {
   updateModal: false,
   projectById: {},
   allEmployees: [],
-  allClients: [],
   allocatedData: [],
   benchData: [],
+  percentageAllocated: 0,
   clientNames: [],
+  allClients: [],
 };
 
 const pmoSlice = createSlice({
@@ -21,6 +22,9 @@ const pmoSlice = createSlice({
     },
     updateProjectById: (state, action) => {
       state.projectById = action.payload;
+    },
+    updatePercentageAllocated: (state, action) => {
+      state.percentageAllocated = action.payload;
     },
     updateProjectsList: (state, action) => {
       state.projects = action.payload;
