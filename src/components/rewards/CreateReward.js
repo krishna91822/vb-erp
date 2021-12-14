@@ -11,7 +11,7 @@ import "./rewardStyle.css";
 import { useDispatch, useSelector } from "react-redux";
 import { addRewardData } from "../../store/rewards-actions";
 import { rewardsActions } from "../../store/rewards-slice";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 const CreateReward = () => {
   const dispatch = useDispatch();
@@ -33,7 +33,7 @@ const CreateReward = () => {
       navigate("/rewards");
       dispatch(rewardsActions.updateRewardStatus());
     }
-  }, [dispatch, updateRewardStatus]);
+  }, [dispatch, updateRewardStatus, navigate]);
 
   const handleChangeForm = (e) => {
     setFormData({
@@ -269,9 +269,11 @@ const CreateReward = () => {
           >
             Save
           </Button>
-          <Button variant="contained" color="error">
-            Cancel
-          </Button>
+          <Link to="/rewards" className="remove-underline">
+            <Button variant="contained" color="error">
+              Cancel
+            </Button>
+          </Link>
         </div>
       </form>
     </Grid>

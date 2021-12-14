@@ -1,6 +1,7 @@
 import { uiActions } from "./ui-slice";
 import { rewardsActions } from "./rewards-slice";
 import axios from "../helpers/axiosInstance";
+import { toast } from "react-toastify";
 
 export const getRewardsData = () => {
   return async (dispatch) => {
@@ -106,17 +107,22 @@ export const searchData = (data) => {
 };
 
 export const deleteRewardData = (id) => {
-  console.log(id);
   return async (dispatch) => {
     const deleteData = async () => {
       const deletedData = axios.delete(`/rewards/${id}`);
-
       return deletedData;
     };
 
     try {
-      await deleteData();
-      dispatch(getRewardsData());
+      const data = await deleteData();
+      if (data.data.status === "success") {
+        toast.success("Deleted", {
+          icon: "🗑",
+        });
+        dispatch(getRewardsData());
+      } else {
+        toast.warning("Error");
+      }
     } catch (error) {
       dispatch(uiActions.toggleLoader());
       setTimeout(function () {
@@ -179,6 +185,7 @@ export const addRewardData = (reward) => {
       const response = axios.post("/rewards", reward);
 
       if (response.status === "failure") {
+        toast.warning("Error");
         throw new Error("Could not fetch cart data!");
       }
       return response;
@@ -186,6 +193,8 @@ export const addRewardData = (reward) => {
 
     try {
       const data = await fetchData();
+      console.log(data);
+      toast.success("Reward Added");
       // dispatch(
       //   rewardsActions.addRewards({
       //     rewards: data.data.data.results || [],
@@ -196,6 +205,81 @@ export const addRewardData = (reward) => {
       dispatch(uiActions.toggleLoader());
     } finally {
       dispatch(uiActions.toggleLoader());
+    }
+  };
+};
+
+export const updateRewardStatus = (id, number) => {
+  return async (dispatch) => {
+    console.log(id);
+    const fetchData = async () => {
+      let status;
+      if (number === 1) {
+        status = { status: "Stopped" };
+      } else if (number === 2) {
+        status = { status: "Launch" };
+      }
+      const response = axios.put(`/rewards/${id}`, status);
+
+      if (response.status === "failure") {
+        throw new Error("Could not fetch cart data!");
+      }
+      return response;
+    };
+
+    try {
+      await fetchData();
+      dispatch(getRewardsData());
+    } catch (error) {
+      dispatch(uiActions.toggleLoader());
+      setTimeout(function () {
+        dispatch(uiActions.toggleLoader());
+        dispatch(
+          uiActions.showNotification({
+            status: "error",
+            title: "Error!",
+            message: "Fetching content data failed!",
+          })
+        );
+      }, 3000);
+    }
+  };
+};
+
+export const updateRewardEmployeeIdArray = (employeeIdArrayData, rewardId) => {
+  return async (dispatch) => {
+    const fetchData = async () => {
+      let employees_id = [];
+      employeeIdArrayData.map((data) => {
+        employees_id.push(data.employee_id);
+      });
+      const data = {
+        recipients_ids: employees_id,
+      };
+      // console.log(employees_id);
+      const response = axios.put(`/rewards/${rewardId}`, data);
+
+      if (response.status === "failure") {
+        throw new Error("Could not fetch cart data!");
+      }
+      return response;
+    };
+
+    try {
+      await fetchData();
+      dispatch(getRewardsData());
+    } catch (error) {
+      dispatch(uiActions.toggleLoader());
+      setTimeout(function () {
+        dispatch(uiActions.toggleLoader());
+        dispatch(
+          uiActions.showNotification({
+            status: "error",
+            title: "Error!",
+            message: "Fetching content data failed!",
+          })
+        );
+      }, 3000);
     }
   };
 };
