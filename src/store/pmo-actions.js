@@ -129,7 +129,7 @@ export const getAllEmployees = () => {
 export const getAllClientData = () => {
   return async (dispatch) => {
     const getData = async () => {
-      const response = await axios.get(`${baseUrl}/cims/filter`);
+      const response = await axios.get(`${baseUrl}/cims/filterclients`);
       if (response.status === "failure") {
         throw new Error(response.data.message);
       }
@@ -149,7 +149,7 @@ export const getAllocatedData = (filters) => {
     const getData = async () => {
       let url = `${baseUrl}/allocations?limit=10`;
       if (filters.empId) url += `&empId=${filters.empId}`;
-      if (filters.employeeName) url += `&employeeName=${filters.employeeName}`;
+      if (filters.employeeName) url += `&empName=${filters.employeeName}`;
       if (filters.projectAllocated)
         url += `&allocatedProject=${filters.projectAllocated}`;
       if (filters.startDate) url += `&allocationStartDate=${filters.startDate}`;
@@ -178,7 +178,7 @@ export const getOnBench = (filters) => {
     const getData = async () => {
       let url = `${baseUrl}/allocations/onbench?limit=10`;
       if (filters.empId) url += `&empId=${filters.empId}`;
-      if (filters.employeeName) url += `&employeeName=${filters.employeeName}`;
+      if (filters.employeeName) url += `&empName=${filters.employeeName}`;
       if (filters.remainingAllocation)
         url += `&remainingAllocation=${filters.remainingAllocation}`;
 

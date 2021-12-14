@@ -35,7 +35,6 @@ const Allocation = () => {
   return (
     <MainComponent>
       <HeadingStyle>
-        <AdminName data-test="admin-name">User:- Admin/Approver</AdminName>
         <Heading>
           <ProjectHead data-test="main-heading">Allocations</ProjectHead>
           <SideButton>
