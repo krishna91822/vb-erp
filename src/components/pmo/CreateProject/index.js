@@ -133,12 +133,12 @@ const CreateProject = () => {
         resources: projectById.resources.map((eachResource) => ({
           ...eachResource,
           empId: eachResource.empId._id,
-          empName: eachResource.empId.empName,
         })),
       });
     }
   }, [projectById]);
   const handelAssociate = (value) => {
+    console.log(value);
     dispatch(getPercentageAllocated(value.empId));
     setState({
       ...state,

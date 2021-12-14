@@ -35,6 +35,7 @@ const Allocated = ({ pressed }) => {
   data = [...data].sort((a, b) =>
     a.empId.empId > b.empId.empId ? 1 : b.empId.empId > a.empId.empId ? -1 : 0
   );
+  console.log(allocatedData);
 
   const filterData = (event) => {
     setFilters({ ...filters, [event.target.name]: event.target.value });

@@ -10,9 +10,12 @@ const style = {
   width: "900px",
   height: "500px",
   bgcolor: "background.paper",
-  border: "2px solid #000",
   boxShadow: 24,
+  borderRadius: "5px",
   p: 3,
+  ".css-ag7rrr-MuiTypography-root": {
+    lineHeight: "1",
+  },
 };
 
 export default function BenchModal({
@@ -45,24 +48,71 @@ export default function BenchModal({
                 color: "black",
                 cursor: "pointer",
                 position: "absolute",
-                right: "0",
-                top: "0",
+                right: "5px",
+                top: "5px",
               }}
             />
-            <ol>
-              <Typography variant="h6">{`${entryData.empId}/${entryData.employeeName}`}</Typography>
+            <ul>
+              <Typography variant="h5">
+                <span
+                  style={{
+                    color: "black",
+                    fontSize: "22px",
+                    textTransform: "capitalize",
+                    lineHeight: "0.8",
+                  }}
+                >
+                  {entryData.empName}
+                </span>
+              </Typography>
+              <Typography>
+                <span
+                  style={{
+                    color: "gray",
+                    fontSize: "12px",
+                    padding: "0 3px",
+                  }}
+                >
+                  {entryData.empId}
+                </span>
+              </Typography>
               {entryData.projects &&
                 entryData.projects.map((currElem, index) => (
                   <div key={index}>
-                    <Typography style={{ padding: "10px" }}>
-                      <li
-                        style={{ paddingBottom: "5px" }}
-                      >{`project name = ${currElem.projectName}, rack rate = ${currElem.rackRate}, start date = ${currElem.allocationStartDate}, end date = ${currElem.allocationEndDate}`}</li>
-                      <hr />
+                    <Typography style={{ padding: "10px 20px" }}>
+                      <li>
+                        <span style={{ textTransform: "capitalize" }}>
+                          {currElem.projectName}
+                        </span>
+                        <ul style={{ padding: "0 10px", fontSize: "14px" }}>
+                          <li style={{ color: "gray" }}>
+                            Allocated Percentage
+                            <span
+                              style={{ color: "black", marginLeft: "6px" }}
+                            >{` ${currElem.allocationPercentage}%`}</span>
+                          </li>
+                          <li style={{ color: "gray" }}>
+                            Allocated Start Date
+                            <span
+                              style={{ color: "black", marginLeft: "19px" }}
+                            >
+                              {currElem.allocationStartDate}
+                            </span>
+                          </li>
+                          <li style={{ color: "gray" }}>
+                            Allocated End Date
+                            <span
+                              style={{ color: "black", marginLeft: "24px" }}
+                            >
+                              {currElem.allocationEndDate}
+                            </span>
+                          </li>
+                        </ul>
+                      </li>
                     </Typography>
                   </div>
                 ))}
-            </ol>
+            </ul>
           </Box>
         </Fade>
       </Modal>
