@@ -8,7 +8,6 @@ import {
   Grid,
 } from "@mui/material";
 import UseForm from "./UseForm";
-import PageHeader from "./PageHeader";
 import Form from "./Form";
 import "../../assets/styles/FormStyles.css";
 import { cimsActions } from "../../store/cims-slice";
@@ -20,11 +19,10 @@ function UpdateClientForm() {
   const navigate = useNavigate();
   const editMode = useSelector((state) => state.cims.editMode);
   const navigateBack = useSelector((state) => state.cims.navigateBack);
-  const { authStore, updateForm, validateOnSubmit } = UseForm();
+  const { updateForm, validateOnSubmit } = UseForm();
 
   useEffect(() => {
     if (navigateBack) navigate("/cims");
-    authStore();
   }, []);
 
   return (

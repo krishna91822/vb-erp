@@ -65,7 +65,9 @@ function ClientsList() {
 
   const [clientId, setClientId] = useState();
   const [clientStatus, setClientStatus] = useState();
+  const [brandName, setBrandName] = useState();
   const [anchorEl, setAnchorEl] = useState(null);
+
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -74,9 +76,10 @@ function ClientsList() {
     setAnchorEl(null);
   };
 
-  const handelMenu = (id, status) => {
+  const handelMenu = (id, status, brandName) => {
     setClientId(id);
     setClientStatus(status);
+    setBrandName(brandName);
   };
 
   function menuIcon() {
@@ -123,7 +126,7 @@ function ClientsList() {
           <MenuItem
             onClick={() => {
               handleClose();
-              handelActiveStatus(clientId);
+              handelActiveStatus(clientId, clientStatus, brandName);
             }}
             disableRipple
           >
@@ -135,7 +138,7 @@ function ClientsList() {
               )}
             </ListItemIcon>
             <ListItemText>
-              {clientStatus ? "Deactivate" : "Activate"}
+              {clientStatus ? "Deactivate" : "Reactivate"}
             </ListItemText>
           </MenuItem>
         </Menu>
@@ -209,7 +212,7 @@ function ClientsList() {
                     }}
                     align="center"
                   >
-                    {client.communicationAddress.country.split("-")[0]}
+                    {client.registeredAddress.country.split("-")[0]}
                   </StyledTableCell>
                   <StyledTableCell
                     onClick={() => {
@@ -228,7 +231,9 @@ function ClientsList() {
                     {client.createdAt.slice(0, 10)}
                   </StyledTableCell>
                   <StyledTableCell
-                    onClick={() => handelMenu(client._id, client.status)}
+                    onClick={() =>
+                      handelMenu(client._id, client.status, client.brandName)
+                    }
                     align="center"
                   >
                     {menuIcon()}

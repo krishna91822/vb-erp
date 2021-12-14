@@ -109,13 +109,15 @@ export const getAddressByPincode = (addType, pincode, ccode) => {
         ? dispatch(cimsActions.setLocCom(data))
         : dispatch(cimsActions.setLocReg(data));
     } catch (error) {
-      dispatch(
-        uiActions.showNotification({
-          status: "error",
-          title: "Error!",
-          message: error.message,
-        })
-      );
+      setTimeout(function () {
+        dispatch(
+          uiActions.showNotification({
+            status: "error",
+            title: "Error!",
+            message: error.message,
+          })
+        );
+      }, 1000);
       dispatch(cimsActions.handelInvalidPincode(addType));
     } finally {
       dispatch(uiActions.toggleLoader());
@@ -230,13 +232,15 @@ export const handelDuplicates = (brand, id) => {
       const data = await fetchData();
       if (data) dispatch(cimsActions.setBrandFocus(false));
     } catch (error) {
-      dispatch(
-        uiActions.showNotification({
-          status: "error",
-          title: "Error!",
-          message: error.message,
-        })
-      );
+      setTimeout(function () {
+        dispatch(
+          uiActions.showNotification({
+            status: "error",
+            title: "Error!",
+            message: error.message,
+          })
+        );
+      }, 1000);
     } finally {
       dispatch(uiActions.toggleLoader());
     }
@@ -247,11 +251,13 @@ export const addNewClient = (formData) => {
   return async (dispatch) => {
     const postData = async () => {
       const response = await axios.post("/cims", { ...formData });
+      console.log(response);
       if (response.data.code === 200 || response.data.status === "success") {
         return response.data;
       }
       throw new Error(
-        response.data.error || "Something went wrong! Please try again..."
+        response.data.error.message ||
+          "Something went wrong! Please try again..."
       );
     };
 
@@ -259,13 +265,15 @@ export const addNewClient = (formData) => {
       dispatch(uiActions.toggleLoader());
       const data = await postData();
       dispatch(cimsActions.resetForm());
-      dispatch(
-        uiActions.showNotification({
-          status: "success",
-          title: "Success!",
-          message: data.message,
-        })
-      );
+      setTimeout(function () {
+        dispatch(
+          uiActions.showNotification({
+            status: "success",
+            title: "Success!",
+            message: data.message,
+          })
+        );
+      }, 1000);
     } catch (error) {
       setTimeout(function () {
         dispatch(
@@ -296,13 +304,15 @@ export const updateClient = (formData) => {
       dispatch(uiActions.toggleLoader());
       const data = await postData();
       dispatch(cimsActions.resetForm());
-      dispatch(
-        uiActions.showNotification({
-          status: "success",
-          title: "Success!",
-          message: data.message,
-        })
-      );
+      setTimeout(function () {
+        dispatch(
+          uiActions.showNotification({
+            status: "success",
+            title: "Success!",
+            message: data.message,
+          })
+        );
+      }, 1000);
     } catch (error) {
       setTimeout(function () {
         dispatch(
@@ -317,10 +327,12 @@ export const updateClient = (formData) => {
   };
 };
 
-export const changeActiveStatus = (clientId) => {
+export const changeActiveStatus = (clientId, clientStatus, brandName) => {
   return async (dispatch) => {
     const fetchData = async () => {
-      const response = await axios.patch(`/cims/status?id=${clientId}`);
+      const response = await axios.patch(
+        `/cims/status?id=${clientId}&status=${clientStatus}&brandName=${brandName}`
+      );
       if (response.data.code === 200 || response.data.status === "success") {
         const data = response.data;
 
@@ -334,13 +346,15 @@ export const changeActiveStatus = (clientId) => {
     try {
       dispatch(uiActions.toggleLoader());
       const data = await fetchData();
-      dispatch(
-        uiActions.showNotification({
-          status: "success",
-          title: "Success!",
-          message: data.message,
-        })
-      );
+      setTimeout(function () {
+        dispatch(
+          uiActions.showNotification({
+            status: "success",
+            title: "Success!",
+            message: data.message,
+          })
+        );
+      }, 1000);
     } catch (error) {
       setTimeout(function () {
         dispatch(
@@ -367,7 +381,7 @@ export const searchClient = (value, filterBy) => {
         return data;
       }
       throw new Error(
-        response.data.error || "Something went wrong! Please try again..."
+        response.data.message || "Something went wrong! Please try again..."
       );
     };
 

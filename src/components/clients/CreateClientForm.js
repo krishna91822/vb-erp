@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import {
   Switch,
@@ -8,7 +8,6 @@ import {
   Typography,
 } from "@mui/material";
 import UseForm from "./UseForm";
-import PageHeader from "./PageHeader";
 import Form from "./Form";
 import "../../assets/styles/FormStyles.css";
 import { cimsActions } from "../../store/cims-slice";
@@ -17,11 +16,7 @@ import { useDispatch, useSelector } from "react-redux";
 function CreateClientForm() {
   const dispatch = useDispatch();
   const editMode = useSelector((state) => state.cims.editMode);
-  const { authStore, submitForm, validateOnSubmit } = UseForm();
-
-  useEffect(() => {
-    authStore();
-  }, []);
+  const { submitForm, validateOnSubmit } = UseForm();
 
   return (
     <>

@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
 import { cimsActions } from "../../store/cims-slice";
 import { useNavigate } from "react-router-dom";
@@ -60,7 +59,7 @@ export default function UseForm() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  useEffect(async () => {
+  useEffect(() => {
     dispatch(fetchCountries());
   }, []);
 
@@ -436,17 +435,6 @@ export default function UseForm() {
     setAddOthers(false);
   };
 
-  // Sam
-  const [store, setStore] = useState("");
-  const [login, setLogin] = useState(true);
-  const authStore = () => {
-    let store = localStorage.getItem("authorization");
-    if (store && login) {
-      setLogin(true);
-      setStore(store);
-    }
-  };
-
   const validateOnSubmit = () => {
     const temp = JSON.parse(JSON.stringify(errors));
     const data = JSON.parse(JSON.stringify(formData));
@@ -564,7 +552,6 @@ export default function UseForm() {
     handleAddOthers,
     errors,
 
-    authStore,
     submitForm,
     addressFields,
     handelCountry,

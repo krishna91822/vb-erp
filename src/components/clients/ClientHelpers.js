@@ -40,8 +40,8 @@ export default function ClientHelpers() {
     }, 3000);
   };
 
-  const handelActiveStatus = async (clientId) => {
-    dispatch(changeActiveStatus(clientId));
+  const handelActiveStatus = async (clientId, clientStatus, brandName) => {
+    dispatch(changeActiveStatus(clientId, clientStatus, brandName));
     setTimeout(() => {
       dispatch(getClientsData(pageNo, sortBy, filterBy, sortingOrder));
       dispatch(uiActions.toggleLoader());
@@ -69,7 +69,7 @@ export default function ClientHelpers() {
 
   const handelFilterBy = (value) => {
     dispatch(cimsActions.setFilterBy(value));
-    dispatch(getClientsData(pageNo, sortBy, value, sortingOrder));
+    dispatch(getClientsData(1, sortBy, value, sortingOrder));
   };
 
   const handelSortingOrder = (value) => {

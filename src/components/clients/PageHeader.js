@@ -63,7 +63,7 @@ export default function PageHeader() {
         <Typography variant="body1">User-Admin/Approver</Typography>
       </Grid>
       <Grid>
-        <Grid container spacing={2} mb={2}>
+        <Grid container spacing={2} mb={1}>
           <Grid item>
             <Typography variant="h4">CIMS</Typography>
           </Grid>

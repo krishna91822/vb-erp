@@ -78,6 +78,14 @@ const cimsSlice = createSlice({
   name: "cims",
   initialState,
   reducers: {
+    resetForm(state, action) {
+      state.form = initialState.form;
+      state.errors = initialState.errors;
+      state.RegCcode = initialState.RegCcode;
+      state.ComCcode = initialState.ComCcode;
+      state.locReg = initialState.locReg;
+      state.locCom = initialState.locCom;
+    },
     createForm(state, action) {
       state.form = action.payload;
     },
@@ -143,7 +151,6 @@ const cimsSlice = createSlice({
         },
       };
     },
-    resetForm: () => initialState,
     getClientsList(state, action) {
       state.clientsList = action.payload;
     },
