@@ -28,7 +28,6 @@ import {
   SideButton,
   Dropdown,
   Options,
-  AdminName,
   ProjectHead,
 } from "./styles";
 import Tpagination from "../../UI/Pagination";
@@ -59,7 +58,7 @@ const ViewProjects = () => {
     const SortingValue = event.target.value;
 
     if (SortingValue === "Sort by Project ID") {
-      const sorteddata = [...projects].sort((a, b) =>
+      const sorteddata = [...projects.results].sort((a, b) =>
         a.vbProjectId.toLowerCase() > b.vbProjectId.toLowerCase()
           ? 1
           : b.vbProjectId.toLowerCase() > a.vbProjectId.toLowerCase()
@@ -70,7 +69,7 @@ const ViewProjects = () => {
     }
 
     if (SortingValue === "Sort by Status") {
-      const sorteddata = [...projects].sort((a, b) =>
+      const sorteddata = [...projects.results].sort((a, b) =>
         a.vbProjectStatus === null || b.vbProjectStatus === null
           ? (a.vbProjectStatus === null) - (b.vbProjectStatus === null) ||
             +(a.vbProjectStatus > b.vbProjectStatus) ||
@@ -108,7 +107,6 @@ const ViewProjects = () => {
     <>
       <MainComponent>
         <HeadingStyle>
-          <AdminName data-test="admin-name">User - Admin/Approver</AdminName>
           <Heading>
             <ProjectHead data-test="main-heading">Projects</ProjectHead>
             <SideButton>
@@ -134,7 +132,7 @@ const ViewProjects = () => {
                   },
                 }}
                 onClick={() => {
-                  navigate("/pmo/createproject");
+                  navigate("/pmo/projects/create");
                 }}
               >
                 Create a project
@@ -289,37 +287,43 @@ const ViewProjects = () => {
                     <TableCell align="left"></TableCell>
                   </TableRow>
                 )}
-                {projects
-                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                  .map((currElem, index) => (
-                    <TableRow key={index} onClick={() => entryLink(currElem)}>
-                      <TableCell align="left">
-                        {index + page * rowsPerPage + 1}
-                      </TableCell>
-                      <TableCell align="left">{currElem.clientName}</TableCell>
-                      <TableCell align="left">{currElem.projectName}</TableCell>
-                      <TableCell align="left">{currElem.vbProjectId}</TableCell>
-                      <TableCell align="left">
-                        {currElem.vbProjectStatus || "----"}
-                      </TableCell>
-                      <TableCell align="left">
-                        <Link
-                          to={`/pmo/projects/${currElem.vbProjectId}/edit`}
-                          onClick={stopClick}
-                        >
-                          <Button
-                            variant="fab"
-                            color="purple"
-                            size="small"
-                            endIcon={<EditIcon />}
-                            sx={{ padding: "0" }}
+                {projects.results
+                  ? projects.results.map((currElem, index) => (
+                      <TableRow key={index} onClick={() => entryLink(currElem)}>
+                        <TableCell align="left">
+                          {index + page * rowsPerPage + 1}
+                        </TableCell>
+                        <TableCell align="left">
+                          {currElem.clientName}
+                        </TableCell>
+                        <TableCell align="left">
+                          {currElem.projectName}
+                        </TableCell>
+                        <TableCell align="left">
+                          {currElem.vbProjectId}
+                        </TableCell>
+                        <TableCell align="left">
+                          {currElem.vbProjectStatus || "----"}
+                        </TableCell>
+                        <TableCell align="left">
+                          <Link
+                            to={`/pmo/projects/${currElem.vbProjectId}/edit`}
+                            onClick={stopClick}
                           >
-                            Edit
-                          </Button>
-                        </Link>
-                      </TableCell>
-                    </TableRow>
-                  ))}
+                            <Button
+                              variant="fab"
+                              color="purple"
+                              size="small"
+                              endIcon={<EditIcon />}
+                              sx={{ padding: "0" }}
+                            >
+                              Edit
+                            </Button>
+                          </Link>
+                        </TableCell>
+                      </TableRow>
+                    ))
+                  : null}
               </TableBody>
             </Table>
           </TableContainer>

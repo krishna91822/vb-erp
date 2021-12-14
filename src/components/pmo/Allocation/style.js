@@ -10,7 +10,7 @@ export const MiniHead = styled.h3`
 export const MainComponent = styled.div`
   padding: 5px 15px;
   min-width: 345px; //we need to remove this line
-  min-height: 85vh;
+  min-height: 90vh;
 `;
 export const HeadingStyle = styled.div`
   p {
@@ -44,7 +44,7 @@ export const Container = styled.div`
   }
   border-top: 0.1rem solid rgb(227, 231, 231);
   .MuiTableContainer-root {
-    height: calc(100vh - 300px);
+    height: calc(100vh - 264px);
   }
 
   .MuiTableHead-root {

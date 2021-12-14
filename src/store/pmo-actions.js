@@ -1,14 +1,12 @@
-import axios from "axios";
+import axios from "../helpers/axiosInstance";
 import { pmoActions } from "./pmo-slice";
-const baseUrl = "http://localhost:3030";
+import { uiActions } from "./ui-slice";
 
 export const createProject = (projectInfo) => {
   return async (dispatch) => {
+    dispatch(uiActions.toggleLoader());
     const saveProjects = async () => {
-      const response = await axios.post(
-        `${baseUrl}/projects`,
-        projectInfo.project
-      );
+      const response = await axios.post(`/projects`, projectInfo.project);
       if (response.status === "failure") {
         throw new Error(response.data.message);
       }
@@ -19,7 +17,7 @@ export const createProject = (projectInfo) => {
         projectId: id,
         resources: projectInfo.resources,
       };
-      const response = await axios.post(`${baseUrl}/allocations`, Allresources);
+      const response = await axios.post(`/allocations`, Allresources);
       if (response.status === "failure") {
         throw new Error(response.data.message);
       }
@@ -28,17 +26,32 @@ export const createProject = (projectInfo) => {
     try {
       const data = await saveProjects();
       await saveResources(data.data._id);
+
+      dispatch(
+        uiActions.showNotification({
+          status: "success",
+          message: "Project Created Successfully !",
+        })
+      );
       dispatch(pmoActions.redirectToProjectList());
-    } catch (err) {
-      console.log(err);
+    } catch (error) {
+      dispatch(
+        uiActions.showNotification({
+          status: "error",
+          message: error.message,
+        })
+      );
+    } finally {
+      dispatch(uiActions.toggleLoader());
     }
   };
 };
 export const updateProject = (projectInfo) => {
   return async (dispatch) => {
+    dispatch(uiActions.toggleLoader());
     const saveProjects = async () => {
       const response = await axios.put(
-        `${baseUrl}/projects/${projectInfo.project.vbProjectId}`,
+        `/projects/${projectInfo.project.vbProjectId}`,
         projectInfo.project
       );
       if (response.status === "failure") {
@@ -51,7 +64,7 @@ export const updateProject = (projectInfo) => {
         projectId: id,
         resources: projectInfo.resources,
       };
-      const response = await axios.put(`${baseUrl}/allocations`, resources);
+      const response = await axios.put(`/allocations`, resources);
       if (response.status === "failure") {
         throw new Error(response.data.message);
       }
@@ -60,16 +73,25 @@ export const updateProject = (projectInfo) => {
     try {
       const data = await saveProjects();
       await saveResources(data.data._id);
+
       dispatch(pmoActions.setUpdateModal());
-    } catch (err) {
-      console.log(err);
+    } catch (error) {
+      dispatch(
+        uiActions.showNotification({
+          status: "error",
+          message: error.message,
+        })
+      );
+    } finally {
+      dispatch(uiActions.toggleLoader());
     }
   };
 };
 export const getAllProjects = (type) => {
   return async (dispatch) => {
+    dispatch(uiActions.toggleLoader());
     const getData = async () => {
-      const response = await axios.get(`${baseUrl}/projects/${type}`);
+      const response = await axios.get(`/projects/${type}`);
       if (response.status === "failure") {
         throw new Error(response.data.message);
       }
@@ -77,9 +99,16 @@ export const getAllProjects = (type) => {
     };
     try {
       const data = await getData();
-      dispatch(pmoActions.updateProjectsList(data.data));
-    } catch (err) {
-      console.log(err);
+      dispatch(pmoActions.updateProjectsList(data.data.data));
+    } catch (error) {
+      dispatch(
+        uiActions.showNotification({
+          status: "error",
+          message: error.message,
+        })
+      );
+    } finally {
+      dispatch(uiActions.toggleLoader());
     }
   };
 };
@@ -87,7 +116,7 @@ export const getAllProjects = (type) => {
 export const getAllFilterProjects = (type, filters) => {
   return async (dispatch) => {
     const getData = async () => {
-      let url = `${baseUrl}/projects/${type}?limit=10`;
+      let url = `/projects/${type}?limit=10`;
       if (filters.clientName) url += `&clientName=${filters.clientName}`;
       if (filters.projectName) url += `&projectName=${filters.projectName}`;
       if (filters.vbProjectId) url += `&vbProjectId=${filters.vbProjectId}`;
@@ -111,7 +140,7 @@ export const getAllFilterProjects = (type, filters) => {
 export const getAllEmployees = () => {
   return async (dispatch) => {
     const getData = async () => {
-      const response = await axios.get(`${baseUrl}/employees/filteremp`);
+      const response = await axios.get(`/employees/filteremp`);
       if (response.status === "failure") {
         throw new Error(response.data.message);
       }
@@ -129,7 +158,7 @@ export const getAllClientData = (value) => {
   return async (dispatch) => {
     const getData = async () => {
       const response = await axios.get(
-        `${baseUrl}/cims/filterclients?brandName=${value}`
+        `/cims/filterclients?brandName=${value}`
       );
       if (response.status === "failure") {
         throw new Error(response.data.message);
@@ -148,7 +177,7 @@ export const getAllClientData = (value) => {
 export const getAllocatedData = (filters) => {
   return async (dispatch) => {
     const getData = async () => {
-      let url = `${baseUrl}/allocations?limit=10`;
+      let url = `/allocations?limit=10`;
       if (filters.empId) url += `&empId=${filters.empId}`;
       if (filters.employeeName) url += `&empName=${filters.employeeName}`;
       if (filters.projectAllocated)
@@ -177,7 +206,7 @@ export const getAllocatedData = (filters) => {
 export const getOnBench = (filters) => {
   return async (dispatch) => {
     const getData = async () => {
-      let url = `${baseUrl}/allocations/onbench?limit=10`;
+      let url = `/allocations/onbench?limit=10`;
       if (filters.empId) url += `&empId=${filters.empId}`;
       if (filters.employeeName) url += `&empName=${filters.employeeName}`;
       if (filters.remainingAllocation)
@@ -203,7 +232,7 @@ export const getPercentageAllocated = (empId) => {
   return async (dispatch) => {
     const getData = async () => {
       const response = await axios.get(
-        `${baseUrl}/allocations/totalallocation?empId=${empId}`
+        `/allocations/totalallocation?empId=${empId}`
       );
       if (response.status === "failure") {
         throw new Error(response.data.message);
@@ -222,16 +251,14 @@ export const getPercentageAllocated = (empId) => {
 export const getProjectById = (projectId) => {
   return async (dispatch) => {
     const getData = async () => {
-      const response = await axios.get(`${baseUrl}/projects/${projectId}`);
+      const response = await axios.get(`/projects/${projectId}`);
       if (response.status === "failure") {
         throw new Error(response.data.message);
       }
       return response;
     };
     const getResourceData = async (projId) => {
-      const response = await axios.get(
-        `${baseUrl}/allocations?projectId=${projId}`
-      );
+      const response = await axios.get(`/allocations?projectId=${projId}`);
       if (response.status === "failure") {
         throw new Error(response.data.message);
       }
@@ -254,7 +281,7 @@ export const getProjectById = (projectId) => {
 export const deleteResource = (id) => {
   return async (dispatch) => {
     const deleteResourceById = async () => {
-      const response = await axios.delete(`${baseUrl}/allocations/${id}`);
+      const response = await axios.delete(`/allocations/${id}`);
       if (response.status === "failure") {
         throw new Error(response.data.message);
       }
@@ -262,7 +289,7 @@ export const deleteResource = (id) => {
     };
     try {
       const data = await deleteResourceById();
-      dispatch(pmoActions.removeAllocation(data.data));
+      // dispatch(pmoActions.removeAllocation(data.data));
     } catch (err) {
       console.log(err);
     }
@@ -272,7 +299,7 @@ export const deleteResource = (id) => {
 export const getClinetById = (id) => {
   return async (dispatch) => {
     const getClinentName = async () => {
-      const response = await axios.get(`${baseUrl}/cims/filterclients/${id}`);
+      const response = await axios.get(`/cims/filterclients/${id}`);
       if (response.status === "failure") {
         throw new Error(response.data.message);
       }

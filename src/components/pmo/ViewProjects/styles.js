@@ -29,7 +29,7 @@ export const ProjectHead = styled.h2`
 `;
 export const Container = styled.div`
   .MuiTableContainer-root {
-    height: calc(100vh - 250px);
+    height: calc(100vh - 218px);
   }
   .MuiTableHead-root {
     background-color: #c6d4d4;

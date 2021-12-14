@@ -37,6 +37,7 @@ const ResourceInformation = ({
   const [open, setOpen] = useState(false);
   const [tempVal, setTempVal] = useState(0);
   const dispatch = useDispatch();
+
   const handleOpen = ({ target }) => {
     let inputvalue = target.value;
 
@@ -46,6 +47,7 @@ const ResourceInformation = ({
       setOpen(false);
     }
   };
+
   useEffect(() => {
     dispatch(getAllEmployees());
   }, []);
