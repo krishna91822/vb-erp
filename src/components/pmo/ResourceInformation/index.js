@@ -41,14 +41,12 @@ const ResourceInformation = ({
     let inputvalue = target.value;
 
     if (inputvalue && inputvalue.length > 2) {
+      dispatch(getAllEmployees(inputvalue));
       setOpen(true);
     } else {
       setOpen(false);
     }
   };
-  useEffect(() => {
-    dispatch(getAllEmployees());
-  }, []);
 
   const resourcesIds = resources.map((eachRes) => eachRes.empId);
   const filteredEmployees = allEmployees

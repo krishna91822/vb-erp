@@ -19,6 +19,7 @@ import { pmoActions } from "../../../store/pmo-slice";
 import {
   getAllProjects,
   getAllFilterProjects,
+  getAllProjectsBySroting,
 } from "../../../store/pmo-actions";
 import {
   MainComponent,
@@ -59,29 +60,11 @@ const ViewProjects = () => {
     const SortingValue = event.target.value;
 
     if (SortingValue === "Sort by Project ID") {
-      const sorteddata = [...projects].sort((a, b) =>
-        a.vbProjectId.toLowerCase() > b.vbProjectId.toLowerCase()
-          ? 1
-          : b.vbProjectId.toLowerCase() > a.vbProjectId.toLowerCase()
-          ? -1
-          : 0
-      );
-      dispatch(pmoActions.SortByProductID(sorteddata));
+      console.log("projed");
+      dispatch(getAllProjectsBySroting(filterProjects, "vbProjectId"));
     }
-
     if (SortingValue === "Sort by Status") {
-      const sorteddata = [...projects].sort((a, b) =>
-        a.vbProjectStatus === null || b.vbProjectStatus === null
-          ? (a.vbProjectStatus === null) - (b.vbProjectStatus === null) ||
-            +(a.vbProjectStatus > b.vbProjectStatus) ||
-            -(a.vbProjectStatus < b.vbProjectStatus)
-          : a.vbProjectStatus.toLowerCase() < b.vbProjectStatus.toLowerCase()
-          ? -1
-          : b.vbProjectStatus.toLowerCase() < a.vbProjectStatus.toLowerCase()
-          ? 1
-          : 0
-      );
-      dispatch(pmoActions.SortByStatus(sorteddata));
+      dispatch(getAllProjectsBySroting(filterProjects, "vbProjectStatus"));
     }
   };
 
@@ -108,7 +91,6 @@ const ViewProjects = () => {
     <>
       <MainComponent>
         <HeadingStyle>
-          <AdminName data-test="admin-name">User - Admin/Approver</AdminName>
           <Heading>
             <ProjectHead data-test="main-heading">Projects</ProjectHead>
             <SideButton>
@@ -134,7 +116,7 @@ const ViewProjects = () => {
                   },
                 }}
                 onClick={() => {
-                  navigate("/pmo/createproject");
+                  navigate("/pmo/project/create");
                 }}
               >
                 Create a project
@@ -329,5 +311,4 @@ const ViewProjects = () => {
     </>
   );
 };
-
 export default ViewProjects;

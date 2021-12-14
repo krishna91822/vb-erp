@@ -95,7 +95,7 @@ const SidebarNavigation = () => {
       name: "PMO",
       dropDown: [
         { name: "Projects", route: "/pmo/projects" },
-        { name: "Create Project", route: "/pmo/createproject" },
+        { name: "Create Project", route: "/pmo/project/create" },
         { name: "Allocations", route: "/pmo/allocations" },
       ],
       open: openPMO,

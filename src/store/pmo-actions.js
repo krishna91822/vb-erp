@@ -77,7 +77,7 @@ export const getAllProjects = (type) => {
     };
     try {
       const data = await getData();
-      dispatch(pmoActions.updateProjectsList(data.data));
+      dispatch(pmoActions.updateProjectsList(data.data.data.results));
     } catch (err) {
       console.log(err);
     }
@@ -101,17 +101,19 @@ export const getAllFilterProjects = (type, filters) => {
     };
     try {
       const data = await getData();
-      dispatch(pmoActions.updateProjectsList(data.data));
+      dispatch(pmoActions.updateProjectsList(data.data.data.results));
     } catch (err) {
       console.log(err);
     }
   };
 };
 
-export const getAllEmployees = () => {
+export const getAllEmployees = (empName) => {
   return async (dispatch) => {
     const getData = async () => {
-      const response = await axios.get(`${baseUrl}/employees/filteremp`);
+      const response = await axios.get(
+        `${baseUrl}/employees/filteremp?empName=${empName}`
+      );
       if (response.status === "failure") {
         throw new Error(response.data.message);
       }
@@ -129,7 +131,7 @@ export const getAllEmployees = () => {
 export const getAllClientData = () => {
   return async (dispatch) => {
     const getData = async () => {
-      const response = await axios.get(`${baseUrl}/cims/filter`);
+      const response = await axios.get(`${baseUrl}/cims/filterclients`);
       if (response.status === "failure") {
         throw new Error(response.data.message);
       }
@@ -149,11 +151,13 @@ export const getAllocatedData = (filters) => {
     const getData = async () => {
       let url = `${baseUrl}/allocations?limit=10`;
       if (filters.empId) url += `&empId=${filters.empId}`;
-      if (filters.employeeName) url += `&employeeName=${filters.employeeName}`;
+      if (filters.employeeName) url += `&empName=${filters.employeeName}`;
       if (filters.projectAllocated)
         url += `&allocatedProject=${filters.projectAllocated}`;
-      if (filters.startDate) url += `&allocationStartDate=${filters.startDate}`;
-      if (filters.endDate) url += `&allocationEndDate=${filters.endDate}`;
+      if (filters.allocationStartDate)
+        url += `&allocationStartDate=${filters.allocationStartDate}`;
+      if (filters.allocationEndDate)
+        url += `&allocationEndDate=${filters.allocationEndDate}`;
       if (filters.allocationPercentage)
         url += `&allocationPercentage=${filters.allocationPercentage}`;
 
@@ -178,7 +182,7 @@ export const getOnBench = (filters) => {
     const getData = async () => {
       let url = `${baseUrl}/allocations/onbench?limit=10`;
       if (filters.empId) url += `&empId=${filters.empId}`;
-      if (filters.employeeName) url += `&employeeName=${filters.employeeName}`;
+      if (filters.employeeName) url += `&empName=${filters.employeeName}`;
       if (filters.remainingAllocation)
         url += `&remainingAllocation=${filters.remainingAllocation}`;
 
@@ -261,7 +265,29 @@ export const deleteResource = (id) => {
     };
     try {
       const data = await deleteResourceById();
-      dispatch(pmoActions.removeAllocation(data.data));
+      // dispatch(pmoActions.removeAllocation(data.data));
+    } catch (err) {
+      console.log(err);
+    }
+  };
+};
+
+export const getAllProjectsBySroting = (type, sortedValue) => {
+  console.log(type, sortedValue);
+  return async (dispatch) => {
+    const getData = async () => {
+      const response = await axios.get(
+        `${baseUrl}/projects/${type}/${sortedValue}`
+      );
+      console.log(`${baseUrl}/${type}`);
+      if (response.status === "failure") {
+        throw new Error(response.data.message);
+      }
+      return response;
+    };
+    try {
+      const data = await getData();
+      dispatch(pmoActions.updateProjectsList(data.data.data.results));
     } catch (err) {
       console.log(err);
     }
