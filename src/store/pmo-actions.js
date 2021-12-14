@@ -97,7 +97,6 @@ export const getAllFilterProjects = (type, filters) => {
       if (response.status === "failure") {
         throw new Error(response.data.message);
       }
-      console.log(url);
       return response;
     };
     try {
@@ -168,7 +167,6 @@ export const getAllocatedData = (filters) => {
     try {
       const data = await getData();
       dispatch(pmoActions.updateAllocatedData(data.data));
-      console.log(data, "data is here");
     } catch (err) {
       console.log(err);
     }
@@ -185,7 +183,6 @@ export const getOnBench = (filters) => {
         url += `&remainingAllocation=${filters.remainingAllocation}`;
 
       const response = await axios.get(url);
-      console.log(url);
 
       if (response.status === "failure") {
         throw new Error(response.data.message);
