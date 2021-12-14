@@ -10,6 +10,7 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
+import Autocomplete from "@mui/material/Autocomplete";
 import TextField from "@mui/material/TextField";
 import SimpleGrow from "./EmpList";
 import BasicDatePicker from "../invoice_FORM/date";
@@ -19,6 +20,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { createNewPO_SOW } from "../../../store/CMS/POSOW-actions";
 import { UpdatePO_SOW } from "../../../store/CMS/POSOW-actions";
 import { SendForApproval } from "../../../store/CMS/POSOW-actions";
+import { fetchAllClients } from "../../../store/CMS/POSOW-actions";
+import { fetchAllClientProjects } from "../../../store/CMS/POSOW-actions";
 import { PoSowActions } from "../../../store/CMS/POSOW-slice";
 import { useNavigate } from "react-router-dom";
 import validateForm from "./validateForm";
@@ -58,8 +61,11 @@ export const CapturePO_SOW = (props) => {
       dispatch(PoSowActions.setRedirect(false));
     }
   }, [isRedirect]);
+  useEffect(() => {
+    dispatch(fetchAllClients());
+  }, []);
 
-  const names = useSelector((state) => state.CMS_state.inputFieldsData.names);
+  const names = useSelector((state) => state.CMS_state.inputFieldsData.clients);
   const projects = useSelector(
     (state) => state.CMS_state.inputFieldsData.projects
   );
@@ -80,7 +86,7 @@ export const CapturePO_SOW = (props) => {
     (state) => state.CMS_state.inputFieldsData.DocumentTypes
   );
 
-  let ReadPersonName = "";
+  let DefaultClientName = { clientName: "" };
   let ReadProjectName = "";
   let ReadPO_num = "";
   let ReadPO_amt = "";
@@ -99,7 +105,7 @@ export const CapturePO_SOW = (props) => {
   );
   const [errors, setErrors] = useState({});
   const [selectedDate, setPOSOWEndDate] = useState(null);
-  const [personName, setPersonName] = React.useState(ReadPersonName);
+  const [clientName, setClientName] = React.useState(DefaultClientName);
   const [projectName, setProjectName] = React.useState(ReadProjectName);
   const [typeName, setTypeName] = React.useState(ReadType);
   const [CurrName, setCurrName] = React.useState(ReadCurr);
@@ -121,10 +127,12 @@ export const CapturePO_SOW = (props) => {
   const [TargetedResChkBox, setTargetedResChkBox] = useState(
     userTargetResCheckedElems
   );
-
+  useEffect(() => {
+    dispatch(fetchAllClientProjects(clientName.clientName));
+  }, [clientName]);
   useEffect(() => {
     if (props.editBtn && filteredArr !== undefined) {
-      setPersonName(filteredArr[0].Client_Name);
+      setClientName({ clientName: filteredArr[0].Client_Name });
       setProjectName(filteredArr[0].Project_Name);
       setPO_number(filteredArr[0].PO_Number);
       setPOAmt(filteredArr[0].PO_Amount);
@@ -173,8 +181,13 @@ export const CapturePO_SOW = (props) => {
     }
   }, [filteredArr]);
 
-  const handleClientChange = (event) => {
-    setPersonName(event.target.value);
+  const handleClientChange = (event, value) => {
+    // setClientName(event.target.value);
+    if (!!value) {
+      setClientName(value);
+    } else {
+      setClientName(DefaultClientName);
+    }
   };
   const handleProjectChange = (event) => {
     setProjectName(event.target.value);
@@ -260,7 +273,7 @@ export const CapturePO_SOW = (props) => {
       }
     }
     const DataToSend = {
-      Client_Name: personName,
+      Client_Name: clientName.clientName,
       Project_Name: projectName,
       Client_Sponser: SelectedClientSponsors,
       Client_Finance_Controller: SelectedFinController,
@@ -379,35 +392,26 @@ export const CapturePO_SOW = (props) => {
                     <strong>Client name</strong>
                   </label>
                   <div>
-                    <FormControl sx={{ m: 1, width: 400 }}>
-                      <InputLabel id="demo-multiple-name-label">
-                        Names
-                      </InputLabel>
-                      <Select
-                        value={personName}
-                        onChange={handleClientChange}
-                        input={<OutlinedInput label="Name" />}
-                        MenuProps={MenuProps}
-                        error={errors.Client_Name ? true : false}
-                        disabled={
-                          props.editBtn && !editTglCheckedState ? true : false
-                        }
-                        data-test="client-name-dropdown"
-                        inputProps={{
-                          "data-testid": "clientNameDropdown-ChangeTest",
-                        }}
-                      >
-                        {names.map((name) => (
-                          <MenuItem
-                            key={name}
-                            value={name}
-                            style={getStyles(name, personName, theme)}
-                          >
-                            {name}
-                          </MenuItem>
-                        ))}
-                      </Select>
-                    </FormControl>
+                    <Autocomplete
+                      disablePortal
+                      id="combo-box-demo"
+                      options={names}
+                      onChange={(event, value) =>
+                        handleClientChange(event, value)
+                      }
+                      disabled={
+                        props.editBtn && !editTglCheckedState ? true : false
+                      }
+                      value={clientName}
+                      getOptionLabel={(option) => option.clientName}
+                      isOptionEqualToValue={(option, value) =>
+                        option.clientName === value.clientName
+                      }
+                      sx={{ width: 400 }}
+                      renderInput={(params) => (
+                        <TextField {...params} label="Client Name" />
+                      )}
+                    />
                   </div>
                 </div>
                 <div className="ProjectDropdown">
@@ -435,11 +439,11 @@ export const CapturePO_SOW = (props) => {
                       >
                         {projects.map((name) => (
                           <MenuItem
-                            key={name}
-                            value={name}
-                            style={getStyles(name, personName, theme)}
+                            key={name.projectName}
+                            value={name.projectName}
+                            style={getStyles(name, projectName, theme)}
                           >
-                            {name}
+                            {name.projectName}
                           </MenuItem>
                         ))}
                       </Select>
@@ -601,7 +605,7 @@ export const CapturePO_SOW = (props) => {
                           <MenuItem
                             key={name}
                             value={name}
-                            style={getStyles(name, personName, theme)}
+                            style={getStyles(name, typeName, theme)}
                           >
                             {name}{" "}
                           </MenuItem>
@@ -679,7 +683,7 @@ export const CapturePO_SOW = (props) => {
                           <MenuItem
                             key={name}
                             value={name}
-                            style={getStyles(name, personName, theme)}
+                            style={getStyles(name, typeName, theme)}
                           >
                             {name}
                           </MenuItem>
@@ -754,7 +758,7 @@ export const CapturePO_SOW = (props) => {
                           <MenuItem
                             key={name}
                             value={name}
-                            style={getStyles(name, personName, theme)}
+                            style={getStyles(name, typeName, theme)}
                           >
                             {name}
                           </MenuItem>

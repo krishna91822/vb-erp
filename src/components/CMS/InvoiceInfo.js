@@ -127,8 +127,11 @@ function InvoiceInfo() {
             By Project Name
           </MenuItem>
 
-          <MenuItem onClick={() => handleSort("invoice_raised")} disableRipple>
-            By invoice raised
+          <MenuItem
+            onClick={() => handleSort("invoice_amount_received")}
+            disableRipple
+          >
+            By invoice amount recieved
           </MenuItem>
           <MenuItem onClick={() => handleSort("Client_Name")} disableRipple>
             By Client Name

@@ -228,3 +228,44 @@ export const UnAssignThisEmp = (emp_id) => {
     }
   };
 };
+
+export const fetchAllClients = () => {
+  return async function (dispatch) {
+    try {
+      const res = await axios.get("poSow/capturePO/clients");
+      if (res.status === 200) {
+        dispatch(PoSowActions.setClientsOptions(res.data.data));
+      } else {
+        throw new Error("Something went wrong!");
+      }
+    } catch (error) {
+      dispatch(
+        uiActions.showNotification({
+          status: "error",
+          title: "Error",
+          message: "Something went wrong",
+        })
+      );
+    }
+  };
+};
+export const fetchAllClientProjects = (clientName) => {
+  return async function (dispatch) {
+    try {
+      const res = await axios.get(`poSow/capturePO/clients/${clientName}`);
+      if (res.status === 200) {
+        dispatch(PoSowActions.setClientProjects(res.data.data));
+      } else {
+        throw new Error("Something went wrong!");
+      }
+    } catch (error) {
+      dispatch(
+        uiActions.showNotification({
+          status: "error",
+          title: "Error",
+          message: "Something went wrong",
+        })
+      );
+    }
+  };
+};
