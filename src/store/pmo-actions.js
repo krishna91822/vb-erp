@@ -51,7 +51,7 @@ export const updateProject = (projectInfo) => {
         projectId: id,
         resources: projectInfo.resources,
       };
-      const response = await axios.post(`${baseUrl}/allocations`, resources);
+      const response = await axios.put(`${baseUrl}/allocations`, resources);
       if (response.status === "failure") {
         throw new Error(response.data.message);
       }
@@ -93,7 +93,6 @@ export const getAllFilterProjects = (type, filters) => {
       if (filters.vbProjectId) url += `&vbProjectId=${filters.vbProjectId}`;
       if (filters.vbProjectStatus)
         url += `&vbProjectStatus=${filters.vbProjectStatus}`;
-      console.log(url, "url");
       const response = await axios.get(url);
       if (response.status === "failure") {
         throw new Error(response.data.message);
@@ -112,7 +111,7 @@ export const getAllFilterProjects = (type, filters) => {
 export const getAllEmployees = () => {
   return async (dispatch) => {
     const getData = async () => {
-      const response = await axios.get(`${baseUrl}/employees`);
+      const response = await axios.get(`${baseUrl}/employees/filteremp`);
       if (response.status === "failure") {
         throw new Error(response.data.message);
       }
@@ -193,6 +192,26 @@ export const getOnBench = (filters) => {
     try {
       const data = await getData();
       dispatch(pmoActions.updatebenchData(data.data));
+    } catch (err) {
+      console.log(err);
+    }
+  };
+};
+
+export const getPercentageAllocated = (empId) => {
+  return async (dispatch) => {
+    const getData = async () => {
+      const response = await axios.get(
+        `${baseUrl}/allocations/totalallocation?empId=${empId}`
+      );
+      if (response.status === "failure") {
+        throw new Error(response.data.message);
+      }
+      return response;
+    };
+    try {
+      const data = await getData();
+      dispatch(pmoActions.updatePercentageAllocated(data.data));
     } catch (err) {
       console.log(err);
     }

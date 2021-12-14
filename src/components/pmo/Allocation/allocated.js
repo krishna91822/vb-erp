@@ -209,9 +209,7 @@ const Allocated = ({ pressed }) => {
                 <TableRow key={index}>
                   <TableCell align="left">{index + 1}</TableCell>
                   <TableCell align="left">{currElem.empId.empId}</TableCell>
-                  <TableCell align="left">
-                    {currElem.empId.employeeName}
-                  </TableCell>
+                  <TableCell align="left">{currElem.empId.empName}</TableCell>
                   <TableCell align="left">
                     {currElem.projectId.projectName}
                   </TableCell>

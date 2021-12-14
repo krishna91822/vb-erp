@@ -37,10 +37,6 @@ const ViewProjects = () => {
   const navigate = useNavigate();
   const { projects } = useSelector((state) => state.pmo);
   const [page, setPage] = useState(0);
-  // const [clientName, setClientName] = useState("");
-  // const [projectName, setProjectName] = useState("");
-  // const [vbProjectId, setVbProjectId] = useState("");
-  // const [vbProjectStatus, setVbProjectStatus] = useState("");
   const [pressed, setPressed] = useState(false);
   const [filterProjects, setFilterProjects] = useState("active");
   const [filters, setFilters] = useState({
@@ -97,34 +93,6 @@ const ViewProjects = () => {
     e.stopPropagation();
   };
 
-  // const filterClientName = (event) => {
-  //   const cName = event.target.value.toLowerCase();
-  //   setClientName(cName);
-  // };
-
-  // const filterProjectId = (event) => {
-  //   const pId = event.target.value.toLowerCase();
-  //   setVbProjectId(pId);
-  // };
-
-  // const filterProjectName = (event) => {
-  //   const pName = event.target.value.toLowerCase();
-  //   setProjectName(pName);
-  // };
-
-  // const filterStatus = (event) => {
-  //   const pStatus = event.target.value.toLowerCase();
-  //   setVbProjectStatus(pStatus);
-  // };
-
-  // const filteredData = projects.filter((eachData) => {
-  //   return (
-  //     eachData.clientName.toLowerCase().includes(clientName) &&
-  //     eachData.projectName.toLowerCase().includes(projectName) &&
-  //     eachData.vbProjectId.toLowerCase().includes(vbProjectId) &&
-  //     eachData.vbProjectStatus.toLowerCase().includes(vbProjectStatus)
-  //   );
-  // });
   const showfilter = () => {
     setPressed(!pressed);
   };
@@ -200,8 +168,6 @@ const ViewProjects = () => {
               border: "0.1em solid #afacacde",
               borderRadius: "5px",
             }}
-            // style={{ height: `calc("100vh" - "140px")` }}
-            // style={{ height: "50vh", overflow: "auto" }}
           >
             <Table data-test="list-table">
               <TableHead>

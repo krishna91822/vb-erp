@@ -63,10 +63,6 @@ export default function BenchModal({
                   </div>
                 ))}
             </ol>
-            {/* <Typography>{`name = ${entryData.associateName},`}</Typography>
-            <Typography>{`last allocated project = ${entryData.lastAllocatedProject},`}</Typography>
-            <Typography>{`last start date = ${entryData.startDate},`}</Typography>
-            <Typography>{`last end date = ${entryData.endDate},`}</Typography> */}
           </Box>
         </Fade>
       </Modal>

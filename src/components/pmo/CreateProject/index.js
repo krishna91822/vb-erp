@@ -31,6 +31,7 @@ import {
   createProject,
   updateProject,
   getProjectById,
+  getPercentageAllocated,
   deleteResource,
   getAllClientData,
 } from "../../../store/pmo-actions";
@@ -53,7 +54,7 @@ const initialState = {
     vbProjectStatus: "",
   },
   resource: {
-    employeeName: "",
+    empName: "",
     allocationStartDate: "",
     allocationEndDate: "",
     allocationPercentage: "0",
@@ -68,9 +69,13 @@ const CreateProject = () => {
   const dispatch = useDispatch();
   const location = useLocation().pathname;
   const navigate = useNavigate();
-  const { redirect, projectById, allClients } = useSelector(
-    (state) => state.pmo
-  );
+  const {
+    redirect,
+    projectById,
+    allClients,
+    allEmployees,
+    percentageAllocated,
+  } = useSelector((state) => state.pmo);
   const [edit, setEdit] = useState(false);
   const [state, setState] = useState(initialState);
   const [errors, setErrors] = useState({});
@@ -125,16 +130,21 @@ const CreateProject = () => {
       setState({
         ...state,
         project: projectById.project,
-        resources: projectById.resources,
+        resources: projectById.resources.map((eachResource) => ({
+          ...eachResource,
+          empId: eachResource.empId._id,
+          empName: eachResource.empId.empName,
+        })),
       });
     }
   }, [projectById]);
   const handelAssociate = (value) => {
+    dispatch(getPercentageAllocated(value.empId));
     setState({
       ...state,
       resource: {
         ...state.resource,
-        employeeName: value.employeeName,
+        empName: value.empName,
         empId: value._id,
       },
     });
@@ -589,6 +599,8 @@ const CreateProject = () => {
             handelAssociate={handelAssociate}
             removeResource={removeResource}
             resourceErrors={resourceErrors}
+            allEmployees={allEmployees}
+            percentageAllocated={percentageAllocated}
           />
         </StyledHeader>
       </PmoContainer>

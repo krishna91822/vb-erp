@@ -38,7 +38,6 @@ const Bench = ({ pressed }) => {
   );
 
   const filterData = (event) => {
-    console.log(event.target.value);
     setFilters({ ...filters, [event.target.name]: event.target.value });
     if (event.key === "Enter") {
       dispatch(getOnBench(filters));
@@ -182,7 +181,7 @@ const Bench = ({ pressed }) => {
                 >
                   <TableCell align="left">{index + page * 5 + 1}</TableCell>
                   <TableCell align="left">{currElem.empId}</TableCell>
-                  <TableCell align="left">{currElem.employeeName}</TableCell>
+                  <TableCell align="left">{currElem.empName}</TableCell>
                   {/* <TableCell align="left">
                       {currElem.primaryCapabilities}
                     </TableCell> */}
