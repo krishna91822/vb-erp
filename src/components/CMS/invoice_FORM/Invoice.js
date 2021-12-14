@@ -33,6 +33,7 @@ import React, { useEffect } from "react";
 import { createNew_INVOICE } from "../../../store/CMS/INVOICE-actions";
 import { Update_INVOICE } from "../../../store/CMS/INVOICE-actions";
 import { fetchPO_SOW_data } from "../../../store/CMS/POSOW-actions";
+import { fetch_INVOICE_data } from "../../../store/CMS/INVOICE-actions";
 import { PoSowActions } from "../../../store/CMS/POSOW-slice";
 
 function Invoice(props) {
@@ -47,7 +48,8 @@ function Invoice(props) {
     }
   }, [isRedirect]);
   useEffect(() => {
-    dispatch(fetchPO_SOW_data());
+    dispatch(fetchPO_SOW_data("Id"));
+    dispatch(fetch_INVOICE_data("Id"));
   }, []);
 
   const allPOSOWs = useSelector((state) => state.CMS_state.poSowData);
