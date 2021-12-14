@@ -35,6 +35,7 @@ export const SOW_init_state = {
   popup: false,
   redirect: false,
   response_message: "",
+  totalCount: 0,
   poSowData: [],
   dataByID: [
     {
@@ -82,6 +83,9 @@ const POSOW_Slice = createSlice({
     },
     setTabViewData(state, action) {
       state.poSowData = action.payload;
+    },
+    setTotalCount(state, action) {
+      state.totalCount = action.payload;
     },
     setPOEmpTabData(state, action) {
       state.employees = [...action.payload].filter((emp) => {

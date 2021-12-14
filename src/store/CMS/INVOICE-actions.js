@@ -61,6 +61,16 @@ export const fetch_INVOICE_data = (sortBy) => {
     }
   };
 };
+export const paginationFetchInvoice = (filename, page, limit) => {
+  return async function (dispatch) {
+    const res = await axios.get(
+      `/invoice/sort/${filename}/?page=${page}&limit=${limit}`
+    );
+    const total = res.data.data.totalCount;
+    dispatch(invoiceActions.setTabViewData(res.data.data.results));
+    dispatch(invoiceActions.setTotalCount(total));
+  };
+};
 export const fetchSpecificINVOICE = (ROW_ID) => {
   return async function (dispatch) {
     try {

@@ -107,6 +107,16 @@ export const fetchPO_SOW_data = (sortBy) => {
     }
   };
 };
+export const paginationFetchPosow = (filename, page, limit) => {
+  return async function (dispatch) {
+    const res = await axios.get(
+      `/poSow/sort/${filename}/?page=${page}&limit=${limit}`
+    );
+    const total = res.data.data.totalCount;
+    dispatch(PoSowActions.setTabViewData(res.data.data.results));
+    dispatch(PoSowActions.setTotalCount(total));
+  };
+};
 export const fetchSpecificPO_SOW = (ROW_ID) => {
   return async function (dispatch) {
     try {

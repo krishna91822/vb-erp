@@ -4,9 +4,9 @@ import POSOW_FORM from "../pages/ContractMgmtSys/POSOW_FORM";
 import POSOW_tabView from "../pages/ContractMgmtSys/POSOW_tabView";
 import POSOW_Read from "../pages/ContractMgmtSys/POSOW_Read";
 import invoice_FORM from "../pages/ContractMgmtSys/invoice_FORM";
-import invoice_READ from "../pages/ContractMgmtSys/invoice_READ";
 import POSOW_EDIT from "../pages/ContractMgmtSys/POSOW_EDIT";
 import invoice_tabView from "../pages/ContractMgmtSys/invoice_tabView";
+import INVOICE_Read from "../pages/ContractMgmtSys/INVOICE_Read";
 
 const routes = [
   {
@@ -35,8 +35,8 @@ const routes = [
     component: invoice_FORM,
   },
   {
-    path: "/invoice/detail/:id",
-    component: invoice_READ,
+    path: "/invoice_details/:id",
+    component: INVOICE_Read,
   },
   {
     path: "/posow/edit/:id",

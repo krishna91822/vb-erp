@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 import * as React from "react";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -21,11 +20,14 @@ import "./Main.css";
 import {
   fetchSpecificPO_SOW,
   sortProducts,
+  paginationFetchPosow,
 } from "../../store/CMS/POSOW-actions";
 import { fetchPO_SOW_data } from "../../store/CMS/POSOW-actions";
 import Typography from "@mui/material/Typography";
 import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
+import InputLabel from "@mui/material/InputLabel";
+import NativeSelect from "@mui/material/NativeSelect";
 
 export const StyledMenu = styled((props) => (
   <Menu
@@ -72,13 +74,16 @@ export const StyledMenu = styled((props) => (
 
 export const Main = () => {
   const dispatch = useDispatch();
-
   useEffect(() => {
-    dispatch(fetchPO_SOW_data("Id"));
+    // dispatch(fetchPO_SOW_data("Id"));
+    dispatch(fetchPO_SOW_data);
+    dispatch(paginationFetchPosow(filename, currentPage, postPerPage));
   }, []);
   const post = useSelector((state) => state.CMS_state.poSowData);
-  const [currentpage, currentsetPage] = React.useState(1);
+  const totalCount = useSelector((state) => state.CMS_state.totalCount);
+  const [currentPage, setCurrentPage] = React.useState(1);
   const [postPerPage, setPostPerPage] = React.useState(5);
+  const [filename, setFilename] = React.useState("id");
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -95,11 +100,13 @@ export const Main = () => {
     setAnchorEl(null);
   };
   const handleChange = (event, value) => {
-    currentsetPage(value);
+    setCurrentPage(value);
+    dispatch(paginationFetchPosow(filename, value, postPerPage));
   };
-  const indexOfLastPost = currentpage * postPerPage;
-  const indexOfFirstPost = indexOfLastPost - postPerPage;
-  const currentPosts = post.slice(indexOfFirstPost, indexOfLastPost);
+  const handlerowsPerpage = (event) => {
+    setPostPerPage(event.target.value);
+    dispatch(paginationFetchPosow(filename, currentPage, event.target.value));
+  };
   return (
     <>
       <div className="sortbtn">
@@ -181,7 +188,7 @@ export const Main = () => {
               </TableRow>
             </TableHead>
             <TableBody className="table-row-posow" data-test="row-click1">
-              {currentPosts.map((row, index) => (
+              {post.map((row, index) => (
                 <TableRow
                   component={Link}
                   to={`/posow/detail/${row._id}`}
@@ -197,7 +204,7 @@ export const Main = () => {
                     className="table-cell"
                     data-test="row-click3"
                   >
-                    {postPerPage * (currentpage - 1) + (index + 1)}
+                    {postPerPage * (currentPage - 1) + (index + 1)}
                   </TableCell>
                   <TableCell>{row.Client_Name}</TableCell>
                   <TableCell>{row.Project_Name}</TableCell>
@@ -219,6 +226,7 @@ export const Main = () => {
                       </Button>
                     </TableCell>
                   )}
+
                   <TableCell>
                     <strong>{row.Status}</strong>
                   </TableCell>
@@ -229,11 +237,28 @@ export const Main = () => {
         </TableContainer>
         <Stack spacing={10}>
           <div className="Pagination">
-            <Typography>Page: {currentpage}</Typography>
+            <Typography>Page: {currentPage}</Typography>
             <div className="numbering">
+              <InputLabel variant="standard" htmlFor="uncontrolled-native">
+                Rows per page:
+              </InputLabel>
+              <NativeSelect
+                value={postPerPage}
+                onChange={handlerowsPerpage}
+                defaultValue={30}
+              >
+                {/* <Select value={postPerPage} onChange={handlerowsPerpage}>
+                  <MenuItem value={5}>5</MenuItem>
+                  <MenuItem value={10}>10</MenuItem>
+                  <MenuItem value={15}>15</MenuItem>
+                </Select> */}
+                <option value={5}>5</option>
+                <option value={10}>10</option>
+                <option value={15}>15</option>
+              </NativeSelect>
               <Pagination
-                count={Math.ceil(post.length / postPerPage)}
-                page={currentpage}
+                count={Math.ceil(totalCount / postPerPage)}
+                page={currentPage}
                 onChange={handleChange}
               />
             </div>

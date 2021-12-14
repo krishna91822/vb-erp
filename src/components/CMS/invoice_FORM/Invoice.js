@@ -30,14 +30,19 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import BasicDatePicker from "./date";
 import React, { useEffect } from "react";
-import { createNew_INVOICE } from "../../../store/CMS/INVOICE-actions";
+import {
+  createNew_INVOICE,
+  paginationFetchInvoice,
+} from "../../../store/CMS/INVOICE-actions";
 import { Update_INVOICE } from "../../../store/CMS/INVOICE-actions";
 import { fetchPO_SOW_data } from "../../../store/CMS/POSOW-actions";
 import { fetch_INVOICE_data } from "../../../store/CMS/INVOICE-actions";
 import { PoSowActions } from "../../../store/CMS/POSOW-slice";
+import { paginationFetchPosow } from "../../../store/CMS/POSOW-actions";
 
 function Invoice(props) {
   const params = useParams();
+  console.log(props, params);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const isRedirect = useSelector((state) => state.CMS_state.redirect);
@@ -48,8 +53,10 @@ function Invoice(props) {
     }
   }, [isRedirect]);
   useEffect(() => {
-    dispatch(fetchPO_SOW_data("Id"));
-    dispatch(fetch_INVOICE_data("Id"));
+    // dispatch(fetchPO_SOW_data("Id"));
+    // dispatch(fetch_INVOICE_data("Id"));
+    dispatch(paginationFetchPosow("id", 1, 50));
+    dispatch(paginationFetchInvoice("Id", 1, 50));
   }, []);
 
   const allPOSOWs = useSelector((state) => state.CMS_state.poSowData);
@@ -61,6 +68,7 @@ function Invoice(props) {
   const allPOId = allINVOICE.map((val) => {
     return val.PO_Id;
   });
+  console.log(allINVOICE);
 
   let filteredArr = useSelector((state) => state.INVOICE_state.dataByID);
 
