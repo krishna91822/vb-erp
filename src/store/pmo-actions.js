@@ -51,7 +51,7 @@ export const updateProject = (projectInfo) => {
         projectId: id,
         resources: projectInfo.resources,
       };
-      const response = await axios.post(`${baseUrl}/allocations`, resources);
+      const response = await axios.put(`${baseUrl}/allocations`, resources);
       if (response.status === "failure") {
         throw new Error(response.data.message);
       }
@@ -93,7 +93,6 @@ export const getAllFilterProjects = (type, filters) => {
       if (filters.vbProjectId) url += `&vbProjectId=${filters.vbProjectId}`;
       if (filters.vbProjectStatus)
         url += `&vbProjectStatus=${filters.vbProjectStatus}`;
-      console.log(url, "url");
       const response = await axios.get(url);
       if (response.status === "failure") {
         throw new Error(response.data.message);
