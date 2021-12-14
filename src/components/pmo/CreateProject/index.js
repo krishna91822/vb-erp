@@ -138,7 +138,6 @@ const CreateProject = () => {
     }
   }, [projectById]);
   const handelAssociate = (value) => {
-    console.log(value);
     dispatch(getPercentageAllocated(value.empId));
     setState({
       ...state,
