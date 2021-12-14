@@ -132,7 +132,7 @@ const CreateProject = () => {
         project: projectById.project,
         resources: projectById.resources.map((eachResource) => ({
           ...eachResource,
-          empId: eachResource.empId.empId,
+          empId: eachResource.empId._id,
           empName: eachResource.empId.empName,
         })),
       });
@@ -145,7 +145,7 @@ const CreateProject = () => {
       resource: {
         ...state.resource,
         empName: value.empName,
-        empId: value.empId,
+        empId: value._id,
       },
     });
   };

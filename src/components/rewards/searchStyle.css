@@ -1,0 +1,50 @@
+.header {
+  width: 99%;
+  height: auto;
+  margin: auto;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  padding: 2px;
+}
+
+.header-title {
+  width: 55%;
+  height: 70px;
+  display: flex;
+  align-items: center;
+}
+
+.header-title #searchbar {
+  width: 1000px;
+}
+
+.header-sortby #sortby-form {
+  width: 150px;
+}
+
+.filter-dropdown {
+  width: 150px;
+}
+
+@media (min-width: 687px) {
+  .header-sortby {
+    width: 200px;
+    height: 70px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+  }
+}
+
+@media (max-width: 686px) {
+  .header-title {
+    width: 55%;
+  }
+  .header-sortby {
+    width: 200px;
+    height: 70px;
+    display: flex;
+    align-items: center;
+  }
+}

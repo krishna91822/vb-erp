@@ -18,16 +18,18 @@ import BenchModal from "./BenchModal";
 const Bench = ({ pressed }) => {
   const { benchData } = useSelector((state) => state.pmo);
   const dispatch = useDispatch();
-  const [associateName, setAssociateName] = useState("");
-  // const [primaryCapabilities, setPrimaryCapabilities] = useState("");
-  const [remainingBandwidth, setRemainingBandwidth] = useState("");
   const [page, setPage] = useState(0);
-  const [empId, setEmpId] = useState("");
   const [modalDetails, setModalDetails] = useState(false);
   const [entryData, setEntryData] = useState({});
+  const [filters, setFilters] = useState({
+    empId: "",
+    employeeName: "",
+    remainingAllocation: "",
+    vbProjectStatus: "",
+  });
 
   useEffect(() => {
-    dispatch(getOnBench());
+    dispatch(getOnBench(filters));
   }, []);
 
   let data = benchData;
@@ -35,32 +37,12 @@ const Bench = ({ pressed }) => {
     a.empId > b.empId ? 1 : b.empId > a.empId ? -1 : 0
   );
 
-  const filterAssociateName = (event) => {
-    const assName = event.target.value.toLowerCase();
-    setAssociateName(assName);
+  const filterData = (event) => {
+    setFilters({ ...filters, [event.target.name]: event.target.value });
+    if (event.key === "Enter") {
+      dispatch(getOnBench(filters));
+    }
   };
-
-  // const filterPrimaryCapabilities = (event) => {
-  //   const primcapabilty = event.target.value.toLowerCase();
-  //   setPrimaryCapabilities(primcapabilty);
-  // };
-
-  const filterRemainingBandwidth = (event) => {
-    setRemainingBandwidth(event.target.value);
-  };
-
-  const filterEmpId = (event) => {
-    const empAll = event.target.value.toUpperCase();
-    setEmpId(empAll);
-  };
-  console.log(data);
-  const filteredData = data.filter((eachData) => {
-    return (
-      eachData.empName.toLowerCase().includes(associateName) &&
-      eachData.remainingAllocation.toString().includes(remainingBandwidth) &&
-      eachData.empId.toString().includes(empId)
-    );
-  });
 
   const entryLink = (elem) => {
     setEntryData(elem);
@@ -146,8 +128,10 @@ const Bench = ({ pressed }) => {
                       variant="standard"
                       type="text"
                       placeholder="Emp Id"
-                      onChange={filterEmpId}
-                      value={empId}
+                      name="empId"
+                      onChange={filterData}
+                      onKeyPress={filterData}
+                      value={filters.empId}
                       inputProps={{ style: { fontSize: "small" } }}
                     />
                   </TableCell>
@@ -156,8 +140,10 @@ const Bench = ({ pressed }) => {
                       variant="standard"
                       type="text"
                       placeholder="Associate Name"
-                      onChange={filterAssociateName}
-                      value={associateName}
+                      name="employeeName"
+                      onChange={filterData}
+                      onKeyPress={filterData}
+                      value={filters.employeeName}
                       inputProps={{ style: { fontSize: "small" } }}
                     />
                   </TableCell>
@@ -177,38 +163,38 @@ const Bench = ({ pressed }) => {
                       variant="standard"
                       type="number"
                       placeholder="Bandwidth"
-                      onChange={filterRemainingBandwidth}
-                      value={remainingBandwidth}
+                      name="remainingAllocation"
+                      onChange={filterData}
+                      onKeyPress={filterData}
+                      value={filters.remainingAllocation}
                       inputProps={{ style: { fontSize: "small" } }}
                     />
                   </TableCell>
                 </TableRow>
               )}
 
-              {filteredData
-                .slice(page * 5, page * 5 + 5)
-                .map((currElem, index) => (
-                  <TableRow
-                    key={currElem.id}
-                    onClick={() => entryLink(currElem)}
-                    style={{ cursor: "pointer" }}
-                  >
-                    <TableCell align="left">{index + page * 5 + 1}</TableCell>
-                    <TableCell align="left">{currElem.empId}</TableCell>
-                    <TableCell align="left">{currElem.empName}</TableCell>
-                    {/* <TableCell align="left">
+              {data.slice(page * 5, page * 5 + 5).map((currElem, index) => (
+                <TableRow
+                  key={index}
+                  onClick={() => entryLink(currElem)}
+                  style={{ cursor: "pointer" }}
+                >
+                  <TableCell align="left">{index + page * 5 + 1}</TableCell>
+                  <TableCell align="left">{currElem.empId}</TableCell>
+                  <TableCell align="left">{currElem.empName}</TableCell>
+                  {/* <TableCell align="left">
                       {currElem.primaryCapabilities}
                     </TableCell> */}
-                    <TableCell align="left">
-                      {currElem.remainingAllocation}
-                    </TableCell>
-                  </TableRow>
-                ))}
+                  <TableCell align="left">
+                    {currElem.remainingAllocation}
+                  </TableCell>
+                </TableRow>
+              ))}
             </TableBody>
           </Table>
         </TableContainer>
       </Container>
-      <Tpagination page={page} setPage={setPage} rows={filteredData} />
+      <Tpagination page={page} setPage={setPage} rows={data} />
     </>
   );
 };
