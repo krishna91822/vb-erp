@@ -69,6 +69,7 @@ export default function ClientHelpers() {
 
   const handelFilterBy = (value) => {
     dispatch(cimsActions.setFilterBy(value));
+    dispatch(cimsActions.setPageNo(1));
     dispatch(getClientsData(1, sortBy, value, sortingOrder));
   };
 
