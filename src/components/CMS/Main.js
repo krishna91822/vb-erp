@@ -74,7 +74,7 @@ export const Main = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(fetchPO_SOW_data());
+    dispatch(fetchPO_SOW_data("Id"));
   }, []);
   const post = useSelector((state) => state.CMS_state.poSowData);
   const [currentpage, currentsetPage] = React.useState(1);
@@ -90,8 +90,8 @@ export const Main = () => {
   const handleRowOnClick = (row_id) => {
     dispatch(fetchSpecificPO_SOW(row_id));
   };
-  const handleSort = (product) => {
-    dispatch(sortProducts(product));
+  const handleSort = (sortBy) => {
+    dispatch(fetchPO_SOW_data(sortBy));
     setAnchorEl(null);
   };
   const handleChange = (event, value) => {

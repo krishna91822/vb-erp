@@ -26,10 +26,9 @@ import Accordion from "@mui/material/Accordion";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import Dialog from "./dialog";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Date from "./date";
+import BasicDatePicker from "./date";
 import React, { useEffect } from "react";
 import { createNew_INVOICE } from "../../../store/CMS/INVOICE-actions";
 import { Update_INVOICE } from "../../../store/CMS/INVOICE-actions";
@@ -181,7 +180,6 @@ function Invoice(props) {
       setPoId(filtered[0]._id);
     }
   }, [projectName]);
-
   const submitForm = async (event) => {
     event.preventDefault();
 
@@ -192,8 +190,9 @@ function Invoice(props) {
       invoice_raised: invoice_raised,
       invoice_amount_received: invoice_amount,
       vb_bank_account: Vb_Bank_Acc,
-      amount_received_on: Date_,
+      amount_received_on: new Date(Date_),
     };
+    console.log(DataToSend);
     if (!props.invoicereceived) {
       dispatch(Update_INVOICE(DataToSend, params.id));
     } else {
@@ -210,6 +209,7 @@ function Invoice(props) {
     const totalinvoiceamount = filterinvoiceArr.map((val) => {
       count = count + val.invoice_amount_received;
     });
+
     setsum(count);
   });
   return (
@@ -513,8 +513,9 @@ function Invoice(props) {
             <Grid item lg={12} md={12} sm={122} xs={12}>
               <label htmlFor="invoiceamount">Amount Received on</label>
               <br />
-              <Date
+              <BasicDatePicker
                 onChange={handleDate}
+                inputFormat="MM/dd/yyyy"
                 value={Date_}
                 disabled={props.readonly || !invoicereceived}
               />

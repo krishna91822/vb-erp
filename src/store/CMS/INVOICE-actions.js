@@ -6,10 +6,8 @@ import { uiActions } from "../ui-slice";
 export const createNew_INVOICE = (formData) => {
   return async function (dispatch) {
     try {
-      const response = await axios.post(
-        "http://localhost:8000/invoice",
-        formData
-      );
+      const response = await axios.post(`/invoice`, formData);
+      console.log(response.status);
       if (response.status === 201) {
         dispatch(
           uiActions.showNotification({
@@ -46,9 +44,7 @@ export const Update_INVOICE = (formData, id) => {
 export const fetch_INVOICE_data = (sortBy) => {
   return async function (dispatch) {
     try {
-      const res = await axios.get(
-        `http://localhost:8000/invoice/sort/${sortBy}`
-      );
+      const res = await axios.get(`/invoice/sort/${sortBy}`);
       if (res.status === 200) {
         dispatch(invoiceActions.setTabViewData(res.data.data.results));
       } else {
@@ -68,7 +64,7 @@ export const fetch_INVOICE_data = (sortBy) => {
 export const fetchSpecificINVOICE = (ROW_ID) => {
   return async function (dispatch) {
     try {
-      const res = await axios.get(`http://localhost:8000/invoice/${ROW_ID}`);
+      const res = await axios.get(`/invoice/${ROW_ID}`);
       if (res.status === 200) {
         dispatch(invoiceActions.SetSpecific([res.data.data]));
       } else {

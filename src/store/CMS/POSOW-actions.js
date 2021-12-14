@@ -5,10 +5,7 @@ import { uiActions } from "../ui-slice";
 export const createNewPO_SOW = (formData) => {
   return async function (dispatch) {
     try {
-      const response = await axios.post(
-        "http://localhost:8000/poSow",
-        formData
-      );
+      const response = await axios.post(`/poSow`, formData);
       if (response.status === 200) {
         dispatch(
           uiActions.showNotification({
@@ -39,10 +36,7 @@ export const createNewPO_SOW = (formData) => {
 export const UpdatePO_SOW = (formData, id) => {
   return async function (dispatch) {
     try {
-      const response = await axios.patch(
-        `http://localhost:8000/poSow/${id}`,
-        formData
-      );
+      const response = await axios.patch(`/poSow/${id}`, formData);
       if (response.status === 200) {
         dispatch(
           uiActions.showNotification({
@@ -69,10 +63,7 @@ export const UpdatePO_SOW = (formData, id) => {
 export const SendForApproval = (curr_status, id) => {
   return async function (dispatch) {
     try {
-      const response = await axios.patch(
-        `http://localhost:8000/poSow/status/${id}`,
-        curr_status
-      );
+      const response = await axios.patch(`/poSow/status/${id}`, curr_status);
       if (response.status === 200) {
         dispatch(
           uiActions.showNotification({
@@ -96,10 +87,10 @@ export const SendForApproval = (curr_status, id) => {
     }
   };
 };
-export const fetchPO_SOW_data = () => {
+export const fetchPO_SOW_data = (sortBy) => {
   return async function (dispatch) {
     try {
-      const res = await axios.get("http://localhost:8000/poSow/sort/Id");
+      const res = await axios.get(`poSow/sort/${sortBy}`);
       if (res.status === 200) {
         dispatch(PoSowActions.setTabViewData(res.data.data.results));
       } else {
@@ -119,7 +110,7 @@ export const fetchPO_SOW_data = () => {
 export const fetchSpecificPO_SOW = (ROW_ID) => {
   return async function (dispatch) {
     try {
-      const res = await axios.get(`http://localhost:8000/poSow/${ROW_ID}`);
+      const res = await axios.get(`/poSow/${ROW_ID}`);
       if (res.status === 200) {
         dispatch(PoSowActions.SetSpecific([res.data.data]));
       } else {
@@ -138,7 +129,7 @@ export const fetchSpecificPO_SOW = (ROW_ID) => {
 };
 export const fetchPOs_emp_data = (po_id) => {
   return async function (dispatch) {
-    const res = await axios.get(`http://localhost:8000/assign/${po_id}`);
+    const res = await axios.get(`/assign/${po_id}`);
     dispatch(PoSowActions.setPOEmpTabData(res.data.data.results));
   };
 };
@@ -146,12 +137,8 @@ export const fetchPOs_emp_data = (po_id) => {
 export const AddEmpToThisPO = (formData) => {
   return async function (dispatch) {
     try {
-      const response = await axios.post(
-        "http://localhost:8000/assign",
-        formData
-      );
+      const response = await axios.post(`/assign`, formData);
       if (response.status === 200) {
-        // dispatch(PoSowActions.PopUpON("Employee Added To This PO"));
         dispatch(
           uiActions.showNotification({
             status: "success",
@@ -181,10 +168,7 @@ export const AddEmpToThisPO = (formData) => {
 export const UpdateEmpData = (formData, emp_id) => {
   return async function (dispatch) {
     try {
-      const response = await axios.patch(
-        `http://localhost:8000/assign/${emp_id}`,
-        formData
-      );
+      const response = await axios.patch(`/assign/${emp_id}`, formData);
       if (response.status === 200) {
         dispatch(
           uiActions.showNotification({
@@ -216,9 +200,7 @@ export const UpdateEmpData = (formData, emp_id) => {
 export const UnAssignThisEmp = (emp_id) => {
   return async function (dispatch) {
     try {
-      const response = await axios.patch(
-        `http://localhost:8000/assign/unassign/${emp_id}`
-      );
+      const response = await axios.patch(`/assign/unassign/${emp_id}`);
       if (response.status === 200) {
         dispatch(
           uiActions.showNotification({
@@ -244,12 +226,5 @@ export const UnAssignThisEmp = (emp_id) => {
         );
       }, 1000);
     }
-  };
-};
-
-export const sortProducts = (product) => {
-  return async function (dispatch) {
-    const res = await axios.get(`http://localhost:8000/poSow/sort/${product}`);
-    dispatch(PoSowActions.setTabViewData(res.data.data.results));
   };
 };

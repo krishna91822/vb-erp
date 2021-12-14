@@ -275,6 +275,7 @@ export const CapturePO_SOW = (props) => {
       Currency: CurrName,
       Remarks: remarks,
     };
+
     const all_errors = validateForm(DataToSend);
     setErrors(all_errors);
     if (Object.keys(all_errors).length === 0) {
