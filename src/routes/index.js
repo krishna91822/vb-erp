@@ -20,7 +20,7 @@ const routes = [
     component: Projects,
   },
   {
-    path: "/pmo/createproject",
+    path: "/pmo/project/create",
     component: CreateProject,
   },
   {

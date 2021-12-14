@@ -79,7 +79,7 @@ const ResourceInformation = ({
                   {...params}
                   placeholder="associate name"
                   value={employeeName}
-                  error={resourceErrors.associateName ? true : false}
+                  error={resourceErrors.employeeName ? true : false}
                 />
               )}
             />
@@ -97,7 +97,7 @@ const ResourceInformation = ({
                 size="small"
                 type="date"
                 name="allocationStartDate"
-                error={resourceErrors.startDate ? true : false}
+                error={resourceErrors.allocationStartDate ? true : false}
                 onChange={handleResourceChange}
                 value={allocationStartDate}
                 data-test="start-date-input"
@@ -112,7 +112,7 @@ const ResourceInformation = ({
                 size="small"
                 type="date"
                 name="allocationEndDate"
-                error={resourceErrors.endDate ? true : false}
+                error={resourceErrors.allocationEndDate ? true : false}
                 style={{ color: "blue" }}
                 onChange={handleResourceChange}
                 value={allocationEndDate}
@@ -136,11 +136,11 @@ const ResourceInformation = ({
                   style={{ width: "60%" }}
                 />
                 <TextField
-                  disabled
+                  readonly
                   placeholder="50%"
                   variant="outlined"
                   size="small"
-                  error={resourceErrors.allocation ? true : false}
+                  error={resourceErrors.allocationPercentage ? true : false}
                   style={{ width: "30%" }}
                   onChange={handleResourceChange}
                   value={`${allocationPercentage}%`}
