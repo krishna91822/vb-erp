@@ -199,3 +199,61 @@ export const addRewardData = (reward) => {
     }
   };
 };
+
+export const EditRewardData = (id) => {
+  return async (dispatch) => {
+    const fetchData = async () => {
+      const response = axios.get(`/rewards/${id}`);
+
+      if (response.status === "failure") {
+        throw new Error("Could not fetch cart data!");
+      }
+      return response;
+    };
+
+    try {
+      const data = await fetchData();
+      dispatch(
+        rewardsActions.addEditRewardData({
+          rewardData: data.data.data || {},
+        })
+      );
+
+      dispatch(rewardsActions.updateRewardStatus());
+
+      // console.log(data);
+    } catch (error) {
+      dispatch(uiActions.toggleLoader());
+      dispatch(
+        uiActions.showNotification({
+          status: "error",
+          title: "Error!",
+          message: "Fetching content data failed!",
+        })
+      );
+    }
+  };
+};
+
+export const UpdateRewardData = (data, id) => {
+  return async (dispatch) => {
+    const fetchData = async () => {
+      const response = axios.put(`/rewards/${id}`, data);
+
+      if (response.status === "failure") {
+        throw new Error("Could not fetch cart data!");
+      }
+      return response;
+    };
+
+    try {
+      const data = await fetchData();
+
+      dispatch(rewardsActions.updateRewardStatus());
+
+      // console.log(data);
+    } catch (error) {
+      dispatch(uiActions.toggleLoader());
+    }
+  };
+};
