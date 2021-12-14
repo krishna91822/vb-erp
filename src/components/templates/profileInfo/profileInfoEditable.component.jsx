@@ -27,7 +27,7 @@ import {
 } from "./../../UI/commonStyles";
 
 const ProfileInfoEditable = (props) => {
-  const { tab, setTab, employee, setEmployee } = props;
+  const { tab, setTab, employee, setEmployee, profileProgress } = props;
 
   const {
     empName,
@@ -38,6 +38,8 @@ const ProfileInfoEditable = (props) => {
     empReportingManager,
   } = employee;
 
+  const profilePercentage = profileProgress();
+
   const handleChange = (event, newValue) => {
     const { value, name } = event.target;
     setEmployee({ ...employee, [name]: value });
@@ -47,14 +49,14 @@ const ProfileInfoEditable = (props) => {
     setTab(newValue);
   };
 
-  const profileProgress = (employee) => {
-    const totalFields = Object.keys(employee).length;
-    const completedFields = Object.values(employee).filter(
-      (d) => d !== null && d !== "none" && d !== ""
-    ).length;
-    const percentage = Math.floor((completedFields / totalFields) * 100);
-    return percentage;
-  };
+  // const profileProgress = (employee) => {
+  //   const totalFields = Object.keys(employee).length;
+  //   const completedFields = Object.values(employee).filter(
+  //     (d) => d !== null && d !== "none" && d !== ""
+  //   ).length;
+  //   const percentage = Math.floor((completedFields / totalFields) * 100);
+  //   return percentage;
+  // };
 
   return (
     <Grid
@@ -109,7 +111,7 @@ const ProfileInfoEditable = (props) => {
           <Box sx={{ width: "75%", margin: "8px 0" }}>
             <LinearProgress
               variant="determinate"
-              value={profileProgress(employee)}
+              value={profilePercentage}
               color="primary"
               sx={{
                 height: 5,
@@ -118,7 +120,7 @@ const ProfileInfoEditable = (props) => {
             />
           </Box>
           <SubTitleTypo sx={{ textTransform: "lowercase" }}>
-            {profileProgress(employee)}
+            {profilePercentage}
             {profileInfoConstant.profilePercentage}
           </SubTitleTypo>
         </Box>

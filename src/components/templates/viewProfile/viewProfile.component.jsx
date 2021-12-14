@@ -9,6 +9,7 @@ import { CustomSwitch, TitleTypo } from "./viewProfile.styles";
 import ProfileContent from "../profileContent/profileContent.component";
 import WithSpinner from "../../hoc/withSpinner/withSpinner.component";
 import CreateProfile from "./../../../pages/createProfile/createProfile.component";
+import Spinner from "./../../UI/spinner/spinner";
 
 import axiosInstance from "./../../../helpers/axiosInstance";
 
@@ -35,9 +36,18 @@ const ViewProfile = () => {
     setEditEmployee(event.target.checked);
   };
 
-  return (
+  return Object.keys(viewedEmployee).length === 0 ? (
+    <Spinner />
+  ) : (
     <Container sx={{ pb: 3, pt: 3 }}>
-      <Box sx={{ display: "flex", p: 2 }}>
+      <Box
+        sx={{
+          display: "flex",
+          p: 2,
+          position: editEmployee ? "absolute" : "relative",
+          mt: editEmployee ? 4 : "",
+        }}
+      >
         <TitleTypo sx={{ textTransform: "capitalize", pr: 1 }}>
           Edit Employee
         </TitleTypo>

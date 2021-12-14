@@ -4,7 +4,7 @@ import { blue, teal } from "@mui/material/colors";
 
 export const BoxStyle = styled(Box)(({ theme }) => ({
   width: "100%",
-  paddingTop: theme.spacing(3),
+  // paddingTop: theme.spacing(3),
   paddingBottom: theme.spacing(3),
 }));
 

@@ -19,7 +19,12 @@ import {
   ContentBoldTypo,
 } from "./../../UI/commonStyles";
 
-const ProfileInfoReadable = ({ value, setValue, currentEmployee }) => {
+const ProfileInfoReadable = ({
+  value,
+  setValue,
+  currentEmployee,
+  profileProgress,
+}) => {
   const {
     empName,
     empId,
@@ -30,18 +35,20 @@ const ProfileInfoReadable = ({ value, setValue, currentEmployee }) => {
     empReportingManager,
   } = currentEmployee;
 
+  const profilePercentage = profileProgress();
+
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
 
-  const profileProgress = (employeeData) => {
-    const totalFields = Object.keys(employeeData).length;
-    const completedFields = Object.values(employeeData).filter(
-      (d) => d !== null && d !== "" && d.length !== 0 && d[0] !== ""
-    ).length;
-    const percentage = Math.floor((completedFields / totalFields) * 100);
-    return percentage;
-  };
+  // const profileProgress = (employeeData) => {
+  //   const totalFields = Object.keys(employeeData).length;
+  //   const completedFields = Object.values(employeeData).filter(
+  //     (d) => d !== null && d !== "" && d.length !== 0 && d[0] !== ""
+  //   ).length;
+  //   const percentage = Math.floor((completedFields / totalFields) * 100);
+  //   return percentage;
+  // };
 
   return (
     <Grid
@@ -80,7 +87,7 @@ const ProfileInfoReadable = ({ value, setValue, currentEmployee }) => {
           <Box sx={{ width: "75%", margin: "8px 0" }}>
             <LinearProgress
               variant="determinate"
-              value={profileProgress(currentEmployee)}
+              value={profilePercentage}
               color="primary"
               sx={{
                 height: 5,
@@ -89,7 +96,7 @@ const ProfileInfoReadable = ({ value, setValue, currentEmployee }) => {
             />
           </Box>
           <SubTitleTypo sx={{ textTransform: "lowercase" }}>
-            {profileProgress(currentEmployee)}
+            {profilePercentage}
             {profileInfoConstant.profilePercentage}
           </SubTitleTypo>
         </Box>

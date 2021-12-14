@@ -90,7 +90,7 @@ const PersonalReadable = ({ empData }) => {
                   flexWrap: "wrap",
                 }}
               >
-                {empHobbies.length !== 0 && empHobbies[0] !== ""
+                {empHobbies !== undefined && empHobbies.constructor === Array
                   ? empHobbies.map((data, i) => (
                       <ListItem key={i}>
                         <Chip
@@ -121,18 +121,20 @@ const PersonalReadable = ({ empData }) => {
             <ContentTypo>{personal.residentialAddress}</ContentTypo>
             <ContentTypo>{empResidentialAddress}</ContentTypo>
           </ContentBox>
-          {personalDetails.map((field) => (
-            <ContentBox key={field._id}>
-              <ContentTypo>{field.fieldName}</ContentTypo>
-              {field.fieldType === "date" ? (
-                <ContentTypo>
-                  {new Date(field.fieldValue).toDateString().slice(4)}
-                </ContentTypo>
-              ) : (
-                <ContentTypo>{field.fieldValue}</ContentTypo>
-              )}
-            </ContentBox>
-          ))}
+          {personalDetails
+            ? personalDetails.map((field) => (
+                <ContentBox key={field._id}>
+                  <ContentTypo>{field.fieldName}</ContentTypo>
+                  {field.fieldType === "date" ? (
+                    <ContentTypo>
+                      {new Date(field.fieldValue).toDateString().slice(4)}
+                    </ContentTypo>
+                  ) : (
+                    <ContentTypo>{field.fieldValue}</ContentTypo>
+                  )}
+                </ContentBox>
+              ))
+            : null}
         </Box>
       </Grid>
     </Grid>

@@ -97,9 +97,37 @@ const CreateProfile = ({
     fieldValue: "",
     fieldType: "",
   };
-  const [personalDetails, setPersonalDetails] = useState([]);
-  const [professionalDetails, setProfessionalDetails] = useState([]);
-  const [skillsDetails, setSkillsDetails] = useState([]);
+  const [personalDetails, setPersonalDetails] = useState(
+    editEmployeeData ? [...editEmployeeData.personalDetails] : []
+  );
+  const [professionalDetails, setProfessionalDetails] = useState(
+    editEmployeeData ? [...editEmployeeData.professionalDetails] : []
+  );
+  const [skillsDetails, setSkillsDetails] = useState(
+    editEmployeeData ? [...editEmployeeData.skillsDetails] : []
+  );
+
+  //calculate percentage progress
+  const profileProgress = () => {
+    const totalFields =
+      Object.keys(employee).length +
+      personalDetails.length +
+      professionalDetails.length +
+      skillsDetails.length;
+    const completedFields =
+      Object.values(employee).filter(
+        (field) =>
+          field !== undefined &&
+          field !== null &&
+          field !== "" &&
+          field.length !== 0
+      ).length +
+      personalDetails.filter((field) => field.fieldValue !== "").length +
+      professionalDetails.filter((field) => field.fieldValue !== "").length +
+      skillsDetails.filter((field) => field.fieldValue !== "").length;
+    const percentage = Math.floor((completedFields / totalFields) * 100);
+    return percentage;
+  };
 
   //render value input field according to types
   const [newFieldData, setNewFieldData] = useState(newFieldTemplate);
@@ -210,19 +238,23 @@ const CreateProfile = ({
     <BoxStyle>
       <ContainerStyleTop>
         <TitleTypo sx={{ textTransform: "capitalize", mb: 0.5 }}>
-          {createProfileConstant.user}
+          {currentEmployee ? currentEmployee.empName : ""}
         </TitleTypo>
         <Box
           sx={{
             display: "flex",
             width: 1,
             alignItems: "center",
-            justifyContent: "space-between",
+            justifyContent: editEmployeeData ? "flex-end" : "space-between",
           }}
         >
-          <TitleTypo sx={{ textTransform: "capitalize", fontSize: 24, ml: 2 }}>
-            {createProfileConstant.createUser}
-          </TitleTypo>
+          {editEmployeeData ? null : (
+            <TitleTypo
+              sx={{ textTransform: "capitalize", fontSize: 24, ml: 2 }}
+            >
+              {createProfileConstant.createUser}
+            </TitleTypo>
+          )}
           <Box>
             <GreenButton onClick={handleConfirm} variant="contained">
               {createProfileConstant.confirm}
@@ -240,6 +272,7 @@ const CreateProfile = ({
             setTab={setTab}
             employee={employee}
             setEmployee={setEmployee}
+            profileProgress={profileProgress}
           />
         </Container>
         <Container sx={{ width: "calc(100% - 16px)" }}>
@@ -322,7 +355,9 @@ const CreateProfile = ({
       <Modal open={openModal} onClose={handleCloseModal}>
         <ModalBoxItem>
           <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-            {createProfileConstant.modalMessageSuccess}
+            {editEmployeeData
+              ? createProfileConstant.modalMessageSuccessEdit
+              : createProfileConstant.modalMessageSuccess}
           </Typography>
           <Button variant="contained" onClick={handleCloseModal}>
             {createProfileConstant.modalBtn}

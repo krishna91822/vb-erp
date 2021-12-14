@@ -31,7 +31,7 @@ const PersonalEditable = (props) => {
 
   const {
     empConnections,
-    // empHobbies,
+    empHobbies,
     empPersonalEmail,
     empDob,
     empAboutMe,
@@ -50,7 +50,7 @@ const PersonalEditable = (props) => {
   ];
 
   // const [hobbies, setHobbies] = useState('');
-  const [chipData, setChipData] = useState([]);
+  const [chipData, setChipData] = useState([...empHobbies]);
 
   const handleNewFieldChange = (event, index) => {
     const updates = personalDetails.map((personalDetail, i) =>

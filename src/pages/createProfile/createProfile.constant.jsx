@@ -4,6 +4,7 @@ export const createProfileConstant = {
   confirm: "Confirm",
   addCustomField: "Add Custom Field",
   modalMessageSuccess: "New employee has been create for review",
+  modalMessageSuccessEdit: "Employee updates has been sent for review",
   modalMessageFail: "Fail to create employee try again",
   modalBtn: "Ok",
   modalBtnTryAgain: "Try Again",

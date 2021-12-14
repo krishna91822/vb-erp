@@ -38,9 +38,57 @@ const ProfileContent = (props) => {
     handleClose,
   } = props;
 
-  const [value, setValue] = useState(0);
+  //calculate percentage progress
+  const profileProgress = () => {
+    try {
+      const totalFields = inEditMode
+        ? Object.keys(updateRequest).length +
+          updateRequest.personalDetails.length +
+          updateRequest.professionalDetails.length +
+          updateRequest.skillsDetails.length
+        : Object.keys(currentEmployee).length +
+          personalDetails.length +
+          professionalDetails.length +
+          skillsDetails.length;
 
-  //modal
+      const completedFields = inEditMode
+        ? Object.values(updateRequest).filter(
+            (field) =>
+              field !== undefined &&
+              field !== null &&
+              field !== "" &&
+              field.length !== 0
+          ).length +
+          updateRequest.personalDetails.filter(
+            (field) => field.fieldValue !== ""
+          ).length +
+          updateRequest.professionalDetails.filter(
+            (field) => field.fieldValue !== ""
+          ).length +
+          updateRequest.skillsDetails.filter((field) => field.fieldValue !== "")
+            .length
+        : Object.values(currentEmployee).filter(
+            (field) =>
+              field !== undefined &&
+              field !== null &&
+              field !== "" &&
+              field.length !== 0
+          ).length +
+          personalDetails.filter((field) => field.fieldValue !== "").length +
+          professionalDetails.filter((field) => field.fieldValue !== "")
+            .length +
+          skillsDetails.filter((field) => field.fieldValue !== "").length;
+
+      const percentage = Math.floor((completedFields / totalFields) * 100);
+      return percentage;
+    } catch (error) {
+      // console.log(error);
+    }
+  };
+
+  profileProgress();
+
+  const [value, setValue] = useState(0);
 
   const handleFieldChange = (event) => {
     setNewFieldData({
@@ -122,6 +170,7 @@ const ProfileContent = (props) => {
           value={value}
           setValue={setValue}
           currentEmployee={currentEmployee}
+          profileProgress={profileProgress}
         />
       </Container>
       <Container sx={{ width: "calc(100% - 16px)" }}>
