@@ -30,28 +30,32 @@ import Dialog from "./dialog";
 import { useState } from "react";
 import Date from "./date";
 import React, { useEffect } from "react";
-import { createNew_INVOICE } from "../../../store/CMS/INVOICE-actions";
+import {
+  createNew_INVOICE,
+  paginationFetchInvoice,
+} from "../../../store/CMS/INVOICE-actions";
 import { Update_INVOICE } from "../../../store/CMS/INVOICE-actions";
-import { fetchPO_SOW_data } from "../../../store/CMS/POSOW-actions";
+import { paginationFetchPosow } from "../../../store/CMS/POSOW-actions";
 
 function Invoice(props) {
   const params = useParams();
+  console.log(props, params);
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(fetchPO_SOW_data());
+    dispatch(paginationFetchPosow("id", 1, 50));
+    dispatch(paginationFetchInvoice("Id", 1, 50));
   }, []);
   const allPOSOWs = useSelector((state) => state.CMS_state.poSowData);
   const allINVOICE = useSelector((state) => state.INVOICE_state.invoiceData);
-  console.log(allINVOICE);
   const allProjects = allPOSOWs.map((val) => {
     return val.Project_Name;
   });
   const allPOId = allINVOICE.map((val) => {
     return val.PO_Id;
   });
+  console.log(allINVOICE);
 
   let filteredArr = useSelector((state) => state.INVOICE_state.dataByID);
-  console.log(filteredArr);
   const names = useSelector(
     (state) => state.INVOICE_state.inputFieldsData.names
   );

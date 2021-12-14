@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 import * as React from "react";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -17,7 +16,10 @@ import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 // import setPosts from './Main/actions'
 // import { sortProducts } from "../../store/CMS/POSOW-actions";
-import { fetch_INVOICE_data } from "../../store/CMS/INVOICE-actions";
+import {
+  fetch_INVOICE_data,
+  paginationFetchInvoice,
+} from "../../store/CMS/INVOICE-actions";
 import Typography from "@mui/material/Typography";
 import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
@@ -26,6 +28,8 @@ import {
   fetchSpecificINVOICE,
   sortProducts,
 } from "../../store/CMS/INVOICE-actions";
+import InputLabel from "@mui/material/InputLabel";
+import NativeSelect from "@mui/material/NativeSelect";
 
 export const StyledMenu = styled((props) => (
   <Menu
@@ -74,12 +78,14 @@ function InvoiceInfo() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(fetch_INVOICE_data());
+    dispatch(fetch_INVOICE_data);
+    dispatch(paginationFetchInvoice(filename, currentPage, postPerPage));
   }, []);
   const post = useSelector((state) => state.INVOICE_state.invoiceData);
-
-  const [currentpage, currentsetPage] = React.useState(1);
+  const totalCount = useSelector((state) => state.INVOICE_state.totalCount);
+  const [currentPage, setCurrentPage] = React.useState(1);
   const [postPerPage, setPostPerPage] = React.useState(5);
+  const [filename, setFilename] = React.useState("Id");
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -93,14 +99,16 @@ function InvoiceInfo() {
     setAnchorEl(null);
   };
   const handleChange = (event, value) => {
-    currentsetPage(value);
+    setCurrentPage(value);
+    dispatch(paginationFetchInvoice(filename, value, postPerPage));
+  };
+  const handlerowsPerpage = (event) => {
+    setPostPerPage(event.target.value);
+    dispatch(paginationFetchInvoice(filename, currentPage, event.target.value));
   };
   const handleRowOnClick = (row_id) => {
     dispatch(fetchSpecificINVOICE(row_id));
   };
-  const indexOfLastPost = currentpage * postPerPage;
-  const indexOfFirstPost = indexOfLastPost - postPerPage;
-  const currentPosts = post.slice(indexOfFirstPost, indexOfLastPost);
   return (
     <>
       <div className="sortbtn">
@@ -156,7 +164,6 @@ function InvoiceInfo() {
             </Link>
           </div>
         </div>
-
         <TableContainer component={Paper}>
           <Table
             sx={{ minWidth: 650 }}
@@ -175,7 +182,7 @@ function InvoiceInfo() {
               </TableRow>
             </TableHead>
             <TableBody className="table-row-posow">
-              {currentPosts.map((row, index) => (
+              {post.map((row, index) => (
                 <TableRow
                   component={Link}
                   to={`/invoice_details/${row._id}`}
@@ -190,12 +197,12 @@ function InvoiceInfo() {
                     className="table-cell"
                     data-test="clickable-row"
                   >
-                    {postPerPage * (currentpage - 1) + (index + 1)}
+                    {postPerPage * (currentPage - 1) + (index + 1)}
                   </TableCell>
-                  <TableCell>{row.PO_Id.Client_Name}</TableCell>
-                  <TableCell>{row.PO_Id.Project_Name}</TableCell>
-                  <TableCell>{row.PO_Id.PO_Number}</TableCell>
-                  <TableCell>{row.PO_Id.PO_Amount}</TableCell>
+                  <TableCell>{row.purchase_orders.Client_Name}</TableCell>
+                  <TableCell>{row.purchase_orders.Project_Name}</TableCell>
+                  <TableCell>{row.purchase_orders.PO_Number}</TableCell>
+                  <TableCell>{row.purchase_orders.PO_Amount}</TableCell>
                   <TableCell>{row.invoice_raised}</TableCell>
                   <TableCell>{row.invoice_amount_received}</TableCell>
                 </TableRow>
@@ -203,13 +210,31 @@ function InvoiceInfo() {
             </TableBody>
           </Table>
         </TableContainer>
+
         <Stack spacing={10}>
           <div className="Pagination">
-            <Typography>Page: {currentpage}</Typography>
+            <Typography className="pagenumber">Page: {currentPage}</Typography>
             <div className="numbering">
+              <InputLabel variant="standard" htmlFor="uncontrolled-native">
+                Rows per page:
+              </InputLabel>
+              <NativeSelect
+                value={postPerPage}
+                onChange={handlerowsPerpage}
+                defaultValue={30}
+              >
+                {/* <Select value={postPerPage} onChange={handlerowsPerpage}>
+                  <MenuItem value={5}>5</MenuItem>
+                  <MenuItem value={10}>10</MenuItem>
+                  <MenuItem value={15}>15</MenuItem>
+                </Select> */}
+                <option value={5}>5</option>
+                <option value={10}>10</option>
+                <option value={15}>15</option>
+              </NativeSelect>
               <Pagination
-                count={Math.ceil(post.length / postPerPage)}
-                page={currentpage}
+                count={Math.ceil(totalCount / postPerPage)}
+                page={currentPage}
                 onChange={handleChange}
               />
             </div>

@@ -32,6 +32,7 @@ export const invoice_init_state = {
   popup: false,
   response_message: "",
   invoiceData: [],
+  totalCount: 0,
   dataByID: [
     {
       Client_Name: "",
@@ -59,6 +60,9 @@ const invoice_Slice = createSlice({
     },
     PopUpOF(state, action) {
       state.popup = !state.popup;
+    },
+    setTotalCount(state, action) {
+      state.totalCount = action.payload;
     },
     setTabViewData(state, action) {
       state.invoiceData = action.payload;
