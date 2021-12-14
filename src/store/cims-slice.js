@@ -67,6 +67,11 @@ const initialState = {
   editMode: true,
   navigateBack: true,
   brandFocus: false,
+  pages: 1,
+  pageNo: 1,
+  sortBy: "createdAt",
+  filterBy: 1,
+  sortingOrder: -1,
 };
 
 const cimsSlice = createSlice({
@@ -167,6 +172,21 @@ const cimsSlice = createSlice({
           pincode: "",
         },
       };
+    },
+    setPages(state, action) {
+      state.pages = action.payload;
+    },
+    setPageNo(state, action) {
+      state.pageNo = action.payload;
+    },
+    setSortBy(state, action) {
+      state.sortBy = action.payload;
+    },
+    setFilterBy(state, action) {
+      state.filterBy = action.payload;
+    },
+    setSortingOrder(state, action) {
+      state.sortingOrder = action.payload;
     },
   },
 });

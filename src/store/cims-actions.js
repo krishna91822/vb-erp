@@ -13,13 +13,14 @@ const contactSchema = {
   otherContactNumber: "",
 };
 
-export const getClientsData = () => {
+export const getClientsData = (pageNo, sortBy, filter, sortingOrder) => {
   return async (dispatch) => {
     const fetchData = async () => {
-      const response = await axios.get("/cims");
+      const response = await axios.get(
+        `/cims?page=${pageNo}&sort=${sortBy}&filter=${filter}&sortOrder=${sortingOrder}`
+      );
       if (response.data.code === 200 || response.data.status === "success") {
         const data = response.data.data;
-
         return data;
       }
       throw new Error(
@@ -30,7 +31,10 @@ export const getClientsData = () => {
     try {
       dispatch(uiActions.toggleLoader());
       const data = await fetchData();
-      dispatch(cimsActions.getClientsList(data || []));
+      dispatch(cimsActions.getClientsList(data.data || []));
+      dispatch(cimsActions.setPages(data.totalPages || 1));
+      if (pageNo > data.totalPages)
+        dispatch(cimsActions.setPageNo(data.totalPages));
     } catch (error) {
       setTimeout(function () {
         dispatch(
@@ -337,6 +341,39 @@ export const changeActiveStatus = (clientId) => {
           message: data.message,
         })
       );
+    } catch (error) {
+      setTimeout(function () {
+        dispatch(
+          uiActions.showNotification({
+            status: "error",
+            title: "Error!",
+            message: error.message,
+          })
+        );
+      }, 1000);
+    }
+  };
+};
+
+export const searchClient = (value, filterBy) => {
+  return async (dispatch) => {
+    const fetchData = async () => {
+      const response = await axios.get(
+        `/cims/search?searchData=${value}&filter=${filterBy}`
+      );
+      if (response.data.code === 200 || response.data.status === "success") {
+        const data = response.data.data;
+
+        return data;
+      }
+      throw new Error(
+        response.data.error || "Something went wrong! Please try again..."
+      );
+    };
+
+    try {
+      const data = await fetchData();
+      dispatch(cimsActions.getClientsList(data || []));
     } catch (error) {
       setTimeout(function () {
         dispatch(

@@ -1,6 +1,6 @@
 .ListContainer {
   position: absolute;
-  height: 70%;
+  height: 55%;
   width: 80%;
   overflow-y: scroll;
   border: 2px solid rgb(216, 213, 213);
@@ -24,4 +24,11 @@
 }
 .table-row {
   cursor: pointer;
+}
+
+.pagination {
+  position: absolute;
+  top: 88%;
+  left: 50%;
+  transform: translate((-50%, 0));
 }

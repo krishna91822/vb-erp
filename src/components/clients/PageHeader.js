@@ -1,7 +1,10 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   Button,
+  Checkbox,
+  Divider,
   FormControl,
+  FormControlLabel,
   Grid,
   InputLabel,
   MenuItem,
@@ -11,25 +14,43 @@ import {
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { cimsActions } from "../../store/cims-slice";
+import SortByAlphaIcon from "@mui/icons-material/SortByAlpha";
+import ClientHelpers from "./ClientHelpers";
 
 export default function PageHeader() {
   const dispatch = useDispatch();
-  const [sortBy, setSortBy] = useState("");
-  const values = [
-    "None",
-    "By ID",
-    "By location",
-    "By start date",
-    "By Status",
-    "By associate name",
-    "By CompanyUID",
+
+  const {
+    sortBy,
+    filterBy,
+    sortingOrder,
+    handelSortBy,
+    handelFilterBy,
+    handelSortingOrder,
+  } = ClientHelpers();
+
+  const sortByFields = [
+    { id: "createdAt", label: "By Start date" },
+    { id: "brandName", label: "By Company" },
+    { id: "contacts.primaryContact.firstName", label: "By Associate name" },
+    { id: "registeredAddress.country", label: "By Location" },
   ];
+
+  const filterByFields = [
+    { id: 1, label: "Active Client" },
+    { id: 0, label: "Inactive Client" },
+  ];
+
   const handleSortBy = (e) => {
-    if (e.target.value === "None") {
-      setSortBy("");
-    } else {
-      setSortBy(e.target.value);
-    }
+    handelSortBy(e.target.value);
+  };
+
+  const handleFilterBy = (e) => {
+    handelFilterBy(e.target.value);
+  };
+
+  const handleSortOrder = (e) => {
+    handelSortingOrder(e.target.checked);
   };
 
   const handleCreate = () => {
@@ -59,8 +80,26 @@ export default function PageHeader() {
             </Link>
           </Grid>
           <Grid item>
+            <FormControl size="small">
+              <InputLabel id="filterBy">Filter by</InputLabel>
+              <Select
+                labelId="filterBy"
+                id="select"
+                value={filterBy}
+                label="filterBy"
+                onChange={handleFilterBy}
+              >
+                {filterByFields.map((field) => (
+                  <MenuItem key={field.id} value={field.id}>
+                    {field.label}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+          </Grid>
+          <Grid item>
             <FormControl size="small" sx={{ minWidth: 120 }}>
-              <InputLabel id="sortBy">sort by</InputLabel>
+              <InputLabel id="sortBy">Sort By</InputLabel>
               <Select
                 labelId="sortBy"
                 id="select"
@@ -68,16 +107,33 @@ export default function PageHeader() {
                 label="sortBy"
                 onChange={handleSortBy}
               >
-                {values.map((values) => (
-                  <MenuItem key={values} value={values}>
-                    {values}
+                {sortByFields.map((field) => (
+                  <MenuItem key={field.id} value={field.id}>
+                    {field.label}
                   </MenuItem>
                 ))}
+
+                <Divider sx={{ borderBottomWidth: 2 }} component="li" />
+
+                <FormControlLabel
+                  sx={{
+                    marginLeft: ".5rem",
+                  }}
+                  control={
+                    <Checkbox
+                      onChange={(e) => handleSortOrder(e)}
+                      size="small"
+                      checked={sortingOrder === 1}
+                    />
+                  }
+                  label={<SortByAlphaIcon />}
+                />
               </Select>
             </FormControl>
           </Grid>
         </Grid>
       </Grid>
+      <Divider sx={{ borderBottomWidth: 2 }} />
     </>
   );
 }

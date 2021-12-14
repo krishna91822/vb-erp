@@ -13,6 +13,10 @@ import {
   ListItemIcon,
   ListItemText,
   Divider,
+  Stack,
+  Pagination,
+  Box,
+  TextField,
 } from "@mui/material";
 import TableCell, { tableCellClasses } from "@mui/material/TableCell";
 import {
@@ -20,6 +24,7 @@ import {
   MoreVert as MoreVertIcon,
   Delete as DeleteIcon,
   Restore as RestoreIcon,
+  ManageSearchSharp as ManageSearchSharpIcon,
 } from "@mui/icons-material";
 import PageHeader from "./PageHeader";
 import "../../assets/styles/ListStyles.css";
@@ -47,7 +52,16 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }));
 
 function ClientsList() {
-  const { clientsList, handleClientData, handelActiveStatus } = ClientHelpers();
+  const {
+    clientsList,
+    handleClientData,
+    handelActiveStatus,
+
+    pages,
+    pageNo,
+    handelPageChange,
+    handelSearch,
+  } = ClientHelpers();
 
   const [clientId, setClientId] = useState();
   const [clientStatus, setClientStatus] = useState();
@@ -132,6 +146,22 @@ function ClientsList() {
   return (
     <div>
       <PageHeader />
+      <Box m={1} sx={{ display: "flex", alignItems: "flex-end" }}>
+        <ManageSearchSharpIcon
+          style={{
+            margin: "0 .5rem",
+            width: "2rem",
+            height: "2rem",
+          }}
+        />
+        <TextField
+          fullWidth
+          id="search"
+          placeholder="Search Company Name / Associate Name / Location"
+          variant="standard"
+          onChange={handelSearch}
+        />
+      </Box>
       <div className="ListContainer">
         <TableContainer component={Paper} align="right">
           <Table sx={{ maxWidth: "100%" }}>
@@ -139,9 +169,7 @@ function ClientsList() {
               <TableRow>
                 <StyledTableCell align="center">ID</StyledTableCell>
                 <StyledTableCell align="center">Company Name</StyledTableCell>
-                <StyledTableCell align="center">
-                  Primary Contact
-                </StyledTableCell>
+                <StyledTableCell align="center">Associate Name</StyledTableCell>
                 <StyledTableCell align="center">Location</StyledTableCell>
                 <StyledTableCell align="center">Status</StyledTableCell>
                 <StyledTableCell align="center">Registered On</StyledTableCell>
@@ -157,7 +185,7 @@ function ClientsList() {
                     }}
                     align="center"
                   >
-                    {idx + 1}
+                    {client.rowNumber}
                   </StyledTableCell>
                   <StyledTableCell
                     onClick={() => {
@@ -210,6 +238,11 @@ function ClientsList() {
             </TableBody>
           </Table>
         </TableContainer>
+      </div>
+      <div className="pagination">
+        <Stack spacing={2}>
+          <Pagination count={pages} page={pageNo} onChange={handelPageChange} />
+        </Stack>
       </div>
     </div>
   );
