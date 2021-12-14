@@ -97,7 +97,7 @@ const Bench = ({ pressed }) => {
                 >
                   Associate Name
                 </TableCell>
-                {/* <TableCell
+                <TableCell
                   align="left"
                   sx={{
                     width: "100px",
@@ -106,7 +106,7 @@ const Bench = ({ pressed }) => {
                   }}
                 >
                   Primary Capabilities
-                </TableCell> */}
+                </TableCell>
                 <TableCell
                   align="left"
                   sx={{
@@ -148,16 +148,16 @@ const Bench = ({ pressed }) => {
                     />
                   </TableCell>
 
-                  {/* <TableCell align="left">
-                    <TextField
+                  <TableCell align="left">
+                    {/* <TextField
                       variant="standard"
                       type="text"
                       placeholder="Primary Capabilities"
                       onChange={filterPrimaryCapabilities}
                       value={primaryCapabilities}
                       inputProps={{ style: { fontSize: "small" } }}
-                    />
-                  </TableCell> */}
+                    /> */}
+                  </TableCell>
                   <TableCell align="left">
                     <TextField
                       variant="standard"
@@ -182,9 +182,9 @@ const Bench = ({ pressed }) => {
                   <TableCell align="left">{index + page * 5 + 1}</TableCell>
                   <TableCell align="left">{currElem.empId}</TableCell>
                   <TableCell align="left">{currElem.empName}</TableCell>
-                  {/* <TableCell align="left">
-                      {currElem.primaryCapabilities}
-                    </TableCell> */}
+                  <TableCell align="left">
+                    {`${currElem.empPrimaryCapability}`}
+                  </TableCell>
                   <TableCell align="left">
                     {currElem.remainingAllocation}
                   </TableCell>

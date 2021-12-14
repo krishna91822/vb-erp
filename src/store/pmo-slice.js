@@ -9,6 +9,7 @@ const initialState = {
   allocatedData: [],
   benchData: [],
   percentageAllocated: 0,
+  clientNames: [],
   allClients: [],
 };
 
@@ -63,6 +64,13 @@ const pmoSlice = createSlice({
     },
     updatebenchData: (state, action) => {
       state.benchData = action.payload;
+    },
+    updateClientNames: (state, action) => {
+      state.clientNames = [
+        `${action.payload.primaryContact.firstName} ${action.payload.primaryContact.lastName}`,
+        `${action.payload.secondaryContact.firstName} ${action.payload.secondaryContact.lastName}`,
+        `${action.payload.tertiaryContact.firstName} ${action.payload.tertiaryContact.lastName}`,
+      ];
     },
   },
 });

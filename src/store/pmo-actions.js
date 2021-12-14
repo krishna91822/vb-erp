@@ -127,11 +127,12 @@ export const getAllEmployees = (empName) => {
     }
   };
 };
-
-export const getAllClientData = () => {
+export const getAllClientData = (value) => {
   return async (dispatch) => {
     const getData = async () => {
-      const response = await axios.get(`${baseUrl}/cims/filterclients`);
+      const response = await axios.get(
+        `${baseUrl}/cims/filterclients?brandName=${value}`
+      );
       if (response.status === "failure") {
         throw new Error(response.data.message);
       }
@@ -288,6 +289,24 @@ export const getAllProjectsBySroting = (type, sortedValue) => {
     try {
       const data = await getData();
       dispatch(pmoActions.updateProjectsList(data.data.data.results));
+    } catch (err) {
+      console.log(err);
+    }
+  };
+};
+
+export const getClinetById = (id) => {
+  return async (dispatch) => {
+    const getClinentName = async () => {
+      const response = await axios.get(`${baseUrl}/cims/filterclients/${id}`);
+      if (response.status === "failure") {
+        throw new Error(response.data.message);
+      }
+      return response;
+    };
+    try {
+      const data = await getClinentName();
+      dispatch(pmoActions.updateClientNames(data.data[0].contacts));
     } catch (err) {
       console.log(err);
     }
