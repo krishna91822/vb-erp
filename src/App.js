@@ -19,10 +19,11 @@ function App() {
     axiosInstance
       .get("/employees")
       .then((response) => {
+        console.log(response);
         if (response) {
           dispatch(
             setCurrentEmployee(
-              response.data.employees.find((item) => item.role === "admin")
+              response.data.employees.find((item) => item.role === "ADMIN")
             )
           );
           setLoading(false);

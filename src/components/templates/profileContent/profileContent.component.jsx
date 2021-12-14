@@ -38,6 +38,8 @@ const ProfileContent = (props) => {
     handleClose,
   } = props;
 
+  console.log("updateRequest:", updateRequest);
+
   //calculate percentage progress
   const profileProgress = () => {
     try {
@@ -82,6 +84,7 @@ const ProfileContent = (props) => {
       const percentage = Math.floor((completedFields / totalFields) * 100);
       return percentage;
     } catch (error) {
+      // throw error;
       // console.log(error);
     }
   };
