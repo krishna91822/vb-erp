@@ -35,7 +35,6 @@ const Header = (props) => {
   const getTextFieldData = (e) => {
     if (e.key === "Enter") {
       const data = e.target.value;
-      e.target.value = "";
       dispatch(searchData(data));
     }
   };

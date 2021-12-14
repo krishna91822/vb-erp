@@ -11,6 +11,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { useDispatch } from "react-redux";
 import { deleteRewardData } from "../../store/rewards-actions";
+import { Link } from "react-router-dom";
 
 const rocket = {
   color: "blue",
@@ -49,9 +50,11 @@ function Body(props) {
           <p>R&R's Information</p>
         </div>
         <div className="middle-button">
-          <Button color="success" variant="contained">
-            Create a Reward
-          </Button>
+          <Link to="/rewards/create">
+            <Button color="success" variant="contained">
+              Create a Reward
+            </Button>
+          </Link>
         </div>
       </div>
       <div className="table-container">
@@ -83,7 +86,7 @@ function Body(props) {
                   <p>{d.employee_id}</p>
                 </div> */}
                 <div className="rewardname">
-                  <p>{d.reward_name}</p>
+                  <p>{d.reward_name ? d.reward_name : d.reward_display_name}</p>
                 </div>
                 <div className="reward">
                   <p>{d.reward_type}</p>
