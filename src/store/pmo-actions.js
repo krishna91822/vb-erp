@@ -125,11 +125,12 @@ export const getAllEmployees = () => {
     }
   };
 };
-
-export const getAllClientData = () => {
+export const getAllClientData = (value) => {
   return async (dispatch) => {
     const getData = async () => {
-      const response = await axios.get(`${baseUrl}/cims/filterclients`);
+      const response = await axios.get(
+        `${baseUrl}/cims/filterclients?brandName=${value}`
+      );
       if (response.status === "failure") {
         throw new Error(response.data.message);
       }
@@ -262,6 +263,24 @@ export const deleteResource = (id) => {
     try {
       const data = await deleteResourceById();
       dispatch(pmoActions.removeAllocation(data.data));
+    } catch (err) {
+      console.log(err);
+    }
+  };
+};
+
+export const getClinetById = (id) => {
+  return async (dispatch) => {
+    const getClinentName = async () => {
+      const response = await axios.get(`${baseUrl}/cims/filterclients/${id}`);
+      if (response.status === "failure") {
+        throw new Error(response.data.message);
+      }
+      return response;
+    };
+    try {
+      const data = await getClinentName();
+      dispatch(pmoActions.updateClientNames(data.data[0].contacts));
     } catch (err) {
       console.log(err);
     }

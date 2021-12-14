@@ -83,7 +83,7 @@ const ResourceInformation = ({
                   {...params}
                   placeholder="associate name"
                   value={empName}
-                  error={resourceErrors.associateName ? true : false}
+                  error={resourceErrors.employeeName ? true : false}
                 />
               )}
             />
@@ -140,7 +140,7 @@ const ResourceInformation = ({
                   style={{ width: "60%" }}
                 />
                 <TextField
-                  disabled
+                  readonly
                   placeholder="50%"
                   variant="outlined"
                   size="small"

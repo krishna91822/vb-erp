@@ -34,6 +34,7 @@ import {
   getPercentageAllocated,
   deleteResource,
   getAllClientData,
+  getClinetById,
 } from "../../../store/pmo-actions";
 import { pmoActions } from "../../../store/pmo-slice";
 import validateForm from "./validateCreateForm";
@@ -41,10 +42,12 @@ import validateResourceForm from "../ResourceInformation/validateResourceForm";
 
 const initialState = {
   project: {
+    clientId: "",
     clientName: "",
     projectName: "",
     clientProjectManager: "",
     clientPrimaryContact: "",
+    clientPrimaryContactName: "",
     clientProjectSponsor: "",
     domainSector: "",
     clientFinanceController: "",
@@ -74,6 +77,7 @@ const CreateProject = () => {
     projectById,
     allClients,
     allEmployees,
+    clientNames,
     percentageAllocated,
   } = useSelector((state) => state.pmo);
   const [edit, setEdit] = useState(false);
@@ -81,13 +85,16 @@ const CreateProject = () => {
   const [errors, setErrors] = useState({});
   const [resourceErrors, setResourceErrors] = useState({});
   const [open, setOpen] = useState(false);
+  const [names, setNames] = useState([]);
 
   const {
     project: {
+      clientId,
       clientName,
       projectName,
       clientProjectManager,
       clientPrimaryContact,
+      clientPrimaryContactName,
       clientProjectSponsor,
       domainSector,
       clientFinanceController,
@@ -102,8 +109,7 @@ const CreateProject = () => {
 
   const clientData = allClients;
   useLayoutEffect(() => {
-    dispatch(getAllClientData());
-    if (location.includes("createproject") || location.includes("edit")) {
+    if (location.includes("create") || location.includes("edit")) {
       setEdit(true);
     }
 
@@ -135,8 +141,14 @@ const CreateProject = () => {
           empId: eachResource.empId._id,
         })),
       });
+      dispatch(getClinetById(projectById.project.clientId));
     }
   }, [projectById]);
+  useEffect(() => {
+    if (clientNames.length > 0) {
+      setNames(clientNames);
+    }
+  }, [clientNames]);
   const handelAssociate = (value) => {
     dispatch(getPercentageAllocated(value.empId));
     setState({
@@ -262,7 +274,7 @@ const CreateProject = () => {
     setErrors(validationErrors);
 
     if (noErrors) {
-      if (location.includes("createproject")) {
+      if (location.includes("create")) {
         dispatch(
           createProject({
             project: { ...state.project },
@@ -284,6 +296,7 @@ const CreateProject = () => {
   const handleOpen = ({ target }) => {
     let inputvalue = target.value;
     if (inputvalue && inputvalue.length > 2) {
+      dispatch(getAllClientData(inputvalue));
       setOpen(true);
     } else {
       setOpen(false);
@@ -305,15 +318,21 @@ const CreateProject = () => {
         ...state.project,
         clientName: value.brandName,
         clientPrimaryContact: value.contacts.primaryContact.contactNumber,
+        clientId: value._id,
+        clientPrimaryContactName: `${value.contacts.primaryContact.firstName} ${value.contacts.primaryContact.lastName}`,
       },
     });
+    setNames([
+      `${value.contacts.primaryContact.firstName} ${value.contacts.primaryContact.lastName}`,
+      `${value.contacts.secondaryContact.firstName} ${value.contacts.secondaryContact.lastName}`,
+      `${value.contacts.tertiaryContact.firstName} ${value.contacts.tertiaryContact.lastName}`,
+    ]);
   };
 
   return (
     <>
       <PmoContainer>
         <HeadingStyle>
-          <p data-test="user">User - Admin/Approver</p>
           <Heading>
             <h2 data-test="page-title">PMO</h2>
             <EditViewSwitchs
@@ -399,23 +418,33 @@ const CreateProject = () => {
               <label htmlFor="cpm" data-test="client-project-manager-label">
                 Client Project Manager <span>*</span>
               </label>
-              <TextField
+              <Select
                 id="cpm"
                 name="clientProjectManager"
                 data-test="client-project-manager-input"
-                size="small"
-                variant="outlined"
+                defaultValue="1"
                 error={errors.clientProjectManager ? true : false}
                 disabled={!edit}
                 value={clientProjectManager}
-                placeholder="Enter Client Project"
+                size="small"
+                variant="outlined"
+                displayEmpty
                 style={{ width: "100%" }}
                 onChange={handleProjectChange}
-              />
+              >
+                <MenuItem value="" disabled>
+                  <span style={{ color: "rgb(190, 190, 190)" }}>
+                    Select Client Project
+                  </span>
+                </MenuItem>
+                {names.map((value) => {
+                  return <MenuItem value={value}>{value}</MenuItem>;
+                })}
+              </Select>
             </FormElementsStyled>
             <FormElementsStyled>
               <label htmlFor="cpc" data-test="client-primary-contact-label">
-                Client Primary Contact <span>*</span>
+                Client Primary Contact
               </label>
               <NumberStyle>
                 <PhoneInput
@@ -424,7 +453,6 @@ const CreateProject = () => {
                   onChange={(e) => handlePhoneNumber(e)}
                   value={clientPrimaryContact.toString() || "+91"}
                   name="clientPrimaryContact"
-                  // placeholder="Contact Number"
                   inputProps={{
                     name: "phone",
                     autoFocus: true,
@@ -439,22 +467,50 @@ const CreateProject = () => {
               </NumberStyle>
             </FormElementsStyled>
             <FormElementsStyled>
-              <label htmlFor="cps" data-test="client-project-sponsor-label">
-                Client Project Sponsor <span>*</span>
+              <label htmlFor="pn" data-test="project-name-label">
+                Client Primary Contact Name
               </label>
               <TextField
-                id="cps"
-                name="clientProjectSponsor"
-                data-test="client-project-sponsor-input"
+                error={errors.clientPrimaryContactName ? true : false}
+                id="cpcn"
+                name="clientPrimaryContactName"
+                data-test="client-primary-contact-name-input"
                 size="small"
                 variant="outlined"
-                disabled={!edit}
-                error={errors.clientProjectSponsor ? true : false}
-                value={clientProjectSponsor}
-                placeholder="Enter Client Project Sponser"
+                disabled
+                placeholder="Enter Client Primary Contact Name"
+                value={clientPrimaryContactName}
                 style={{ width: "100%" }}
                 onChange={handleProjectChange}
               />
+            </FormElementsStyled>
+            <FormElementsStyled>
+              <label htmlFor="cps" data-test="client-project-sponsor-label">
+                Client Project Sponsor <span>*</span>
+              </label>
+              <Select
+                id="cps"
+                name="clientProjectSponsor"
+                data-test="client-project-sponsor-input"
+                defaultValue="1"
+                error={errors.clientProjectSponsor ? true : false}
+                value={clientProjectSponsor}
+                disabled={!edit}
+                size="small"
+                variant="outlined"
+                displayEmpty
+                style={{ width: "100%" }}
+                onChange={handleProjectChange}
+              >
+                <MenuItem value="" hidden>
+                  <span style={{ color: "rgb(190, 190, 190)" }}>
+                    Select Client Project Sponser
+                  </span>
+                </MenuItem>
+                {names.map((value) => {
+                  return <MenuItem value={value}>{value}</MenuItem>;
+                })}
+              </Select>
             </FormElementsStyled>
             <FormElementsStyled>
               <label htmlFor="ds" data-test="domain-sector-label">
@@ -477,19 +533,29 @@ const CreateProject = () => {
               <label htmlFor="cfc" data-test="client-finance-controller-label">
                 Client Finance Controller <span>*</span>
               </label>
-              <TextField
+              <Select
                 id="cfc"
                 name="clientFinanceController"
                 data-test="client-finance-controller-input"
-                size="small"
-                variant="outlined"
-                disabled={!edit}
+                defaultValue="1"
                 error={errors.clientFinanceController ? true : false}
                 value={clientFinanceController}
-                placeholder="Enter Client Finance Controller"
+                disabled={!edit}
+                size="small"
+                variant="outlined"
+                displayEmpty
                 style={{ width: "100%" }}
                 onChange={handleProjectChange}
-              />
+              >
+                <MenuItem value="" disabled>
+                  <span style={{ color: "rgb(190, 190, 190)" }}>
+                    Select Client Project Sponser
+                  </span>
+                </MenuItem>
+                {names.map((value) => {
+                  return <MenuItem value={value}>{value}</MenuItem>;
+                })}
+              </Select>
             </FormElementsStyled>
             <DateContainerStyled
               sColor={!startDate ? "#a2a2a2" : "black"}

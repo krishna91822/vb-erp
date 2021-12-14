@@ -9,6 +9,7 @@ const initialState = {
   allocatedData: [],
   benchData: [],
   percentageAllocated: 0,
+  clientNames: [],
   allClients: [],
 };
 
@@ -38,7 +39,6 @@ const pmoSlice = createSlice({
       const filterResources = current(state).projectById.resources.filter(
         (resource) => resource._id !== action.payload._id
       );
-      console.log(filterResources);
       state.projectById.resources = filterResources;
     },
     SortByProductID: (state, action) => {
@@ -63,6 +63,13 @@ const pmoSlice = createSlice({
     },
     updatebenchData: (state, action) => {
       state.benchData = action.payload;
+    },
+    updateClientNames: (state, action) => {
+      state.clientNames = [
+        `${action.payload.primaryContact.firstName} ${action.payload.primaryContact.lastName}`,
+        `${action.payload.secondaryContact.firstName} ${action.payload.secondaryContact.lastName}`,
+        `${action.payload.tertiaryContact.firstName} ${action.payload.tertiaryContact.lastName}`,
+      ];
     },
   },
 });
