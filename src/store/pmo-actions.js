@@ -219,7 +219,7 @@ export const getAllocatedData = (filters) => {
 
     try {
       const data = await getData();
-      dispatch(pmoActions.updateAllocatedData(data.data));
+      dispatch(pmoActions.updateAllocatedData(data.data.data));
     } catch (error) {
       dispatch(
         uiActions.showNotification({
@@ -231,10 +231,10 @@ export const getAllocatedData = (filters) => {
   };
 };
 
-export const getOnBench = (filters) => {
+export const getOnBench = (filters, pageNo) => {
   return async (dispatch) => {
     const getData = async () => {
-      let url = `/allocations/onbench?limit=10`;
+      let url = `/allocations/onbench?limit=10&page=${pageNo}`;
       if (filters.empId) url += `&empId=${filters.empId}`;
       if (filters.employeeName) url += `&empName=${filters.employeeName}`;
       if (filters.remainingAllocation)
@@ -249,7 +249,7 @@ export const getOnBench = (filters) => {
     };
     try {
       const data = await getData();
-      dispatch(pmoActions.updatebenchData(data.data));
+      dispatch(pmoActions.updatebenchData(data.data.data));
     } catch (error) {
       dispatch(
         uiActions.showNotification({

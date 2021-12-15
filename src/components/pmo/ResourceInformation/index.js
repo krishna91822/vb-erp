@@ -41,9 +41,9 @@ const ResourceInformation = ({
   const handleOpen = ({ target }) => {
     let inputvalue = target.value;
 
-    if (inputvalue && inputvalue.length > 2) {
-      dispatch(getAllEmployees(inputvalue));
+    if (inputvalue.length > 2) {
       setOpen(true);
+      dispatch(getAllEmployees(inputvalue));
     } else {
       setOpen(false);
     }
@@ -71,19 +71,21 @@ const ResourceInformation = ({
               key={tempVal}
               size="small"
               onInputChange={handleOpen}
-              getOptionLabel={(option) => option.empName}
+              getOptionLabel={(option) => option.empName || "Invalid"}
               onChange={(event, value) => {
                 value ? handelAssociate(value) : setOpen(false);
               }}
+              // getOptionDisabled={(option) => option.empName}
               options={filteredEmployees}
               open={open}
               style={{ width: "100%" }}
+              disableClearable
               renderInput={(params) => (
                 <TextField
                   {...params}
                   placeholder="associate name"
                   value={empName}
-                  error={resourceErrors.employeeName ? true : false}
+                  error={resourceErrors.empName ? true : false}
                 />
               )}
             />
