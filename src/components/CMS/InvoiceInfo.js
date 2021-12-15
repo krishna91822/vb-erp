@@ -188,7 +188,7 @@ function InvoiceInfo() {
               {post.map((row, index) => (
                 <TableRow
                   component={Link}
-                  to={`/invoice/detail/${row._id}`}
+                  to={`/invoice_details/${row._id}`}
                   onClick={() => handleRowOnClick(row._id)}
                   key={row.name}
                   style={{ textDecoration: "none" }}

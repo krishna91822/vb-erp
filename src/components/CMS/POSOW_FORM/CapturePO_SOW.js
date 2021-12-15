@@ -303,7 +303,7 @@ export const CapturePO_SOW = (props) => {
   };
   return (
     <div>
-      <div className="container">
+      <div className="posowForm-container">
         <React.Fragment>
           <CssBaseline />
           <Container fixed>
@@ -335,12 +335,12 @@ export const CapturePO_SOW = (props) => {
                 overflowY: "scroll",
               }}
             >
-              <div className="ProjectInfoHeader">
+              <div className="posow-ProjectInfoHeader">
                 <div className="ProjectHeaderTitle">
                   <h3>Project information</h3>
                 </div>
                 {props.editBtn ? (
-                  <div className="status">
+                  <div className="posow-status">
                     <h5 data-test="status-label">STATUS</h5>
                     <strong data-testid="status">
                       {" - " + "  " + status}
@@ -350,7 +350,7 @@ export const CapturePO_SOW = (props) => {
                   <div></div>
                 )}
                 {props.editBtn ? (
-                  <div className="SaveButton">
+                  <div className="posow-SaveButton">
                     <strong
                       className="editTxt"
                       data-test="editModeSwitch-label"
@@ -370,7 +370,7 @@ export const CapturePO_SOW = (props) => {
                     </label>
                   </div>
                 ) : (
-                  <div className="SaveButton">
+                  <div className="posow-SaveButton">
                     <Button
                       variant="contained"
                       color="success"
@@ -386,7 +386,7 @@ export const CapturePO_SOW = (props) => {
               </div>
               <hr className="projectInfoSeperator" />
 
-              <div className="NameDropdowns">
+              <div className="posow-Dropdowns">
                 <div className="ClientDropdown">
                   <label>
                     <strong>Client name</strong>
@@ -407,6 +407,7 @@ export const CapturePO_SOW = (props) => {
                       isOptionEqualToValue={(option, value) =>
                         option.clientName === value.clientName
                       }
+                      data-testid="clientNameDropdown-ChangeTest"
                       sx={{ width: 400 }}
                       renderInput={(params) => (
                         <TextField {...params} label="Client Name" />
@@ -452,7 +453,7 @@ export const CapturePO_SOW = (props) => {
                 </div>
               </div>
 
-              <div className="CheckBoxInputs">
+              <div className="posow-CheckBoxInputs">
                 <div>
                   <div className="clientSponsorCBs">
                     <h3 data-test="client-sponsor-chkBox-label">
@@ -769,7 +770,7 @@ export const CapturePO_SOW = (props) => {
                 </div>
               </div>
               <div className="docInfoBottomFields">
-                <div className="SaveButton">
+                <div className="posow-SaveButton">
                   {(props.editBtn && editTglCheckedState) || !props.editBtn ? (
                     <Button
                       variant="contained"
