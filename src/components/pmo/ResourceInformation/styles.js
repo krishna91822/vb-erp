@@ -78,10 +78,10 @@ export const MultiElemContainer = styled.div`
   flex-direction: colmun;
   flex-wrap: wrap;
   justify-content: space-between;
-  & input[name="startDate"] {
+  & input[name="allocationStartDate"] {
     color: ${(props) => props.sColor};
   }
-  & input[name="endDate"] {
+  & input[name="allocationEndDate"] {
     color: ${(props) => props.eColor};
   }
   @media ${device.tablet} {
@@ -100,4 +100,7 @@ export const AllocElemContainer = styled.div`
   display: flex;
   justify-content: space-between;
   width: 100%;
+  & input[name="allocationPercentagetxt"] {
+    color: ${(props) => props.aColor};
+  }
 `;

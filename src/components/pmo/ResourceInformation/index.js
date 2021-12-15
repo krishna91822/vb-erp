@@ -83,7 +83,7 @@ const ResourceInformation = ({
                   {...params}
                   placeholder="associate name"
                   value={empName}
-                  error={resourceErrors.employeeName ? true : false}
+                  error={resourceErrors.empName ? true : false}
                 />
               )}
             />
@@ -129,7 +129,9 @@ const ResourceInformation = ({
               <Heading data-test="allocation">
                 Allocation <span>*</span>
               </Heading>
-              <AllocElemContainer>
+              <AllocElemContainer
+                aColor={allocationPercentage > 0 ? "black" : "#a2a2a2"}
+              >
                 <input
                   type="range"
                   min="1"
@@ -140,6 +142,7 @@ const ResourceInformation = ({
                   style={{ width: "60%" }}
                 />
                 <TextField
+                  name="allocationPercentagetxt"
                   readonly
                   placeholder="50%"
                   variant="outlined"
