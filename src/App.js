@@ -1,46 +1,35 @@
-import { Fragment, useEffect, useState } from "react";
-
 import { Route, Routes } from "react-router-dom";
 
-import routes from "./routes/routes";
-
+import routes from "./routes/index";
 import Layout from "./components/layout/Layout";
-
-import { useDispatch } from "react-redux";
-import { setCurrentEmployee } from "./store/employeeSlice";
-
-import axiosInstance from "./helpers/axiosInstance";
+import Notification from "./components/UI/Notification";
+import PageLoader from "./components/UI/PageLoader";
+import { useSelector } from "react-redux";
+import { Fragment } from "react";
 
 function App() {
-  const [loading, setLoading] = useState(true);
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    axiosInstance
-      .get("/employees")
-      .then((response) => {
-        if (response) {
-          dispatch(
-            setCurrentEmployee(
-              response.data.employees.find((item) => item.role === "ADMIN")
-            )
-          );
-          setLoading(false);
-        }
-      })
-      .catch((err) => console.log(err));
-  }, [dispatch]);
+  const notification = useSelector((state) => state.ui.notification);
+  const loader = useSelector((state) => state.ui.loading);
 
   return (
     <Fragment>
+      {notification && !loader && (
+        <Notification
+          status={notification.status}
+          title={notification.title}
+          message={notification.message}
+        />
+      )}
+      {loader && <PageLoader />}
       <Layout>
         <Routes>
           {routes.map((route, index) => (
             <Route
               key={index}
               path={route.path}
-              element={<route.component isLoading={loading} />}
-            />
+              exact
+              element={<route.component />}
+            ></Route>
           ))}
         </Routes>
       </Layout>

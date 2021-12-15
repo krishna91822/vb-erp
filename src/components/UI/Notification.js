@@ -1,17 +1,14 @@
-import React from "react";
-
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { useDispatch, useSelector } from "react-redux";
-import { showNotification } from "./../../redux/ui/ui.actions";
+import { useDispatch } from "react-redux";
+import { uiActions } from "../../store/ui-slice";
 
 const Notification = (props) => {
-  const notification = useSelector((state) => state.ui.notification);
   const dispatch = useDispatch();
 
   const afterToast = () => {
     toast.clearWaitingQueue();
-    if (notification) dispatch(showNotification(null));
+    dispatch(uiActions.showNotification(null));
   };
 
   if (props.status === "success") {
@@ -32,4 +29,4 @@ const Notification = (props) => {
   return <ToastContainer autoClose={3000} limit={3} />;
 };
 
-export default React.memo(Notification);
+export default Notification;

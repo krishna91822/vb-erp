@@ -5,7 +5,7 @@ const baseURL = process.env.REACT_APP_API_BASE_URL;
 let headers = {};
 
 const token =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxYjUzMmU2ZmEyOTliZGI1ZjdkYTIxMSIsImlhdCI6MTYzOTI2NDk5OSwiZXhwIjoxNjQ3MDQwOTk5fQ.IPt4dr5ty4Ji02w4piMv8fOWBn1pMAS195zg7RUcAg8";
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c";
 
 if (token) {
   headers.Authorization = `Bearer ${token}`;
@@ -13,13 +13,14 @@ if (token) {
 
 const axiosInstance = axios.create({
   baseURL: baseURL,
+  timeout: 10000,
   headers,
 });
 
 axiosInstance.interceptors.response.use(
   (response) =>
     new Promise((resolve, reject) => {
-      resolve(response.data);
+      resolve(response);
     }),
   (error) => {
     if (!error.response) {

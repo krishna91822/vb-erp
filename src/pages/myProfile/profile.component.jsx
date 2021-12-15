@@ -12,6 +12,25 @@ const Profile = () => {
     (state) => state.employee
   );
 
+  // const [loading, setLoading] = useState(true);
+  // const dispatch = useDispatch();
+
+  // useEffect(() => {
+  //   axiosInstance
+  //     .get("/employees")
+  //     .then((response) => {
+  //       if (response) {
+  //         dispatch(
+  //           setCurrentEmployee(
+  //             response.data.employees.find((item) => item.role === "ADMIN")
+  //           )
+  //         );
+  //         setLoading(false);
+  //       }
+  //     })
+  //     .catch((err) => console.log(err));
+  // }, [dispatch]);
+
   const [personalDetails, setPersonalDetails] = useState([
     ...currentEmployee.personalDetails,
   ]);

@@ -30,12 +30,14 @@ const customStyles = {
     width: "180px",
   },
   toolbar: {
+    display: "flex",
     height: "70px",
     justifyContent: "space-between",
     padding: "0 40px",
   },
   appbar: {
     backgroundColor: "white",
+    position: "fixed",
     width: "100%",
   },
 };
@@ -51,7 +53,7 @@ const Header = () => {
   };
   return (
     <ThemeProvider theme={theme}>
-      <AppBar sx={customStyles.appbar}>
+      <AppBar sx={customStyles.appbar} position="static">
         <Toolbar sx={customStyles.toolbar}>
           <img style={customStyles.image} src={vbLogo} alt="vb-logo" />
           <IconButton size="large" edge="end" onClick={handleClick}>
