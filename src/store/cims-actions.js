@@ -258,6 +258,7 @@ export const addNewClient = (formData) => {
   return async (dispatch) => {
     const postData = async () => {
       const response = await axios.post("/cims", { ...formData });
+      console.log(response);
       if (response.data.code === 200 || response.data.status === "success") {
         return response.data;
       }

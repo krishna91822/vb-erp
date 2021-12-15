@@ -193,10 +193,11 @@ export default function UseForm() {
       temp.brandName = fieldValues.brandName ? "" : "This field is required.";
     if ("domain" in fieldValues)
       temp.domain = fieldValues.domain ? "" : "This field is required.";
-    if ("baseLocation" in fieldValues)
-      temp.baseLocation = fieldValues.baseLocation
-        ? ""
-        : "This field is required.";
+    // Need to verify this field
+    // if ("baseLocation" in fieldValues)
+    //   temp.baseLocation = fieldValues.baseLocation
+    //     ? ""
+    //     : "This field is required.";
     if ("gstNumber" in fieldValues) {
       temp.gstNumber = fieldValues.gstNumber ? "" : "This field is required.";
       if (fieldValues.gstNumber)

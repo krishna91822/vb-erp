@@ -24,7 +24,8 @@ const initialFields = {
   legalName: "",
   brandName: "",
   domain: "",
-  baseLocation: "",
+  // Need to verify this field
+  // baseLocation: "",
   gstNumber: "",
   panNumber: "",
   companyType: "",
@@ -89,6 +90,11 @@ const cimsSlice = createSlice({
       state.ComCcode = initialState.ComCcode;
       state.locReg = initialState.locReg;
       state.locCom = initialState.locCom;
+      state.editMode = initialState.editMode;
+      state.navigateBack = initialState.navigateBack;
+      state.brandFocus = initialState.brandFocus;
+      state.searchBy = initialState.searchBy;
+      state.popUpOpen = initialState.popUpOpen;
     },
     createForm(state, action) {
       state.form = action.payload;
