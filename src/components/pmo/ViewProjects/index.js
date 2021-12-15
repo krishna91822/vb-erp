@@ -15,7 +15,6 @@ import EditIcon from "@mui/icons-material/Edit";
 import FilterListIcon from "@mui/icons-material/FilterList";
 import FilterListOffIcon from "@mui/icons-material/FilterListOff";
 
-import { pmoActions } from "../../../store/pmo-slice";
 import {
   getAllProjects,
   getAllFilterProjects,
@@ -29,10 +28,10 @@ import {
   SideButton,
   Dropdown,
   Options,
-  AdminName,
   ProjectHead,
 } from "./styles";
 import Tpagination from "../../UI/Pagination";
+
 const ViewProjects = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -60,7 +59,6 @@ const ViewProjects = () => {
     const SortingValue = event.target.value;
 
     if (SortingValue === "Sort by Project ID") {
-      console.log("projed");
       dispatch(getAllProjectsBySroting(filterProjects, "vbProjectId"));
     }
     if (SortingValue === "Sort by Status") {
@@ -116,7 +114,7 @@ const ViewProjects = () => {
                   },
                 }}
                 onClick={() => {
-                  navigate("/pmo/project/create");
+                  navigate("/pmo/projects/create");
                 }}
               >
                 Create a project
@@ -271,37 +269,43 @@ const ViewProjects = () => {
                     <TableCell align="left"></TableCell>
                   </TableRow>
                 )}
-                {projects
-                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                  .map((currElem, index) => (
-                    <TableRow key={index} onClick={() => entryLink(currElem)}>
-                      <TableCell align="left">
-                        {index + page * rowsPerPage + 1}
-                      </TableCell>
-                      <TableCell align="left">{currElem.clientName}</TableCell>
-                      <TableCell align="left">{currElem.projectName}</TableCell>
-                      <TableCell align="left">{currElem.vbProjectId}</TableCell>
-                      <TableCell align="left">
-                        {currElem.vbProjectStatus || "----"}
-                      </TableCell>
-                      <TableCell align="left">
-                        <Link
-                          to={`/pmo/projects/${currElem.vbProjectId}/edit`}
-                          onClick={stopClick}
-                        >
-                          <Button
-                            variant="fab"
-                            color="purple"
-                            size="small"
-                            endIcon={<EditIcon />}
-                            sx={{ padding: "0" }}
+                {projects.results
+                  ? projects.results.map((currElem, index) => (
+                      <TableRow key={index} onClick={() => entryLink(currElem)}>
+                        <TableCell align="left">
+                          {index + page * rowsPerPage + 1}
+                        </TableCell>
+                        <TableCell align="left">
+                          {currElem.clientName}
+                        </TableCell>
+                        <TableCell align="left">
+                          {currElem.projectName}
+                        </TableCell>
+                        <TableCell align="left">
+                          {currElem.vbProjectId}
+                        </TableCell>
+                        <TableCell align="left">
+                          {currElem.vbProjectStatus || "----"}
+                        </TableCell>
+                        <TableCell align="left">
+                          <Link
+                            to={`/pmo/projects/${currElem.vbProjectId}/edit`}
+                            onClick={stopClick}
                           >
-                            Edit
-                          </Button>
-                        </Link>
-                      </TableCell>
-                    </TableRow>
-                  ))}
+                            <Button
+                              variant="fab"
+                              color="purple"
+                              size="small"
+                              endIcon={<EditIcon />}
+                              sx={{ padding: "0" }}
+                            >
+                              Edit
+                            </Button>
+                          </Link>
+                        </TableCell>
+                      </TableRow>
+                    ))
+                  : null}
               </TableBody>
             </Table>
           </TableContainer>
