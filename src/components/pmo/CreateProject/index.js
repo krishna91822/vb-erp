@@ -323,13 +323,18 @@ const CreateProject = () => {
         clientPrimaryContact: value.contacts.primaryContact.contactNumber,
         clientId: value._id,
         clientPrimaryContactName: `${value.contacts.primaryContact.firstName} ${value.contacts.primaryContact.lastName}`,
+        // domainSector: value.domain,
       },
     });
-    setNames([
-      `${value.contacts.primaryContact.firstName} ${value.contacts.primaryContact.lastName}`,
-      `${value.contacts.secondaryContact.firstName} ${value.contacts.secondaryContact.lastName}`,
-      `${value.contacts.tertiaryContact.firstName} ${value.contacts.tertiaryContact.lastName}`,
-    ]);
+    setNames(
+      [
+        `${value.contacts.primaryContact.firstName} ${value.contacts.primaryContact.lastName}`,
+        `${value.contacts.secondaryContact.firstName} ${value.contacts.secondaryContact.lastName}`,
+        `${value.contacts.tertiaryContact.firstName} ${value.contacts.tertiaryContact.lastName}`,
+      ].filter((data) => {
+        return data.trim().length > 0;
+      })
+    );
   };
 
   return (
