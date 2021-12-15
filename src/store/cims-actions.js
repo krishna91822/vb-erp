@@ -13,18 +13,27 @@ const contactSchema = {
   otherContactNumber: "",
 };
 
-export const getClientsData = (pageNo, sortBy, filter, sortingOrder) => {
+export const getClientsData = (
+  pageNo,
+  sortBy,
+  filter,
+  sortingOrder,
+  searchBy
+) => {
   return async (dispatch) => {
     const fetchData = async () => {
       const response = await axios.get(
-        `/cims?page=${pageNo}&sort=${sortBy}&filter=${filter}&sortOrder=${sortingOrder}`
+        `/cims?page=${pageNo}&sort=${sortBy}&filter=${filter}&sortOrder=${sortingOrder}&searchData=${searchBy}`
       );
       if (response.data.code === 200 || response.data.status === "success") {
         const data = response.data.data;
         return data;
       }
       throw new Error(
-        response.data.error || "Something went wrong! Please try again..."
+        response.data.error[0].message ||
+          response.data.error ||
+          response.data.message ||
+          "Something went wrong! Please try again..."
       );
     };
 
@@ -249,7 +258,6 @@ export const addNewClient = (formData) => {
   return async (dispatch) => {
     const postData = async () => {
       const response = await axios.post("/cims", { ...formData });
-      console.log(response);
       if (response.data.code === 200 || response.data.status === "success") {
         return response.data;
       }
@@ -353,39 +361,6 @@ export const changeActiveStatus = (clientId, clientStatus, brandName) => {
           })
         );
       }, 1000);
-    } catch (error) {
-      setTimeout(function () {
-        dispatch(
-          uiActions.showNotification({
-            status: "error",
-            title: "Error!",
-            message: error.message,
-          })
-        );
-      }, 1000);
-    }
-  };
-};
-
-export const searchClient = (value, filterBy) => {
-  return async (dispatch) => {
-    const fetchData = async () => {
-      const response = await axios.get(
-        `/cims/search?searchData=${value}&filter=${filterBy}`
-      );
-      if (response.data.code === 200 || response.data.status === "success") {
-        const data = response.data.data;
-
-        return data;
-      }
-      throw new Error(
-        response.data.message || "Something went wrong! Please try again..."
-      );
-    };
-
-    try {
-      const data = await fetchData();
-      dispatch(cimsActions.getClientsList(data || []));
     } catch (error) {
       setTimeout(function () {
         dispatch(

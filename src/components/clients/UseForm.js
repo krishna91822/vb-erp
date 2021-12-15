@@ -404,6 +404,7 @@ export default function UseForm() {
   const handelComAddress = (checked) => {
     if (checked) {
       dispatch(cimsActions.setLocCom({ ...locReg }));
+      dispatch(cimsActions.setComCcode(RegCcode));
       let new_form = JSON.parse(JSON.stringify(formData));
       new_form["communicationAddress"] = { ...new_form["registeredAddress"] };
       dispatch(cimsActions.createForm(new_form));

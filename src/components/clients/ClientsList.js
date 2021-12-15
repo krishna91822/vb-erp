@@ -17,6 +17,7 @@ import {
   Pagination,
   Box,
   TextField,
+  InputAdornment,
 } from "@mui/material";
 import TableCell, { tableCellClasses } from "@mui/material/TableCell";
 import {
@@ -24,7 +25,8 @@ import {
   MoreVert as MoreVertIcon,
   Delete as DeleteIcon,
   Restore as RestoreIcon,
-  ManageSearchSharp as ManageSearchSharpIcon,
+  ManageSearchRounded as ManageSearchRoundedIcon,
+  ClearRounded as ClearRoundedIcon,
 } from "@mui/icons-material";
 import PageHeader from "./PageHeader";
 import "../../assets/styles/ListStyles.css";
@@ -59,8 +61,10 @@ function ClientsList() {
 
     pages,
     pageNo,
+    searchBy,
     handelPageChange,
     handelSearch,
+    handelClearSearch,
   } = ClientHelpers();
 
   const [clientId, setClientId] = useState();
@@ -149,20 +153,31 @@ function ClientsList() {
   return (
     <div>
       <PageHeader />
-      <Box m={1} sx={{ display: "flex", alignItems: "flex-end" }}>
-        <ManageSearchSharpIcon
-          style={{
-            margin: "0 .5rem",
-            width: "2rem",
-            height: "2rem",
-          }}
-        />
+      <Box m={2} mb={1}>
         <TextField
           fullWidth
           id="search"
           placeholder="Search Company Name / Associate Name / Location"
+          value={searchBy}
           variant="standard"
           onChange={handelSearch}
+          size="small"
+          InputProps={{
+            startAdornment: (
+              <InputAdornment position="start">
+                <IconButton disableRipple>
+                  <ManageSearchRoundedIcon />
+                </IconButton>
+              </InputAdornment>
+            ),
+            endAdornment: (
+              <InputAdornment position="end">
+                <IconButton onClick={handelClearSearch}>
+                  <ClearRoundedIcon />
+                </IconButton>
+              </InputAdornment>
+            ),
+          }}
         />
       </Box>
       <div className="ListContainer">

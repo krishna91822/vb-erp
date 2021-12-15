@@ -72,6 +72,7 @@ const initialState = {
   sortBy: "createdAt",
   filterBy: 1,
   sortingOrder: -1,
+  searchBy: "",
   popUpOpen: false,
   popUpMessage: "",
   popUpOk: "",
@@ -197,6 +198,9 @@ const cimsSlice = createSlice({
     },
     setSortingOrder(state, action) {
       state.sortingOrder = action.payload;
+    },
+    setSearchBy(state, action) {
+      state.searchBy = action.payload;
     },
     setPopUp(state, action) {
       state.popUpMessage = action.payload.message;
