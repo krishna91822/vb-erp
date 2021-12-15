@@ -43,7 +43,11 @@ const Review = () => {
   const [searchEmp, setSearchEmp] = useState("");
   const [reviewData, setReviewData] = useState([]);
   const [reviewItemData, setReviewItemData] = useState({});
+
   const [sort, setSort] = useState("reqId");
+  const handleChange = (event) => {
+    setSort(event.target.value);
+  };
 
   const searchHandleChange = (event) => {
     setSearchEmp(event.target.value);
@@ -115,10 +119,6 @@ const Review = () => {
         handleCloseModalForReview();
       })
       .catch((err) => console.log(err, reviewItemData._id));
-  };
-
-  const handleChange = (event) => {
-    setSort(event.target.value);
   };
 
   const renderChildStatus = (status) => {
@@ -219,6 +219,9 @@ const Review = () => {
               <ContentTypo>{item.reqName}</ContentTypo>
               <ContentTypo>
                 {new Date(item.createdAt).toISOString().slice(0, 10)}
+              </ContentTypo>
+              <ContentTypo>
+                {item.employeeDetails.empReportingManager}
               </ContentTypo>
               <ContentTypo>{item.reqType}</ContentTypo>
               {renderChildStatus(item.status)}

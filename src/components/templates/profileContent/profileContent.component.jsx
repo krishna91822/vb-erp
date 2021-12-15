@@ -24,8 +24,8 @@ import AdapterDateFns from "@mui/lab/AdapterDateFns";
 
 const ProfileContent = (props) => {
   const {
-    inEditMode,
     currentEmployee,
+    inEditMode,
     updateRequest,
     setUpdateRequest,
     personalDetails,
@@ -40,50 +40,48 @@ const ProfileContent = (props) => {
 
   //calculate percentage progress
   const profileProgress = () => {
-    try {
-      const totalFields = inEditMode
-        ? Object.keys(updateRequest).length +
-          updateRequest.personalDetails.length +
-          updateRequest.professionalDetails.length +
-          updateRequest.skillsDetails.length
-        : Object.keys(currentEmployee).length +
-          personalDetails.length +
-          professionalDetails.length +
-          skillsDetails.length;
+    const totalFields = inEditMode
+      ? Object.keys(updateRequest).length +
+        updateRequest.personalDetails.length +
+        updateRequest.professionalDetails.length +
+        updateRequest.skillsDetails.length
+      : Object.keys(currentEmployee).length +
+        currentEmployee.personalDetails.length +
+        currentEmployee.professionalDetails.length +
+        currentEmployee.skillsDetails.length;
 
-      const completedFields = inEditMode
-        ? Object.values(updateRequest).filter(
-            (field) =>
-              field !== undefined &&
-              field !== null &&
-              field !== "" &&
-              field.length !== 0
-          ).length +
-          updateRequest.personalDetails.filter(
-            (field) => field.fieldValue !== ""
-          ).length +
-          updateRequest.professionalDetails.filter(
-            (field) => field.fieldValue !== ""
-          ).length +
-          updateRequest.skillsDetails.filter((field) => field.fieldValue !== "")
-            .length
-        : Object.values(currentEmployee).filter(
-            (field) =>
-              field !== undefined &&
-              field !== null &&
-              field !== "" &&
-              field.length !== 0
-          ).length +
-          personalDetails.filter((field) => field.fieldValue !== "").length +
-          professionalDetails.filter((field) => field.fieldValue !== "")
-            .length +
-          skillsDetails.filter((field) => field.fieldValue !== "").length;
-
-      const percentage = Math.floor((completedFields / totalFields) * 100);
-      return percentage;
-    } catch (error) {
-      // console.log(error);
-    }
+    const completedFields = inEditMode
+      ? Object.values(updateRequest).filter(
+          (field) =>
+            field !== undefined &&
+            field !== null &&
+            field !== "" &&
+            field.length !== 0
+        ).length +
+        updateRequest.personalDetails.filter((field) => field.fieldValue !== "")
+          .length +
+        updateRequest.professionalDetails.filter(
+          (field) => field.fieldValue !== ""
+        ).length +
+        updateRequest.skillsDetails.filter((field) => field.fieldValue !== "")
+          .length
+      : Object.values(currentEmployee).filter(
+          (field) =>
+            field !== undefined &&
+            field !== null &&
+            field !== "" &&
+            field.length !== 0
+        ).length +
+        currentEmployee.personalDetails.filter(
+          (field) => field.fieldValue !== ""
+        ).length +
+        currentEmployee.professionalDetails.filter(
+          (field) => field.fieldValue !== ""
+        ).length +
+        currentEmployee.skillsDetails.filter((field) => field.fieldValue !== "")
+          .length;
+    const percentage = Math.floor((completedFields / totalFields) * 100);
+    return percentage;
   };
 
   profileProgress();

@@ -1,5 +1,12 @@
 export const reviewText = {
-  title: ["req id", "requester name", "requested on", "request type", "status"],
+  title: [
+    "req id",
+    "requester name",
+    "requested on",
+    "reporting to",
+    "request type",
+    "status",
+  ],
   sortOption: [
     {
       value: "reqId",

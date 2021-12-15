@@ -87,7 +87,7 @@ const ProfileInfoReadable = ({
           <Box sx={{ width: "75%", margin: "8px 0" }}>
             <LinearProgress
               variant="determinate"
-              value={profilePercentage}
+              value={profilePercentage ? profilePercentage : 0}
               color="primary"
               sx={{
                 height: 5,
@@ -96,7 +96,7 @@ const ProfileInfoReadable = ({
             />
           </Box>
           <SubTitleTypo sx={{ textTransform: "lowercase" }}>
-            {profilePercentage}
+            {profilePercentage ? profilePercentage : 0}
             {profileInfoConstant.profilePercentage}
           </SubTitleTypo>
         </Box>

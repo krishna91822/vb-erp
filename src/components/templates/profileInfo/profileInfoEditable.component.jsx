@@ -49,15 +49,6 @@ const ProfileInfoEditable = (props) => {
     setTab(newValue);
   };
 
-  // const profileProgress = (employee) => {
-  //   const totalFields = Object.keys(employee).length;
-  //   const completedFields = Object.values(employee).filter(
-  //     (d) => d !== null && d !== "none" && d !== ""
-  //   ).length;
-  //   const percentage = Math.floor((completedFields / totalFields) * 100);
-  //   return percentage;
-  // };
-
   return (
     <Grid
       container
@@ -129,7 +120,7 @@ const ProfileInfoEditable = (props) => {
         <Box sx={{ width: "100%" }}>
           <StyledTabs value={tab} onChange={handleTabChange}>
             <StyledTab icon={<LocalCafeIcon />} label="Personal" />
-            <StyledTab icon={<ImportContactsIcon />} label="Profesional" />
+            <StyledTab icon={<ImportContactsIcon />} label="professional" />
             <StyledTab icon={<BadgeIcon />} label="Skills And Qualifications" />
           </StyledTabs>
         </Box>
@@ -196,7 +187,7 @@ const ProfileInfoEditable = (props) => {
               <LocalizationProvider dateAdapter={AdapterDateFns}>
                 <DesktopDatePicker
                   inputFormat="dd/MM/yyyy"
-                  value={empDoj ? empDoj : null}
+                  value={empDoj ? empDoj : new Date()}
                   onChange={(newValue) => {
                     setEmployee({ ...employee, empDoj: newValue });
                   }}
@@ -215,6 +206,7 @@ const ProfileInfoEditable = (props) => {
                 required
                 id="outlined-basic"
                 variant="outlined"
+                placeholder="sunilee"
                 value={empReportingManager}
                 type="text"
                 name="empReportingManager"

@@ -90,7 +90,10 @@ const PersonalReadable = ({ empData }) => {
                   flexWrap: "wrap",
                 }}
               >
-                {empHobbies !== undefined && empHobbies.constructor === Array
+                {empHobbies !== undefined &&
+                empHobbies.constructor === Array &&
+                empHobbies.length !== 0 &&
+                empHobbies[0] !== ""
                   ? empHobbies.map((data, i) => (
                       <ListItem key={i}>
                         <Chip

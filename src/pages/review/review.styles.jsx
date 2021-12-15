@@ -13,7 +13,7 @@ export const CustomGridBox = styled("div")(({ theme }) => ({
   width: "calc(100% - 8px)",
   margin: "0 auto",
   display: "grid",
-  gridTemplateColumns: "70px repeat(4,1fr)",
+  gridTemplateColumns: "70px repeat(5,1fr)",
   alignItems: "center",
   justifyItems: "center",
   textTransform: "capitalize",

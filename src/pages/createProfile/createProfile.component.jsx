@@ -35,6 +35,7 @@ import TabPanelCustom from "./../../components/templates/tabPanelCustom.componen
 import PersonalEditable from "../../components/templates/personal/personalEditable.component";
 import ProfessionalEditable from "../../components/templates/professional/professionalEditable.component";
 import SkillEditable from "../../components/templates/skill/skillEditable.component";
+import Spinner from "../../components/UI/spinner/spinner";
 
 import { useSelector } from "react-redux";
 
@@ -234,7 +235,7 @@ const CreateProfile = ({
     }
   };
 
-  return (
+  return currentEmployee && currentEmployee.role === "ADMIN" ? (
     <BoxStyle>
       <ContainerStyleTop>
         <TitleTypo sx={{ textTransform: "capitalize", mb: 0.5 }}>
@@ -375,6 +376,8 @@ const CreateProfile = ({
         </ModalBoxItem>
       </Modal>
     </BoxStyle>
+  ) : (
+    <Spinner />
   );
 };
 

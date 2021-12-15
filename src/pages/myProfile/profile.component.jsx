@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { memo, useEffect, useState } from "react";
 
 import { Container } from "@mui/material";
 
@@ -8,8 +8,9 @@ import EditMode from "../../components/templates/editMode/editMode.component";
 import ProfileContent from "../../components/templates/profileContent/profileContent.component";
 
 const Profile = () => {
-  const { currentEmployee } = useSelector((state) => state.employee);
-  const { inEditMode } = useSelector((state) => state.employee);
+  const { currentEmployee, inEditMode } = useSelector(
+    (state) => state.employee
+  );
 
   const [personalDetails, setPersonalDetails] = useState([
     ...currentEmployee.personalDetails,
@@ -73,4 +74,4 @@ const Profile = () => {
   );
 };
 
-export default Profile;
+export default memo(Profile);
