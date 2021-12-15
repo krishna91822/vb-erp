@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 import { useParams } from "react-router-dom";
 import "./Invoice.css";
 import { useDispatch, useSelector } from "react-redux";
@@ -120,6 +119,7 @@ function Invoice(props) {
   const [Vb_Bank_Acc, setVbbankacc] = React.useState(ReadVbBankAcc);
   const [Date_, setDate] = React.useState(ReadDate);
   const [invoicereceived, setinvoicereceived] = useState(props.invoicereceived);
+  const [invoice_raised_yesno, setInvoiceRaisedYesNo] = React.useState("");
   // const [filterinvoiceArr, setfilterinvoiceArr] = useState([]);
   let [sum, setsum] = useState(0);
 
@@ -159,6 +159,7 @@ function Invoice(props) {
   };
   const handleInvoiceRaised = (event) => {
     setInvoiceRaised(event.target.value);
+    setInvoiceRaisedYesNo(event.target.value);
   };
   const handleInvoiceAmount = (event) => {
     setinvoiceAmount(event.target.value);
@@ -475,57 +476,64 @@ function Invoice(props) {
                 </FormControl>
               </Box>
             </Grid>
-            <Grid item lg={12} md={12} sm={122} xs={12}>
-              <label>Invoice amount received</label>
-              <br />
-              <Box sx={{ minWidth: 120 }}>
-                <FormControl fullWidth>
-                  <Select
-                    disabled={props.readonly}
-                    value={invoice_amount}
-                    onChange={handleInvoiceAmount}
-                  >
-                    {invoiceAmount.map((detail) => (
-                      <MenuItem value={detail}>{detail}</MenuItem>
-                    ))}
-                  </Select>
-                </FormControl>
-              </Box>
-              <span>{PoCurr}</span>
-            </Grid>
+            <Grid item lg={12} md={12} sm={122} xs={12}></Grid>
           </div>
           <Grid item lg={12} md={12} sm={122} xs={12}>
             <div className="invoicereceived">
               <span>Invoice Received</span>
-              <Switch defaultChecked onChange={invoicereceivedhandler} />
+              <Switch
+                disabled={invoice_raised_yesno === "No"}
+                onChange={invoicereceivedhandler}
+              />
             </div>
           </Grid>
           <div className="gridcontainer">
             <Grid item lg={12} md={12} sm={122} xs={12}>
+              <label>Invoice amount received</label>
+              <Box sx={{ minWidth: 120 }}>
+                <FormControl fullWidth>
+                  <TextField
+                    disabled={
+                      props.readonly ||
+                      invoicereceived ||
+                      invoice_raised_yesno === "No"
+                    }
+                    value={invoice_amount}
+                    onChange={handleInvoiceAmount}
+                  />
+                  <span>{PoCurr}</span>
+                </FormControl>
+              </Box>
+              <br />
               <label>VB Bank Account</label>
               <br />
               <Box sx={{ minWidth: 120 }}>
                 <FormControl fullWidth>
-                  <Select
-                    disabled={props.readonly || !invoicereceived}
+                  <TextField
+                    disabled={
+                      props.readonly ||
+                      invoicereceived ||
+                      invoice_raised_yesno === "No"
+                    }
                     value={Vb_Bank_Acc}
                     onChange={handlevbbankacc}
-                  >
-                    {VbBankAcc.map((detail) => (
-                      <MenuItem value={detail}>{detail}</MenuItem>
-                    ))}
-                  </Select>
+                  />
                 </FormControl>
               </Box>
             </Grid>
             <Grid item lg={12} md={12} sm={122} xs={12}>
+              <br />
               <label htmlFor="invoiceamount">Amount Received on</label>
               <br />
               <BasicDatePicker
                 onChange={handleDate}
                 inputFormat="MM/dd/yyyy"
                 value={Date_}
-                disabled={props.readonly || !invoicereceived}
+                disabled={
+                  props.readonly ||
+                  invoicereceived ||
+                  invoice_raised_yesno === "No"
+                }
               />
             </Grid>
           </div>
