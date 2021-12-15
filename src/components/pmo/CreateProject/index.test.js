@@ -16,11 +16,7 @@ describe("User Name testing", () => {
       </Provider>
     );
   });
-  test("testing resource head text", () => {
-    expect(wrapper.find(`[data-test="user"]`).text()).toContain(
-      "user-Admin/Approver"
-    );
-  });
+
   test("testing page title", () => {
     expect(wrapper.find(`[data-test="page-title"]`).text()).toContain("PMO");
   });
@@ -50,26 +46,13 @@ describe("User Name testing", () => {
   test("testing client name input", () => {
     expect(wrapper.find(`[data-test="client-name-input"]`).exists()).toBe(true);
   });
-  test("testing Project name label", () => {
-    expect(wrapper.find(`[data-test="project-name-label"]`).text()).toContain(
-      "Project Name"
-    );
-  });
+
   test("testing project name input", () => {
     expect(wrapper.find(`[data-test="project-name-input"]`).exists()).toBe(
       true
     );
   });
-  test("testing Project name label", () => {
-    expect(wrapper.find(`[data-test="project-name-label"]`).text()).toContain(
-      "Project Name"
-    );
-  });
-  test("testing project name input", () => {
-    expect(wrapper.find(`[data-test="project-name-input"]`).exists()).toBe(
-      true
-    );
-  });
+
   test("testing client project manager label", () => {
     expect(
       wrapper.find(`[data-test="client-project-manager-label"]`).text()

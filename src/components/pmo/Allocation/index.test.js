@@ -14,12 +14,6 @@ const findByTestAttr = (wrapper, val) => {
 };
 
 describe("Allocations testing", () => {
-  test("check the admin", () => {
-    const wrapper = setup();
-    const adminName = findByTestAttr(wrapper, "admin-name");
-    expect(adminName.exists()).toBe(true);
-  });
-
   test("check the dropdown", () => {
     const wrapper = setup();
     const adminName = findByTestAttr(wrapper, "sortby-dropdown");

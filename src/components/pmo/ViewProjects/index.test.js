@@ -25,11 +25,6 @@ describe("ViewProjects Testing", () => {
   test("ViewProjects is defined", () => {
     expect(ViewProjects).toBeDefined();
   });
-  test("check the admin name", () => {
-    const wrapper = setup();
-    const adminName = findByTestAttr(wrapper, "admin-name");
-    expect(adminName.exists()).toBe(true);
-  });
 
   test("check the main heading", () => {
     const wrapper = setup();
@@ -43,7 +38,7 @@ describe("ViewProjects Testing", () => {
       wrapper,
       "create-project-button"
     );
-    expect(createProjectButton.exists()).toBe(true);
+    expect(createProjectButton.exists()).toBe(false);
   });
 
   test("Check the table", () => {
