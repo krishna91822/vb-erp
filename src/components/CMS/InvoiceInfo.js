@@ -94,9 +94,11 @@ function InvoiceInfo() {
   const handleClose = () => {
     setAnchorEl(null);
   };
-  const handleSort = (product) => {
+  const handleSort = (sortBy) => {
     // dispatch(sortProducts(product));
-    dispatch(fetch_INVOICE_data(product));
+    // dispatch(fetch_INVOICE_data(product));
+    setFilename(sortBy);
+    dispatch(paginationFetchInvoice(filename, currentPage, postPerPage));
     setAnchorEl(null);
   };
   const handleChange = (event, value) => {

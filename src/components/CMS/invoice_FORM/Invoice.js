@@ -42,7 +42,6 @@ import { paginationFetchPosow } from "../../../store/CMS/POSOW-actions";
 
 function Invoice(props) {
   const params = useParams();
-  console.log(props, params);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const isRedirect = useSelector((state) => state.CMS_state.redirect);
@@ -68,7 +67,6 @@ function Invoice(props) {
   const allPOId = allINVOICE.map((val) => {
     return val.PO_Id;
   });
-  console.log(allINVOICE);
 
   let filteredArr = useSelector((state) => state.INVOICE_state.dataByID);
 

@@ -74,18 +74,19 @@ export const StyledMenu = styled((props) => (
 
 export const Main = () => {
   const dispatch = useDispatch();
-  useEffect(() => {
-    // dispatch(fetchPO_SOW_data("Id"));
-    dispatch(fetchPO_SOW_data);
-    dispatch(paginationFetchPosow(filename, currentPage, postPerPage));
-  }, []);
+
   const post = useSelector((state) => state.CMS_state.poSowData);
   const totalCount = useSelector((state) => state.CMS_state.totalCount);
   const [currentPage, setCurrentPage] = React.useState(1);
   const [postPerPage, setPostPerPage] = React.useState(5);
-  const [filename, setFilename] = React.useState("id");
+  const [filename, setFilename] = React.useState("Id");
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
+  useEffect(() => {
+    // dispatch(fetchPO_SOW_data("Id"));
+    // dispatch(fetchPO_SOW_data);
+    dispatch(paginationFetchPosow(filename, currentPage, postPerPage));
+  }, []);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -96,7 +97,8 @@ export const Main = () => {
     dispatch(fetchSpecificPO_SOW(row_id));
   };
   const handleSort = (sortBy) => {
-    dispatch(fetchPO_SOW_data(sortBy));
+    setFilename(sortBy);
+    dispatch(paginationFetchPosow(filename, currentPage, postPerPage));
     setAnchorEl(null);
   };
   const handleChange = (event, value) => {
