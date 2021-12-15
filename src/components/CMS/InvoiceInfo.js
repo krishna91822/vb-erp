@@ -101,14 +101,7 @@ function InvoiceInfo() {
   const handleClose = () => {
     setAnchorEl(null);
   };
-  const searchHandler = (event) => {
-    setsearchText(event.target.value);
-  };
-  const searchbuttonHandler = () => {
-    console.log("btn clicked");
-    console.log(searchText);
-    dispatch(searchINVOICE(searchText));
-  };
+
   const handleSort = (sortBy) => {
     setFilename(sortBy);
 
@@ -128,19 +121,21 @@ function InvoiceInfo() {
   const handleRowOnClick = (row_id) => {
     dispatch(fetchSpecificINVOICE(row_id));
   };
+  const searchHandler = (event) => {
+    if (event.key === "Enter") {
+      dispatch(searchINVOICE(event.target.value));
+    }
+  };
   return (
     <>
       <Grid container>
         <Grid item lg={6} md={6} sm={6} xs={6}>
           <TextField
             id="outlined-basic"
-            onChange={searchHandler}
-            label="Outlined"
+            onKeyPress={searchHandler}
+            label="search"
             variant="outlined"
           />
-          <Button variant="outlined" onClick={searchbuttonHandler}>
-            search
-          </Button>
         </Grid>
         <Grid item lg={6} md={6} sm={6} xs={6}>
           <div className="sortbtn">
@@ -194,10 +189,18 @@ function InvoiceInfo() {
             <h3 data-test="MainHeading">Invoice Information</h3>
           </div>
           <div className="buttondiv">
-            <Link to="/invoice/create-invoice">
-              <button className="button1" data-test="Capture-po-sow">
+            <Link
+              to="/invoice/create-invoice"
+              style={{ textDecoration: "none" }}
+            >
+              <Button
+                className="button1"
+                data-test="Capture-po-sow"
+                variant="contained"
+                color="success"
+              >
                 Capture Invoice{" "}
-              </button>
+              </Button>
             </Link>
           </div>
         </div>

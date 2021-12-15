@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import axios from "../../helpers/axiosInstance";
 import { PoSowActions } from "./POSOW-slice";
 import { uiActions } from "../ui-slice";
@@ -265,6 +266,26 @@ export const fetchAllClientProjects = (clientName) => {
       const res = await axios.get(`poSow/capturePO/clients/${clientName}`);
       if (res.status === 200) {
         dispatch(PoSowActions.setClientProjects(res.data.data));
+      } else {
+        throw new Error("Something went wrong!");
+      }
+    } catch (error) {
+      dispatch(
+        uiActions.showNotification({
+          status: "error",
+          title: "Error",
+          message: "Something went wrong",
+        })
+      );
+    }
+  };
+};
+export const searchPoSow = (keyword) => {
+  return async function (dispatch) {
+    try {
+      const res = await axios.get(`poSow/sort/Id?keyword=${keyword}`);
+      if (res.status === 200) {
+        dispatch(PoSowActions.setTabViewData(res.data.data.results));
       } else {
         throw new Error("Something went wrong!");
       }

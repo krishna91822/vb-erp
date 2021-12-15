@@ -96,7 +96,7 @@ export const fetchSpecificINVOICE = (ROW_ID) => {
 export const searchINVOICE = (keyword) => {
   return async function (dispatch) {
     try {
-      const res = await axios.get(`/invoice/sort/id?keyword=${keyword}`);
+      const res = await axios.get(`/invoice/sort/Id?keyword=${keyword}`);
       if (res.status === 200) {
         dispatch(invoiceActions.setTabViewData(res.data.data.results));
       } else {

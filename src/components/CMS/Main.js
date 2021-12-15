@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import * as React from "react";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -14,6 +15,8 @@ import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { Grid } from "@mui/material";
+import TextField from "@mui/material/TextField";
 
 import "./Main.css";
 
@@ -21,6 +24,7 @@ import {
   fetchSpecificPO_SOW,
   sortProducts,
   paginationFetchPosow,
+  searchPoSow,
 } from "../../store/CMS/POSOW-actions";
 import { fetchPO_SOW_data } from "../../store/CMS/POSOW-actions";
 import Typography from "@mui/material/Typography";
@@ -112,63 +116,91 @@ export const Main = () => {
     setPostPerPage(event.target.value);
     dispatch(paginationFetchPosow(filename, currentPage, event.target.value));
   };
+  const searchHandler = (event) => {
+    if (event.key === "Enter") {
+      dispatch(searchPoSow(event.target.value));
+    }
+  };
   return (
     <>
-      <div className="sortbtn">
-        <Button
-          id="demo-customized-button"
-          aria-controls="demo-customized-menu"
-          aria-haspopup="true"
-          aria-expanded={open ? "true" : undefined}
-          variant="contained"
-          disableElevation
-          onClick={handleClick}
-          endIcon={<KeyboardArrowDownIcon />}
-          data-test="SortByButton"
-          className="sort-by-button"
-        >
-          Sort by
-        </Button>
-        <StyledMenu
-          id="demo-customized-menu"
-          MenuListProps={{
-            "aria-labelledby": "demo-customized-button",
-          }}
-          anchorEl={anchorEl}
-          open={open}
-          onClose={handleClose}
-          data-test="StyledMenu"
-        >
-          <MenuItem
-            onClick={() => handleSort("_id")}
-            disableRipple
-            className="menu-by-id"
-          >
-            By ID
-          </MenuItem>
+      <Grid container>
+        <Grid item lg={6} md={6} sm={6} xs={6}>
+          <TextField
+            id="outlined-basic"
+            onKeyPress={searchHandler}
+            label="search"
+            variant="outlined"
+          />
+        </Grid>
+        <Grid item lg={6} md={6} sm={6} xs={6}>
+          <div className="sortbtn">
+            <Button
+              id="demo-customized-button"
+              aria-controls="demo-customized-menu"
+              aria-haspopup="true"
+              aria-expanded={open ? "true" : undefined}
+              variant="contained"
+              disableElevation
+              onClick={handleClick}
+              endIcon={<KeyboardArrowDownIcon />}
+              data-test="SortByButton"
+              className="sort-by-button"
+            >
+              Sort by
+            </Button>
+            <StyledMenu
+              id="demo-customized-menu"
+              MenuListProps={{
+                "aria-labelledby": "demo-customized-button",
+              }}
+              anchorEl={anchorEl}
+              open={open}
+              onClose={handleClose}
+              data-test="StyledMenu"
+            >
+              <MenuItem
+                onClick={() => handleSort("_id")}
+                disableRipple
+                className="menu-by-id"
+              >
+                By ID
+              </MenuItem>
 
-          <MenuItem onClick={() => handleSort("Project_Name")} disableRipple>
-            By Project Name
-          </MenuItem>
+              <MenuItem
+                onClick={() => handleSort("Project_Name")}
+                disableRipple
+              >
+                By Project Name
+              </MenuItem>
 
-          <MenuItem onClick={() => handleSort("Client_Sponser")} disableRipple>
-            By Client Sponsor
-          </MenuItem>
-          <MenuItem onClick={() => handleSort("Client_Name")} disableRipple>
-            By Client Name
-          </MenuItem>
-        </StyledMenu>
-      </div>
+              <MenuItem
+                onClick={() => handleSort("Client_Sponser")}
+                disableRipple
+              >
+                By Client Sponsor
+              </MenuItem>
+              <MenuItem onClick={() => handleSort("Client_Name")} disableRipple>
+                By Client Name
+              </MenuItem>
+            </StyledMenu>
+          </div>
+        </Grid>
+      </Grid>
       <div className="container">
         <div className="innerheader">
           <div>
             <h3 data-test="MainHeading">PO/SOW's Information</h3>
           </div>
           <div className="buttondiv">
-            <Link to="/posow/create">
-              <button className="button1" data-test="Capture-po-sow">
+            <Link to="/posow/create" style={{ textDecoration: "none" }}>
+              <Button
+                className="button1"
+                data-test="Capture-po-sow"
+                variant="contained"
+                color="success"
+              >
                 Capture PO/SOW{" "}
-              </button>
+              </Button>
             </Link>
           </div>
         </div>
