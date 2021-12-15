@@ -33,9 +33,9 @@ const Bench = ({ pressed }) => {
   }, []);
 
   let data = benchData;
-  data = [...data].sort((a, b) =>
-    a.empId > b.empId ? 1 : b.empId > a.empId ? -1 : 0
-  );
+  // data = [...data].sort((a, b) =>
+  //   a.empId > b.empId ? 1 : b.empId > a.empId ? -1 : 0
+  // );
 
   const filterData = (event) => {
     setFilters({ ...filters, [event.target.name]: event.target.value });
@@ -173,28 +173,30 @@ const Bench = ({ pressed }) => {
                 </TableRow>
               )}
 
-              {data.slice(page * 5, page * 5 + 5).map((currElem, index) => (
-                <TableRow
-                  key={index}
-                  onClick={() => entryLink(currElem)}
-                  style={{ cursor: "pointer" }}
-                >
-                  <TableCell align="left">{index + page * 5 + 1}</TableCell>
-                  <TableCell align="left">{currElem.empId}</TableCell>
-                  <TableCell align="left">{currElem.empName}</TableCell>
-                  <TableCell align="left">
-                    {`${currElem.empPrimaryCapability}`}
-                  </TableCell>
-                  <TableCell align="left">
-                    {currElem.remainingAllocation}
-                  </TableCell>
-                </TableRow>
-              ))}
+              {data.results
+                ? data.results.map((currElem, index) => (
+                    <TableRow
+                      key={index}
+                      onClick={() => entryLink(currElem)}
+                      style={{ cursor: "pointer" }}
+                    >
+                      <TableCell align="left">{index + page * 5 + 1}</TableCell>
+                      <TableCell align="left">{currElem.empId}</TableCell>
+                      <TableCell align="left">{currElem.empName}</TableCell>
+                      <TableCell align="left">
+                        {`${currElem.empPrimaryCapability}`}
+                      </TableCell>
+                      <TableCell align="left">
+                        {currElem.remainingAllocation}
+                      </TableCell>
+                    </TableRow>
+                  ))
+                : null}
             </TableBody>
           </Table>
         </TableContainer>
       </Container>
-      <Tpagination page={page} setPage={setPage} rows={data} />
+      {/* <Tpagination page={page} setPage={setPage} rows={data} /> */}
     </>
   );
 };

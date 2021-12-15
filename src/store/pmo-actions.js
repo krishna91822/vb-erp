@@ -89,11 +89,13 @@ export const updateProject = (projectInfo) => {
   };
 };
 
-export const getAllProjects = (type) => {
+export const getAllProjects = (type, pageNo) => {
   return async (dispatch) => {
     dispatch(uiActions.toggleLoader());
     const getData = async () => {
-      const response = await axios.get(`/projects/${type}`);
+      const response = await axios.get(
+        `/projects/${type}?limit=10&page=${pageNo}`
+      );
       if (response.status === "failure") {
         throw new Error(response.data.message);
       }
@@ -194,10 +196,10 @@ export const getAllClientData = (value) => {
   };
 };
 
-export const getAllocatedData = (filters) => {
+export const getAllocatedData = (filters, pageNo) => {
   return async (dispatch) => {
     const getData = async () => {
-      let url = `/allocations?limit=10`;
+      let url = `/allocations?limit=10&page=${pageNo}`;
       if (filters.empId) url += `&empId=${filters.empId}`;
       if (filters.employeeName) url += `&empName=${filters.employeeName}`;
       if (filters.projectAllocated)
@@ -219,7 +221,7 @@ export const getAllocatedData = (filters) => {
 
     try {
       const data = await getData();
-      dispatch(pmoActions.updateAllocatedData(data.data));
+      dispatch(pmoActions.updateAllocatedData(data.data.data));
     } catch (error) {
       dispatch(
         uiActions.showNotification({
@@ -249,7 +251,7 @@ export const getOnBench = (filters) => {
     };
     try {
       const data = await getData();
-      dispatch(pmoActions.updatebenchData(data.data));
+      dispatch(pmoActions.updatebenchData(data.data.data));
     } catch (error) {
       dispatch(
         uiActions.showNotification({
@@ -307,7 +309,7 @@ export const getProjectById = (projectId) => {
       const resourceData = await getResourceData(data.data[0]._id);
       const allData = {
         project: data.data[0],
-        resources: resourceData.data,
+        resources: resourceData.data.data.results,
       };
       dispatch(pmoActions.updateProjectById(allData));
     } catch (error) {
@@ -345,7 +347,6 @@ export const deleteResource = (id) => {
 };
 
 export const getAllProjectsBySroting = (type, sortedValue) => {
-  console.log(type, sortedValue);
   return async (dispatch) => {
     const getData = async () => {
       const response = await axios.get(`/projects/${type}/${sortedValue}`);

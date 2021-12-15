@@ -11,8 +11,9 @@ import {
   TextField,
 } from "@mui/material";
 import { useSelector, useDispatch } from "react-redux";
-import { Container, MiniHead } from "./style";
+import { Container, MiniHead, PageNation } from "./style";
 import Tpagination from "../../UI/Pagination";
+import Pagination from "@mui/material/Pagination";
 
 const Allocated = ({ pressed }) => {
   const { allocatedData } = useSelector((state) => state.pmo);
@@ -28,19 +29,19 @@ const Allocated = ({ pressed }) => {
   });
 
   useEffect(() => {
-    dispatch(getAllocatedData(filters));
+    dispatch(getAllocatedData(filters, 1));
   }, []);
 
   let data = allocatedData;
-  data = [...data].sort((a, b) =>
-    a.empId.empId > b.empId.empId ? 1 : b.empId.empId > a.empId.empId ? -1 : 0
-  );
-
   const filterData = (event) => {
     setFilters({ ...filters, [event.target.name]: event.target.value });
     if (event.key === "Enter") {
-      dispatch(getAllocatedData(filters));
+      dispatch(getAllocatedData(filters, 1));
     }
+  };
+
+  const changePage = (event) => {
+    dispatch(getAllocatedData(filters, event.target.textContent));
   };
 
   return (
@@ -205,29 +206,53 @@ const Allocated = ({ pressed }) => {
                 </TableRow>
               )}
 
-              {data.map((currElem, index) => (
-                <TableRow key={index}>
-                  <TableCell align="left">{index + 1}</TableCell>
-                  <TableCell align="left">{currElem.empId.empId}</TableCell>
-                  <TableCell align="left">{currElem.empId.empName}</TableCell>
-                  <TableCell align="left">
-                    {currElem.projectId.projectName}
-                  </TableCell>
-                  <TableCell align="left">
-                    {currElem.allocationPercentage}
-                  </TableCell>
-                  <TableCell align="left">
-                    {currElem.allocationStartDate}
-                  </TableCell>
-                  <TableCell align="left">
-                    {currElem.allocationEndDate}
-                  </TableCell>
-                </TableRow>
-              ))}
+              {data.results
+                ? data.results.map((currElem, index) => (
+                    <TableRow key={index}>
+                      <TableCell align="left">{index + 1}</TableCell>
+                      <TableCell align="left">{currElem.empId.empId}</TableCell>
+                      <TableCell align="left">
+                        {currElem.empId.empName}
+                      </TableCell>
+                      <TableCell align="left">
+                        {currElem.projectId.projectName}
+                      </TableCell>
+                      <TableCell align="left">
+                        {currElem.allocationPercentage}
+                      </TableCell>
+                      <TableCell align="left">
+                        {currElem.allocationStartDate}
+                      </TableCell>
+                      <TableCell align="left">
+                        {currElem.allocationEndDate}
+                      </TableCell>
+                    </TableRow>
+                  ))
+                : null}
             </TableBody>
           </Table>
         </TableContainer>
       </Container>
+      <PageNation
+        style={{
+          position: "sticky",
+          bottom: "0",
+        }}
+      >
+        <PageNation
+          style={{
+            width: "100%",
+            display: "flex",
+            flexDirection: "row-reverse",
+          }}
+        >
+          <Pagination
+            count={data.pageCount}
+            onClick={changePage}
+            style={{ textAlign: "right" }}
+          />
+        </PageNation>
+      </PageNation>
       {/* <Tpagination page={page} setPage={setPage} rows={filteredData} /> */}
     </>
   );
