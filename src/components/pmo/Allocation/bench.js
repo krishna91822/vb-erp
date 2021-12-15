@@ -40,7 +40,7 @@ const Bench = ({ pressed }) => {
   const filterData = (event) => {
     setFilters({ ...filters, [event.target.name]: event.target.value });
     if (event.key === "Enter") {
-      dispatch(getOnBench(filters));
+      dispatch(getOnBench(filters, 1));
     }
   };
 
