@@ -107,3 +107,4 @@ export const Dropdown = styled.select`
 export const Options = styled.option`
   color: black;
 `;
+export const PageNation = styled.div``;

@@ -12,7 +12,6 @@ import {
 } from "@mui/material";
 import { useSelector, useDispatch } from "react-redux";
 import { Container, MiniHead } from "./style";
-import Tpagination from "../../UI/Pagination";
 
 const Allocated = ({ pressed }) => {
   const { allocatedData } = useSelector((state) => state.pmo);
@@ -32,9 +31,9 @@ const Allocated = ({ pressed }) => {
   }, []);
 
   let data = allocatedData;
-  data = [...data].sort((a, b) =>
-    a.empId.empId > b.empId.empId ? 1 : b.empId.empId > a.empId.empId ? -1 : 0
-  );
+  // data = [...data].sort((a, b) =>
+  //   a.empId.empId > b.empId.empId ? 1 : b.empId.empId > a.empId.empId ? -1 : 0
+  // );
 
   const filterData = (event) => {
     setFilters({ ...filters, [event.target.name]: event.target.value });
@@ -69,7 +68,7 @@ const Allocated = ({ pressed }) => {
                 <TableCell
                   align="left"
                   sx={{
-                    width: "100px",
+                    width: "140px",
                     maxWidth: "140px",
                     minWidth: "140px",
                   }}
@@ -79,7 +78,7 @@ const Allocated = ({ pressed }) => {
                 <TableCell
                   align="left"
                   sx={{
-                    width: "100px",
+                    width: "180px",
                     maxWidth: "180px",
                     minWidth: "180px",
                   }}
@@ -89,7 +88,7 @@ const Allocated = ({ pressed }) => {
                 <TableCell
                   align="left"
                   sx={{
-                    width: "100px",
+                    width: "180px",
                     maxWidth: "180px",
                     minWidth: "180px",
                   }}
@@ -99,7 +98,7 @@ const Allocated = ({ pressed }) => {
                 <TableCell
                   align="left"
                   sx={{
-                    width: "100px",
+                    width: "180px",
                     maxWidth: "180px",
                     minWidth: "180px",
                   }}
@@ -109,7 +108,7 @@ const Allocated = ({ pressed }) => {
                 <TableCell
                   align="left"
                   sx={{
-                    width: "100px",
+                    width: "180px",
                     maxWidth: "180px",
                     minWidth: "180px",
                   }}
@@ -119,7 +118,7 @@ const Allocated = ({ pressed }) => {
                 <TableCell
                   align="left"
                   sx={{
-                    width: "100px",
+                    width: "180px",
                     maxWidth: "180px",
                     minWidth: "180px",
                   }}
@@ -205,25 +204,29 @@ const Allocated = ({ pressed }) => {
                 </TableRow>
               )}
 
-              {data.map((currElem, index) => (
-                <TableRow key={index}>
-                  <TableCell align="left">{index + 1}</TableCell>
-                  <TableCell align="left">{currElem.empId.empId}</TableCell>
-                  <TableCell align="left">{currElem.empId.empName}</TableCell>
-                  <TableCell align="left">
-                    {currElem.projectId.projectName}
-                  </TableCell>
-                  <TableCell align="left">
-                    {currElem.allocationPercentage}
-                  </TableCell>
-                  <TableCell align="left">
-                    {currElem.allocationStartDate}
-                  </TableCell>
-                  <TableCell align="left">
-                    {currElem.allocationEndDate}
-                  </TableCell>
-                </TableRow>
-              ))}
+              {data.results
+                ? data.results.map((currElem, index) => (
+                    <TableRow key={index}>
+                      <TableCell align="left">{index + 1}</TableCell>
+                      <TableCell align="left">{currElem.empId.empId}</TableCell>
+                      <TableCell align="left">
+                        {currElem.empId.empName}
+                      </TableCell>
+                      <TableCell align="left">
+                        {currElem.projectId.projectName}
+                      </TableCell>
+                      <TableCell align="left">
+                        {currElem.allocationPercentage}
+                      </TableCell>
+                      <TableCell align="left">
+                        {currElem.allocationStartDate}
+                      </TableCell>
+                      <TableCell align="left">
+                        {currElem.allocationEndDate}
+                      </TableCell>
+                    </TableRow>
+                  ))
+                : null}
             </TableBody>
           </Table>
         </TableContainer>

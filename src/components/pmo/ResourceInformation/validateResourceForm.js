@@ -1,7 +1,7 @@
 export default function validateResourceForm(data) {
   let errors = {};
 
-  if (!data.empName.trim()) {
+  if (!data.empName || data.empName.trim() === "Invalid") {
     errors.empName = "Associate Name Required";
   }
 
