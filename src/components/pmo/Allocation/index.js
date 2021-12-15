@@ -10,7 +10,6 @@ import {
   SideButton,
   Dropdown,
   Options,
-  AdminName,
   ProjectHead,
   MainComponent,
 } from "./style";
@@ -21,6 +20,7 @@ const Allocation = () => {
 
   const ChangeAllocation = (event) => {
     const AllocatedValue = event.target.value;
+    setPressed(false);
     if (AllocatedValue === "Sort by on Bench") {
       setBench(true);
     } else {
@@ -30,6 +30,9 @@ const Allocation = () => {
 
   const showfilter = () => {
     setPressed(!pressed);
+  };
+  const sortValue = (event) => {
+    alert(event.target.value);
   };
 
   return (
@@ -52,6 +55,13 @@ const Allocation = () => {
             <Dropdown data-test="sortby-dropdown" onChange={ChangeAllocation}>
               <Options value="Sort by Allocated">Allocated</Options>
               <Options value="Sort by on Bench">On Bench</Options>
+            </Dropdown>
+            <Dropdown data-test="sortby-dropdown" onChange={sortValue}>
+              <Options Value="Sort by" hidden>
+                Sort by
+              </Options>
+              <Options value="Sort by ID">Sort by ID</Options>
+              <Options value="Sort by name">Sort by name</Options>
             </Dropdown>
           </SideButton>
         </Heading>

@@ -134,7 +134,7 @@ export const getAllFilterProjects = (type, filters) => {
     };
     try {
       const data = await getData();
-      dispatch(pmoActions.updateProjectsList(data.data.data.results));
+      dispatch(pmoActions.updateProjectsList(data.data.data));
     } catch (error) {
       dispatch(
         uiActions.showNotification({
@@ -212,7 +212,6 @@ export const getAllocatedData = (filters, pageNo) => {
         url += `&allocationPercentage=${filters.allocationPercentage}`;
 
       const response = await axios.get(url);
-
       if (response.status === "failure") {
         throw new Error(response.data.message);
       }
@@ -233,10 +232,10 @@ export const getAllocatedData = (filters, pageNo) => {
   };
 };
 
-export const getOnBench = (filters) => {
+export const getOnBench = (filters, pageNo) => {
   return async (dispatch) => {
     const getData = async () => {
-      let url = `/allocations/onbench?limit=10`;
+      let url = `/allocations/onbench?limit=10&page=${pageNo}`;
       if (filters.empId) url += `&empId=${filters.empId}`;
       if (filters.employeeName) url += `&empName=${filters.employeeName}`;
       if (filters.remainingAllocation)

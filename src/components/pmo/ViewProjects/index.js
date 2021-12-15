@@ -283,7 +283,10 @@ const ViewProjects = () => {
                         <TableCell align="left">
                           {currElem.clientName}
                         </TableCell>
-                        <TableCell align="left">
+                        <TableCell
+                          align="left"
+                          style={{ textTransform: "capitalize" }}
+                        >
                           {currElem.projectName}
                         </TableCell>
                         <TableCell align="left">

@@ -37,7 +37,7 @@ const ResourceInformationTable = ({ resources, removeResource, edit }) => {
             <TableBody>
               {resources.map((eachData, index) => (
                 <TableRow
-                  key={eachData.id}
+                  key={index + 1}
                   sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                 >
                   <TableCell align="left">{index + 1}</TableCell>

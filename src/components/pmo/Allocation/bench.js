@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { getOnBench } from "../../../store/pmo-actions";
+import Pagination from "@mui/material/Pagination";
+
 import {
   Table,
   TableBody,
@@ -11,14 +13,12 @@ import {
   TextField,
 } from "@mui/material";
 
-import { Container, MiniHead } from "./style";
-import Tpagination from "../../UI/Pagination";
+import { Container, MiniHead, PageNation } from "./style";
 import BenchModal from "./BenchModal";
 
 const Bench = ({ pressed }) => {
   const { benchData } = useSelector((state) => state.pmo);
   const dispatch = useDispatch();
-  const [page, setPage] = useState(0);
   const [modalDetails, setModalDetails] = useState(false);
   const [entryData, setEntryData] = useState({});
   const [filters, setFilters] = useState({
@@ -29,7 +29,7 @@ const Bench = ({ pressed }) => {
   });
 
   useEffect(() => {
-    dispatch(getOnBench(filters));
+    dispatch(getOnBench(filters, 1));
   }, []);
 
   let data = benchData;
@@ -40,13 +40,17 @@ const Bench = ({ pressed }) => {
   const filterData = (event) => {
     setFilters({ ...filters, [event.target.name]: event.target.value });
     if (event.key === "Enter") {
-      dispatch(getOnBench(filters));
+      dispatch(getOnBench(filters, 1));
     }
   };
 
   const entryLink = (elem) => {
     setEntryData(elem);
     setModalDetails(true);
+  };
+
+  const changePage = (event) => {
+    dispatch(getOnBench(filters, event.target.textContent));
   };
 
   return (
@@ -70,7 +74,7 @@ const Bench = ({ pressed }) => {
                 <TableCell
                   align="left"
                   sx={{
-                    width: "100px",
+                    width: "180px",
                     maxWidth: "180px",
                     minWidth: "180px",
                   }}
@@ -80,7 +84,7 @@ const Bench = ({ pressed }) => {
                 <TableCell
                   align="left"
                   sx={{
-                    width: "100px",
+                    width: "180px",
                     maxWidth: "180px",
                     minWidth: "180px",
                   }}
@@ -90,7 +94,7 @@ const Bench = ({ pressed }) => {
                 <TableCell
                   align="left"
                   sx={{
-                    width: "100px",
+                    width: "180px",
                     maxWidth: "180px",
                     minWidth: "180px",
                   }}
@@ -100,7 +104,7 @@ const Bench = ({ pressed }) => {
                 <TableCell
                   align="left"
                   sx={{
-                    width: "100px",
+                    width: "180px",
                     maxWidth: "180px",
                     minWidth: "180px",
                   }}
@@ -110,7 +114,7 @@ const Bench = ({ pressed }) => {
                 <TableCell
                   align="left"
                   sx={{
-                    width: "100px",
+                    width: "180px",
                     maxWidth: "180px",
                     minWidth: "180px",
                   }}
@@ -180,11 +184,16 @@ const Bench = ({ pressed }) => {
                       onClick={() => entryLink(currElem)}
                       style={{ cursor: "pointer" }}
                     >
-                      <TableCell align="left">{index + page * 5 + 1}</TableCell>
+                      <TableCell align="left">{index + 1}</TableCell>
                       <TableCell align="left">{currElem.empId}</TableCell>
-                      <TableCell align="left">{currElem.empName}</TableCell>
+                      <TableCell
+                        align="left"
+                        style={{ textTransform: "capitalize" }}
+                      >
+                        {currElem.empName}
+                      </TableCell>
                       <TableCell align="left">
-                        {`${currElem.empPrimaryCapability}`}
+                        {`${currElem.empPrimaryCapability}` || "-----"}
                       </TableCell>
                       <TableCell align="left">
                         {currElem.remainingAllocation}
@@ -196,7 +205,26 @@ const Bench = ({ pressed }) => {
           </Table>
         </TableContainer>
       </Container>
-      {/* <Tpagination page={page} setPage={setPage} rows={data} /> */}
+      <PageNation
+        style={{
+          position: "sticky",
+          bottom: "0",
+        }}
+      >
+        <PageNation
+          style={{
+            width: "100%",
+            display: "flex",
+            flexDirection: "row-reverse",
+          }}
+        >
+          <Pagination
+            count={data.pageCount}
+            onClick={changePage}
+            style={{ textAlign: "right" }}
+          />
+        </PageNation>
+      </PageNation>
     </>
   );
 };

@@ -12,7 +12,6 @@ import {
 } from "@mui/material";
 import { useSelector, useDispatch } from "react-redux";
 import { Container, MiniHead, PageNation } from "./style";
-import Tpagination from "../../UI/Pagination";
 import Pagination from "@mui/material/Pagination";
 
 const Allocated = ({ pressed }) => {
@@ -70,7 +69,7 @@ const Allocated = ({ pressed }) => {
                 <TableCell
                   align="left"
                   sx={{
-                    width: "100px",
+                    width: "140px",
                     maxWidth: "140px",
                     minWidth: "140px",
                   }}
@@ -80,7 +79,7 @@ const Allocated = ({ pressed }) => {
                 <TableCell
                   align="left"
                   sx={{
-                    width: "100px",
+                    width: "180px",
                     maxWidth: "180px",
                     minWidth: "180px",
                   }}
@@ -90,17 +89,17 @@ const Allocated = ({ pressed }) => {
                 <TableCell
                   align="left"
                   sx={{
-                    width: "100px",
+                    width: "180px",
                     maxWidth: "180px",
                     minWidth: "180px",
                   }}
                 >
-                  Project Allocated
+                  Allocated Project
                 </TableCell>
                 <TableCell
                   align="left"
                   sx={{
-                    width: "100px",
+                    width: "180px",
                     maxWidth: "180px",
                     minWidth: "180px",
                   }}
@@ -110,7 +109,7 @@ const Allocated = ({ pressed }) => {
                 <TableCell
                   align="left"
                   sx={{
-                    width: "100px",
+                    width: "180px",
                     maxWidth: "180px",
                     minWidth: "180px",
                   }}
@@ -120,7 +119,7 @@ const Allocated = ({ pressed }) => {
                 <TableCell
                   align="left"
                   sx={{
-                    width: "100px",
+                    width: "180px",
                     maxWidth: "180px",
                     minWidth: "180px",
                   }}
@@ -211,10 +210,16 @@ const Allocated = ({ pressed }) => {
                     <TableRow key={index}>
                       <TableCell align="left">{index + 1}</TableCell>
                       <TableCell align="left">{currElem.empId.empId}</TableCell>
-                      <TableCell align="left">
+                      <TableCell
+                        align="left"
+                        style={{ textTransform: "capitalize" }}
+                      >
                         {currElem.empId.empName}
                       </TableCell>
-                      <TableCell align="left">
+                      <TableCell
+                        align="left"
+                        style={{ textTransform: "capitalize" }}
+                      >
                         {currElem.projectId.projectName}
                       </TableCell>
                       <TableCell align="left">
@@ -253,7 +258,6 @@ const Allocated = ({ pressed }) => {
           />
         </PageNation>
       </PageNation>
-      {/* <Tpagination page={page} setPage={setPage} rows={filteredData} /> */}
     </>
   );
 };
