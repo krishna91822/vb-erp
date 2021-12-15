@@ -87,6 +87,7 @@ export const Main = () => {
     // dispatch(fetchPO_SOW_data);
     dispatch(paginationFetchPosow(filename, currentPage, postPerPage));
   }, []);
+
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -98,9 +99,11 @@ export const Main = () => {
   };
   const handleSort = (sortBy) => {
     setFilename(sortBy);
-    dispatch(paginationFetchPosow(filename, currentPage, postPerPage));
     setAnchorEl(null);
   };
+  useEffect(() => {
+    dispatch(paginationFetchPosow(filename, currentPage, postPerPage));
+  }, [filename]);
   const handleChange = (event, value) => {
     setCurrentPage(value);
     dispatch(paginationFetchPosow(filename, value, postPerPage));

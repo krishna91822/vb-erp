@@ -95,12 +95,13 @@ function InvoiceInfo() {
     setAnchorEl(null);
   };
   const handleSort = (sortBy) => {
-    // dispatch(sortProducts(product));
-    // dispatch(fetch_INVOICE_data(product));
     setFilename(sortBy);
-    dispatch(paginationFetchInvoice(filename, currentPage, postPerPage));
+
     setAnchorEl(null);
   };
+  useEffect(() => {
+    dispatch(paginationFetchInvoice(filename, currentPage, postPerPage));
+  }, [filename]);
   const handleChange = (event, value) => {
     setCurrentPage(value);
     dispatch(paginationFetchInvoice(filename, value, postPerPage));
