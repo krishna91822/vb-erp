@@ -332,7 +332,7 @@ const ViewProjects = () => {
             }}
           >
             <Pagination
-              count={projects.pageCount}
+              count={projects.pageCount || 1}
               onClick={changePage}
               style={{ textAlign: "right" }}
             />

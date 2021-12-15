@@ -52,88 +52,112 @@ export default function BenchModal({
                 top: "5px",
               }}
             />
-            <ul>
-              <Typography component={"div"} variant="h5">
-                <span
-                  style={{
-                    color: "black",
-                    fontSize: "26px",
-                    textTransform: "capitalize",
-                    lineHeight: "0.8",
-                  }}
-                >
-                  {entryData.empName}
-                </span>
-              </Typography>
-              <Typography component={"div"}>
-                <span
-                  style={{
-                    color: "gray",
-                    fontSize: "14px",
-                    padding: "0 3px",
-                  }}
-                >
-                  Emp ID:{entryData.empId}
-                </span>
-              </Typography>
-              {entryData.projects &&
-                (entryData.projects.length > 0 ? (
-                  entryData.projects.map((currElem, index) => (
-                    <div key={index} style={{ padding: "20px" }}>
-                      <Typography component={"span"}>
-                        <li style={{ fontSize: "20px" }}>
-                          <span style={{ textTransform: "capitalize" }}>
-                            {currElem.projectName}
-                          </span>
-                          <ul
-                            style={{
-                              padding: "0 10px",
-                              fontSize: "14px",
-                              listStylePosition: "inside",
-                            }}
-                          >
-                            <li>
-                              <span
-                                style={{ color: "gray", marginRight: "35px" }}
-                              >
-                                Allocated Percentage
-                              </span>
-                              {` ${currElem.allocationPercentage}%`}
-                            </li>
-                            <li>
-                              <span
-                                style={{ color: "gray", marginRight: "48px" }}
-                              >
-                                Allocated Start Date
-                              </span>
-                              {currElem.allocationStartDate}
-                            </li>
-                            <li>
-                              <span
-                                style={{ color: "gray", marginRight: "53px" }}
-                              >
-                                Allocated End Date
-                              </span>
-                              {currElem.allocationEndDate}
-                            </li>
-                          </ul>
-                        </li>
-                      </Typography>
-                    </div>
-                  ))
-                ) : (
-                  <Typography
-                    component={"span"}
-                    style={{
-                      color: "gray",
-                      fontSize: "30px",
-                      padding: "3px",
-                    }}
-                  >
-                    NOT ALLOCATED YET
-                  </Typography>
-                ))}
-            </ul>
+            <Typography component={"div"} variant="h5">
+              <span
+                style={{
+                  color: "black",
+                  fontSize: "26px",
+                  textTransform: "capitalize",
+                  lineHeight: "0.8",
+                }}
+              >
+                {entryData.empName}
+              </span>
+            </Typography>
+            <Typography component={"div"}>
+              <span
+                style={{
+                  color: "gray",
+                  fontSize: "14px",
+                  padding: "0 3px",
+                }}
+              >
+                Emp ID:{entryData.empId}
+              </span>
+            </Typography>
+            <div
+              style={{
+                padding: "0 20px",
+                height: "calc(100% - 68px)",
+                marginTop: "20px",
+                overflowY: "auto",
+              }}
+            >
+              <ul style={{ display: "flex", flexWrap: "wrap" }}>
+                {entryData.projects &&
+                  (entryData.projects.length > 0 ? (
+                    entryData.projects.map((currElem, index) => (
+                      <li
+                        key={index}
+                        style={{
+                          fontSize: "18px",
+                          marginBottom: "20px",
+                          flexBasis: "50%",
+                        }}
+                      >
+                        <span style={{ textTransform: "capitalize" }}>
+                          {currElem.projectName}
+                        </span>
+                        <ul
+                          style={{
+                            padding: "0 10px",
+                            fontSize: "14px",
+                            listStylePosition: "inside",
+                          }}
+                        >
+                          <li>
+                            <div
+                              style={{
+                                color: "gray",
+                                width: "155px",
+                                display: "inline-block",
+                              }}
+                            >
+                              Allocated Percentage
+                            </div>
+                            {` ${currElem.allocationPercentage}%`}
+                          </li>
+                          <li>
+                            <div
+                              style={{
+                                color: "gray",
+                                width: "155px",
+                                display: "inline-block",
+                              }}
+                            >
+                              Allocated Start Date
+                            </div>
+                            {currElem.allocationStartDate}
+                          </li>
+                          <li>
+                            <div
+                              style={{
+                                color: "gray",
+                                width: "155px",
+                                display: "inline-block",
+                              }}
+                            >
+                              Allocated End Date
+                            </div>
+                            {currElem.allocationEndDate}
+                          </li>
+                        </ul>
+                      </li>
+                    ))
+                  ) : (
+                    <Typography
+                      component={"span"}
+                      style={{
+                        color: "gray",
+                        fontSize: "30px",
+                        padding: "3px",
+                      }}
+                    >
+                      NOT ALLOCATED YET
+                    </Typography>
+                  ))}
+              </ul>
+            </div>
           </Box>
         </Fade>
       </Modal>

@@ -31,6 +31,7 @@ const Allocation = () => {
   const showfilter = () => {
     setPressed(!pressed);
   };
+
   const sortValue = (event) => {
     alert(event.target.value);
   };
@@ -52,16 +53,16 @@ const Allocation = () => {
                 style={{ cursor: "pointer" }}
               />
             )}
-            <Dropdown data-test="sortby-dropdown" onChange={ChangeAllocation}>
-              <Options value="Sort by Allocated">Allocated</Options>
-              <Options value="Sort by on Bench">On Bench</Options>
-            </Dropdown>
             <Dropdown data-test="sortby-dropdown" onChange={sortValue}>
               <Options Value="Sort by" hidden>
                 Sort by
               </Options>
               <Options value="Sort by ID">Sort by ID</Options>
               <Options value="Sort by name">Sort by name</Options>
+            </Dropdown>
+            <Dropdown data-test="sortby-dropdown" onChange={ChangeAllocation}>
+              <Options value="Sort by Allocated">Allocated</Options>
+              <Options value="Sort by on Bench">On Bench</Options>
             </Dropdown>
           </SideButton>
         </Heading>

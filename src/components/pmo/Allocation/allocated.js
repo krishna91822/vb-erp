@@ -252,7 +252,7 @@ const Allocated = ({ pressed }) => {
           }}
         >
           <Pagination
-            count={data.pageCount}
+            count={data.pageCount || 1}
             onClick={changePage}
             style={{ textAlign: "right" }}
           />

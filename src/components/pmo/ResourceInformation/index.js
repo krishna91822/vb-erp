@@ -136,7 +136,7 @@ const ResourceInformation = ({
               >
                 <input
                   type="range"
-                  min="1"
+                  min="0"
                   max={100 - percentageAllocated}
                   name="allocationPercentage"
                   value={allocationPercentage}
