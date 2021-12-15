@@ -9,6 +9,7 @@ import {
 } from "@mui/material";
 import UseForm from "./UseForm";
 import Form from "./Form";
+import MidPopUp from "./MidPopUp";
 import "../../assets/styles/FormStyles.css";
 import { cimsActions } from "../../store/cims-slice";
 import { useDispatch, useSelector } from "react-redux";
@@ -20,6 +21,7 @@ function CreateClientForm() {
 
   return (
     <>
+      <MidPopUp />
       <Grid container m={1}>
         <Grid item>
           <Typography variant="h4">CIMS</Typography>

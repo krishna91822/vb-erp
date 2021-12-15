@@ -72,6 +72,9 @@ const initialState = {
   sortBy: "createdAt",
   filterBy: 1,
   sortingOrder: -1,
+  popUpOpen: false,
+  popUpMessage: "",
+  popUpOk: "",
 };
 
 const cimsSlice = createSlice({
@@ -194,6 +197,11 @@ const cimsSlice = createSlice({
     },
     setSortingOrder(state, action) {
       state.sortingOrder = action.payload;
+    },
+    setPopUp(state, action) {
+      state.popUpMessage = action.payload.message;
+      state.popUpOpen = action.payload.popUpOpen;
+      state.popUpOk = action.payload.ok || "";
     },
   },
 });

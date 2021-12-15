@@ -13,6 +13,7 @@ import "../../assets/styles/FormStyles.css";
 import { cimsActions } from "../../store/cims-slice";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import MidPopUp from "./MidPopUp";
 
 function UpdateClientForm() {
   const dispatch = useDispatch();
@@ -27,6 +28,7 @@ function UpdateClientForm() {
 
   return (
     <>
+      <MidPopUp />
       <Grid container m={1}>
         <Grid item>
           <Typography variant="h4">CIMS</Typography>

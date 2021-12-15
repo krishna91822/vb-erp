@@ -111,9 +111,8 @@ export const getAddressByPincode = (addType, pincode, ccode) => {
     } catch (error) {
       setTimeout(function () {
         dispatch(
-          uiActions.showNotification({
-            status: "error",
-            title: "Error!",
+          cimsActions.setPopUp({
+            popUpOpen: true,
             message: error.message,
           })
         );
@@ -234,9 +233,8 @@ export const handelDuplicates = (brand, id) => {
     } catch (error) {
       setTimeout(function () {
         dispatch(
-          uiActions.showNotification({
-            status: "error",
-            title: "Error!",
+          cimsActions.setPopUp({
+            popUpOpen: true,
             message: error.message,
           })
         );
