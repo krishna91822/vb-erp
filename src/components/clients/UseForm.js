@@ -13,7 +13,7 @@ import {
 
 const companyTypes = ["GST Registered", "GST Unregistered", "Overseas"];
 const contactSchema = {
-  title: "",
+  designation: "",
   firstName: "",
   lastName: "",
   email: "",
@@ -28,7 +28,7 @@ const initialContacts = [
 ];
 
 const fields = [
-  { id: "title", label: "Designation *" },
+  { id: "designation", label: "Designation *" },
   { id: "firstName", label: "First name *" },
   { id: "lastName", label: "Last name *" },
   { id: "email", label: "Email address *" },
@@ -43,7 +43,7 @@ const addressFields = [
   { name: "pincode", label: "Postal/Pin Code *" },
   { name: "state", label: "State *" },
   { name: "district", label: "District *" },
-  { name: "city", label: "Area *" },
+  { name: "area", label: "Area *" },
   { name: "landmark", label: "Landmark" },
 ];
 
@@ -88,8 +88,8 @@ export default function UseForm() {
   // Handel errors
   const validate = (type = "", fieldValues) => {
     let temp = JSON.parse(JSON.stringify(errors));
-    if ("title" in fieldValues)
-      temp["contacts"][type].title = fieldValues.title
+    if ("designation" in fieldValues)
+      temp["contacts"][type].designation = fieldValues.designation
         ? ""
         : "This field is required.";
     if ("firstName" in fieldValues)
@@ -137,7 +137,7 @@ export default function UseForm() {
   const validateOptional = (type = "", fieldValues) => {
     let temp = JSON.parse(JSON.stringify(errors));
     if (
-      fieldValues.title ||
+      fieldValues.designation ||
       fieldValues.firstName ||
       fieldValues.lastName ||
       fieldValues.email ||
@@ -165,7 +165,7 @@ export default function UseForm() {
             : "Other contact number is not valid.";
       else temp["contacts"][type].otherContactNumber = "";
     } else {
-      temp["contacts"][type].title = "";
+      temp["contacts"][type].designation = "";
       temp["contacts"][type].firstName = "";
       temp["contacts"][type].lastName = "";
       temp["contacts"][type].email = "";
@@ -187,10 +187,8 @@ export default function UseForm() {
 
   const validateBasic = (fieldValues) => {
     let temp = JSON.parse(JSON.stringify(errors));
-    if ("designation" in fieldValues)
-      temp.designation = fieldValues.designation
-        ? ""
-        : "This field is required.";
+    if ("legalName" in fieldValues)
+      temp.legalName = fieldValues.legalName ? "" : "This field is required.";
     if ("brandName" in fieldValues)
       temp.brandName = fieldValues.brandName ? "" : "This field is required.";
     if ("domain" in fieldValues)
@@ -320,8 +318,8 @@ export default function UseForm() {
           temp[addType].district = temp[addType].pincode
             ? "This field is required."
             : "";
-        if (errors[addType].city)
-          temp[addType].city = temp[addType].pincode
+        if (errors[addType].area)
+          temp[addType].area = temp[addType].pincode
             ? "This field is required."
             : "";
       }
@@ -339,9 +337,9 @@ export default function UseForm() {
         fieldValues.district || formData[addType].district
           ? ""
           : "This field is required.";
-    if ("city" in fieldValues)
-      temp[addType].city =
-        fieldValues.city || formData[addType].city
+    if ("area" in fieldValues)
+      temp[addType].area =
+        fieldValues.area || formData[addType].area
           ? ""
           : "This field is required.";
     setTimeout(() => {
@@ -352,7 +350,7 @@ export default function UseForm() {
   const setAddress = (e, addType) => {
     let new_form = JSON.parse(JSON.stringify(formData));
     if (e.target.name === "pincode") {
-      new_form[addType]["city"] = "";
+      new_form[addType]["area"] = "";
       new_form[addType]["district"] = "";
       new_form[addType]["state"] = "";
     }
@@ -387,7 +385,7 @@ export default function UseForm() {
           : (new_form["companyType"] = "Overseas");
         dispatch(cimsActions.setRegCcode(code));
       } else dispatch(cimsActions.setComCcode(data.split("-")[1]));
-      new_form[addType]["city"] = "";
+      new_form[addType]["area"] = "";
       new_form[addType]["district"] = "";
       new_form[addType]["state"] = "";
       new_form[addType]["pincode"] = "";
@@ -396,7 +394,7 @@ export default function UseForm() {
     if (name === "district" && data !== "") {
       const loc = addType === "registeredAddress" ? locReg : locCom;
       new_form[addType]["state"] = loc.state;
-      new_form[addType]["city"] = loc["districts"][data][0];
+      new_form[addType]["area"] = loc["districts"][data][0];
     }
     dispatch(cimsActions.createForm(new_form));
   };

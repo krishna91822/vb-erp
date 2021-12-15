@@ -5,7 +5,7 @@ import axios from "../helpers/axiosInstance";
 const baseURL = process.env.REACT_APP_API_BASE_URL;
 
 const contactSchema = {
-  title: "",
+  designation: "",
   firstName: "",
   lastName: "",
   email: "",

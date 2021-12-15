@@ -7,12 +7,12 @@ const addressFields = {
   country: "",
   state: "",
   district: "",
-  city: "",
+  area: "",
   landmark: "",
 };
 
 const contactFields = {
-  title: "",
+  designation: "",
   firstName: "",
   lastName: "",
   email: "",
@@ -21,7 +21,7 @@ const contactFields = {
 };
 
 const initialFields = {
-  designation: "",
+  legalName: "",
   brandName: "",
   domain: "",
   baseLocation: "",
@@ -119,8 +119,8 @@ const cimsSlice = createSlice({
       const districtName = state.form.registeredAddress.district
         ? state.form.registeredAddress.district
         : Object.keys(data["districts"])[0];
-      const cityName = state.form.registeredAddress.city
-        ? state.form.registeredAddress.city
+      const areaName = state.form.registeredAddress.area
+        ? state.form.registeredAddress.area
         : data["districts"][districtName][0];
       state.locReg = data;
       state.form = {
@@ -129,7 +129,7 @@ const cimsSlice = createSlice({
           ...state.form.registeredAddress,
           state: stateName,
           district: districtName,
-          city: cityName,
+          area: areaName,
         },
       };
     },
@@ -141,8 +141,8 @@ const cimsSlice = createSlice({
       const districtName = state.form.communicationAddress.district
         ? state.form.communicationAddress.district
         : Object.keys(data["districts"])[0];
-      const cityName = state.form.communicationAddress.city
-        ? state.form.communicationAddress.city
+      const areaName = state.form.communicationAddress.area
+        ? state.form.communicationAddress.area
         : data["districts"][districtName][0];
       state.locCom = data;
       state.form = {
@@ -151,7 +151,7 @@ const cimsSlice = createSlice({
           ...state.form.communicationAddress,
           state: stateName,
           district: districtName,
-          city: cityName,
+          area: areaName,
         },
       };
     },
@@ -177,7 +177,7 @@ const cimsSlice = createSlice({
         ...state.form,
         [add]: {
           ...state.form[add],
-          city: "",
+          area: "",
           district: "",
           state: "",
           pincode: "",

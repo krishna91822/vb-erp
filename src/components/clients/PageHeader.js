@@ -30,9 +30,9 @@ export default function PageHeader() {
   } = ClientHelpers();
 
   const sortByFields = [
-    { id: "createdAt", label: "By Start date" },
+    { id: "createdAt", label: "By Start Date" },
     { id: "brandName", label: "By Company" },
-    { id: "contacts.primaryContact.firstName", label: "By Associate name" },
+    { id: "contacts.primaryContact.firstName", label: "By Associate Name" },
     { id: "registeredAddress.country", label: "By Location" },
   ];
 
@@ -81,7 +81,7 @@ export default function PageHeader() {
           </Grid>
           <Grid item>
             <FormControl size="small">
-              <InputLabel id="filterBy">Filter by</InputLabel>
+              <InputLabel id="filterBy">Filter By</InputLabel>
               <Select
                 labelId="filterBy"
                 id="select"

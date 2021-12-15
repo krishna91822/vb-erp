@@ -84,7 +84,7 @@ export default function AddressFields(props) {
       );
     }
     if (
-      field.name === "city" &&
+      field.name === "area" &&
       formData[props.type].district !== "" &&
       formData[props.type].pincode !== "" &&
       loc["districts"][formData[props.type]["district"]].length > 1
@@ -92,9 +92,9 @@ export default function AddressFields(props) {
       return (
         <Grid item xs={12} sm={gridStyle}>
           <FormControl size="small" fullWidth>
-            <InputLabel id="city">{field.label}</InputLabel>
+            <InputLabel id="area">{field.label}</InputLabel>
             <Select
-              labelId="city"
+              labelId="area"
               name={field.name}
               value={formData[props.type][field.name]}
               label={field.label}

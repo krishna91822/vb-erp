@@ -34,21 +34,21 @@ export default function Form() {
     <div className="form-body">
       <form>
         <Grid container spacing={2} mb={3}>
-          <Grid item xs={12} md={6}>
+          <Grid item xs={12}>
             <TextField
               label="Legal Name"
               variant="outlined"
-              name="designation"
+              name="legalName"
               fullWidth
               required
               disabled={!editMode}
-              value={formData.designation}
+              value={formData.legalName}
               size="small"
               onChange={(e) => setformvalue(e)}
               onBlur={(e) => setformvalue(e)}
-              {...(errors.designation && {
+              {...(errors.legalName && {
                 error: true,
-                helperText: errors.designation,
+                helperText: errors.legalName,
               })}
             />
           </Grid>
@@ -92,7 +92,10 @@ export default function Form() {
               />
             </div>
           </Grid>
-          <Grid item xs={12} sm={6}>
+
+          {/* Need confirmation about this field */}
+
+          {/* <Grid item xs={12} sm={6}>
             <div className="align-form-fields">
               <TextField
                 label="Base Location"
@@ -111,7 +114,7 @@ export default function Form() {
                 })}
               />
             </div>
-          </Grid>
+          </Grid> */}
         </Grid>
         <Grid container spacing={2} mb={3}>
           <Grid item xs={12}>
@@ -120,7 +123,7 @@ export default function Form() {
             </Typography>
           </Grid>
           <Grid item xs={12}>
-            <Typography variant="h6">Registered address</Typography>
+            <Typography variant="h6">Registered Address</Typography>
           </Grid>
           <AddressFields type="registeredAddress" />
           <Grid item xs={12} ml mb={2}>
@@ -137,13 +140,13 @@ export default function Form() {
             />
           </Grid>
           <Grid item xs={12}>
-            <Typography variant="h6">Communication address</Typography>
+            <Typography variant="h6">Communication Address</Typography>
           </Grid>
           <AddressFields type="communicationAddress" />
         </Grid>
         <Grid item xs={12} mt={2}>
           <Typography align="center" variant="h5">
-            Tax details
+            Tax Details
           </Typography>
         </Grid>
         <Grid container spacing={2} mt={1} mb={3}>
@@ -155,7 +158,7 @@ export default function Form() {
               required
               disabled={!editMode}
               fullWidth
-              label="Company type"
+              label="Company Type"
               value={formData.companyType}
               onChange={(e) => setformvalue(e)}
               onBlur={(e) => setformvalue(e)}
