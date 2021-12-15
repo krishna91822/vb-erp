@@ -15,10 +15,10 @@ import EditIcon from "@mui/icons-material/Edit";
 import FilterListIcon from "@mui/icons-material/FilterList";
 import FilterListOffIcon from "@mui/icons-material/FilterListOff";
 
-import { pmoActions } from "../../../store/pmo-slice";
 import {
   getAllProjects,
   getAllFilterProjects,
+  getAllProjectsBySroting,
 } from "../../../store/pmo-actions";
 import {
   MainComponent,
@@ -31,6 +31,7 @@ import {
   ProjectHead,
 } from "./styles";
 import Tpagination from "../../UI/Pagination";
+
 const ViewProjects = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -58,29 +59,10 @@ const ViewProjects = () => {
     const SortingValue = event.target.value;
 
     if (SortingValue === "Sort by Project ID") {
-      const sorteddata = [...projects.results].sort((a, b) =>
-        a.vbProjectId.toLowerCase() > b.vbProjectId.toLowerCase()
-          ? 1
-          : b.vbProjectId.toLowerCase() > a.vbProjectId.toLowerCase()
-          ? -1
-          : 0
-      );
-      dispatch(pmoActions.SortByProductID(sorteddata));
+      dispatch(getAllProjectsBySroting(filterProjects, "vbProjectId"));
     }
-
     if (SortingValue === "Sort by Status") {
-      const sorteddata = [...projects.results].sort((a, b) =>
-        a.vbProjectStatus === null || b.vbProjectStatus === null
-          ? (a.vbProjectStatus === null) - (b.vbProjectStatus === null) ||
-            +(a.vbProjectStatus > b.vbProjectStatus) ||
-            -(a.vbProjectStatus < b.vbProjectStatus)
-          : a.vbProjectStatus.toLowerCase() < b.vbProjectStatus.toLowerCase()
-          ? -1
-          : b.vbProjectStatus.toLowerCase() < a.vbProjectStatus.toLowerCase()
-          ? 1
-          : 0
-      );
-      dispatch(pmoActions.SortByStatus(sorteddata));
+      dispatch(getAllProjectsBySroting(filterProjects, "vbProjectStatus"));
     }
   };
 
@@ -333,5 +315,4 @@ const ViewProjects = () => {
     </>
   );
 };
-
 export default ViewProjects;

@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { TextField, Button } from "@mui/material";
 import ResourceInformationTable from "../ResourceInformationTable";
 import Autocomplete from "@mui/material/Autocomplete";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
 import { getAllEmployees } from "../../../store/pmo-actions";
 import {
@@ -42,20 +42,18 @@ const ResourceInformation = ({
     let inputvalue = target.value;
 
     if (inputvalue && inputvalue.length > 2) {
+      dispatch(getAllEmployees(inputvalue));
       setOpen(true);
     } else {
       setOpen(false);
     }
   };
 
-  useEffect(() => {
-    dispatch(getAllEmployees());
-  }, []);
-
   const resourcesIds = resources.map((eachRes) => eachRes.empId);
   const filteredEmployees = allEmployees
     ? allEmployees.filter((eachEmp) => !resourcesIds.includes(eachEmp._id))
     : [];
+
   return (
     <Container>
       <ResourceInformationHeading data-test="resource-head">

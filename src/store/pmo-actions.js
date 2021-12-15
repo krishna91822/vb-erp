@@ -46,6 +46,7 @@ export const createProject = (projectInfo) => {
     }
   };
 };
+
 export const updateProject = (projectInfo) => {
   return async (dispatch) => {
     dispatch(uiActions.toggleLoader());
@@ -87,6 +88,7 @@ export const updateProject = (projectInfo) => {
     }
   };
 };
+
 export const getAllProjects = (type) => {
   return async (dispatch) => {
     dispatch(uiActions.toggleLoader());
@@ -130,17 +132,24 @@ export const getAllFilterProjects = (type, filters) => {
     };
     try {
       const data = await getData();
-      dispatch(pmoActions.updateProjectsList(data.data));
-    } catch (err) {
-      console.log(err);
+      dispatch(pmoActions.updateProjectsList(data.data.data.results));
+    } catch (error) {
+      dispatch(
+        uiActions.showNotification({
+          status: "error",
+          message: error.message,
+        })
+      );
     }
   };
 };
 
-export const getAllEmployees = () => {
+export const getAllEmployees = (empName) => {
   return async (dispatch) => {
     const getData = async () => {
-      const response = await axios.get(`/employees/filteremp`);
+      const response = await axios.get(
+        `/employees/filteremp?empName=${empName}`
+      );
       if (response.status === "failure") {
         throw new Error(response.data.message);
       }
@@ -149,11 +158,17 @@ export const getAllEmployees = () => {
     try {
       const data = await getData();
       dispatch(pmoActions.updateEmployeeList(data.data));
-    } catch (err) {
-      console.log(err);
+    } catch (error) {
+      dispatch(
+        uiActions.showNotification({
+          status: "error",
+          message: error.message,
+        })
+      );
     }
   };
 };
+
 export const getAllClientData = (value) => {
   return async (dispatch) => {
     const getData = async () => {
@@ -168,8 +183,13 @@ export const getAllClientData = (value) => {
     try {
       const data = await getData();
       dispatch(pmoActions.updateClientList(data.data));
-    } catch (err) {
-      console.log(err);
+    } catch (error) {
+      dispatch(
+        uiActions.showNotification({
+          status: "error",
+          message: error.message,
+        })
+      );
     }
   };
 };
@@ -182,8 +202,10 @@ export const getAllocatedData = (filters) => {
       if (filters.employeeName) url += `&empName=${filters.employeeName}`;
       if (filters.projectAllocated)
         url += `&allocatedProject=${filters.projectAllocated}`;
-      if (filters.startDate) url += `&allocationStartDate=${filters.startDate}`;
-      if (filters.endDate) url += `&allocationEndDate=${filters.endDate}`;
+      if (filters.allocationStartDate)
+        url += `&allocationStartDate=${filters.allocationStartDate}`;
+      if (filters.allocationEndDate)
+        url += `&allocationEndDate=${filters.allocationEndDate}`;
       if (filters.allocationPercentage)
         url += `&allocationPercentage=${filters.allocationPercentage}`;
 
@@ -194,11 +216,17 @@ export const getAllocatedData = (filters) => {
       }
       return response;
     };
+
     try {
       const data = await getData();
       dispatch(pmoActions.updateAllocatedData(data.data));
-    } catch (err) {
-      console.log(err);
+    } catch (error) {
+      dispatch(
+        uiActions.showNotification({
+          status: "error",
+          message: error.message,
+        })
+      );
     }
   };
 };
@@ -222,8 +250,13 @@ export const getOnBench = (filters) => {
     try {
       const data = await getData();
       dispatch(pmoActions.updatebenchData(data.data));
-    } catch (err) {
-      console.log(err);
+    } catch (error) {
+      dispatch(
+        uiActions.showNotification({
+          status: "error",
+          message: error.message,
+        })
+      );
     }
   };
 };
@@ -242,8 +275,13 @@ export const getPercentageAllocated = (empId) => {
     try {
       const data = await getData();
       dispatch(pmoActions.updatePercentageAllocated(data.data));
-    } catch (err) {
-      console.log(err);
+    } catch (error) {
+      dispatch(
+        uiActions.showNotification({
+          status: "error",
+          message: error.message,
+        })
+      );
     }
   };
 };
@@ -272,8 +310,13 @@ export const getProjectById = (projectId) => {
         resources: resourceData.data,
       };
       dispatch(pmoActions.updateProjectById(allData));
-    } catch (err) {
-      console.log(err);
+    } catch (error) {
+      dispatch(
+        uiActions.showNotification({
+          status: "error",
+          message: error.message,
+        })
+      );
     }
   };
 };
@@ -290,8 +333,37 @@ export const deleteResource = (id) => {
     try {
       const data = await deleteResourceById();
       // dispatch(pmoActions.removeAllocation(data.data));
-    } catch (err) {
-      console.log(err);
+    } catch (error) {
+      dispatch(
+        uiActions.showNotification({
+          status: "error",
+          message: error.message,
+        })
+      );
+    }
+  };
+};
+
+export const getAllProjectsBySroting = (type, sortedValue) => {
+  console.log(type, sortedValue);
+  return async (dispatch) => {
+    const getData = async () => {
+      const response = await axios.get(`/projects/${type}/${sortedValue}`);
+      if (response.status === "failure") {
+        throw new Error(response.data.message);
+      }
+      return response;
+    };
+    try {
+      const data = await getData();
+      dispatch(pmoActions.updateProjectsList(data.data.data.results));
+    } catch (error) {
+      dispatch(
+        uiActions.showNotification({
+          status: "error",
+          message: error.message,
+        })
+      );
     }
   };
 };
@@ -308,8 +380,13 @@ export const getClinetById = (id) => {
     try {
       const data = await getClinentName();
       dispatch(pmoActions.updateClientNames(data.data[0].contacts));
-    } catch (err) {
-      console.log(err);
+    } catch (error) {
+      dispatch(
+        uiActions.showNotification({
+          status: "error",
+          message: error.message,
+        })
+      );
     }
   };
 };

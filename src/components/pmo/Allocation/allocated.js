@@ -23,8 +23,8 @@ const Allocated = ({ pressed }) => {
     projectAllocated: "",
     allocationPercentage: "",
     employeeName: "",
-    startDate: "",
-    endDate: "",
+    allocationStartDate: "",
+    allocationEndDate: "",
   });
 
   useEffect(() => {
@@ -187,7 +187,7 @@ const Allocated = ({ pressed }) => {
                       name="allocationStartDate"
                       onChange={filterData}
                       onKeyPress={filterData}
-                      value={filters.startDate}
+                      value={filters.allocationStartDate}
                       inputProps={{ style: { fontSize: "small" } }}
                     />
                   </TableCell>
@@ -199,7 +199,7 @@ const Allocated = ({ pressed }) => {
                       name="allocationEndDate"
                       onChange={filterData}
                       onKeyPress={filterData}
-                      value={filters.endDate}
+                      value={filters.allocationEndDate}
                     />
                   </TableCell>
                 </TableRow>
