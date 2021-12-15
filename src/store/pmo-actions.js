@@ -356,7 +356,7 @@ export const getAllProjectsBySroting = (type, sortedValue) => {
     };
     try {
       const data = await getData();
-      dispatch(pmoActions.updateProjectsList(data.data.data.results));
+      dispatch(pmoActions.updateProjectsList(data.data.data));
     } catch (error) {
       dispatch(
         uiActions.showNotification({
