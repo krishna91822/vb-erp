@@ -111,3 +111,5 @@ export const EditButton = styled.button`
     background-color: #ececec;
   }
 `;
+
+export const PageNation = styled.div``;

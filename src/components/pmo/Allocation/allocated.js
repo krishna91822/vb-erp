@@ -11,7 +11,8 @@ import {
   TextField,
 } from "@mui/material";
 import { useSelector, useDispatch } from "react-redux";
-import { Container, MiniHead } from "./style";
+import { Container, MiniHead, PageNation } from "./style";
+import Pagination from "@mui/material/Pagination";
 
 const Allocated = ({ pressed }) => {
   const { allocatedData } = useSelector((state) => state.pmo);
@@ -27,19 +28,19 @@ const Allocated = ({ pressed }) => {
   });
 
   useEffect(() => {
-    dispatch(getAllocatedData(filters));
+    dispatch(getAllocatedData(filters, 1));
   }, []);
 
   let data = allocatedData;
-  // data = [...data].sort((a, b) =>
-  //   a.empId.empId > b.empId.empId ? 1 : b.empId.empId > a.empId.empId ? -1 : 0
-  // );
-
   const filterData = (event) => {
     setFilters({ ...filters, [event.target.name]: event.target.value });
     if (event.key === "Enter") {
-      dispatch(getAllocatedData(filters));
+      dispatch(getAllocatedData(filters, 1));
     }
+  };
+
+  const changePage = (event) => {
+    dispatch(getAllocatedData(filters, event.target.textContent));
   };
 
   return (
@@ -93,7 +94,7 @@ const Allocated = ({ pressed }) => {
                     minWidth: "180px",
                   }}
                 >
-                  Project Allocated
+                  Allocated Project
                 </TableCell>
                 <TableCell
                   align="left"
@@ -209,10 +210,16 @@ const Allocated = ({ pressed }) => {
                     <TableRow key={index}>
                       <TableCell align="left">{index + 1}</TableCell>
                       <TableCell align="left">{currElem.empId.empId}</TableCell>
-                      <TableCell align="left">
+                      <TableCell
+                        align="left"
+                        style={{ textTransform: "capitalize" }}
+                      >
                         {currElem.empId.empName}
                       </TableCell>
-                      <TableCell align="left">
+                      <TableCell
+                        align="left"
+                        style={{ textTransform: "capitalize" }}
+                      >
                         {currElem.projectId.projectName}
                       </TableCell>
                       <TableCell align="left">
@@ -231,7 +238,26 @@ const Allocated = ({ pressed }) => {
           </Table>
         </TableContainer>
       </Container>
-      {/* <Tpagination page={page} setPage={setPage} rows={filteredData} /> */}
+      <PageNation
+        style={{
+          position: "sticky",
+          bottom: "0",
+        }}
+      >
+        <PageNation
+          style={{
+            width: "100%",
+            display: "flex",
+            flexDirection: "row-reverse",
+          }}
+        >
+          <Pagination
+            count={data.pageCount}
+            onClick={changePage}
+            style={{ textAlign: "right" }}
+          />
+        </PageNation>
+      </PageNation>
     </>
   );
 };

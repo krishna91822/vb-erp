@@ -193,7 +193,7 @@ const Bench = ({ pressed }) => {
                         {currElem.empName}
                       </TableCell>
                       <TableCell align="left">
-                        {`${currElem.empPrimaryCapability}`}
+                        {`${currElem.empPrimaryCapability}` || "-----"}
                       </TableCell>
                       <TableCell align="left">
                         {currElem.remainingAllocation}

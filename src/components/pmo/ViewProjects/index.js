@@ -14,6 +14,7 @@ import {
 import EditIcon from "@mui/icons-material/Edit";
 import FilterListIcon from "@mui/icons-material/FilterList";
 import FilterListOffIcon from "@mui/icons-material/FilterListOff";
+import Pagination from "@mui/material/Pagination";
 
 import {
   getAllProjects,
@@ -29,8 +30,8 @@ import {
   Dropdown,
   Options,
   ProjectHead,
+  PageNation,
 } from "./styles";
-import Tpagination from "../../UI/Pagination";
 
 const ViewProjects = () => {
   const dispatch = useDispatch();
@@ -48,7 +49,7 @@ const ViewProjects = () => {
   const rowsPerPage = 10;
 
   useEffect(() => {
-    dispatch(getAllProjects(filterProjects));
+    dispatch(getAllProjects(filterProjects, 1));
   }, [filterProjects]);
 
   const FilterProjects = (event) => {
@@ -83,6 +84,10 @@ const ViewProjects = () => {
     if (event.key === "Enter") {
       dispatch(getAllFilterProjects(filterProjects, filters));
     }
+  };
+
+  const changePage = (event) => {
+    dispatch(getAllProjects(filterProjects, event.target.textContent));
   };
 
   return (
@@ -278,7 +283,10 @@ const ViewProjects = () => {
                         <TableCell align="left">
                           {currElem.clientName}
                         </TableCell>
-                        <TableCell align="left">
+                        <TableCell
+                          align="left"
+                          style={{ textTransform: "capitalize" }}
+                        >
                           {currElem.projectName}
                         </TableCell>
                         <TableCell align="left">
@@ -310,7 +318,26 @@ const ViewProjects = () => {
             </Table>
           </TableContainer>
         </Container>
-        <Tpagination page={page} setPage={setPage} rows={projects} />
+        <PageNation
+          style={{
+            position: "sticky",
+            bottom: "0",
+          }}
+        >
+          <PageNation
+            style={{
+              width: "100%",
+              display: "flex",
+              flexDirection: "row-reverse",
+            }}
+          >
+            <Pagination
+              count={projects.pageCount}
+              onClick={changePage}
+              style={{ textAlign: "right" }}
+            />
+          </PageNation>
+        </PageNation>
       </MainComponent>
     </>
   );
