@@ -38,6 +38,8 @@ const ProfileContent = (props) => {
     handleClose,
   } = props;
 
+  console.log("updateRequest:", updateRequest);
+
   //calculate percentage progress
   const profileProgress = () => {
     const totalFields = inEditMode
