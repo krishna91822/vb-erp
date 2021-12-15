@@ -12,7 +12,15 @@ const AllAvailableEmp = [
   { emp_name: "Mandy", emp_id: "VB1994" },
   { emp_name: "", emp_id: "" },
 ];
-const employees = [];
+const employees = [
+  {
+    Employee_Name: "Alex",
+    Employee_Id: 1990,
+    Start_Date: "11 / 15 / 2021",
+    End_Date: "11 / 25 / 2021",
+    Allocation_Rate: 15,
+  },
+];
 const projects = [];
 const clientFinController = ["ABC", "XYZ", "EFG"];
 const targetedResources = ["ABC", "XYZ", "EFG", "ZZZ"];

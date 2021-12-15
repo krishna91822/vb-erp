@@ -13,6 +13,9 @@ import {
   fireEvent,
   getByTestId,
   waitFor,
+  within,
+  querySelector,
+  getByRole,
 } from "@testing-library/react";
 import { shallow } from "enzyme";
 import ShallowRenderer from "react-test-renderer/shallow";
@@ -44,11 +47,7 @@ describe("POSOW FORM", () => {
       false
     );
   });
-  test("testing client Drop down", () => {
-    expect(wrapper.find(`[data-test="client-name-dropdown"]`).exists()).toBe(
-      true
-    );
-  });
+
   test("testing client sponosor check box label", () => {
     expect(
       wrapper.find(`[data-test="client-sponsor-chkBox-label"]`).text()
@@ -177,27 +176,6 @@ describe("POSOW EDIT", () => {
   });
 });
 
-describe("Assigned Emp Table", () => {
-  let wrapper;
-  beforeEach(() => {
-    wrapper = mount(
-      <Provider store={store}>
-        <MemoryRouter>
-          <DenseTable />
-        </MemoryRouter>
-      </Provider>
-    );
-  });
-  test("testing table header", () => {
-    expect(wrapper.find(`[data-test="emp-table-head"]`).exists()).toBe(true);
-  });
-  test("testing emp dialog box availaibility on edit btn click", () => {
-    expect(wrapper.find(`[data-test="Add-emp-dialogBox"]`).exists()).toBe(true);
-  });
-  test("testing unassign button availibility", () => {
-    expect(wrapper.find(`[data-test="Unassign-emp-btn"]`).exists()).toBe(true);
-  });
-});
 describe("Adding Emp dialog box", () => {
   const setup = () => {
     const { container } = render(
@@ -250,8 +228,10 @@ describe("testing on change/click on capture new PO/SOW page", () => {
       component,
       "clientNameDropdown-ChangeTest"
     );
-    fireEvent.change(clientNameDropDown, { target: { value: "Nasdaq" } });
-    expect(clientNameDropDown.value).toBe("Nasdaq");
+    const input = within(clientNameDropDown).getByRole("textbox");
+
+    clientNameDropDown.focus();
+    fireEvent.change(input, { target: { value: "" } });
   });
   test("should call onChange of projects dropdown", () => {
     const component = setup();
@@ -259,8 +239,8 @@ describe("testing on change/click on capture new PO/SOW page", () => {
       component,
       "projectDropdown-ChangeTest"
     );
-    fireEvent.change(projectDropdown, { target: { value: "project x" } });
-    expect(projectDropdown.value).toBe("project x");
+    fireEvent.change(projectDropdown, { target: { value: "" } });
+    expect(projectDropdown.value).toBe("");
   });
   test("should call onChange of clientsponsor checkbox", () => {
     const component = setup();
