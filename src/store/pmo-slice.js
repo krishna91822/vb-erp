@@ -70,7 +70,9 @@ const pmoSlice = createSlice({
         `${action.payload.primaryContact.firstName} ${action.payload.primaryContact.lastName}`,
         `${action.payload.secondaryContact.firstName} ${action.payload.secondaryContact.lastName}`,
         `${action.payload.tertiaryContact.firstName} ${action.payload.tertiaryContact.lastName}`,
-      ];
+      ].filter((data) => {
+        return data.trim().length > 0;
+      });
     },
   },
 });
