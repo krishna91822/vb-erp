@@ -333,7 +333,6 @@ export const deleteResource = (id) => {
     };
     try {
       const data = await deleteResourceById();
-      // dispatch(pmoActions.removeAllocation(data.data));
     } catch (error) {
       dispatch(
         uiActions.showNotification({
@@ -380,6 +379,32 @@ export const getClinetById = (id) => {
     try {
       const data = await getClinentName();
       dispatch(pmoActions.updateClientNames(data.data[0].contacts));
+    } catch (error) {
+      dispatch(
+        uiActions.showNotification({
+          status: "error",
+          message: error.message,
+        })
+      );
+    }
+  };
+};
+
+export const searchVbManager = () => {
+  return async (dispatch) => {
+    const getData = async () => {
+      const response = await axios.get(
+        // `/employees/filteremp?empName=${empName}`
+        `/employees/empManagers`
+      );
+      if (response.status === "failure") {
+        throw new Error(response.data.message);
+      }
+      return response;
+    };
+    try {
+      const data = await getData();
+      dispatch(pmoActions.updateVbManagers(data.data));
     } catch (error) {
       dispatch(
         uiActions.showNotification({

@@ -63,7 +63,8 @@ const ResourceInformation = ({
         <AllElementsContainer>
           <ResourceForm>
             <Heading>
-              Associate Name <span>*</span>
+              Associate Name <span>*</span>{" "}
+              <small>(min 3 letters required)</small>
             </Heading>
             <Autocomplete
               id="free-solo-demo"
