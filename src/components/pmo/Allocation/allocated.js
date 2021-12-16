@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { getAllocatedData } from "../../../store/pmo-actions";
+import Tpagination from "../../UI/Pagination";
 
 import {
   Table,
@@ -12,9 +13,8 @@ import {
 } from "@mui/material";
 import { useSelector, useDispatch } from "react-redux";
 import { Container, MiniHead, PageNation } from "./style";
-import Pagination from "@mui/material/Pagination";
 
-const Allocated = ({ pressed }) => {
+const Allocated = ({ pressed, allocatedSortedValue }) => {
   const { allocatedData } = useSelector((state) => state.pmo);
   const dispatch = useDispatch();
 
@@ -26,24 +26,23 @@ const Allocated = ({ pressed }) => {
     allocationStartDate: "",
     allocationEndDate: "",
   });
-
   useEffect(() => {
-    dispatch(getAllocatedData(filters, 1));
-    // eslint-disable-next-line
-  }, []);
+    dispatch(getAllocatedData(filters, 1, allocatedSortedValue)); // eslint-disable-next-line
+  }, [allocatedSortedValue]);
 
   let data = allocatedData;
   const filterData = (event) => {
     setFilters({ ...filters, [event.target.name]: event.target.value });
     if (event.key === "Enter") {
-      dispatch(getAllocatedData(filters, 1));
+      dispatch(getAllocatedData(filters, 1, allocatedSortedValue));
     }
   };
 
   const changePage = (event) => {
-    dispatch(getAllocatedData(filters, event.target.textContent));
+    dispatch(
+      getAllocatedData(filters, event.target.textContent, allocatedSortedValue)
+    );
   };
-
   return (
     <>
       <Container>
@@ -209,7 +208,9 @@ const Allocated = ({ pressed }) => {
               {data.results
                 ? data.results.map((currElem, index) => (
                     <TableRow key={index}>
-                      <TableCell align="left">{index + 1}</TableCell>
+                      <TableCell align="left">
+                        {index + parseInt(data.currentPage) * 10 - 9}
+                      </TableCell>
                       <TableCell align="left">{currElem.empId.empId}</TableCell>
                       <TableCell
                         align="left"
@@ -248,26 +249,7 @@ const Allocated = ({ pressed }) => {
             : ""}
         </TableContainer>
       </Container>
-      <PageNation
-        style={{
-          position: "sticky",
-          bottom: "0",
-        }}
-      >
-        <PageNation
-          style={{
-            width: "100%",
-            display: "flex",
-            flexDirection: "row-reverse",
-          }}
-        >
-          <Pagination
-            count={data.pageCount || 1}
-            onClick={changePage}
-            style={{ textAlign: "right" }}
-          />
-        </PageNation>
-      </PageNation>
+      <Tpagination count={data.pageCount || 1} changePage={changePage} />
     </>
   );
 };

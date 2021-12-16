@@ -121,9 +121,19 @@ const CreateProject = () => {
 
     return () => {
       dispatch(pmoActions.clearCreateProjectState());
+      setState(initialState);
     };
     // eslint-disable-next-line
   }, []);
+
+  useLayoutEffect(() => {
+    if (location.includes("create")) {
+      dispatch(pmoActions.clearCreateProjectState());
+      setState(initialState);
+      setEdit(true);
+      setVbManInput("");
+    }
+  }, [location]);
 
   useEffect(() => {
     if (redirect) {
@@ -160,7 +170,6 @@ const CreateProject = () => {
   }, [clientNames]);
 
   const handelAssociate = (value) => {
-    console.log(value, "value here");
     dispatch(getPercentageAllocated(value.empId));
     setState({
       ...state,
@@ -336,14 +345,6 @@ const CreateProject = () => {
         dispatch(getAllClientData(event.target.value));
       }
     }
-
-    // let inputvalue = target.value;
-    // if (inputvalue && inputvalue.length > 2) {
-    //   dispatch(getAllClientData(inputvalue));
-    //   setOpen(true);
-    // } else {
-    //   setOpen(false);
-    // }
   };
   const handleOnClick = (event, value) => {
     if (value) {
@@ -688,7 +689,7 @@ const CreateProject = () => {
                 renderInput={(params) => (
                   <TextField
                     {...params}
-                    placeholder="Enter VB Project Manager"
+                    placeholder="Enter VB Manager"
                     name="vbProjectManager"
                     error={errors.vbProjectManager ? true : false}
                     width="100%"

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { getOnBench } from "../../../store/pmo-actions";
-import Pagination from "@mui/material/Pagination";
+import Tpagination from "../../UI/Pagination";
 
 import {
   Table,
@@ -16,7 +16,7 @@ import {
 import { Container, MiniHead, PageNation } from "./style";
 import BenchModal from "./BenchModal";
 
-const Bench = ({ pressed }) => {
+const Bench = ({ pressed, benchSortValue }) => {
   const { benchData } = useSelector((state) => state.pmo);
   const dispatch = useDispatch();
   const [modalDetails, setModalDetails] = useState(false);
@@ -29,19 +29,15 @@ const Bench = ({ pressed }) => {
   });
 
   useEffect(() => {
-    dispatch(getOnBench(filters, 1));
-    // eslint-disable-next-line
-  }, []);
+    dispatch(getOnBench(filters, 1, benchSortValue)); // eslint-disable-next-line
+  }, [benchSortValue]);
 
   let data = benchData;
-  // data = [...data].sort((a, b) =>
-  //   a.empId > b.empId ? 1 : b.empId > a.empId ? -1 : 0
-  // );
 
   const filterData = (event) => {
     setFilters({ ...filters, [event.target.name]: event.target.value });
     if (event.key === "Enter") {
-      dispatch(getOnBench(filters, 1));
+      dispatch(getOnBench(filters, 1, benchSortValue));
     }
   };
 
@@ -51,7 +47,7 @@ const Bench = ({ pressed }) => {
   };
 
   const changePage = (event) => {
-    dispatch(getOnBench(filters, event.target.textContent));
+    dispatch(getOnBench(filters, event.target.textContent, benchSortValue));
   };
 
   return (
@@ -215,26 +211,7 @@ const Bench = ({ pressed }) => {
             : ""}
         </TableContainer>
       </Container>
-      <PageNation
-        style={{
-          position: "sticky",
-          bottom: "0",
-        }}
-      >
-        <PageNation
-          style={{
-            width: "100%",
-            display: "flex",
-            flexDirection: "row-reverse",
-          }}
-        >
-          <Pagination
-            count={data.pageCount}
-            onClick={changePage}
-            style={{ textAlign: "right" }}
-          />
-        </PageNation>
-      </PageNation>
+      <Tpagination count={data.pageCount} changePage={changePage} />
     </>
   );
 };
