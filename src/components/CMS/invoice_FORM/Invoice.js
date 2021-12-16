@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { useParams } from "react-router-dom";
 import "./Invoice.css";
 import { useDispatch, useSelector } from "react-redux";
@@ -109,21 +110,39 @@ function Invoice(props) {
   const [PoCurr, setPoCurr] = useState("");
   const [clientFinControllerArr, setClientFinControllerArr] =
     useState(clientFinController);
-  const [poId, setPoId] = useState("");
+  const [poId, setPoId] = useState("61b337aea50b020d3cf384e0");
   const [clientSponsorArr, setClientSponsorArr] = useState(clientSponsors);
   const [ClientSponsor, setClientSponsor] = React.useState(Readclientsponsor);
   const [invoice_raised, setInvoiceRaised] = React.useState(Readinvoiceraised);
   const [invoice_amount, setinvoiceAmount] = React.useState(Readinvoiceamount);
   const [Vb_Bank_Acc, setVbbankacc] = React.useState(ReadVbBankAcc);
   const [Date_, setDate] = React.useState(ReadDate);
-  const [invoicereceived, setinvoicereceived] = useState(props.invoicereceived);
+
   const [invoice_raised_yesno, setInvoiceRaisedYesNo] = React.useState("");
+  const [invoicereceived, setinvoicereceived] = useState(true);
+  const [editTglCheckedState, seteditTglCheckedState] = React.useState(
+    props.toggleState
+  );
   // const [filterinvoiceArr, setfilterinvoiceArr] = useState([]);
   let [sum, setsum] = useState(0);
 
   useEffect(() => {
-    if (props.readonly && filteredArr[0].PO_Id !== undefined) {
-      console.log(filteredArr[0]);
+    if (!props.readonly && filteredArr[0].PO_Id !== undefined) {
+      setPersonName(filteredArr[0].PO_Id.Client_Name);
+      setProjectName(filteredArr[0].PO_Id.Project_Name);
+      setPO_number(filteredArr[0].PO_Id.PO_Number);
+      setPOAmt(filteredArr[0].PO_Id.PO_Amount);
+      setClientFinController(filteredArr[0].client_finance_controller);
+      setClientSponsor(filteredArr[0].client_sponsor);
+      setInvoiceRaised(filteredArr[0].invoice_raised);
+      setinvoiceAmount(filteredArr[0].invoice_amount_received);
+      setDate(filteredArr[0].amount_received_on);
+      setVbbankacc(filteredArr[0].vb_bank_account);
+    }
+  }, [filteredArr]);
+
+  useEffect(() => {
+    if (props.editBtn && filteredArr[0].PO_Id !== undefined) {
       setPersonName(filteredArr[0].PO_Id.Client_Name);
       setProjectName(filteredArr[0].PO_Id.Project_Name);
       setPO_number(filteredArr[0].PO_Id.PO_Number);
@@ -145,6 +164,10 @@ function Invoice(props) {
   };
   const handlePoNumTxtBoxChange = (event) => {
     setPO_number(event.target.value);
+  };
+
+  const handleEditTglChange = (e) => {
+    seteditTglCheckedState(!editTglCheckedState);
   };
 
   const handlePOAmtTxtBoxChange = (event) => {
@@ -172,6 +195,27 @@ function Invoice(props) {
   const invoicereceivedhandler = (e) => {
     setinvoicereceived(!invoicereceived);
   };
+  const updatehandler = (e) => {
+    // console.log(ClientSponsor);
+    // console.log(invoice_raised);
+    // console.log(invoice_amount);
+    // console.log(invoicereceived);
+    // console.log(Vb_Bank_Acc);
+    // console.log(clientFinControllerArr);
+
+    const DataToSend = {
+      PO_Id: poId,
+      client_sponsor: ClientSponsor,
+      client_finance_controller: Client_Fin_controller,
+      invoice_raised: invoice_raised,
+      invoice_amount_received: invoice_amount,
+      vb_bank_account: Vb_Bank_Acc,
+      amount_received_on: new Date(Date_),
+    };
+    console.log(DataToSend);
+
+    dispatch(Update_INVOICE(DataToSend, params.id));
+  };
 
   useEffect(() => {
     if (projectName && !params.id) {
@@ -192,8 +236,8 @@ function Invoice(props) {
 
     const DataToSend = {
       PO_Id: poId,
-      client_sponsor: ClientSponsor,
-      client_finance_controller: Client_Fin_controller,
+      // client_sponsor: ClientSponsor,
+      // client_finance_controller: Client_Fin_controller,
       invoice_raised: invoice_raised,
       invoice_amount_received: invoice_amount,
       vb_bank_account: Vb_Bank_Acc,
@@ -221,21 +265,49 @@ function Invoice(props) {
   });
   return (
     <div className="maincontainer">
-      <h3>Invoice</h3>
+      <Grid container>
+        <Grid item lg={11} md={11} sm={12} xs={12}>
+          <h3>Invoice</h3>
+        </Grid>
+        <Grid item lg={1} md={1} sm={12} xs={12}>
+          {props.editBtn && editTglCheckedState ? (
+            <div>
+              <Button
+                variant="contained"
+                color="success"
+                onClick={updatehandler}
+                data-test="UpdateBtn"
+              >
+                Update{" "}
+              </Button>
+            </div>
+          ) : (
+            <div></div>
+          )}
+        </Grid>
+      </Grid>
+
       <form onSubmit={submitForm}>
         <Grid container>
           <Grid item lg={11} md={11} sm={12} xs={12}>
             <h4 className="heading">PO Information</h4>
           </Grid>
           <Grid item lg={1} md={1} sm={12} xs={12}>
-            <Button
-              variant="contained"
-              color="success"
-              type="submit"
-              onClick={(event) => submitForm(event)}
-            >
-              SAVE
-            </Button>
+            <div className="posow-SaveButton">
+              <strong className="editTxt" data-test="editModeSwitch-label">
+                Edit
+              </strong>
+              <label className="switch">
+                <input
+                  type="checkbox"
+                  data-test="EditToggleBtn"
+                  data-testid="EditToggleBtn"
+                  checked={editTglCheckedState}
+                  onChange={handleEditTglChange}
+                />
+                <span className="slider round"></span>
+              </label>
+            </div>
           </Grid>
         </Grid>
 
@@ -247,7 +319,8 @@ function Invoice(props) {
             <Box sx={{ minWidth: 120 }}>
               <FormControl fullWidth>
                 <Select
-                  disabled={props.readonly}
+                  disabled={true}
+                  // disabled={props.readonly}
                   value={projectName}
                   onChange={handleProjectChange}
                 >
@@ -283,7 +356,12 @@ function Invoice(props) {
                         <MenuItem value={detail}>{detail}</MenuItem>
                       ))}
                     </Select> */}
-                    <TextField disabled={true} value={ClientSponsor} />
+                    <TextField
+                      //
+                      disabled={true}
+                      value={ClientSponsor}
+                      onChange={handleClientSponsor}
+                    />
                   </FormControl>
                 </Box>
               </Grid>
@@ -294,6 +372,8 @@ function Invoice(props) {
                   <FormControl fullWidth>
                     {/* <Select
                       disabled={projectName ? false : true}
+                    <Select
+                      disabled={true}
                       value={Client_Fin_controller}
                       onChange={handleClientFinController}
                     >
@@ -463,7 +543,7 @@ function Invoice(props) {
               <Box sx={{ minWidth: 120 }}>
                 <FormControl fullWidth>
                   <Select
-                    disabled={props.readonly}
+                    disabled={!editTglCheckedState}
                     value={invoice_raised}
                     onChange={handleInvoiceRaised}
                   >
@@ -474,7 +554,6 @@ function Invoice(props) {
                 </FormControl>
               </Box>
             </Grid>
-            <Grid item lg={12} md={12} sm={122} xs={12}></Grid>
           </div>
           <Grid item lg={12} md={12} sm={122} xs={12}>
             <div className="invoicereceived">
@@ -532,6 +611,11 @@ function Invoice(props) {
                   invoicereceived ||
                   invoice_raised_yesno === "No"
                 }
+                // disabled={
+                //   (props.readonly ||
+                //   invoicereceived ||
+                //   invoice_raised_yesno === "No") && editTglCheckedState
+                // }
               />
             </Grid>
           </div>

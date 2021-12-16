@@ -12,7 +12,7 @@ const INVOICE_Read = () => {
       dispatch(fetchSpecificINVOICE(id));
     }
   }, [id]);
-  return <Invoice readonly={true} />;
+  return <Invoice editBtn={true} toggleState={false} />;
 };
 
 export default INVOICE_Read;

@@ -71,6 +71,9 @@ const invoice_Slice = createSlice({
     SetSpecific(state, action) {
       state.dataByID = [...action.payload];
     },
+    setRedirect(state, action) {
+      state.redirect = action.payload;
+    },
   },
 });
 
