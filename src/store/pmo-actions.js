@@ -199,7 +199,7 @@ export const getAllClientData = (value) => {
 export const getAllocatedData = (filters, pageNo) => {
   return async (dispatch) => {
     const getData = async () => {
-      let url = `/allocations?limit=10&page=${pageNo}`;
+      let url = `/allocations/allocated?limit=10&page=${pageNo}`;
       if (filters.empId) url += `&empId=${filters.empId}`;
       if (filters.employeeName) url += `&empName=${filters.employeeName}`;
       if (filters.projectAllocated)

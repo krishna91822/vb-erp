@@ -37,7 +37,6 @@ const ViewProjects = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { projects } = useSelector((state) => state.pmo);
-  const [page, setPage] = useState(0);
   const [pressed, setPressed] = useState(false);
   const [filterProjects, setFilterProjects] = useState("active");
   const [filters, setFilters] = useState({
@@ -46,10 +45,10 @@ const ViewProjects = () => {
     vbProjectId: "",
     vbProjectStatus: "",
   });
-  const rowsPerPage = 10;
 
   useEffect(() => {
     dispatch(getAllProjects(filterProjects, 1));
+    // eslint-disable-next-line
   }, [filterProjects]);
 
   const FilterProjects = (event) => {
@@ -131,6 +130,7 @@ const ViewProjects = () => {
                 <Options value="Sort by Project ID">Sort by Project ID</Options>
                 <Options value="Sort by Status">Sort by Status</Options>
               </Dropdown>
+
               <Dropdown
                 onChange={FilterProjects}
                 style={{ width: "120px" }}
@@ -190,9 +190,9 @@ const ViewProjects = () => {
                   <TableCell
                     align="left"
                     sx={{
-                      width: "146px",
-                      maxWidth: "146px",
-                      minWidth: "146px",
+                      width: "156px",
+                      maxWidth: "156px",
+                      minWidth: "156px",
                     }}
                   >
                     Project ID
@@ -200,9 +200,9 @@ const ViewProjects = () => {
                   <TableCell
                     align="left"
                     sx={{
-                      width: "156px",
-                      maxWidth: "156px",
-                      minWidth: "156px",
+                      width: "146px",
+                      maxWidth: "146px",
+                      minWidth: "146px",
                     }}
                   >
                     Status
@@ -210,9 +210,9 @@ const ViewProjects = () => {
                   <TableCell
                     align="left"
                     sx={{
-                      width: "136px",
-                      maxWidth: "136px",
-                      minWidth: "136px",
+                      width: "146px",
+                      maxWidth: "146px",
+                      minWidth: "146px",
                     }}
                   >
                     Actions
@@ -277,9 +277,7 @@ const ViewProjects = () => {
                 {projects.results
                   ? projects.results.map((currElem, index) => (
                       <TableRow key={index} onClick={() => entryLink(currElem)}>
-                        <TableCell align="left">
-                          {index + page * rowsPerPage + 1}
-                        </TableCell>
+                        <TableCell align="left">{index + 1}</TableCell>
                         <TableCell align="left">
                           {currElem.clientName}
                         </TableCell>

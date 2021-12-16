@@ -30,6 +30,7 @@ const Bench = ({ pressed }) => {
 
   useEffect(() => {
     dispatch(getOnBench(filters, 1));
+    // eslint-disable-next-line
   }, []);
 
   let data = benchData;
