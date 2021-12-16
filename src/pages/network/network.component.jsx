@@ -71,7 +71,7 @@ const Network = () => {
   };
 
   return (
-    <Box sx={{ width: "100%", pt: 3, pb: 3 }}>
+    <Box data-test="network-page-test" sx={{ width: "100%", pt: 3, pb: 3 }}>
       <Container
         sx={{
           minHeight: "calc(100vh - 50px)",
@@ -103,6 +103,7 @@ const Network = () => {
             }}
           >
             <TextField
+              data-test="search-bar-test"
               onChange={searchHandleChange}
               placeholder="Search employee"
               id="outlined-search"
@@ -112,6 +113,7 @@ const Network = () => {
             />
           </Box>
           <CustomTextField
+            data-test="sort-test"
             label="Sort"
             id="outlined-select-currency"
             select
@@ -128,6 +130,7 @@ const Network = () => {
         </Box>
         <Box sx={{ width: "100%" }}>
           <CustomGridBox
+            data-test="networkTableHead"
             sx={{
               height: 60,
               mt: 2,
@@ -165,6 +168,7 @@ const Network = () => {
         {/* pagination */}
         <Box sx={{ width: 1, display: "flex", justifyContent: "center" }}>
           <Pagination
+            data-test="pagination-test"
             count={paginationInfo.totalPage}
             page={paginationInfo.page}
             onChange={handlePagination}

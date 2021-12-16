@@ -41,6 +41,7 @@ const EditMode = ({ updateRequest, handleOpen }) => {
   };
   return (
     <Box
+      data-test="edit-mode-test"
       sx={{
         minHeight: 40,
         display: "flex",
@@ -79,10 +80,14 @@ const EditMode = ({ updateRequest, handleOpen }) => {
       ) : (
         ""
       )}
-      <TitleTypo sx={{ textTransform: "capitalize", pr: 1 }}>
+      <TitleTypo
+        data-test="edit-text-test"
+        sx={{ textTransform: "capitalize", pr: 1 }}
+      >
         {editModeConstant.editModeBtn}
       </TitleTypo>
       <CustomSwitch
+        data-test="edit-switch-test"
         checked={inEditMode}
         onChange={handleChange}
         inputProps={{ "aria-label": "switch" }}

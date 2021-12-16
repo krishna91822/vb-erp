@@ -88,7 +88,7 @@ const Profile = () => {
   };
 
   return loading ? (
-    <Spinner />
+    <Spinner data-test="profile-page-test" />
   ) : (
     <Container sx={{ pb: 3 }}>
       <EditMode {...editModeProps} />
