@@ -15,7 +15,7 @@ const projects = ["xyz23", "asd34", "abc56", "yusah98", "ydy APPs"];
 const clientFinController = ["ABC", "XYZ", "EFG"];
 const targetedResources = ["ABC", "XYZ", "EFG", "ZZZ"];
 const clientSponsors = ["ABC", "XYZ"];
-const invoiceRaised = ["2567", "8743", "3753"];
+const invoiceRaised = ["Yes", "No"];
 const invoiceAmount = ["9349", "8243", "9753"];
 const VbBankAcc = ["0987", "7654", "2958"];
 
