@@ -407,7 +407,8 @@ const CreateProject = () => {
           <FormContainerStyled>
             <FormElementsStyled>
               <label htmlFor="cn" data-test="client-name-label">
-                Client Name <span>*</span>
+                Client Name <span>*</span>{" "}
+                <small>(min 3 letters required)</small>
               </label>
               <Autocomplete
                 name="clientName"
@@ -642,7 +643,8 @@ const CreateProject = () => {
             </DateContainerStyled>
             <FormElementsStyled>
               <label htmlFor="vpm" data-test="vb-project-manager-label">
-                VB Project Manager <span>*</span>
+                VB Project Manager <span>*</span>{" "}
+                <small>(min 3 letters required)</small>
               </label>
               <Autocomplete
                 id="cn"
