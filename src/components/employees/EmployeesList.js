@@ -43,8 +43,41 @@ const EmployeesList = (props) => {
     rowData = collectedDataArray;
     collectedDataArray = [];
     props.setOpenPopup(false);
-    dispatch(updateRewardEmployeeIdArray(rowData, props.rewardId));
-    console.log("hello", rowData);
+    //dispatch(updateRewardEmployeeIdArray(rowData, props.rewardId));
+    if (props.receiver) {
+      props.updaterecipientsData(rowData);
+    }
+    if (props.sender) {
+      props.updateSenderData(rowData);
+    }
+
+    // console.log("hello", rowData);
+  };
+
+  const onRowClicked = (rowData, rowState) => {
+    let rowStatus = false;
+    let rowEmployeeId;
+    var collectedDataObject = {};
+    collectedDataObject.name = rowData.row.name;
+    collectedDataObject.email = rowData.row.email;
+    collectedDataObject.employee_id = rowData.row.employee_id;
+    for (var i = 0; i < collectedDataArray.length; i++) {
+      if (
+        collectedDataObject.employee_id === collectedDataArray[i].employee_id
+      ) {
+        rowStatus = true;
+        rowEmployeeId = collectedDataObject.employee_id;
+      }
+    }
+
+    if (rowStatus === true) {
+      collectedDataArray = collectedDataArray.filter(
+        (data) => data.employee_id !== rowEmployeeId
+      );
+    } else {
+      collectedDataArray.push(collectedDataObject);
+    }
+    // console.log(collectedDataArray);
   };
 
   return (
@@ -62,7 +95,7 @@ const EmployeesList = (props) => {
         </div>
       </div>
       <div className="employee-table-container">
-        <EmployeeTable collectedDataArray={collectedDataArray} rows={rows} />
+        <EmployeeTable onRowClicked={onRowClicked} rows={rows} />
       </div>
       <div className="employee-button-container">
         <div className="employee-close-button">

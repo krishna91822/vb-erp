@@ -131,7 +131,18 @@ const EditReward = () => {
       rewardsActions.addEditRewardData({
         rewardData: {
           ...rewardData,
-          selected_sender: e.target.value,
+          sender_id: e.target.value,
+        },
+      })
+    );
+  };
+
+  const selectreceiverChange = (e) => {
+    dispatch(
+      rewardsActions.addEditRewardData({
+        rewardData: {
+          ...rewardData,
+          recipients_ids: e.target.value,
         },
       })
     );
@@ -251,10 +262,10 @@ const EditReward = () => {
                 <MenuItem value="CEO">CEO</MenuItem>
                 <MenuItem value="Manager">Manager</MenuItem>
                 <MenuItem
-                  value={rewardData.sender_id}
-                  onChange={selectsenderChange}
+                  value="selected"
                   onClick={() => relaunchReward()}
                   disableRipple
+                  onChange={selectsenderChange}
                 >
                   :Selected
                 </MenuItem>
@@ -282,9 +293,10 @@ const EditReward = () => {
 
                 <MenuItem value="Employees">Employee</MenuItem>
                 <MenuItem
-                  value={rewardData.recipients_ids}
+                  value="selected"
                   onClick={() => relaunchReward()}
                   disableRipple
+                  onChange={selectreceiverChange}
                 >
                   :Selected
                 </MenuItem>
