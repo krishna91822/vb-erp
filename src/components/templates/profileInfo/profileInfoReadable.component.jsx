@@ -130,8 +130,7 @@ const ProfileInfoReadable = ({
               {profileInfoConstant.department} - {empDepartment}
             </ContentBoldTypo>
             <ContentBoldTypo sx={{ textTransform: "capitalize", pl: 1 }}>
-              {profileInfoConstant.designation} -{" "}
-              {empDesignation ? empDesignation.toUpperCase() : empDesignation}
+              {profileInfoConstant.designation} - {empDesignation}
             </ContentBoldTypo>
             <ContentBoldTypo sx={{ textTransform: "capitalize", pl: 1 }}>
               {profileInfoConstant.dateOfJoining} -{" "}

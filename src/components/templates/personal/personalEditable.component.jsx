@@ -35,9 +35,7 @@ const PersonalEditable = (props) => {
     empPersonalEmail,
     empDob,
     empAboutMe,
-    // eslint-disable-next-line no-unused-vars
     empCurrentAddress,
-    // eslint-disable-next-line no-unused-vars
     empResidentialAddress,
   } = empData;
 
@@ -102,7 +100,9 @@ const PersonalEditable = (props) => {
     setAddressChecked(!addresschecked);
   };
 
-  const [currentAddress, setCurrentAddress] = useState({});
+  const [currentAddress, setCurrentAddress] = useState(
+    empCurrentAddress ? { ...empCurrentAddress } : {}
+  );
   const handleCurrentAddressChange = (event) => {
     const { value, name } = event.target;
     if (addresschecked) {
@@ -122,7 +122,9 @@ const PersonalEditable = (props) => {
     }
   };
 
-  const [residentialAddress, setResidentialAddress] = useState({});
+  const [residentialAddress, setResidentialAddress] = useState(
+    empResidentialAddress ? { ...empResidentialAddress } : {}
+  );
   const handleResidentialAddressChange = (event) => {
     const { value, name } = event.target;
     setResidentialAddress({ ...residentialAddress, [name]: value });

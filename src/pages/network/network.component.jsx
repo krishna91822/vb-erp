@@ -38,7 +38,7 @@ const Network = () => {
         `/employees?search=${searchEmp}&sort=${sort}&page=${paginationInfo.page}&limit=${paginationInfo.limit}`
       )
       .then((response) => {
-        setEmployees(response.data.data.employees);
+        setEmployees(response.data.data);
         response.data.totalResult < paginationInfo.limit
           ? setPaginationInfo({
               ...paginationInfo,
