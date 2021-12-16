@@ -248,7 +248,7 @@ const CreateProfile = ({
   };
 
   return currentEmployee && currentEmployee.role === "ADMIN" ? (
-    <BoxStyle>
+    <BoxStyle data-test="create-profile-test">
       <ContainerStyleTop>
         <TitleTypo sx={{ textTransform: "capitalize", mb: 0.5 }}>
           {currentEmployee ? currentEmployee.empName : ""}
@@ -269,10 +269,18 @@ const CreateProfile = ({
             </TitleTypo>
           )}
           <Box>
-            <GreenButton onClick={handleConfirm} variant="contained">
+            <GreenButton
+              data-test="confirm-button-test"
+              onClick={handleConfirm}
+              variant="contained"
+            >
               {createProfileConstant.confirm}
             </GreenButton>
-            <BlueButton onClick={handleOpen} variant="contained">
+            <BlueButton
+              data-test="custome-button-test"
+              onClick={handleOpen}
+              variant="contained"
+            >
               {createProfileConstant.addCustomField}
             </BlueButton>
           </Box>
@@ -389,7 +397,7 @@ const CreateProfile = ({
       </Modal>
     </BoxStyle>
   ) : (
-    <Spinner />
+    <Spinner data-test="spinner-test" />
   );
 };
 
