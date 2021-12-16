@@ -343,7 +343,6 @@ const CreateProject = () => {
   };
   const handleVbManOpen = () => {
     if (vbManInput && vbManInput.length > 2) {
-      dispatch(searchVbManager());
       setOpenVbMan(true);
     } else {
       setOpenVbMan(false);
@@ -353,6 +352,7 @@ const CreateProject = () => {
     const newInputValue = event.target.value;
     setVbManInput(newInputValue);
     if (newInputValue.length > 2) {
+      dispatch(searchVbManager());
       setOpenVbMan(true);
     } else {
       setOpenVbMan(false);
@@ -665,7 +665,7 @@ const CreateProject = () => {
                 renderInput={(params) => (
                   <TextField
                     {...params}
-                    placeholder="Enter Client name"
+                    placeholder="Enter VB Project Manager"
                     name="vbProjectManager"
                     error={errors.vbProjectManager ? true : false}
                     width="100%"
