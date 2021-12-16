@@ -83,41 +83,54 @@ const SidebarNavigation = () => {
   const sideMenu = [
     {
       name: "My Profile",
+      link: "/",
     },
     {
       name: "Tasks",
-      dropDown: [{ name: "Create Profile" }, { name: "Reviews" }],
+      dropDown: [
+        { name: "Create Profile", link: "/" },
+        { name: "Reviews", link: "/" },
+      ],
       open: openTasks,
       handle: handleClickTasks,
     },
     {
       name: "Network",
+      link: "/",
     },
     {
       name: "Contract Mgmt",
+      link: "/",
     },
     {
       name: "PMO",
       dropDown: [
-        { name: "Projects" },
-        { name: "Create Projects" },
-        { name: "Allocations" },
+        { name: "Projects", link: "/" },
+        { name: "Create Projects", link: "/" },
+        { name: "Allocations", link: "/" },
       ],
       open: openPMO,
       handle: handleClickPMO,
     },
     {
       name: "CIMS",
+      link: "/",
     },
     {
       name: "CMS",
-      dropDown: [{ name: "PO/SOW" }, { name: "Invoicing" }],
+      dropDown: [
+        { name: "PO/SOW", link: "/" },
+        { name: "Invoicing", link: "/" },
+      ],
       open: openCMS,
       handle: handleClickCMS,
     },
     {
       name: "R&R",
-      dropDown: [{ name: "Catalog" }, { name: "Reward", route: "/rewards" }],
+      dropDown: [
+        { name: "Catalog", link: "/" },
+        { name: "Reward", link: "/" },
+      ],
       open: openRR,
       handle: handleClickRR,
     },
@@ -134,6 +147,8 @@ const SidebarNavigation = () => {
             if (!menuItem.dropDown) {
               return (
                 <CustomListItemButton
+                  component={Link}
+                  to={menuItem.link}
                   selected={selectedIndex === i}
                   onClick={() => handleListItemClick(i)}
                 >
@@ -166,7 +181,7 @@ const SidebarNavigation = () => {
                         // <Link to={item.route}>
                         <CustomListItemButton
                           component={Link}
-                          to={item.route}
+                          to={item.link}
                           sx={{ pl: 4 }}
                         >
                           <ListItemIcon>
