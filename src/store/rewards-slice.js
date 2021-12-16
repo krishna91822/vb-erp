@@ -7,6 +7,7 @@ const initialState = {
   searchValue: "",
   sorting: "",
   defaultPage: 1,
+  editRewardData: {},
 };
 
 var globalRewardsData;
@@ -37,6 +38,9 @@ const rewardSlice = createSlice({
     },
     updateRewardStatus: (state, action) => {
       state.updateRewardData = !state.updateRewardData;
+    },
+    addEditRewardData: (state, action) => {
+      state.editRewardData = action.payload.rewardData;
     },
   },
 });

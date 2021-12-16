@@ -12,6 +12,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { addRewardData } from "../../store/rewards-actions";
 import { rewardsActions } from "../../store/rewards-slice";
 import { useNavigate, Link } from "react-router-dom";
+import Popup from "./Popup";
+import EmployeesList from "../employees/EmployeesList";
 
 const CreateReward = () => {
   const dispatch = useDispatch();
@@ -27,7 +29,6 @@ const CreateReward = () => {
   const updateRewardStatus = useSelector(
     (state) => state.reward.updateRewardData
   );
-
   useEffect(() => {
     if (updateRewardStatus) {
       navigate("/rewards");
@@ -80,6 +81,12 @@ const CreateReward = () => {
     event.preventDefault();
     dispatch(addRewardData(formData));
     console.log(formData);
+  };
+
+  const [openPopup, setOpenPopup] = useState(false);
+
+  const relaunchReward = () => {
+    setOpenPopup(true);
   };
 
   return (
@@ -169,7 +176,13 @@ const CreateReward = () => {
             >
               <MenuItem value="CEO">CEO</MenuItem>
               <MenuItem value="Manager">Manager</MenuItem>
-              <MenuItem value="selected">:Selected</MenuItem>
+              <MenuItem
+                value="selected"
+                onClick={() => relaunchReward()}
+                disableRipple
+              >
+                :Selected
+              </MenuItem>
             </Select>
           </FormControl>
         </Grid>
@@ -185,23 +198,27 @@ const CreateReward = () => {
               name="reward_receiver"
               onChange={receiverChange}
             >
-              <MenuItem value="Manager">Manager</MenuItem>
+              {type === "On-Demand" && (
+                <MenuItem value="Manager">Manager</MenuItem>
+              )}
+
               <MenuItem value="Employees">Employee</MenuItem>
-              <MenuItem value="Everyone">Everyone</MenuItem>
-              <MenuItem value="selected">:Selected</MenuItem>
+              <MenuItem
+                value="selected"
+                onClick={() => relaunchReward()}
+                disableRipple
+              >
+                :Selected
+              </MenuItem>
             </Select>
           </FormControl>
-          &nbsp;
-          <Button id="editbutton" variant="contained">
-            Edit
-          </Button>
         </Grid>
         <br />
         <Grid item>
           <FormLabel children="Receiver Message" style={{ color: " black " }} />
           <br />
           <TextField
-            placeholder="Congratulations Receiver for a great sales cycle"
+            defaultValue="hii <@receiver> you have some msg from <@sender>"
             multiline
             className="textfield1"
             rows={3}
@@ -275,6 +292,17 @@ const CreateReward = () => {
             </Button>
           </Link>
         </div>
+        <Popup
+          title="Team Members"
+          openPopup={openPopup}
+          setOpenPopup={setOpenPopup}
+        >
+          <EmployeesList
+            rewardId={formData._id}
+            openPopup={openPopup}
+            setOpenPopup={setOpenPopup}
+          />
+        </Popup>
       </form>
     </Grid>
   );

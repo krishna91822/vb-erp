@@ -76,7 +76,7 @@ const EmployeesList = (props) => {
     } else {
       collectedDataArray.push(collectedDataObject);
     }
-    console.log(collectedDataArray);
+    // console.log(collectedDataArray);
   };
 
   return (

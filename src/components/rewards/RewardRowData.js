@@ -71,8 +71,8 @@ const RewardRowData = ({ data, StyledMenu, open }) => {
           <p>{data.reward_type}</p>
         </div>
         <div className="assignee">
-          {data.reward_sender === "selected" && data.sender_id.length > 0 ? (
-            <p>{data.sender_id[0].empName}</p>
+          {data.reward_sender === "selected" ? (
+            <p>Employee Name</p>
           ) : (
             <p>{data.reward_sender}</p>
           )}
@@ -118,7 +118,7 @@ const RewardRowData = ({ data, StyledMenu, open }) => {
 
             <Link
               style={{ textDecoration: "none", color: "black" }}
-              to={`/reward/edit/${data._id}`}
+              to={`/rewards/edit/${data._id}`}
             >
               <MenuItem onClick={handleClose} disableRipple>
                 Edit
