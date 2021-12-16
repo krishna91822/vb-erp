@@ -498,9 +498,6 @@ export const CapturePO_SOW = (props) => {
               <hr className="projectInfoSeperator" />
               <div className="DocInfoinputBoxesRowOne">
                 <div className="txtBox TypeDropdown ">
-                  {/* <label>
-                    <strong>Type</strong>
-                  </label> */}
                   <div>
                     <FormControl sx={{ m: 1 }} className="inputField">
                       <InputLabel id="demo-multiple-name-label">
@@ -533,9 +530,6 @@ export const CapturePO_SOW = (props) => {
                 </div>
                 {props.editBtn ? (
                   <div className="txtBox PoNoTxtBox">
-                    {/* <label>
-                      <strong>{typeName} Number</strong>
-                    </label> */}
                     <div>
                       <TextField
                         className="inputTxtField inputField"
@@ -557,9 +551,6 @@ export const CapturePO_SOW = (props) => {
                 )}
                 <br />
                 <div className="txtBox CurrDropdown">
-                  {/* <label>
-                    <strong>Currency</strong>
-                  </label> */}
                   <div>
                     <FormControl sx={{ m: 1 }} className="inputField">
                       <InputLabel id="demo-multiple-name-label">
@@ -595,9 +586,6 @@ export const CapturePO_SOW = (props) => {
                   </div>
                 </div>
                 <div className="txtBox PoAmtTxtBox">
-                  {/* <label>
-                    <strong>{typeName} Amount</strong>
-                  </label> */}
                   <div>
                     <TextField
                       className="inputTxtField inputField "
@@ -626,7 +614,6 @@ export const CapturePO_SOW = (props) => {
                       className="inputField"
                       maxDate="POSOW"
                       label={typeName + " End Date"}
-                      // inputFormat="MM/dd/yyyy"
                       value={selectedDate}
                       onChange={handleDateChange}
                       helperText="Choose Date"
@@ -640,9 +627,6 @@ export const CapturePO_SOW = (props) => {
               </div>
               <div className="DocInfoInputBoxesRowTow">
                 <div className="txtBox PoAmtTxtBox">
-                  {/* <label>
-                    <strong>Document Name</strong>
-                  </label> */}
                   <div>
                     <TextField
                       className="inputField"
@@ -734,7 +718,7 @@ export const CapturePO_SOW = (props) => {
                     </Link>
                   )}
                 </div>
-                <div className="txtBox">
+                <div className="posow-txtBox">
                   <label>
                     <strong>Remarks/Comments</strong>
                   </label>
