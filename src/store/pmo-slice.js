@@ -36,12 +36,6 @@ const pmoSlice = createSlice({
     updateClientList: (state, action) => {
       state.allClients = action.payload;
     },
-    SortByProductID: (state, action) => {
-      state.projects = action.payload;
-    },
-    SortByStatus: (state, action) => {
-      state.projects = action.payload;
-    },
     redirectToProjectList: (state, action) => {
       state.redirect = !state.redirect;
     },

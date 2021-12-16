@@ -1,13 +1,14 @@
 export default function validateResourceForm(data) {
   let errors = {};
 
-  if (!data.empName || data.empName.trim() === "Invalid") {
+  if (!data.empName || data.empName.trim() === "") {
     errors.empName = "Associate Name Required";
   }
 
   if (!data.allocationStartDate.trim()) {
     errors.allocationStartDate = "Start Date Required";
   }
+
   if (!data.allocationEndDate.trim()) {
     errors.allocationEndDate = "End Date Required";
   } else if (data.allocationStartDate > data.allocationEndDate) {
@@ -20,6 +21,5 @@ export default function validateResourceForm(data) {
   if (!data.rackRate.trim()) {
     errors.rackRate = "RackRate Required";
   }
-
   return errors;
 }
