@@ -11,6 +11,7 @@ const initialState = {
   percentageAllocated: 0,
   clientNames: [],
   allClients: [],
+  vbManagers: [],
 };
 
 const pmoSlice = createSlice({
@@ -60,6 +61,9 @@ const pmoSlice = createSlice({
       ].filter((data) => {
         return data.trim().length > 0;
       });
+    },
+    updateVbManagers: (state, action) => {
+      state.vbManagers = action.payload;
     },
   },
 });

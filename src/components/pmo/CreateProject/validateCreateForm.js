@@ -1,7 +1,7 @@
 export default function validateForm(data) {
   let errors = {};
 
-  if (!data.clientName.trim()) {
+  if (!data.clientName && data.clientName === "") {
     errors.clientName = "Client Name Required";
   }
   if (!data.projectName.trim()) {

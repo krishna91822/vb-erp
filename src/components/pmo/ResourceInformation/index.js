@@ -34,19 +34,32 @@ const ResourceInformation = ({
     allocationPercentage,
     rackRate,
   } = resource;
+
   const [open, setOpen] = useState(false);
-  const [tempVal, setTempVal] = useState(0);
+  const [focused, setFocused] = useState(false);
+  const [tempEmpName, setTempEmpName] = useState("");
   const dispatch = useDispatch();
 
-  const handleOpen = ({ target }) => {
-    let inputvalue = target.value;
-
-    if (inputvalue.length > 2) {
-      setOpen(true);
-      dispatch(getAllEmployees(inputvalue));
-    } else {
+  const handleInputChange = (event, value) => {
+    setFocused(true);
+    if (event) {
+      setTempEmpName(event.target.value);
       setOpen(false);
+      if (event.target.value && event.target.value.length > 2) {
+        setOpen(true);
+        dispatch(getAllEmployees(event.target.value));
+      }
     }
+  };
+
+  const handleOnClick = (event, value) => {
+    if (value) {
+      handelAssociate(value);
+      setOpen(false);
+      setTempEmpName("");
+      setFocused(false);
+    }
+    setTempEmpName("");
   };
 
   const resourcesIds = resources.map((eachRes) => eachRes.empId);
@@ -63,28 +76,27 @@ const ResourceInformation = ({
         <AllElementsContainer>
           <ResourceForm>
             <Heading>
-              Associate Name <span>*</span>
+              Associate Name <span>*</span>{" "}
+              <small>(min 3 letters required)</small>
             </Heading>
             <Autocomplete
-              id="free-solo-demo"
-              freeSolo
-              key={tempVal}
               size="small"
-              onInputChange={handleOpen}
-              getOptionLabel={(option) => option.empName || "Invalid"}
-              onChange={(event, value) => {
-                value ? handelAssociate(value) : setOpen(false);
+              onBlur={() => {
+                setTempEmpName("");
+                setOpen(false);
+                setFocused(false);
               }}
-              // getOptionDisabled={(option) => option.empName}
+              onInputChange={handleInputChange}
+              getOptionLabel={(option) => option.empName}
+              onChange={handleOnClick}
               options={filteredEmployees}
               open={open}
               style={{ width: "100%" }}
-              disableClearable
+              inputValue={focused ? tempEmpName : empName}
               renderInput={(params) => (
                 <TextField
                   {...params}
                   placeholder="associate name"
-                  value={empName}
                   error={resourceErrors.empName ? true : false}
                 />
               )}
@@ -178,7 +190,7 @@ const ResourceInformation = ({
           <ResourceForm style={{ justifyContent: "start" }}>
             <Button
               onClick={() => {
-                setTempVal(tempVal + 1);
+                // setTempVal(tempVal + 1);
                 addResource();
               }}
               variant="contained"

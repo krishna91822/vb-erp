@@ -35,6 +35,7 @@ import {
   deleteResource,
   getAllClientData,
   getClinetById,
+  searchVbManager,
 } from "../../../store/pmo-actions";
 import { pmoActions } from "../../../store/pmo-slice";
 import validateForm from "./validateCreateForm";
@@ -79,6 +80,7 @@ const CreateProject = () => {
     allEmployees,
     clientNames,
     percentageAllocated,
+    vbManagers,
   } = useSelector((state) => state.pmo);
   const [edit, setEdit] = useState(false);
   const [state, setState] = useState(initialState);
@@ -86,6 +88,9 @@ const CreateProject = () => {
   const [resourceErrors, setResourceErrors] = useState({});
   const [open, setOpen] = useState(false);
   const [names, setNames] = useState([]);
+  const [openVbMan, setOpenVbMan] = useState(false);
+  const [vbManInput, setVbManInput] = useState("");
+  const [tempClientName, setTempClientName] = useState("");
 
   const {
     project: {
@@ -142,6 +147,7 @@ const CreateProject = () => {
         })),
       });
       dispatch(getClinetById(projectById.project.clientId));
+      setVbManInput(projectById.project.vbProjectManager);
     }
   }, [projectById]);
 
@@ -152,13 +158,14 @@ const CreateProject = () => {
   }, [clientNames]);
 
   const handelAssociate = (value) => {
+    console.log(value, "value here");
     dispatch(getPercentageAllocated(value.empId));
     setState({
       ...state,
       resource: {
         ...state.resource,
-        empName: value.empName,
-        empId: value._id,
+        empName: value.empName || "",
+        empId: value._id || "",
       },
     });
   };
@@ -296,24 +303,6 @@ const CreateProject = () => {
     }
   };
 
-  const handleOpen = ({ target }) => {
-    let inputvalue = target.value;
-    if (inputvalue && inputvalue.length > 2) {
-      dispatch(getAllClientData(inputvalue));
-      setOpen(true);
-    } else {
-      setOpen(false);
-    }
-  };
-  const handlePhoneNumber = (number) => {
-    setState({
-      ...state,
-      project: {
-        ...state.project,
-        clientPrimaryContact: number,
-      },
-    });
-  };
   const handleAutoselect = (value) => {
     setState({
       ...state,
@@ -323,7 +312,7 @@ const CreateProject = () => {
         clientPrimaryContact: value.contacts.primaryContact.contactNumber,
         clientId: value._id,
         clientPrimaryContactName: `${value.contacts.primaryContact.firstName} ${value.contacts.primaryContact.lastName}`,
-        // domainSector: value.domain,
+        domainSector: value.domain,
       },
     });
     setNames(
@@ -335,6 +324,71 @@ const CreateProject = () => {
         return data.trim().length > 0;
       })
     );
+  };
+  const handleInputChange = (event, value) => {
+    if (event) {
+      setTempClientName(event.target.value);
+      setOpen(false);
+      if (event.target.value && event.target.value.length > 2) {
+        setOpen(true);
+        dispatch(getAllClientData(event.target.value));
+      }
+    }
+
+    // let inputvalue = target.value;
+    // if (inputvalue && inputvalue.length > 2) {
+    //   dispatch(getAllClientData(inputvalue));
+    //   setOpen(true);
+    // } else {
+    //   setOpen(false);
+    // }
+  };
+  const handleOnClick = (event, value) => {
+    if (value) {
+      handleAutoselect(value);
+      setOpen(false);
+      setTempClientName("");
+    }
+    setTempClientName("");
+  };
+
+  const handlePhoneNumber = (number) => {
+    setState({
+      ...state,
+      project: {
+        ...state.project,
+        clientPrimaryContact: number,
+      },
+    });
+  };
+  const handleVbManOpen = () => {
+    if (vbManInput && vbManInput.length > 2) {
+      dispatch(searchVbManager());
+      setOpenVbMan(true);
+    } else {
+      setOpenVbMan(false);
+    }
+  };
+  const handleVbManInputChange = (event) => {
+    const newInputValue = event.target.value;
+    setVbManInput(newInputValue);
+    if (newInputValue.length > 2) {
+      setOpenVbMan(true);
+    } else {
+      setOpenVbMan(false);
+    }
+  };
+  const handleVbManAutoselect = (value) => {
+    if (value) {
+      setVbManInput(value.empName);
+      setState({
+        ...state,
+        project: {
+          ...state.project,
+          vbProjectManager: value.empName,
+        },
+      });
+    }
   };
 
   return (
@@ -373,25 +427,27 @@ const CreateProject = () => {
           <FormContainerStyled>
             <FormElementsStyled>
               <label htmlFor="cn" data-test="client-name-label">
-                Client Name <span>*</span>
+                Client Name <span>*</span>{" "}
+                <small>(min 3 letters required)</small>
               </label>
               <Autocomplete
                 name="clientName"
                 id="cn"
                 data-test="client-name-input"
                 disabled={!edit}
-                freeSolo
-                disableClearable
                 size="small"
-                onInputChange={handleOpen}
-                getOptionLabel={(option) => option.brandName}
-                onChange={(event, value) => {
-                  value ? handleAutoselect(value) : setOpen(false);
+                onInputChange={handleInputChange}
+                onBlur={() => {
+                  setTempClientName("");
+                  setOpen(false);
                 }}
+                getOptionLabel={(option) => option.brandName}
+                onChange={handleOnClick}
                 style={{ width: "100%" }}
                 options={allClients || []}
                 open={open}
-                inputValue={clientName}
+                disableClearable
+                inputValue={tempClientName || clientName}
                 renderInput={(params) => (
                   <TextField
                     {...params}
@@ -558,7 +614,7 @@ const CreateProject = () => {
                 data-test="domain-sector-input"
                 size="small"
                 variant="outlined"
-                disabled={!edit}
+                disabled
                 value={domainSector}
                 placeholder="Enter Domain/Sector"
                 style={{ width: "100%" }}
@@ -608,29 +664,36 @@ const CreateProject = () => {
             </DateContainerStyled>
             <FormElementsStyled>
               <label htmlFor="vpm" data-test="vb-project-manager-label">
-                VB Project Manager <span>*</span>
+                VB Project Manager <span>*</span>{" "}
+                <small>(min 3 letters required)</small>
               </label>
-              <Select
-                error={errors.vbProjectManager ? true : false}
-                id="vpm"
-                name="vbProjectManager"
-                data-test="vb-project-manager-select"
-                defaultValue="1"
-                value={vbProjectManager}
-                size="small"
-                variant="outlined"
-                displayEmpty
+              <Autocomplete
+                id="cn"
+                data-test="client-name-input"
                 disabled={!edit}
+                disableClearable
+                size="small"
+                onOpen={handleVbManOpen}
+                onClose={() => setOpenVbMan(false)}
+                getOptionLabel={(option) => option.empName}
+                onChange={(event, value) => {
+                  handleVbManAutoselect(value);
+                }}
                 style={{ width: "100%" }}
-                onChange={handleProjectChange}
-              >
-                <MenuItem value="" disabled>
-                  <span style={{ color: "rgb(190, 190, 190)" }}>
-                    Select VB Project Manager
-                  </span>
-                </MenuItem>
-                <MenuItem value="Valuebound">ValueBound</MenuItem>
-              </Select>
+                options={vbManagers || []}
+                open={openVbMan}
+                inputValue={vbManInput}
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    placeholder="Enter Client name"
+                    name="vbProjectManager"
+                    error={errors.vbProjectManager ? true : false}
+                    width="100%"
+                    onChange={handleVbManInputChange}
+                  />
+                )}
+              />
             </FormElementsStyled>
             <FormElementsStyled>
               <label htmlFor="vpm" data-test="project-status-label">
