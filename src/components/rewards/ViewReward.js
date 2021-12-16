@@ -17,7 +17,7 @@ const ViewReward = () => {
   return (
     <div className="wrapper">
       <SearchComponent />
-      <RewardTableComponent data={rewards} />
+      <RewardTableComponent rewardData={rewards} />
       <PaginationComponent />
     </div>
   );
