@@ -64,7 +64,7 @@ export const UpdatePO_SOW = (formData, id) => {
 export const SendForApproval = (curr_status, id) => {
   return async function (dispatch) {
     try {
-      const response = await axios.patch(`/poSow/status/${id}`, curr_status);
+      const response = await axios.patch(`/poSow/status/${id}?status=Pending`);
       if (response.status === 200) {
         dispatch(
           uiActions.showNotification({

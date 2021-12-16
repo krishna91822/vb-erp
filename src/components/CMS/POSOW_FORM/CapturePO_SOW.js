@@ -146,7 +146,6 @@ export const CapturePO_SOW = (props) => {
     if (props.editBtn && filteredArr !== undefined) {
       setClientName({ clientName: filteredArr[0].Client_Name });
       setProjectName({ _id: "", projectName: filteredArr[0].Project_Name });
-
       setPO_number(filteredArr[0].PO_Number);
       setPOAmt(filteredArr[0].PO_Amount);
       setTypeName(filteredArr[0].Type);
@@ -171,10 +170,16 @@ export const CapturePO_SOW = (props) => {
           Object.keys(filteredArr[0].Targetted_Resources)
         )
       );
-      setTargetedResChkBox(Object.values(filteredArr[0].Targetted_Resources));
+      // setTargetedResChkBox(Object.values(filteredArr[0].Targetted_Resources));
     }
   }, [filteredArr]);
-
+  useEffect(() => {
+    if (props.editBtn && params.id) {
+      setTargetedResChkBox(Object.values(filteredArr[0].Targetted_Resources));
+    } else {
+      setTargetedResChkBox(new Array(targetedResources.length).fill(false));
+    }
+  }, [targetedResources]);
   const handleClientChange = (event, value) => {
     if (!!value) {
       setClientName(value);
@@ -243,24 +248,18 @@ export const CapturePO_SOW = (props) => {
   const submitForm = (event) => {
     event.preventDefault();
 
-    let SelectedTargetedRes = [];
-
     let testObjTargetedRes = {};
+    console.log(TargetedResChkBox, targetedResources);
     for (var i = 0; i < TargetedResChkBox.length; i++) {
       testObjTargetedRes[targetedResources[i]] = TargetedResChkBox[i];
-
-      if (TargetedResChkBox[i] === true) {
-        SelectedTargetedRes.push(targetedResources[i]);
-      }
     }
-
+    console.log(testObjTargetedRes);
     const DataToSend = {
       Project_Id: projectId,
       Client_Name: clientName.clientName,
       Project_Name: projectName.projectName,
       Client_Sponser: clientProjectSponsor,
       Client_Finance_Controller: clientFinanceController,
-
       Targetted_Resources: testObjTargetedRes,
       Status: status,
       Type: typeName,
