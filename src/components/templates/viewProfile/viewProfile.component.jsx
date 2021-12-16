@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
 
-import { Box, Container } from "@mui/material";
+import { Box, Container, Button } from "@mui/material";
 
 import { useParams } from "react-router-dom";
 
 import { CustomSwitch, TitleTypo } from "./viewProfile.styles";
+import jsPDF from "jspdf";
 
+import template from "./pdfTemplate";
 import ProfileContent from "../profileContent/profileContent.component";
 import WithSpinner from "../../hoc/withSpinner/withSpinner.component";
 import CreateProfile from "./../../../pages/createProfile/createProfile.component";
@@ -35,27 +37,103 @@ const ViewProfile = () => {
   const handleSwitchChange = (event) => {
     setEditEmployee(event.target.checked);
   };
+  const handlePdfClick = () => {
+    var doc = new jsPDF();
+    doc.addImage(template, "JPEG", 0, 0, 210, 298);
+    doc.setFontSize(10);
+    doc.text(`${viewedEmployee.empName}`, 30, 71, {
+      align: "center",
+    });
+    doc.text(`${viewedEmployee.empId}`, 85, 42.5);
+    doc.text(`${viewedEmployee.empEmail}`, 158, 42.5);
+    doc.text(`${viewedEmployee.empDepartment}`, 85, 49.5);
+    doc.text(`${viewedEmployee.empDesignation}`, 158, 49.5);
+    doc.text(
+      `${new Date(viewedEmployee.empDoj).toDateString().slice(4)}`,
+      85,
+      57
+    );
+    doc.text(`${viewedEmployee.empReportingManager}`, 158, 57);
+
+    doc.text(`${viewedEmployee.empAboutMe}`, 5, 87, {
+      maxWidth: 90,
+      align: "justify",
+    });
+    doc.text(`${viewedEmployee.empPersonalEmail}`, 135, 85.5);
+    doc.text(
+      `${new Date(viewedEmployee.empDob).toDateString().slice(4)}`,
+      135,
+      92.5
+    );
+    doc.text(`${viewedEmployee.empHobbies}`, 135, 99);
+    doc.text(`${viewedEmployee.empConnections}`, 135, 106.5);
+    doc.text(`${viewedEmployee.empCurrentAddress}`, 135, 113, {
+      maxWidth: 60,
+    });
+    doc.text(`${viewedEmployee.empResidentialAddress}`, 135, 127, {
+      maxWidth: 60,
+    });
+
+    doc.text(`${viewedEmployee.empBand}`, 45, 156);
+    doc.text(`${viewedEmployee.empGraduation}`, 45, 162);
+    doc.text(`${viewedEmployee.empGraduationUniversity}`, 45, 169);
+    doc.text(`${viewedEmployee.empPostGraduation}`, 45, 176);
+    doc.text(`${viewedEmployee.empPostGraduationUniversity}`, 45, 182.5);
+
+    doc.text(`${viewedEmployee.empPrimaryCapability}`, 45, 198.5);
+    doc.text(`${viewedEmployee.empSkillSet}`, 45, 205.5);
+    doc.text(`${viewedEmployee.empCertifications}`, 45, 212.5);
+
+    doc.save(`${viewedEmployee.empName}`);
+  };
 
   return Object.keys(viewedEmployee).length === 0 ? (
     <Spinner />
   ) : (
-    <Container sx={{ pb: 3, pt: 3, position: "relative" }}>
-      <Box
-        sx={{
-          display: "flex",
-          p: 2,
-          position: editEmployee ? "absolute" : "relative",
-          mt: editEmployee ? 4 : "",
-        }}
-      >
-        <TitleTypo sx={{ textTransform: "capitalize", pr: 1 }}>
-          Edit Employee
-        </TitleTypo>
-        <CustomSwitch
-          checked={editEmployee}
-          onChange={handleSwitchChange}
-          inputProps={{ "aria-label": "controlled" }}
-        />
+    <Container
+      sx={{
+        pb: 3,
+        pt: 3,
+        position: "relative",
+      }}
+    >
+      <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+        <Box
+          sx={{
+            display: "flex",
+            p: 2,
+            position: editEmployee ? "absolute" : "relative",
+            mt: editEmployee ? 4 : "",
+          }}
+        >
+          <TitleTypo sx={{ textTransform: "capitalize", pr: 1 }}>
+            Edit Employee
+          </TitleTypo>
+          <CustomSwitch
+            checked={editEmployee}
+            onChange={handleSwitchChange}
+            inputProps={{ "aria-label": "controlled" }}
+          />
+        </Box>
+        <Box>
+          {!editEmployee ? (
+            <Button
+              id="download"
+              variant="contained"
+              onClick={handlePdfClick}
+              sx={{
+                backgroundColor: "#1AAE9F",
+                "&:hover": {
+                  backgroundColor: "hsl(173.9,74%,30%)",
+                },
+              }}
+            >
+              Download as PDF
+            </Button>
+          ) : (
+            <></>
+          )}
+        </Box>
       </Box>
       {editEmployee ? (
         <CreateProfile editEmployeeData={viewedEmployee} />
