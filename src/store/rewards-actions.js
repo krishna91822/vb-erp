@@ -179,6 +179,8 @@ export const deleteRewardData = (id, defaultPage, sorting, searchValue) => {
           dispatch(getRewardsDataWithPageAndSearch(searchValue, defaultPage));
         } else if (defaultPage !== 1 && sorting !== "") {
           dispatch(filterDataWithPageAndFilter(sorting, defaultPage));
+        } else if (defaultPage !== 1) {
+          dispatch(getRewardsDataWithPageNumber(defaultPage));
         } else {
           dispatch(getRewardsData());
         }
@@ -380,13 +382,12 @@ export const updateRewardStatus = (
 
     try {
       await fetchData();
-      console.log(defaultPage);
       if (defaultPage !== 1 && searchValue !== "") {
         dispatch(getRewardsDataWithPageAndSearch(searchValue, defaultPage));
       } else if (defaultPage !== 1 && sorting !== "") {
         dispatch(filterDataWithPageAndFilter(sorting, defaultPage));
       } else if (defaultPage !== 1) {
-        getRewardsDataWithPageNumber(defaultPage);
+        dispatch(getRewardsDataWithPageNumber(defaultPage));
       } else {
         dispatch(getRewardsData());
       }
