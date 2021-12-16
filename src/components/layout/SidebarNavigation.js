@@ -116,6 +116,7 @@ const SidebarNavigation = () => {
       name: "CIMS",
       link: "/cims",
     },
+
     {
       name: "CMS",
       dropDown: [

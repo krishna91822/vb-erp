@@ -1,0 +1,34 @@
+.invoiceinputs {
+  width: 85%;
+  margin-bottom: 10px;
+}
+.gridcontainer {
+  border: 1px solid grey;
+  width: 100%;
+  padding: 15px 5px;
+}
+.maincontainer {
+  margin: 0 55px;
+}
+select {
+  width: 85%;
+  margin-bottom: 10px;
+}
+form {
+  padding: 10px;
+}
+.invoicereceived {
+  margin: 10px 0;
+}
+form {
+  border: 1px solid grey;
+}
+h3 {
+  padding-left: 10px;
+}
+.heading {
+  display: inline-block;
+}
+.savebtn {
+  margin-left: 100%;
+}

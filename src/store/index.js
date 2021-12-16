@@ -5,6 +5,8 @@ import uiSlice from "./ui-slice";
 import rewardSlice from "./rewards-slice";
 import cimsSlice from "./cims-slice";
 import employeeSlice from "./employees-slice";
+import POSOW_Slice from "./CMS/POSOW-slice";
+import invoice_Slice from "./CMS/INVOICE-slice";
 
 export default configureStore({
   reducer: {
@@ -13,5 +15,7 @@ export default configureStore({
     reward: rewardSlice.reducer,
     cims: cimsSlice.reducer,
     employee: employeeSlice.reducer,
+    CMS_state: POSOW_Slice.reducer,
+    INVOICE_state: invoice_Slice.reducer,
   },
 });
