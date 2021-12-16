@@ -460,3 +460,35 @@ export const updateRewardEmployeeIdArray = (dataIds, rewardId) => {
     }
   };
 };
+
+export const addselectedpopup = (employeeIdArrayData, reward) => {
+  return async (dispatch) => {
+    const fetchData = async () => {
+      let employees_id = [];
+      employeeIdArrayData.map((data) => employees_id.push(data.employee_id));
+
+      const data = {
+        recipients_ids: employees_id,
+      };
+      // console.log(employees_id);
+      const response = axios.post("/rewards", reward);
+
+      if (response.status === "failure") {
+        throw new Error("Could not fetch cart data!");
+      }
+      return response;
+    };
+
+    try {
+      await fetchData();
+
+      toast.success("Reward Select");
+
+      dispatch(rewardsActions.updateRewardStatus());
+    } catch (error) {
+      dispatch(uiActions.toggleLoader());
+    } finally {
+      dispatch(uiActions.toggleLoader());
+    }
+  };
+};
