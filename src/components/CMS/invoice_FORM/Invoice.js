@@ -110,7 +110,7 @@ function Invoice(props) {
   const [PoCurr, setPoCurr] = useState("");
   const [clientFinControllerArr, setClientFinControllerArr] =
     useState(clientFinController);
-  const [poId, setPoId] = useState("61b337aea50b020d3cf384e0");
+  const [poId, setPoId] = useState("");
   const [clientSponsorArr, setClientSponsorArr] = useState(clientSponsors);
   const [ClientSponsor, setClientSponsor] = React.useState(Readclientsponsor);
   const [invoice_raised, setInvoiceRaised] = React.useState(Readinvoiceraised);
@@ -143,6 +143,7 @@ function Invoice(props) {
 
   useEffect(() => {
     if (props.editBtn && filteredArr[0].PO_Id !== undefined) {
+      // console.log(filteredArr);
       setPersonName(filteredArr[0].PO_Id.Client_Name);
       setProjectName(filteredArr[0].PO_Id.Project_Name);
       setPO_number(filteredArr[0].PO_Id.PO_Number);
@@ -153,6 +154,7 @@ function Invoice(props) {
       setinvoiceAmount(filteredArr[0].invoice_amount_received);
       setDate(filteredArr[0].amount_received_on);
       setVbbankacc(filteredArr[0].vb_bank_account);
+      setPoId(filteredArr[0].PO_Id._id);
     }
   }, [filteredArr]);
 
@@ -212,7 +214,6 @@ function Invoice(props) {
       vb_bank_account: Vb_Bank_Acc,
       amount_received_on: new Date(Date_),
     };
-    console.log(DataToSend);
 
     dispatch(Update_INVOICE(DataToSend, params.id));
   };
@@ -222,13 +223,14 @@ function Invoice(props) {
       const filtered = allPOSOWs.filter((val) => {
         return projectName === val.Project_Name;
       });
+
       setPO_number(filtered[0].PO_Number);
       setPersonName(filtered[0].Client_Name);
       setClientSponsorArr(filtered[0].Client_Sponser);
       setClientFinControllerArr(filtered[0].Client_Finance_Controller);
       setPOAmt(filtered[0].PO_Amount);
       setPoCurr(filtered[0].Currency);
-      setPoId(filtered[0]._id);
+      setPoId(filtered[0].PO_Id);
     }
   }, [projectName]);
   const submitForm = async (event) => {
@@ -236,14 +238,11 @@ function Invoice(props) {
 
     const DataToSend = {
       PO_Id: poId,
-      // client_sponsor: ClientSponsor,
-      // client_finance_controller: Client_Fin_controller,
       invoice_raised: invoice_raised,
       invoice_amount_received: invoice_amount,
       vb_bank_account: Vb_Bank_Acc,
       amount_received_on: new Date(Date_),
     };
-    console.log(DataToSend);
     if (!props.invoicereceived) {
       dispatch(Update_INVOICE(DataToSend, params.id));
     } else {
