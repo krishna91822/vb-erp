@@ -94,7 +94,6 @@ const CreateProject = () => {
 
   const {
     project: {
-      clientId,
       clientName,
       projectName,
       clientProjectManager,
@@ -105,7 +104,6 @@ const CreateProject = () => {
       clientFinanceController,
       startDate,
       endDate,
-      vbProjectManager,
       vbProjectStatus,
     },
     resource,
@@ -125,6 +123,7 @@ const CreateProject = () => {
       dispatch(pmoActions.clearCreateProjectState());
       setState(initialState);
     };
+    // eslint-disable-next-line
   }, []);
 
   useLayoutEffect(() => {
@@ -143,6 +142,7 @@ const CreateProject = () => {
       dispatch(pmoActions.redirectToProjectList());
       setEdit(false);
     }
+    // eslint-disable-next-line
   }, [redirect]);
 
   useEffect(() => {
@@ -159,12 +159,14 @@ const CreateProject = () => {
       dispatch(getClinetById(projectById.project.clientId));
       setVbManInput(projectById.project.vbProjectManager);
     }
+    // eslint-disable-next-line
   }, [projectById]);
 
   useEffect(() => {
     if (clientNames.length > 0) {
       setNames(clientNames);
     }
+    // eslint-disable-next-line
   }, [clientNames]);
 
   const handelAssociate = (value) => {

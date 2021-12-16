@@ -29,6 +29,7 @@ export default function validateForm(data) {
       errors.endDate = "End Date need to be grater than Start Date";
     }
   }
+
   if (!data.vbProjectManager.trim()) {
     errors.vbProjectManager = "VB Project Manager Required";
   }

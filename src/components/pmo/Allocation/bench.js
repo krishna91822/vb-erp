@@ -29,7 +29,7 @@ const Bench = ({ pressed, benchSortValue }) => {
   });
 
   useEffect(() => {
-    dispatch(getOnBench(filters, 1, benchSortValue));
+    dispatch(getOnBench(filters, 1, benchSortValue)); // eslint-disable-next-line
   }, [benchSortValue]);
 
   let data = benchData;

@@ -27,7 +27,7 @@ const Allocated = ({ pressed, allocatedSortedValue }) => {
     allocationEndDate: "",
   });
   useEffect(() => {
-    dispatch(getAllocatedData(filters, 1, allocatedSortedValue));
+    dispatch(getAllocatedData(filters, 1, allocatedSortedValue)); // eslint-disable-next-line
   }, [allocatedSortedValue]);
 
   let data = allocatedData;
