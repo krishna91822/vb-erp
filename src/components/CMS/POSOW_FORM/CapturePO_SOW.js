@@ -247,9 +247,7 @@ export const CapturePO_SOW = (props) => {
 
   const submitForm = (event) => {
     event.preventDefault();
-
     let testObjTargetedRes = {};
-
     for (var i = 0; i < TargetedResChkBox.length; i++) {
       testObjTargetedRes[targetedResources[i]] = TargetedResChkBox[i];
     }
@@ -498,9 +496,6 @@ export const CapturePO_SOW = (props) => {
               <hr className="projectInfoSeperator" />
               <div className="DocInfoinputBoxesRowOne">
                 <div className="txtBox TypeDropdown ">
-                  {/* <label>
-                    <strong>Type</strong>
-                  </label> */}
                   <div>
                     <FormControl sx={{ m: 1 }} className="inputField">
                       <InputLabel id="demo-multiple-name-label">
@@ -514,9 +509,7 @@ export const CapturePO_SOW = (props) => {
                         data-test="Doc-Type-dropdown"
                         inputProps={{ "data-testid": "Doc-Type-dropdown" }}
                         error={errors.Type ? true : false}
-                        disabled={
-                          props.editBtn && !editTglCheckedState ? true : false
-                        }
+                        disabled={props.editBtn ? true : false}
                       >
                         {types.map((name) => (
                           <MenuItem
@@ -533,9 +526,6 @@ export const CapturePO_SOW = (props) => {
                 </div>
                 {props.editBtn ? (
                   <div className="txtBox PoNoTxtBox">
-                    {/* <label>
-                      <strong>{typeName} Number</strong>
-                    </label> */}
                     <div>
                       <TextField
                         className="inputTxtField inputField"
@@ -557,9 +547,6 @@ export const CapturePO_SOW = (props) => {
                 )}
                 <br />
                 <div className="txtBox CurrDropdown">
-                  {/* <label>
-                    <strong>Currency</strong>
-                  </label> */}
                   <div>
                     <FormControl sx={{ m: 1 }} className="inputField">
                       <InputLabel id="demo-multiple-name-label">
@@ -595,9 +582,6 @@ export const CapturePO_SOW = (props) => {
                   </div>
                 </div>
                 <div className="txtBox PoAmtTxtBox">
-                  {/* <label>
-                    <strong>{typeName} Amount</strong>
-                  </label> */}
                   <div>
                     <TextField
                       className="inputTxtField inputField "
@@ -617,16 +601,15 @@ export const CapturePO_SOW = (props) => {
                 </div>
               </div>
               <div className="newRowtwo">
-                <div className="PO-endDate">
+                <div className="PO-endDate ">
                   <label>
                     <strong>{typeName + " End Date"}</strong>
                   </label>
                   <div>
                     <BasicDatePicker
-                      className="inputField"
+                      className="inputField txtBox"
                       maxDate="POSOW"
                       label={typeName + " End Date"}
-                      // inputFormat="MM/dd/yyyy"
                       value={selectedDate}
                       onChange={handleDateChange}
                       helperText="Choose Date"
@@ -640,12 +623,9 @@ export const CapturePO_SOW = (props) => {
               </div>
               <div className="DocInfoInputBoxesRowTow">
                 <div className="txtBox PoAmtTxtBox">
-                  {/* <label>
-                    <strong>Document Name</strong>
-                  </label> */}
                   <div>
                     <TextField
-                      className="inputField"
+                      className="inputTxtField"
                       sx={{ m: 1, width: 400 }}
                       id="outlined-basic"
                       label="uploaded Doc"
@@ -658,11 +638,11 @@ export const CapturePO_SOW = (props) => {
                   </div>
                 </div>
                 <div className="DocTypeDropdown">
-                  {/* <label>
-                    <strong>Doc Type</strong>
-                  </label> */}
                   <div>
-                    <FormControl sx={{ m: 1, width: 300 }}>
+                    <FormControl
+                      sx={{ m: 1, width: 300 }}
+                      className="inputField"
+                    >
                       <InputLabel id="demo-multiple-name-label">
                         Doc type
                       </InputLabel>
@@ -734,7 +714,7 @@ export const CapturePO_SOW = (props) => {
                     </Link>
                   )}
                 </div>
-                <div className="txtBox">
+                <div className="posow-txtBox">
                   <label>
                     <strong>Remarks/Comments</strong>
                   </label>
