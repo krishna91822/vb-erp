@@ -39,7 +39,7 @@ export default function ClientHelpers() {
     setTimeout(() => {
       navigate(`/cims/clientdetails/${clientId}`);
       dispatch(uiActions.toggleLoader());
-    }, 2000);
+    }, 4000);
   };
 
   const handelActiveStatus = async (clientId, clientStatus, brandName) => {
