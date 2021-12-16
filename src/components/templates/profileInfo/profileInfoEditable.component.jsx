@@ -207,7 +207,7 @@ const ProfileInfoEditable = (props) => {
                 id="outlined-basic"
                 variant="outlined"
                 placeholder="sunilee"
-                value={empReportingManager}
+                value={empReportingManager ? empReportingManager : "sunilee"}
                 type="text"
                 name="empReportingManager"
                 onChange={handleChange}

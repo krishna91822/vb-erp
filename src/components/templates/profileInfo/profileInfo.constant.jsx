@@ -5,5 +5,5 @@ export const profileInfoConstant = {
   department: "department",
   designation: "designation",
   dateOfJoining: "date of joining",
-  reportingManager: "reporting manager",
+  reportingManager: "reporting to",
 };

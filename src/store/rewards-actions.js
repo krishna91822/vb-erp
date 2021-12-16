@@ -185,6 +185,7 @@ export const addRewardData = (reward) => {
     };
 
     try {
+      // eslint-disable-next-line no-unused-vars
       const data = await fetchData();
       // dispatch(
       //   rewardsActions.addRewards({

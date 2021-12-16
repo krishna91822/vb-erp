@@ -33,6 +33,7 @@ const CreateReward = () => {
       navigate("/rewards");
       dispatch(rewardsActions.updateRewardStatus());
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch, updateRewardStatus]);
 
   const handleChangeForm = (e) => {

@@ -38,27 +38,23 @@ const ProfileContent = (props) => {
     handleClose,
   } = props;
 
-  console.log("updateRequest:", updateRequest);
-
   //calculate percentage progress
   const profileProgress = () => {
     const totalFields = inEditMode
       ? Object.keys(updateRequest).length +
         updateRequest.personalDetails.length +
         updateRequest.professionalDetails.length +
-        updateRequest.skillsDetails.length
+        updateRequest.skillsDetails.length -
+        3
       : Object.keys(currentEmployee).length +
         currentEmployee.personalDetails.length +
         currentEmployee.professionalDetails.length +
-        currentEmployee.skillsDetails.length;
+        currentEmployee.skillsDetails.length -
+        3;
 
     const completedFields = inEditMode
       ? Object.values(updateRequest).filter(
-          (field) =>
-            field !== undefined &&
-            field !== null &&
-            field !== "" &&
-            field.length !== 0
+          (field) => field !== undefined && field !== null && field !== ""
         ).length +
         updateRequest.personalDetails.filter((field) => field.fieldValue !== "")
           .length +
@@ -66,13 +62,10 @@ const ProfileContent = (props) => {
           (field) => field.fieldValue !== ""
         ).length +
         updateRequest.skillsDetails.filter((field) => field.fieldValue !== "")
-          .length
+          .length -
+        3
       : Object.values(currentEmployee).filter(
-          (field) =>
-            field !== undefined &&
-            field !== null &&
-            field !== "" &&
-            field.length !== 0
+          (field) => field !== undefined && field !== null && field !== ""
         ).length +
         currentEmployee.personalDetails.filter(
           (field) => field.fieldValue !== ""
@@ -81,7 +74,8 @@ const ProfileContent = (props) => {
           (field) => field.fieldValue !== ""
         ).length +
         currentEmployee.skillsDetails.filter((field) => field.fieldValue !== "")
-          .length;
+          .length -
+        3;
     const percentage = Math.floor((completedFields / totalFields) * 100);
     return percentage;
   };

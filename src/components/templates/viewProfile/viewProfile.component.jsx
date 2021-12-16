@@ -24,7 +24,7 @@ const ViewProfile = () => {
     axiosInstance
       .get(`/employees?empId=${empId}`)
       .then((response) => {
-        setViewedEmployee({ ...response.data.employees[0] });
+        setViewedEmployee({ ...response.data.data.employees[0] });
         setLoading(false);
       })
       .catch((err) => console.error(err));
@@ -39,7 +39,7 @@ const ViewProfile = () => {
   return Object.keys(viewedEmployee).length === 0 ? (
     <Spinner />
   ) : (
-    <Container sx={{ pb: 3, pt: 3 }}>
+    <Container sx={{ pb: 3, pt: 3, position: "relative" }}>
       <Box
         sx={{
           display: "flex",

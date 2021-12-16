@@ -67,9 +67,9 @@ const Review = () => {
         `/reviews?search=${searchEmp}&sort=${sort},-reqId&page=${paginationInfo.page}&limit=${paginationInfo.limit}`
       )
       .then((response) => {
-        setReviewData(response.data.reviews);
-
-        response.results < paginationInfo.limit && paginationInfo.page === 1
+        setReviewData(response.data.data.reviews);
+        response.data.totalResult < paginationInfo.limit &&
+        paginationInfo.page === 1
           ? setPaginationInfo({
               ...paginationInfo,
               totalPage: 1,
@@ -77,7 +77,7 @@ const Review = () => {
           : setPaginationInfo({
               ...paginationInfo,
               totalPage: Math.ceil(
-                response.totalDocuments / paginationInfo.limit
+                response.data.totalDocuments / paginationInfo.limit
               ),
             });
       })
@@ -90,9 +90,9 @@ const Review = () => {
       .get(`/reviews?reqId=${item.reqId}`)
       .then((response) => {
         setReviewItemData({
-          ...response.data.reviews[0].employeeDetails,
-          _id: response.data.reviews[0]._id,
-          status: response.data.reviews[0].status,
+          ...response.data.data.reviews[0].employeeDetails,
+          _id: response.data.data.reviews[0]._id,
+          status: response.data.data.reviews[0].status,
         });
         handleOpenModalForReview();
       })

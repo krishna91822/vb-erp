@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-import { Grid, TextField, Box, Chip } from "@mui/material";
+import { Grid, TextField, Box, Chip, Checkbox } from "@mui/material";
 import ClearIcon from "@mui/icons-material/Clear";
 
 import { personal } from "./personal.constant";
@@ -49,7 +49,11 @@ const PersonalEditable = (props) => {
     blue[500],
   ];
 
-  // const [hobbies, setHobbies] = useState('');
+  const [addresschecked, setAddressChecked] = useState(true);
+  const handleAddressCheckedChange = (event) => {
+    setAddressChecked(!addresschecked);
+  };
+
   const [chipData, setChipData] = useState([...empHobbies]);
 
   const handleNewFieldChange = (event, index) => {
@@ -94,6 +98,12 @@ const PersonalEditable = (props) => {
   const handleChange = (event) => {
     const { value, name } = event.target;
     setEmpData({ ...empData, [name]: value });
+  };
+
+  const [address, setAddress] = useState({});
+  const handleAddressChange = (event) => {
+    const { value, name } = event.target;
+    setAddress({ ...address, [name]: value });
   };
 
   return (
@@ -207,29 +217,150 @@ const PersonalEditable = (props) => {
           </ContentBox>
           <ContentBox>
             <ContentTypo>{personal.currentAddress}</ContentTypo>
-            <CustomTextField
-              autoComplete="off"
-              required
-              id="outlined-basic"
-              variant="outlined"
-              value={empCurrentAddress ? empCurrentAddress : ""}
-              type="text"
-              name="empCurrentAddress"
-              onChange={handleChange}
-            />
+            <Box sx={{ width: 1 }}>
+              <CustomTextField
+                autoComplete="off"
+                required
+                id="outlined-basic"
+                variant="outlined"
+                value={
+                  address.empCurrentAddressOne
+                    ? address.empCurrentAddressOne
+                    : ""
+                }
+                type="text"
+                name="empCurrentAddressOne"
+                onChange={handleAddressChange}
+                placeholder="Address line 1"
+                sx={{ width: "100%" }}
+              />
+              <Box
+                sx={{
+                  width: 1,
+                  display: "flex",
+                  justifyContent: "space-between",
+                  flexWrap: "wrap",
+                  mt: 1,
+                }}
+              >
+                <CustomTextField
+                  autoComplete="off"
+                  required
+                  id="outlined-basic"
+                  variant="outlined"
+                  value={
+                    address.empCurrentAddressCity
+                      ? address.empCurrentAddressCity
+                      : ""
+                  }
+                  type="text"
+                  name="empCurrentAddressCity"
+                  onChange={handleAddressChange}
+                  placeholder="City"
+                  sx={{ width: "30%" }}
+                />
+                <CustomTextField
+                  autoComplete="off"
+                  required
+                  id="outlined-basic"
+                  variant="outlined"
+                  value={
+                    address.empCurrentAddressState
+                      ? address.empCurrentAddressState
+                      : ""
+                  }
+                  type="text"
+                  name="empCurrentAddressState"
+                  onChange={handleAddressChange}
+                  placeholder="State"
+                  sx={{ width: "30%" }}
+                />
+                <CustomTextField
+                  autoComplete="off"
+                  required
+                  id="outlined-basic"
+                  variant="outlined"
+                  value={
+                    address.empCurrentAddressPinCode
+                      ? address.empCurrentAddressPinCode
+                      : ""
+                  }
+                  type="text"
+                  name="empCurrentAddressPinCode"
+                  onChange={handleAddressChange}
+                  placeholder="Pin code"
+                  sx={{ width: "30%" }}
+                />
+              </Box>
+            </Box>
           </ContentBox>
+          <Checkbox
+            checked={addresschecked}
+            onChange={handleAddressCheckedChange}
+            inputProps={{ "aria-label": "controlled" }}
+          />
           <ContentBox>
             <ContentTypo>{personal.residentialAddress}</ContentTypo>
-            <CustomTextField
-              autoComplete="off"
-              required
-              id="outlined-basic"
-              variant="outlined"
-              value={empResidentialAddress ? empResidentialAddress : ""}
-              type="text"
-              name="empResidentialAddress"
-              onChange={handleChange}
-            />
+            <Box sx={{ width: 1 }}>
+              <CustomTextField
+                autoComplete="off"
+                required
+                id="outlined-basic"
+                variant="outlined"
+                value={empResidentialAddress ? empResidentialAddress : ""}
+                type="text"
+                name="empResidentialAddress"
+                onChange={handleChange}
+                placeholder="Address line 1"
+                sx={{ width: "100%" }}
+              />
+              <Box
+                sx={{
+                  width: 1,
+                  display: "flex",
+                  justifyContent: "space-between",
+                  flexWrap: "wrap",
+                  mt: 1,
+                }}
+              >
+                <CustomTextField
+                  autoComplete="off"
+                  required
+                  id="outlined-basic"
+                  variant="outlined"
+                  value={empResidentialAddress ? empResidentialAddress : ""}
+                  type="text"
+                  name="empResidentialAddress"
+                  onChange={handleChange}
+                  placeholder="City"
+                  sx={{ width: "30%" }}
+                />
+                <CustomTextField
+                  autoComplete="off"
+                  required
+                  id="outlined-basic"
+                  variant="outlined"
+                  value={empResidentialAddress ? empResidentialAddress : ""}
+                  type="text"
+                  name="empResidentialAddress"
+                  onChange={handleChange}
+                  placeholder="State"
+                  sx={{ width: "30%" }}
+                />
+                <CustomTextField
+                  autoComplete="off"
+                  required
+                  id="outlined-basic"
+                  variant="outlined"
+                  value={empResidentialAddress ? empResidentialAddress : ""}
+                  type="text"
+                  name="empResidentialAddress"
+                  onChange={handleChange}
+                  placeholder="Pin code"
+                  sx={{ width: "30%" }}
+                />
+              </Box>
+            </Box>
           </ContentBox>
           {personalDetails.map((field, index) => (
             <ContentBox key={index} sx={{ position: "relative" }}>

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import { LocalizationProvider, DesktopDatePicker } from "@mui/lab";
 import AdapterDateFns from "@mui/lab/AdapterDateFns";
@@ -37,7 +37,8 @@ import ProfessionalEditable from "../../components/templates/professional/profes
 import SkillEditable from "../../components/templates/skill/skillEditable.component";
 import Spinner from "../../components/UI/spinner/spinner";
 
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { setCurrentEmployee } from "./../../store/employeeSlice";
 
 import axiosInstance from "./../../helpers/axiosInstance";
 
@@ -47,6 +48,16 @@ const CreateProfile = ({
   setToggleEditEmployee,
 }) => {
   const { currentEmployee } = useSelector((state) => state.employee);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    axiosInstance
+      .get("/employees?empEmail=admin@mail.com")
+      .then((response) => {
+        dispatch(setCurrentEmployee(response.data.data.employees[0]));
+      })
+      .catch((err) => console.log(err));
+  }, [dispatch]);
 
   const empInitial = {
     empName: "",
@@ -126,6 +137,7 @@ const CreateProfile = ({
       personalDetails.filter((field) => field.fieldValue !== "").length +
       professionalDetails.filter((field) => field.fieldValue !== "").length +
       skillsDetails.filter((field) => field.fieldValue !== "").length;
+
     const percentage = Math.floor((completedFields / totalFields) * 100);
     return percentage;
   };
@@ -199,9 +211,9 @@ const CreateProfile = ({
       alert("Fields are empty");
     } else {
       // Profile - Update;
-      let creatEmployee;
+      let createEmployee;
       editEmployeeData
-        ? (creatEmployee = {
+        ? (createEmployee = {
             reqName: currentEmployee.empName,
             reqType: "profile-update",
             employeeDetails: {
@@ -211,7 +223,7 @@ const CreateProfile = ({
               skillsDetails,
             },
           })
-        : (creatEmployee = {
+        : (createEmployee = {
             reqName: currentEmployee.empName,
             reqType: "profile-creation",
             employeeDetails: {
@@ -222,7 +234,7 @@ const CreateProfile = ({
             },
           });
       axiosInstance
-        .post("/reviews", creatEmployee)
+        .post("/reviews", createEmployee)
         .then(function (response) {
           setEmployee(empInitial);
           handleOpenModal();

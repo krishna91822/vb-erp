@@ -2,51 +2,52 @@ import React, { memo, useEffect, useState } from "react";
 
 import { Container } from "@mui/material";
 
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { setCurrentEmployee } from "./../../store/employeeSlice";
 
 import EditMode from "../../components/templates/editMode/editMode.component";
 import ProfileContent from "../../components/templates/profileContent/profileContent.component";
+import Spinner from "./../../components/UI/spinner/spinner";
+import axiosInstance from "../../helpers/axiosInstance";
 
 const Profile = () => {
   const { currentEmployee, inEditMode } = useSelector(
     (state) => state.employee
   );
 
-  // const [loading, setLoading] = useState(true);
-  // const dispatch = useDispatch();
+  const [loading, setLoading] = useState(true);
+  const dispatch = useDispatch();
 
-  // useEffect(() => {
-  //   axiosInstance
-  //     .get("/employees")
-  //     .then((response) => {
-  //       if (response) {
-  //         dispatch(
-  //           setCurrentEmployee(
-  //             response.data.employees.find((item) => item.role === "ADMIN")
-  //           )
-  //         );
-  //         setLoading(false);
-  //       }
-  //     })
-  //     .catch((err) => console.log(err));
-  // }, [dispatch]);
+  useEffect(() => {
+    axiosInstance
+      .get("/employees?empEmail=admin@mail.com")
+      .then((response) => {
+        dispatch(setCurrentEmployee(response.data.data.employees[0]));
+        setUpdateRequest({
+          ...response.data.data.employees[0],
+          personalDetails: [...response.data.data.employees[0].personalDetails],
+          professionalDetails: [
+            ...response.data.data.employees[0].professionalDetails,
+          ],
+          skillsDetails: [...response.data.data.employees[0].skillsDetails],
+        });
+        setPersonalDetails([
+          ...response.data.data.employees[0].personalDetails,
+        ]);
+        setProfessionalDetails([
+          ...response.data.data.employees[0].professionalDetails,
+        ]);
+        setSkillsDetails([...response.data.data.employees[0].skillsDetails]);
+        setLoading(false);
+      })
+      .catch((err) => console.log(err));
+  }, [dispatch]);
 
-  const [personalDetails, setPersonalDetails] = useState([
-    ...currentEmployee.personalDetails,
-  ]);
-  const [professionalDetails, setProfessionalDetails] = useState([
-    ...currentEmployee.professionalDetails,
-  ]);
-  const [skillsDetails, setSkillsDetails] = useState([
-    ...currentEmployee.skillsDetails,
-  ]);
+  const [personalDetails, setPersonalDetails] = useState([]);
+  const [professionalDetails, setProfessionalDetails] = useState([]);
+  const [skillsDetails, setSkillsDetails] = useState([]);
 
-  const [updateRequest, setUpdateRequest] = useState({
-    ...currentEmployee,
-    personalDetails,
-    professionalDetails,
-    skillsDetails,
-  });
+  const [updateRequest, setUpdateRequest] = useState({});
 
   useEffect(() => {
     setUpdateRequest({
@@ -55,6 +56,7 @@ const Profile = () => {
       professionalDetails,
       skillsDetails,
     });
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [inEditMode, personalDetails, professionalDetails, skillsDetails]);
 
@@ -85,7 +87,9 @@ const Profile = () => {
     handleOpen,
   };
 
-  return (
+  return loading ? (
+    <Spinner />
+  ) : (
     <Container sx={{ pb: 3 }}>
       <EditMode {...editModeProps} />
       <ProfileContent {...profileContentProps} />

@@ -38,9 +38,8 @@ const Network = () => {
         `/employees?search=${searchEmp}&sort=${sort}&page=${paginationInfo.page}&limit=${paginationInfo.limit}`
       )
       .then((response) => {
-        setEmployees(response.data.employees);
-
-        response.results < paginationInfo.limit
+        setEmployees(response.data.data.employees);
+        response.data.totalResult < paginationInfo.limit
           ? setPaginationInfo({
               ...paginationInfo,
               totalPage: 1,
@@ -48,7 +47,7 @@ const Network = () => {
           : setPaginationInfo({
               ...paginationInfo,
               totalPage: Math.ceil(
-                response.totalDocuments / paginationInfo.limit
+                response.data.totalDocuments / paginationInfo.limit
               ),
             });
       })
