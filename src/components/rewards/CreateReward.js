@@ -124,15 +124,15 @@ const CreateReward = () => {
               value={type}
               onChange={typeChange}
             >
-              <MenuItem value="daily">Daily</MenuItem>
-              <MenuItem value="monthly">Monthly</MenuItem>
-              <MenuItem value="yearly">Yearly</MenuItem>
-              <MenuItem value="on-demand">OnDemand</MenuItem>
+              <MenuItem value="Daily">Daily</MenuItem>
+              <MenuItem value="Monthly">Monthly</MenuItem>
+              <MenuItem value="Yearly">Yearly</MenuItem>
+              <MenuItem value="On-Demand">OnDemand</MenuItem>
             </Select>
           </FormControl>
         </Grid>
         <br />
-        {type === "daily" && (
+        {type === "Daily" && (
           <Grid item>
             <FormLabel
               children="Reward Sub Type"
@@ -167,8 +167,8 @@ const CreateReward = () => {
               value={send}
               onChange={senderChange}
             >
-              <MenuItem value="ceo">CEO</MenuItem>
-              <MenuItem value="manager">Manager</MenuItem>
+              <MenuItem value="CEO">CEO</MenuItem>
+              <MenuItem value="Manager">Manager</MenuItem>
               <MenuItem value="selected">:Selected</MenuItem>
             </Select>
           </FormControl>
@@ -185,9 +185,9 @@ const CreateReward = () => {
               name="reward_receiver"
               onChange={receiverChange}
             >
-              <MenuItem value="manager">Manager</MenuItem>
-              <MenuItem value="employees">Employee</MenuItem>
-              <MenuItem value="everyone">Everyone</MenuItem>
+              <MenuItem value="Manager">Manager</MenuItem>
+              <MenuItem value="Employees">Employee</MenuItem>
+              <MenuItem value="Everyone">Everyone</MenuItem>
               <MenuItem value="selected">:Selected</MenuItem>
             </Select>
           </FormControl>

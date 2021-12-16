@@ -19,6 +19,10 @@ export const getRewardsData = () => {
       dispatch(
         rewardsActions.addRewards({
           rewards: data.data.data.results || [],
+          totalRewards: data.data.data.totalCount,
+          searchValue: "",
+          sorting: "",
+          defaultPage: 1,
         })
       );
     } catch (error) {
@@ -53,6 +57,10 @@ export const getRewardsDataWithPageNumber = (pageNumber) => {
       dispatch(
         rewardsActions.addRewards({
           rewards: data.data.data.results || [],
+          totalRewards: data.data.data.totalCount,
+          searchValue: "",
+          sorting: "",
+          defaultPage: pageNumber,
         })
       );
     } catch (error) {
@@ -72,6 +80,7 @@ export const getRewardsDataWithPageNumber = (pageNumber) => {
 };
 
 export const searchData = (data) => {
+  const searchValue = data;
   return async (dispatch) => {
     const fetchData = async () => {
       const response = axios.get(`/rewards/search?search=${data}`);
@@ -88,6 +97,10 @@ export const searchData = (data) => {
       dispatch(
         rewardsActions.addRewards({
           rewards: data.data.data.results || [],
+          totalRewards: data.data.data.totalCount,
+          searchValue: searchValue,
+          sorting: "",
+          defaultPage: 1,
         })
       );
     } catch (error) {
@@ -106,7 +119,49 @@ export const searchData = (data) => {
   };
 };
 
-export const deleteRewardData = (id) => {
+export const getRewardsDataWithPageAndSearch = (searchValue, pageNumber) => {
+  return async (dispatch) => {
+    const fetchData = async () => {
+      const response = axios.get(
+        `/rewards/search?search=${searchValue}&page=${pageNumber}`
+      );
+
+      if (response.status === "failure") {
+        throw new Error("Could not fetch cart data!");
+      }
+      return response;
+    };
+
+    try {
+      const data = await fetchData();
+      console.log(data);
+      dispatch(
+        rewardsActions.addRewards({
+          rewards: data.data.data.results || [],
+          totalRewards: data.data.data.totalCount,
+          searchValue: searchValue,
+          sorting: "",
+          defaultPage: pageNumber,
+        })
+      );
+    } catch (error) {
+      dispatch(uiActions.toggleLoader());
+      setTimeout(function () {
+        dispatch(uiActions.toggleLoader());
+        dispatch(
+          uiActions.showNotification({
+            status: "error",
+            title: "Error!",
+            message: "Fetching content data failed!",
+          })
+        );
+      }, 3000);
+    }
+  };
+};
+
+export const deleteRewardData = (id, defaultPage, sorting, searchValue) => {
+  console.log(defaultPage);
   return async (dispatch) => {
     const deleteData = async () => {
       const deletedData = axios.delete(`/rewards/${id}`);
@@ -119,7 +174,13 @@ export const deleteRewardData = (id) => {
         toast.success("Deleted", {
           icon: "🗑",
         });
-        dispatch(getRewardsData());
+        if (defaultPage !== 1 && searchValue !== "") {
+          dispatch(getRewardsDataWithPageAndSearch(searchValue, defaultPage));
+        } else if (defaultPage !== 1 && sorting !== "") {
+          dispatch(filterDataWithPageAndFilter(sorting, defaultPage));
+        } else {
+          dispatch(getRewardsData());
+        }
       } else {
         toast.warning("Error");
       }
@@ -141,11 +202,14 @@ export const deleteRewardData = (id) => {
 
 export const filterData = (filterValue) => {
   return async (dispatch) => {
+    let sortingStatus;
     const fetchData = async () => {
       let response;
       if (filterValue === "Default") {
         response = axios.get(`/rewards`);
+        sortingStatus = "";
       } else {
+        sortingStatus = filterValue;
         response = axios.get(`/rewards/?status=${filterValue}`);
       }
 
@@ -160,6 +224,50 @@ export const filterData = (filterValue) => {
       dispatch(
         rewardsActions.addRewards({
           rewards: data.data.data.results || [],
+          totalRewards: data.data.data.totalCount,
+          searchValue: "",
+          sorting: sortingStatus,
+          defaultPage: 1,
+        })
+      );
+    } catch (error) {
+      dispatch(uiActions.toggleLoader());
+      setTimeout(function () {
+        dispatch(uiActions.toggleLoader());
+        dispatch(
+          uiActions.showNotification({
+            status: "error",
+            title: "Error!",
+            message: "Fetching content data failed!",
+          })
+        );
+      }, 3000);
+    }
+  };
+};
+
+export const filterDataWithPageAndFilter = (filterValue, pageNumber) => {
+  return async (dispatch) => {
+    const fetchData = async () => {
+      const response = axios.get(
+        `/rewards/?page=${pageNumber}&status=${filterValue}`
+      );
+
+      if (response.status === "failure") {
+        throw new Error("Could not fetch cart data!");
+      }
+      return response;
+    };
+
+    try {
+      const data = await fetchData();
+      dispatch(
+        rewardsActions.addRewards({
+          rewards: data.data.data.results || [],
+          totalRewards: data.data.data.totalCount,
+          searchValue: "",
+          sorting: filterValue,
+          defaultPage: pageNumber,
         })
       );
     } catch (error) {
@@ -195,11 +303,6 @@ export const addRewardData = (reward) => {
       const data = await fetchData();
       console.log(data);
       toast.success("Reward Added");
-      // dispatch(
-      //   rewardsActions.addRewards({
-      //     rewards: data.data.data.results || [],
-      //   })
-      // );
       dispatch(rewardsActions.updateRewardStatus());
     } catch (error) {
       dispatch(uiActions.toggleLoader());
@@ -209,7 +312,13 @@ export const addRewardData = (reward) => {
   };
 };
 
-export const updateRewardStatus = (id, number) => {
+export const updateRewardStatus = (
+  id,
+  number,
+  defaultPage,
+  sorting,
+  searchValue
+) => {
   return async (dispatch) => {
     console.log(id);
     const fetchData = async () => {
@@ -217,19 +326,31 @@ export const updateRewardStatus = (id, number) => {
       if (number === 1) {
         status = { status: "Stopped" };
       } else if (number === 2) {
-        status = { status: "Launch" };
+        status = { status: "In Progress" };
       }
       const response = axios.put(`/rewards/${id}`, status);
 
       if (response.status === "failure") {
         throw new Error("Could not fetch cart data!");
+      } else {
+        if (number === 1) {
+          toast.success("Status changed to Stopped");
+        } else {
+          toast.success("Status changed to In Progress");
+        }
       }
       return response;
     };
 
     try {
       await fetchData();
-      dispatch(getRewardsData());
+      if (defaultPage !== 1 && searchValue !== "") {
+        dispatch(getRewardsDataWithPageAndSearch(searchValue, defaultPage));
+      } else if (defaultPage !== 1 && sorting !== "") {
+        dispatch(filterDataWithPageAndFilter(sorting, defaultPage));
+      } else {
+        dispatch(getRewardsData());
+      }
     } catch (error) {
       dispatch(uiActions.toggleLoader());
       setTimeout(function () {
@@ -246,21 +367,15 @@ export const updateRewardStatus = (id, number) => {
   };
 };
 
-export const updateRewardEmployeeIdArray = (employeeIdArrayData, rewardId) => {
+export const updateRewardEmployeeIdArray = (dataIds, rewardId) => {
   return async (dispatch) => {
     const fetchData = async () => {
-      let employees_id = [];
-      employeeIdArrayData.map((data) => {
-        employees_id.push(data.employee_id);
-      });
-      const data = {
-        recipients_ids: employees_id,
-      };
-      // console.log(employees_id);
-      const response = axios.put(`/rewards/${rewardId}`, data);
+      const response = axios.put(`/rewards/${rewardId}`, dataIds);
 
       if (response.status === "failure") {
         throw new Error("Could not fetch cart data!");
+      } else {
+        toast.success("Employees Updated");
       }
       return response;
     };

@@ -1,7 +1,6 @@
 import * as React from "react";
 import "./employeeList.css";
 import Button from "@mui/material/Button";
-// import Pagination from "@mui/material/Pagination";
 import EmployeeTable from "./EmployeeTable";
 import { getEmployeesData } from "../../store/employees-actions";
 import { useDispatch, useSelector } from "react-redux";
@@ -17,7 +16,7 @@ const EmployeesList = (props) => {
 
   const employeesData = useSelector((state) => state.employee.employees);
 
-  employeesData.map((data) => {
+  employeesData.forEach((data) => {
     rows.push({
       employee_id: data._id,
       id: data.empId,
@@ -44,8 +43,40 @@ const EmployeesList = (props) => {
     rowData = collectedDataArray;
     collectedDataArray = [];
     props.setOpenPopup(false);
-    dispatch(updateRewardEmployeeIdArray(rowData, props.rewardId));
-    console.log("hello", rowData);
+    let employees_id = [];
+    rowData.forEach((data) => {
+      employees_id.push(data.employee_id);
+    });
+    const dataIds = {
+      recipients_ids: employees_id,
+    };
+    dispatch(updateRewardEmployeeIdArray(dataIds, props.rewardId));
+  };
+
+  const onRowClicked = (rowData, rowState) => {
+    let rowStatus = false;
+    let rowEmployeeId;
+    var collectedDataObject = {};
+    collectedDataObject.name = rowData.row.name;
+    collectedDataObject.email = rowData.row.email;
+    collectedDataObject.employee_id = rowData.row.employee_id;
+    for (var i = 0; i < collectedDataArray.length; i++) {
+      if (
+        collectedDataObject.employee_id === collectedDataArray[i].employee_id
+      ) {
+        rowStatus = true;
+        rowEmployeeId = collectedDataObject.employee_id;
+      }
+    }
+
+    if (rowStatus === true) {
+      collectedDataArray = collectedDataArray.filter(
+        (data) => data.employee_id !== rowEmployeeId
+      );
+    } else {
+      collectedDataArray.push(collectedDataObject);
+    }
+    console.log(collectedDataArray);
   };
 
   return (
@@ -63,11 +94,8 @@ const EmployeesList = (props) => {
         </div>
       </div>
       <div className="employee-table-container">
-        <EmployeeTable collectedDataArray={collectedDataArray} rows={rows} />
+        <EmployeeTable onRowClicked={onRowClicked} rows={rows} />
       </div>
-      {/* <div className="employee-pagination-container">
-        <Pagination count={2} color="primary" />
-      </div> */}
       <div className="employee-button-container">
         <div className="employee-close-button">
           <Button onClick={updatePopupState} variant="outlined" color="error">

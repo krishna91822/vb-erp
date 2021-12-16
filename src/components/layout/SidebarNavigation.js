@@ -86,7 +86,10 @@ const SidebarNavigation = () => {
     },
     {
       name: "Tasks",
-      dropDown: [{ name: "Create Profile" }, { name: "Reviews" }],
+      dropDown: [
+        { name: "Create Profile", route: "/" },
+        { name: "Reviews", route: "/" },
+      ],
       open: openTasks,
       handle: handleClickTasks,
     },
@@ -99,9 +102,9 @@ const SidebarNavigation = () => {
     {
       name: "PMO",
       dropDown: [
-        { name: "Projects" },
-        { name: "Create Projects" },
-        { name: "Allocations" },
+        { name: "Projects", route: "/" },
+        { name: "Create Projects", route: "/" },
+        { name: "Allocations", route: "/" },
       ],
       open: openPMO,
       handle: handleClickPMO,
@@ -111,13 +114,19 @@ const SidebarNavigation = () => {
     },
     {
       name: "CMS",
-      dropDown: [{ name: "PO/SOW" }, { name: "Invoicing" }],
+      dropDown: [
+        { name: "PO/SOW", route: "/" },
+        { name: "Invoicing", route: "/" },
+      ],
       open: openCMS,
       handle: handleClickCMS,
     },
     {
       name: "R&R",
-      dropDown: [{ name: "Catalog" }, { name: "Reward", route: "/rewards" }],
+      dropDown: [
+        { name: "Catalog", route: "/" },
+        { name: "Reward", route: "/rewards" },
+      ],
       open: openRR,
       handle: handleClickRR,
     },
@@ -163,7 +172,10 @@ const SidebarNavigation = () => {
                   <Collapse in={menuItem.open} timeout="auto" unmountOnExit>
                     <List component="div" disablePadding>
                       {menuItem.dropDown.map((item) => (
-                        <Link to={item.route}>
+                        <Link
+                          style={{ textDecoration: "none" }}
+                          to={item.route}
+                        >
                           <CustomListItemButton
                             component={Link}
                             to={item.route}
@@ -172,7 +184,10 @@ const SidebarNavigation = () => {
                             <ListItemIcon>
                               <GridViewIcon style={{ color: "black" }} />
                             </ListItemIcon>
-                            <ListItemText primary={item.name} />
+                            <ListItemText
+                              style={{ color: "black" }}
+                              primary={item.name}
+                            />
                           </CustomListItemButton>
                         </Link>
                       ))}

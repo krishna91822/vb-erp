@@ -1,26 +1,26 @@
 import React, { useState } from "react";
 import "./rewardTableStyle.css";
-// import Button from "@mui/material/Button";
 import MenuItem from "@mui/material/MenuItem";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEllipsisV } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
-
 import {
   deleteRewardData,
   updateRewardStatus,
 } from "../../store/rewards-actions";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Popup from "./Popup";
 import EmployeesList from "../employees/EmployeesList";
-// import { Launch } from "@mui/icons-material";
 
 const RewardRowData = ({ data, StyledMenu, open }) => {
   const dispatch = useDispatch();
   const [anchorEl, setAnchorEl] = useState(null);
   const [openPopup, setOpenPopup] = useState(false);
+  const defaultPage = useSelector((state) => state.reward.defaultPage);
+  const sorting = useSelector((state) => state.reward.sorting);
+  const searchValue = useSelector((state) => state.reward.searchValue);
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -31,13 +31,12 @@ const RewardRowData = ({ data, StyledMenu, open }) => {
   };
 
   const deleteReward = (id) => {
-    dispatch(deleteRewardData(id));
+    dispatch(deleteRewardData(id, defaultPage, sorting, searchValue));
     setAnchorEl(null);
   };
 
-  const relaunchReward = (rewardSender, rewardReceiver) => {
-    // console.log(rewardSender, rewardReceiver);
-    if (rewardReceiver === "selected" || rewardSender === "selected") {
+  const relaunchReward = (rewardReceiver) => {
+    if (rewardReceiver === "selected") {
       setOpenPopup(true);
     } else {
       setOpenPopup(false);
@@ -46,12 +45,12 @@ const RewardRowData = ({ data, StyledMenu, open }) => {
   };
 
   const stopReward = (id) => {
-    dispatch(updateRewardStatus(id, 1)); //1 is for updating reward status to STOPPED
+    dispatch(updateRewardStatus(id, 1, defaultPage, sorting, searchValue)); //1 is for updating reward status to STOPPED
     setAnchorEl(null);
   };
 
   const launchReward = (id) => {
-    dispatch(updateRewardStatus(id, 2)); //2 is for updating reward status to LAUNCH
+    dispatch(updateRewardStatus(id, 2, defaultPage, sorting, searchValue)); //2 is for updating reward status to LAUNCH
     setAnchorEl(null);
   };
 
@@ -72,7 +71,11 @@ const RewardRowData = ({ data, StyledMenu, open }) => {
           <p>{data.reward_type}</p>
         </div>
         <div className="assignee">
-          <p>{data.reward_sender}</p>
+          {data.reward_sender === "selected" && data.sender_id.length > 0 ? (
+            <p>{data.sender_id[0].empName}</p>
+          ) : (
+            <p>{data.reward_sender}</p>
+          )}
         </div>
         <div className="reward-state">
           <p>{data.status}</p>
@@ -88,19 +91,16 @@ const RewardRowData = ({ data, StyledMenu, open }) => {
             open={Boolean(anchorEl)}
             onClose={handleClose}
           >
-            {data.status !== "Launch" ? (
+            {data.status !== "In Progress" ? (
               <MenuItem onClick={() => launchReward(data._id)} disableRipple>
                 Launch
               </MenuItem>
             ) : (
               ""
             )}
-            {data.reward_sender === "selected" ||
-            data.reward_receiver === "selected" ? (
+            {data.reward_receiver === "selected" ? (
               <MenuItem
-                onClick={() =>
-                  relaunchReward(data.reward_sender, data.reward_receiver)
-                }
+                onClick={() => relaunchReward(data.reward_receiver)}
                 disableRipple
               >
                 Re-Launch
@@ -142,7 +142,6 @@ const RewardRowData = ({ data, StyledMenu, open }) => {
             disableElevation
             onClick={handleClick}
           >
-            {/* <b>...</b> */}
             <FontAwesomeIcon icon={faEllipsisV} />
           </p>
         </div>
