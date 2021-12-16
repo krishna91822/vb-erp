@@ -314,16 +314,7 @@ export const fetchClientProjectSponsor = (projectId) => {
     }
   };
 };
-// export const fetchTargetedResources = (projectId) => {
-//   return async function (dispatch) {
-//     try {
-//       const res = await axios.get(
-//         `poSow/capturePO/details?projectId=${projectId}`
-//       );
 
-//       if (res.status === 200) {
-//         console.log(res.data.data);
-//         dispatch(PoSowActions.setTargetedResources(res.data.data));
 export const searchPoSow = (keyword) => {
   return async function (dispatch) {
     try {
@@ -344,16 +335,3 @@ export const searchPoSow = (keyword) => {
     }
   };
 };
-// export const fetchClientProjectSponsor = (projectId) => {
-//   return async function (dispatch) {
-//     const res = await axios.get(
-//       `poSow/capturePO/details?projectId=${projectId}`
-//     );
-//     console.log(res.data.data[0].projectId.clientProjectSponsor);
-//     dispatch(
-//       PoSowActions.setClientProjectSponsor(
-//         res.data.data[0].projectId.clientProjectSponsor
-//       )
-//     );
-//   };
-// };
