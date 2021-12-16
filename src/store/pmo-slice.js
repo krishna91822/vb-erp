@@ -11,6 +11,7 @@ const initialState = {
   percentageAllocated: 0,
   clientNames: [],
   allClients: [],
+  vbManagers: [],
 };
 
 const pmoSlice = createSlice({
@@ -35,13 +36,6 @@ const pmoSlice = createSlice({
     updateClientList: (state, action) => {
       state.allClients = action.payload;
     },
-    // removeAllocation: (state, action) => {
-    //   // const filterResources = current(state).projectById.resources.filter(
-    //   //   (resource) => resource._id !== action.payload._id
-    //   // );
-    //   // console.log(filterResources);
-    //   state.projectById.resources = action.payload;
-    // },
     SortByProductID: (state, action) => {
       state.projects = action.payload;
     },
@@ -73,6 +67,9 @@ const pmoSlice = createSlice({
       ].filter((data) => {
         return data.trim().length > 0;
       });
+    },
+    updateVbManagers: (state, action) => {
+      state.vbManagers = action.payload;
     },
   },
 });
