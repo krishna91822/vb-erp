@@ -35,7 +35,9 @@ const PersonalEditable = (props) => {
     empPersonalEmail,
     empDob,
     empAboutMe,
+    // eslint-disable-next-line no-unused-vars
     empCurrentAddress,
+    // eslint-disable-next-line no-unused-vars
     empResidentialAddress,
   } = empData;
 
@@ -48,11 +50,6 @@ const PersonalEditable = (props) => {
     teal[500],
     blue[500],
   ];
-
-  const [addresschecked, setAddressChecked] = useState(true);
-  const handleAddressCheckedChange = (event) => {
-    setAddressChecked(!addresschecked);
-  };
 
   const [chipData, setChipData] = useState([...empHobbies]);
 
@@ -100,10 +97,39 @@ const PersonalEditable = (props) => {
     setEmpData({ ...empData, [name]: value });
   };
 
-  const [address, setAddress] = useState({});
-  const handleAddressChange = (event) => {
+  const [addresschecked, setAddressChecked] = useState(true);
+  const handleAddressCheckedChange = (event) => {
+    setAddressChecked(!addresschecked);
+  };
+
+  const [currentAddress, setCurrentAddress] = useState({});
+  const handleCurrentAddressChange = (event) => {
     const { value, name } = event.target;
-    setAddress({ ...address, [name]: value });
+    if (addresschecked) {
+      setCurrentAddress({ ...currentAddress, [name]: value });
+      setResidentialAddress({ ...currentAddress, [name]: value });
+      setEmpData({
+        ...empData,
+        empResidentialAddress: { ...currentAddress, [name]: value },
+        empCurrentAddress: { ...currentAddress, [name]: value },
+      });
+    } else {
+      setCurrentAddress({ ...currentAddress, [name]: value });
+      setEmpData({
+        ...empData,
+        empCurrentAddress: { ...currentAddress, [name]: value },
+      });
+    }
+  };
+
+  const [residentialAddress, setResidentialAddress] = useState({});
+  const handleResidentialAddressChange = (event) => {
+    const { value, name } = event.target;
+    setResidentialAddress({ ...residentialAddress, [name]: value });
+    setEmpData({
+      ...empData,
+      empResidentialAddress: { ...residentialAddress, [name]: value },
+    });
   };
 
   return (
@@ -224,13 +250,13 @@ const PersonalEditable = (props) => {
                 id="outlined-basic"
                 variant="outlined"
                 value={
-                  address.empCurrentAddressOne
-                    ? address.empCurrentAddressOne
+                  currentAddress.empAddressLineOne
+                    ? currentAddress.empAddressLineOne
                     : ""
                 }
                 type="text"
-                name="empCurrentAddressOne"
-                onChange={handleAddressChange}
+                name="empAddressLineOne"
+                onChange={handleCurrentAddressChange}
                 placeholder="Address line 1"
                 sx={{ width: "100%" }}
               />
@@ -249,13 +275,13 @@ const PersonalEditable = (props) => {
                   id="outlined-basic"
                   variant="outlined"
                   value={
-                    address.empCurrentAddressCity
-                      ? address.empCurrentAddressCity
+                    currentAddress.empAddressCity
+                      ? currentAddress.empAddressCity
                       : ""
                   }
                   type="text"
-                  name="empCurrentAddressCity"
-                  onChange={handleAddressChange}
+                  name="empAddressCity"
+                  onChange={handleCurrentAddressChange}
                   placeholder="City"
                   sx={{ width: "30%" }}
                 />
@@ -265,13 +291,13 @@ const PersonalEditable = (props) => {
                   id="outlined-basic"
                   variant="outlined"
                   value={
-                    address.empCurrentAddressState
-                      ? address.empCurrentAddressState
+                    currentAddress.empAddressState
+                      ? currentAddress.empAddressState
                       : ""
                   }
                   type="text"
-                  name="empCurrentAddressState"
-                  onChange={handleAddressChange}
+                  name="empAddressState"
+                  onChange={handleCurrentAddressChange}
                   placeholder="State"
                   sx={{ width: "30%" }}
                 />
@@ -281,36 +307,55 @@ const PersonalEditable = (props) => {
                   id="outlined-basic"
                   variant="outlined"
                   value={
-                    address.empCurrentAddressPinCode
-                      ? address.empCurrentAddressPinCode
+                    currentAddress.empAddressPinCode
+                      ? currentAddress.empAddressPinCode
                       : ""
                   }
-                  type="text"
-                  name="empCurrentAddressPinCode"
-                  onChange={handleAddressChange}
+                  type="number"
+                  name="empAddressPinCode"
+                  onChange={handleCurrentAddressChange}
                   placeholder="Pin code"
-                  sx={{ width: "30%" }}
+                  sx={{
+                    width: "30%",
+                  }}
                 />
               </Box>
             </Box>
           </ContentBox>
-          <Checkbox
-            checked={addresschecked}
-            onChange={handleAddressCheckedChange}
-            inputProps={{ "aria-label": "controlled" }}
-          />
+          <Box
+            sx={{
+              width: 1,
+              display: "flex",
+              alignItems: "center",
+              textTransform: "capitalize",
+            }}
+          >
+            <Checkbox
+              checked={addresschecked}
+              onChange={handleAddressCheckedChange}
+              inputProps={{ "aria-label": "controlled" }}
+            />
+            <ContentTypo sx={{ fontWeight: "400" }}>
+              {personal.addressCheckbox}
+            </ContentTypo>
+          </Box>
           <ContentBox>
             <ContentTypo>{personal.residentialAddress}</ContentTypo>
             <Box sx={{ width: 1 }}>
               <CustomTextField
+                disabled={addresschecked}
                 autoComplete="off"
                 required
                 id="outlined-basic"
                 variant="outlined"
-                value={empResidentialAddress ? empResidentialAddress : ""}
+                value={
+                  residentialAddress.empAddressLineOne
+                    ? residentialAddress.empAddressLineOne
+                    : ""
+                }
                 type="text"
-                name="empResidentialAddress"
-                onChange={handleChange}
+                name="empAddressLineOne"
+                onChange={handleResidentialAddressChange}
                 placeholder="Address line 1"
                 sx={{ width: "100%" }}
               />
@@ -324,38 +369,53 @@ const PersonalEditable = (props) => {
                 }}
               >
                 <CustomTextField
+                  disabled={addresschecked}
                   autoComplete="off"
                   required
                   id="outlined-basic"
                   variant="outlined"
-                  value={empResidentialAddress ? empResidentialAddress : ""}
+                  value={
+                    residentialAddress.empAddressCity
+                      ? residentialAddress.empAddressCity
+                      : ""
+                  }
                   type="text"
-                  name="empResidentialAddress"
-                  onChange={handleChange}
+                  name="empAddressCity"
+                  onChange={handleResidentialAddressChange}
                   placeholder="City"
                   sx={{ width: "30%" }}
                 />
                 <CustomTextField
+                  disabled={addresschecked}
                   autoComplete="off"
                   required
                   id="outlined-basic"
                   variant="outlined"
-                  value={empResidentialAddress ? empResidentialAddress : ""}
+                  value={
+                    residentialAddress.empAddressState
+                      ? residentialAddress.empAddressState
+                      : ""
+                  }
                   type="text"
-                  name="empResidentialAddress"
-                  onChange={handleChange}
+                  name="empAddressState"
+                  onChange={handleResidentialAddressChange}
                   placeholder="State"
                   sx={{ width: "30%" }}
                 />
                 <CustomTextField
+                  disabled={addresschecked}
                   autoComplete="off"
                   required
                   id="outlined-basic"
                   variant="outlined"
-                  value={empResidentialAddress ? empResidentialAddress : ""}
+                  value={
+                    residentialAddress.empAddressPinCode
+                      ? residentialAddress.empAddressPinCode
+                      : ""
+                  }
                   type="text"
-                  name="empResidentialAddress"
-                  onChange={handleChange}
+                  name="empAddressPinCode"
+                  onChange={handleResidentialAddressChange}
                   placeholder="Pin code"
                   sx={{ width: "30%" }}
                 />

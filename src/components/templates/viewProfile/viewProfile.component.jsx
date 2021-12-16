@@ -67,12 +67,22 @@ const ViewProfile = () => {
     );
     doc.text(`${viewedEmployee.empHobbies}`, 135, 99);
     doc.text(`${viewedEmployee.empConnections}`, 135, 106.5);
-    doc.text(`${viewedEmployee.empCurrentAddress}`, 135, 113, {
-      maxWidth: 60,
-    });
-    doc.text(`${viewedEmployee.empResidentialAddress}`, 135, 127, {
-      maxWidth: 60,
-    });
+    doc.text(
+      `${viewedEmployee.empCurrentAddress.empAddressLineOne}, ${viewedEmployee.empCurrentAddress.empAddressCity}, ${viewedEmployee.empCurrentAddress.empAddressState}, ${viewedEmployee.empCurrentAddress.empAddressPinCode}`,
+      135,
+      113,
+      {
+        maxWidth: 60,
+      }
+    );
+    doc.text(
+      `${viewedEmployee.empResidentialAddress.empAddressLineOne}, ${viewedEmployee.empResidentialAddress.empAddressCity}, ${viewedEmployee.empResidentialAddress.empAddressState}, ${viewedEmployee.empResidentialAddress.empAddressPinCode}`,
+      135,
+      127,
+      {
+        maxWidth: 60,
+      }
+    );
 
     doc.text(`${viewedEmployee.empBand}`, 45, 156);
     doc.text(`${viewedEmployee.empGraduation}`, 45, 162);

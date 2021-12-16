@@ -118,11 +118,30 @@ const PersonalReadable = ({ empData }) => {
           </ContentBox>
           <ContentBox>
             <ContentTypo>{personal.currentAddress}</ContentTypo>
-            <ContentTypo>{empCurrentAddress}</ContentTypo>
+            <Box sx={{ width: 1 }}>
+              {empCurrentAddress ? (
+                <ContentTypo>
+                  {empCurrentAddress.empAddressLineOne},{" "}
+                  {empCurrentAddress.empAddressCity},{" "}
+                  {empCurrentAddress.empAddressState},{" "}
+                  {empCurrentAddress.empAddressPinCode}
+                </ContentTypo>
+              ) : null}
+            </Box>
           </ContentBox>
+
           <ContentBox>
             <ContentTypo>{personal.residentialAddress}</ContentTypo>
-            <ContentTypo>{empResidentialAddress}</ContentTypo>
+            <Box sx={{ width: 1 }}>
+              {empResidentialAddress ? (
+                <ContentTypo>
+                  {empResidentialAddress.empAddressLineOne},{" "}
+                  {empResidentialAddress.empAddressCity},{" "}
+                  {empResidentialAddress.empAddressState},{" "}
+                  {empResidentialAddress.empAddressPinCode}
+                </ContentTypo>
+              ) : null}
+            </Box>
           </ContentBox>
           {personalDetails
             ? personalDetails.map((field) => (

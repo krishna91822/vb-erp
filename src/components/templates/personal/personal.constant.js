@@ -4,6 +4,7 @@ export const personal = {
   dob: "DOB",
   hobbies: "hobbies",
   connections: "connections",
-  currentAddress: "current add",
-  residentialAddress: "residential add",
+  currentAddress: "current address",
+  residentialAddress: "residential address",
+  addressCheckbox: "residential address same as current address",
 };

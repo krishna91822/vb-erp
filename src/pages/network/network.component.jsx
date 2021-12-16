@@ -157,7 +157,11 @@ const Network = () => {
               <ContentTypo>{item.empId}</ContentTypo>
               <ContentTypo>{item.empEmail}</ContentTypo>
               <ContentTypo>{item.empDesignation}</ContentTypo>
-              <ContentTypo>{item.empCurrentAddress}</ContentTypo>
+              <ContentTypo>
+                {item.empCurrentAddress
+                  ? item.empCurrentAddress.empAddressCity
+                  : ""}
+              </ContentTypo>
               <ContentTypo>{item.empDepartment}</ContentTypo>
             </CustomGridBox>
           ))}
