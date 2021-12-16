@@ -392,12 +392,12 @@ export const getClinetById = (id) => {
   };
 };
 
-export const searchVbManager = () => {
+export const searchVbManager = (empName) => {
   return async (dispatch) => {
     const getData = async () => {
       const response = await axios.get(
-        // `/employees/filteremp?empName=${empName}`
-        `/employees/empManagers`
+        `employees/empManagers?empName=${empName}`
+        // `/employees/empManagers`
       );
       if (response.status === "failure") {
         throw new Error(response.data.message);

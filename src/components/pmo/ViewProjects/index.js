@@ -332,7 +332,13 @@ const ViewProjects = () => {
               : ""}
           </TableContainer>
         </Container>
-        <Tpagination count={projects.pageCount} changePage={changePage} />
+        <Tpagination
+          count={projects.pageCount}
+          changePage={changePage}
+          visi={
+            projects.results ? (!projects.results.length ? "hidden" : "") : ""
+          }
+        />
       </MainComponent>
     </>
   );

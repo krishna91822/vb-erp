@@ -249,7 +249,11 @@ const Allocated = ({ pressed, allocatedSortedValue }) => {
             : ""}
         </TableContainer>
       </Container>
-      <Tpagination count={data.pageCount || 1} changePage={changePage} />
+      <Tpagination
+        count={data.pageCount || 1}
+        changePage={changePage}
+        visi={data.results ? (!data.results.length ? "hidden" : "") : ""}
+      />
     </>
   );
 };

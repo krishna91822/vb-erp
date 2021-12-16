@@ -211,7 +211,11 @@ const Bench = ({ pressed, benchSortValue }) => {
             : ""}
         </TableContainer>
       </Container>
-      <Tpagination count={data.pageCount} changePage={changePage} />
+      <Tpagination
+        count={data.pageCount}
+        changePage={changePage}
+        visi={data.results ? (!data.results.length ? "hidden" : "") : ""}
+      />
     </>
   );
 };

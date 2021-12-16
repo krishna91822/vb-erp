@@ -375,7 +375,7 @@ const CreateProject = () => {
     const newInputValue = event.target.value;
     setVbManInput(newInputValue);
     if (newInputValue.length > 2) {
-      dispatch(searchVbManager());
+      dispatch(searchVbManager(newInputValue));
       setOpenVbMan(true);
     } else {
       setOpenVbMan(false);
