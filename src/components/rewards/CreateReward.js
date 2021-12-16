@@ -88,7 +88,6 @@ const CreateReward = () => {
   const relaunchReward = () => {
     setOpenPopup(true);
   };
-
   return (
     <Grid classes={{ root: { width: "100%" } }}>
       <form>
@@ -158,6 +157,7 @@ const CreateReward = () => {
                 <MenuItem value="birthday-celebration">
                   Birthday Celebration
                 </MenuItem>
+                <MenuItem value="starOfTheMonth">Star Of The Month</MenuItem>
               </Select>
             </FormControl>
           </Grid>
@@ -218,7 +218,7 @@ const CreateReward = () => {
           <FormLabel children="Receiver Message" style={{ color: " black " }} />
           <br />
           <TextField
-            defaultValue="hii <@receiver> you have some msg from <@sender>"
+            placeholder="hii <@receiver> you have some msg from <@sender>"
             multiline
             className="textfield1"
             rows={3}
@@ -292,17 +292,19 @@ const CreateReward = () => {
             </Button>
           </Link>
         </div>
-        <Popup
-          title="Team Members"
-          openPopup={openPopup}
-          setOpenPopup={setOpenPopup}
-        >
-          <EmployeesList
-            rewardId={formData._id}
+        {
+          <Popup
+            title="Team Members"
             openPopup={openPopup}
             setOpenPopup={setOpenPopup}
-          />
-        </Popup>
+          >
+            <EmployeesList
+              rewardId={formData._id}
+              openPopup={openPopup}
+              setOpenPopup={setOpenPopup}
+            />
+          </Popup>
+        }
       </form>
     </Grid>
   );
