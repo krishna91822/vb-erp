@@ -11,6 +11,7 @@ const initialState = {
   percentageAllocated: 0,
   clientNames: [],
   allClients: [],
+  vbManagers: [],
 };
 
 const pmoSlice = createSlice({
@@ -35,7 +36,6 @@ const pmoSlice = createSlice({
     updateClientList: (state, action) => {
       state.allClients = action.payload;
     },
-
     redirectToProjectList: (state, action) => {
       state.redirect = !state.redirect;
     },
@@ -61,6 +61,9 @@ const pmoSlice = createSlice({
       ].filter((data) => {
         return data.trim().length > 0;
       });
+    },
+    updateVbManagers: (state, action) => {
+      state.vbManagers = action.payload;
     },
   },
 });
