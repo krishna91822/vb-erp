@@ -11,7 +11,9 @@ import "./rewardStyle.css";
 import { useDispatch, useSelector } from "react-redux";
 import { addRewardData } from "../../store/rewards-actions";
 import { rewardsActions } from "../../store/rewards-slice";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
+import Popup from "./Popup";
+import EmployeesList from "../employees/EmployeesList";
 
 const CreateReward = () => {
   const dispatch = useDispatch();
@@ -27,13 +29,12 @@ const CreateReward = () => {
   const updateRewardStatus = useSelector(
     (state) => state.reward.updateRewardData
   );
-
   useEffect(() => {
     if (updateRewardStatus) {
       navigate("/rewards");
       dispatch(rewardsActions.updateRewardStatus());
     }
-  }, [dispatch, updateRewardStatus]);
+  }, [dispatch, updateRewardStatus, navigate]);
 
   const handleChangeForm = (e) => {
     setFormData({
@@ -82,6 +83,12 @@ const CreateReward = () => {
     console.log(formData);
   };
 
+  const [openPopup, setOpenPopup] = useState(false);
+
+  const relaunchReward = () => {
+    setOpenPopup(true);
+  };
+
   return (
     <Grid classes={{ root: { width: "100%" } }}>
       <form>
@@ -124,15 +131,15 @@ const CreateReward = () => {
               value={type}
               onChange={typeChange}
             >
-              <MenuItem value="daily">Daily</MenuItem>
-              <MenuItem value="monthly">Monthly</MenuItem>
-              <MenuItem value="yearly">Yearly</MenuItem>
-              <MenuItem value="on-demand">OnDemand</MenuItem>
+              <MenuItem value="Daily">Daily</MenuItem>
+              <MenuItem value="Monthly">Monthly</MenuItem>
+              <MenuItem value="Yearly">Yearly</MenuItem>
+              <MenuItem value="On-Demand">OnDemand</MenuItem>
             </Select>
           </FormControl>
         </Grid>
         <br />
-        {type === "daily" && (
+        {type === "Daily" && (
           <Grid item>
             <FormLabel
               children="Reward Sub Type"
@@ -167,9 +174,15 @@ const CreateReward = () => {
               value={send}
               onChange={senderChange}
             >
-              <MenuItem value="ceo">CEO</MenuItem>
-              <MenuItem value="manager">Manager</MenuItem>
-              <MenuItem value="selected">:Selected</MenuItem>
+              <MenuItem value="CEO">CEO</MenuItem>
+              <MenuItem value="Manager">Manager</MenuItem>
+              <MenuItem
+                value="selected"
+                onClick={() => relaunchReward()}
+                disableRipple
+              >
+                :Selected
+              </MenuItem>
             </Select>
           </FormControl>
         </Grid>
@@ -185,23 +198,27 @@ const CreateReward = () => {
               name="reward_receiver"
               onChange={receiverChange}
             >
-              <MenuItem value="manager">Manager</MenuItem>
-              <MenuItem value="employees">Employee</MenuItem>
-              <MenuItem value="everyone">Everyone</MenuItem>
-              <MenuItem value="selected">:Selected</MenuItem>
+              {type === "On-Demand" && (
+                <MenuItem value="Manager">Manager</MenuItem>
+              )}
+
+              <MenuItem value="Employees">Employee</MenuItem>
+              <MenuItem
+                value="selected"
+                onClick={() => relaunchReward()}
+                disableRipple
+              >
+                :Selected
+              </MenuItem>
             </Select>
           </FormControl>
-          &nbsp;
-          <Button id="editbutton" variant="contained">
-            Edit
-          </Button>
         </Grid>
         <br />
         <Grid item>
           <FormLabel children="Receiver Message" style={{ color: " black " }} />
           <br />
           <TextField
-            placeholder="Congratulations Receiver for a great sales cycle"
+            defaultValue="hii <@receiver> you have some msg from <@sender>"
             multiline
             className="textfield1"
             rows={3}
@@ -269,10 +286,23 @@ const CreateReward = () => {
           >
             Save
           </Button>
-          <Button variant="contained" color="error">
-            Cancel
-          </Button>
+          <Link to="/rewards" className="remove-underline">
+            <Button variant="contained" color="error">
+              Cancel
+            </Button>
+          </Link>
         </div>
+        <Popup
+          title="Team Members"
+          openPopup={openPopup}
+          setOpenPopup={setOpenPopup}
+        >
+          <EmployeesList
+            rewardId={formData._id}
+            openPopup={openPopup}
+            setOpenPopup={setOpenPopup}
+          />
+        </Popup>
       </form>
     </Grid>
   );

@@ -8,6 +8,8 @@ import Select from "@mui/material/Select";
 import { FormLabel } from "@mui/material";
 import { useParams } from "react-router-dom";
 import "./rewardStyle.css";
+import Popup from "./Popup";
+import EmployeesList from "../employees/EmployeesList";
 import { useDispatch, useSelector } from "react-redux";
 import { EditRewardData } from "../../store/rewards-actions";
 import { rewardsActions } from "../../store/rewards-slice";
@@ -15,7 +17,11 @@ import { UpdateRewardData } from "../../store/rewards-actions";
 
 const EditReward = () => {
   let { id } = useParams();
+  const [openPopup, setOpenPopup] = React.useState(false);
 
+  const relaunchReward = () => {
+    setOpenPopup(true);
+  };
   const dispatch = useDispatch();
   const updateRewardStatus = useSelector(
     (state) => state.reward.updateRewardData
@@ -118,6 +124,18 @@ const EditReward = () => {
       })
     );
   };
+
+  const selectsenderChange = (e) => {
+    dispatch(
+      rewardsActions.addEditRewardData({
+        rewardData: {
+          ...rewardData,
+          selected_sender: e.target.value,
+        },
+      })
+    );
+  };
+
   const announcementChange = (e) => {
     dispatch(
       rewardsActions.addEditRewardData({
@@ -151,7 +169,7 @@ const EditReward = () => {
               style={{
                 fontSize: " 2rem ",
                 fontWeight: " 650 ",
-                color: " Red ",
+                color: " Black ",
               }}
               children="Edit Reward"
             />
@@ -186,15 +204,15 @@ const EditReward = () => {
                 value={rewardData.reward_type}
                 onChange={typeChange}
               >
-                <MenuItem value="daily">Daily</MenuItem>
-                <MenuItem value="monthly">Monthly</MenuItem>
-                <MenuItem value="yearly">Yearly</MenuItem>
-                <MenuItem value="on-demand">OnDemand</MenuItem>
+                <MenuItem value="Daily">Daily</MenuItem>
+                <MenuItem value="Monthly">Monthly</MenuItem>
+                <MenuItem value="Yearly">Yearly</MenuItem>
+                <MenuItem value="On-Demand">OnDemand</MenuItem>
               </Select>
             </FormControl>
           </Grid>
           <br />
-          {rewardData.reward_type === "daily" && (
+          {rewardData.reward_type === "Daily" && (
             <Grid item>
               <FormLabel
                 children="Reward Sub Type"
@@ -229,9 +247,16 @@ const EditReward = () => {
                 value={rewardData.reward_sender}
                 onChange={senderChange}
               >
-                <MenuItem value="ceo">CEO</MenuItem>
-                <MenuItem value="manager">Manager</MenuItem>
-                <MenuItem value="selected">:Selected</MenuItem>
+                <MenuItem value="CEO">CEO</MenuItem>
+                <MenuItem value="Manager">Manager</MenuItem>
+                <MenuItem
+                  value={rewardData.sender_id}
+                  onChange={selectsenderChange}
+                  onClick={() => relaunchReward()}
+                  disableRipple
+                >
+                  :Selected
+                </MenuItem>
               </Select>
             </FormControl>
           </Grid>
@@ -250,16 +275,20 @@ const EditReward = () => {
                 name="reward_receiver"
                 onChange={receiverChange}
               >
-                <MenuItem value="manager">Manager</MenuItem>
-                <MenuItem value="employees">Employee</MenuItem>
-                <MenuItem value="everyone">Everyone</MenuItem>
-                <MenuItem value="selected">:Selected</MenuItem>
+                {rewardData.reward_type === "On-Demand" && (
+                  <MenuItem value="Manager">Manager</MenuItem>
+                )}
+
+                <MenuItem value="Employees">Employee</MenuItem>
+                <MenuItem
+                  value={rewardData.recipients_ids}
+                  onClick={() => relaunchReward()}
+                  disableRipple
+                >
+                  :Selected
+                </MenuItem>
               </Select>
             </FormControl>
-            &nbsp;
-            <Button id="editbutton" variant="contained">
-              Edit
-            </Button>
           </Grid>
           <br />
           <Grid item>
@@ -347,6 +376,17 @@ const EditReward = () => {
               Cancel
             </Button>
           </div>
+          <Popup
+            title="Team Members"
+            openPopup={openPopup}
+            setOpenPopup={setOpenPopup}
+          >
+            <EmployeesList
+              rewardId={rewardData._id}
+              openPopup={openPopup}
+              setOpenPopup={setOpenPopup}
+            />
+          </Popup>
         </form>
       )}
     </Grid>
