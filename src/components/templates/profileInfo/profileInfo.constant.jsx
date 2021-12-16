@@ -6,4 +6,9 @@ export const profileInfoConstant = {
   designation: "designation",
   dateOfJoining: "date of joining",
   reportingManager: "reporting to",
+  tabs: {
+    personal: "personal",
+    professional: "professional",
+    skills: "skills and qualifications",
+  },
 };

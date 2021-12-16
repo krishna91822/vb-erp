@@ -119,9 +119,18 @@ const ProfileInfoEditable = (props) => {
       <Grid item sm={8}>
         <Box sx={{ width: "100%" }}>
           <StyledTabs value={tab} onChange={handleTabChange}>
-            <StyledTab icon={<LocalCafeIcon />} label="Personal" />
-            <StyledTab icon={<ImportContactsIcon />} label="professional" />
-            <StyledTab icon={<BadgeIcon />} label="Skills And Qualifications" />
+            <StyledTab
+              icon={<LocalCafeIcon />}
+              label={profileInfoConstant.tabs.personal}
+            />
+            <StyledTab
+              icon={<ImportContactsIcon />}
+              label={profileInfoConstant.tabs.personal}
+            />
+            <StyledTab
+              icon={<BadgeIcon />}
+              label={profileInfoConstant.tabs.skills}
+            />
           </StyledTabs>
         </Box>
         <Box
