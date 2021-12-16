@@ -16,7 +16,7 @@ import {
 import { Container, MiniHead, PageNation } from "./style";
 import BenchModal from "./BenchModal";
 
-const Bench = ({ pressed }) => {
+const Bench = ({ pressed, benchSortValue }) => {
   const { benchData } = useSelector((state) => state.pmo);
   const dispatch = useDispatch();
   const [modalDetails, setModalDetails] = useState(false);
@@ -29,15 +29,15 @@ const Bench = ({ pressed }) => {
   });
 
   useEffect(() => {
-    dispatch(getOnBench(filters, 1));
-  }, []);
+    dispatch(getOnBench(filters, 1, benchSortValue));
+  }, [benchSortValue]);
 
   let data = benchData;
 
   const filterData = (event) => {
     setFilters({ ...filters, [event.target.name]: event.target.value });
     if (event.key === "Enter") {
-      dispatch(getOnBench(filters, 1));
+      dispatch(getOnBench(filters, 1, benchSortValue));
     }
   };
 
@@ -47,7 +47,7 @@ const Bench = ({ pressed }) => {
   };
 
   const changePage = (event) => {
-    dispatch(getOnBench(filters, event.target.textContent));
+    dispatch(getOnBench(filters, event.target.textContent, benchSortValue));
   };
 
   return (

@@ -196,10 +196,10 @@ export const getAllClientData = (value) => {
   };
 };
 
-export const getAllocatedData = (filters, pageNo) => {
+export const getAllocatedData = (filters, pageNo, sortedValue) => {
   return async (dispatch) => {
     const getData = async () => {
-      let url = `/allocations?limit=10&page=${pageNo}`;
+      let url = `/allocations/allocated/${sortedValue}?limit=10&page=${pageNo}`;
       if (filters.empId) url += `&empId=${filters.empId}`;
       if (filters.employeeName) url += `&empName=${filters.employeeName}`;
       if (filters.projectAllocated)
@@ -232,10 +232,10 @@ export const getAllocatedData = (filters, pageNo) => {
   };
 };
 
-export const getOnBench = (filters, pageNo) => {
+export const getOnBench = (filters, pageNo, sortedValue) => {
   return async (dispatch) => {
     const getData = async () => {
-      let url = `/allocations/onbench?limit=10&page=${pageNo}`;
+      let url = `/allocations/onbench/${sortedValue}?limit=10&page=${pageNo}`;
       if (filters.empId) url += `&empId=${filters.empId}`;
       if (filters.employeeName) url += `&empName=${filters.employeeName}`;
       if (filters.remainingAllocation)
@@ -297,7 +297,9 @@ export const getProjectById = (projectId) => {
       return response;
     };
     const getResourceData = async (projId) => {
-      const response = await axios.get(`/allocations?projectId=${projId}`);
+      const response = await axios.get(
+        `/allocations/allocated?projectId=${projId}`
+      );
       if (response.status === "failure") {
         throw new Error(response.data.message);
       }

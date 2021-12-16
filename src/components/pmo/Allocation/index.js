@@ -1,6 +1,8 @@
 import React, { useState } from "react";
+
 import Allocated from "./allocated";
 import Bench from "./bench";
+
 import FilterListIcon from "@mui/icons-material/FilterList";
 import FilterListOffIcon from "@mui/icons-material/FilterListOff";
 
@@ -17,8 +19,10 @@ import {
 const Allocation = () => {
   const [pressed, setPressed] = useState(false);
   const [bench, setBench] = useState(false);
+  const [sortValue, setSortValue] = useState("");
 
   const ChangeAllocation = (event) => {
+    setSortValue("");
     const AllocatedValue = event.target.value;
     setPressed(false);
     if (AllocatedValue === "Sort by on Bench") {
@@ -32,8 +36,8 @@ const Allocation = () => {
     setPressed(!pressed);
   };
 
-  const sortValue = (event) => {
-    alert(event.target.value);
+  const handleSortValue = (event) => {
+    setSortValue(event.target.value);
   };
 
   return (
@@ -53,13 +57,35 @@ const Allocation = () => {
                 style={{ cursor: "pointer" }}
               />
             )}
-            <Dropdown data-test="sortby-dropdown" onChange={sortValue}>
-              <Options Value="Sort by" hidden>
-                Sort by
-              </Options>
-              <Options value="Sort by ID">Sort by ID</Options>
-              <Options value="Sort by name">Sort by name</Options>
-            </Dropdown>
+            {!bench ? (
+              <Dropdown
+                data-test="sortby-dropdown"
+                value={sortValue}
+                onChange={handleSortValue}
+              >
+                <Options value="Sort by" hidden>
+                  Sort by
+                </Options>
+                <Options value="allocationPercentage">
+                  Sort by Percentage
+                </Options>
+                <Options value="allocationStartDate">
+                  Sort by Start-Date
+                </Options>
+                <Options value="allocationEndDate">Sort by End-Date</Options>
+              </Dropdown>
+            ) : (
+              <Dropdown onChange={handleSortValue} value={sortValue}>
+                <Options value="Sort by" hidden>
+                  Sort by
+                </Options>
+                <Options value="empId">Sort by EmpId</Options>
+                <Options value="empName">Sort by Emp-Name</Options>
+                <Options value="remainingAllocation">
+                  Sort by Allocations
+                </Options>
+              </Dropdown>
+            )}
             <Dropdown data-test="sortby-dropdown" onChange={ChangeAllocation}>
               <Options value="Sort by Allocated">Allocated</Options>
               <Options value="Sort by on Bench">On Bench</Options>
@@ -67,7 +93,11 @@ const Allocation = () => {
           </SideButton>
         </Heading>
       </HeadingStyle>
-      {bench ? <Bench pressed={pressed} /> : <Allocated pressed={pressed} />}
+      {bench ? (
+        <Bench pressed={pressed} benchSortValue={sortValue} />
+      ) : (
+        <Allocated pressed={pressed} allocatedSortedValue={sortValue} />
+      )}
     </MainComponent>
   );
 };

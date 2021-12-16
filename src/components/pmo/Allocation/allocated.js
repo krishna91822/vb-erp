@@ -14,7 +14,7 @@ import {
 import { useSelector, useDispatch } from "react-redux";
 import { Container, MiniHead, PageNation } from "./style";
 
-const Allocated = ({ pressed }) => {
+const Allocated = ({ pressed, allocatedSortedValue }) => {
   const { allocatedData } = useSelector((state) => state.pmo);
   const dispatch = useDispatch();
 
@@ -26,21 +26,22 @@ const Allocated = ({ pressed }) => {
     allocationStartDate: "",
     allocationEndDate: "",
   });
-
   useEffect(() => {
-    dispatch(getAllocatedData(filters, 1));
-  }, []);
+    dispatch(getAllocatedData(filters, 1, allocatedSortedValue));
+  }, [allocatedSortedValue]);
 
   let data = allocatedData;
   const filterData = (event) => {
     setFilters({ ...filters, [event.target.name]: event.target.value });
     if (event.key === "Enter") {
-      dispatch(getAllocatedData(filters, 1));
+      dispatch(getAllocatedData(filters, 1, allocatedSortedValue));
     }
   };
 
   const changePage = (event) => {
-    dispatch(getAllocatedData(filters, event.target.textContent));
+    dispatch(
+      getAllocatedData(filters, event.target.textContent, allocatedSortedValue)
+    );
   };
   return (
     <>
