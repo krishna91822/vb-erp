@@ -316,6 +316,19 @@ const ViewProjects = () => {
                   : null}
               </TableBody>
             </Table>
+            {projects.results
+              ? !projects.results.length && (
+                  <p
+                    style={{
+                      textAlign: "center",
+                      color: "grey",
+                      margin: "15px",
+                    }}
+                  >
+                    No Project Found!!!
+                  </p>
+                )
+              : ""}
           </TableContainer>
         </Container>
         <PageNation
