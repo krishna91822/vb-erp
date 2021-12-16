@@ -273,7 +273,7 @@ export const CapturePO_SOW = (props) => {
     };
 
     const all_errors = validateForm(DataToSend);
-    console.log(all_errors);
+
     setErrors(all_errors);
     if (Object.keys(all_errors).length === 0) {
       if (props.editBtn && editTglCheckedState) {
@@ -497,12 +497,12 @@ export const CapturePO_SOW = (props) => {
 
               <hr className="projectInfoSeperator" />
               <div className="DocInfoinputBoxesRowOne">
-                <div className="TypeDropdown">
-                  <label>
+                <div className="txtBox TypeDropdown ">
+                  {/* <label>
                     <strong>Type</strong>
-                  </label>
+                  </label> */}
                   <div>
-                    <FormControl sx={{ m: 1, width: 250 }}>
+                    <FormControl sx={{ m: 1 }} className="inputField">
                       <InputLabel id="demo-multiple-name-label">
                         Type
                       </InputLabel>
@@ -533,13 +533,14 @@ export const CapturePO_SOW = (props) => {
                 </div>
                 {props.editBtn ? (
                   <div className="txtBox PoNoTxtBox">
-                    <label>
+                    {/* <label>
                       <strong>{typeName} Number</strong>
-                    </label>
+                    </label> */}
                     <div>
                       <TextField
+                        className="inputTxtField inputField"
                         id="outlined-basic"
-                        label={"Enter " + typeName + " Number"}
+                        label={typeName + " Number"}
                         variant="outlined"
                         value={PO_number}
                         onChange={handlePoNumTxtBoxChange}
@@ -554,36 +555,18 @@ export const CapturePO_SOW = (props) => {
                 ) : (
                   <div></div>
                 )}
-                <div className="txtBox PoAmtTxtBox">
-                  <label>
-                    <strong>{typeName} Amount</strong>
-                  </label>
-                  <div>
-                    <TextField
-                      id="outlined-basic"
-                      label={"Enter " + typeName + " Amount"}
-                      variant="outlined"
-                      value={PO_amt}
-                      onChange={handlePOAmtTxtBoxChange}
-                      inputProps={{ "data-testid": "po-sow-amt" }}
-                      error={errors.PO_Amount ? true : false}
-                      helperText={errors.PO_Number ? errors.PO_Amount : ""}
-                      disabled={
-                        props.editBtn && !editTglCheckedState ? true : false
-                      }
-                    />
-                  </div>
-                </div>
-                <div className="CurrDropdown">
-                  <label>
+                <br />
+                <div className="txtBox CurrDropdown">
+                  {/* <label>
                     <strong>Currency</strong>
-                  </label>
+                  </label> */}
                   <div>
-                    <FormControl sx={{ m: 1, width: 250 }}>
+                    <FormControl sx={{ m: 1 }} className="inputField">
                       <InputLabel id="demo-multiple-name-label">
                         Currency
                       </InputLabel>
                       <Select
+                        className="inputField"
                         value={CurrName}
                         onChange={handleCurrencyChange}
                         input={<OutlinedInput label="Currency" />}
@@ -611,6 +594,27 @@ export const CapturePO_SOW = (props) => {
                     </FormControl>
                   </div>
                 </div>
+                <div className="txtBox PoAmtTxtBox">
+                  {/* <label>
+                    <strong>{typeName} Amount</strong>
+                  </label> */}
+                  <div>
+                    <TextField
+                      className="inputTxtField inputField "
+                      id="outlined-basic"
+                      label={typeName + " Amount"}
+                      variant="outlined"
+                      value={PO_amt}
+                      onChange={handlePOAmtTxtBoxChange}
+                      inputProps={{ "data-testid": "po-sow-amt" }}
+                      error={errors.PO_Amount ? true : false}
+                      helperText={errors.PO_Number ? errors.PO_Amount : ""}
+                      disabled={
+                        props.editBtn && !editTglCheckedState ? true : false
+                      }
+                    />
+                  </div>
+                </div>
               </div>
               <div className="newRowtwo">
                 <div className="PO-endDate">
@@ -619,11 +623,13 @@ export const CapturePO_SOW = (props) => {
                   </label>
                   <div>
                     <BasicDatePicker
+                      className="inputField"
                       maxDate="POSOW"
                       label={typeName + " End Date"}
-                      inputFormat="MM/dd/yyyy"
+                      // inputFormat="MM/dd/yyyy"
                       value={selectedDate}
                       onChange={handleDateChange}
+                      helperText="Choose Date"
                       disabled={
                         props.editBtn && !editTglCheckedState ? true : false
                       }
@@ -634,11 +640,12 @@ export const CapturePO_SOW = (props) => {
               </div>
               <div className="DocInfoInputBoxesRowTow">
                 <div className="txtBox PoAmtTxtBox">
-                  <label>
+                  {/* <label>
                     <strong>Document Name</strong>
-                  </label>
+                  </label> */}
                   <div>
                     <TextField
+                      className="inputField"
                       sx={{ m: 1, width: 400 }}
                       id="outlined-basic"
                       label="uploaded Doc"
@@ -651,18 +658,19 @@ export const CapturePO_SOW = (props) => {
                   </div>
                 </div>
                 <div className="DocTypeDropdown">
-                  <label>
+                  {/* <label>
                     <strong>Doc Type</strong>
-                  </label>
+                  </label> */}
                   <div>
                     <FormControl sx={{ m: 1, width: 300 }}>
                       <InputLabel id="demo-multiple-name-label">
-                        Select Doc type
+                        Doc type
                       </InputLabel>
                       <Select
+                        className="inputField"
                         value={DocTypes}
                         onChange={handleDocTypesChange}
-                        input={<OutlinedInput label="Select Doc type" />}
+                        input={<OutlinedInput label="Doc type" />}
                         MenuProps={MenuProps}
                         data-test="doc-typeForUpload-dropdown"
                         inputProps={{

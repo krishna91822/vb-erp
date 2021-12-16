@@ -47,7 +47,10 @@ hr.projectInfoSeperator {
   justify-content: space-between;
   white-space: nowrap;
 }
-.txtBox,
+.txtBox {
+  margin-top: 0.51rem;
+  width: 50%;
+}
 .PO-endDate {
   margin-top: 0.51rem;
 }
@@ -143,4 +146,12 @@ input:checked + .slider:before {
   justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
+}
+.inputField {
+  width: 96%;
+  margin-left: 5px;
+  margin-right: 5px;
+}
+.inputTxtField {
+  margin-top: 15px;
 }

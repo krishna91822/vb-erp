@@ -51,8 +51,6 @@ function Invoice(props) {
     }
   }, [isRedirect]);
   useEffect(() => {
-    // dispatch(fetchPO_SOW_data("Id"));
-    // dispatch(fetch_INVOICE_data("Id"));
     dispatch(paginationFetchPosow("id", 1, 50));
     dispatch(paginationFetchInvoice("Id", 1, 50));
   }, []);
@@ -125,6 +123,7 @@ function Invoice(props) {
 
   useEffect(() => {
     if (props.readonly && filteredArr[0].PO_Id !== undefined) {
+      console.log(filteredArr[0]);
       setPersonName(filteredArr[0].PO_Id.Client_Name);
       setProjectName(filteredArr[0].PO_Id.Project_Name);
       setPO_number(filteredArr[0].PO_Id.PO_Number);
@@ -175,11 +174,10 @@ function Invoice(props) {
   };
 
   useEffect(() => {
-    if (projectName) {
+    if (projectName && !params.id) {
       const filtered = allPOSOWs.filter((val) => {
         return projectName === val.Project_Name;
       });
-
       setPO_number(filtered[0].PO_Number);
       setPersonName(filtered[0].Client_Name);
       setClientSponsorArr(filtered[0].Client_Sponser);
@@ -276,7 +274,7 @@ function Invoice(props) {
                 <br />
                 <Box sx={{ minWidth: 120 }}>
                   <FormControl fullWidth>
-                    <Select
+                    {/* <Select
                       disabled={projectName ? false : true}
                       value={ClientSponsor}
                       onChange={handleClientSponsor}
@@ -284,7 +282,8 @@ function Invoice(props) {
                       {[clientSponsorArr].map((detail) => (
                         <MenuItem value={detail}>{detail}</MenuItem>
                       ))}
-                    </Select>
+                    </Select> */}
+                    <TextField disabled={true} value={ClientSponsor} />
                   </FormControl>
                 </Box>
               </Grid>
@@ -293,15 +292,16 @@ function Invoice(props) {
                 <br />
                 <Box sx={{ minWidth: 120 }}>
                   <FormControl fullWidth>
-                    <Select
+                    {/* <Select
                       disabled={projectName ? false : true}
                       value={Client_Fin_controller}
                       onChange={handleClientFinController}
                     >
-                      {clientFinControllerArr.map((detail) => (
+                      {[clientFinControllerArr].map((detail) => (
                         <MenuItem value={detail}>{detail}</MenuItem>
                       ))}
-                    </Select>
+                    </Select> */}
+                    <TextField disabled={true} value={Client_Fin_controller} />
                   </FormControl>
                 </Box>
               </Grid>

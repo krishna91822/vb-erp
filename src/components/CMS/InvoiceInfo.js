@@ -188,7 +188,8 @@ function InvoiceInfo() {
           <div>
             <h3 data-test="MainHeading">Invoice Information</h3>
           </div>
-          <div className="buttondiv">
+          {/* will be required in future */}
+          {/* <div className="buttondiv">
             <Link
               to="/invoice/create-invoice"
               style={{ textDecoration: "none" }}
@@ -202,7 +203,7 @@ function InvoiceInfo() {
                 Capture Invoice{" "}
               </Button>
             </Link>
-          </div>
+          </div> */}
         </div>
         <TableContainer component={Paper}>
           <Table
