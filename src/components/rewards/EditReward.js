@@ -14,6 +14,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { EditRewardData } from "../../store/rewards-actions";
 import { rewardsActions } from "../../store/rewards-slice";
 import { UpdateRewardData } from "../../store/rewards-actions";
+import { useNavigate } from "react-router-dom";
 
 const EditReward = () => {
   let { id } = useParams();
@@ -146,7 +147,7 @@ const EditReward = () => {
       })
     );
   };
-
+  let navigate = useNavigate();
   const saveFormData = () => {
     if (
       rewardData.reward_display_name !== "" ||
@@ -154,7 +155,7 @@ const EditReward = () => {
     ) {
       console.log(rewardData);
       dispatch(UpdateRewardData(rewardData, id));
-      alert("Data Saved");
+      navigate("/rewards");
     } else {
       alert("Cannot Leave name OR message field blank");
     }
