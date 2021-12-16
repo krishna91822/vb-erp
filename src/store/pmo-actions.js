@@ -334,7 +334,7 @@ export const deleteResource = (id) => {
       return response;
     };
     try {
-      const data = await deleteResourceById();
+      await deleteResourceById();
     } catch (error) {
       dispatch(
         uiActions.showNotification({

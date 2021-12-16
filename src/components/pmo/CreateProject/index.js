@@ -2,6 +2,8 @@ import React, { useState, useLayoutEffect, useEffect } from "react";
 import { useParams, useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { isEmpty } from "lodash";
+
+import { uiActions } from "../../../store/ui-slice";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
 
@@ -132,7 +134,7 @@ const CreateProject = () => {
       setState(initialState);
       setEdit(true);
       setVbManInput("");
-    }
+    } // eslint-disable-next-line
   }, [location]);
 
   useEffect(() => {
@@ -188,7 +190,12 @@ const CreateProject = () => {
         currentDate.getMonth() + 1
       }-${currentDate.getDate()}`;
       if (target.value < current_date) {
-        alert("Start date cannot be earlier than today's date");
+        dispatch(
+          uiActions.showNotification({
+            status: "error",
+            message: "Start date cannot be earlier than today's date",
+          })
+        );
       } else {
         setState({
           ...state,
@@ -200,7 +207,12 @@ const CreateProject = () => {
       }
     } else if (target.name === "endDate") {
       if (startDate > target.value) {
-        alert("End Date need to be greater than Start Date");
+        dispatch(
+          uiActions.showNotification({
+            status: "error",
+            message: "End Date need to be greater than Start Date",
+          })
+        );
       } else {
         setState({
           ...state,
@@ -224,9 +236,19 @@ const CreateProject = () => {
   const handleResourceChange = ({ target }) => {
     if (target.name === "allocationStartDate") {
       if (target.value < startDate || target.value > endDate) {
-        alert("Start Date need to be in range");
+        dispatch(
+          uiActions.showNotification({
+            status: "error",
+            message: "Start Date need to be in range",
+          })
+        );
       } else if (startDate === "" || endDate === "") {
-        alert("Please enter project start date|end date");
+        dispatch(
+          uiActions.showNotification({
+            status: "error",
+            message: "Please enter project start date|end date",
+          })
+        );
       } else {
         setState({
           ...state,
@@ -238,9 +260,19 @@ const CreateProject = () => {
       }
     } else if (target.name === "allocationEndDate") {
       if (target.value > endDate || target.value < startDate) {
-        alert("End Date need to be in range");
+        dispatch(
+          uiActions.showNotification({
+            status: "error",
+            message: "End Date need to be in range",
+          })
+        );
       } else if (target.value < resource.startDate) {
-        alert("End Date need to be grater than Start Date");
+        dispatch(
+          uiActions.showNotification({
+            status: "error",
+            message: "End Date need to be grater than Start Date",
+          })
+        );
       } else {
         setState({
           ...state,

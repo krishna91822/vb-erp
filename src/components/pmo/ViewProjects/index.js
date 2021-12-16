@@ -30,7 +30,6 @@ import {
   Dropdown,
   Options,
   ProjectHead,
-  PageNation,
 } from "./styles";
 
 const ViewProjects = () => {
@@ -86,7 +85,6 @@ const ViewProjects = () => {
   };
 
   const changePage = (event) => {
-    console.log(event.target.textContent);
     dispatch(getAllProjects(filterProjects, event.target.textContent));
   };
 
