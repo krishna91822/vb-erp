@@ -382,14 +382,14 @@ export const updateRewardStatus = (
 
     try {
       await fetchData();
-      if (defaultPage !== 1 && searchValue !== "") {
+      if (searchValue !== "") {
         dispatch(getRewardsDataWithPageAndSearch(searchValue, defaultPage));
-      } else if (defaultPage !== 1 && sorting !== "") {
+      } else if (sorting !== "") {
         dispatch(filterDataWithPageAndFilter(sorting, defaultPage));
       } else if (defaultPage !== 1) {
         dispatch(getRewardsDataWithPageNumber(defaultPage));
       } else {
-        dispatch(getRewardsData());
+        dispatch(getRewardsDataWithPageNumber(1));
       }
     } catch (error) {
       dispatch(uiActions.toggleLoader());

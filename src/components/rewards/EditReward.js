@@ -15,14 +15,10 @@ import { EditRewardData } from "../../store/rewards-actions";
 import { rewardsActions } from "../../store/rewards-slice";
 import { UpdateRewardData } from "../../store/rewards-actions";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 
 const EditReward = () => {
   let { id } = useParams();
-  const [openPopup, setOpenPopup] = React.useState(false);
-
-  const relaunchReward = () => {
-    setOpenPopup(true);
-  };
   const dispatch = useDispatch();
   const updateRewardStatus = useSelector(
     (state) => state.reward.updateRewardData
@@ -126,16 +122,27 @@ const EditReward = () => {
     );
   };
 
-  const selectsenderChange = (e) => {
-    dispatch(
-      rewardsActions.addEditRewardData({
-        rewardData: {
-          ...rewardData,
-          selected_sender: e.target.value,
-        },
-      })
-    );
-  };
+  // const selectsenderChange = (e) => {
+  //   dispatch(
+  //     rewardsActions.addEditRewardData({
+  //       rewardData: {
+  //         ...rewardData,
+  //         sender_id: e.target.value,
+  //       },
+  //     })
+  //   );
+  // };
+
+  // const selectreceiverChange = (e) => {
+  //   dispatch(
+  //     rewardsActions.addEditRewardData({
+  //       rewardData: {
+  //         ...rewardData,
+  //         recipients_ids: e.target.value,
+  //       },
+  //     })
+  //   );
+  // };
 
   const announcementChange = (e) => {
     dispatch(
@@ -147,6 +154,7 @@ const EditReward = () => {
       })
     );
   };
+
   let navigate = useNavigate();
   const saveFormData = () => {
     if (
@@ -160,6 +168,41 @@ const EditReward = () => {
       alert("Cannot Leave name OR message field blank");
     }
   };
+
+  const [openSenderPopup, setOpenSenderPopup] = useState(false);
+
+  const senderPopup = () => {
+    setOpenSenderPopup(true);
+  };
+
+  const [openReceiverPopup, setOpenReceiverPopup] = useState(false);
+
+  const receiverPopup = () => {
+    setOpenReceiverPopup(true);
+  };
+
+  const updateSenderData = (data) => {
+    dispatch(
+      rewardsActions.addEditRewardData({
+        rewardData: {
+          ...rewardData,
+          sender_id: data[0].employee_id,
+        },
+      })
+    );
+  };
+
+  const updaterecipientsData = (data) => {
+    dispatch(
+      rewardsActions.addEditRewardData({
+        rewardData: {
+          ...rewardData,
+          recipients_ids: data.map((emp) => emp.employee_id),
+        },
+      })
+    );
+  };
+
   return (
     <Grid classes={{ root: { width: "100%" } }}>
       {rewardData && rewardData.reward_type && (
@@ -192,7 +235,6 @@ const EditReward = () => {
               onChange={handleChangeName}
             />
           </Grid>
-
           <br />
           <Grid item>
             <FormLabel children="Reward Type" style={{ color: " black " }} />
@@ -251,9 +293,8 @@ const EditReward = () => {
                 <MenuItem value="CEO">CEO</MenuItem>
                 <MenuItem value="Manager">Manager</MenuItem>
                 <MenuItem
-                  value={rewardData.sender_id}
-                  onChange={selectsenderChange}
-                  onClick={() => relaunchReward()}
+                  value="selected"
+                  onClick={() => senderPopup()}
                   disableRipple
                 >
                   :Selected
@@ -282,8 +323,8 @@ const EditReward = () => {
 
                 <MenuItem value="Employees">Employee</MenuItem>
                 <MenuItem
-                  value={rewardData.recipients_ids}
-                  onClick={() => relaunchReward()}
+                  value="selected"
+                  onClick={() => receiverPopup()}
                   disableRipple
                 >
                   :Selected
@@ -377,17 +418,36 @@ const EditReward = () => {
               Cancel
             </Button>
           </div>
-          <Popup
-            title="Team Members"
-            openPopup={openPopup}
-            setOpenPopup={setOpenPopup}
-          >
-            <EmployeesList
-              rewardId={rewardData._id}
-              openPopup={openPopup}
-              setOpenPopup={setOpenPopup}
-            />
-          </Popup>
+          {
+            <Popup
+              title="Team Members"
+              openPopup={openSenderPopup}
+              setOpenPopup={setOpenSenderPopup}
+            >
+              <EmployeesList
+                sender={true}
+                rewardId={rewardData._id}
+                updateSenderData={updateSenderData}
+                openPopup={openSenderPopup}
+                setOpenPopup={setOpenSenderPopup}
+              />
+            </Popup>
+          }
+          {
+            <Popup
+              title="Team Members"
+              openPopup={openReceiverPopup}
+              setOpenPopup={setOpenReceiverPopup}
+            >
+              <EmployeesList
+                receiver={true}
+                rewardId={rewardData._id}
+                updaterecipientsData={updaterecipientsData}
+                openPopup={openReceiverPopup}
+                setOpenPopup={setOpenReceiverPopup}
+              />
+            </Popup>
+          }
         </form>
       )}
     </Grid>

@@ -24,6 +24,7 @@ const CreateReward = () => {
   const [announcement, setAnnouncement] = React.useState("");
   const [subtype, setSubType] = React.useState("");
   const [receiver, setReceiver] = React.useState("");
+  const [multipleEmployeeData, setMultipleEmployeeData] = React.useState([]);
 
   const [formData, setFormData] = useState({});
   const updateRewardStatus = useSelector(
@@ -42,6 +43,14 @@ const CreateReward = () => {
       [e.target.name]: e.target.value,
     });
   };
+
+  const handledata = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
+  };
+
   const receiverChange = (event) => {
     setReceiver(event.target.value);
     setFormData({
@@ -80,14 +89,36 @@ const CreateReward = () => {
   const getFormData = (event) => {
     event.preventDefault();
     dispatch(addRewardData(formData));
-    console.log(formData);
   };
 
-  const [openPopup, setOpenPopup] = useState(false);
+  const [openSenderPopup, setOpenSenderPopup] = useState(false);
 
-  const relaunchReward = () => {
-    setOpenPopup(true);
+  const senderPopup = () => {
+    setOpenSenderPopup(true);
   };
+
+  const [openReceiverPopup, setOpenReceiverPopup] = useState(false);
+
+  const receiverPopup = () => {
+    setOpenReceiverPopup(true);
+  };
+
+  const updateSenderData = (data) => {
+    // setMultipleEmployeeData(data);
+    setFormData({
+      ...formData,
+      sender_id: data[0].employee_id,
+    });
+  };
+
+  const updaterecipientsData = (data) => {
+    //setMultipleEmployeeData(data);
+    setFormData({
+      ...formData,
+      recipients_ids: data.map((emp) => emp.employee_id),
+    });
+  };
+
   return (
     <Grid classes={{ root: { width: "100%" } }}>
       <form>
@@ -178,7 +209,7 @@ const CreateReward = () => {
               <MenuItem value="Manager">Manager</MenuItem>
               <MenuItem
                 value="selected"
-                onClick={() => relaunchReward()}
+                onClick={() => senderPopup()}
                 disableRipple
               >
                 :Selected
@@ -205,7 +236,8 @@ const CreateReward = () => {
               <MenuItem value="Employees">Employee</MenuItem>
               <MenuItem
                 value="selected"
-                onClick={() => relaunchReward()}
+                onChange={handledata}
+                onClick={() => receiverPopup()}
                 disableRipple
               >
                 :Selected
@@ -295,13 +327,31 @@ const CreateReward = () => {
         {
           <Popup
             title="Team Members"
-            openPopup={openPopup}
-            setOpenPopup={setOpenPopup}
+            openPopup={openSenderPopup}
+            setOpenPopup={setOpenSenderPopup}
           >
             <EmployeesList
+              sender={true}
               rewardId={formData._id}
-              openPopup={openPopup}
-              setOpenPopup={setOpenPopup}
+              updateSenderData={updateSenderData}
+              openPopup={openSenderPopup}
+              setOpenPopup={setOpenSenderPopup}
+            />
+          </Popup>
+        }
+
+        {
+          <Popup
+            title="Team Members"
+            openPopup={openReceiverPopup}
+            setOpenPopup={setOpenReceiverPopup}
+          >
+            <EmployeesList
+              receiver={true}
+              rewardId={formData._id}
+              updaterecipientsData={updaterecipientsData}
+              openPopup={openReceiverPopup}
+              setOpenPopup={setOpenReceiverPopup}
             />
           </Popup>
         }
