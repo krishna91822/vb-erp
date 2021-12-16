@@ -12,7 +12,7 @@ import {
   TextField,
 } from "@mui/material";
 import { useSelector, useDispatch } from "react-redux";
-import { Container, MiniHead, PageNation } from "./style";
+import { Container, MiniHead } from "./style";
 
 const Allocated = ({ pressed, allocatedSortedValue }) => {
   const { allocatedData } = useSelector((state) => state.pmo);

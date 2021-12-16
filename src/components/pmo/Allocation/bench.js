@@ -13,7 +13,7 @@ import {
   TextField,
 } from "@mui/material";
 
-import { Container, MiniHead, PageNation } from "./style";
+import { Container, MiniHead } from "./style";
 import BenchModal from "./BenchModal";
 
 const Bench = ({ pressed, benchSortValue }) => {
