@@ -3,6 +3,9 @@ import NotFound from "../pages/NotFound";
 import Clients from "../pages/Clients/Clients";
 import CreateClient from "../pages/Clients/CreateClient";
 import UpdateClient from "../pages/Clients/UpdateClient";
+import Projects from "../pages/pmo/Projects";
+import CreateProject from "../pages/pmo/CreateProject";
+import Allocations from "../pages/pmo/Allocations";
 import CreateReward from "../pages/Rewards/CreateReward";
 import EditReward from "../pages/Rewards/EditReward";
 import RewardsList from "../pages/Rewards/RewardsList";
@@ -58,6 +61,26 @@ const routes = [
     path: "/templates",
     component: Templates,
     title: "Templates",
+  },
+  {
+    path: "/pmo/projects",
+    component: Projects,
+  },
+  {
+    path: "/pmo/projects/create",
+    component: CreateProject,
+  },
+  {
+    path: "/pmo/projects/:id",
+    component: CreateProject,
+  },
+  {
+    path: "/pmo/projects/:id/edit",
+    component: CreateProject,
+  },
+  {
+    path: "/pmo/allocations",
+    component: Allocations,
   },
   {
     path: "/rewards/create",

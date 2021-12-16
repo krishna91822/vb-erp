@@ -6,11 +6,28 @@ import reportWebVitals from "./reportWebVitals";
 
 import { BrowserRouter } from "react-router-dom";
 import { Provider } from "react-redux";
+import { createGlobalStyle } from "styled-components";
 
 import { ThemeProvider } from "@mui/material/styles";
 import { theme } from "./theme";
 
 import store from "./store/index";
+
+const GlobalStyles = createGlobalStyle`
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  body {
+    height: 100%;
+  }
+
+  #root {
+    height: 100vh;
+  }
+`;
 
 ReactDOM.render(
   <Provider store={store}>
