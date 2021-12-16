@@ -215,7 +215,7 @@ export const Main = () => {
                   <TableCell>{row.Project_Name}</TableCell>
                   <TableCell>{row.PO_Number}</TableCell>
                   <TableCell>{row.PO_Amount}</TableCell>
-                  <TableCell>{row.Client_Sponser[0]}</TableCell>
+                  <TableCell>{row.Client_Sponser}</TableCell>
                   {row.Status === "Rejected" || row.Status === "Drafted" ? (
                     <TableCell
                       component={Link}

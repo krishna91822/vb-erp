@@ -22,9 +22,9 @@ const employees = [
   },
 ];
 const projects = [];
-const clientFinController = ["ABC", "XYZ", "EFG"];
-const targetedResources = ["ABC", "XYZ", "EFG", "ZZZ"];
-const clientSponsors = ["ABC", "XYZ"];
+const clientFinController = "";
+const targetedResources = [];
+const clientSponsor = "";
 const types = ["PO", "SOW"];
 const currencies = ["INR", "USD"];
 const DocumentTypes = [".docx", ".pdf", ".excel"];
@@ -35,7 +35,7 @@ export const SOW_init_state = {
     projects: projects,
     clientFinController: clientFinController,
     targetedResources: targetedResources,
-    clientSponsors: clientSponsors,
+    clientSponsor: clientSponsor,
     types: types,
     currencies: currencies,
     DocumentTypes: DocumentTypes,
@@ -113,6 +113,22 @@ const POSOW_Slice = createSlice({
     },
     setClientProjects(state, action) {
       state.inputFieldsData.projects = action.payload;
+    },
+    setClientProjectSponsor(state, action) {
+      state.inputFieldsData.clientSponsor = action.payload;
+    },
+    setClientFinanceController(state, action) {
+      state.inputFieldsData.clientFinController = action.payload;
+    },
+    setTargetedResources(state, action) {
+      state.inputFieldsData.targetedResources = [...action.payload].map(
+        (obj) => {
+          return obj.empId.empName;
+        }
+      );
+    },
+    setTargetedResourcesOnReadPage(state, action) {
+      state.inputFieldsData.targetedResources = action.payload;
     },
   },
 });

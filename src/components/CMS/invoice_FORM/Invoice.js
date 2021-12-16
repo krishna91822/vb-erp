@@ -174,7 +174,7 @@ function Invoice(props) {
   };
 
   useEffect(() => {
-    if (projectName && !params.id) {
+    if (projectName) {
       const filtered = allPOSOWs.filter((val) => {
         return projectName === val.Project_Name;
       });
@@ -280,7 +280,7 @@ function Invoice(props) {
                       value={ClientSponsor}
                       onChange={handleClientSponsor}
                     >
-                      {clientSponsorArr.map((detail) => (
+                      {[clientSponsorArr].map((detail) => (
                         <MenuItem value={detail}>{detail}</MenuItem>
                       ))}
                     </Select>
@@ -387,73 +387,71 @@ function Invoice(props) {
           </Grid>
         </Grid>
         <hr />
-        {props.readonly ? (
+        {/* {props.readonly ? (
           <></>
-        ) : (
-          <Accordion>
-            <AccordionSummary
-              expandIcon={<ExpandMoreIcon />}
-              aria-controls="panel1a-content"
-              id="panel1a-header"
-            >
-              <Typography>Related Invoices</Typography>
-            </AccordionSummary>
-            <AccordionDetails>
-              <Typography>
-                <TableContainer component={Paper}>
-                  <Table sx={{ minWidth: 650 }} aria-label="simple table">
-                    <TableHead className="tablehead">
-                      <TableRow>
-                        <TableCell>Invoice ID</TableCell>
-                        <TableCell>Client Name</TableCell>
-                        <TableCell>PO/SOW Order</TableCell>
-                        <TableCell>Invoice raised</TableCell>
-                        <TableCell>Invoice Amount received</TableCell>
-                        <TableCell>Bank Account</TableCell>
-                      </TableRow>
-                    </TableHead>
-                    <TableBody>
-                      <TableCell>
-                        {filterinvoiceArr.map((detail) => (
-                          <TableRow>{detail._id}</TableRow>
-                        ))}
-                      </TableCell>
-                      <TableCell>
-                        {filterinvoiceArr.map((detail) => (
-                          <TableRow>
-                            {detail.purchase_orders.Client_Name}
-                          </TableRow>
-                        ))}
-                      </TableCell>
-                      <TableCell>
-                        {filterinvoiceArr.map((detail) => (
-                          <TableRow>
-                            {detail.purchase_orders.PO_Number}
-                          </TableRow>
-                        ))}
-                      </TableCell>
-                      <TableCell>
-                        {filterinvoiceArr.map((detail) => (
-                          <TableRow>{detail.invoice_raised}</TableRow>
-                        ))}
-                      </TableCell>
-                      <TableCell>
-                        {filterinvoiceArr.map((detail) => (
-                          <TableRow>{detail.invoice_amount_received}</TableRow>
-                        ))}
-                      </TableCell>
-                      <TableCell>
-                        {filterinvoiceArr.map((detail) => (
-                          <TableRow>{detail.vb_bank_account}</TableRow>
-                        ))}
-                      </TableCell>
-                    </TableBody>
-                  </Table>
-                </TableContainer>
-              </Typography>
-            </AccordionDetails>
-          </Accordion>
-        )}
+        ) : ( */}
+        <Accordion>
+          <AccordionSummary
+            expandIcon={<ExpandMoreIcon />}
+            aria-controls="panel1a-content"
+            id="panel1a-header"
+          >
+            <Typography>Related Invoices</Typography>
+          </AccordionSummary>
+          <AccordionDetails>
+            <Typography>
+              <TableContainer component={Paper}>
+                <Table sx={{ minWidth: 650 }} aria-label="simple table">
+                  <TableHead className="tablehead">
+                    <TableRow>
+                      <TableCell>Invoice ID</TableCell>
+                      <TableCell>Client Name</TableCell>
+                      <TableCell>PO/SOW Order</TableCell>
+                      <TableCell>Invoice raised</TableCell>
+                      <TableCell>Invoice Amount received</TableCell>
+                      <TableCell>Bank Account</TableCell>
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>
+                    <TableCell>
+                      {filterinvoiceArr.map((detail) => (
+                        <TableRow>{detail._id}</TableRow>
+                      ))}
+                    </TableCell>
+                    <TableCell>
+                      {filterinvoiceArr.map((detail) => (
+                        <TableRow>
+                          {detail.purchase_orders.Client_Name}
+                        </TableRow>
+                      ))}
+                    </TableCell>
+                    <TableCell>
+                      {filterinvoiceArr.map((detail) => (
+                        <TableRow>{detail.purchase_orders.PO_Number}</TableRow>
+                      ))}
+                    </TableCell>
+                    <TableCell>
+                      {filterinvoiceArr.map((detail) => (
+                        <TableRow>{detail.invoice_raised}</TableRow>
+                      ))}
+                    </TableCell>
+                    <TableCell>
+                      {filterinvoiceArr.map((detail) => (
+                        <TableRow>{detail.invoice_amount_received}</TableRow>
+                      ))}
+                    </TableCell>
+                    <TableCell>
+                      {filterinvoiceArr.map((detail) => (
+                        <TableRow>{detail.vb_bank_account}</TableRow>
+                      ))}
+                    </TableCell>
+                  </TableBody>
+                </Table>
+              </TableContainer>
+            </Typography>
+          </AccordionDetails>
+        </Accordion>
+        {/* )} */}
         <h3>Invoice Status</h3>
         <hr />
         <Grid container>

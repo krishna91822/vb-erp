@@ -21,7 +21,11 @@ import { createNewPO_SOW } from "../../../store/CMS/POSOW-actions";
 import { UpdatePO_SOW } from "../../../store/CMS/POSOW-actions";
 import { SendForApproval } from "../../../store/CMS/POSOW-actions";
 import { fetchAllClients } from "../../../store/CMS/POSOW-actions";
-import { fetchAllClientProjects } from "../../../store/CMS/POSOW-actions";
+import {
+  fetchAllClientProjects,
+  fetchClientProjectSponsor,
+  fetchTargetedResources,
+} from "../../../store/CMS/POSOW-actions";
 import { PoSowActions } from "../../../store/CMS/POSOW-slice";
 import { useNavigate } from "react-router-dom";
 import validateForm from "./validateForm";
@@ -75,8 +79,8 @@ export const CapturePO_SOW = (props) => {
   const targetedResources = useSelector(
     (state) => state.CMS_state.inputFieldsData.targetedResources
   );
-  const clientSponsors = useSelector(
-    (state) => state.CMS_state.inputFieldsData.clientSponsors
+  const clientSponsor = useSelector(
+    (state) => state.CMS_state.inputFieldsData.clientSponsor
   );
   const types = useSelector((state) => state.CMS_state.inputFieldsData.types);
   const currencies = useSelector(
@@ -86,8 +90,8 @@ export const CapturePO_SOW = (props) => {
     (state) => state.CMS_state.inputFieldsData.DocumentTypes
   );
 
-  let DefaultClientName = { clientName: "" };
-  let ReadProjectName = "";
+  let DefaultClientName = null;
+  let ReadProjectName = null;
   let ReadPO_num = "";
   let ReadPO_amt = "";
   let ReadType = "PO";
@@ -99,14 +103,16 @@ export const CapturePO_SOW = (props) => {
   let userTargetResCheckedElems = new Array(targetedResources.length).fill(
     false
   );
-  let userCkdClientSponsor = new Array(clientSponsors.length).fill(false);
-  let usrChkdClientFinController = new Array(clientFinController.length).fill(
-    false
-  );
+
   const [errors, setErrors] = useState({});
+  const [projectId, setProjectId] = useState("");
   const [selectedDate, setPOSOWEndDate] = useState(null);
   const [clientName, setClientName] = React.useState(DefaultClientName);
   const [projectName, setProjectName] = React.useState(ReadProjectName);
+  const [clientProjectSponsor, setclientProjectSponsor] =
+    React.useState(clientSponsor);
+  const [clientFinanceController, setClientFinanceController] =
+    React.useState(clientFinController);
   const [typeName, setTypeName] = React.useState(ReadType);
   const [CurrName, setCurrName] = React.useState(ReadCurr);
   const [DocTypes, setDocTypes] = React.useState(initDocTypes);
@@ -119,21 +125,28 @@ export const CapturePO_SOW = (props) => {
   const [editTglCheckedState, seteditTglCheckedState] = React.useState(
     props.toggleState
   );
-  const [ClientSponsorCheckedState, setClientSponsorCheckedState] =
-    useState(userCkdClientSponsor);
-  const [clientFinanceController, setClientFinanceController] = useState(
-    usrChkdClientFinController
-  );
+
   const [TargetedResChkBox, setTargetedResChkBox] = useState(
     userTargetResCheckedElems
   );
   useEffect(() => {
-    dispatch(fetchAllClientProjects(clientName.clientName));
+    if (clientName !== null && !params.id)
+      dispatch(fetchAllClientProjects(clientName.clientName));
   }, [clientName]);
+  useEffect(() => {
+    if (projectName !== null && !params.id) {
+      dispatch(fetchClientProjectSponsor(projectId));
+    }
+  }, [projectName]);
+  useEffect(() => {
+    setclientProjectSponsor(clientSponsor);
+    setClientFinanceController(clientFinController);
+  });
   useEffect(() => {
     if (props.editBtn && filteredArr !== undefined) {
       setClientName({ clientName: filteredArr[0].Client_Name });
-      setProjectName(filteredArr[0].Project_Name);
+      setProjectName({ _id: "", projectName: filteredArr[0].Project_Name });
+
       setPO_number(filteredArr[0].PO_Number);
       setPOAmt(filteredArr[0].PO_Amount);
       setTypeName(filteredArr[0].Type);
@@ -142,55 +155,40 @@ export const CapturePO_SOW = (props) => {
       setDocName(filteredArr[0].Document_Name);
       setStatus(filteredArr[0].Status);
       setDocTypes(filteredArr[0].Document_Type);
+      setProjectId(filteredArr[0].Project_Id);
       setPOSOWEndDate(new Date(filteredArr[0].POSOW_endDate));
+      dispatch(
+        PoSowActions.setClientProjectSponsor(filteredArr[0].Client_Sponser)
+      );
+      dispatch(
+        PoSowActions.setClientFinanceController(
+          filteredArr[0].Client_Finance_Controller
+        )
+      );
 
-      let fetchedTargetedRes = filteredArr[0].Targetted_Resources;
-      fetchedTargetedRes.map((readElem) => {
-        if (targetedResources.includes(readElem)) {
-          userTargetResCheckedElems[targetedResources.indexOf(readElem)] = true;
-          return targetedResources.indexOf(readElem);
-        } else {
-          return false;
-        }
-      });
-      setTargetedResChkBox(userTargetResCheckedElems);
-
-      let fetchedClientSponsor = filteredArr[0].Client_Sponser;
-      fetchedClientSponsor.map((readElem) => {
-        if (clientSponsors.includes(readElem)) {
-          userCkdClientSponsor[clientSponsors.indexOf(readElem)] = true;
-          return clientSponsors.indexOf(readElem);
-        } else {
-          return false;
-        }
-      });
-      setClientSponsorCheckedState(userCkdClientSponsor);
-
-      let fetchedClientFinControler = filteredArr[0].Client_Finance_Controller;
-      fetchedClientFinControler.map((readElem) => {
-        if (clientFinController.includes(readElem)) {
-          usrChkdClientFinController[
-            clientFinController.indexOf(readElem)
-          ] = true;
-          return clientFinController.indexOf(readElem);
-        } else {
-          return false;
-        }
-      });
-      setClientFinanceController(usrChkdClientFinController);
+      dispatch(
+        PoSowActions.setTargetedResourcesOnReadPage(
+          Object.keys(filteredArr[0].Targetted_Resources)
+        )
+      );
+      setTargetedResChkBox(Object.values(filteredArr[0].Targetted_Resources));
     }
   }, [filteredArr]);
 
   const handleClientChange = (event, value) => {
-    // setClientName(event.target.value);
     if (!!value) {
       setClientName(value);
     } else {
       setClientName(DefaultClientName);
     }
   };
-  const handleProjectChange = (event) => {
-    setProjectName(event.target.value);
+  const handleProjectChange = (event, val) => {
+    if (!!val) {
+      setProjectName(val);
+      setProjectId(val._id);
+    } else {
+      setProjectName(ReadProjectName);
+    }
   };
   const handleTypeChange = (event) => {
     setTypeName(event.target.value);
@@ -223,24 +221,13 @@ export const CapturePO_SOW = (props) => {
     seteditTglCheckedState(!editTglCheckedState);
   };
 
-  const handleClientOnChange = (position) => {
-    const updatedCheckedState = ClientSponsorCheckedState.map((item, index) =>
-      index === position ? !item : item
-    );
-    setClientSponsorCheckedState(updatedCheckedState);
-  };
   const handleTargetedResChkBoxOnChange = (position) => {
     const updatedCheckedState = TargetedResChkBox.map((item, index) =>
       index === position ? !item : item
     );
     setTargetedResChkBox(updatedCheckedState);
   };
-  const handleClientfinChkBoxOnChange = (position) => {
-    const updatedCheckedState = clientFinanceController.map((item, index) =>
-      index === position ? !item : item
-    );
-    setClientFinanceController(updatedCheckedState);
-  };
+
   const handleUploadBtnClick = (e) => {
     setUploadFile(e.target.files[0]);
     if (e.target.files[0] !== undefined) {
@@ -252,32 +239,29 @@ export const CapturePO_SOW = (props) => {
   const handleSendForApprovalBtnOnClk = () => {
     dispatch(SendForApproval({ Status: filteredArr[0].Status }, params.id));
   };
+
   const submitForm = (event) => {
     event.preventDefault();
-    let SelectedClientSponsors = [];
-    let SelectedFinController = [];
+
     let SelectedTargetedRes = [];
-    for (var i = 0; i < ClientSponsorCheckedState.length; i++) {
-      if (ClientSponsorCheckedState[i] === true) {
-        SelectedClientSponsors.push(clientSponsors[i]);
-      }
-    }
-    for (var i = 0; i < clientFinanceController.length; i++) {
-      if (clientFinanceController[i] === true) {
-        SelectedFinController.push(clientFinController[i]);
-      }
-    }
+
+    let testObjTargetedRes = {};
     for (var i = 0; i < TargetedResChkBox.length; i++) {
+      testObjTargetedRes[targetedResources[i]] = TargetedResChkBox[i];
+
       if (TargetedResChkBox[i] === true) {
         SelectedTargetedRes.push(targetedResources[i]);
       }
     }
+
     const DataToSend = {
+      Project_Id: projectId,
       Client_Name: clientName.clientName,
-      Project_Name: projectName,
-      Client_Sponser: SelectedClientSponsors,
-      Client_Finance_Controller: SelectedFinController,
-      Targetted_Resources: SelectedTargetedRes,
+      Project_Name: projectName.projectName,
+      Client_Sponser: clientProjectSponsor,
+      Client_Finance_Controller: clientFinanceController,
+
+      Targetted_Resources: testObjTargetedRes,
       Status: status,
       Type: typeName,
       Document_Type: DocTypes,
@@ -400,7 +384,10 @@ export const CapturePO_SOW = (props) => {
                         handleClientChange(event, value)
                       }
                       disabled={
-                        props.editBtn && !editTglCheckedState ? true : false
+                        (props.editBtn && !editTglCheckedState) ||
+                        editTglCheckedState
+                          ? true
+                          : false
                       }
                       value={clientName}
                       getOptionLabel={(option) => option.clientName}
@@ -420,35 +407,30 @@ export const CapturePO_SOW = (props) => {
                     <strong>Project name</strong>
                   </label>
                   <div>
-                    <FormControl sx={{ m: 1, width: 400 }}>
-                      <InputLabel id="demo-multiple-name-label">
-                        Projects
-                      </InputLabel>
-                      <Select
-                        value={projectName}
-                        onChange={handleProjectChange}
-                        input={<OutlinedInput label="Projects" />}
-                        MenuProps={MenuProps}
-                        error={errors.Project_Name ? true : false}
-                        disabled={
-                          props.editBtn && !editTglCheckedState ? true : false
-                        }
-                        data-test="project-dropdown"
-                        inputProps={{
-                          "data-testid": "projectDropdown-ChangeTest",
-                        }}
-                      >
-                        {projects.map((name) => (
-                          <MenuItem
-                            key={name.projectName}
-                            value={name.projectName}
-                            style={getStyles(name, projectName, theme)}
-                          >
-                            {name.projectName}
-                          </MenuItem>
-                        ))}
-                      </Select>
-                    </FormControl>
+                    <Autocomplete
+                      disablePortal
+                      id="combo-box-demo"
+                      options={projects}
+                      onChange={(event, value) =>
+                        handleProjectChange(event, value)
+                      }
+                      disabled={
+                        (props.editBtn && !editTglCheckedState) ||
+                        editTglCheckedState
+                          ? true
+                          : false
+                      }
+                      value={projectName}
+                      getOptionLabel={(option) => option.projectName}
+                      isOptionEqualToValue={(option, value) =>
+                        option.projectName === value.projectName
+                      }
+                      data-testid="projectDropdown-ChangeTest"
+                      sx={{ width: 400 }}
+                      renderInput={(params) => (
+                        <TextField {...params} label="Projects" />
+                      )}
+                    />
                   </div>
                 </div>
               </div>
@@ -460,32 +442,7 @@ export const CapturePO_SOW = (props) => {
                       Client Sponsor
                     </h3>
                     <ul className="">
-                      {clientSponsors.map((name, index) => {
-                        return (
-                          <li key={index}>
-                            <div className="">
-                              <div className="">
-                                <input
-                                  type="checkbox"
-                                  id={`custom-checkbox-${index}`}
-                                  name={name}
-                                  value={name}
-                                  data-test="client ChkBox Input"
-                                  data-testid={`clientSponers${index}`}
-                                  disabled={
-                                    props.editBtn && !editTglCheckedState
-                                      ? true
-                                      : false
-                                  }
-                                  onChange={() => handleClientOnChange(index)}
-                                  checked={ClientSponsorCheckedState[index]}
-                                />
-                                <label>{name}</label>
-                              </div>
-                            </div>
-                          </li>
-                        );
-                      })}
+                      <li>{clientProjectSponsor}</li>
                     </ul>
                   </div>
                 </div>
@@ -495,34 +452,7 @@ export const CapturePO_SOW = (props) => {
                       Client Finance Controller
                     </h3>
                     <ul className="">
-                      {clientFinController.map((name, index) => {
-                        return (
-                          <li key={index}>
-                            <div className="">
-                              <div className="">
-                                <input
-                                  type="checkbox"
-                                  id={`custom-checkbox-${index}`}
-                                  name={name}
-                                  value={name}
-                                  data-test="client-finController-chkBox-input"
-                                  data-testid={`clientfinCont${index}`}
-                                  onChange={() =>
-                                    handleClientfinChkBoxOnChange(index)
-                                  }
-                                  checked={clientFinanceController[index]}
-                                  disabled={
-                                    props.editBtn && !editTglCheckedState
-                                      ? true
-                                      : false
-                                  }
-                                />
-                                <label>{name}</label>
-                              </div>
-                            </div>
-                          </li>
-                        );
-                      })}
+                      <li>{clientFinanceController}</li>
                     </ul>
                   </div>
                 </div>
@@ -564,21 +494,7 @@ export const CapturePO_SOW = (props) => {
                   </div>
                 </div>
               </div>
-              {props.editBtn &&
-              filteredArr[0].Status === "Approved" &&
-              filteredArr[0].Type === "PO" ? (
-                <div>
-                  <hr className="projectInfoSeperator" />
-                  <SimpleGrow />
-                  <hr className="projectInfoSeperator" />
-                </div>
-              ) : (
-                <div></div>
-              )}
 
-              <div className="DocheaderTitle">
-                <h3 data-test="doc-info-label">Document information</h3>
-              </div>
               <hr className="projectInfoSeperator" />
               <div className="DocInfoinputBoxesRowOne">
                 <div className="TypeDropdown">
