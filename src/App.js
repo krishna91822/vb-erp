@@ -6,6 +6,7 @@ import Notification from "./components/UI/Notification";
 import PageLoader from "./components/UI/PageLoader";
 import { useSelector } from "react-redux";
 import { Fragment } from "react";
+import { CssBaseline } from "@mui/material";
 
 function App() {
   const notification = useSelector((state) => state.ui.notification);
@@ -13,6 +14,7 @@ function App() {
 
   return (
     <Fragment>
+      <CssBaseline />
       {notification && !loader && (
         <Notification
           status={notification.status}

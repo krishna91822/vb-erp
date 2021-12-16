@@ -114,7 +114,7 @@ const SidebarNavigation = () => {
     },
     {
       name: "CIMS",
-      link: "/",
+      link: "/cims",
     },
     {
       name: "CMS",

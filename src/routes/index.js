@@ -1,7 +1,8 @@
 import Templates from "../pages/Templates";
 import NotFound from "../pages/NotFound";
-import CreateReward from "../pages/Rewards/CreateReward";
-import RewardsList from "../pages/Rewards/RewardsList";
+import Clients from "../pages/Clients/Clients";
+import CreateClient from "../pages/Clients/CreateClient";
+import UpdateClient from "../pages/Clients/UpdateClient";
 
 const routes = [
   {
@@ -24,9 +25,19 @@ const routes = [
     title: "Login",
   },
   {
-    path: "/rewards",
-    component: RewardsList,
-    title: "Rewards",
+    path: "/cims",
+    component: Clients,
+    title: "Clients",
+  },
+  {
+    path: "/cims/create",
+    component: CreateClient,
+    title: "Create Client",
+  },
+  {
+    path: "/cims/clientdetails/:id",
+    component: UpdateClient,
+    title: "Update Client",
   },
   {
     path: "*",
