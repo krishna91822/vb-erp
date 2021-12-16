@@ -52,8 +52,6 @@ export default function UseForm() {
   const errors = useSelector((state) => state.cims.errors);
   const RegCcode = useSelector((state) => state.cims.RegCcode);
   const ComCcode = useSelector((state) => state.cims.ComCcode);
-  const locReg = useSelector((state) => state.cims.locReg);
-  const locCom = useSelector((state) => state.cims.locCom);
   const countries = useSelector((state) => state.cims.countries);
   const brandFocus = useSelector((state) => state.cims.brandFocus);
   const navigate = useNavigate();
@@ -62,6 +60,9 @@ export default function UseForm() {
   useEffect(() => {
     dispatch(fetchCountries());
   }, []);
+
+  const locReg = useSelector((state) => state.cims.locReg);
+  const locCom = useSelector((state) => state.cims.locCom);
 
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);

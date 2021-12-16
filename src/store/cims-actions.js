@@ -28,6 +28,18 @@ export const getClientsData = (
       if (response.data.code === 200 || response.data.status === "success") {
         const data = response.data.data;
         return data;
+      } else if (response.data.code === 404) {
+        const data = response.data.data;
+        setTimeout(function () {
+          dispatch(
+            uiActions.showNotification({
+              status: "error",
+              title: "Error!",
+              message: response.data.message,
+            })
+          );
+        }, 1000);
+        return data;
       }
       throw new Error(
         response.data.error[0].message ||
@@ -258,7 +270,6 @@ export const addNewClient = (formData) => {
   return async (dispatch) => {
     const postData = async () => {
       const response = await axios.post("/cims", { ...formData });
-      console.log(response);
       if (response.data.code === 200 || response.data.status === "success") {
         return response.data;
       }

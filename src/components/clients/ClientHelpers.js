@@ -39,7 +39,7 @@ export default function ClientHelpers() {
     setTimeout(() => {
       navigate(`/cims/clientdetails/${clientId}`);
       dispatch(uiActions.toggleLoader());
-    }, 3000);
+    }, 2000);
   };
 
   const handelActiveStatus = async (clientId, clientStatus, brandName) => {
@@ -56,7 +56,7 @@ export default function ClientHelpers() {
     const target = e.target.value.replace(/[^\w\s]/gi, "");
     dispatch(cimsActions.setSearchBy(target));
     if (target !== "" && target.length > 1)
-      dispatch(getClientsData(pageNo, sortBy, filterBy, sortingOrder, target));
+      dispatch(getClientsData(1, sortBy, filterBy, sortingOrder, target));
     else if (target === "")
       dispatch(getClientsData(pageNo, sortBy, filterBy, sortingOrder, target));
   };
