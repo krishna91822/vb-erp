@@ -132,6 +132,7 @@ const CreateProject = () => {
       dispatch(pmoActions.clearCreateProjectState());
       setState(initialState);
       setEdit(true);
+      setVbManInput("");
     }
   }, [location]);
 
