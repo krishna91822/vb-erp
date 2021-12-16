@@ -249,11 +249,11 @@ export const CapturePO_SOW = (props) => {
     event.preventDefault();
 
     let testObjTargetedRes = {};
-    console.log(TargetedResChkBox, targetedResources);
+
     for (var i = 0; i < TargetedResChkBox.length; i++) {
       testObjTargetedRes[targetedResources[i]] = TargetedResChkBox[i];
     }
-    console.log(testObjTargetedRes);
+
     const DataToSend = {
       Project_Id: projectId,
       Client_Name: clientName.clientName,
@@ -265,7 +265,7 @@ export const CapturePO_SOW = (props) => {
       Type: typeName,
       Document_Type: DocTypes,
       Document_Name: DocName,
-      PO_Number: PO_number,
+      // PO_Number: PO_number,
       PO_Amount: PO_amt,
       POSOW_endDate: new Date(selectedDate),
       Currency: CurrName,
@@ -273,6 +273,7 @@ export const CapturePO_SOW = (props) => {
     };
 
     const all_errors = validateForm(DataToSend);
+    console.log(all_errors);
     setErrors(all_errors);
     if (Object.keys(all_errors).length === 0) {
       if (props.editBtn && editTglCheckedState) {
@@ -530,27 +531,29 @@ export const CapturePO_SOW = (props) => {
                     </FormControl>
                   </div>
                 </div>
-                <div className="txtBox PoNoTxtBox">
-                  <label>
-                    <strong>{typeName} Number</strong>
-                  </label>
-                  <div>
-                    <TextField
-                      id="outlined-basic"
-                      label={"Enter " + typeName + " Number"}
-                      variant="outlined"
-                      value={PO_number}
-                      onChange={handlePoNumTxtBoxChange}
-                      inputProps={{ "data-testid": "po-sow-num" }}
-                      data-test="po-sow-num"
-                      error={errors.PO_Number ? true : false}
-                      helperText={errors.PO_Number ? errors.PO_Number : ""}
-                      disabled={
-                        props.editBtn && !editTglCheckedState ? true : false
-                      }
-                    />
+                {props.editBtn ? (
+                  <div className="txtBox PoNoTxtBox">
+                    <label>
+                      <strong>{typeName} Number</strong>
+                    </label>
+                    <div>
+                      <TextField
+                        id="outlined-basic"
+                        label={"Enter " + typeName + " Number"}
+                        variant="outlined"
+                        value={PO_number}
+                        onChange={handlePoNumTxtBoxChange}
+                        inputProps={{ "data-testid": "po-sow-num" }}
+                        data-test="po-sow-num"
+                        error={errors.PO_Number ? true : false}
+                        helperText={errors.PO_Number ? errors.PO_Number : ""}
+                        disabled={props.editBtn ? true : false}
+                      />
+                    </div>
                   </div>
-                </div>
+                ) : (
+                  <div></div>
+                )}
                 <div className="txtBox PoAmtTxtBox">
                   <label>
                     <strong>{typeName} Amount</strong>
