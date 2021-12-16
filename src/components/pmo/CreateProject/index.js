@@ -94,7 +94,6 @@ const CreateProject = () => {
 
   const {
     project: {
-      clientId,
       clientName,
       projectName,
       clientProjectManager,
@@ -105,7 +104,6 @@ const CreateProject = () => {
       clientFinanceController,
       startDate,
       endDate,
-      vbProjectManager,
       vbProjectStatus,
     },
     resource,
@@ -124,6 +122,7 @@ const CreateProject = () => {
     return () => {
       dispatch(pmoActions.clearCreateProjectState());
     };
+    // eslint-disable-next-line
   }, []);
 
   useEffect(() => {
@@ -133,6 +132,7 @@ const CreateProject = () => {
       dispatch(pmoActions.redirectToProjectList());
       setEdit(false);
     }
+    // eslint-disable-next-line
   }, [redirect]);
 
   useEffect(() => {
@@ -149,12 +149,14 @@ const CreateProject = () => {
       dispatch(getClinetById(projectById.project.clientId));
       setVbManInput(projectById.project.vbProjectManager);
     }
+    // eslint-disable-next-line
   }, [projectById]);
 
   useEffect(() => {
     if (clientNames.length > 0) {
       setNames(clientNames);
     }
+    // eslint-disable-next-line
   }, [clientNames]);
 
   const handelAssociate = (value) => {
@@ -718,7 +720,7 @@ const CreateProject = () => {
                     Select Project Status
                   </span>
                 </MenuItem>
-                <MenuItem value="Un Assigned">Un Assigned</MenuItem>
+                <MenuItem value="Yet to Begin">Yet to Begin</MenuItem>
                 <MenuItem value="Active">Active</MenuItem>
                 <MenuItem value="On Hold">On Hold</MenuItem>
                 <MenuItem value="Done">Done</MenuItem>

@@ -29,6 +29,7 @@ const Allocated = ({ pressed }) => {
 
   useEffect(() => {
     dispatch(getAllocatedData(filters, 1));
+    // eslint-disable-next-line
   }, []);
 
   let data = allocatedData;
