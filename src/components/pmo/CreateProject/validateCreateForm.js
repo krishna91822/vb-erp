@@ -19,13 +19,15 @@ export default function validateForm(data) {
   if (!data.clientFinanceController.trim()) {
     errors.clientFinanceController = "Client Finance Controller Required";
   }
-  if (!data.startDate.trim()) {
-    errors.startDate = "Start Date Required";
-  }
-  if (!data.endDate.trim()) {
-    errors.endDate = "End Date Required";
-  } else if (data.startDate > data.endDate) {
-    errors.endDate = "End Date need to be grater than Start Date";
+  if (data.vbProjectStatus !== "Yet to Begin") {
+    if (!data.startDate.trim()) {
+      errors.startDate = "Start Date Required";
+    }
+    if (!data.endDate.trim()) {
+      errors.endDate = "End Date Required";
+    } else if (data.startDate > data.endDate) {
+      errors.endDate = "End Date need to be grater than Start Date";
+    }
   }
   if (!data.vbProjectManager.trim()) {
     errors.vbProjectManager = "VB Project Manager Required";

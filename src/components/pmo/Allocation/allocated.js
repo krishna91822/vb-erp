@@ -238,6 +238,15 @@ const Allocated = ({ pressed, allocatedSortedValue }) => {
                 : null}
             </TableBody>
           </Table>
+          {data.results
+            ? !data.results.length && (
+                <p
+                  style={{ textAlign: "center", color: "grey", margin: "15px" }}
+                >
+                  No Data Found!!!
+                </p>
+              )
+            : ""}
         </TableContainer>
       </Container>
       <Tpagination count={data.pageCount || 1} changePage={changePage} />

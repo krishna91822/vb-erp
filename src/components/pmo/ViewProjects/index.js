@@ -87,6 +87,7 @@ const ViewProjects = () => {
   };
 
   const changePage = (event) => {
+    console.log(event.target.textContent);
     dispatch(getAllProjects(filterProjects, event.target.textContent));
   };
 
@@ -316,6 +317,19 @@ const ViewProjects = () => {
                   : null}
               </TableBody>
             </Table>
+            {projects.results
+              ? !projects.results.length && (
+                  <p
+                    style={{
+                      textAlign: "center",
+                      color: "grey",
+                      margin: "15px",
+                    }}
+                  >
+                    No Project Found!!!
+                  </p>
+                )
+              : ""}
           </TableContainer>
         </Container>
         <Tpagination count={projects.pageCount} changePage={changePage} />

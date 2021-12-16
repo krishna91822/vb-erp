@@ -718,7 +718,7 @@ const CreateProject = () => {
                     Select Project Status
                   </span>
                 </MenuItem>
-                <MenuItem value="Un Assigned">Un Assigned</MenuItem>
+                <MenuItem value="Yet to Begin">Yet to Begin</MenuItem>
                 <MenuItem value="Active">Active</MenuItem>
                 <MenuItem value="On Hold">On Hold</MenuItem>
                 <MenuItem value="Done">Done</MenuItem>
