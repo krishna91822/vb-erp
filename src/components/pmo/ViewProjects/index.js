@@ -14,8 +14,8 @@ import {
 import EditIcon from "@mui/icons-material/Edit";
 import FilterListIcon from "@mui/icons-material/FilterList";
 import FilterListOffIcon from "@mui/icons-material/FilterListOff";
-import Pagination from "@mui/material/Pagination";
 
+import Tpagination from "../../UI/Pagination";
 import {
   getAllProjects,
   getAllFilterProjects,
@@ -278,7 +278,7 @@ const ViewProjects = () => {
                   ? projects.results.map((currElem, index) => (
                       <TableRow key={index} onClick={() => entryLink(currElem)}>
                         <TableCell align="left">
-                          {index + page * rowsPerPage + 1}
+                          {index + parseInt(projects.currentPage) * 10 - 9}
                         </TableCell>
                         <TableCell align="left">
                           {currElem.clientName}
@@ -318,26 +318,7 @@ const ViewProjects = () => {
             </Table>
           </TableContainer>
         </Container>
-        <PageNation
-          style={{
-            position: "sticky",
-            bottom: "0",
-          }}
-        >
-          <PageNation
-            style={{
-              width: "100%",
-              display: "flex",
-              flexDirection: "row-reverse",
-            }}
-          >
-            <Pagination
-              count={projects.pageCount || 1}
-              onClick={changePage}
-              style={{ textAlign: "right" }}
-            />
-          </PageNation>
-        </PageNation>
+        <Tpagination count={projects.pageCount} changePage={changePage} />
       </MainComponent>
     </>
   );

@@ -35,19 +35,6 @@ const pmoSlice = createSlice({
     updateClientList: (state, action) => {
       state.allClients = action.payload;
     },
-    // removeAllocation: (state, action) => {
-    //   // const filterResources = current(state).projectById.resources.filter(
-    //   //   (resource) => resource._id !== action.payload._id
-    //   // );
-    //   // console.log(filterResources);
-    //   state.projectById.resources = action.payload;
-    // },
-    SortByProductID: (state, action) => {
-      state.projects = action.payload;
-    },
-    SortByStatus: (state, action) => {
-      state.projects = action.payload;
-    },
     redirectToProjectList: (state, action) => {
       state.redirect = !state.redirect;
     },

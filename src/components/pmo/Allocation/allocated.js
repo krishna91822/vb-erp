@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { getAllocatedData } from "../../../store/pmo-actions";
+import Tpagination from "../../UI/Pagination";
 
 import {
   Table,
@@ -12,7 +13,6 @@ import {
 } from "@mui/material";
 import { useSelector, useDispatch } from "react-redux";
 import { Container, MiniHead, PageNation } from "./style";
-import Pagination from "@mui/material/Pagination";
 
 const Allocated = ({ pressed }) => {
   const { allocatedData } = useSelector((state) => state.pmo);
@@ -42,7 +42,6 @@ const Allocated = ({ pressed }) => {
   const changePage = (event) => {
     dispatch(getAllocatedData(filters, event.target.textContent));
   };
-
   return (
     <>
       <Container>
@@ -208,7 +207,9 @@ const Allocated = ({ pressed }) => {
               {data.results
                 ? data.results.map((currElem, index) => (
                     <TableRow key={index}>
-                      <TableCell align="left">{index + 1}</TableCell>
+                      <TableCell align="left">
+                        {index + parseInt(data.currentPage) * 10 - 9}
+                      </TableCell>
                       <TableCell align="left">{currElem.empId.empId}</TableCell>
                       <TableCell
                         align="left"
@@ -238,26 +239,7 @@ const Allocated = ({ pressed }) => {
           </Table>
         </TableContainer>
       </Container>
-      <PageNation
-        style={{
-          position: "sticky",
-          bottom: "0",
-        }}
-      >
-        <PageNation
-          style={{
-            width: "100%",
-            display: "flex",
-            flexDirection: "row-reverse",
-          }}
-        >
-          <Pagination
-            count={data.pageCount || 1}
-            onClick={changePage}
-            style={{ textAlign: "right" }}
-          />
-        </PageNation>
-      </PageNation>
+      <Tpagination count={data.pageCount || 1} changePage={changePage} />
     </>
   );
 };
