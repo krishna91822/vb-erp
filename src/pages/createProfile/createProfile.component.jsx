@@ -84,7 +84,9 @@ const CreateProfile = ({
   };
 
   const [employee, setEmployee] = useState(
-    editEmployeeData ? editEmployeeData : empInitial
+    editEmployeeData
+      ? editEmployeeData
+      : { ...empInitial, empDoj: new Date(), empReportingManager: "sunilee" }
   );
 
   const [tab, setTab] = useState(0);
@@ -205,8 +207,7 @@ const CreateProfile = ({
     if (
       employee.empName === "" ||
       employee.empEmail === "" ||
-      employee.empDoj === "" ||
-      employee.empDob === ""
+      employee.empDoj === ""
     ) {
       alert("Fields are empty");
     } else {

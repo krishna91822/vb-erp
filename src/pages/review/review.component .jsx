@@ -158,6 +158,7 @@ const Review = () => {
               My Reviews
             </TitleTypo>
             <TextField
+              data-test="Search By Req Name-test"
               onChange={searchHandleChange}
               placeholder="Search By Req Name"
               id="outlined-search"
@@ -167,6 +168,7 @@ const Review = () => {
             />
           </Box>
           <CustomTextField
+            data-test="Sort-test"
             label="Sort"
             id="outlined-select-currency"
             select

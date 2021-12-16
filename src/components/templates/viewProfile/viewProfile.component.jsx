@@ -120,6 +120,7 @@ const ViewProfile = () => {
             Edit Employee
           </TitleTypo>
           <CustomSwitch
+            data-test="download-button-text"
             checked={editEmployee}
             onChange={handleSwitchChange}
             inputProps={{ "aria-label": "controlled" }}
