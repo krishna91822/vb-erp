@@ -1,11 +1,14 @@
+/* eslint-disable prettier/prettier */
 import * as React from "react";
 import Table from "@mui/material/Table";
+import { Grid } from "@mui/material";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
+import TextField from "@mui/material/TextField";
 import { styled, alpha } from "@mui/material/styles";
 import Button from "@mui/material/Button";
 import Menu from "@mui/material/Menu";
@@ -19,6 +22,7 @@ import { useSelector, useDispatch } from "react-redux";
 import {
   fetch_INVOICE_data,
   paginationFetchInvoice,
+  searchINVOICE,
 } from "../../store/CMS/INVOICE-actions";
 import Typography from "@mui/material/Typography";
 import Pagination from "@mui/material/Pagination";
@@ -88,12 +92,16 @@ function InvoiceInfo() {
   const [filename, setFilename] = React.useState("Id");
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
+
+  const [searchText, setsearchText] = useState("");
+
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
   const handleClose = () => {
     setAnchorEl(null);
   };
+
   const handleSort = (sortBy) => {
     setFilename(sortBy);
 
@@ -113,57 +121,86 @@ function InvoiceInfo() {
   const handleRowOnClick = (row_id) => {
     dispatch(fetchSpecificINVOICE(row_id));
   };
+  const searchHandler = (event) => {
+    if (event.key === "Enter") {
+      dispatch(searchINVOICE(event.target.value));
+    }
+  };
   return (
     <>
-      <div className="sortbtn">
-        <Button
-          id="demo-customized-button"
-          aria-controls="demo-customized-menu"
-          aria-haspopup="true"
-          aria-expanded={open ? "true" : undefined}
-          variant="contained"
-          disableElevation
-          onClick={handleClick}
-          endIcon={<KeyboardArrowDownIcon />}
-          data-test="SortByButton"
-          className="sort-by-button"
-        >
-          Sort by
-        </Button>
-        <StyledMenu
-          id="demo-customized-menu"
-          MenuListProps={{
-            "aria-labelledby": "demo-customized-button",
-          }}
-          anchorEl={anchorEl}
-          open={open}
-          onClose={handleClose}
-        >
-          <MenuItem onClick={() => handleSort("Project_Name")} disableRipple>
-            By Project Name
-          </MenuItem>
+      <Grid container>
+        <Grid item lg={6} md={6} sm={6} xs={6}>
+          <TextField
+            id="outlined-basic"
+            onKeyPress={searchHandler}
+            label="search"
+            variant="outlined"
+          />
+        </Grid>
+        <Grid item lg={6} md={6} sm={6} xs={6}>
+          <div className="sortbtn">
+            <Button
+              id="demo-customized-button"
+              aria-controls="demo-customized-menu"
+              aria-haspopup="true"
+              aria-expanded={open ? "true" : undefined}
+              variant="contained"
+              disableElevation
+              onClick={handleClick}
+              endIcon={<KeyboardArrowDownIcon />}
+              data-test="SortByButton"
+              className="sort-by-button"
+            >
+              Sort by
+            </Button>
+            <StyledMenu
+              id="demo-customized-menu"
+              MenuListProps={{
+                "aria-labelledby": "demo-customized-button",
+              }}
+              anchorEl={anchorEl}
+              open={open}
+              onClose={handleClose}
+            >
+              <MenuItem
+                onClick={() => handleSort("Project_Name")}
+                disableRipple
+              >
+                By Project Name
+              </MenuItem>
 
-          <MenuItem
-            onClick={() => handleSort("invoice_amount_received")}
-            disableRipple
-          >
-            By invoice amount recieved
-          </MenuItem>
-          <MenuItem onClick={() => handleSort("Client_Name")} disableRipple>
-            By Client Name
-          </MenuItem>
-        </StyledMenu>
-      </div>
+              <MenuItem
+                onClick={() => handleSort("invoice_amount_received")}
+                disableRipple
+              >
+                By invoice amount recieved
+              </MenuItem>
+              <MenuItem onClick={() => handleSort("Client_Name")} disableRipple>
+                By Client Name
+              </MenuItem>
+            </StyledMenu>
+          </div>
+        </Grid>
+      </Grid>
+
       <div className="container">
         <div className="innerheader">
           <div>
             <h3 data-test="MainHeading">Invoice Information</h3>
           </div>
           <div className="buttondiv">
-            <Link to="/invoice/create-invoice">
-              <button className="button1" data-test="Capture-po-sow">
+            <Link
+              to="/invoice/create-invoice"
+              style={{ textDecoration: "none" }}
+            >
+              <Button
+                className="button1"
+                data-test="Capture-po-sow"
+                variant="contained"
+                color="success"
+              >
                 Capture Invoice{" "}
-              </button>
+              </Button>
             </Link>
           </div>
         </div>

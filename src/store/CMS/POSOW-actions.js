@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import axios from "../../helpers/axiosInstance";
 import { PoSowActions } from "./POSOW-slice";
 import { uiActions } from "../ui-slice";
@@ -313,16 +314,22 @@ export const fetchClientProjectSponsor = (projectId) => {
     }
   };
 };
-export const fetchTargetedResources = (projectId) => {
+// export const fetchTargetedResources = (projectId) => {
+//   return async function (dispatch) {
+//     try {
+//       const res = await axios.get(
+//         `poSow/capturePO/details?projectId=${projectId}`
+//       );
+
+//       if (res.status === 200) {
+//         console.log(res.data.data);
+//         dispatch(PoSowActions.setTargetedResources(res.data.data));
+export const searchPoSow = (keyword) => {
   return async function (dispatch) {
     try {
-      const res = await axios.get(
-        `poSow/capturePO/details?projectId=${projectId}`
-      );
-
+      const res = await axios.get(`poSow/sort/Id?keyword=${keyword}`);
       if (res.status === 200) {
-        console.log(res.data.data);
-        dispatch(PoSowActions.setTargetedResources(res.data.data));
+        dispatch(PoSowActions.setTabViewData(res.data.data.results));
       } else {
         throw new Error("Something went wrong!");
       }

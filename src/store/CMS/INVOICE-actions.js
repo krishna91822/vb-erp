@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import axios from "../../helpers/axiosInstance";
 import { invoiceActions } from "./INVOICE-slice";
 import { PoSowActions } from "./POSOW-slice";
@@ -77,6 +78,27 @@ export const fetchSpecificINVOICE = (ROW_ID) => {
       const res = await axios.get(`/invoice/${ROW_ID}`);
       if (res.status === 200) {
         dispatch(invoiceActions.SetSpecific([res.data.data]));
+      } else {
+        throw new Error("Could'nt fetch data!");
+      }
+    } catch (error) {
+      dispatch(
+        uiActions.showNotification({
+          status: "error",
+          title: "Error",
+          message: "Could'nt fetch data",
+        })
+      );
+    }
+  };
+};
+
+export const searchINVOICE = (keyword) => {
+  return async function (dispatch) {
+    try {
+      const res = await axios.get(`/invoice/sort/Id?keyword=${keyword}`);
+      if (res.status === 200) {
+        dispatch(invoiceActions.setTabViewData(res.data.data.results));
       } else {
         throw new Error("Could'nt fetch data!");
       }
