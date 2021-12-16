@@ -212,13 +212,15 @@ function InvoiceInfo() {
           >
             <TableHead className="tablehead">
               <TableRow>
-                <TableCell>ID</TableCell>
+                <TableCell></TableCell>
                 <TableCell>Client Name</TableCell>
                 <TableCell>Project Name</TableCell>
                 <TableCell>PO/SOW Order</TableCell>
                 <TableCell>PO/SOW Amount</TableCell>
                 <TableCell>Invoice raised</TableCell>
+                <TableCell>Invoice Received</TableCell>
                 <TableCell>Invoice Amount received</TableCell>
+                <TableCell>Action</TableCell>
               </TableRow>
             </TableHead>
             <TableBody className="table-row-posow">
@@ -244,7 +246,21 @@ function InvoiceInfo() {
                   <TableCell>{row.purchase_orders.PO_Number}</TableCell>
                   <TableCell>{row.purchase_orders.PO_Amount}</TableCell>
                   <TableCell>{row.invoice_raised}</TableCell>
+                  <TableCell>{row.invoice_received}</TableCell>
                   <TableCell>{row.invoice_amount_received}</TableCell>
+                  {row.invoice_received === "No" ? (
+                    <TableCell
+                      component={Link}
+                      to={``}
+                      style={{ textDecoration: "none" }}
+                    >
+                      <Button>EDIT</Button>
+                    </TableCell>
+                  ) : (
+                    <TableCell aria-disabled>
+                      <Button disabled>EDIT</Button>
+                    </TableCell>
+                  )}
                 </TableRow>
               ))}
             </TableBody>
