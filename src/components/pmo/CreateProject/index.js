@@ -90,6 +90,7 @@ const CreateProject = () => {
   const [names, setNames] = useState([]);
   const [openVbMan, setOpenVbMan] = useState(false);
   const [vbManInput, setVbManInput] = useState("");
+  const [tempClientName, setTempClientName] = useState("");
 
   const {
     project: {
@@ -157,13 +158,14 @@ const CreateProject = () => {
   }, [clientNames]);
 
   const handelAssociate = (value) => {
+    console.log(value, "value here");
     dispatch(getPercentageAllocated(value.empId));
     setState({
       ...state,
       resource: {
         ...state.resource,
-        empName: value.empName,
-        empId: value._id,
+        empName: value.empName || "",
+        empId: value._id || "",
       },
     });
   };
@@ -301,24 +303,6 @@ const CreateProject = () => {
     }
   };
 
-  const handleOpen = ({ target }) => {
-    let inputvalue = target.value;
-    if (inputvalue && inputvalue.length > 2) {
-      dispatch(getAllClientData(inputvalue));
-      setOpen(true);
-    } else {
-      setOpen(false);
-    }
-  };
-  const handlePhoneNumber = (number) => {
-    setState({
-      ...state,
-      project: {
-        ...state.project,
-        clientPrimaryContact: number,
-      },
-    });
-  };
   const handleAutoselect = (value) => {
     setState({
       ...state,
@@ -340,6 +324,42 @@ const CreateProject = () => {
         return data.trim().length > 0;
       })
     );
+  };
+  const handleInputChange = (event, value) => {
+    if (event) {
+      setTempClientName(event.target.value);
+      setOpen(false);
+      if (event.target.value && event.target.value.length > 2) {
+        setOpen(true);
+        dispatch(getAllClientData(event.target.value));
+      }
+    }
+
+    // let inputvalue = target.value;
+    // if (inputvalue && inputvalue.length > 2) {
+    //   dispatch(getAllClientData(inputvalue));
+    //   setOpen(true);
+    // } else {
+    //   setOpen(false);
+    // }
+  };
+  const handleOnClick = (event, value) => {
+    if (value) {
+      handleAutoselect(value);
+      setOpen(false);
+      setTempClientName("");
+    }
+    setTempClientName("");
+  };
+
+  const handlePhoneNumber = (number) => {
+    setState({
+      ...state,
+      project: {
+        ...state.project,
+        clientPrimaryContact: number,
+      },
+    });
   };
   const handleVbManOpen = () => {
     if (vbManInput && vbManInput.length > 2) {
@@ -415,18 +435,19 @@ const CreateProject = () => {
                 id="cn"
                 data-test="client-name-input"
                 disabled={!edit}
-                freeSolo
-                disableClearable
                 size="small"
-                onInputChange={handleOpen}
-                getOptionLabel={(option) => option.brandName}
-                onChange={(event, value) => {
-                  value ? handleAutoselect(value) : setOpen(false);
+                onInputChange={handleInputChange}
+                onBlur={() => {
+                  setTempClientName("");
+                  setOpen(false);
                 }}
+                getOptionLabel={(option) => option.brandName}
+                onChange={handleOnClick}
                 style={{ width: "100%" }}
                 options={allClients || []}
                 open={open}
-                inputValue={clientName}
+                disableClearable
+                inputValue={tempClientName || clientName}
                 renderInput={(params) => (
                   <TextField
                     {...params}

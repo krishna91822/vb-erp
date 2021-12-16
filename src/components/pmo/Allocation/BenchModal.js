@@ -83,10 +83,10 @@ export default function BenchModal({
                 overflowY: "auto",
               }}
             >
-              <ul style={{ display: "flex", flexWrap: "wrap" }}>
-                {entryData.projects &&
-                  (entryData.projects.length > 0 ? (
-                    entryData.projects.map((currElem, index) => (
+              {entryData.projects &&
+                (entryData.projects.length > 0 ? (
+                  <ul style={{ display: "flex", flexWrap: "wrap" }}>
+                    {entryData.projects.map((currElem, index) => (
                       <li
                         key={index}
                         style={{
@@ -143,20 +143,32 @@ export default function BenchModal({
                           </li>
                         </ul>
                       </li>
-                    ))
-                  ) : (
+                    ))}
+                  </ul>
+                ) : (
+                  <div
+                    style={{
+                      height: "100%",
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      paddingBottom: "95px",
+                    }}
+                  >
                     <Typography
                       component={"span"}
                       style={{
                         color: "gray",
-                        fontSize: "30px",
+                        fontSize: "25px",
                         padding: "3px",
+                        display: "flex",
+                        justifyConents: "center",
                       }}
                     >
-                      NOT ALLOCATED YET
+                      Not Allocated Yet
                     </Typography>
-                  ))}
-              </ul>
+                  </div>
+                ))}
             </div>
           </Box>
         </Fade>
