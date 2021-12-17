@@ -47,7 +47,6 @@ const EditReward = () => {
       })
     );
   };
-  console.log(rewardData);
   const handleChangeReceiverMessage = (e) => {
     dispatch(
       rewardsActions.addEditRewardData({
@@ -161,7 +160,6 @@ const EditReward = () => {
       rewardData.reward_display_name !== "" ||
       rewardData.receiver_message !== ""
     ) {
-      console.log(rewardData);
       dispatch(UpdateRewardData(rewardData, id));
       navigate("/rewards");
     } else {
