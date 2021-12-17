@@ -652,7 +652,7 @@ export const CapturePO_SOW = (props) => {
                           props.editBtn && !editTglCheckedState ? true : false
                         }
                       >
-                        Upload File
+                        Browse File
                         <input
                           type="file"
                           hidden
@@ -730,14 +730,7 @@ export const CapturePO_SOW = (props) => {
                       data-test="sendForApproval-btn"
                       data-testid="sendForApproval-btn-ClickTest"
                     >
-                      Select File
-                      <input
-                        type="file"
-                        hidden
-                        onChange={handleUploadBtnClick}
-                        data-test="upload-file-input"
-                        data-testid="upload-file-input-ClickTest"
-                      />
+                      SEND FOR APPROVAL
                     </Button>
                   ) : (
                     <div></div>
