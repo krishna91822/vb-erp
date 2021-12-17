@@ -36,6 +36,7 @@ export default function Form() {
         <Grid container spacing={2} mb={3}>
           <Grid item xs={12}>
             <TextField
+              id=""
               label="Legal Name"
               variant="outlined"
               name="legalName"
@@ -55,6 +56,7 @@ export default function Form() {
           <Grid item xs={12} sm={6}>
             <div className="align-form-fields">
               <TextField
+                id=""
                 label="Brand Name"
                 variant="outlined"
                 name="brandName"
@@ -75,6 +77,7 @@ export default function Form() {
           <Grid item xs={12} sm={6}>
             <div className="right-float-fields">
               <TextField
+                id=""
                 label="Domain/Sector"
                 variant="outlined"
                 name="domain"
@@ -98,6 +101,7 @@ export default function Form() {
           {/* <Grid item xs={12} sm={6}>
             <div className="align-form-fields">
               <TextField
+                id=""
                 label="Base Location"
                 variant="outlined"
                 name="baseLocation"
@@ -172,6 +176,7 @@ export default function Form() {
           </Grid>
           <Grid item md={6}>
             <TextField
+              id=""
               label={
                 formData.companyType === "GST Registered" ? "GST No" : "PAN No"
               }
