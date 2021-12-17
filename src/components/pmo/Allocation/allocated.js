@@ -12,7 +12,7 @@ import {
   TextField,
 } from "@mui/material";
 import { useSelector, useDispatch } from "react-redux";
-import { Container, MiniHead } from "./style";
+import { Container, MiniHead, DateContainerStyled } from "./style";
 
 const Allocated = ({ pressed, allocatedSortedValue }) => {
   const { allocatedData } = useSelector((state) => state.pmo);
@@ -180,27 +180,40 @@ const Allocated = ({ pressed, allocatedSortedValue }) => {
                       inputProps={{ style: { fontSize: "small" } }}
                     />
                   </TableCell>
+
                   <TableCell align="left">
-                    <TextField
-                      variant="standard"
-                      type="date"
-                      name="allocationStartDate"
-                      onChange={filterData}
-                      onKeyPress={filterData}
-                      value={filters.allocationStartDate}
-                      inputProps={{ style: { fontSize: "small" } }}
-                    />
+                    <DateContainerStyled
+                      sColor={
+                        !filters.allocationStartDate ? "#a2a2a2" : "black"
+                      }
+                    >
+                      <TextField
+                        variant="standard"
+                        type="date"
+                        name="allocationStartDate"
+                        onChange={filterData}
+                        onKeyPress={filterData}
+                        value={filters.allocationStartDate}
+                        inputProps={{ style: { fontSize: "small" } }}
+                      />
+                    </DateContainerStyled>
                   </TableCell>
+
                   <TableCell align="left">
-                    <TextField
-                      variant="standard"
-                      type="date"
-                      inputProps={{ style: { fontSize: "small" } }}
-                      name="allocationEndDate"
-                      onChange={filterData}
-                      onKeyPress={filterData}
-                      value={filters.allocationEndDate}
-                    />
+                    <DateContainerStyled
+                      eColor={!filters.allocationEndDate ? "#a2a2a2" : "black"}
+                    >
+                      <TextField
+                        variant="standard"
+                        type="date"
+                        data-date-format="YYYY MM DD"
+                        inputProps={{ style: { fontSize: "small" } }}
+                        name="allocationEndDate"
+                        onChange={filterData}
+                        onKeyPress={filterData}
+                        value={filters.allocationEndDate}
+                      />
+                    </DateContainerStyled>
                   </TableCell>
                 </TableRow>
               )}

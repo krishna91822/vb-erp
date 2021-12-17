@@ -13,7 +13,6 @@ import {
 } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import FilterListIcon from "@mui/icons-material/FilterList";
-// import FilterListOffIcon from "@mui/icons-material/FilterListOff";
 import FilterListOffIcon from "@mui/icons-material/FilterList";
 
 import Tpagination from "../../UI/Pagination";
@@ -57,13 +56,7 @@ const ViewProjects = () => {
 
   const entryValue = (event) => {
     const SortingValue = event.target.value;
-
-    if (SortingValue === "Sort by Project ID") {
-      dispatch(getAllProjectsBySroting(filterProjects, "vbProjectId"));
-    }
-    if (SortingValue === "Sort by Status") {
-      dispatch(getAllProjectsBySroting(filterProjects, "vbProjectStatus"));
-    }
+    dispatch(getAllProjectsBySroting(filterProjects, SortingValue));
   };
 
   const entryLink = (currElem) => {
@@ -124,11 +117,11 @@ const ViewProjects = () => {
               Create a project
             </Button>
             <Dropdown onChange={entryValue} data-test="sortby-dropdown">
-              <Options Value="Sort by" hidden>
-                Sort by
+              <Options value="vbProjectId" selected>
+                Sort by Project ID
               </Options>
-              <Options value="Sort by Project ID">Sort by Project ID</Options>
-              <Options value="Sort by Status">Sort by Status</Options>
+              <Options value="clientName">Sort by Client Name</Options>
+              <Options value="projectName">Sort by Project Name</Options>
             </Dropdown>
 
             <Dropdown
@@ -142,7 +135,8 @@ const ViewProjects = () => {
               <Options value="active" selected>
                 Active
               </Options>
-              <Options value="done">Past</Options>
+              <Options value="done">Completed</Options>
+              <Options value="other">Other Projects</Options>
             </Dropdown>
           </SideButton>
         </Heading>

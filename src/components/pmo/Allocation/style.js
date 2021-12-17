@@ -8,9 +8,6 @@ export const MiniHead = styled.h3`
 `;
 
 export const MainComponent = styled.div`
-  padding: 5px 15px;
-  min-width: 345px; //we need to remove this line
-  min-height: 90vh;
   & h2 {
     margin: 0;
   }
@@ -114,3 +111,12 @@ export const Options = styled.option`
   color: black;
 `;
 export const PageNation = styled.div``;
+
+export const DateContainerStyled = styled.div`
+  & input[name="allocationStartDate"] {
+    color: ${(props) => props.sColor};
+  }
+  & input[name="allocationEndDate"] {
+    color: ${(props) => props.eColor};
+  }
+`;
