@@ -6,6 +6,7 @@ import { getEmployeesData } from "../../store/employees-actions";
 import { useDispatch, useSelector } from "react-redux";
 import { searchEmployeeData } from "../../store/employees-actions";
 import { updateRewardEmployeeIdArray } from "../../store/rewards-actions";
+import { toast } from "react-toastify";
 
 const EmployeesList = (props) => {
   var collectedDataArray = [];
@@ -15,6 +16,7 @@ const EmployeesList = (props) => {
   const dispatch = useDispatch();
 
   const employeesData = useSelector((state) => state.employee.employees);
+  console.log(employeesData);
 
   employeesData.forEach((data) => {
     rows.push({
@@ -46,9 +48,11 @@ const EmployeesList = (props) => {
     let employees_id = [];
     if (props.receiver) {
       props.updaterecipientsData(rowData);
+      toast.success("Reward Receivers Added");
     }
     if (props.sender) {
       props.updateSenderData(rowData);
+      toast.success("Reward Sender Added");
     }
     rowData.forEach((data) => {
       employees_id.push(data.employee_id);
@@ -56,7 +60,10 @@ const EmployeesList = (props) => {
     const dataIds = {
       recipients_ids: employees_id,
     };
-    dispatch(updateRewardEmployeeIdArray(dataIds, props.rewardId));
+    debugger;
+    if (props.rewardList) {
+      dispatch(updateRewardEmployeeIdArray(dataIds, props.rewardId));
+    }
   };
 
   const onRowClicked = (rowData, rowState) => {
@@ -86,35 +93,37 @@ const EmployeesList = (props) => {
   };
 
   return (
-    <div className="employee-container">
-      <div className="employee-search-container">
-        <div className="employee-search-title">
-          <p>Search:</p>
+    <>
+      <div className="employee-container">
+        <div className="employee-search-container">
+          <div className="employee-search-title">
+            <p>Search:</p>
+          </div>
+          <div className="employee-search-form">
+            <input
+              onChange={getTextFieldData}
+              type="text"
+              placeholder="Search"
+            ></input>
+          </div>
         </div>
-        <div className="employee-search-form">
-          <input
-            onChange={getTextFieldData}
-            type="text"
-            placeholder="Search"
-          ></input>
+        <div className="employee-table-container">
+          <EmployeeTable onRowClicked={onRowClicked} rows={rows} />
+        </div>
+        <div className="employee-button-container">
+          <div className="employee-close-button">
+            <Button onClick={updatePopupState} variant="outlined" color="error">
+              Close
+            </Button>
+          </div>
+          <div className="employee-save-button">
+            <Button onClick={getSelectedRowsData} variant="contained">
+              Save Changes
+            </Button>
+          </div>
         </div>
       </div>
-      <div className="employee-table-container">
-        <EmployeeTable onRowClicked={onRowClicked} rows={rows} />
-      </div>
-      <div className="employee-button-container">
-        <div className="employee-close-button">
-          <Button onClick={updatePopupState} variant="outlined" color="error">
-            Close
-          </Button>
-        </div>
-        <div className="employee-save-button">
-          <Button onClick={getSelectedRowsData} variant="contained">
-            Save Changes
-          </Button>
-        </div>
-      </div>
-    </div>
+    </>
   );
 };
 

@@ -203,6 +203,10 @@ const EditReward = () => {
     );
   };
 
+  const cencelButton = () => {
+    navigate("/rewards");
+  };
+
   return (
     <Grid classes={{ root: { width: "100%" } }}>
       {rewardData && rewardData.reward_type && (
@@ -271,6 +275,29 @@ const EditReward = () => {
                   onChange={subtypeChange}
                 >
                   <MenuItem value="work-anniversary">Work Anniversary</MenuItem>
+                  <MenuItem value="birthday-celebration">
+                    Birthday Celebration
+                  </MenuItem>
+                </Select>
+              </FormControl>
+            </Grid>
+          )}
+          {rewardData.reward_type === "Monthly" && (
+            <Grid item>
+              <FormLabel
+                children="Reward Sub Type"
+                style={{ color: " black " }}
+              />
+              <br />
+              <FormControl id="RType">
+                <Select
+                  justify="justify"
+                  className="textfield"
+                  name="reward_subType"
+                  value={rewardData.reward_subType}
+                  onChange={subtypeChange}
+                >
+                  <MenuItem value="starOfTheMonth">Star of the month</MenuItem>
                   <MenuItem value="birthday-celebration">
                     Birthday Celebration
                   </MenuItem>
@@ -414,7 +441,7 @@ const EditReward = () => {
             >
               Save
             </Button>
-            <Button variant="contained" color="error">
+            <Button onClick={cencelButton} variant="contained" color="error">
               Cancel
             </Button>
           </div>

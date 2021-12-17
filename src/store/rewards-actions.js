@@ -27,16 +27,14 @@ export const getRewardsData = () => {
       );
     } catch (error) {
       dispatch(uiActions.toggleLoader());
-      setTimeout(function () {
-        dispatch(uiActions.toggleLoader());
-        dispatch(
-          uiActions.showNotification({
-            status: "error",
-            title: "Error!",
-            message: "Fetching content data failed!",
-          })
-        );
-      }, 3000);
+
+      dispatch(
+        uiActions.showNotification({
+          status: "error",
+          title: "Error!",
+          message: "Fetching content data failed!",
+        })
+      );
     }
   };
 };
@@ -322,6 +320,8 @@ export const EditRewardData = (id) => {
 
       if (response.status === "failure") {
         throw new Error("Could not fetch cart data!");
+      } else {
+        toast.success("Reward Edited");
       }
       return response;
     };
@@ -329,6 +329,7 @@ export const EditRewardData = (id) => {
     try {
       // eslint-disable-next-line no-unused-vars
       const data = await fetchData();
+
       dispatch(
         rewardsActions.addEditRewardData({
           rewardData: data.data.data || {},
@@ -421,7 +422,6 @@ export const UpdateRewardData = (data, id) => {
 
     try {
       await fetchData();
-
       dispatch(rewardsActions.updateRewardStatus());
 
       // console.log(data);
