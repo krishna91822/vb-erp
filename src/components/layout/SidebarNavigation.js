@@ -115,8 +115,8 @@ const SidebarNavigation = () => {
     {
       name: "CMS",
       dropDown: [
-        { name: "PO/SOW", link: "/" },
-        { name: "Invoicing", link: "/" },
+        { name: "PO/SOW", link: "/posow" },
+        { name: "Invoicing", link: "/invoices" },
       ],
       open: openCMS,
       handle: handleClickCMS,

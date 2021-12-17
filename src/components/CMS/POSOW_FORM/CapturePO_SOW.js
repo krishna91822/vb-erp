@@ -89,6 +89,9 @@ export const CapturePO_SOW = (props) => {
   const DocumentTypes = useSelector(
     (state) => state.CMS_state.inputFieldsData.DocumentTypes
   );
+  const allocationRateArr = useSelector(
+    (state) => state.CMS_state.allocationRate
+  );
 
   let DefaultClientName = null;
   let ReadProjectName = null;
@@ -115,7 +118,7 @@ export const CapturePO_SOW = (props) => {
     React.useState(clientFinController);
   const [typeName, setTypeName] = React.useState(ReadType);
   const [CurrName, setCurrName] = React.useState(ReadCurr);
-  const [DocTypes, setDocTypes] = React.useState(initDocTypes);
+  // const [DocTypes, setDocTypes] = React.useState(initDocTypes);
   const [remarks, setRemarks] = React.useState(Readremarks);
   const [PO_number, setPO_number] = React.useState(ReadPO_num);
   const [PO_amt, setPOAmt] = React.useState(ReadPO_amt);
@@ -153,7 +156,6 @@ export const CapturePO_SOW = (props) => {
       setRemarks(filteredArr[0].Remarks);
       setDocName(filteredArr[0].Document_Name);
       setStatus(filteredArr[0].Status);
-      setDocTypes(filteredArr[0].Document_Type);
       setProjectId(filteredArr[0].Project_Id);
       setPOSOWEndDate(new Date(filteredArr[0].POSOW_endDate));
       dispatch(
@@ -170,7 +172,6 @@ export const CapturePO_SOW = (props) => {
           Object.keys(filteredArr[0].Targetted_Resources)
         )
       );
-      // setTargetedResChkBox(Object.values(filteredArr[0].Targetted_Resources));
     }
   }, [filteredArr]);
   useEffect(() => {
@@ -203,9 +204,6 @@ export const CapturePO_SOW = (props) => {
   };
   const handleDateChange = (changedDate) => {
     setPOSOWEndDate(changedDate);
-  };
-  const handleDocTypesChange = (event) => {
-    setDocTypes(event.target.value);
   };
   const handleRemarksChange = (event) => {
     setRemarks(event.target.value);
@@ -247,23 +245,27 @@ export const CapturePO_SOW = (props) => {
 
   const submitForm = (event) => {
     event.preventDefault();
-    let testObjTargetedRes = {};
+    let selectedTargetedRes = {};
+    let selectedTargetedResAllocationRate = {};
     for (var i = 0; i < TargetedResChkBox.length; i++) {
-      testObjTargetedRes[targetedResources[i]] = TargetedResChkBox[i];
+      selectedTargetedRes[targetedResources[i]] = TargetedResChkBox[i];
+      if (TargetedResChkBox[i]) {
+        selectedTargetedResAllocationRate[targetedResources[i]] =
+          allocationRateArr[i];
+      }
     }
-
+    // console.log(selectedTargetedResAllocationRate);
     const DataToSend = {
       Project_Id: projectId,
-      Client_Name: clientName.clientName,
-      Project_Name: projectName.projectName,
+      Client_Name: clientName ? clientName.clientName : "",
+      Project_Name: projectName ? projectName.projectName : "",
       Client_Sponser: clientProjectSponsor,
       Client_Finance_Controller: clientFinanceController,
-      Targetted_Resources: testObjTargetedRes,
+      Targetted_Resources: selectedTargetedRes,
+      Targeted_Res_AllocationRate: selectedTargetedResAllocationRate,
       Status: status,
       Type: typeName,
-      Document_Type: DocTypes,
       Document_Name: DocName,
-      // PO_Number: PO_number,
       PO_Amount: PO_amt,
       POSOW_endDate: new Date(selectedDate),
       Currency: CurrName,
@@ -394,8 +396,13 @@ export const CapturePO_SOW = (props) => {
                       }
                       data-testid="clientNameDropdown-ChangeTest"
                       sx={{ width: 400 }}
+                      error={true}
                       renderInput={(params) => (
-                        <TextField {...params} label="Client Name" />
+                        <TextField
+                          {...params}
+                          label="Client Name"
+                          error={errors.Client_Name ? true : false}
+                        />
                       )}
                     />
                   </div>
@@ -426,7 +433,11 @@ export const CapturePO_SOW = (props) => {
                       data-testid="projectDropdown-ChangeTest"
                       sx={{ width: 400 }}
                       renderInput={(params) => (
-                        <TextField {...params} label="Projects" />
+                        <TextField
+                          {...params}
+                          label="Projects"
+                          error={errors.Project_Name ? true : false}
+                        />
                       )}
                     />
                   </div>
@@ -637,43 +648,6 @@ export const CapturePO_SOW = (props) => {
                     />
                   </div>
                 </div>
-                <div className="DocTypeDropdown">
-                  <div>
-                    <FormControl
-                      sx={{ m: 1, width: 300 }}
-                      className="inputField"
-                    >
-                      <InputLabel id="demo-multiple-name-label">
-                        Doc type
-                      </InputLabel>
-                      <Select
-                        className="inputField"
-                        value={DocTypes}
-                        onChange={handleDocTypesChange}
-                        input={<OutlinedInput label="Doc type" />}
-                        MenuProps={MenuProps}
-                        data-test="doc-typeForUpload-dropdown"
-                        inputProps={{
-                          "data-testid": "UploadDocTypeDropdown",
-                        }}
-                        error={errors.Document_Type ? true : false}
-                        disabled={
-                          props.editBtn && !editTglCheckedState ? true : false
-                        }
-                      >
-                        {DocumentTypes.map((name) => (
-                          <MenuItem
-                            key={name}
-                            value={name}
-                            style={getStyles(name, typeName, theme)}
-                          >
-                            {name}
-                          </MenuItem>
-                        ))}
-                      </Select>
-                    </FormControl>
-                  </div>
-                </div>
               </div>
               <div className="docInfoBottomFields">
                 <div className="posow-SaveButton">
@@ -686,15 +660,13 @@ export const CapturePO_SOW = (props) => {
                         props.editBtn && !editTglCheckedState ? true : false
                       }
                     >
-                      Upload File
+                      Select File
                       <input
                         type="file"
                         hidden
                         onChange={handleUploadBtnClick}
-                        accept={DocTypes}
                         data-test="upload-file-input"
                         data-testid="upload-file-input-ClickTest"
-                        disabled={DocTypes === "" ? true : false}
                       />
                     </Button>
                   ) : (

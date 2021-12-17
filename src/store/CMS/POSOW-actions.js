@@ -288,7 +288,7 @@ export const fetchClientProjectSponsor = (projectId) => {
       );
 
       if (res.status === 200) {
-        console.log(res.data.data);
+        // console.log(res.data.data);
         dispatch(
           PoSowActions.setClientProjectSponsor(
             res.data.data[0].projectId.clientProjectSponsor
@@ -300,6 +300,7 @@ export const fetchClientProjectSponsor = (projectId) => {
           )
         );
         dispatch(PoSowActions.setTargetedResources(res.data.data));
+        dispatch(PoSowActions.setAllocationRate(res.data.data));
       } else {
         throw new Error("Something went wrong!");
       }
