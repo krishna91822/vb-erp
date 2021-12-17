@@ -44,6 +44,12 @@ const EmployeesList = (props) => {
     collectedDataArray = [];
     props.setOpenPopup(false);
     let employees_id = [];
+    if (props.receiver) {
+      props.updaterecipientsData(rowData);
+    }
+    if (props.sender) {
+      props.updateSenderData(rowData);
+    }
     rowData.forEach((data) => {
       employees_id.push(data.employee_id);
     });

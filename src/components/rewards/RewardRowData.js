@@ -72,7 +72,7 @@ const RewardRowData = ({ data, StyledMenu, open }) => {
         </div>
         <div className="assignee">
           {data.reward_sender === "selected" ? (
-            <p>Employee Name</p>
+            <p>{data.sender_id[0].empName}</p>
           ) : (
             <p>{data.reward_sender}</p>
           )}
