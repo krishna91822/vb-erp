@@ -47,7 +47,6 @@ const EditReward = () => {
       })
     );
   };
-  console.log(rewardData);
   const handleChangeReceiverMessage = (e) => {
     dispatch(
       rewardsActions.addEditRewardData({
@@ -161,7 +160,6 @@ const EditReward = () => {
       rewardData.reward_display_name !== "" ||
       rewardData.receiver_message !== ""
     ) {
-      console.log(rewardData);
       dispatch(UpdateRewardData(rewardData, id));
       navigate("/rewards");
     } else {
@@ -201,6 +199,10 @@ const EditReward = () => {
         },
       })
     );
+  };
+
+  const cencelButton = () => {
+    navigate("/rewards");
   };
 
   return (
@@ -271,6 +273,29 @@ const EditReward = () => {
                   onChange={subtypeChange}
                 >
                   <MenuItem value="work-anniversary">Work Anniversary</MenuItem>
+                  <MenuItem value="birthday-celebration">
+                    Birthday Celebration
+                  </MenuItem>
+                </Select>
+              </FormControl>
+            </Grid>
+          )}
+          {rewardData.reward_type === "Monthly" && (
+            <Grid item>
+              <FormLabel
+                children="Reward Sub Type"
+                style={{ color: " black " }}
+              />
+              <br />
+              <FormControl id="RType">
+                <Select
+                  justify="justify"
+                  className="textfield"
+                  name="reward_subType"
+                  value={rewardData.reward_subType}
+                  onChange={subtypeChange}
+                >
+                  <MenuItem value="starOfTheMonth">Star of the month</MenuItem>
                   <MenuItem value="birthday-celebration">
                     Birthday Celebration
                   </MenuItem>
@@ -414,7 +439,7 @@ const EditReward = () => {
             >
               Save
             </Button>
-            <Button variant="contained" color="error">
+            <Button onClick={cencelButton} variant="contained" color="error">
               Cancel
             </Button>
           </div>

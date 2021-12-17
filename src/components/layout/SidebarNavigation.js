@@ -93,10 +93,10 @@ const SidebarNavigation = () => {
       name: "Network",
       link: "/network",
     },
-    {
-      name: "Contract Mgmt",
-      link: "/",
-    },
+    // {
+    //   name: "Contract Mgmt",
+    //   link: "/",
+    // },
     {
       name: "PMO",
       dropDown: [

@@ -21,7 +21,6 @@
   width: 500px;
   height: auto;
   display: flex;
-  justify-content: center;
   align-items: center;
 }
 
@@ -34,7 +33,7 @@
   width: 300px;
   height: auto;
   display: flex;
-  justify-content: center;
+  justify-content: flex-end;
   align-items: center;
 }
 

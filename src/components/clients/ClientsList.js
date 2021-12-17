@@ -29,7 +29,7 @@ import {
   ClearRounded as ClearRoundedIcon,
 } from "@mui/icons-material";
 import PageHeader from "./PageHeader";
-import "../../assets/styles/ListStyles.css";
+import "../../assets/styles/ClientListStyles.css";
 
 import ClientHelpers from "./ClientHelpers";
 

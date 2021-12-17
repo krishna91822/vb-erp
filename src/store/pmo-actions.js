@@ -150,7 +150,7 @@ export const getAllEmployees = (empName) => {
   return async (dispatch) => {
     const getData = async () => {
       const response = await axios.get(
-        `/employees/filteremp?empName=${empName}`
+        `/allocations/filteremp?empName=${empName}`
       );
       if (response.status === "failure") {
         throw new Error(response.data.message);
@@ -396,7 +396,7 @@ export const searchVbManager = (empName) => {
   return async (dispatch) => {
     const getData = async () => {
       const response = await axios.get(
-        `employees/empManagers?empName=${empName}`
+        `allocations/managers?empName=${empName}`
         // `/employees/empManagers`
       );
       if (response.status === "failure") {

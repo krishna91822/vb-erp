@@ -93,6 +93,11 @@ const routes = [
     title: "Create Reward",
   },
   {
+    path: "/rewards",
+    component: RewardsList,
+    title: "Rewards List",
+  },
+  {
     path: "/rewards/edit/:id",
     component: EditReward,
     title: "Edit Reward",
