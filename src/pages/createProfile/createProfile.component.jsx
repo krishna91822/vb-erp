@@ -54,7 +54,7 @@ const CreateProfile = ({
     axiosInstance
       .get("/employees?empEmail=admin@mail.com")
       .then((response) => {
-        dispatch(setCurrentEmployee(response.data.data.employees[0]));
+        dispatch(setCurrentEmployee(response.data.data[0]));
       })
       .catch((err) => console.log(err));
   }, [dispatch]);
@@ -68,19 +68,19 @@ const CreateProfile = ({
     empReportingManager: "",
     empAboutMe: "",
     empBand: "",
-    empCertifications: "",
+    empCertifications: [],
     empConnections: "",
-    empCurrentAddress: "",
+    empCurrentAddress: undefined,
     empDob: null,
     empGraduation: "",
     empGraduationUniversity: "",
-    empHobbies: "",
+    empHobbies: [],
     empPersonalEmail: "",
     empPostGraduation: "",
     empPostGraduationUniversity: "",
-    empPrimaryCapability: "",
-    empResidentialAddress: "",
-    empSkillSet: "",
+    empPrimaryCapability: [],
+    empResidentialAddress: undefined,
+    empSkillSet: [],
   };
 
   const [employee, setEmployee] = useState(
@@ -207,7 +207,8 @@ const CreateProfile = ({
     if (
       employee.empName === "" ||
       employee.empEmail === "" ||
-      employee.empDoj === ""
+      employee.empDoj === "" ||
+      employee.empDob === ""
     ) {
       alert("Fields are empty");
     } else {
@@ -234,6 +235,7 @@ const CreateProfile = ({
               skillsDetails,
             },
           });
+      console.log(createEmployee);
       axiosInstance
         .post("/reviews", createEmployee)
         .then(function (response) {

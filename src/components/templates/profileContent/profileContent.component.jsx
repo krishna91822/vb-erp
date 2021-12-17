@@ -54,7 +54,11 @@ const ProfileContent = (props) => {
 
     const completedFields = inEditMode
       ? Object.values(updateRequest).filter(
-          (field) => field !== undefined && field !== null && field !== ""
+          (field) =>
+            field !== undefined &&
+            field !== null &&
+            field !== "" &&
+            field.length !== 0
         ).length +
         updateRequest.personalDetails.filter((field) => field.fieldValue !== "")
           .length +
@@ -65,7 +69,11 @@ const ProfileContent = (props) => {
           .length -
         3
       : Object.values(currentEmployee).filter(
-          (field) => field !== undefined && field !== null && field !== ""
+          (field) =>
+            field !== undefined &&
+            field !== null &&
+            field !== "" &&
+            field.length !== 0
         ).length +
         currentEmployee.personalDetails.filter(
           (field) => field.fieldValue !== ""

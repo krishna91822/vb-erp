@@ -22,22 +22,16 @@ const Profile = () => {
     axiosInstance
       .get("/employees?empEmail=admin@mail.com")
       .then((response) => {
-        dispatch(setCurrentEmployee(response.data.data.employees[0]));
+        dispatch(setCurrentEmployee(response.data.data[0]));
         setUpdateRequest({
-          ...response.data.data.employees[0],
-          personalDetails: [...response.data.data.employees[0].personalDetails],
-          professionalDetails: [
-            ...response.data.data.employees[0].professionalDetails,
-          ],
-          skillsDetails: [...response.data.data.employees[0].skillsDetails],
+          ...response.data.data[0],
+          personalDetails: [...response.data.data[0].personalDetails],
+          professionalDetails: [...response.data.data[0].professionalDetails],
+          skillsDetails: [...response.data.data[0].skillsDetails],
         });
-        setPersonalDetails([
-          ...response.data.data.employees[0].personalDetails,
-        ]);
-        setProfessionalDetails([
-          ...response.data.data.employees[0].professionalDetails,
-        ]);
-        setSkillsDetails([...response.data.data.employees[0].skillsDetails]);
+        setPersonalDetails([...response.data.data[0].personalDetails]);
+        setProfessionalDetails([...response.data.data[0].professionalDetails]);
+        setSkillsDetails([...response.data.data[0].skillsDetails]);
         setLoading(false);
       })
       .catch((err) => console.log(err));

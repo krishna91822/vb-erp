@@ -26,7 +26,7 @@ const ViewProfile = () => {
     axiosInstance
       .get(`/employees?empId=${empId}`)
       .then((response) => {
-        setViewedEmployee({ ...response.data.data.employees[0] });
+        setViewedEmployee({ ...response.data.data[0] });
         setLoading(false);
       })
       .catch((err) => console.error(err));
@@ -68,7 +68,9 @@ const ViewProfile = () => {
     doc.text(`${viewedEmployee.empHobbies}`, 135, 99);
     doc.text(`${viewedEmployee.empConnections}`, 135, 106.5);
     doc.text(
-      `${viewedEmployee.empCurrentAddress.empAddressLineOne}, ${viewedEmployee.empCurrentAddress.empAddressCity}, ${viewedEmployee.empCurrentAddress.empAddressState}, ${viewedEmployee.empCurrentAddress.empAddressPinCode}`,
+      viewedEmployee.empCurrentAddress
+        ? `${viewedEmployee.empCurrentAddress.empAddressLineOne}, ${viewedEmployee.empCurrentAddress.empAddressCity}, ${viewedEmployee.empCurrentAddress.empAddressState}, ${viewedEmployee.empCurrentAddress.empAddressPinCode}`
+        : "",
       135,
       113,
       {
@@ -76,7 +78,9 @@ const ViewProfile = () => {
       }
     );
     doc.text(
-      `${viewedEmployee.empResidentialAddress.empAddressLineOne}, ${viewedEmployee.empResidentialAddress.empAddressCity}, ${viewedEmployee.empResidentialAddress.empAddressState}, ${viewedEmployee.empResidentialAddress.empAddressPinCode}`,
+      viewedEmployee.empResidentialAddress
+        ? `${viewedEmployee.empResidentialAddress.empAddressLineOne}, ${viewedEmployee.empResidentialAddress.empAddressCity}, ${viewedEmployee.empResidentialAddress.empAddressState}, ${viewedEmployee.empResidentialAddress.empAddressPinCode}`
+        : "",
       135,
       127,
       {

@@ -21,7 +21,7 @@ const ProfessionalReadable = ({ empData }) => {
       </ContentBox>
       <ContentBox>
         <ContentTypo>{professionalConstant.graduation}</ContentTypo>
-        <ContentTypo>{empGraduation.toUpperCase()}</ContentTypo>
+        <ContentTypo>{empGraduation}</ContentTypo>
       </ContentBox>
       <ContentBox>
         <ContentTypo>{professionalConstant.graduationUniversity}</ContentTypo>
