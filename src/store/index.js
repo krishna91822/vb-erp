@@ -1,5 +1,5 @@
 import { configureStore } from "@reduxjs/toolkit";
-import logger from "redux-logger";
+// import logger from "redux-logger";
 
 import uiSlice from "./ui-slice";
 import employeeSlice from "./employeeSlice";
@@ -8,11 +8,10 @@ import contentsSlice from "./contents-slice";
 import pmoSlice from "./pmo-slice";
 import rewardSlice from "./rewards-slice";
 import cimsSlice from "./cims-slice";
-import employeeSlice from "./employees-slice";
 import POSOW_Slice from "./CMS/POSOW-slice";
 import invoice_Slice from "./CMS/INVOICE-slice";
 
-const middleware = [logger];
+// const middleware = [logger];
 
 export default configureStore({
   reducer: {
@@ -25,5 +24,5 @@ export default configureStore({
     INVOICE_state: invoice_Slice.reducer,
     employee: employeeSlice,
   },
-  middleware: [...middleware],
+  // middleware: [...middleware],
 });
