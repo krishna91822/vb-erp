@@ -37,6 +37,10 @@ export const Heading = styled.div`
   flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
+
+  & > h2 {
+    margin: 0;
+  }
 `;
 
 export const StyledHeader = styled.form`
@@ -53,6 +57,10 @@ export const FormHeadingStyled = styled.div`
   justify-content: space-between;
   align-items: center;
   border-bottom: 0.1em solid #afacacde;
+
+  & > h3 {
+    margin: 0;
+  }
 `;
 
 export const FormContainerStyled = styled.div`
@@ -88,12 +96,7 @@ export const FormElementsStyled = styled.div`
   }
 `;
 
-export const NumberStyle = styled.div`
-  // input::-webkit-input-placeholder {
-  //   font-weight: 100;
-  //   color: #a2a2a2;
-  // }
-`;
+export const NumberStyle = styled.div``;
 
 export const DateContainerStyled = styled.div`
   width: 48%;

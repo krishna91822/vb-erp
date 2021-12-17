@@ -23,6 +23,7 @@ export const AdminName = styled.p`
 `;
 
 export const ProjectHead = styled.h2`
+  margin: 0px;
   @media (max-width: 450px) {
     margin: 1rem;
   }

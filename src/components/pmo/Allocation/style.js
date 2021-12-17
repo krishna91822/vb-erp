@@ -8,9 +8,9 @@ export const MiniHead = styled.h3`
 `;
 
 export const MainComponent = styled.div`
-  padding: 5px 15px;
+  /* padding: 5px 15px;
   min-width: 345px; //we need to remove this line
-  min-height: 90vh;
+  min-height: 90vh; */
 `;
 export const HeadingStyle = styled.div`
   p {
@@ -34,6 +34,7 @@ export const AdminName = styled.p`
 `;
 
 export const ProjectHead = styled.h2`
+  margin: 0;
   @media (max-width: 450px) {
     margin: 1rem;
   }

@@ -10,11 +10,16 @@ import {
   TableRow,
   TextField,
   Button,
+  MenuItem,
+  Select,
+  InputLabel,
+  FormControl,
 } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import FilterListIcon from "@mui/icons-material/FilterList";
 // import FilterListOffIcon from "@mui/icons-material/FilterListOff";
 import FilterListOffIcon from "@mui/icons-material/FilterList";
+// import FilterListOffIcon from "@mui/icons-material/FilterListOff";
 
 import Tpagination from "../../UI/Pagination";
 import {
@@ -109,7 +114,6 @@ const ViewProjects = () => {
               )}
               <Button
                 variant="contained"
-                // size="small"
                 sx={{
                   backgroundColor: "#e8833a",
                   textTransform: "none",
@@ -123,27 +127,55 @@ const ViewProjects = () => {
               >
                 Create a project
               </Button>
-              <Dropdown onChange={entryValue} data-test="sortby-dropdown">
-                <Options Value="Sort by" hidden>
-                  Sort by
-                </Options>
-                <Options value="Sort by Project ID">Sort by Project ID</Options>
-                <Options value="Sort by Status">Sort by Status</Options>
-              </Dropdown>
-
-              <Dropdown
-                onChange={FilterProjects}
-                style={{ width: "120px" }}
-                data-test="sortby-dropdown"
-              >
-                <Options Value="Filter Projects" hidden>
-                  {filterProjects}
-                </Options>
-                <Options value="active" selected>
-                  Active
-                </Options>
-                <Options value="done">Past</Options>
-              </Dropdown>
+              <FormControl size="small">
+                <InputLabel id="filterBy">Sort By</InputLabel>
+                <Select
+                  defaultValue="Sort by Project ID"
+                  labelId="filterBy"
+                  id="select"
+                  label="filterBy"
+                  // inputProps={{ style: { fontSize: "5px" } }}
+                  onChange={entryValue}
+                  sx={{ fontSize: "14px", width: "150px" }}
+                  // style={{ width: "150px" }}
+                >
+                  <MenuItem
+                    value="Sort by Project ID"
+                    sx={{ fontSize: "14px" }}
+                  >
+                    Project ID
+                  </MenuItem>
+                  <MenuItem value="Client Name" sx={{ fontSize: "14px" }}>
+                    Client Name
+                  </MenuItem>
+                  <MenuItem value="Project Name" sx={{ fontSize: "14px" }}>
+                    Project Name
+                  </MenuItem>
+                </Select>
+              </FormControl>
+              <FormControl size="small">
+                <InputLabel id="filterBy">Status</InputLabel>
+                <Select
+                  defaultValue="active"
+                  labelId="filterBy"
+                  id="select"
+                  data-test="sortby-dropdown"
+                  label="filterBy"
+                  // color="orange"
+                  onChange={FilterProjects}
+                  sx={{ fontSize: "14px", width: "150px" }}
+                >
+                  <MenuItem value="active" sx={{ fontSize: "14px" }}>
+                    Active
+                  </MenuItem>
+                  <MenuItem value="done" sx={{ fontSize: "14px" }}>
+                    Completed
+                  </MenuItem>
+                  <MenuItem value="other" sx={{ fontSize: "14px" }}>
+                    Others
+                  </MenuItem>
+                </Select>
+              </FormControl>
             </SideButton>
           </Heading>
         </HeadingStyle>
@@ -316,20 +348,21 @@ const ViewProjects = () => {
                   : null}
               </TableBody>
             </Table>
-            {projects.results
-              ? !projects.results.length && (
-                  <p
-                    style={{
-                      textAlign: "center",
-                      color: "grey",
-                      margin: "15px",
-                    }}
-                  >
-                    No Project Found!!!
-                  </p>
-                )
-              : ""}
           </TableContainer>
+          {projects.results
+            ? !projects.results.length && (
+                <p
+                  style={{
+                    textAlign: "center",
+                    color: "grey",
+                    position: "relative",
+                    bottom: "220px",
+                  }}
+                >
+                  No Project Yet!!!
+                </p>
+              )
+            : ""}
         </Container>
         <Tpagination
           count={projects.pageCount}
