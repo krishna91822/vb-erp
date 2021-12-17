@@ -1,8 +1,8 @@
 import styled from "styled-components";
 
 export const MainComponent = styled.div`
-  /* padding: 5px 15px; */
-  /* min-width: 477px; //we need to remove this line */
+  /* padding: 5px 15px;
+  min-width: 477px; //we need to remove this line */
   /* min-height: 85vh; */
 `;
 export const HeadingStyle = styled.div``;
@@ -13,6 +13,9 @@ export const Heading = styled.div`
   flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
+  h2 {
+    margin: 0;
+  }
 `;
 
 export const AdminName = styled.p`
@@ -23,6 +26,7 @@ export const AdminName = styled.p`
 `;
 
 export const ProjectHead = styled.h2`
+  margin: 0px;
   @media (max-width: 450px) {
     margin: 1rem;
   }
@@ -74,6 +78,10 @@ export const SideButton = styled.div`
   flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
+  select {
+    width: 28%;
+  }
+
   & > * {
     margin: 0 6px;
   }

@@ -177,7 +177,7 @@ const CreateProject = () => {
       ...state,
       resource: {
         ...state.resource,
-        empName: value.empName || "",
+        empName: value.empName + " (" + value.empId + ")" || "",
         empId: value._id || "",
       },
     });
@@ -710,7 +710,9 @@ const CreateProject = () => {
                 size="small"
                 onOpen={handleVbManOpen}
                 onClose={() => setOpenVbMan(false)}
-                getOptionLabel={(option) => option.empName}
+                getOptionLabel={(option) =>
+                  option.empName + " (" + option.empId + ")"
+                }
                 onChange={(event, value) => {
                   handleVbManAutoselect(value);
                 }}
@@ -756,7 +758,7 @@ const CreateProject = () => {
                 <MenuItem value="Yet to Begin">Yet to Begin</MenuItem>
                 <MenuItem value="Active">Active</MenuItem>
                 <MenuItem value="On Hold">On Hold</MenuItem>
-                <MenuItem value="Done">Done</MenuItem>
+                <MenuItem value="Done">Complete</MenuItem>
               </Select>
             </FormElementsStyled>
           </FormContainerStyled>
