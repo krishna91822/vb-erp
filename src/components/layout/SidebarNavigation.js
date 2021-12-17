@@ -25,7 +25,6 @@ const boxStyles = {
   boxShadow:
     "rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px",
 };
-
 const listStyles = {
   width: "250px",
   height: "100%",
@@ -33,7 +32,6 @@ const listStyles = {
   bgcolor: "white",
   color: "black",
 };
-
 const paperStyles = {
   padding: 0,
   margin: 0,
@@ -48,23 +46,20 @@ const paperStyles = {
     overflowY: "scroll",
   },
 };
-
 const CustomListItemButton = styled(ListItemButton)(({ theme }) => ({
   "&.Mui-selected": {
-    backgroundColor: "#efefef",
+    backgroundColor: "#EFEFEF",
   },
   "&.Mui-selected:hover": {
-    backgroundColor: "#efefef",
+    backgroundColor: "#EFEFEF",
   },
 }));
-
 const SidebarNavigation = () => {
   const [openTasks, setOpenTasks] = useState(false);
   const [openPMO, setOpenPMO] = useState(false);
   const [openCMS, setOpenCMS] = useState(false);
   const [openRR, setOpenRR] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState(0);
-
   const handleListItemClick = (index) => {
     setSelectedIndex(index);
   };
@@ -83,40 +78,45 @@ const SidebarNavigation = () => {
   const sideMenu = [
     {
       name: "My Profile",
+      link: "/my-profile",
     },
     {
       name: "Tasks",
       dropDown: [
-        { name: "Create Profile", route: "/" },
-        { name: "Reviews", route: "/" },
+        { name: "Create Profile", link: "/create-profile" },
+        { name: "Reviews", link: "/reviews" },
       ],
       open: openTasks,
       handle: handleClickTasks,
     },
     {
       name: "Network",
+      link: "/network",
     },
-    {
-      name: "Contract Mgmt",
-    },
+    // {
+    //   name: "Contract Mgmt",
+    //   link: "/",
+    // },
     {
       name: "PMO",
       dropDown: [
-        { name: "Projects", route: "/" },
-        { name: "Create Projects", route: "/" },
-        { name: "Allocations", route: "/" },
+        { name: "Projects", link: "/pmo/projects" },
+        { name: "Create Projects", link: "/pmo/projects/create" },
+        { name: "Allocations", link: "/pmo/allocations" },
       ],
       open: openPMO,
       handle: handleClickPMO,
     },
     {
       name: "CIMS",
+      link: "/cims",
     },
+
     {
       name: "CMS",
       dropDown: [
-        { name: "PO/SOW", route: "/" },
-        { name: "Invoicing", route: "/" },
+        { name: "PO/SOW", link: "/posow" },
+        { name: "Invoicing", link: "/invoices" },
       ],
       open: openCMS,
       handle: handleClickCMS,
@@ -124,14 +124,13 @@ const SidebarNavigation = () => {
     {
       name: "R&R",
       dropDown: [
-        { name: "Catalog", route: "/" },
-        { name: "Reward", route: "/rewards" },
+        // { name: "Catalog", link: "/" },
+        { name: "Reward", link: "/rewards" },
       ],
       open: openRR,
       handle: handleClickRR,
     },
   ];
-
   return (
     <Box sx={boxStyles}>
       <Paper sx={paperStyles} elevation={0}>
@@ -143,6 +142,8 @@ const SidebarNavigation = () => {
             if (!menuItem.dropDown) {
               return (
                 <CustomListItemButton
+                  component={Link}
+                  to={menuItem.link}
                   selected={selectedIndex === i}
                   onClick={() => handleListItemClick(i)}
                 >
@@ -172,24 +173,19 @@ const SidebarNavigation = () => {
                   <Collapse in={menuItem.open} timeout="auto" unmountOnExit>
                     <List component="div" disablePadding>
                       {menuItem.dropDown.map((item) => (
-                        <Link
-                          style={{ textDecoration: "none" }}
-                          to={item.route}
+                        <CustomListItemButton
+                          component={Link}
+                          to={item.link}
+                          sx={{ pl: 4 }}
                         >
-                          <CustomListItemButton
-                            component={Link}
-                            to={item.route}
-                            sx={{ pl: 4 }}
-                          >
-                            <ListItemIcon>
-                              <GridViewIcon style={{ color: "black" }} />
-                            </ListItemIcon>
-                            <ListItemText
-                              style={{ color: "black" }}
-                              primary={item.name}
-                            />
-                          </CustomListItemButton>
-                        </Link>
+                          <ListItemIcon>
+                            <GridViewIcon style={{ color: "black" }} />
+                          </ListItemIcon>
+                          <ListItemText
+                            style={{ color: "black" }}
+                            primary={item.name}
+                          />
+                        </CustomListItemButton>
                       ))}
                     </List>
                   </Collapse>
