@@ -1,12 +1,13 @@
 import * as React from "react";
 import Pagination from "@mui/material/Pagination";
 
-export default function Tpagination({ count, changePage }) {
+export default function Tpagination({ count, changePage, visi }) {
   return (
     <div
       style={{
         position: "sticky",
         bottom: "0",
+        visibility: visi,
       }}
     >
       <div
