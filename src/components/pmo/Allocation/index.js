@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import Allocated from "./allocated";
 import Bench from "./bench";
 
+import { MenuItem, Select, InputLabel, FormControl } from "@mui/material";
 import FilterListIcon from "@mui/icons-material/FilterList";
 import FilterListOffIcon from "@mui/icons-material/FilterListOff";
 // import FilterListOffIcon from "@mui/icons-material/FilterList";
@@ -11,8 +12,6 @@ import {
   HeadingStyle,
   Heading,
   SideButton,
-  Dropdown,
-  Options,
   ProjectHead,
   MainComponent,
 } from "./style";
@@ -59,38 +58,80 @@ const Allocation = () => {
               />
             )}
             {!bench ? (
-              <Dropdown
-                data-test="sortby-dropdown"
-                value={sortValue}
-                onChange={handleSortValue}
-              >
-                <Options value="Sort by" hidden>
-                  Sort by
-                </Options>
-                <Options value="allocationPercentage">
-                  Sort by Percentage
-                </Options>
-                <Options value="allocationStartDate">
-                  Sort by Start-Date
-                </Options>
-                <Options value="allocationEndDate">Sort by End-Date</Options>
-              </Dropdown>
+              <FormControl size="small">
+                <InputLabel id="filterBy">Sort by</InputLabel>
+                <Select
+                  defaultValue="allocationStartDate"
+                  labelId="filterBy"
+                  id="select"
+                  data-test="sortby-dropdown"
+                  label="filterBy"
+                  // color="orange"
+                  onChange={handleSortValue}
+                  sx={{ fontSize: "14px", width: "150px" }}
+                >
+                  <MenuItem
+                    value="allocationStartDate"
+                    sx={{ fontSize: "14px" }}
+                  >
+                    Start-Date
+                  </MenuItem>
+                  <MenuItem value="allocationEndDate" sx={{ fontSize: "14px" }}>
+                    End-Date
+                  </MenuItem>
+                  <MenuItem
+                    value="allocationPercentage"
+                    sx={{ fontSize: "14px" }}
+                  >
+                    Percentage
+                  </MenuItem>
+                </Select>
+              </FormControl>
             ) : (
-              <Dropdown onChange={handleSortValue} value={sortValue}>
-                <Options value="Sort by" hidden>
-                  Sort by
-                </Options>
-                <Options value="empId">Sort by EmpId</Options>
-                <Options value="empName">Sort by Emp-Name</Options>
-                <Options value="remainingAllocation">
-                  Sort by Allocations
-                </Options>
-              </Dropdown>
+              <FormControl size="small">
+                <InputLabel id="Sort">Sort by</InputLabel>
+                <Select
+                  defaultValue="empId"
+                  labelId="Sort"
+                  data-test="sortby-dropdown"
+                  label="Sort by"
+                  onChange={handleSortValue}
+                  sx={{ fontSize: "14px", width: "150px" }}
+                >
+                  <MenuItem value="empId" sx={{ fontSize: "14px" }}>
+                    EmpId
+                  </MenuItem>
+                  <MenuItem value="empName" sx={{ fontSize: "14px" }}>
+                    Emp-Name
+                  </MenuItem>
+                  <MenuItem
+                    value="remainingAllocation"
+                    sx={{ fontSize: "14px" }}
+                  >
+                    Bandwidth
+                  </MenuItem>
+                </Select>
+              </FormControl>
             )}
-            <Dropdown data-test="sortby-dropdown" onChange={ChangeAllocation}>
-              <Options value="Sort by Allocated">Allocated</Options>
-              <Options value="Sort by on Bench">On Bench</Options>
-            </Dropdown>
+            <FormControl size="small">
+              <InputLabel id="Sort by">Status</InputLabel>
+              <Select
+                defaultValue="Sort by Allocated"
+                labelId="Sort by"
+                data-test="sortby-dropdown"
+                label="Sort by"
+                // color="orange"
+                onChange={ChangeAllocation}
+                sx={{ fontSize: "14px", width: "150px" }}
+              >
+                <MenuItem value="Sort by Allocated" sx={{ fontSize: "14px" }}>
+                  Allocated
+                </MenuItem>
+                <MenuItem value="Sort by on Bench" sx={{ fontSize: "14px" }}>
+                  On Bench
+                </MenuItem>
+              </Select>
+            </FormControl>
           </SideButton>
         </Heading>
       </HeadingStyle>

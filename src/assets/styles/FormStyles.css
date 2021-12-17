@@ -1,6 +1,7 @@
 .FormContainer {
-  position: sticky;
-  height: 88%;
+  position: fixed;
+  height: 75%;
+  margin-right: 1rem;
   overflow-y: scroll;
   border: 2px solid rgb(216, 213, 213);
   border-radius: 0.5rem;

@@ -125,7 +125,7 @@ const ProfileInfoEditable = (props) => {
             />
             <StyledTab
               icon={<ImportContactsIcon />}
-              label={profileInfoConstant.tabs.personal}
+              label={profileInfoConstant.tabs.professional}
             />
             <StyledTab
               icon={<BadgeIcon />}
