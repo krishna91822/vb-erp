@@ -402,7 +402,6 @@ export const CapturePO_SOW = (props) => {
                       renderInput={(params) => (
                         <TextField
                           {...params}
-                          label="Client Name"
                           error={errors.Client_Name ? true : false}
                         />
                       )}
@@ -437,7 +436,6 @@ export const CapturePO_SOW = (props) => {
                       renderInput={(params) => (
                         <TextField
                           {...params}
-                          label="Projects"
                           error={errors.Project_Name ? true : false}
                         />
                       )}
