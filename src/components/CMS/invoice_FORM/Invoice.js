@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { useParams } from "react-router-dom";
 import "./Invoice.css";
 import { useDispatch, useSelector } from "react-redux";
@@ -51,7 +52,7 @@ function Invoice(props) {
   const isRedirect = useSelector((state) => state.INVOICE_state.redirect);
   const allPOSOWs = useSelector((state) => state.CMS_state.poSowData);
   const allINVOICE = useSelector((state) => state.INVOICE_state.invoiceData);
-  console.log(isRedirect);
+
   useEffect(() => {
     if (isRedirect) {
       navigate("/invoices");
@@ -157,8 +158,10 @@ function Invoice(props) {
     }
   }, [filteredArr]);
   useEffect(() => {
-    if (invoice_raised === "Yes" && invoice_amount !== undefined) {
-      setinvoicereceived(true);
+    if (invoicereceived) {
+      if (invoice_raised === "Yes" && invoice_amount !== undefined) {
+        setinvoicereceived(true);
+      }
     }
   });
 
@@ -199,9 +202,7 @@ function Invoice(props) {
     setDate(Date);
   };
   const invoicereceivedhandler = (e) => {
-    if (invoice_raised_yesno === "Yes") {
-      setinvoicereceived(true);
-    }
+    setinvoicereceived(!invoicereceived);
   };
   const updatehandler = (e) => {
     const DataToSend = {
@@ -304,9 +305,9 @@ function Invoice(props) {
                   checked={editTglCheckedState}
                   onChange={handleEditTglChange}
                   disabled={
-                    invoice_raised === "Yes" && invoice_amount !== undefined
-                      ? true
-                      : false
+                    invoice_raised === "Yes" &&
+                    invoice_amount !== undefined &&
+                    editTglCheckedState === false
                   }
                 />
                 <span className="slider round"></span>
@@ -535,7 +536,7 @@ function Invoice(props) {
             <div className="invoicereceived">
               <span>Invoice Received</span>
               <Switch
-                disabled={invoice_raised_yesno === "No"}
+                disabled={invoice_raised_yesno === "No" || !editTglCheckedState}
                 onChange={invoicereceivedhandler}
                 checked={invoicereceived}
               />
@@ -548,8 +549,8 @@ function Invoice(props) {
                 <FormControl fullWidth>
                   <TextField
                     disabled={
-                      props.readonly ||
                       !invoicereceived ||
+                      !editTglCheckedState ||
                       invoice_raised_yesno === "No"
                     }
                     value={invoice_amount}
@@ -565,9 +566,9 @@ function Invoice(props) {
                 <FormControl fullWidth>
                   <Select
                     disabled={
-                      props.readonly ||
                       !invoicereceived ||
-                      invoice_raised_yesno === "No"
+                      invoice_raised_yesno === "No" ||
+                      !editTglCheckedState
                     }
                     value={Vb_Bank_Acc}
                     onChange={handlevbbankacc}
@@ -588,15 +589,10 @@ function Invoice(props) {
                 inputFormat="MM/dd/yyyy"
                 value={Date_}
                 disabled={
-                  props.readonly ||
                   !invoicereceived ||
-                  invoice_raised_yesno === "No"
+                  invoice_raised_yesno === "No" ||
+                  !editTglCheckedState
                 }
-                // disabled={
-                //   (props.readonly ||
-                //   invoicereceived ||
-                //   invoice_raised_yesno === "No") && editTglCheckedState
-                // }
               />
             </Grid>
           </div>
