@@ -710,7 +710,9 @@ const CreateProject = () => {
                 size="small"
                 onOpen={handleVbManOpen}
                 onClose={() => setOpenVbMan(false)}
-                getOptionLabel={(option) => option.empName}
+                getOptionLabel={(option) =>
+                  option.empName + " (" + option.empId + ")"
+                }
                 onChange={(event, value) => {
                   handleVbManAutoselect(value);
                 }}

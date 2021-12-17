@@ -193,6 +193,7 @@ const Allocated = ({ pressed, allocatedSortedValue }) => {
                         name="allocationStartDate"
                         onChange={filterData}
                         onKeyPress={filterData}
+                        format="yyyy-mm-dd"
                         value={filters.allocationStartDate}
                         inputProps={{ style: { fontSize: "small" } }}
                       />
