@@ -22,6 +22,10 @@ export const device = {
 export const PmoContainer = styled.div`
   // padding: 5px 15px;
   min-width: 300px; //we need to remove this line
+  & h2,
+  h3 {
+    margin: 0;
+  }
 `;
 
 export const HeadingStyle = styled.div`

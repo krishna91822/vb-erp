@@ -177,7 +177,7 @@ const CreateProject = () => {
       ...state,
       resource: {
         ...state.resource,
-        empName: value.empName || "",
+        empName: value.empName + "-" + value.empId || "",
         empId: value._id || "",
       },
     });

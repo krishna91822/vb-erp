@@ -87,7 +87,7 @@ const ResourceInformation = ({
                 setFocused(false);
               }}
               onInputChange={handleInputChange}
-              getOptionLabel={(option) => option.empName}
+              getOptionLabel={(option) => option.empName + "-" + option.empId}
               onChange={handleOnClick}
               options={filteredEmployees}
               open={open}

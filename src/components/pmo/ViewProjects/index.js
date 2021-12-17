@@ -92,61 +92,61 @@ const ViewProjects = () => {
   return (
     <>
       <MainComponent>
-        <HeadingStyle>
-          <Heading>
-            <ProjectHead data-test="main-heading">Projects</ProjectHead>
-            <SideButton>
-              {!pressed ? (
-                <FilterListIcon
-                  onClick={showfilter}
-                  style={{ cursor: "pointer" }}
-                />
-              ) : (
-                <FilterListOffIcon
-                  onClick={showfilter}
-                  style={{ cursor: "pointer" }}
-                />
-              )}
-              <Button
-                variant="contained"
-                // size="small"
-                sx={{
-                  backgroundColor: "#e8833a",
-                  textTransform: "none",
-                  ":hover": {
-                    bgcolor: "#ff862e",
-                  },
-                }}
-                onClick={() => {
-                  navigate("/pmo/projects/create");
-                }}
-              >
-                Create a project
-              </Button>
-              <Dropdown onChange={entryValue} data-test="sortby-dropdown">
-                <Options Value="Sort by" hidden>
-                  Sort by
-                </Options>
-                <Options value="Sort by Project ID">Sort by Project ID</Options>
-                <Options value="Sort by Status">Sort by Status</Options>
-              </Dropdown>
+        {/* <HeadingStyle> */}
+        <Heading>
+          <ProjectHead data-test="main-heading">Projects</ProjectHead>
+          <SideButton>
+            {!pressed ? (
+              <FilterListIcon
+                onClick={showfilter}
+                style={{ cursor: "pointer" }}
+              />
+            ) : (
+              <FilterListOffIcon
+                onClick={showfilter}
+                style={{ cursor: "pointer" }}
+              />
+            )}
+            <Button
+              variant="contained"
+              // size="small"
+              sx={{
+                backgroundColor: "#e8833a",
+                textTransform: "none",
+                ":hover": {
+                  bgcolor: "#ff862e",
+                },
+              }}
+              onClick={() => {
+                navigate("/pmo/projects/create");
+              }}
+            >
+              Create a project
+            </Button>
+            <Dropdown onChange={entryValue} data-test="sortby-dropdown">
+              <Options Value="Sort by" hidden>
+                Sort by
+              </Options>
+              <Options value="Sort by Project ID">Sort by Project ID</Options>
+              <Options value="Sort by Status">Sort by Status</Options>
+            </Dropdown>
 
-              <Dropdown
-                onChange={FilterProjects}
-                style={{ width: "120px" }}
-                data-test="sortby-dropdown"
-              >
-                <Options Value="Filter Projects" hidden>
-                  {filterProjects}
-                </Options>
-                <Options value="active" selected>
-                  Active
-                </Options>
-                <Options value="done">Past</Options>
-              </Dropdown>
-            </SideButton>
-          </Heading>
-        </HeadingStyle>
+            <Dropdown
+              onChange={FilterProjects}
+              style={{ width: "120px" }}
+              data-test="sortby-dropdown"
+            >
+              <Options Value="Filter Projects" hidden>
+                {filterProjects}
+              </Options>
+              <Options value="active" selected>
+                Active
+              </Options>
+              <Options value="done">Past</Options>
+            </Dropdown>
+          </SideButton>
+        </Heading>
+        {/* </HeadingStyle> */}
         <Container>
           <TableContainer
             sx={{

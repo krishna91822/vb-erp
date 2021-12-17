@@ -11,6 +11,12 @@ export const MainComponent = styled.div`
   padding: 5px 15px;
   min-width: 345px; //we need to remove this line
   min-height: 90vh;
+  & h2 {
+    margin: 0;
+  }
+  & select {
+    width: 40%;
+  }
 `;
 export const HeadingStyle = styled.div`
   p {
