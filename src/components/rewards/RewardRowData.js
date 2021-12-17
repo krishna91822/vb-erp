@@ -72,7 +72,14 @@ const RewardRowData = ({ data, StyledMenu, open }) => {
         </div>
         <div className="assignee">
           {data.reward_sender === "selected" ? (
-            <p>{data.sender_id[0].empName}</p>
+            // <p>{data.sender_id[0].empName}</p>
+            <>
+              {data.sender_id[0] !== undefined ? (
+                <p>{data.sender_id[0].empName}</p>
+              ) : (
+                <p>{data.sender_id.empName}</p>
+              )}
+            </>
           ) : (
             <p>{data.reward_sender}</p>
           )}
