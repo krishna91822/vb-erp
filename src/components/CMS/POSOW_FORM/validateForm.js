@@ -16,13 +16,9 @@ export default function validateForm(data) {
   if (!data.Type.trim()) {
     errors.Type = "Type of Doc(PO/SOW) is required";
   }
-  if (!data.Document_Type.trim()) {
-    errors.Document_Type = "Type of document to be uploaded required";
-  }
   if (!data.Document_Name.trim()) {
     errors.Document_Name = "Document name is required";
   }
-
   if (!data.PO_Amount) {
     errors.PO_Amount = "PO amount is required";
   }
