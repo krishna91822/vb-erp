@@ -15,7 +15,7 @@ export const getEmployeesData = () => {
 
     try {
       const data = await fetchData();
-      console.log(data.data.data);
+
       dispatch(
         addEmployees({
           employees: data.data.data || [],

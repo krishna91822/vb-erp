@@ -91,7 +91,7 @@ export const searchData = (data) => {
 
     try {
       const data = await fetchData();
-      console.log(data);
+
       dispatch(
         rewardsActions.addRewards({
           rewards: data.data.data.results || [],
@@ -132,7 +132,7 @@ export const getRewardsDataWithPageAndSearch = (searchValue, pageNumber) => {
 
     try {
       const data = await fetchData();
-      console.log(data);
+
       dispatch(
         rewardsActions.addRewards({
           rewards: data.data.data.results || [],
@@ -159,7 +159,6 @@ export const getRewardsDataWithPageAndSearch = (searchValue, pageNumber) => {
 };
 
 export const deleteRewardData = (id, defaultPage, sorting, searchValue) => {
-  console.log(defaultPage);
   return async (dispatch) => {
     const deleteData = async () => {
       const deletedData = axios.delete(`/rewards/${id}`);
@@ -172,7 +171,6 @@ export const deleteRewardData = (id, defaultPage, sorting, searchValue) => {
         toast.success("Deleted", {
           icon: "🗑",
         });
-        console.log(defaultPage);
         if (defaultPage !== 1 && searchValue !== "") {
           dispatch(getRewardsDataWithPageAndSearch(searchValue, defaultPage));
         } else if (defaultPage !== 1 && sorting !== "") {
@@ -338,7 +336,7 @@ export const EditRewardData = (id) => {
 
       dispatch(rewardsActions.updateRewardStatus());
 
-      // console.log(data);
+      //
     } catch (error) {
       dispatch(uiActions.toggleLoader());
       dispatch(
@@ -360,7 +358,6 @@ export const updateRewardStatus = (
   searchValue
 ) => {
   return async (dispatch) => {
-    console.log(id);
     const fetchData = async () => {
       let status;
       if (number === 1) {
@@ -424,7 +421,7 @@ export const UpdateRewardData = (data, id) => {
       await fetchData();
       dispatch(rewardsActions.updateRewardStatus());
 
-      // console.log(data);
+      //
     } catch (error) {
       dispatch(uiActions.toggleLoader());
     }
@@ -472,7 +469,6 @@ export const addselectedpopup = (employeeIdArrayData, reward) => {
       const data = {
         recipients_ids: employees_id,
       };
-      // console.log(employees_id);
       const response = axios.post("/rewards", reward);
 
       if (response.status === "failure") {

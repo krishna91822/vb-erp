@@ -16,7 +16,6 @@ const EmployeesList = (props) => {
   const dispatch = useDispatch();
 
   const employeesData = useSelector((state) => state.employee.employees);
-  console.log(employeesData);
 
   employeesData.forEach((data) => {
     rows.push({
@@ -60,7 +59,6 @@ const EmployeesList = (props) => {
     const dataIds = {
       recipients_ids: employees_id,
     };
-    debugger;
     if (props.rewardList) {
       dispatch(updateRewardEmployeeIdArray(dataIds, props.rewardId));
     }
@@ -89,7 +87,6 @@ const EmployeesList = (props) => {
     } else {
       collectedDataArray.push(collectedDataObject);
     }
-    // console.log(collectedDataArray);
   };
 
   return (
