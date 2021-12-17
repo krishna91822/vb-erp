@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 import { useParams } from "react-router-dom";
 import "./Invoice.css";
 import { useDispatch, useSelector } from "react-redux";
@@ -37,29 +36,28 @@ import {
 import { Update_INVOICE } from "../../../store/CMS/INVOICE-actions";
 import { fetchPO_SOW_data } from "../../../store/CMS/POSOW-actions";
 import { fetch_INVOICE_data } from "../../../store/CMS/INVOICE-actions";
-import { PoSowActions } from "../../../store/CMS/POSOW-slice";
+import { invoiceActions } from "../../../store/CMS/INVOICE-slice";
 import { paginationFetchPosow } from "../../../store/CMS/POSOW-actions";
 
 function Invoice(props) {
   const params = useParams();
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const isRedirect = useSelector((state) => state.CMS_state.redirect);
+
   useEffect(() => {
-    if (isRedirect) {
-      navigate("/invoices");
-      dispatch(PoSowActions.setRedirect(false));
-    }
-  }, [isRedirect]);
-  useEffect(() => {
-    // dispatch(fetchPO_SOW_data("Id"));
-    // dispatch(fetch_INVOICE_data("Id"));
     dispatch(paginationFetchPosow("id", 1, 50));
     dispatch(paginationFetchInvoice("Id", 1, 50));
   }, []);
-
+  const isRedirect = useSelector((state) => state.INVOICE_state.redirect);
   const allPOSOWs = useSelector((state) => state.CMS_state.poSowData);
   const allINVOICE = useSelector((state) => state.INVOICE_state.invoiceData);
+  console.log(isRedirect);
+  useEffect(() => {
+    if (isRedirect) {
+      navigate("/invoices");
+      dispatch(invoiceActions.setRedirect(false));
+    }
+  }, [isRedirect]);
 
   const allProjects = allPOSOWs.map((val) => {
     return val.Project_Name;
@@ -119,12 +117,17 @@ function Invoice(props) {
   const [invoice_amount, setinvoiceAmount] = React.useState(Readinvoiceamount);
   const [Vb_Bank_Acc, setVbbankacc] = React.useState(ReadVbBankAcc);
   const [Date_, setDate] = React.useState(ReadDate);
-  const [invoicereceived, setinvoicereceived] = useState(props.invoicereceived);
-  // const [filterinvoiceArr, setfilterinvoiceArr] = useState([]);
+
+  const [invoicereceived, setinvoicereceived] = useState(false);
+  const [editTglCheckedState, seteditTglCheckedState] = React.useState(
+    props.toggleState
+  );
+
+  const [invoice_raised_yesno, setInvoiceRaisedYesNo] = React.useState("No");
   let [sum, setsum] = useState(0);
 
   useEffect(() => {
-    if (props.readonly && filteredArr[0].PO_Id !== undefined) {
+    if (!props.readonly && filteredArr[0].PO_Id !== undefined) {
       setPersonName(filteredArr[0].PO_Id.Client_Name);
       setProjectName(filteredArr[0].PO_Id.Project_Name);
       setPO_number(filteredArr[0].PO_Id.PO_Number);
@@ -138,6 +141,27 @@ function Invoice(props) {
     }
   }, [filteredArr]);
 
+  useEffect(() => {
+    if (props.editBtn && filteredArr[0].PO_Id !== undefined) {
+      setPersonName(filteredArr[0].PO_Id.Client_Name);
+      setProjectName(filteredArr[0].PO_Id.Project_Name);
+      setPO_number(filteredArr[0].PO_Id.PO_Number);
+      setPOAmt(filteredArr[0].PO_Id.PO_Amount);
+      setClientFinController(filteredArr[0].client_finance_controller);
+      setClientSponsor(filteredArr[0].client_sponsor);
+      setInvoiceRaised(filteredArr[0].invoice_raised);
+      setinvoiceAmount(filteredArr[0].invoice_amount_received);
+      setDate(filteredArr[0].amount_received_on);
+      setVbbankacc(filteredArr[0].vb_bank_account);
+      setPoId(filteredArr[0].PO_Id._id);
+    }
+  }, [filteredArr]);
+  useEffect(() => {
+    if (invoice_raised === "Yes" && invoice_amount !== undefined) {
+      setinvoicereceived(true);
+    }
+  });
+
   const handleClientChange = (event) => {
     setPersonName(event.target.value);
   };
@@ -146,6 +170,10 @@ function Invoice(props) {
   };
   const handlePoNumTxtBoxChange = (event) => {
     setPO_number(event.target.value);
+  };
+
+  const handleEditTglChange = (e) => {
+    seteditTglCheckedState(!editTglCheckedState);
   };
 
   const handlePOAmtTxtBoxChange = (event) => {
@@ -159,6 +187,7 @@ function Invoice(props) {
   };
   const handleInvoiceRaised = (event) => {
     setInvoiceRaised(event.target.value);
+    setInvoiceRaisedYesNo(event.target.value);
   };
   const handleInvoiceAmount = (event) => {
     setinvoiceAmount(event.target.value);
@@ -170,7 +199,23 @@ function Invoice(props) {
     setDate(Date);
   };
   const invoicereceivedhandler = (e) => {
-    setinvoicereceived(!invoicereceived);
+    if (invoice_raised_yesno === "Yes") {
+      setinvoicereceived(true);
+    }
+  };
+  const updatehandler = (e) => {
+    const DataToSend = {
+      PO_Id: poId,
+      client_sponsor: ClientSponsor,
+      client_finance_controller: Client_Fin_controller,
+      invoice_raised: invoice_raised,
+      invoice_amount_received: invoice_amount,
+      vb_bank_account: Vb_Bank_Acc,
+      amount_received_on: new Date(Date_),
+      invoice_received: invoicereceived ? "Yes" : "No",
+    };
+
+    dispatch(Update_INVOICE(DataToSend, params.id));
   };
 
   useEffect(() => {
@@ -185,7 +230,7 @@ function Invoice(props) {
       setClientFinControllerArr(filtered[0].Client_Finance_Controller);
       setPOAmt(filtered[0].PO_Amount);
       setPoCurr(filtered[0].Currency);
-      setPoId(filtered[0]._id);
+      setPoId(filtered[0].PO_Id);
     }
   }, [projectName]);
   const submitForm = async (event) => {
@@ -193,14 +238,12 @@ function Invoice(props) {
 
     const DataToSend = {
       PO_Id: poId,
-      client_sponsor: ClientSponsor,
-      client_finance_controller: Client_Fin_controller,
       invoice_raised: invoice_raised,
       invoice_amount_received: invoice_amount,
       vb_bank_account: Vb_Bank_Acc,
       amount_received_on: new Date(Date_),
+      invoice_received: invoicereceived ? "Yes" : "No",
     };
-    console.log(DataToSend);
     if (!props.invoicereceived) {
       dispatch(Update_INVOICE(DataToSend, params.id));
     } else {
@@ -210,8 +253,7 @@ function Invoice(props) {
   const filterinvoiceArr = allINVOICE.filter((val) => {
     return poId === val.purchase_orders._id;
   });
-  // setfilterinvoiceArr([...filterinvoiceData]);
-  // console.log(filterinvoiceArr);
+
   let count = 0;
   useEffect(() => {
     const totalinvoiceamount = filterinvoiceArr.map((val) => {
@@ -222,21 +264,54 @@ function Invoice(props) {
   });
   return (
     <div className="maincontainer">
-      <h3>Invoice</h3>
+      <Grid container>
+        <Grid item lg={11} md={11} sm={12} xs={12}>
+          <h3>Invoice</h3>
+        </Grid>
+        <Grid item lg={1} md={1} sm={12} xs={12}>
+          {props.editBtn && editTglCheckedState ? (
+            <div>
+              <Button
+                variant="contained"
+                color="success"
+                onClick={updatehandler}
+                data-test="UpdateBtn"
+              >
+                Update{" "}
+              </Button>
+            </div>
+          ) : (
+            <div></div>
+          )}
+        </Grid>
+      </Grid>
+
       <form onSubmit={submitForm}>
         <Grid container>
           <Grid item lg={11} md={11} sm={12} xs={12}>
             <h4 className="heading">PO Information</h4>
           </Grid>
           <Grid item lg={1} md={1} sm={12} xs={12}>
-            <Button
-              variant="contained"
-              color="success"
-              type="submit"
-              onClick={(event) => submitForm(event)}
-            >
-              SAVE
-            </Button>
+            <div className="posow-SaveButton">
+              <strong className="editTxt" data-test="editModeSwitch-label">
+                Edit
+              </strong>
+              <label className="switch">
+                <input
+                  type="checkbox"
+                  data-test="EditToggleBtn"
+                  data-testid="EditToggleBtn"
+                  checked={editTglCheckedState}
+                  onChange={handleEditTglChange}
+                  disabled={
+                    invoice_raised === "Yes" && invoice_amount !== undefined
+                      ? true
+                      : false
+                  }
+                />
+                <span className="slider round"></span>
+              </label>
+            </div>
           </Grid>
         </Grid>
 
@@ -248,7 +323,7 @@ function Invoice(props) {
             <Box sx={{ minWidth: 120 }}>
               <FormControl fullWidth>
                 <Select
-                  disabled={props.readonly}
+                  disabled={true}
                   value={projectName}
                   onChange={handleProjectChange}
                 >
@@ -275,15 +350,12 @@ function Invoice(props) {
                 <br />
                 <Box sx={{ minWidth: 120 }}>
                   <FormControl fullWidth>
-                    <Select
-                      disabled={projectName ? false : true}
+                    <TextField
+                      //
+                      disabled={true}
                       value={ClientSponsor}
                       onChange={handleClientSponsor}
-                    >
-                      {clientSponsorArr.map((detail) => (
-                        <MenuItem value={detail}>{detail}</MenuItem>
-                      ))}
-                    </Select>
+                    />
                   </FormControl>
                 </Box>
               </Grid>
@@ -292,15 +364,7 @@ function Invoice(props) {
                 <br />
                 <Box sx={{ minWidth: 120 }}>
                   <FormControl fullWidth>
-                    <Select
-                      disabled={projectName ? false : true}
-                      value={Client_Fin_controller}
-                      onChange={handleClientFinController}
-                    >
-                      {clientFinControllerArr.map((detail) => (
-                        <MenuItem value={detail}>{detail}</MenuItem>
-                      ))}
-                    </Select>
+                    <TextField disabled={true} value={Client_Fin_controller} />
                   </FormControl>
                 </Box>
               </Grid>
@@ -387,73 +451,64 @@ function Invoice(props) {
           </Grid>
         </Grid>
         <hr />
-        {props.readonly ? (
-          <></>
-        ) : (
-          <Accordion>
-            <AccordionSummary
-              expandIcon={<ExpandMoreIcon />}
-              aria-controls="panel1a-content"
-              id="panel1a-header"
-            >
-              <Typography>Related Invoices</Typography>
-            </AccordionSummary>
-            <AccordionDetails>
-              <Typography>
-                <TableContainer component={Paper}>
-                  <Table sx={{ minWidth: 650 }} aria-label="simple table">
-                    <TableHead className="tablehead">
-                      <TableRow>
-                        <TableCell>Invoice ID</TableCell>
-                        <TableCell>Client Name</TableCell>
-                        <TableCell>PO/SOW Order</TableCell>
-                        <TableCell>Invoice raised</TableCell>
-                        <TableCell>Invoice Amount received</TableCell>
-                        <TableCell>Bank Account</TableCell>
-                      </TableRow>
-                    </TableHead>
-                    <TableBody>
-                      <TableCell>
-                        {filterinvoiceArr.map((detail) => (
-                          <TableRow>{detail._id}</TableRow>
-                        ))}
-                      </TableCell>
-                      <TableCell>
-                        {filterinvoiceArr.map((detail) => (
-                          <TableRow>
-                            {detail.purchase_orders.Client_Name}
-                          </TableRow>
-                        ))}
-                      </TableCell>
-                      <TableCell>
-                        {filterinvoiceArr.map((detail) => (
-                          <TableRow>
-                            {detail.purchase_orders.PO_Number}
-                          </TableRow>
-                        ))}
-                      </TableCell>
-                      <TableCell>
-                        {filterinvoiceArr.map((detail) => (
-                          <TableRow>{detail.invoice_raised}</TableRow>
-                        ))}
-                      </TableCell>
-                      <TableCell>
-                        {filterinvoiceArr.map((detail) => (
-                          <TableRow>{detail.invoice_amount_received}</TableRow>
-                        ))}
-                      </TableCell>
-                      <TableCell>
-                        {filterinvoiceArr.map((detail) => (
-                          <TableRow>{detail.vb_bank_account}</TableRow>
-                        ))}
-                      </TableCell>
-                    </TableBody>
-                  </Table>
-                </TableContainer>
-              </Typography>
-            </AccordionDetails>
-          </Accordion>
-        )}
+
+        <Accordion>
+          <AccordionSummary
+            expandIcon={<ExpandMoreIcon />}
+            aria-controls="panel1a-content"
+            id="panel1a-header"
+          >
+            <Typography>Related Invoices</Typography>
+          </AccordionSummary>
+          <AccordionDetails>
+            <Typography>
+              <TableContainer component={Paper}>
+                <Table sx={{ minWidth: 650 }} aria-label="simple table">
+                  <TableHead className="tablehead">
+                    <TableRow>
+                      <TableCell>PO/SOW Order</TableCell>
+                      <TableCell>Client Name</TableCell>
+
+                      <TableCell>Invoice raised</TableCell>
+                      <TableCell>Invoice Amount received</TableCell>
+                      <TableCell>Bank Account</TableCell>
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>
+                    <TableCell>
+                      {filterinvoiceArr.map((detail) => (
+                        <TableRow>{detail.purchase_orders.PO_Number}</TableRow>
+                      ))}
+                    </TableCell>
+                    <TableCell>
+                      {filterinvoiceArr.map((detail) => (
+                        <TableRow>
+                          {detail.purchase_orders.Client_Name}
+                        </TableRow>
+                      ))}
+                    </TableCell>
+
+                    <TableCell>
+                      {filterinvoiceArr.map((detail) => (
+                        <TableRow>{detail.invoice_raised}</TableRow>
+                      ))}
+                    </TableCell>
+                    <TableCell>
+                      {filterinvoiceArr.map((detail) => (
+                        <TableRow>{detail.invoice_amount_received}</TableRow>
+                      ))}
+                    </TableCell>
+                    <TableCell>
+                      {filterinvoiceArr.map((detail) => (
+                        <TableRow>{detail.vb_bank_account}</TableRow>
+                      ))}
+                    </TableCell>
+                  </TableBody>
+                </Table>
+              </TableContainer>
+            </Typography>
+          </AccordionDetails>
+        </Accordion>
         <h3>Invoice Status</h3>
         <hr />
         <Grid container>
@@ -464,7 +519,7 @@ function Invoice(props) {
               <Box sx={{ minWidth: 120 }}>
                 <FormControl fullWidth>
                   <Select
-                    disabled={props.readonly}
+                    disabled={!editTglCheckedState}
                     value={invoice_raised}
                     onChange={handleInvoiceRaised}
                   >
@@ -475,39 +530,45 @@ function Invoice(props) {
                 </FormControl>
               </Box>
             </Grid>
-            <Grid item lg={12} md={12} sm={122} xs={12}>
-              <label>Invoice amount received</label>
-              <br />
-              <Box sx={{ minWidth: 120 }}>
-                <FormControl fullWidth>
-                  <Select
-                    disabled={props.readonly}
-                    value={invoice_amount}
-                    onChange={handleInvoiceAmount}
-                  >
-                    {invoiceAmount.map((detail) => (
-                      <MenuItem value={detail}>{detail}</MenuItem>
-                    ))}
-                  </Select>
-                </FormControl>
-              </Box>
-              <span>{PoCurr}</span>
-            </Grid>
           </div>
           <Grid item lg={12} md={12} sm={122} xs={12}>
             <div className="invoicereceived">
               <span>Invoice Received</span>
-              <Switch defaultChecked onChange={invoicereceivedhandler} />
+              <Switch
+                disabled={invoice_raised_yesno === "No"}
+                onChange={invoicereceivedhandler}
+                checked={invoicereceived}
+              />
             </div>
           </Grid>
           <div className="gridcontainer">
             <Grid item lg={12} md={12} sm={122} xs={12}>
+              <label>Invoice amount received</label>
+              <Box sx={{ minWidth: 120 }}>
+                <FormControl fullWidth>
+                  <TextField
+                    disabled={
+                      props.readonly ||
+                      !invoicereceived ||
+                      invoice_raised_yesno === "No"
+                    }
+                    value={invoice_amount}
+                    onChange={handleInvoiceAmount}
+                  />
+                  <span>{PoCurr}</span>
+                </FormControl>
+              </Box>
+              <br />
               <label>VB Bank Account</label>
               <br />
               <Box sx={{ minWidth: 120 }}>
                 <FormControl fullWidth>
                   <Select
-                    disabled={props.readonly || !invoicereceived}
+                    disabled={
+                      props.readonly ||
+                      !invoicereceived ||
+                      invoice_raised_yesno === "No"
+                    }
                     value={Vb_Bank_Acc}
                     onChange={handlevbbankacc}
                   >
@@ -519,13 +580,23 @@ function Invoice(props) {
               </Box>
             </Grid>
             <Grid item lg={12} md={12} sm={122} xs={12}>
+              <br />
               <label htmlFor="invoiceamount">Amount Received on</label>
               <br />
               <BasicDatePicker
                 onChange={handleDate}
                 inputFormat="MM/dd/yyyy"
                 value={Date_}
-                disabled={props.readonly || !invoicereceived}
+                disabled={
+                  props.readonly ||
+                  !invoicereceived ||
+                  invoice_raised_yesno === "No"
+                }
+                // disabled={
+                //   (props.readonly ||
+                //   invoicereceived ||
+                //   invoice_raised_yesno === "No") && editTglCheckedState
+                // }
               />
             </Grid>
           </div>

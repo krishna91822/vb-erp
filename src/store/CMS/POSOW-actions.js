@@ -64,7 +64,7 @@ export const UpdatePO_SOW = (formData, id) => {
 export const SendForApproval = (curr_status, id) => {
   return async function (dispatch) {
     try {
-      const response = await axios.patch(`/poSow/status/${id}`, curr_status);
+      const response = await axios.patch(`/poSow/status/${id}?status=Pending`);
       if (response.status === 200) {
         dispatch(
           uiActions.showNotification({
@@ -280,6 +280,41 @@ export const fetchAllClientProjects = (clientName) => {
     }
   };
 };
+export const fetchClientProjectSponsor = (projectId) => {
+  return async function (dispatch) {
+    try {
+      const res = await axios.get(
+        `poSow/capturePO/details?projectId=${projectId}`
+      );
+
+      if (res.status === 200) {
+        console.log(res.data.data);
+        dispatch(
+          PoSowActions.setClientProjectSponsor(
+            res.data.data[0].projectId.clientProjectSponsor
+          )
+        );
+        dispatch(
+          PoSowActions.setClientFinanceController(
+            res.data.data[0].projectId.clientFinanceController
+          )
+        );
+        dispatch(PoSowActions.setTargetedResources(res.data.data));
+      } else {
+        throw new Error("Something went wrong!");
+      }
+    } catch (error) {
+      dispatch(
+        uiActions.showNotification({
+          status: "error",
+          title: "Error",
+          message: "Something went wrong",
+        })
+      );
+    }
+  };
+};
+
 export const searchPoSow = (keyword) => {
   return async function (dispatch) {
     try {

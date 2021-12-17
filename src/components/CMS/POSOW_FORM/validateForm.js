@@ -22,23 +22,14 @@ export default function validateForm(data) {
   if (!data.Document_Name.trim()) {
     errors.Document_Name = "Document name is required";
   }
-  if (!data.PO_Number) {
-    errors.PO_Number = "PO number is required";
-  }
-  if (data.PO_Number) {
-    if (!isAlphaNumeric(data.PO_Number)) {
-      errors.PO_Number = "special characters not allowed";
-    }
-  }
+
   if (!data.PO_Amount) {
     errors.PO_Amount = "PO amount is required";
   }
   if (!data.Currency.trim()) {
     errors.Currency = "Currency name is required";
   }
-  // if (!data.Remarks.trim()) {
-  //   errors.Remarks = "Remarks are required";
-  // }
+
   if (!data.POSOW_endDate) {
     errors.Remarks = "POSOW end date is required are required";
   }

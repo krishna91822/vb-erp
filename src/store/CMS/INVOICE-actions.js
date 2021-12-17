@@ -32,16 +32,35 @@ export const createNew_INVOICE = (formData) => {
     }
   };
 };
+
 export const Update_INVOICE = (formData, id) => {
   return async function (dispatch) {
-    const rqst = await axios
-      .patch(`/updatePoDetails/${id}`, formData)
-      .then((res) => {
-        console.log(res.status);
-      })
-      .then(dispatch(invoiceActions.PopUpON("Updated Successfully")));
+    try {
+      const response = await axios.patch(`/invoice/${id}`, formData);
+      if (response.status === 200) {
+        dispatch(
+          uiActions.showNotification({
+            status: "success",
+            title: "Success!",
+            message: "Updated Successfully!",
+          })
+        );
+        dispatch(invoiceActions.setRedirect(true));
+      } else {
+        throw new Error("Could not Save data!");
+      }
+    } catch (error) {
+      dispatch(
+        uiActions.showNotification({
+          status: "error",
+          title: "Error",
+          message: "Could not update data",
+        })
+      );
+    }
   };
 };
+
 export const fetch_INVOICE_data = (sortBy) => {
   return async function (dispatch) {
     try {

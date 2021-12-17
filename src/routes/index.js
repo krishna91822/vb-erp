@@ -15,7 +15,8 @@ import POSOW_Read from "../pages/ContractMgmtSys/POSOW_Read";
 import invoice_FORM from "../pages/ContractMgmtSys/invoice_FORM";
 import POSOW_EDIT from "../pages/ContractMgmtSys/POSOW_EDIT";
 import invoice_tabView from "../pages/ContractMgmtSys/invoice_tabView";
-import INVOICE_Read from "../pages/ContractMgmtSys/INVOICE_Read";
+import { INVOICE_Read } from "../pages/ContractMgmtSys/invoice_READ";
+import invoice_EDIT from "../pages/ContractMgmtSys/invoice_EDIT";
 
 import Profile from "../pages/myProfile/profile.component";
 import ViewProfile from "./../components/templates/viewProfile/viewProfile.component";
@@ -52,6 +53,10 @@ const routes = [
   {
     path: "/invoice_details/:id",
     component: INVOICE_Read,
+  },
+  {
+    path: "/invoice/edit/:id",
+    component: invoice_EDIT,
   },
   {
     path: "/posow/edit/:id",

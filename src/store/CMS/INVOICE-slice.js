@@ -14,8 +14,10 @@ const names = [
 const projects = ["xyz23", "asd34", "abc56", "yusah98", "ydy APPs"];
 const clientFinController = ["ABC", "XYZ", "EFG"];
 const targetedResources = ["ABC", "XYZ", "EFG", "ZZZ"];
-const clientSponsors = ["ABC", "XYZ"];
-const invoiceRaised = ["2567", "8743", "3753"];
+const clientSponsors = [];
+const invoiceRaised = ["Yes", "No"];
+const invoiceRecieved = ["Yes", "No"];
+
 const invoiceAmount = ["9349", "8243", "9753"];
 const VbBankAcc = ["0987", "7654", "2958"];
 
@@ -29,8 +31,11 @@ export const invoice_init_state = {
     invoiceRaised: invoiceRaised,
     invoiceAmount: invoiceAmount,
     VbBankAcc: VbBankAcc,
+    invoice_received: invoiceRecieved,
   },
+
   popup: false,
+  redirect: false,
   response_message: "",
   invoiceData: [],
   totalCount: 0,
@@ -46,6 +51,7 @@ export const invoice_init_state = {
       invoiceRaised: "",
       invoiceAmount: "",
       VbBankAcc: "",
+      invoice_received: "",
       Date: "",
     },
   ],
@@ -70,6 +76,9 @@ const invoice_Slice = createSlice({
     },
     SetSpecific(state, action) {
       state.dataByID = [...action.payload];
+    },
+    setRedirect(state, action) {
+      state.redirect = action.payload;
     },
   },
 });

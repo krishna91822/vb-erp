@@ -12,6 +12,7 @@ export default function BasicDatePicker(props) {
         value={props.value}
         onChange={props.onChange}
         disabled={props.disabled}
+        helperText={props.hintText}
         renderInput={(params) => <TextField {...params} />}
       />
     </LocalizationProvider>
