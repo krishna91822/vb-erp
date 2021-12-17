@@ -110,7 +110,7 @@ function Invoice(props) {
   const [PoCurr, setPoCurr] = useState("");
   const [clientFinControllerArr, setClientFinControllerArr] =
     useState(clientFinController);
-  const [poId, setPoId] = useState("61b337aea50b020d3cf384e0");
+  const [poId, setPoId] = useState("");
   const [clientSponsorArr, setClientSponsorArr] = useState(clientSponsors);
   const [ClientSponsor, setClientSponsor] = React.useState(Readclientsponsor);
   const [invoice_raised, setInvoiceRaised] = React.useState(Readinvoiceraised);
