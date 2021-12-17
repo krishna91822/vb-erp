@@ -10,7 +10,7 @@ import {
 import UseForm from "./UseForm";
 import Form from "./Form";
 import MidPopUp from "./MidPopUp";
-import "../../assets/styles/FormStyles.css";
+import "../../assets/styles/ClientFormStyles.css";
 import { cimsActions } from "../../store/cims-slice";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -27,8 +27,8 @@ function CreateClientForm() {
           <Typography variant="h4">CIMS</Typography>
         </Grid>
       </Grid>
-      <div className="FormContainer">
-        <div className="form-header">
+      <div className="CIMSFormContainer">
+        <div className="cims-form-header">
           <Grid container m={2} spacing={1}>
             <Grid item md={4}>
               <Typography variant="h4">Client Information</Typography>

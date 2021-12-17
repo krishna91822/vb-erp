@@ -222,6 +222,10 @@ export default function UseForm() {
       fieldValues.companyType === "GST Registered"
         ? (temp.panNumber = "")
         : (temp.gstNumber = "");
+      if (fieldValues.companyType === "Overseas") {
+        temp.panNumber = "";
+        temp.gstNumber = "";
+      }
     }
     setTimeout(() => {
       dispatch(cimsActions.setErrors({ ...temp }));
@@ -488,7 +492,9 @@ export default function UseForm() {
               )
               .every((x) => x);
           } else if (key === "gstNumber" || key === "panNumber")
-            return data["gstNumber"] !== "" || data["panNumber"] !== "";
+            return data["companyType"] === "Overseas"
+              ? true
+              : data["gstNumber"] !== "" || data["panNumber"] !== "";
           return data[key] !== "";
         })
         .every((x) => x) &&
