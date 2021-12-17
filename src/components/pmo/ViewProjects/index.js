@@ -85,7 +85,6 @@ const ViewProjects = () => {
   return (
     <>
       <MainComponent>
-        {/* <HeadingStyle> */}
         <Heading>
           <ProjectHead data-test="main-heading">Projects</ProjectHead>
           <SideButton>
@@ -102,7 +101,6 @@ const ViewProjects = () => {
             )}
             <Button
               variant="contained"
-              // size="small"
               sx={{
                 backgroundColor: "#e8833a",
                 textTransform: "none",
@@ -136,11 +134,10 @@ const ViewProjects = () => {
                 Active
               </Options>
               <Options value="done">Completed</Options>
-              <Options value="other">Other Projects</Options>
+              <Options value="others">Other Projects</Options>
             </Dropdown>
           </SideButton>
         </Heading>
-        {/* </HeadingStyle> */}
         <Container>
           <TableContainer
             sx={{
