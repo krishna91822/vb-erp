@@ -4,8 +4,8 @@ import Allocated from "./allocated";
 import Bench from "./bench";
 
 import FilterListIcon from "@mui/icons-material/FilterList";
-// import FilterListOffIcon from "@mui/icons-material/FilterListOff";
-import FilterListOffIcon from "@mui/icons-material/FilterList";
+import FilterListOffIcon from "@mui/icons-material/FilterListOff";
+// import FilterListOffIcon from "@mui/icons-material/FilterList";
 
 import {
   HeadingStyle,
