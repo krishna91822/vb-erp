@@ -1,5 +1,5 @@
 import { uiActions } from "./ui-slice";
-import { employeesActions } from "./employees-slice";
+import { addEmployees } from "./employeeSlice";
 import axios from "../helpers/axiosInstance";
 
 export const getEmployeesData = () => {
@@ -15,23 +15,14 @@ export const getEmployeesData = () => {
 
     try {
       const data = await fetchData();
+      console.log(data.data.data);
       dispatch(
-        employeesActions.addEmployees({
+        addEmployees({
           employees: data.data.data || [],
         })
       );
     } catch (error) {
       dispatch(uiActions.toggleLoader());
-      setTimeout(function () {
-        dispatch(uiActions.toggleLoader());
-        dispatch(
-          uiActions.showNotification({
-            status: "error",
-            title: "Error!",
-            message: "Fetching content data failed!",
-          })
-        );
-      }, 3000);
     }
   };
 };
@@ -51,22 +42,12 @@ export const searchEmployeeData = (data) => {
     try {
       const data = await fetchData();
       dispatch(
-        employeesActions.addEmployees({
+        addEmployees({
           employees: data.data.data || [],
         })
       );
     } catch (error) {
       dispatch(uiActions.toggleLoader());
-      setTimeout(function () {
-        dispatch(uiActions.toggleLoader());
-        dispatch(
-          uiActions.showNotification({
-            status: "error",
-            title: "Error!",
-            message: "Fetching content data failed!",
-          })
-        );
-      }, 3000);
     }
   };
 };

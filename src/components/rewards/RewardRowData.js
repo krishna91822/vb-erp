@@ -159,6 +159,7 @@ const RewardRowData = ({ data, StyledMenu, open }) => {
         >
           <EmployeesList
             rewardId={data._id}
+            rewardList={true}
             openPopup={openPopup}
             setOpenPopup={setOpenPopup}
           />
