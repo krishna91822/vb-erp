@@ -78,20 +78,20 @@ const SidebarNavigation = () => {
   const sideMenu = [
     {
       name: "My Profile",
-      link: "/",
+      link: "/my-profile",
     },
     {
       name: "Tasks",
       dropDown: [
-        { name: "Create Profile", link: "/" },
-        { name: "Reviews", link: "/" },
+        { name: "Create Profile", link: "/create-profile" },
+        { name: "Reviews", link: "/reviews" },
       ],
       open: openTasks,
       handle: handleClickTasks,
     },
     {
       name: "Network",
-      link: "/",
+      link: "/network",
     },
     {
       name: "Contract Mgmt",
@@ -115,8 +115,8 @@ const SidebarNavigation = () => {
     {
       name: "CMS",
       dropDown: [
-        { name: "PO/SOW", link: "/" },
-        { name: "Invoicing", link: "/" },
+        { name: "PO/SOW", link: "/posow" },
+        { name: "Invoicing", link: "/invoices" },
       ],
       open: openCMS,
       handle: handleClickCMS,
@@ -124,8 +124,8 @@ const SidebarNavigation = () => {
     {
       name: "R&R",
       dropDown: [
-        { name: "Catalog", link: "/" },
-        { name: "Reward", link: "/" },
+        // { name: "Catalog", link: "/" },
+        { name: "Reward", link: "/rewards" },
       ],
       open: openRR,
       handle: handleClickRR,
