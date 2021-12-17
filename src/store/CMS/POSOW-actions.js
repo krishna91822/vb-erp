@@ -286,9 +286,7 @@ export const fetchClientProjectSponsor = (projectId) => {
       const res = await axios.get(
         `poSow/capturePO/details?projectId=${projectId}`
       );
-
-      if (res.status === 200) {
-        // console.log(res.data.data);
+      if (res.status === 200 && [...res.data.data].length !== 0) {
         dispatch(
           PoSowActions.setClientProjectSponsor(
             res.data.data[0].projectId.clientProjectSponsor
@@ -302,7 +300,7 @@ export const fetchClientProjectSponsor = (projectId) => {
         dispatch(PoSowActions.setTargetedResources(res.data.data));
         dispatch(PoSowActions.setAllocationRate(res.data.data));
       } else {
-        throw new Error("Something went wrong!");
+        throw new Error();
       }
     } catch (error) {
       dispatch(

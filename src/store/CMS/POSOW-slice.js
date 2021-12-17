@@ -120,6 +120,11 @@ const POSOW_Slice = createSlice({
     setTargetedResourcesOnReadPage(state, action) {
       state.inputFieldsData.targetedResources = action.payload;
     },
+    clearData(state) {
+      state.inputFieldsData.clientFinController = "";
+      state.inputFieldsData.clientSponsor = "";
+      state.inputFieldsData.targetedResources = [];
+    },
   },
 });
 

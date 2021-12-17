@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -13,7 +12,7 @@ import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import Autocomplete from "@mui/material/Autocomplete";
 import TextField from "@mui/material/TextField";
-import SimpleGrow from "./EmpList";
+
 import BasicDatePicker from "../invoice_FORM/date";
 import { Grid } from "@mui/material";
 import "./CapturePO_SOW.css";
