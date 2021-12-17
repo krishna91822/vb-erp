@@ -412,7 +412,7 @@ function Invoice(props) {
             </Grid>
           </Grid>
           <Grid item lg={4} md={4} sm={12} xs={12}>
-            <table>
+            {/* <table>
               <thead>
                 <tr>
                   <th>ID</th>
@@ -447,7 +447,7 @@ function Invoice(props) {
                   <td>100</td>
                 </tr>
               </tbody>
-            </table>
+            </table> */}
           </Grid>
         </Grid>
         <hr />
