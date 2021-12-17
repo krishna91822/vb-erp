@@ -153,5 +153,5 @@ input:checked + .slider:before {
   margin-right: 5px;
 }
 .inputTxtField {
-  margin-top: 15px;
+  margin-top: 8px !important;
 }

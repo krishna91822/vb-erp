@@ -247,9 +247,7 @@ export const CapturePO_SOW = (props) => {
 
   const submitForm = (event) => {
     event.preventDefault();
-
     let testObjTargetedRes = {};
-
     for (var i = 0; i < TargetedResChkBox.length; i++) {
       testObjTargetedRes[targetedResources[i]] = TargetedResChkBox[i];
     }
@@ -511,9 +509,7 @@ export const CapturePO_SOW = (props) => {
                         data-test="Doc-Type-dropdown"
                         inputProps={{ "data-testid": "Doc-Type-dropdown" }}
                         error={errors.Type ? true : false}
-                        disabled={
-                          props.editBtn && !editTglCheckedState ? true : false
-                        }
+                        disabled={props.editBtn ? true : false}
                       >
                         {types.map((name) => (
                           <MenuItem
@@ -605,13 +601,13 @@ export const CapturePO_SOW = (props) => {
                 </div>
               </div>
               <div className="newRowtwo">
-                <div className="PO-endDate">
+                <div className="PO-endDate ">
                   <label>
                     <strong>{typeName + " End Date"}</strong>
                   </label>
                   <div>
                     <BasicDatePicker
-                      className="inputField"
+                      className="inputField txtBox"
                       maxDate="POSOW"
                       label={typeName + " End Date"}
                       value={selectedDate}
@@ -629,7 +625,7 @@ export const CapturePO_SOW = (props) => {
                 <div className="txtBox PoAmtTxtBox">
                   <div>
                     <TextField
-                      className="inputField"
+                      className="inputTxtField"
                       sx={{ m: 1, width: 400 }}
                       id="outlined-basic"
                       label="uploaded Doc"
@@ -642,11 +638,11 @@ export const CapturePO_SOW = (props) => {
                   </div>
                 </div>
                 <div className="DocTypeDropdown">
-                  {/* <label>
-                    <strong>Doc Type</strong>
-                  </label> */}
                   <div>
-                    <FormControl sx={{ m: 1, width: 300 }}>
+                    <FormControl
+                      sx={{ m: 1, width: 300 }}
+                      className="inputField"
+                    >
                       <InputLabel id="demo-multiple-name-label">
                         Doc type
                       </InputLabel>
