@@ -1,3 +1,5 @@
+/* eslint-disable prettier/prettier */
+
 import Invoice from "../../components/CMS/invoice_FORM/Invoice";
 
 import React from "react";
