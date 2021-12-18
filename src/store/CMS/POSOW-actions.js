@@ -281,7 +281,6 @@ export const fetchAllClientProjects = (clientName) => {
   };
 };
 export const fetchClientProjectSponsor = (projectId) => {
-  console.log(projectId);
   return async function (dispatch) {
     try {
       const res = await axios.get(

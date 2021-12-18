@@ -8,11 +8,9 @@ import { useTheme } from "@mui/material/styles";
 import OutlinedInput from "@mui/material/OutlinedInput";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
-import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import Autocomplete from "@mui/material/Autocomplete";
 import TextField from "@mui/material/TextField";
-
 import BasicDatePicker from "../invoice_FORM/date";
 import { Grid } from "@mui/material";
 import "./CapturePO_SOW.css";
@@ -25,7 +23,6 @@ import { fetchAllClients } from "../../../store/CMS/POSOW-actions";
 import {
   fetchAllClientProjects,
   fetchClientProjectSponsor,
-  fetchTargetedResources,
 } from "../../../store/CMS/POSOW-actions";
 import { PoSowActions } from "../../../store/CMS/POSOW-slice";
 import { useNavigate } from "react-router-dom";
@@ -93,7 +90,6 @@ export const CapturePO_SOW = (props) => {
   const allocationRateArr = useSelector(
     (state) => state.CMS_state.allocationRate
   );
-  console.log(allocationRateArr);
 
   let DefaultClientName = null;
   let ReadProjectName = null;
@@ -260,7 +256,7 @@ export const CapturePO_SOW = (props) => {
           allocationRateArr[i];
       }
     }
-    console.log(selectedTargetedResAllocationRate);
+
     const DataToSend = {
       Project_Id: projectId,
       Client_Name: clientName ? clientName.clientName : "",
