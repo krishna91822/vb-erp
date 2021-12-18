@@ -20,6 +20,7 @@ import FilterListIcon from "@mui/icons-material/FilterList";
 import FilterListOffIcon from "@mui/icons-material/FilterListOff";
 
 import Tpagination from "../../UI/Pagination";
+import NoDataFound from "../NoDataFound";
 import {
   getAllProjects,
   getAllFilterProjects,
@@ -340,21 +341,17 @@ const ViewProjects = () => {
                   : null}
               </TableBody>
             </Table>
+            <NoDataFound
+              name={
+                projects.results
+                  ? !projects.results.length
+                    ? "No Project Found !!!"
+                    : ""
+                  : "No Project Yet !!!"
+              }
+              filter={pressed}
+            />
           </TableContainer>
-          {projects.results
-            ? !projects.results.length && (
-                <p
-                  style={{
-                    textAlign: "center",
-                    color: "grey",
-                    position: "relative",
-                    bottom: "220px",
-                  }}
-                >
-                  No Project Yet!!!
-                </p>
-              )
-            : ""}
         </Container>
         <Tpagination
           count={projects.pageCount}

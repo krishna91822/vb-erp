@@ -1,8 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { getOnBench } from "../../../store/pmo-actions";
-import Tpagination from "../../UI/Pagination";
-
 import {
   Table,
   TableBody,
@@ -15,6 +12,9 @@ import {
 
 import { Container, MiniHead } from "./style";
 import BenchModal from "./BenchModal";
+import { getOnBench } from "../../../store/pmo-actions";
+import Tpagination from "../../UI/Pagination";
+import NoDataFound from "../NoDataFound";
 
 const Bench = ({ pressed, benchSortValue }) => {
   const { benchData } = useSelector((state) => state.pmo);
@@ -200,21 +200,17 @@ const Bench = ({ pressed, benchSortValue }) => {
                 : null}
             </TableBody>
           </Table>
+          <NoDataFound
+            name={
+              data.results
+                ? !data.results.length
+                  ? "No Data Found !!!"
+                  : ""
+                : "No Data Yet !!!"
+            }
+            filter={pressed}
+          />
         </TableContainer>
-        {data.results
-          ? !data.results.length && (
-              <p
-                style={{
-                  textAlign: "center",
-                  color: "grey",
-                  position: "relative",
-                  bottom: "190px",
-                }}
-              >
-                No Data Found!!!
-              </p>
-            )
-          : ""}
       </Container>
       <Tpagination
         count={data.pageCount}

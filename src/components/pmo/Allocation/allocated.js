@@ -1,7 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { getAllocatedData } from "../../../store/pmo-actions";
-import Tpagination from "../../UI/Pagination";
-
 import {
   Table,
   TableBody,
@@ -12,6 +9,10 @@ import {
   TextField,
 } from "@mui/material";
 import { useSelector, useDispatch } from "react-redux";
+
+import { getAllocatedData } from "../../../store/pmo-actions";
+import Tpagination from "../../UI/Pagination";
+import NoDataFound from "../NoDataFound";
 import { Container, MiniHead, DateContainerStyled } from "./style";
 
 const Allocated = ({ pressed, allocatedSortedValue }) => {
@@ -252,21 +253,17 @@ const Allocated = ({ pressed, allocatedSortedValue }) => {
                 : null}
             </TableBody>
           </Table>
+          <NoDataFound
+            name={
+              data.results
+                ? !data.results.length
+                  ? "No Allocation Found !!!"
+                  : ""
+                : "No Allocation Yet !!!"
+            }
+            filter={pressed}
+          />
         </TableContainer>
-        {data.results
-          ? !data.results.length && (
-              <p
-                style={{
-                  textAlign: "center",
-                  color: "grey",
-                  position: "relative",
-                  bottom: "190px",
-                }}
-              >
-                No Data Found!!!
-              </p>
-            )
-          : ""}
       </Container>
       <Tpagination
         count={data.pageCount || 1}
