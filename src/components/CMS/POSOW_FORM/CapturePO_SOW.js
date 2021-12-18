@@ -134,8 +134,11 @@ export const CapturePO_SOW = (props) => {
     userTargetResCheckedElems
   );
   useEffect(() => {
-    if (clientName !== null && !params.id)
+    if (clientName !== null && !params.id) {
+      setProjectName(null);
+      dispatch(PoSowActions.clearData());
       dispatch(fetchAllClientProjects(clientName.clientName));
+    }
   }, [clientName]);
   useEffect(() => {
     if ((!props.editBtn && projectName !== null) || editTglCheckedState) {

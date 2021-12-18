@@ -12,6 +12,8 @@ import Button from "@mui/material/Button";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+import EditIcon from "@mui/icons-material/Edit";
+import EditOffIcon from "@mui/icons-material/EditOff";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
@@ -248,7 +250,7 @@ export const Main = () => {
                   <TableCell>{row.PO_Number}</TableCell>
                   <TableCell>{row.PO_Amount}</TableCell>
                   <TableCell>{row.Client_Sponser}</TableCell>
-                  {row.Status === "Rejected" || row.Status === "Drafted" ? (
+                  {/* {row.Status === "Rejected" || row.Status === "Drafted" ? (
                     <TableCell
                       component={Link}
                       to={`/posow/edit/${row._id}`}
@@ -261,6 +263,15 @@ export const Main = () => {
                       <Button className="editbtn" disabled>
                         EDIT
                       </Button>
+                    </TableCell>
+                  )} */}
+                  {row.Status === "Rejected" || row.Status === "Drafted" ? (
+                    <TableCell>
+                      <EditIcon />
+                    </TableCell>
+                  ) : (
+                    <TableCell>
+                      <EditOffIcon />
                     </TableCell>
                   )}
 
