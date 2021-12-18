@@ -93,10 +93,10 @@ const SidebarNavigation = () => {
       name: "Network",
       link: "/network",
     },
-    // {
-    //   name: "Contract Mgmt",
-    //   link: "/",
-    // },
+    {
+      name: "CIMS",
+      link: "/cims",
+    },
     {
       name: "PMO",
       dropDown: [
@@ -106,10 +106,6 @@ const SidebarNavigation = () => {
       ],
       open: openPMO,
       handle: handleClickPMO,
-    },
-    {
-      name: "CIMS",
-      link: "/cims",
     },
 
     {

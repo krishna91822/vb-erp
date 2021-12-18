@@ -281,11 +281,13 @@ export const fetchAllClientProjects = (clientName) => {
   };
 };
 export const fetchClientProjectSponsor = (projectId) => {
+  console.log(projectId);
   return async function (dispatch) {
     try {
       const res = await axios.get(
         `poSow/capturePO/details?projectId=${projectId}`
       );
+
       if (res.status === 200 && [...res.data.data].length !== 0) {
         dispatch(
           PoSowActions.setClientProjectSponsor(
