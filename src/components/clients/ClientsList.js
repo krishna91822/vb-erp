@@ -18,6 +18,7 @@ import {
   Box,
   TextField,
   InputAdornment,
+  Typography,
 } from "@mui/material";
 import TableCell, { tableCellClasses } from "@mui/material/TableCell";
 import {
@@ -85,6 +86,65 @@ function ClientsList() {
     setClientStatus(status);
     setBrandName(brandName);
   };
+
+  const clients = clientsList.map((client, idx) => (
+    <StyledTableRow className="table-row" key={client._id}>
+      <StyledTableCell
+        onClick={() => {
+          handleClientData(client._id, false);
+        }}
+        align="center"
+      >
+        {client.rowNumber}
+      </StyledTableCell>
+      <StyledTableCell
+        onClick={() => {
+          handleClientData(client._id, false);
+        }}
+        align="center"
+      >
+        {client.brandName}
+      </StyledTableCell>
+      <StyledTableCell
+        onClick={() => {
+          handleClientData(client._id, false);
+        }}
+        align="center"
+      >
+        {`${client.contacts.primaryContact.firstName} ${client.contacts.primaryContact.lastName}`}
+      </StyledTableCell>
+      <StyledTableCell
+        onClick={() => {
+          handleClientData(client._id, false);
+        }}
+        align="center"
+      >
+        {client.registeredAddress.country.split("-")[0]}
+      </StyledTableCell>
+      <StyledTableCell
+        onClick={() => {
+          handleClientData(client._id, false);
+        }}
+        align="center"
+      >
+        {client.status ? "Active" : "Inactive"}
+      </StyledTableCell>
+      <StyledTableCell
+        onClick={() => {
+          handleClientData(client._id, false);
+        }}
+        align="center"
+      >
+        {client.createdAt.slice(0, 10)}
+      </StyledTableCell>
+      <StyledTableCell
+        onClick={() => handelMenu(client._id, client.status, client.brandName)}
+        align="center"
+      >
+        {menuIcon()}
+      </StyledTableCell>
+    </StyledTableRow>
+  ));
 
   function menuIcon() {
     return (
@@ -194,70 +254,18 @@ function ClientsList() {
                 <StyledTableCell align="center">Actions</StyledTableCell>
               </TableRow>
             </TableHead>
-            <TableBody>
-              {clientsList.map((client, idx) => (
-                <StyledTableRow className="table-row" key={client._id}>
-                  <StyledTableCell
-                    onClick={() => {
-                      handleClientData(client._id, false);
-                    }}
-                    align="center"
-                  >
-                    {client.rowNumber}
-                  </StyledTableCell>
-                  <StyledTableCell
-                    onClick={() => {
-                      handleClientData(client._id, false);
-                    }}
-                    align="center"
-                  >
-                    {client.brandName}
-                  </StyledTableCell>
-                  <StyledTableCell
-                    onClick={() => {
-                      handleClientData(client._id, false);
-                    }}
-                    align="center"
-                  >
-                    {`${client.contacts.primaryContact.firstName} ${client.contacts.primaryContact.lastName}`}
-                  </StyledTableCell>
-                  <StyledTableCell
-                    onClick={() => {
-                      handleClientData(client._id, false);
-                    }}
-                    align="center"
-                  >
-                    {client.registeredAddress.country.split("-")[0]}
-                  </StyledTableCell>
-                  <StyledTableCell
-                    onClick={() => {
-                      handleClientData(client._id, false);
-                    }}
-                    align="center"
-                  >
-                    {client.status ? "Active" : "Inactive"}
-                  </StyledTableCell>
-                  <StyledTableCell
-                    onClick={() => {
-                      handleClientData(client._id, false);
-                    }}
-                    align="center"
-                  >
-                    {client.createdAt.slice(0, 10)}
-                  </StyledTableCell>
-                  <StyledTableCell
-                    onClick={() =>
-                      handelMenu(client._id, client.status, client.brandName)
-                    }
-                    align="center"
-                  >
-                    {menuIcon()}
-                  </StyledTableCell>
-                </StyledTableRow>
-              ))}
-            </TableBody>
+            <TableBody>{clientsList.length && clients}</TableBody>
           </Table>
         </TableContainer>
+        {clientsList.length === 0 && (
+          <Typography
+            mt={18}
+            sx={{ textAlign: "center", color: "gray" }}
+            variant="h4"
+          >
+            No Records Found!
+          </Typography>
+        )}
       </div>
       <div className="pagination">
         <Stack spacing={2}>
