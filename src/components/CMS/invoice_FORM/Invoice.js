@@ -430,34 +430,22 @@ function Invoice(props) {
           <Grid item lg={4} md={4} sm={12} xs={12}>
             <Table>
               <TableHead>
-                <TableCell>Targeted Resources</TableCell>
-                <TableCell>Percentage Allocation</TableCell>
-              </TableHead>
-
-              <TableBody className="table-row-posow">
-                <TableRow
-                  style={{ textDecoration: "none" }}
-                  sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-                >
-                  {targetedResourcesName.map((row, index) => (
-                    <TableCell
-                      component="th"
-                      scope="row"
-                      className="table-cell"
-                    >
-                      {row}
-                    </TableCell>
-                  ))}
-                  {percentageAllocation.map((row, index) => (
-                    <TableCell
-                      component="th"
-                      scope="row"
-                      className="table-cell"
-                    >
-                      {row}
-                    </TableCell>
-                  ))}
+                <TableRow>
+                  <TableCell>Targeted Resources</TableCell>
+                  <TableCell>Percentage Allocation</TableCell>
                 </TableRow>
+              </TableHead>
+              <TableBody className="table-row-posow">
+                <TableCell component="th" scope="row" className="table-cell">
+                  {targetedResourcesName.map((row, index) => (
+                    <TableRow>{row}</TableRow>
+                  ))}
+                </TableCell>
+                <TableCell component="th" scope="row" className="table-cell">
+                  {percentageAllocation.map((row, index) => (
+                    <TableRow>{row}</TableRow>
+                  ))}
+                </TableCell>
               </TableBody>
             </Table>
           </Grid>
