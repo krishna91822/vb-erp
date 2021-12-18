@@ -1,22 +1,13 @@
 import styled from "styled-components";
 
 const size = {
-  mobileM: "375px",
   mobileL: "540px",
   tablet: "851px",
-  laptop: "1024px",
-  laptopL: "1440px",
-  desktop: "2560px",
 };
 
 export const device = {
-  mobileM: `(max-width: ${size.mobileM})`,
   mobileL: `(max-width: ${size.mobileL})`,
   tablet: `(max-width: ${size.tablet})`,
-  laptop: `(max-width: ${size.laptop})`,
-  laptopL: `(max-width: ${size.laptopL})`,
-  desktop: `(max-width: ${size.desktop})`,
-  desktopL: `(max-width: ${size.desktop})`,
 };
 
 export const ResourceInformationHeading = styled.h3`
@@ -29,7 +20,6 @@ export const Heading = styled.h1`
   font-weight: 400;
   display: block;
   margin: 10px 0 7px;
-  // padding: 0.5em 1em;
   & > span {
     color: red;
   }
@@ -60,10 +50,7 @@ export const ResourceForm = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  input[type="number"]::-webkit-inner-spin-button,
-  input[type="number"]::-webkit-outer-spin-button {
-    -webkit-appearance: none;
-  }
+
   @media ${device.tablet} {
     width: 80%;
   }

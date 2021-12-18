@@ -8,7 +8,6 @@ export const Container = styled.div`
 
   .MuiTableBody-root > .MuiTableRow-root:hover {
     background-color: #f8f8f8;
-    cursor: pointer;
   }
 
   th {
@@ -18,17 +17,6 @@ export const Container = styled.div`
   tbody {
     tr:nth-child(2n) {
       background: #f8f8f8;
-    }
-  }
-
-  a {
-    text-decoration: none;
-    color: #e8833a;
-    border: none;
-    cursor: pointer;
-
-    &:hover {
-      color: #ff862e;
     }
   }
 
