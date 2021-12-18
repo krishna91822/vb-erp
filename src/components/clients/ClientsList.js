@@ -254,7 +254,7 @@ function ClientsList() {
                 <StyledTableCell align="center">Actions</StyledTableCell>
               </TableRow>
             </TableHead>
-            <TableBody>{clientsList.length && clients}</TableBody>
+            <TableBody>{clientsList.length !== 0 && clients}</TableBody>
           </Table>
         </TableContainer>
         {clientsList.length === 0 && (
