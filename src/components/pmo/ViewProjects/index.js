@@ -31,8 +31,6 @@ import {
   Heading,
   Container,
   SideButton,
-  Dropdown,
-  Options,
   ProjectHead,
 } from "./styles";
 
@@ -122,7 +120,7 @@ const ViewProjects = () => {
               <FormControl size="small">
                 <InputLabel id="filterBy">Sort By</InputLabel>
                 <Select
-                  defaultValue="Sort by Project ID"
+                  defaultValue="vbProjectId"
                   labelId="filterBy"
                   id="select"
                   label="filterBy"
@@ -131,16 +129,13 @@ const ViewProjects = () => {
                   sx={{ fontSize: "14px", width: "150px" }}
                   // style={{ width: "150px" }}
                 >
-                  <MenuItem
-                    value="Sort by Project ID"
-                    sx={{ fontSize: "14px" }}
-                  >
+                  <MenuItem value="vbProjectId" sx={{ fontSize: "14px" }}>
                     Project ID
                   </MenuItem>
-                  <MenuItem value="Client Name" sx={{ fontSize: "14px" }}>
+                  <MenuItem value="clientName" sx={{ fontSize: "14px" }}>
                     Client Name
                   </MenuItem>
-                  <MenuItem value="Project Name" sx={{ fontSize: "14px" }}>
+                  <MenuItem value="projectName" sx={{ fontSize: "14px" }}>
                     Project Name
                   </MenuItem>
                 </Select>

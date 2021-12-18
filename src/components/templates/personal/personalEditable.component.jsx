@@ -4,6 +4,7 @@ import { Grid, TextField, Box, Chip, Checkbox } from "@mui/material";
 import ClearIcon from "@mui/icons-material/Clear";
 
 import { personal } from "./personal.constant";
+import validator from "validator";
 
 import {
   ListItem,
@@ -79,10 +80,6 @@ const PersonalEditable = (props) => {
     }
   };
 
-  // const handleChangeHobbies = (event) => {
-  //   setHobbies(event.target.value);
-  // };
-
   const handleDelete = (i) => {
     // setChipData((chips) => chips.filter((chip) => chip !== chipToDelete));
     const filteredHobbies = [...chipData];
@@ -154,6 +151,7 @@ const PersonalEditable = (props) => {
           {personal.aboutMe}
         </TitleTypo>
         <TextField
+          placeholder="Write something about you"
           id="outlined-multiline-flexible"
           multiline
           maxRows={4}
@@ -168,6 +166,7 @@ const PersonalEditable = (props) => {
           <ContentBox>
             <ContentTypo>{personal.personalEmail}</ContentTypo>
             <CustomTextField
+              placeholder="Enter personal email"
               autoComplete="off"
               required
               id="outlined-basic"
@@ -175,15 +174,17 @@ const PersonalEditable = (props) => {
               value={empPersonalEmail ? empPersonalEmail : ""}
               type="email"
               name="empPersonalEmail"
-              onChange={handleChange}
+              onChange={(event) => {
+                handleChange(event);
+              }}
             />
           </ContentBox>
           <ContentBox>
             <ContentTypo>{personal.dob}</ContentTypo>
             <LocalizationProvider dateAdapter={AdapterDateFns}>
               <DesktopDatePicker
-                inputFormat="MM/dd/yyyy"
-                value={empDob ? empDob : null}
+                inputFormat="dd/MM/yyyy"
+                value={empDob ? empDob : new Date()}
                 onChange={(newValue) => {
                   setEmpData({ ...empData, empDob: newValue });
                 }}
@@ -233,12 +234,13 @@ const PersonalEditable = (props) => {
           <ContentBox>
             <ContentTypo>{personal.connections}</ContentTypo>
             <CustomTextField
+              placeholder="enter no. of connections"
               autoComplete="off"
               required
               id="outlined-basic"
               variant="outlined"
               value={empConnections ? empConnections : ""}
-              type="text"
+              type="number"
               name="empConnections"
               onChange={handleChange}
             />
@@ -252,13 +254,15 @@ const PersonalEditable = (props) => {
                 id="outlined-basic"
                 variant="outlined"
                 value={
-                  currentAddress.empAddressLineOne
+                  empCurrentAddress?.empAddressLineOne
                     ? currentAddress.empAddressLineOne
                     : ""
                 }
                 type="text"
                 name="empAddressLineOne"
-                onChange={handleCurrentAddressChange}
+                onChange={(event) => {
+                  handleCurrentAddressChange(event);
+                }}
                 placeholder="Address line 1"
                 sx={{ width: "100%" }}
               />
@@ -277,7 +281,7 @@ const PersonalEditable = (props) => {
                   id="outlined-basic"
                   variant="outlined"
                   value={
-                    currentAddress.empAddressCity
+                    empCurrentAddress?.empAddressCity
                       ? currentAddress.empAddressCity
                       : ""
                   }
@@ -293,7 +297,7 @@ const PersonalEditable = (props) => {
                   id="outlined-basic"
                   variant="outlined"
                   value={
-                    currentAddress.empAddressState
+                    empCurrentAddress?.empAddressState
                       ? currentAddress.empAddressState
                       : ""
                   }
@@ -309,7 +313,7 @@ const PersonalEditable = (props) => {
                   id="outlined-basic"
                   variant="outlined"
                   value={
-                    currentAddress.empAddressPinCode
+                    empCurrentAddress?.empAddressPinCode
                       ? currentAddress.empAddressPinCode
                       : ""
                   }
@@ -351,7 +355,7 @@ const PersonalEditable = (props) => {
                 id="outlined-basic"
                 variant="outlined"
                 value={
-                  residentialAddress.empAddressLineOne
+                  empResidentialAddress?.empAddressLineOne
                     ? residentialAddress.empAddressLineOne
                     : ""
                 }
@@ -377,7 +381,7 @@ const PersonalEditable = (props) => {
                   id="outlined-basic"
                   variant="outlined"
                   value={
-                    residentialAddress.empAddressCity
+                    empResidentialAddress?.empAddressCity
                       ? residentialAddress.empAddressCity
                       : ""
                   }
@@ -394,7 +398,7 @@ const PersonalEditable = (props) => {
                   id="outlined-basic"
                   variant="outlined"
                   value={
-                    residentialAddress.empAddressState
+                    empResidentialAddress?.empAddressState
                       ? residentialAddress.empAddressState
                       : ""
                   }
@@ -411,7 +415,7 @@ const PersonalEditable = (props) => {
                   id="outlined-basic"
                   variant="outlined"
                   value={
-                    residentialAddress.empAddressPinCode
+                    empResidentialAddress?.empAddressPinCode
                       ? residentialAddress.empAddressPinCode
                       : ""
                   }

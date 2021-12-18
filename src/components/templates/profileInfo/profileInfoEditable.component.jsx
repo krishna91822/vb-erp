@@ -83,7 +83,7 @@ const ProfileInfoEditable = (props) => {
           <TitleTypo sx={{ mt: 1, textTransform: "capitalize" }}>
             <TextField
               id="standard-basic"
-              placeholder="Username"
+              placeholder="Full Name"
               variant="standard"
               type="text"
               name="empName"
@@ -149,6 +149,7 @@ const ProfileInfoEditable = (props) => {
                 {profileInfoConstant.emailId}
               </ContentBoldTypo>
               <CustomTextField
+                placeholder="company email"
                 autoComplete="off"
                 required
                 id="outlined-basic"
@@ -164,6 +165,7 @@ const ProfileInfoEditable = (props) => {
                 {profileInfoConstant.department}
               </ContentBoldTypo>
               <CustomTextField
+                placeholder="Enter department"
                 autoComplete="off"
                 required
                 id="outlined-basic"
@@ -179,6 +181,7 @@ const ProfileInfoEditable = (props) => {
                 {profileInfoConstant.designation}
               </ContentBoldTypo>
               <CustomTextField
+                placeholder="Enter designation"
                 autoComplete="off"
                 required
                 id="outlined-basic"
@@ -211,12 +214,14 @@ const ProfileInfoEditable = (props) => {
                 {profileInfoConstant.reportingManager}
               </ContentBoldTypo>
               <CustomTextField
+                placeholder="Enter Reporting manager"
                 autoComplete="off"
                 required
                 id="outlined-basic"
                 variant="outlined"
-                placeholder="sunilee"
-                value={empReportingManager ? empReportingManager : "sunilee"}
+                defaultValue={
+                  empReportingManager ? empReportingManager : "sunilee"
+                }
                 type="text"
                 name="empReportingManager"
                 onChange={handleChange}
