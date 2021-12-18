@@ -3,6 +3,8 @@ import React, { useEffect, useState } from "react";
 import { LocalizationProvider, DesktopDatePicker } from "@mui/lab";
 import AdapterDateFns from "@mui/lab/AdapterDateFns";
 
+import validator from "validator";
+
 import {
   Box,
   Button,
@@ -69,7 +71,7 @@ const CreateProfile = ({
     empAboutMe: "",
     empBand: "",
     empCertifications: [],
-    empConnections: "",
+    empConnections: 0,
     empCurrentAddress: undefined,
     empDob: null,
     empGraduation: "",
@@ -88,6 +90,20 @@ const CreateProfile = ({
       ? editEmployeeData
       : { ...empInitial, empDoj: new Date(), empReportingManager: "sunilee" }
   );
+
+  const formValidation = {
+    email: !validator.isEmail(employee?.empEmail),
+    personalEmail: !validator.isEmail(employee?.empPersonalEmail),
+    name: employee?.empName === "",
+    department: employee?.empDepartment === "",
+    designation: employee?.empDesignation === "",
+    doj: employee?.empDoj === null,
+    dob: employee?.empDob === null,
+    reportingManager: employee?.empReportingManager === "",
+    connection: employee?.empConnections
+      ? !validator.isInt(employee?.empConnections)
+      : false,
+  };
 
   const [tab, setTab] = useState(0);
 
@@ -297,6 +313,7 @@ const CreateProfile = ({
             employee={employee}
             setEmployee={setEmployee}
             profileProgress={profileProgress}
+            formValidation={formValidation}
           />
         </Container>
         <Container sx={{ width: "calc(100% - 16px)" }}>
@@ -306,6 +323,7 @@ const CreateProfile = ({
               setEmpData={setEmployee}
               personalDetails={personalDetails}
               setPersonalDetails={setPersonalDetails}
+              formValidation={formValidation}
             />
           </TabPanelCustom>
           <TabPanelCustom value={tab} index={1}>
@@ -314,6 +332,7 @@ const CreateProfile = ({
               setEmpData={setEmployee}
               professionalDetails={professionalDetails}
               setProfessionalDetails={setProfessionalDetails}
+              formValidation={formValidation}
             />
           </TabPanelCustom>
           <TabPanelCustom value={tab} index={2}>
@@ -322,6 +341,7 @@ const CreateProfile = ({
               setEmpData={setEmployee}
               skillsDetails={skillsDetails}
               setSkillsDetails={setSkillsDetails}
+              formValidation={formValidation}
             />
           </TabPanelCustom>
         </Container>

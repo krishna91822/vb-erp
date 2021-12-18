@@ -11,6 +11,8 @@ import Paper from "@mui/material/Paper";
 import TextField from "@mui/material/TextField";
 import { styled, alpha } from "@mui/material/styles";
 import Button from "@mui/material/Button";
+import EditIcon from "@mui/icons-material/Edit";
+import EditOffIcon from "@mui/icons-material/EditOff";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
@@ -250,16 +252,12 @@ function InvoiceInfo() {
                   <TableCell>{row.invoice_received}</TableCell>
                   <TableCell>{row.invoice_amount_received}</TableCell>
                   {row.invoice_received === "No" ? (
-                    <TableCell
-                      component={Link}
-                      to={``}
-                      style={{ textDecoration: "none" }}
-                    >
-                      <Button>EDIT</Button>
+                    <TableCell>
+                      <EditIcon />
                     </TableCell>
                   ) : (
-                    <TableCell aria-disabled>
-                      <Button disabled>EDIT</Button>
+                    <TableCell>
+                      <EditOffIcon />
                     </TableCell>
                   )}
                 </TableRow>

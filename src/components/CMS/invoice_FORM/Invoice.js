@@ -60,7 +60,7 @@ function Invoice(props) {
       dispatch(invoiceActions.setRedirect(false));
     }
   }, [isRedirect]);
-  console.log(allPOSOWs);
+
   const allProjects = allPOSOWs.map((val) => {
     return val.Project_Name;
   });
@@ -135,26 +135,24 @@ function Invoice(props) {
   const [invoice_raised_yesno, setInvoiceRaisedYesNo] = React.useState("No");
   let [sum, setsum] = useState(0);
 
-  useEffect(() => {
-    if (!props.readonly && filteredArr[0].PO_Id !== undefined) {
-      setPersonName(filteredArr[0].PO_Id.Client_Name);
-      setProjectName(filteredArr[0].PO_Id.Project_Name);
-      setPO_number(filteredArr[0].PO_Id.PO_Number);
-      setPOAmt(filteredArr[0].PO_Id.PO_Amount);
-      setClientFinController(filteredArr[0].client_finance_controller);
-      setClientSponsor(filteredArr[0].client_sponsor);
-      setInvoiceRaised(filteredArr[0].invoice_raised);
-      setinvoiceAmount(filteredArr[0].invoice_amount_received);
-      setDate(filteredArr[0].amount_received_on);
-      setVbbankacc(filteredArr[0].vb_bank_account);
-      setTargetedResources(filteredArr[0].PO_Id.Targetted_Resources);
-      setTargetedAllocation(filteredArr[0].PO_Id.Targeted_Res_AllocationRate);
-    }
-  }, [filteredArr]);
+  // useEffect(() => {
+  //   if (!props.readonly && filteredArr[0].PO_Id !== undefined) {
+  //     setPersonName(filteredArr[0].PO_Id.Client_Name);
+  //     setProjectName(filteredArr[0].PO_Id.Project_Name);
+  //     setPO_number(filteredArr[0].PO_Id.PO_Number);
+  //     setPOAmt(filteredArr[0].PO_Id.PO_Amount);
+  //     setClientFinController(filteredArr[0].client_finance_controller);
+  //     setClientSponsor(filteredArr[0].client_sponsor);
+  //     setInvoiceRaised(filteredArr[0].invoice_raised);
+  //     setinvoiceAmount(filteredArr[0].invoice_amount_received);
+  //     setDate(filteredArr[0].amount_received_on);
+  //     setVbbankacc(filteredArr[0].vb_bank_account);
+  //     setTargetedResources(filteredArr[0].PO_Id.Targetted_Resources);
+  //     setTargetedAllocation(filteredArr[0].PO_Id.Targeted_Res_AllocationRate);
+  //   }
+  // }, [filteredArr]);
   const targetedResourcesName = Object.keys(TargettedAllocation);
   const percentageAllocation = Object.values(TargettedAllocation);
-
-  console.log(typeof targetedResourcesName);
 
   useEffect(() => {
     if (props.editBtn && filteredArr[0].PO_Id !== undefined) {
