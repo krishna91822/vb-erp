@@ -93,6 +93,7 @@ export const CapturePO_SOW = (props) => {
   const allocationRateArr = useSelector(
     (state) => state.CMS_state.allocationRate
   );
+  console.log(allocationRateArr);
 
   let DefaultClientName = null;
   let ReadProjectName = null;
@@ -140,7 +141,7 @@ export const CapturePO_SOW = (props) => {
     if ((!props.editBtn && projectName !== null) || editTglCheckedState) {
       dispatch(fetchClientProjectSponsor(projectId));
     }
-  }, [projectName]);
+  }, [projectName, editTglCheckedState]);
 
   useEffect(() => {
     setclientProjectSponsor(clientSponsor);
@@ -159,6 +160,7 @@ export const CapturePO_SOW = (props) => {
       setStatus(filteredArr[0].Status);
       setProjectId(filteredArr[0].Project_Id);
       setPOSOWEndDate(new Date(filteredArr[0].POSOW_endDate));
+
       dispatch(
         PoSowActions.setClientProjectSponsor(filteredArr[0].Client_Sponser)
       );
@@ -278,7 +280,6 @@ export const CapturePO_SOW = (props) => {
     setErrors(all_errors);
     if (Object.keys(all_errors).length === 0) {
       if (props.editBtn && editTglCheckedState) {
-        console.log(DataToSend);
         dispatch(UpdatePO_SOW(DataToSend, params.id));
       } else {
         dispatch(createNewPO_SOW(DataToSend));
