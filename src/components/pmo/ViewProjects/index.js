@@ -125,10 +125,8 @@ const ViewProjects = () => {
                   labelId="filterBy"
                   id="select"
                   label="filterBy"
-                  // inputProps={{ style: { fontSize: "5px" } }}
                   onChange={entryValue}
                   sx={{ fontSize: "14px", width: "150px" }}
-                  // style={{ width: "150px" }}
                 >
                   <MenuItem value="vbProjectId" sx={{ fontSize: "14px" }}>
                     Project ID

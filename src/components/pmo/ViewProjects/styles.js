@@ -1,9 +1,26 @@
 import styled from "styled-components";
 
+const size = {
+  mobileM: "375px",
+  mobileL: "540px",
+  tablet: "900px",
+  laptop: "1024px",
+  laptopL: "1440px",
+  desktop: "2560px",
+};
+
+export const device = {
+  mobileM: `(max-width: ${size.mobileM})`,
+  mobileL: `(max-width: ${size.mobileL})`,
+  tablet: `(max-width: ${size.tablet})`,
+  laptop: `(max-width: ${size.laptop})`,
+  laptopL: `(max-width: ${size.laptopL})`,
+  desktop: `(max-width: ${size.desktop})`,
+  desktopL: `(max-width: ${size.desktop})`,
+};
+
 export const MainComponent = styled.div`
-  /* padding: 5px 15px;
-  min-width: 477px; //we need to remove this line */
-  /* min-height: 85vh; */
+  min-width: 300px; //we need to remove this line
 `;
 export const HeadingStyle = styled.div``;
 export const Heading = styled.div`
@@ -16,20 +33,37 @@ export const Heading = styled.div`
   h2 {
     margin: 0;
   }
+  @media ${device.tablet} {
+    flex-direction: column;
+    justify-content: space-around;
+    height: 116px;
+    h2 {
+      padding: 0 30px;
+      border-bottom: 1px solid green;
+    }
+  }
+  @media (max-width: 800px) {
+    flex-direction: row;
+    height: 178px;
+  }
+  @media (max-width: 600px) {
+    flex-direction: column;
+    height: 230px;
+  }
 `;
 
 export const AdminName = styled.p`
   text-align: right;
-  @media (max-width: 450px) {
+  /* @media (max-width: 450px) {
     margin-right: 1rem;
-  }
+  } */
 `;
 
 export const ProjectHead = styled.h2`
   margin: 0px;
-  @media (max-width: 450px) {
+  /* @media (max-width: 450px) {
     margin: 1rem;
-  }
+  } */
 `;
 export const Container = styled.div`
   .MuiTableContainer-root {
@@ -69,9 +103,9 @@ export const Container = styled.div`
     }
   }
 
-  @media (max-width: 450px) {
+  /* @media (max-width: 450px) {
     margin: 1rem;
-  }
+  } */
 `;
 export const SideButton = styled.div`
   display: flex;
@@ -85,9 +119,25 @@ export const SideButton = styled.div`
   & > * {
     margin: 0 6px;
   }
-  @media (max-width: 450px) {
-    margin-right: 1rem;
+
+  @media (max-width: 800px) {
+    height: 185px;
+    flex-direction: column-reverse;
+    justify-content: space-around;
+    button {
+      order: 4;
+    }
   }
+  @media (max-width: 600px) {
+    width: 100%;
+    & > button,
+    div {
+      width: 280px;
+    }
+  }
+  /* @media (max-width: 450px) {
+    margin-right: 1rem;
+  } */
 `;
 
 export const Dropdown = styled.select`
