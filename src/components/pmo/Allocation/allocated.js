@@ -33,7 +33,14 @@ const Allocated = ({ pressed, allocatedSortedValue }) => {
 
   let data = allocatedData;
   const filterData = (event) => {
-    setFilters({ ...filters, [event.target.name]: event.target.value });
+    if (event.target.name === "empId") {
+      setFilters({
+        ...filters,
+        [event.target.name]: event.target.value.toUpperCase(),
+      });
+    } else {
+      setFilters({ ...filters, [event.target.name]: event.target.value });
+    }
     if (event.key === "Enter") {
       dispatch(getAllocatedData(filters, 1, allocatedSortedValue));
     }

@@ -35,7 +35,14 @@ const Bench = ({ pressed, benchSortValue }) => {
   let data = benchData;
 
   const filterData = (event) => {
-    setFilters({ ...filters, [event.target.name]: event.target.value });
+    if (event.target.name === "empId") {
+      setFilters({
+        ...filters,
+        [event.target.name]: event.target.value.toUpperCase(),
+      });
+    } else {
+      setFilters({ ...filters, [event.target.name]: event.target.value });
+    }
     if (event.key === "Enter") {
       dispatch(getOnBench(filters, 1, benchSortValue));
     }
@@ -71,9 +78,9 @@ const Bench = ({ pressed, benchSortValue }) => {
                 <TableCell
                   align="left"
                   sx={{
-                    width: "180px",
-                    maxWidth: "180px",
-                    minWidth: "180px",
+                    width: "150px",
+                    maxWidth: "150px",
+                    minWidth: "150px",
                   }}
                 >
                   SNO
