@@ -27,8 +27,8 @@ import CreateProfile from "./../pages/createProfile/createProfile.component";
 const routes = [
   {
     path: "/",
-    component: Templates,
-    title: "Templates",
+    component: Profile,
+    title: "Profile",
   },
   {
     path: "/posow/create",

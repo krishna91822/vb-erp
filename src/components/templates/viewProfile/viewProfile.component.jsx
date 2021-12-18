@@ -6,7 +6,7 @@ import { useParams } from "react-router-dom";
 
 import { CustomSwitch, TitleTypo } from "./viewProfile.styles";
 import jsPDF from "jspdf";
-
+import PictureAsPdfIcon from "@mui/icons-material/PictureAsPdf";
 import template from "./pdfTemplate";
 import ProfileContent from "../profileContent/profileContent.component";
 import WithSpinner from "../../hoc/withSpinner/withSpinner.component";
@@ -39,6 +39,7 @@ const ViewProfile = () => {
   };
   const handlePdfClick = () => {
     var doc = new jsPDF();
+    doc.setFont("Roboto", "bold");
     doc.addImage(template, "JPEG", 0, 0, 210, 298);
     doc.setFontSize(10);
     doc.text(`${viewedEmployee.empName}`, 30, 71, {
@@ -55,24 +56,25 @@ const ViewProfile = () => {
     );
     doc.text(`${viewedEmployee.empReportingManager}`, 158, 57);
 
+    //Personal
     doc.text(`${viewedEmployee.empAboutMe}`, 5, 87, {
       maxWidth: 90,
       align: "justify",
     });
-    doc.text(`${viewedEmployee.empPersonalEmail}`, 135, 85.5);
+    doc.text(`${viewedEmployee.empPersonalEmail}`, 135, 86);
     doc.text(
       `${new Date(viewedEmployee.empDob).toDateString().slice(4)}`,
       135,
-      92.5
+      93
     );
-    doc.text(`${viewedEmployee.empHobbies}`, 135, 99);
-    doc.text(`${viewedEmployee.empConnections}`, 135, 106.5);
+    doc.text(`${viewedEmployee.empHobbies}`, 135, 99.5);
+    doc.text(`${viewedEmployee.empConnections}`, 135, 107);
     doc.text(
       viewedEmployee.empCurrentAddress
         ? `${viewedEmployee.empCurrentAddress.empAddressLineOne}, ${viewedEmployee.empCurrentAddress.empAddressCity}, ${viewedEmployee.empCurrentAddress.empAddressState}, ${viewedEmployee.empCurrentAddress.empAddressPinCode}`
         : "",
       135,
-      113,
+      113.5,
       {
         maxWidth: 60,
       }
@@ -82,21 +84,133 @@ const ViewProfile = () => {
         ? `${viewedEmployee.empResidentialAddress.empAddressLineOne}, ${viewedEmployee.empResidentialAddress.empAddressCity}, ${viewedEmployee.empResidentialAddress.empAddressState}, ${viewedEmployee.empResidentialAddress.empAddressPinCode}`
         : "",
       135,
-      127,
+      134.5,
       {
         maxWidth: 60,
       }
     );
+    let i = 0;
+    {
+      viewedEmployee.personalDetails ? (
+        viewedEmployee.personalDetails.map((person) =>
+          person.fieldType === "date"
+            ? doc.text(
+                `${new Date(person.fieldValue).toDateString().slice(4)}`,
+                135,
+                148 + 8 * i++,
+                { maxWidth: 69 }
+              )
+            : doc.text(`${person.fieldValue}`, 135, 148 + 8 * i++, {
+                maxWidth: 69,
+              })
+        )
+      ) : (
+        <></>
+      );
+      i = 0;
+    }
 
-    doc.text(`${viewedEmployee.empBand}`, 45, 156);
-    doc.text(`${viewedEmployee.empGraduation}`, 45, 162);
-    doc.text(`${viewedEmployee.empGraduationUniversity}`, 45, 169);
-    doc.text(`${viewedEmployee.empPostGraduation}`, 45, 176);
-    doc.text(`${viewedEmployee.empPostGraduationUniversity}`, 45, 182.5);
+    //Professional
+    doc.text(`${viewedEmployee.empBand}`, 45, 176.5);
+    doc.text(`${viewedEmployee.empGraduation}`, 45, 183);
+    doc.text(`${viewedEmployee.empGraduationUniversity}`, 45, 190);
+    doc.text(`${viewedEmployee.empPostGraduation}`, 45, 197);
+    doc.text(`${viewedEmployee.empPostGraduationUniversity}`, 45, 204.5);
+    {
+      viewedEmployee.professionalDetails ? (
+        viewedEmployee.professionalDetails.map((prof) =>
+          doc.text(`${prof.fieldName}:`, 100, 176 + 7 * i++, { maxWidth: 30 })
+        )
+      ) : (
+        <></>
+      );
+      i = 0;
+    }
+    {
+      viewedEmployee.professionalDetails ? (
+        viewedEmployee.professionalDetails.map((prof) =>
+          prof.fieldType === "date"
+            ? doc.text(
+                `${new Date(prof.fieldValue).toDateString().slice(4)}`,
+                135,
+                176 + 7 * i++,
+                { maxWidth: 69 }
+              )
+            : doc.text(`${prof.fieldValue}`, 135, 176 + 7 * i++, {
+                maxWidth: 69,
+              })
+        )
+      ) : (
+        <></>
+      );
+      i = 0;
+    }
 
-    doc.text(`${viewedEmployee.empPrimaryCapability}`, 45, 198.5);
-    doc.text(`${viewedEmployee.empSkillSet}`, 45, 205.5);
-    doc.text(`${viewedEmployee.empCertifications}`, 45, 212.5);
+    //Skills and Qualifications
+    doc.text(`${viewedEmployee.empPrimaryCapability}`, 45, 224, {
+      maxWidth: 50,
+      lineHeightFactor: 1,
+    });
+    doc.text(`${viewedEmployee.empSkillSet}`, 45, 232, {
+      maxWidth: 50,
+      lineHeightFactor: 1,
+    });
+    doc.text(`${viewedEmployee.empCertifications}`, 45, 239.5, {
+      maxWidth: 50,
+      lineHeightFactor: 1,
+    });
+    {
+      viewedEmployee.skillsDetails ? (
+        viewedEmployee.skillsDetails.map((skill) =>
+          skill.fieldType === "date"
+            ? doc.text(
+                `${new Date(skill.fieldValue).toDateString().slice(4)}`,
+                135,
+                224 + 7 * i++,
+                { maxWidth: 69 }
+              )
+            : doc.text(`${skill.fieldValue}`, 135, 224 + 7 * i++, {
+                maxWidth: 69,
+              })
+        )
+      ) : (
+        <></>
+      );
+      i = 0;
+    }
+
+    //Extra Labels
+    doc.setTextColor("#161F3C");
+    {
+      viewedEmployee.personalDetails ? (
+        viewedEmployee.personalDetails.map((person) =>
+          doc.text(`${person.fieldName}:`, 100, 148 + 8 * i++, { maxWidth: 30 })
+        )
+      ) : (
+        <></>
+      );
+      i = 0;
+    }
+    {
+      viewedEmployee.professionalDetails ? (
+        viewedEmployee.professionalDetails.map((prof) =>
+          doc.text(`${prof.fieldName}:`, 100, 176 + 7 * i++, { maxWidth: 30 })
+        )
+      ) : (
+        <></>
+      );
+      i = 0;
+    }
+    {
+      viewedEmployee.skillsDetails ? (
+        viewedEmployee.skillsDetails.map((skill) =>
+          doc.text(`${skill.fieldName}:`, 100, 224 + 7 * i++, { maxWidth: 30 })
+        )
+      ) : (
+        <></>
+      );
+      i = 0;
+    }
 
     doc.save(`${viewedEmployee.empName}`);
   };
@@ -143,6 +257,7 @@ const ViewProfile = () => {
                 },
               }}
             >
+              <PictureAsPdfIcon sx={{ marginRight: 1 }} />
               Download as PDF
             </Button>
           ) : (

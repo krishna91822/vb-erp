@@ -188,6 +188,7 @@ const Review = () => {
             width: "100%-1",
             backgroundColor: "textColor.light",
             padding: 1,
+            marginTop: 1,
           }}
         >
           <CustomGridBox
@@ -243,7 +244,7 @@ const Review = () => {
         </Box>
       </Container>
       <Modal open={openModalForReview} onClose={handleCloseModalForReview}>
-        <ModalBoxItem>
+        <ModalBoxItem sx={{ height: "auto" }}>
           <Box
             sx={{
               width: 1,
