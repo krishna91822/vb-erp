@@ -28,13 +28,7 @@ import {
 } from "@mui/material/colors";
 
 const PersonalEditable = (props) => {
-  const {
-    empData,
-    setEmpData,
-    personalDetails,
-    setPersonalDetails,
-    formValidation,
-  } = props;
+  const { empData, setEmpData, personalDetails, setPersonalDetails } = props;
 
   const {
     empConnections,
@@ -172,10 +166,6 @@ const PersonalEditable = (props) => {
           <ContentBox>
             <ContentTypo>{personal.personalEmail}</ContentTypo>
             <CustomTextField
-              error={formValidation.personalEmail}
-              helperText={
-                formValidation.personalEmail ? "Enter valid email address" : ""
-              }
               placeholder="Enter personal email"
               autoComplete="off"
               required
@@ -184,14 +174,15 @@ const PersonalEditable = (props) => {
               value={empPersonalEmail ? empPersonalEmail : ""}
               type="email"
               name="empPersonalEmail"
-              onChange={handleChange}
+              onChange={(event) => {
+                handleChange(event);
+              }}
             />
           </ContentBox>
           <ContentBox>
             <ContentTypo>{personal.dob}</ContentTypo>
             <LocalizationProvider dateAdapter={AdapterDateFns}>
               <DesktopDatePicker
-                error={formValidation.dob}
                 inputFormat="dd/MM/yyyy"
                 value={empDob ? empDob : new Date()}
                 onChange={(newValue) => {
@@ -243,17 +234,13 @@ const PersonalEditable = (props) => {
           <ContentBox>
             <ContentTypo>{personal.connections}</ContentTypo>
             <CustomTextField
-              error={formValidation.connection}
-              helperText={
-                formValidation.connection ? "Connection should be number" : ""
-              }
               placeholder="enter no. of connections"
               autoComplete="off"
               required
               id="outlined-basic"
               variant="outlined"
               value={empConnections ? empConnections : ""}
-              type="text"
+              type="number"
               name="empConnections"
               onChange={handleChange}
             />
@@ -273,7 +260,9 @@ const PersonalEditable = (props) => {
                 }
                 type="text"
                 name="empAddressLineOne"
-                onChange={handleCurrentAddressChange}
+                onChange={(event) => {
+                  handleCurrentAddressChange(event);
+                }}
                 placeholder="Address line 1"
                 sx={{ width: "100%" }}
               />

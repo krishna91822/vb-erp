@@ -66,14 +66,14 @@ const CreateProfile = ({
     empEmail: "",
     empDepartment: "",
     empDesignation: "",
-    empDoj: new Date(),
+    empDoj: null,
     empReportingManager: "",
     empAboutMe: "",
     empBand: "",
     empCertifications: [],
-    empConnections: null,
+    empConnections: 0,
     empCurrentAddress: undefined,
-    empDob: new Date(),
+    empDob: null,
     empGraduation: "",
     empGraduationUniversity: "",
     empHobbies: [],
@@ -88,10 +88,7 @@ const CreateProfile = ({
   const [employee, setEmployee] = useState(
     editEmployeeData
       ? editEmployeeData
-      : {
-          ...empInitial,
-          empReportingManager: "sunilee",
-        }
+      : { ...empInitial, empDoj: new Date(), empReportingManager: "sunilee" }
   );
 
   const formValidation = {
@@ -224,14 +221,10 @@ const CreateProfile = ({
 
   const handleConfirm = (event) => {
     if (
-      formValidation.email ||
-      formValidation.personalEmail ||
-      formValidation.name ||
-      formValidation.department ||
-      formValidation.designation ||
-      formValidation.doj ||
-      formValidation.dob ||
-      formValidation.reportingManager
+      employee.empName === "" ||
+      employee.empEmail === "" ||
+      employee.empDoj === "" ||
+      employee.empDob === ""
     ) {
       alert("Fields are empty");
     } else {
