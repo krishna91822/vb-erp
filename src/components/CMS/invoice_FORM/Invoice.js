@@ -271,11 +271,14 @@ function Invoice(props) {
 
   let count = 0;
   useEffect(() => {
-    const totalinvoiceamount = filterinvoiceArr.map((val) => {
-      count = count + val.invoice_amount_received;
-    });
-
-    setsum(count);
+    if (invoice_amount !== undefined) {
+      const totalinvoiceamount = filterinvoiceArr.map((val) => {
+        count = count + val.invoice_amount_received;
+      });
+      setsum(count);
+    } else {
+      setsum(0);
+    }
   });
 
   return (
@@ -420,6 +423,7 @@ function Invoice(props) {
                   <Box sx={{ minWidth: 120 }}>
                     <FormControl fullWidth>
                       <TextField disabled={true} value={PO_amt - sum} />
+                      {console.log(PO_amt - sum)}
                     </FormControl>
                   </Box>
                   <span>{PoCurr}</span>
