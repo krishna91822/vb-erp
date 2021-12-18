@@ -83,7 +83,7 @@ const ProfileInfoEditable = (props) => {
           <TitleTypo sx={{ mt: 1, textTransform: "capitalize" }}>
             <TextField
               id="standard-basic"
-              placeholder="Full name"
+              placeholder="Full Name"
               variant="standard"
               type="text"
               name="empName"
