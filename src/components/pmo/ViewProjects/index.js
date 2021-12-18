@@ -83,7 +83,6 @@ const ViewProjects = () => {
   const changePage = (event) => {
     dispatch(getAllProjects(filterProjects, event.target.textContent));
   };
-
   return (
     <>
       <MainComponent>
@@ -279,16 +278,18 @@ const ViewProjects = () => {
                       />
                     </TableCell>
                     <TableCell align="left">
-                      <TextField
-                        variant="standard"
-                        type="text"
-                        placeholder="Project Status"
-                        name="vbProjectStatus"
-                        onChange={filterData}
-                        onKeyPress={filterData}
-                        value={filters.vbProjectStatus}
-                        inputProps={{ style: { fontSize: "small" } }}
-                      />
+                      {filterProjects === "others" && (
+                        <TextField
+                          variant="standard"
+                          type="text"
+                          placeholder="Project Status"
+                          name="vbProjectStatus"
+                          onChange={filterData}
+                          onKeyPress={filterData}
+                          value={filters.vbProjectStatus}
+                          inputProps={{ style: { fontSize: "small" } }}
+                        />
+                      )}
                     </TableCell>
                     <TableCell align="left"></TableCell>
                   </TableRow>
