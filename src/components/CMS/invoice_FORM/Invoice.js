@@ -35,6 +35,7 @@ import {
   fetchSpecificINVOICE,
   paginationFetchInvoice,
 } from "../../../store/CMS/INVOICE-actions";
+import validateInvoice from "./validateInvoice";
 import { Update_INVOICE } from "../../../store/CMS/INVOICE-actions";
 import { fetchPO_SOW_data } from "../../../store/CMS/POSOW-actions";
 import { fetch_INVOICE_data } from "../../../store/CMS/INVOICE-actions";
@@ -111,6 +112,7 @@ function Invoice(props) {
     ReadClientFinController
   );
   const [PoCurr, setPoCurr] = useState("");
+  const [errors, setErrors] = useState({});
   const [clientFinControllerArr, setClientFinControllerArr] =
     useState(clientFinController);
   const [poId, setPoId] = useState("");
@@ -119,7 +121,7 @@ function Invoice(props) {
   const [invoice_raised, setInvoiceRaised] = React.useState(Readinvoiceraised);
   const [invoice_amount, setinvoiceAmount] = React.useState(Readinvoiceamount);
   const [Vb_Bank_Acc, setVbbankacc] = React.useState(ReadVbBankAcc);
-  const [Date_, setDate] = React.useState(ReadDate);
+  const [Date_, setDate] = React.useState(undefined);
 
   const [invoicereceived, setinvoicereceived] = useState(false);
   const [editTglCheckedState, seteditTglCheckedState] = React.useState(
@@ -146,8 +148,11 @@ function Invoice(props) {
       setClientFinController(filteredArr[0].client_finance_controller);
       setClientSponsor(filteredArr[0].client_sponsor);
       setInvoiceRaised(filteredArr[0].invoice_raised);
+      console.log(filteredArr[0].invoice_amount_received);
       setinvoiceAmount(filteredArr[0].invoice_amount_received);
-      setDate(filteredArr[0].amount_received_on);
+      filteredArr[0].amount_received_on !== undefined
+        ? setDate(filteredArr[0].amount_received_on)
+        : setDate(null);
       setVbbankacc(filteredArr[0].vb_bank_account);
       setTargetedResources(filteredArr[0].PO_Id.Targetted_Resources);
       setTargetedAllocation(filteredArr[0].PO_Id.Targeted_Res_AllocationRate);
@@ -161,7 +166,16 @@ function Invoice(props) {
       }
     }
   }, []);
-
+  useEffect(() => {
+    if (invoice_raised === "Yes") {
+      setInvoiceRaisedYesNo("Yes");
+    }
+  }, [editTglCheckedState]);
+  useEffect(() => {
+    if (!invoicereceived) {
+      setinvoiceAmount(null);
+    }
+  }, [invoicereceived]);
   const handleClientChange = (event) => {
     setPersonName(event.target.value);
   };
@@ -202,6 +216,7 @@ function Invoice(props) {
     setinvoicereceived(!invoicereceived);
   };
   const updatehandler = (e) => {
+    new Date(Date_).getFullYear();
     const DataToSend = {
       PO_Id: poId,
       client_sponsor: ClientSponsor,
@@ -209,11 +224,25 @@ function Invoice(props) {
       invoice_raised: invoice_raised,
       invoice_amount_received: invoice_amount,
       vb_bank_account: Vb_Bank_Acc,
-      amount_received_on: new Date(Date_),
+      amount_received_on:
+        new Date(Date_).getFullYear() === 1970 ? null : new Date(Date_),
       invoice_received: invoicereceived ? "Yes" : "No",
     };
-
-    dispatch(Update_INVOICE(DataToSend, params.id));
+    const DataToValidate = {
+      invoice_received: invoicereceived ? "Yes" : "No",
+      invoice_amount_received: invoice_amount,
+      PO_amt: PO_amt,
+      vb_bank_account: Vb_Bank_Acc,
+      amount_received_on:
+        new Date(Date_).getFullYear() === 1970 ? null : new Date(Date_),
+    };
+    const all_errors = validateInvoice(DataToValidate);
+    setErrors(all_errors);
+    if (Object.keys(all_errors).length === 0) {
+      dispatch(Update_INVOICE(DataToSend, params.id));
+    } else {
+      alert("Error\nThere may be some missing inputs or bad inputs");
+    }
   };
 
   useEffect(() => {
@@ -261,7 +290,7 @@ function Invoice(props) {
     } else {
       setsum(0);
     }
-  });
+  }, [filteredArr]);
 
   return (
     <div className="maincontainer">
@@ -306,7 +335,7 @@ function Invoice(props) {
                   onChange={handleEditTglChange}
                   disabled={
                     invoice_raised === "Yes" &&
-                    invoice_amount !== undefined &&
+                    invoice_amount &&
                     editTglCheckedState === false
                   }
                 />
@@ -405,7 +434,6 @@ function Invoice(props) {
                   <Box sx={{ minWidth: 120 }}>
                     <FormControl fullWidth>
                       <TextField disabled={true} value={PO_amt - sum} />
-                      {console.log(PO_amt - sum)}
                     </FormControl>
                   </Box>
                   <span>{PoCurr}</span>
@@ -438,7 +466,7 @@ function Invoice(props) {
         </Grid>
         <hr />
 
-        <Accordion>
+        {/* <Accordion>
           <AccordionSummary
             expandIcon={<ExpandMoreIcon />}
             aria-controls="panel1a-content"
@@ -493,7 +521,7 @@ function Invoice(props) {
               </TableContainer>
             </Typography>
           </AccordionDetails>
-        </Accordion>
+        </Accordion> */}
         <h3>Invoice Status</h3>
         <hr />
         <Grid container>
@@ -570,8 +598,7 @@ function Invoice(props) {
               <br />
               <BasicDatePicker
                 onChange={handleDate}
-                inputFormat="MM/dd/yyyy"
-                value={Date_}
+                value={Date_ ? new Date(Date_) : null}
                 disabled={
                   !invoicereceived ||
                   invoice_raised_yesno === "No" ||
