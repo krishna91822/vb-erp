@@ -19,15 +19,16 @@ import {
 const Allocation = () => {
   const [pressed, setPressed] = useState(false);
   const [bench, setBench] = useState(false);
-  const [sortValue, setSortValue] = useState("");
+  const [sortValue, setSortValue] = useState("allocationStartDate");
 
   const ChangeAllocation = (event) => {
-    setSortValue("");
     const AllocatedValue = event.target.value;
     setPressed(false);
     if (AllocatedValue === "Sort by on Bench") {
+      setSortValue("empId");
       setBench(true);
     } else {
+      setSortValue("allocationStartDate");
       setBench(false);
     }
   };
@@ -59,13 +60,13 @@ const Allocation = () => {
             )}
             {!bench ? (
               <FormControl size="small">
-                <InputLabel id="filterBy">Sort by</InputLabel>
+                <InputLabel id="Sort by">Sort by</InputLabel>
                 <Select
-                  defaultValue="allocationStartDate"
-                  labelId="filterBy"
+                  value={sortValue}
+                  labelId="Sort by"
                   id="select"
                   data-test="sortby-dropdown"
-                  label="filterBy"
+                  label="Sort by"
                   // color="orange"
                   onChange={handleSortValue}
                   sx={{ fontSize: "14px", width: "150px" }}
@@ -91,10 +92,10 @@ const Allocation = () => {
               <FormControl size="small">
                 <InputLabel id="Sort">Sort by</InputLabel>
                 <Select
-                  defaultValue="empId"
-                  labelId="Sort"
+                  value={sortValue}
                   data-test="sortby-dropdown"
                   label="Sort by"
+                  id="select"
                   onChange={handleSortValue}
                   sx={{ fontSize: "14px", width: "150px" }}
                 >
@@ -102,7 +103,7 @@ const Allocation = () => {
                     EmpId
                   </MenuItem>
                   <MenuItem value="empName" sx={{ fontSize: "14px" }}>
-                    Emp-Name
+                    EmpName
                   </MenuItem>
                   <MenuItem
                     value="remainingAllocation"

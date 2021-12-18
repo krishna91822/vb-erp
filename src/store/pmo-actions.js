@@ -198,6 +198,7 @@ export const getAllClientData = (value) => {
 
 export const getAllocatedData = (filters, pageNo, sortedValue) => {
   return async (dispatch) => {
+    dispatch(uiActions.toggleLoader());
     const getData = async () => {
       let url = `/allocations/allocated/${sortedValue}?limit=10&page=${pageNo}`;
       if (filters.empId) url += `&empId=${filters.empId}`;
@@ -228,12 +229,16 @@ export const getAllocatedData = (filters, pageNo, sortedValue) => {
           message: error.message,
         })
       );
+    } finally {
+      dispatch(uiActions.toggleLoader());
     }
   };
 };
 
 export const getOnBench = (filters, pageNo, sortedValue) => {
   return async (dispatch) => {
+    dispatch(uiActions.toggleLoader());
+
     const getData = async () => {
       let url = `/allocations/onbench/${sortedValue}?limit=10&page=${pageNo}`;
       if (filters.empId) url += `&empId=${filters.empId}`;
@@ -258,6 +263,8 @@ export const getOnBench = (filters, pageNo, sortedValue) => {
           message: error.message,
         })
       );
+    } finally {
+      dispatch(uiActions.toggleLoader());
     }
   };
 };
@@ -289,6 +296,8 @@ export const getPercentageAllocated = (empId) => {
 
 export const getProjectById = (projectId) => {
   return async (dispatch) => {
+    dispatch(uiActions.toggleLoader());
+
     const getData = async () => {
       const response = await axios.get(`/projects/${projectId}`);
       if (response.status === "failure") {
@@ -320,6 +329,8 @@ export const getProjectById = (projectId) => {
           message: error.message,
         })
       );
+    } finally {
+      dispatch(uiActions.toggleLoader());
     }
   };
 };
@@ -348,6 +359,8 @@ export const deleteResource = (id) => {
 
 export const getAllProjectsBySroting = (type, sortedValue) => {
   return async (dispatch) => {
+    dispatch(uiActions.toggleLoader());
+
     const getData = async () => {
       const response = await axios.get(`/projects/${type}/${sortedValue}`);
       if (response.status === "failure") {
@@ -365,6 +378,8 @@ export const getAllProjectsBySroting = (type, sortedValue) => {
           message: error.message,
         })
       );
+    } finally {
+      dispatch(uiActions.toggleLoader());
     }
   };
 };
