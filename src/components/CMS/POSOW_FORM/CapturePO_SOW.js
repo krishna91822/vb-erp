@@ -12,8 +12,9 @@ import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import Autocomplete from "@mui/material/Autocomplete";
 import TextField from "@mui/material/TextField";
-import SimpleGrow from "./EmpList";
+
 import BasicDatePicker from "../invoice_FORM/date";
+import { Grid } from "@mui/material";
 import "./CapturePO_SOW.css";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -89,6 +90,9 @@ export const CapturePO_SOW = (props) => {
   const DocumentTypes = useSelector(
     (state) => state.CMS_state.inputFieldsData.DocumentTypes
   );
+  const allocationRateArr = useSelector(
+    (state) => state.CMS_state.allocationRate
+  );
 
   let DefaultClientName = null;
   let ReadProjectName = null;
@@ -115,7 +119,7 @@ export const CapturePO_SOW = (props) => {
     React.useState(clientFinController);
   const [typeName, setTypeName] = React.useState(ReadType);
   const [CurrName, setCurrName] = React.useState(ReadCurr);
-  const [DocTypes, setDocTypes] = React.useState(initDocTypes);
+  // const [DocTypes, setDocTypes] = React.useState(initDocTypes);
   const [remarks, setRemarks] = React.useState(Readremarks);
   const [PO_number, setPO_number] = React.useState(ReadPO_num);
   const [PO_amt, setPOAmt] = React.useState(ReadPO_amt);
@@ -153,7 +157,6 @@ export const CapturePO_SOW = (props) => {
       setRemarks(filteredArr[0].Remarks);
       setDocName(filteredArr[0].Document_Name);
       setStatus(filteredArr[0].Status);
-      setDocTypes(filteredArr[0].Document_Type);
       setProjectId(filteredArr[0].Project_Id);
       setPOSOWEndDate(new Date(filteredArr[0].POSOW_endDate));
       dispatch(
@@ -170,7 +173,6 @@ export const CapturePO_SOW = (props) => {
           Object.keys(filteredArr[0].Targetted_Resources)
         )
       );
-      // setTargetedResChkBox(Object.values(filteredArr[0].Targetted_Resources));
     }
   }, [filteredArr]);
   useEffect(() => {
@@ -203,9 +205,6 @@ export const CapturePO_SOW = (props) => {
   };
   const handleDateChange = (changedDate) => {
     setPOSOWEndDate(changedDate);
-  };
-  const handleDocTypesChange = (event) => {
-    setDocTypes(event.target.value);
   };
   const handleRemarksChange = (event) => {
     setRemarks(event.target.value);
@@ -247,23 +246,27 @@ export const CapturePO_SOW = (props) => {
 
   const submitForm = (event) => {
     event.preventDefault();
-    let testObjTargetedRes = {};
+    let selectedTargetedRes = {};
+    let selectedTargetedResAllocationRate = {};
     for (var i = 0; i < TargetedResChkBox.length; i++) {
-      testObjTargetedRes[targetedResources[i]] = TargetedResChkBox[i];
+      selectedTargetedRes[targetedResources[i]] = TargetedResChkBox[i];
+      if (TargetedResChkBox[i]) {
+        selectedTargetedResAllocationRate[targetedResources[i]] =
+          allocationRateArr[i];
+      }
     }
-
+    // console.log(selectedTargetedResAllocationRate);
     const DataToSend = {
       Project_Id: projectId,
-      Client_Name: clientName.clientName,
-      Project_Name: projectName.projectName,
+      Client_Name: clientName ? clientName.clientName : "",
+      Project_Name: projectName ? projectName.projectName : "",
       Client_Sponser: clientProjectSponsor,
       Client_Finance_Controller: clientFinanceController,
-      Targetted_Resources: testObjTargetedRes,
+      Targetted_Resources: selectedTargetedRes,
+      Targeted_Res_AllocationRate: selectedTargetedResAllocationRate,
       Status: status,
       Type: typeName,
-      Document_Type: DocTypes,
       Document_Name: DocName,
-      // PO_Number: PO_number,
       PO_Amount: PO_amt,
       POSOW_endDate: new Date(selectedDate),
       Currency: CurrName,
@@ -394,8 +397,12 @@ export const CapturePO_SOW = (props) => {
                       }
                       data-testid="clientNameDropdown-ChangeTest"
                       sx={{ width: 400 }}
+                      error={true}
                       renderInput={(params) => (
-                        <TextField {...params} label="Client Name" />
+                        <TextField
+                          {...params}
+                          error={errors.Client_Name ? true : false}
+                        />
                       )}
                     />
                   </div>
@@ -426,7 +433,10 @@ export const CapturePO_SOW = (props) => {
                       data-testid="projectDropdown-ChangeTest"
                       sx={{ width: 400 }}
                       renderInput={(params) => (
-                        <TextField {...params} label="Projects" />
+                        <TextField
+                          {...params}
+                          error={errors.Project_Name ? true : false}
+                        />
                       )}
                     />
                   </div>
@@ -494,43 +504,91 @@ export const CapturePO_SOW = (props) => {
               </div>
 
               <hr className="projectInfoSeperator" />
-              <div className="DocInfoinputBoxesRowOne">
-                <div className="txtBox TypeDropdown ">
-                  <div>
-                    <FormControl sx={{ m: 1 }} className="inputField">
-                      <InputLabel id="demo-multiple-name-label">
-                        Type
-                      </InputLabel>
-                      <Select
-                        value={typeName}
-                        onChange={handleTypeChange}
-                        input={<OutlinedInput label="Name" />}
-                        MenuProps={MenuProps}
-                        data-test="Doc-Type-dropdown"
-                        inputProps={{ "data-testid": "Doc-Type-dropdown" }}
-                        error={errors.Type ? true : false}
-                        disabled={props.editBtn ? true : false}
+
+              <Grid container>
+                <Grid item lg={6} md={6} sm={12} xs={12} className="finalgrid">
+                  <InputLabel id="demo-multiple-name-label">
+                    <strong>Type</strong>
+                  </InputLabel>
+                  <Select
+                    className="finalinput"
+                    value={typeName}
+                    onChange={handleTypeChange}
+                    input={<OutlinedInput label="Name" />}
+                    MenuProps={MenuProps}
+                    data-test="Doc-Type-dropdown"
+                    inputProps={{ "data-testid": "Doc-Type-dropdown" }}
+                    error={errors.Type ? true : false}
+                    disabled={props.editBtn ? true : false}
+                  >
+                    {types.map((name) => (
+                      <MenuItem
+                        key={name}
+                        value={name}
+                        style={getStyles(name, typeName, theme)}
                       >
-                        {types.map((name) => (
-                          <MenuItem
-                            key={name}
-                            value={name}
-                            style={getStyles(name, typeName, theme)}
-                          >
-                            {name}{" "}
-                          </MenuItem>
-                        ))}
-                      </Select>
-                    </FormControl>
-                  </div>
-                </div>
-                {props.editBtn ? (
-                  <div className="txtBox PoNoTxtBox">
+                        {name}{" "}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </Grid>
+
+                <Grid item lg={6} md={6} sm={12} xs={12} className="finalgrid">
+                  <InputLabel id="demo-multiple-name-label">
+                    <strong>Currency</strong>
+                  </InputLabel>
+                  <Select
+                    className="finalinput"
+                    value={CurrName}
+                    onChange={handleCurrencyChange}
+                    input={<OutlinedInput label="Currency" />}
+                    variant="outlined"
+                    MenuProps={MenuProps}
+                    data-test="currency-dropdown"
+                    inputProps={{
+                      "data-testid": "currencyDropdown-onChangeTest",
+                    }}
+                    error={errors.Currency ? true : false}
+                    disabled={
+                      props.editBtn && !editTglCheckedState ? true : false
+                    }
+                  >
+                    {currencies.map((name) => (
+                      <MenuItem
+                        key={name}
+                        value={name}
+                        style={getStyles(name, typeName, theme)}
+                      >
+                        {name}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </Grid>
+                <Grid item lg={6} md={6} sm={12} xs={12} className="finalgrid">
+                  <InputLabel id="demo-multiple-name-label">
+                    <strong>{typeName} Amount</strong>
+                  </InputLabel>
+                  <TextField
+                    className="finalinput"
+                    variant="outlined"
+                    value={PO_amt}
+                    onChange={handlePOAmtTxtBoxChange}
+                    inputProps={{ "data-testid": "po-sow-amt" }}
+                    error={errors.PO_Amount ? true : false}
+                    helperText={errors.PO_Number ? errors.PO_Amount : ""}
+                    disabled={
+                      props.editBtn && !editTglCheckedState ? true : false
+                    }
+                  />
+                </Grid>
+                <Grid item lg={6} md={6} sm={12} xs={12} className="finalgrid">
+                  {props.editBtn ? (
                     <div>
+                      <InputLabel id="demo-multiple-name-label">
+                        <strong>{typeName} Number</strong>
+                      </InputLabel>
                       <TextField
-                        className="inputTxtField inputField"
-                        id="outlined-basic"
-                        label={typeName + " Number"}
+                        className="finalinput"
                         variant="outlined"
                         value={PO_number}
                         onChange={handlePoNumTxtBoxChange}
@@ -541,221 +599,143 @@ export const CapturePO_SOW = (props) => {
                         disabled={props.editBtn ? true : false}
                       />
                     </div>
-                  </div>
-                ) : (
-                  <div></div>
-                )}
-                <br />
-                <div className="txtBox CurrDropdown">
-                  <div>
-                    <FormControl sx={{ m: 1 }} className="inputField">
-                      <InputLabel id="demo-multiple-name-label">
-                        Currency
-                      </InputLabel>
-                      <Select
-                        className="inputField"
-                        value={CurrName}
-                        onChange={handleCurrencyChange}
-                        input={<OutlinedInput label="Currency" />}
-                        variant="outlined"
-                        MenuProps={MenuProps}
-                        data-test="currency-dropdown"
-                        inputProps={{
-                          "data-testid": "currencyDropdown-onChangeTest",
-                        }}
-                        error={errors.Currency ? true : false}
-                        disabled={
-                          props.editBtn && !editTglCheckedState ? true : false
-                        }
-                      >
-                        {currencies.map((name) => (
-                          <MenuItem
-                            key={name}
-                            value={name}
-                            style={getStyles(name, typeName, theme)}
-                          >
-                            {name}
-                          </MenuItem>
-                        ))}
-                      </Select>
-                    </FormControl>
-                  </div>
-                </div>
-                <div className="txtBox PoAmtTxtBox">
-                  <div>
-                    <TextField
-                      className="inputTxtField inputField "
-                      id="outlined-basic"
-                      label={typeName + " Amount"}
-                      variant="outlined"
-                      value={PO_amt}
-                      onChange={handlePOAmtTxtBoxChange}
-                      inputProps={{ "data-testid": "po-sow-amt" }}
-                      error={errors.PO_Amount ? true : false}
-                      helperText={errors.PO_Number ? errors.PO_Amount : ""}
-                      disabled={
-                        props.editBtn && !editTglCheckedState ? true : false
-                      }
-                    />
-                  </div>
-                </div>
-              </div>
-              <div className="newRowtwo">
-                <div className="PO-endDate ">
-                  <label>
-                    <strong>{typeName + " End Date"}</strong>
-                  </label>
-                  <div>
-                    <BasicDatePicker
-                      className="inputField txtBox"
-                      maxDate="POSOW"
-                      label={typeName + " End Date"}
-                      value={selectedDate}
-                      onChange={handleDateChange}
-                      helperText="Choose Date"
-                      disabled={
-                        props.editBtn && !editTglCheckedState ? true : false
-                      }
-                      data-testid="BasicdatePicker"
-                    />
-                  </div>
-                </div>
-              </div>
-              <div className="DocInfoInputBoxesRowTow">
-                <div className="txtBox PoAmtTxtBox">
-                  <div>
-                    <TextField
-                      className="inputTxtField"
-                      sx={{ m: 1, width: 400 }}
-                      id="outlined-basic"
-                      label="uploaded Doc"
-                      variant="outlined"
-                      value={DocName}
-                      data-test="uploaded-doc-name-txtBox"
-                      error={errors.Document_Name ? true : false}
-                      disabled={true}
-                    />
-                  </div>
-                </div>
-                <div className="DocTypeDropdown">
-                  <div>
-                    <FormControl
-                      sx={{ m: 1, width: 300 }}
-                      className="inputField"
-                    >
-                      <InputLabel id="demo-multiple-name-label">
-                        Doc type
-                      </InputLabel>
-                      <Select
-                        className="inputField"
-                        value={DocTypes}
-                        onChange={handleDocTypesChange}
-                        input={<OutlinedInput label="Doc type" />}
-                        MenuProps={MenuProps}
-                        data-test="doc-typeForUpload-dropdown"
-                        inputProps={{
-                          "data-testid": "UploadDocTypeDropdown",
-                        }}
-                        error={errors.Document_Type ? true : false}
-                        disabled={
-                          props.editBtn && !editTglCheckedState ? true : false
-                        }
-                      >
-                        {DocumentTypes.map((name) => (
-                          <MenuItem
-                            key={name}
-                            value={name}
-                            style={getStyles(name, typeName, theme)}
-                          >
-                            {name}
-                          </MenuItem>
-                        ))}
-                      </Select>
-                    </FormControl>
-                  </div>
-                </div>
-              </div>
-              <div className="docInfoBottomFields">
-                <div className="posow-SaveButton">
-                  {(props.editBtn && editTglCheckedState) || !props.editBtn ? (
-                    <Button
-                      variant="contained"
-                      component="label"
-                      style={{ backgroundColor: "#f57c00", color: "#FFFFFF" }}
-                      disabled={
-                        props.editBtn && !editTglCheckedState ? true : false
-                      }
-                    >
-                      Upload File
-                      <input
-                        type="file"
-                        hidden
-                        onChange={handleUploadBtnClick}
-                        accept={DocTypes}
-                        data-test="upload-file-input"
-                        data-testid="upload-file-input-ClickTest"
-                        disabled={DocTypes === "" ? true : false}
-                      />
-                    </Button>
                   ) : (
-                    <Link
-                      to="/files/testFile.txt"
-                      target="_blank"
-                      download
-                      style={{ textDecoration: "none" }}
-                      data-test="download-link"
-                    >
+                    <div></div>
+                  )}
+                </Grid>
+              </Grid>
+
+              <hr className="projectInfoSeperator" />
+
+              <Grid container>
+                <Grid item lg={6} md={6} sm={12} xs={12} className="finalgrid">
+                  <InputLabel id="demo-multiple-name-label">
+                    <strong>{typeName + " End Date"}</strong>
+                  </InputLabel>
+                  <BasicDatePicker
+                    className="finalinput"
+                    className="inputField txtBox"
+                    maxDate="POSOW"
+                    label={typeName + " End Date"}
+                    value={selectedDate}
+                    onChange={handleDateChange}
+                    helperText="Choose Date"
+                    disabled={
+                      props.editBtn && !editTglCheckedState ? true : false
+                    }
+                    data-testid="BasicdatePicker"
+                  />
+                </Grid>
+                <Grid item lg={6} md={6} sm={12} xs={12} className="finalgrid">
+                  <InputLabel id="demo-multiple-name-label">
+                    <strong>Uploaded Document</strong>
+                  </InputLabel>
+                  <TextField
+                    className="finalinput"
+                    sx={{ m: 1, width: 400 }}
+                    id="outlined-basic"
+                    variant="outlined"
+                    value={DocName}
+                    data-test="uploaded-doc-name-txtBox"
+                    error={errors.Document_Name ? true : false}
+                    disabled={true}
+                  />
+                  <div className="posow-SaveButton">
+                    {(props.editBtn && editTglCheckedState) ||
+                    !props.editBtn ? (
                       <Button
                         variant="contained"
-                        style={{ backgroundColor: "03A9F4", color: "#FFFFFF" }}
+                        component="label"
+                        style={{ backgroundColor: "#f57c00", color: "#FFFFFF" }}
+                        disabled={
+                          props.editBtn && !editTglCheckedState ? true : false
+                        }
                       >
-                        Download
+                        Browse File
+                        <input
+                          type="file"
+                          hidden
+                          onChange={handleUploadBtnClick}
+                          data-test="upload-file-input"
+                          data-testid="upload-file-input-ClickTest"
+                        />
                       </Button>
-                    </Link>
-                  )}
-                </div>
-                <div className="posow-txtBox">
-                  <label>
+                    ) : (
+                      <Link
+                        to="/files/testFile.txt"
+                        target="_blank"
+                        download
+                        style={{ textDecoration: "none" }}
+                        data-test="download-link"
+                      >
+                        <Button
+                          variant="contained"
+                          style={{
+                            backgroundColor: "03A9F4",
+                            color: "#FFFFFF",
+                          }}
+                        >
+                          Download
+                        </Button>
+                      </Link>
+                    )}
+                  </div>
+                </Grid>
+              </Grid>
+
+              <Grid container>
+                <Grid
+                  item
+                  lg={12}
+                  md={12}
+                  sm={12}
+                  xs={12}
+                  className="finalgrid"
+                >
+                  <InputLabel id="demo-multiple-name-label">
                     <strong>Remarks/Comments</strong>
-                  </label>
-                  <Box
-                    component="form"
-                    sx={{ "& .MuiTextField-root": { m: 1, width: "25ch" } }}
-                    noValidat
-                    autoComplete="off"
-                  >
-                    <TextField
-                      id="outlined-multiline-static"
-                      label="Remarks"
-                      multiline
-                      rows={4}
-                      value={remarks}
-                      onChange={handleRemarksChange}
-                      data-test="comments-remarks-txtBox"
-                      inputProps={{ "data-testid": "RemarksTxtBox" }}
-                      error={errors.Remarks ? true : false}
-                      disabled={
-                        props.editBtn && !editTglCheckedState ? true : false
-                      }
-                    />
-                  </Box>
-                </div>
-                {props.editBtn && status === "Drafted" ? (
-                  <Button
-                    variant="contained"
-                    component="label"
-                    style={{ backgroundColor: "03A9F4", color: "#FFFFFF" }}
-                    onClick={handleSendForApprovalBtnOnClk}
-                    disabled={editTglCheckedState ? true : false}
-                    data-test="sendForApproval-btn"
-                    data-testid="sendForApproval-btn-ClickTest"
-                  >
-                    Send For Approval
-                  </Button>
-                ) : (
-                  <div></div>
-                )}
-              </div>
+                  </InputLabel>
+                  <TextField
+                    className="finalinput"
+                    id="outlined-multiline-static"
+                    multiline
+                    rows={4}
+                    value={remarks}
+                    onChange={handleRemarksChange}
+                    data-test="comments-remarks-txtBox"
+                    inputProps={{ "data-testid": "RemarksTxtBox" }}
+                    error={errors.Remarks ? true : false}
+                    disabled={
+                      props.editBtn && !editTglCheckedState ? true : false
+                    }
+                  />
+                </Grid>
+                <Grid
+                  item
+                  lg={12}
+                  md={12}
+                  sm={12}
+                  xs={12}
+                  className="finalgrid"
+                >
+                  {props.editBtn && status === "Drafted" ? (
+                    <Button
+                      className="finalinput"
+                      variant="contained"
+                      component="label"
+                      style={{ backgroundColor: "03A9F4", color: "#FFFFFF" }}
+                      onClick={handleSendForApprovalBtnOnClk}
+                      disabled={editTglCheckedState ? true : false}
+                      data-test="sendForApproval-btn"
+                      data-testid="sendForApproval-btn-ClickTest"
+                    >
+                      SEND FOR APPROVAL
+                    </Button>
+                  ) : (
+                    <div></div>
+                  )}
+                </Grid>
+              </Grid>
             </Box>
           </Container>
         </React.Fragment>

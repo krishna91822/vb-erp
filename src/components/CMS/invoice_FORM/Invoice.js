@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { useParams } from "react-router-dom";
 import "./Invoice.css";
 import { useDispatch, useSelector } from "react-redux";
@@ -31,6 +32,7 @@ import BasicDatePicker from "./date";
 import React, { useEffect } from "react";
 import {
   createNew_INVOICE,
+  fetchSpecificINVOICE,
   paginationFetchInvoice,
 } from "../../../store/CMS/INVOICE-actions";
 import { Update_INVOICE } from "../../../store/CMS/INVOICE-actions";
@@ -51,21 +53,20 @@ function Invoice(props) {
   const isRedirect = useSelector((state) => state.INVOICE_state.redirect);
   const allPOSOWs = useSelector((state) => state.CMS_state.poSowData);
   const allINVOICE = useSelector((state) => state.INVOICE_state.invoiceData);
-  console.log(isRedirect);
+
   useEffect(() => {
     if (isRedirect) {
       navigate("/invoices");
       dispatch(invoiceActions.setRedirect(false));
     }
   }, [isRedirect]);
-
+  console.log(allPOSOWs);
   const allProjects = allPOSOWs.map((val) => {
     return val.Project_Name;
   });
   const allPOId = allINVOICE.map((val) => {
     return val.PO_Id;
   });
-
   let filteredArr = useSelector((state) => state.INVOICE_state.dataByID);
 
   const names = useSelector(
@@ -99,6 +100,8 @@ function Invoice(props) {
   let Readinvoiceamount = "";
   let ReadVbBankAcc = "";
   let ReadDate = null;
+  let readtargetedResources = "";
+  let readtargetedAllocation = "";
 
   const [personName, setPersonName] = React.useState(ReadPersonName);
   const [projectName, setProjectName] = React.useState(ReadProjectName);
@@ -122,6 +125,12 @@ function Invoice(props) {
   const [editTglCheckedState, seteditTglCheckedState] = React.useState(
     props.toggleState
   );
+  const [Targetted_Resources, setTargetedResources] = React.useState(
+    readtargetedResources
+  );
+  const [TargettedAllocation, setTargetedAllocation] = React.useState(
+    readtargetedAllocation
+  );
 
   const [invoice_raised_yesno, setInvoiceRaisedYesNo] = React.useState("No");
   let [sum, setsum] = useState(0);
@@ -138,8 +147,14 @@ function Invoice(props) {
       setinvoiceAmount(filteredArr[0].invoice_amount_received);
       setDate(filteredArr[0].amount_received_on);
       setVbbankacc(filteredArr[0].vb_bank_account);
+      setTargetedResources(filteredArr[0].PO_Id.Targetted_Resources);
+      setTargetedAllocation(filteredArr[0].PO_Id.Targeted_Res_AllocationRate);
     }
   }, [filteredArr]);
+  const targetedResourcesName = Object.keys(TargettedAllocation);
+  const percentageAllocation = Object.values(TargettedAllocation);
+
+  console.log(typeof targetedResourcesName);
 
   useEffect(() => {
     if (props.editBtn && filteredArr[0].PO_Id !== undefined) {
@@ -153,14 +168,18 @@ function Invoice(props) {
       setinvoiceAmount(filteredArr[0].invoice_amount_received);
       setDate(filteredArr[0].amount_received_on);
       setVbbankacc(filteredArr[0].vb_bank_account);
+      setTargetedResources(filteredArr[0].PO_Id.Targetted_Resources);
+      setTargetedAllocation(filteredArr[0].PO_Id.Targeted_Res_AllocationRate);
       setPoId(filteredArr[0].PO_Id._id);
     }
   }, [filteredArr]);
   useEffect(() => {
-    if (invoice_raised === "Yes" && invoice_amount !== undefined) {
-      setinvoicereceived(true);
+    if (invoicereceived) {
+      if (invoice_raised === "Yes" && invoice_amount !== undefined) {
+        setinvoicereceived(true);
+      }
     }
-  });
+  }, []);
 
   const handleClientChange = (event) => {
     setPersonName(event.target.value);
@@ -199,9 +218,7 @@ function Invoice(props) {
     setDate(Date);
   };
   const invoicereceivedhandler = (e) => {
-    if (invoice_raised_yesno === "Yes") {
-      setinvoicereceived(true);
-    }
+    setinvoicereceived(!invoicereceived);
   };
   const updatehandler = (e) => {
     const DataToSend = {
@@ -262,6 +279,7 @@ function Invoice(props) {
 
     setsum(count);
   });
+
   return (
     <div className="maincontainer">
       <Grid container>
@@ -304,9 +322,9 @@ function Invoice(props) {
                   checked={editTglCheckedState}
                   onChange={handleEditTglChange}
                   disabled={
-                    invoice_raised === "Yes" && invoice_amount !== undefined
-                      ? true
-                      : false
+                    invoice_raised === "Yes" &&
+                    invoice_amount !== undefined &&
+                    editTglCheckedState === false
                   }
                 />
                 <span className="slider round"></span>
@@ -412,42 +430,38 @@ function Invoice(props) {
             </Grid>
           </Grid>
           <Grid item lg={4} md={4} sm={12} xs={12}>
-            <table>
-              <thead>
-                <tr>
-                  <th>ID</th>
-                  <th>Res.Name</th>
-                  <th>%Allocation</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>1</td>
-                  <td>Harry P.</td>
-                  <td>100</td>
-                </tr>
-                <tr>
-                  <td>2</td>
-                  <td>Josh Calf</td>
-                  <td>100</td>
-                </tr>
-                <tr>
-                  <td>3</td>
-                  <td>Sumit Jha</td>
-                  <td>50</td>
-                </tr>
-                <tr>
-                  <td>4</td>
-                  <td>Zayn M</td>
-                  <td>100</td>
-                </tr>
-                <tr>
-                  <td>5</td>
-                  <td>Liam P</td>
-                  <td>100</td>
-                </tr>
-              </tbody>
-            </table>
+            <Table>
+              <TableHead>
+                <TableCell>Targeted Resources</TableCell>
+                <TableCell>Percentage Allocation</TableCell>
+              </TableHead>
+
+              <TableBody className="table-row-posow">
+                <TableRow
+                  style={{ textDecoration: "none" }}
+                  sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                >
+                  {targetedResourcesName.map((row, index) => (
+                    <TableCell
+                      component="th"
+                      scope="row"
+                      className="table-cell"
+                    >
+                      {row}
+                    </TableCell>
+                  ))}
+                  {percentageAllocation.map((row, index) => (
+                    <TableCell
+                      component="th"
+                      scope="row"
+                      className="table-cell"
+                    >
+                      {row}
+                    </TableCell>
+                  ))}
+                </TableRow>
+              </TableBody>
+            </Table>
           </Grid>
         </Grid>
         <hr />
@@ -468,7 +482,6 @@ function Invoice(props) {
                     <TableRow>
                       <TableCell>PO/SOW Order</TableCell>
                       <TableCell>Client Name</TableCell>
-
                       <TableCell>Invoice raised</TableCell>
                       <TableCell>Invoice Amount received</TableCell>
                       <TableCell>Bank Account</TableCell>
@@ -535,7 +548,7 @@ function Invoice(props) {
             <div className="invoicereceived">
               <span>Invoice Received</span>
               <Switch
-                disabled={invoice_raised_yesno === "No"}
+                disabled={invoice_raised_yesno === "No" || !editTglCheckedState}
                 onChange={invoicereceivedhandler}
                 checked={invoicereceived}
               />
@@ -548,8 +561,8 @@ function Invoice(props) {
                 <FormControl fullWidth>
                   <TextField
                     disabled={
-                      props.readonly ||
                       !invoicereceived ||
+                      !editTglCheckedState ||
                       invoice_raised_yesno === "No"
                     }
                     value={invoice_amount}
@@ -565,9 +578,9 @@ function Invoice(props) {
                 <FormControl fullWidth>
                   <Select
                     disabled={
-                      props.readonly ||
                       !invoicereceived ||
-                      invoice_raised_yesno === "No"
+                      invoice_raised_yesno === "No" ||
+                      !editTglCheckedState
                     }
                     value={Vb_Bank_Acc}
                     onChange={handlevbbankacc}
@@ -588,15 +601,10 @@ function Invoice(props) {
                 inputFormat="MM/dd/yyyy"
                 value={Date_}
                 disabled={
-                  props.readonly ||
                   !invoicereceived ||
-                  invoice_raised_yesno === "No"
+                  invoice_raised_yesno === "No" ||
+                  !editTglCheckedState
                 }
-                // disabled={
-                //   (props.readonly ||
-                //   invoicereceived ||
-                //   invoice_raised_yesno === "No") && editTglCheckedState
-                // }
               />
             </Grid>
           </div>

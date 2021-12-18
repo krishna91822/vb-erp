@@ -17,7 +17,7 @@ import {
 import UseForm from "./UseForm";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/material.css";
-import "../../assets/styles/FormStyles.css";
+import "../../assets/styles/ClientFormStyles.css";
 import { useSelector } from "react-redux";
 
 export default function AddressFields() {
@@ -147,7 +147,7 @@ export default function AddressFields() {
   });
 
   return (
-    <div className="contact-form">
+    <div className="cims-contact-form">
       <Box sx={{ width: "100%", typography: "body1" }}>
         <TabContext value={value}>
           <Box

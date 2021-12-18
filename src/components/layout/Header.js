@@ -39,6 +39,7 @@ const customStyles = {
     backgroundColor: "white",
     position: "fixed",
     width: "100%",
+    zIndex: 1000,
   },
 };
 

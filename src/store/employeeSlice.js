@@ -4,6 +4,7 @@ const INITIAL_STATE = {
   currentEmployee: null,
   inEditMode: false,
   createEmployee: null,
+  employees: [],
 };
 
 export const employeeSlice = createSlice({
@@ -19,10 +20,17 @@ export const employeeSlice = createSlice({
     createEmployee: (state, action) => {
       state.createEmployee = action.payload;
     },
+    addEmployees: (state, action) => {
+      state.employees = action.payload.employees;
+    },
   },
 });
 
-export const { setCurrentEmployee, toggleEditMode, createEmployee } =
-  employeeSlice.actions;
+export const {
+  setCurrentEmployee,
+  toggleEditMode,
+  createEmployee,
+  addEmployees,
+} = employeeSlice.actions;
 
 export default employeeSlice.reducer;

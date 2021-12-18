@@ -155,3 +155,10 @@ input:checked + .slider:before {
 .inputTxtField {
   margin-top: 8px !important;
 }
+.finalgrid {
+  padding-left: 1rem;
+  padding-bottom: 0.5rem;
+}
+.finalinput {
+  width: 100%;
+}

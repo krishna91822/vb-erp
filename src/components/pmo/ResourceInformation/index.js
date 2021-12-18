@@ -66,7 +66,6 @@ const ResourceInformation = ({
   const filteredEmployees = allEmployees
     ? allEmployees.filter((eachEmp) => !resourcesIds.includes(eachEmp._id))
     : [];
-
   return (
     <Container>
       <ResourceInformationHeading data-test="resource-head">
@@ -87,7 +86,9 @@ const ResourceInformation = ({
                 setFocused(false);
               }}
               onInputChange={handleInputChange}
-              getOptionLabel={(option) => option.empName}
+              getOptionLabel={(option) =>
+                option.empName + " (" + option.empId + ")"
+              }
               onChange={handleOnClick}
               options={filteredEmployees}
               open={open}
@@ -148,6 +149,7 @@ const ResourceInformation = ({
               >
                 <input
                   type="range"
+                  step={5}
                   min="0"
                   max={100 - percentageAllocated}
                   name="allocationPercentage"
@@ -190,7 +192,6 @@ const ResourceInformation = ({
           <ResourceForm style={{ justifyContent: "start" }}>
             <Button
               onClick={() => {
-                // setTempVal(tempVal + 1);
                 addResource();
               }}
               variant="contained"

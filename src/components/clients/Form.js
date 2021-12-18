@@ -10,7 +10,7 @@ import {
 import UseForm from "./UseForm";
 import AddressFields from "./AddressFields";
 import ContactForm from "./ContactForm";
-import "../../assets/styles/FormStyles.css";
+import "../../assets/styles/ClientFormStyles.css";
 import { useSelector } from "react-redux";
 
 export default function Form() {
@@ -31,7 +31,7 @@ export default function Form() {
   };
 
   return (
-    <div className="form-body">
+    <div className="cims-form-body">
       <form>
         <Grid container spacing={2} mb={3}>
           <Grid item xs={12}>
@@ -188,7 +188,7 @@ export default function Form() {
               }
               fullWidth
               required
-              disabled={!editMode}
+              disabled={!editMode || formData.companyType === "Overseas"}
               size="small"
               value={
                 formData[

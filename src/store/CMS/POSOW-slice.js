@@ -2,28 +2,12 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const clients = [];
 
-const AllAvailableEmp = [
-  { emp_name: "dave", emp_id: "VB1990" },
-  { emp_name: "Alex", emp_id: "VB1972" },
-  { emp_name: "Josh", emp_id: "VB1974" },
-  { emp_name: "Ryan", emp_id: "VB2008" },
-  { emp_name: "Scott", emp_id: "VB1957" },
-  { emp_name: "Patt", emp_id: "VB1993" },
-  { emp_name: "Mandy", emp_id: "VB1994" },
-  { emp_name: "", emp_id: "" },
-];
-const employees = [
-  {
-    Employee_Name: "Alex",
-    Employee_Id: 1990,
-    Start_Date: "11 / 15 / 2021",
-    End_Date: "11 / 25 / 2021",
-    Allocation_Rate: 15,
-  },
-];
+const AllAvailableEmp = [];
+const employees = [];
 const projects = [];
 const clientFinController = "";
 const targetedResources = [];
+const initAllocationRate = [];
 const clientSponsor = "";
 const types = ["PO", "SOW"];
 const currencies = ["INR", "USD"];
@@ -42,6 +26,7 @@ export const SOW_init_state = {
   },
   popup: false,
   redirect: false,
+  allocationRate: initAllocationRate,
   response_message: "",
   totalCount: 0,
   poSowData: [],
@@ -127,8 +112,18 @@ const POSOW_Slice = createSlice({
         }
       );
     },
+    setAllocationRate(state, action) {
+      state.allocationRate = [...action.payload].map((obj) => {
+        return obj.allocationPercentage;
+      });
+    },
     setTargetedResourcesOnReadPage(state, action) {
       state.inputFieldsData.targetedResources = action.payload;
+    },
+    clearData(state) {
+      state.inputFieldsData.clientFinController = "";
+      state.inputFieldsData.clientSponsor = "";
+      state.inputFieldsData.targetedResources = [];
     },
   },
 });
