@@ -29,7 +29,7 @@ export default function validateForm(data) {
   if (!data.Client_Finance_Controller) {
     errors.Client_Finance_Controller = "client finance controller is required";
   }
-  if (Object.keys(data.Targetted_Resources).length === 0) {
+  if (Object.keys(data.Targeted_Res_AllocationRate).length === 0) {
     errors.Targetted_Resources =
       "At least one client sponsor needs to be selected";
   }

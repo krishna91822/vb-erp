@@ -93,6 +93,7 @@ export const CapturePO_SOW = (props) => {
   const allocationRateArr = useSelector(
     (state) => state.CMS_state.allocationRate
   );
+  console.log(allocationRateArr);
 
   let DefaultClientName = null;
   let ReadProjectName = null;
@@ -119,7 +120,6 @@ export const CapturePO_SOW = (props) => {
     React.useState(clientFinController);
   const [typeName, setTypeName] = React.useState(ReadType);
   const [CurrName, setCurrName] = React.useState(ReadCurr);
-  // const [DocTypes, setDocTypes] = React.useState(initDocTypes);
   const [remarks, setRemarks] = React.useState(Readremarks);
   const [PO_number, setPO_number] = React.useState(ReadPO_num);
   const [PO_amt, setPOAmt] = React.useState(ReadPO_amt);
@@ -138,10 +138,11 @@ export const CapturePO_SOW = (props) => {
       dispatch(fetchAllClientProjects(clientName.clientName));
   }, [clientName]);
   useEffect(() => {
-    if (projectName !== null && !params.id) {
+    if ((!props.editBtn && projectName !== null) || editTglCheckedState) {
       dispatch(fetchClientProjectSponsor(projectId));
     }
-  }, [projectName]);
+  }, [projectName, editTglCheckedState]);
+
   useEffect(() => {
     setclientProjectSponsor(clientSponsor);
     setClientFinanceController(clientFinController);
@@ -159,6 +160,7 @@ export const CapturePO_SOW = (props) => {
       setStatus(filteredArr[0].Status);
       setProjectId(filteredArr[0].Project_Id);
       setPOSOWEndDate(new Date(filteredArr[0].POSOW_endDate));
+
       dispatch(
         PoSowActions.setClientProjectSponsor(filteredArr[0].Client_Sponser)
       );
@@ -255,7 +257,7 @@ export const CapturePO_SOW = (props) => {
           allocationRateArr[i];
       }
     }
-    // console.log(selectedTargetedResAllocationRate);
+    console.log(selectedTargetedResAllocationRate);
     const DataToSend = {
       Project_Id: projectId,
       Client_Name: clientName ? clientName.clientName : "",
@@ -614,7 +616,7 @@ export const CapturePO_SOW = (props) => {
                   </InputLabel>
                   <BasicDatePicker
                     className="finalinput"
-                    className="inputField txtBox"
+                    // className="inputField txtBox"
                     maxDate="POSOW"
                     label={typeName + " End Date"}
                     value={selectedDate}
