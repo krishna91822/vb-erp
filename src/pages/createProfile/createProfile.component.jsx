@@ -3,6 +3,8 @@ import React, { useEffect, useState } from "react";
 import { LocalizationProvider, DesktopDatePicker } from "@mui/lab";
 import AdapterDateFns from "@mui/lab/AdapterDateFns";
 
+import validator from "validator";
+
 import {
   Box,
   Button,
@@ -64,14 +66,14 @@ const CreateProfile = ({
     empEmail: "",
     empDepartment: "",
     empDesignation: "",
-    empDoj: null,
+    empDoj: new Date(),
     empReportingManager: "",
     empAboutMe: "",
     empBand: "",
     empCertifications: [],
-    empConnections: "",
+    empConnections: null,
     empCurrentAddress: undefined,
-    empDob: null,
+    empDob: new Date(),
     empGraduation: "",
     empGraduationUniversity: "",
     empHobbies: [],
@@ -86,8 +88,25 @@ const CreateProfile = ({
   const [employee, setEmployee] = useState(
     editEmployeeData
       ? editEmployeeData
-      : { ...empInitial, empDoj: new Date(), empReportingManager: "sunilee" }
+      : {
+          ...empInitial,
+          empReportingManager: "sunilee",
+        }
   );
+
+  const formValidation = {
+    email: !validator.isEmail(employee?.empEmail),
+    personalEmail: !validator.isEmail(employee?.empPersonalEmail),
+    name: employee?.empName === "",
+    department: employee?.empDepartment === "",
+    designation: employee?.empDesignation === "",
+    doj: employee?.empDoj === null,
+    dob: employee?.empDob === null,
+    reportingManager: employee?.empReportingManager === "",
+    connection: employee?.empConnections
+      ? !validator.isInt(employee?.empConnections)
+      : false,
+  };
 
   const [tab, setTab] = useState(0);
 
@@ -205,10 +224,14 @@ const CreateProfile = ({
 
   const handleConfirm = (event) => {
     if (
-      employee.empName === "" ||
-      employee.empEmail === "" ||
-      employee.empDoj === "" ||
-      employee.empDob === ""
+      formValidation.email ||
+      formValidation.personalEmail ||
+      formValidation.name ||
+      formValidation.department ||
+      formValidation.designation ||
+      formValidation.doj ||
+      formValidation.dob ||
+      formValidation.reportingManager
     ) {
       alert("Fields are empty");
     } else {
@@ -297,6 +320,7 @@ const CreateProfile = ({
             employee={employee}
             setEmployee={setEmployee}
             profileProgress={profileProgress}
+            formValidation={formValidation}
           />
         </Container>
         <Container sx={{ width: "calc(100% - 16px)" }}>
@@ -306,6 +330,7 @@ const CreateProfile = ({
               setEmpData={setEmployee}
               personalDetails={personalDetails}
               setPersonalDetails={setPersonalDetails}
+              formValidation={formValidation}
             />
           </TabPanelCustom>
           <TabPanelCustom value={tab} index={1}>
@@ -314,6 +339,7 @@ const CreateProfile = ({
               setEmpData={setEmployee}
               professionalDetails={professionalDetails}
               setProfessionalDetails={setProfessionalDetails}
+              formValidation={formValidation}
             />
           </TabPanelCustom>
           <TabPanelCustom value={tab} index={2}>
@@ -322,6 +348,7 @@ const CreateProfile = ({
               setEmpData={setEmployee}
               skillsDetails={skillsDetails}
               setSkillsDetails={setSkillsDetails}
+              formValidation={formValidation}
             />
           </TabPanelCustom>
         </Container>

@@ -27,7 +27,14 @@ import {
 } from "./../../UI/commonStyles";
 
 const ProfileInfoEditable = (props) => {
-  const { tab, setTab, employee, setEmployee, profileProgress } = props;
+  const {
+    tab,
+    setTab,
+    employee,
+    setEmployee,
+    profileProgress,
+    formValidation,
+  } = props;
 
   const {
     empName,
@@ -82,6 +89,8 @@ const ProfileInfoEditable = (props) => {
           </Avatar>
           <TitleTypo sx={{ mt: 1, textTransform: "capitalize" }}>
             <TextField
+              error={formValidation.name}
+              helperText={formValidation.name ? "Enter full name" : ""}
               id="standard-basic"
               placeholder="Full Name"
               variant="standard"
@@ -149,6 +158,9 @@ const ProfileInfoEditable = (props) => {
                 {profileInfoConstant.emailId}
               </ContentBoldTypo>
               <CustomTextField
+                error={formValidation.email}
+                helperText={formValidation.email ? "Enter valid email" : ""}
+                placeholder="company email"
                 autoComplete="off"
                 required
                 id="outlined-basic"
@@ -164,6 +176,9 @@ const ProfileInfoEditable = (props) => {
                 {profileInfoConstant.department}
               </ContentBoldTypo>
               <CustomTextField
+                error={formValidation.department}
+                helperText={formValidation.department ? "Enter department" : ""}
+                placeholder="Enter department"
                 autoComplete="off"
                 required
                 id="outlined-basic"
@@ -179,6 +194,11 @@ const ProfileInfoEditable = (props) => {
                 {profileInfoConstant.designation}
               </ContentBoldTypo>
               <CustomTextField
+                error={formValidation.designation}
+                helperText={
+                  formValidation.designation ? "Enter designation" : ""
+                }
+                placeholder="Enter designation"
                 autoComplete="off"
                 required
                 id="outlined-basic"
@@ -195,6 +215,8 @@ const ProfileInfoEditable = (props) => {
               </ContentBoldTypo>
               <LocalizationProvider dateAdapter={AdapterDateFns}>
                 <DesktopDatePicker
+                  error={formValidation.doj}
+                  helperText={formValidation.doj ? "Enter date of joining" : ""}
                   inputFormat="dd/MM/yyyy"
                   value={empDoj ? empDoj : new Date()}
                   onChange={(newValue) => {
@@ -211,11 +233,17 @@ const ProfileInfoEditable = (props) => {
                 {profileInfoConstant.reportingManager}
               </ContentBoldTypo>
               <CustomTextField
+                error={formValidation.reportingManager}
+                helperText={
+                  formValidation.reportingManager
+                    ? "Enter Reporting manager"
+                    : ""
+                }
+                placeholder="Enter Reporting manager"
                 autoComplete="off"
                 required
                 id="outlined-basic"
                 variant="outlined"
-                placeholder="sunilee"
                 defaultValue={
                   empReportingManager ? empReportingManager : "sunilee"
                 }
