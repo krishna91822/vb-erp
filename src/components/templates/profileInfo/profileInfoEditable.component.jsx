@@ -83,7 +83,7 @@ const ProfileInfoEditable = (props) => {
           <TitleTypo sx={{ mt: 1, textTransform: "capitalize" }}>
             <TextField
               id="standard-basic"
-              placeholder="Username"
+              placeholder="Full Name"
               variant="standard"
               type="text"
               name="empName"
@@ -216,7 +216,9 @@ const ProfileInfoEditable = (props) => {
                 id="outlined-basic"
                 variant="outlined"
                 placeholder="sunilee"
-                value={empReportingManager ? empReportingManager : "sunilee"}
+                defaultValue={
+                  empReportingManager ? empReportingManager : "sunilee"
+                }
                 type="text"
                 name="empReportingManager"
                 onChange={handleChange}
