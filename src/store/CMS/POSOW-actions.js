@@ -301,6 +301,7 @@ export const fetchClientProjectSponsor = (projectId) => {
         dispatch(PoSowActions.setTargetedResources(res.data.data));
         dispatch(PoSowActions.setAllocationRate(res.data.data));
       } else {
+        dispatch(PoSowActions.clearData());
         throw new Error();
       }
     } catch (error) {
@@ -308,7 +309,7 @@ export const fetchClientProjectSponsor = (projectId) => {
         uiActions.showNotification({
           status: "error",
           title: "Error",
-          message: "Something went wrong",
+          message: "Resources not allocated for this project",
         })
       );
     }
