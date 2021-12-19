@@ -191,6 +191,7 @@ const ResourceInformation = ({
                   startAdornment: (
                     <InputAdornment position="start">₹</InputAdornment>
                   ),
+                  inputProps: { min: 0 },
                 }}
               />
             </ResourceForm>

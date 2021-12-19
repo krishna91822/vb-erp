@@ -339,7 +339,7 @@ const ViewProjects = () => {
               name={
                 projects.results
                   ? !projects.results.length
-                    ? "No Project Found !!!"
+                    ? "No Project Yet !!!"
                     : ""
                   : "No Project Yet !!!"
               }

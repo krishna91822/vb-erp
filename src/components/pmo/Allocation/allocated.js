@@ -185,7 +185,10 @@ const Allocated = ({ pressed, allocatedSortedValue }) => {
                       onChange={filterData}
                       onKeyPress={filterData}
                       value={filters.allocationPercentage}
-                      inputProps={{ style: { fontSize: "small" } }}
+                      inputProps={{
+                        style: { fontSize: "small" },
+                        min: 0,
+                      }}
                     />
                   </TableCell>
 

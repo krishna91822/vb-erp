@@ -34,6 +34,16 @@ export const ProjectHead = styled.h2`
   margin: 0;
 `;
 export const Container = styled.div`
+  input::-webkit-outer-spin-button,
+  input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  /* Firefox */
+  input[type="number"] {
+    -moz-appearance: textfield;
+  }
   .MuiTableBody-root > .MuiTableRow-root:hover {
     background-color: #f8f8f8;
   }
