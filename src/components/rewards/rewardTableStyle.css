@@ -39,7 +39,6 @@
 
 .table-container {
   width: 99%;
-  height: 500px;
   margin: auto;
   margin-top: 30px;
   padding: 2px;
@@ -140,7 +139,6 @@
 
 .data-row-container {
   width: 100%;
-  height: 380px;
   margin: auto;
   margin-top: 2px;
   margin-top: 10px;
