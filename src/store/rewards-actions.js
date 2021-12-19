@@ -301,8 +301,13 @@ export const addRewardData = (reward) => {
     try {
       await fetchData();
 
-      toast.success("Reward Added");
       dispatch(rewardsActions.updateRewardStatus());
+      dispatch(
+        uiActions.showNotification({
+          status: "success",
+          message: "Reward Created Successfully !",
+        })
+      );
     } catch (error) {
       dispatch(uiActions.toggleLoader());
     } finally {
