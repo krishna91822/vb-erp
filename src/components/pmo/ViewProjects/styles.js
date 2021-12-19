@@ -1,9 +1,7 @@
 import styled from "styled-components";
 
 export const MainComponent = styled.div`
-  /* padding: 5px 15px;
-  min-width: 477px; //we need to remove this line */
-  /* min-height: 85vh; */
+  min-width: 300px; //we need to remove this line
 `;
 export const HeadingStyle = styled.div``;
 export const Heading = styled.div`
@@ -16,20 +14,27 @@ export const Heading = styled.div`
   h2 {
     margin: 0;
   }
-`;
-
-export const AdminName = styled.p`
-  text-align: right;
-  @media (max-width: 450px) {
-    margin-right: 1rem;
+  @media (max-width: 900px) {
+    flex-direction: column;
+    justify-content: space-around;
+    height: 116px;
+    h2 {
+      padding: 0 30px;
+      border-bottom: 1px solid green;
+    }
+  }
+  @media (max-width: 800px) {
+    flex-direction: row;
+    height: 178px;
+  }
+  @media (max-width: 600px) {
+    flex-direction: column;
+    height: 230px;
   }
 `;
 
 export const ProjectHead = styled.h2`
   margin: 0px;
-  @media (max-width: 450px) {
-    margin: 1rem;
-  }
 `;
 export const Container = styled.div`
   .MuiTableContainer-root {
@@ -61,16 +66,11 @@ export const Container = styled.div`
   a {
     text-decoration: none;
     color: #e8833a;
-    border: none;
     cursor: pointer;
 
     &:hover {
       color: #ff862e;
     }
-  }
-
-  @media (max-width: 450px) {
-    margin: 1rem;
   }
 `;
 export const SideButton = styled.div`
@@ -85,39 +85,20 @@ export const SideButton = styled.div`
   & > * {
     margin: 0 6px;
   }
-  @media (max-width: 450px) {
-    margin-right: 1rem;
+
+  @media (max-width: 800px) {
+    height: 185px;
+    flex-direction: column-reverse;
+    justify-content: space-around;
+    button {
+      order: 4;
+    }
+  }
+  @media (max-width: 600px) {
+    width: 100%;
+    & > button,
+    div {
+      width: 280px;
+    }
   }
 `;
-
-export const Dropdown = styled.select`
-  padding: 0.3rem;
-  border-radius: 0.2rem;
-  border: 2px solid blue;
-  outline: none;
-  transition: 0.2s ease-in;
-  &:hover {
-    border: 2px Solid #e8833a;
-  }
-`;
-export const Options = styled.option`
-  color: black;
-`;
-
-export const EditAction = styled.div``;
-
-export const EditButton = styled.button`
-  text-decoration: none;
-  padding: 0;
-  color: #e8833a;
-  border: none;
-  background-color: transparent;
-  cursor: pointer;
-
-  &:hover {
-    color: #ff862e;
-    background-color: #ececec;
-  }
-`;
-
-export const PageNation = styled.div``;

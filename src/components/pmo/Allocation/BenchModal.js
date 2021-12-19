@@ -64,7 +64,10 @@ export default function BenchModal({
                 {entryData.empName}
               </span>
             </Typography>
-            <Typography component={"div"}>
+            <Typography
+              component={"div"}
+              style={{ borderBottom: "1px solid #afacacde" }}
+            >
               <span
                 style={{
                   color: "gray",
@@ -81,11 +84,20 @@ export default function BenchModal({
                 height: "calc(100% - 68px)",
                 marginTop: "20px",
                 overflowY: "auto",
+                padding: "5px",
+                // boxShadow: "0px 0px 5px black",
+                border: "1px solid #afacacde",
+                borderRadius: "5px",
               }}
             >
               {entryData.projects &&
                 (entryData.projects.length > 0 ? (
-                  <ul style={{ display: "flex", flexWrap: "wrap" }}>
+                  <ul
+                    style={{
+                      display: "flex",
+                      flexWrap: "wrap",
+                    }}
+                  >
                     {entryData.projects.map((currElem, index) => (
                       <li
                         key={index}
@@ -109,7 +121,7 @@ export default function BenchModal({
                             <div
                               style={{
                                 color: "gray",
-                                width: "155px",
+                                width: "150px",
                                 display: "inline-block",
                               }}
                             >

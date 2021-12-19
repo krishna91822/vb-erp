@@ -1,7 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { getAllocatedData } from "../../../store/pmo-actions";
-import Tpagination from "../../UI/Pagination";
-
 import {
   Table,
   TableBody,
@@ -12,6 +9,10 @@ import {
   TextField,
 } from "@mui/material";
 import { useSelector, useDispatch } from "react-redux";
+
+import { getAllocatedData } from "../../../store/pmo-actions";
+import Tpagination from "../../UI/Pagination";
+import NoDataFound from "../NoDataFound";
 import { Container, MiniHead, DateContainerStyled } from "./style";
 
 const Allocated = ({ pressed, allocatedSortedValue }) => {
@@ -32,7 +33,14 @@ const Allocated = ({ pressed, allocatedSortedValue }) => {
 
   let data = allocatedData;
   const filterData = (event) => {
-    setFilters({ ...filters, [event.target.name]: event.target.value });
+    if (event.target.name === "empId") {
+      setFilters({
+        ...filters,
+        [event.target.name]: event.target.value.toUpperCase(),
+      });
+    } else {
+      setFilters({ ...filters, [event.target.name]: event.target.value });
+    }
     if (event.key === "Enter") {
       dispatch(getAllocatedData(filters, 1, allocatedSortedValue));
     }
@@ -177,7 +185,10 @@ const Allocated = ({ pressed, allocatedSortedValue }) => {
                       onChange={filterData}
                       onKeyPress={filterData}
                       value={filters.allocationPercentage}
-                      inputProps={{ style: { fontSize: "small" } }}
+                      inputProps={{
+                        style: { fontSize: "small" },
+                        min: 0,
+                      }}
                     />
                   </TableCell>
 
@@ -252,21 +263,17 @@ const Allocated = ({ pressed, allocatedSortedValue }) => {
                 : null}
             </TableBody>
           </Table>
+          <NoDataFound
+            name={
+              data.results
+                ? !data.results.length
+                  ? "No Allocation Found !!!"
+                  : ""
+                : "No Allocation Yet !!!"
+            }
+            filter={pressed}
+          />
         </TableContainer>
-        {data.results
-          ? !data.results.length && (
-              <p
-                style={{
-                  textAlign: "center",
-                  color: "grey",
-                  position: "relative",
-                  bottom: "190px",
-                }}
-              >
-                No Data Found!!!
-              </p>
-            )
-          : ""}
       </Container>
       <Tpagination
         count={data.pageCount || 1}

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { TextField, Button } from "@mui/material";
+import InputAdornment from "@mui/material/InputAdornment";
 import ResourceInformationTable from "../ResourceInformationTable";
 import Autocomplete from "@mui/material/Autocomplete";
 import { useDispatch } from "react-redux";
@@ -186,6 +187,12 @@ const ResourceInformation = ({
                 value={rackRate}
                 style={{ marginTop: 3 }}
                 data-test="rack-rate-input"
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start">₹</InputAdornment>
+                  ),
+                  inputProps: { min: 0 },
+                }}
               />
             </ResourceForm>
           </MultiElemContainer>

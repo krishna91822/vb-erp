@@ -2,21 +2,12 @@ import styled from "styled-components";
 
 export const MiniHead = styled.h3`
   margin: 0.3rem 0rem;
-  @media (max-width: 450px) {
-    margin: 1rem;
-  }
 `;
 
 export const MainComponent = styled.div`
-  /* padding: 5px 15px;
-  min-width: 345px; //we need to remove this line
-  min-height: 90vh; */
+  min-width: 300px; //we need to remove this line
 `;
-export const HeadingStyle = styled.div`
-  p {
-    text-align: right;
-  }
-`;
+
 export const Heading = styled.div`
   height: 46px;
   margin: 5px 0px;
@@ -24,22 +15,35 @@ export const Heading = styled.div`
   flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
-`;
 
-export const AdminName = styled.p`
-  text-align: right;
-  @media (max-width: 450px) {
-    margin-right: 1rem;
+  @media (max-width: 851px) {
+    flex-direction: column;
+    justify-content: space-around;
+    height: 116px;
+    h2 {
+      padding: 0 30px;
+      border-bottom: 1px solid green;
+    }
+  }
+  @media (max-width: 640px) {
+    height: 205px;
   }
 `;
 
 export const ProjectHead = styled.h2`
   margin: 0;
-  @media (max-width: 450px) {
-    margin: 1rem;
-  }
 `;
 export const Container = styled.div`
+  input::-webkit-outer-spin-button,
+  input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  /* Firefox */
+  input[type="number"] {
+    -moz-appearance: textfield;
+  }
   .MuiTableBody-root > .MuiTableRow-root:hover {
     background-color: #f8f8f8;
   }
@@ -64,11 +68,8 @@ export const Container = styled.div`
       background: #f8f8f8;
     }
   }
-
-  @media (max-width: 450px) {
-    margin: 1rem;
-  }
 `;
+
 export const SideButton = styled.div`
   display: flex;
   flex-wrap: wrap;
@@ -77,38 +78,17 @@ export const SideButton = styled.div`
   & > * {
     margin: 0.5em 0 0.5em 0.5em;
   }
-  @media (max-width: 450px) {
-    margin-right: 1rem;
+  @media (max-width: 640px) {
+    height: 160px;
+    flex-direction: column-reverse;
+    justify-content: space-around;
+    width: 100%;
+    & > button,
+    div {
+      width: 230px;
+    }
   }
 `;
-
-export const CreateProjectButton = styled.button`
-  text-decoration: none;
-  color: white;
-  margin-top: 0.3rem;
-  margin-left: 1rem;
-  padding: 0.5rem 1rem;
-  background-color: orange;
-  border: none;
-  cursor: pointer;
-
-  &:hover {
-    background-color: red;
-  }
-`;
-export const Dropdown = styled.select`
-  padding: 0.3rem;
-  border-radius: 0.2rem;
-  border: 2px solid blue;
-  outline: none;
-  &:hover {
-    border: 2px Solid orange;
-  }
-`;
-export const Options = styled.option`
-  color: black;
-`;
-export const PageNation = styled.div``;
 
 export const DateContainerStyled = styled.div`
   & input[name="allocationStartDate"] {

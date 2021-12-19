@@ -18,7 +18,6 @@ import {
 import EditViewSwitchs from "../EditViewSwitch";
 import ResourceInformation from "../ResourceInformation";
 import {
-  HeadingStyle,
   Heading,
   StyledHeader,
   FormHeadingStyled,
@@ -27,7 +26,6 @@ import {
   DateContainerStyled,
   PmoContainer,
   DateElementStyled,
-  NumberStyle,
 } from "./styles";
 import {
   createProject,
@@ -184,27 +182,6 @@ const CreateProject = () => {
   };
 
   const handleProjectChange = ({ target }) => {
-    // if (target.name === "startDate") {
-    //   const currentDate = new Date();
-    //   const current_date = `${currentDate.getFullYear()}-${
-    //     currentDate.getMonth() + 1
-    //   }-${currentDate.getDate()}`;
-    // if (target.value < current_date) {
-    //   dispatch(
-    //     uiActions.showNotification({
-    //       status: "error",
-    //       message: "Start date cannot be earlier than today's date",
-    //     })
-    //   );
-    // } else {
-    //   setState({
-    //     ...state,
-    //     project: {
-    //       ...state.project,
-    //       [target.name]: target.value,
-    //     },
-    //   });
-    // }
     if (target.name === "endDate") {
       if (startDate > target.value) {
         dispatch(
@@ -429,17 +406,15 @@ const CreateProject = () => {
   return (
     <>
       <PmoContainer>
-        <HeadingStyle>
-          <Heading>
-            <h2 data-test="page-title">PMO</h2>
-            <EditViewSwitchs
-              edit={edit}
-              setEdit={setEdit}
-              id={id}
-              onUpdate={handleSubmit}
-            />
-          </Heading>
-        </HeadingStyle>
+        <Heading>
+          <h2 data-test="page-title">PMO</h2>
+          <EditViewSwitchs
+            edit={edit}
+            setEdit={setEdit}
+            id={id}
+            onUpdate={handleSubmit}
+          />
+        </Heading>
         <StyledHeader onSubmit={handleSubmit} data-test="create-project-form">
           <FormHeadingStyled>
             <h3 data-test="form-title">Project Information </h3>
@@ -535,25 +510,23 @@ const CreateProject = () => {
               <label htmlFor="cpc" data-test="client-primary-contact-label">
                 Client Primary Contact
               </label>
-              <NumberStyle>
-                <PhoneInput
-                  disabled
-                  error={errors.clientPrimaryContact ? true : false}
-                  onChange={(e) => handlePhoneNumber(e)}
-                  value={clientPrimaryContact.toString() || "+91"}
-                  name="clientPrimaryContact"
-                  inputProps={{
-                    name: "phone",
-                    autoFocus: true,
-                  }}
-                  inputStyle={{
-                    height: "40px",
-                    width: "100%",
-                    fontSize: "inherit",
-                    color: "#a2a2a2",
-                  }}
-                />
-              </NumberStyle>
+              <PhoneInput
+                disabled
+                error={errors.clientPrimaryContact ? true : false}
+                onChange={(e) => handlePhoneNumber(e)}
+                value={clientPrimaryContact.toString() || "+91"}
+                name="clientPrimaryContact"
+                inputProps={{
+                  name: "phone",
+                  autoFocus: true,
+                }}
+                inputStyle={{
+                  height: "40px",
+                  width: "100%",
+                  fontSize: "inherit",
+                  color: "#a2a2a2",
+                }}
+              />
             </FormElementsStyled>
             <FormElementsStyled>
               <label htmlFor="cpm" data-test="client-project-manager-label">

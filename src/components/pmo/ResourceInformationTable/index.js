@@ -58,9 +58,16 @@ const ResourceInformationTable = ({ resources, removeResource, edit }) => {
                       onClick={() => {
                         removeResource(eachData.empId, eachData._id);
                       }}
-                      style={{ cursor: "pointer" }}
                     >
-                      <DeleteIcon />
+                      <DeleteIcon
+                        style={{
+                          cursor: "pointer",
+                          // "&:hover": {
+                          //   backgroundColor: "red",
+                          //   color: "red",
+                          // },
+                        }}
+                      />
                     </TableCell>
                   )}
                 </TableRow>

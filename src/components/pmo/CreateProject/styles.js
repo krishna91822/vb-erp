@@ -1,37 +1,17 @@
 import styled from "styled-components";
 
 const size = {
-  mobileM: "375px",
   mobileL: "540px",
   tablet: "851px",
-  laptop: "1024px",
-  laptopL: "1440px",
-  desktop: "2560px",
 };
 
-export const device = {
-  mobileM: `(max-width: ${size.mobileM})`,
+const device = {
   mobileL: `(max-width: ${size.mobileL})`,
   tablet: `(max-width: ${size.tablet})`,
-  laptop: `(max-width: ${size.laptop})`,
-  laptopL: `(max-width: ${size.laptopL})`,
-  desktop: `(max-width: ${size.desktop})`,
-  desktopL: `(max-width: ${size.desktop})`,
 };
 
 export const PmoContainer = styled.div`
-  // padding: 5px 15px;
   min-width: 300px; //we need to remove this line
-  & h2,
-  h3 {
-    margin: 0;
-  }
-`;
-
-export const HeadingStyle = styled.div`
-  p {
-    text-align: right;
-  }
 `;
 
 export const Heading = styled.div`
@@ -51,7 +31,6 @@ export const StyledHeader = styled.form`
   padding: 0.5em;
   border: 0.1em solid #afacacde;
   border-radius: 5px;
-  /* box-shadow: 0px 0px 15px black; */
 `;
 
 export const FormHeadingStyled = styled.div`
@@ -76,9 +55,6 @@ export const FormContainerStyled = styled.div`
   @media ${device.tablet} {
     flex-direction: column;
   }
-
-  @media ${device.mobileL} {
-  }
 `;
 
 export const FormElementsStyled = styled.div`
@@ -86,7 +62,6 @@ export const FormElementsStyled = styled.div`
   & > label {
     display: block;
     margin: 10px 0 7px;
-    // padding: 0.5em 1em;
   }
   & > label > span {
     color: red;
@@ -99,8 +74,6 @@ export const FormElementsStyled = styled.div`
     width: 90%;
   }
 `;
-
-export const NumberStyle = styled.div``;
 
 export const DateContainerStyled = styled.div`
   width: 48%;
@@ -128,7 +101,6 @@ export const DateElementStyled = styled.div`
   & > label {
     display: block;
     margin: 10px 0 7px;
-    // padding: 0.5em 1em;
   }
   & > label > span {
     color: red;

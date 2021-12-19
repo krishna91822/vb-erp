@@ -1,8 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { getOnBench } from "../../../store/pmo-actions";
-import Tpagination from "../../UI/Pagination";
-
 import {
   Table,
   TableBody,
@@ -15,6 +12,9 @@ import {
 
 import { Container, MiniHead } from "./style";
 import BenchModal from "./BenchModal";
+import { getOnBench } from "../../../store/pmo-actions";
+import Tpagination from "../../UI/Pagination";
+import NoDataFound from "../NoDataFound";
 
 const Bench = ({ pressed, benchSortValue }) => {
   const { benchData } = useSelector((state) => state.pmo);
@@ -35,7 +35,14 @@ const Bench = ({ pressed, benchSortValue }) => {
   let data = benchData;
 
   const filterData = (event) => {
-    setFilters({ ...filters, [event.target.name]: event.target.value });
+    if (event.target.name === "empId") {
+      setFilters({
+        ...filters,
+        [event.target.name]: event.target.value.toUpperCase(),
+      });
+    } else {
+      setFilters({ ...filters, [event.target.name]: event.target.value });
+    }
     if (event.key === "Enter") {
       dispatch(getOnBench(filters, 1, benchSortValue));
     }
@@ -71,9 +78,9 @@ const Bench = ({ pressed, benchSortValue }) => {
                 <TableCell
                   align="left"
                   sx={{
-                    width: "180px",
-                    maxWidth: "180px",
-                    minWidth: "180px",
+                    width: "150px",
+                    maxWidth: "150px",
+                    minWidth: "150px",
                   }}
                 >
                   SNO
@@ -149,16 +156,7 @@ const Bench = ({ pressed, benchSortValue }) => {
                     />
                   </TableCell>
 
-                  <TableCell align="left">
-                    {/* <TextField
-                      variant="standard"
-                      type="text"
-                      placeholder="Primary Capabilities"
-                      onChange={filterPrimaryCapabilities}
-                      value={primaryCapabilities}
-                      inputProps={{ style: { fontSize: "small" } }}
-                    /> */}
-                  </TableCell>
+                  <TableCell align="left"></TableCell>
                   <TableCell align="left">
                     <TextField
                       variant="standard"
@@ -168,7 +166,7 @@ const Bench = ({ pressed, benchSortValue }) => {
                       onChange={filterData}
                       onKeyPress={filterData}
                       value={filters.remainingAllocation}
-                      inputProps={{ style: { fontSize: "small" } }}
+                      inputProps={{ style: { fontSize: "small" }, min: 0 }}
                     />
                   </TableCell>
                 </TableRow>
@@ -200,21 +198,17 @@ const Bench = ({ pressed, benchSortValue }) => {
                 : null}
             </TableBody>
           </Table>
+          <NoDataFound
+            name={
+              data.results
+                ? !data.results.length
+                  ? "No Data Found !!!"
+                  : ""
+                : "No Data Yet !!!"
+            }
+            filter={pressed}
+          />
         </TableContainer>
-        {data.results
-          ? !data.results.length && (
-              <p
-                style={{
-                  textAlign: "center",
-                  color: "grey",
-                  position: "relative",
-                  bottom: "190px",
-                }}
-              >
-                No Data Found!!!
-              </p>
-            )
-          : ""}
       </Container>
       <Tpagination
         count={data.pageCount}

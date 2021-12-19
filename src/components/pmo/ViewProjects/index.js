@@ -20,6 +20,7 @@ import FilterListIcon from "@mui/icons-material/FilterList";
 import FilterListOffIcon from "@mui/icons-material/FilterListOff";
 
 import Tpagination from "../../UI/Pagination";
+import NoDataFound from "../NoDataFound";
 import {
   getAllProjects,
   getAllFilterProjects,
@@ -83,7 +84,6 @@ const ViewProjects = () => {
   const changePage = (event) => {
     dispatch(getAllProjects(filterProjects, event.target.textContent));
   };
-
   return (
     <>
       <MainComponent>
@@ -124,10 +124,8 @@ const ViewProjects = () => {
                   labelId="filterBy"
                   id="select"
                   label="filterBy"
-                  // inputProps={{ style: { fontSize: "5px" } }}
                   onChange={entryValue}
                   sx={{ fontSize: "14px", width: "150px" }}
-                  // style={{ width: "150px" }}
                 >
                   <MenuItem value="vbProjectId" sx={{ fontSize: "14px" }}>
                     Project ID
@@ -279,16 +277,18 @@ const ViewProjects = () => {
                       />
                     </TableCell>
                     <TableCell align="left">
-                      <TextField
-                        variant="standard"
-                        type="text"
-                        placeholder="Project Status"
-                        name="vbProjectStatus"
-                        onChange={filterData}
-                        onKeyPress={filterData}
-                        value={filters.vbProjectStatus}
-                        inputProps={{ style: { fontSize: "small" } }}
-                      />
+                      {filterProjects === "others" && (
+                        <TextField
+                          variant="standard"
+                          type="text"
+                          placeholder="Project Status"
+                          name="vbProjectStatus"
+                          onChange={filterData}
+                          onKeyPress={filterData}
+                          value={filters.vbProjectStatus}
+                          inputProps={{ style: { fontSize: "small" } }}
+                        />
+                      )}
                     </TableCell>
                     <TableCell align="left"></TableCell>
                   </TableRow>
@@ -335,21 +335,17 @@ const ViewProjects = () => {
                   : null}
               </TableBody>
             </Table>
+            <NoDataFound
+              name={
+                projects.results
+                  ? !projects.results.length
+                    ? "No Project Yet !!!"
+                    : ""
+                  : "No Project Yet !!!"
+              }
+              filter={pressed}
+            />
           </TableContainer>
-          {projects.results
-            ? !projects.results.length && (
-                <p
-                  style={{
-                    textAlign: "center",
-                    color: "grey",
-                    position: "relative",
-                    bottom: "220px",
-                  }}
-                >
-                  No Project Yet!!!
-                </p>
-              )
-            : ""}
         </Container>
         <Tpagination
           count={projects.pageCount}
