@@ -182,27 +182,6 @@ const CreateProject = () => {
   };
 
   const handleProjectChange = ({ target }) => {
-    // if (target.name === "startDate") {
-    //   const currentDate = new Date();
-    //   const current_date = `${currentDate.getFullYear()}-${
-    //     currentDate.getMonth() + 1
-    //   }-${currentDate.getDate()}`;
-    // if (target.value < current_date) {
-    //   dispatch(
-    //     uiActions.showNotification({
-    //       status: "error",
-    //       message: "Start date cannot be earlier than today's date",
-    //     })
-    //   );
-    // } else {
-    //   setState({
-    //     ...state,
-    //     project: {
-    //       ...state.project,
-    //       [target.name]: target.value,
-    //     },
-    //   });
-    // }
     if (target.name === "endDate") {
       if (startDate > target.value) {
         dispatch(
