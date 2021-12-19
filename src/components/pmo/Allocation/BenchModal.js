@@ -109,7 +109,7 @@ export default function BenchModal({
                             <div
                               style={{
                                 color: "gray",
-                                width: "155px",
+                                width: "150px",
                                 display: "inline-block",
                               }}
                             >
