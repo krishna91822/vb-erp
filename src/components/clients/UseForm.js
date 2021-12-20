@@ -61,9 +61,7 @@ export default function UseForm() {
 
   useEffect(() => {
     dispatch(fetchCountries());
-    setTimeout(() => {
-      handelSetAddOthers(formData);
-    }, 4000);
+    handelSetAddOthers(formData);
   }, []);
 
   const locReg = useSelector((state) => state.cims.locReg);
@@ -89,7 +87,7 @@ export default function UseForm() {
 
   const [contacts, setContacts] = useState(initialContacts);
   const [n, setN] = useState(Object.keys(formData.contacts).length);
-  const [addOthers, setAddOthers] = useState(true);
+  const [addOthers, setAddOthers] = useState(false);
 
   // Handel errors
   const validate = (type = "", fieldValues) => {
