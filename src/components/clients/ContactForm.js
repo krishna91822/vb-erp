@@ -167,9 +167,9 @@ export default function AddressFields() {
                 <Button
                   id="addOthersBtn"
                   sx={{ color: "gray", borderColor: "white" }}
-                  variant={!addOthers ? "contained" : "outlined"}
+                  variant={!addOthers || !editMode ? "contained" : "outlined"}
                   onClick={handleAddOthers}
-                  disabled={!addOthers}
+                  disabled={!addOthers || !editMode}
                 >
                   <AddRoundedIcon sx={{ fontSize: "2rem" }} />
                 </Button>

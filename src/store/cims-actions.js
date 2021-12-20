@@ -321,7 +321,9 @@ export const updateClient = (formData) => {
     try {
       dispatch(uiActions.toggleLoader());
       const data = await postData();
-      dispatch(cimsActions.resetForm());
+      setTimeout(function () {
+        dispatch(cimsActions.resetForm());
+      }, 2000);
       setTimeout(function () {
         dispatch(
           uiActions.showNotification({

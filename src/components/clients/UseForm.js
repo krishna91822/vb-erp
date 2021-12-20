@@ -54,11 +54,16 @@ export default function UseForm() {
   const ComCcode = useSelector((state) => state.cims.ComCcode);
   const countries = useSelector((state) => state.cims.countries);
   const brandFocus = useSelector((state) => state.cims.brandFocus);
+  const editMode = useSelector((state) => state.cims.editMode);
+
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(fetchCountries());
+    setTimeout(() => {
+      handelSetAddOthers(formData);
+    }, 4000);
   }, []);
 
   const locReg = useSelector((state) => state.cims.locReg);
@@ -84,7 +89,7 @@ export default function UseForm() {
 
   const [contacts, setContacts] = useState(initialContacts);
   const [n, setN] = useState(Object.keys(formData.contacts).length);
-  const [addOthers, setAddOthers] = useState(false);
+  const [addOthers, setAddOthers] = useState(true);
 
   // Handel errors
   const validate = (type = "", fieldValues) => {
