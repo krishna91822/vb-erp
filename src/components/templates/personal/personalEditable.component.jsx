@@ -4,7 +4,6 @@ import { Grid, TextField, Box, Chip, Checkbox } from "@mui/material";
 import ClearIcon from "@mui/icons-material/Clear";
 
 import { personal } from "./personal.constant";
-import validator from "validator";
 
 import {
   ListItem,
