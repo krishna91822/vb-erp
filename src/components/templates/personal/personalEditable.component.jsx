@@ -150,8 +150,9 @@ const PersonalEditable = (props) => {
           },
           "& .MuiFormControl-root": { minHeight: 200 },
           "& .MuiOutlinedInput-notchedOutline": {
-            border: "2px solid",
+            border: "0.1em solid",
             borderColor: "textColor.paletteGrey",
+            borderRadius: "5px",
           },
         }}
       >

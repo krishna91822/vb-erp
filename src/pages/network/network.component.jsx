@@ -5,6 +5,7 @@ import {
   TitleTypo,
   CustomTextField,
   ContentTypo,
+  CustomContainer,
 } from "./network.styles";
 import { networkText } from "./network.constant";
 import { TextField } from "@mui/material";
@@ -71,47 +72,38 @@ const Network = () => {
   };
 
   return (
-    <Box data-test="network-page-test" sx={{ width: "100%", pt: 3, pb: 3 }}>
-      <Container
+    <Box data-test="network-page-test" sx={{ pt: 1 }}>
+      <Box
+        noValidate
+        autoComplete="off"
         sx={{
-          minHeight: "calc(100vh - 50px)",
-          width: "calc(100% - 48px)",
-          border: "2px solid",
-          borderColor: "textColor.paletteGrey",
-          pb: 3,
+          display: "flex",
+          flexDirection: "row",
+          alignItems: "center",
+          justifyContent: "space-between",
+          mb: 1,
         }}
       >
-        <Box
-          noValidate
-          autoComplete="off"
+        <TitleTypo
           sx={{
-            width: "100%",
-            height: "56px",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-            pt: 2,
+            fontSize: "1.5em",
+            textTransform: "capitalize",
+            mb: 0.5,
+            mr: 2,
           }}
         >
-          {" "}
-          <Box
-            sx={{
-              display: "flex",
-              justifyContent: "flex-end",
-              alignItems: "center",
-              padding: 1,
-            }}
-          >
-            <TextField
-              data-test="search-bar-test"
-              onChange={searchHandleChange}
-              placeholder="Search employee"
-              id="outlined-search"
-              size="small"
-              variant="outlined"
-              sx={{ width: "100%", height: "40px" }}
-            />
-          </Box>
+          Network
+        </TitleTypo>
+        <Box sx={{}}>
+          <TextField
+            data-test="search-bar-test"
+            onChange={searchHandleChange}
+            placeholder="Search employee"
+            id="outlined-search"
+            size="small"
+            variant="outlined"
+            sx={{ width: "15vw", height: "40px", mr: 1 }}
+          />
           <CustomTextField
             data-test="sort-test"
             label="Sort"
@@ -119,7 +111,7 @@ const Network = () => {
             select
             value={sort}
             onChange={sortHandleChange}
-            sx={{ width: "25%" }}
+            sx={{ width: "15vw" }}
           >
             {sortOptions.map((option) => (
               <MenuItem key={option.value} value={option.value}>
@@ -128,6 +120,19 @@ const Network = () => {
             ))}
           </CustomTextField>
         </Box>
+      </Box>
+      <CustomContainer
+        sx={{
+          // height: "80vh",
+          // width: "100%",
+          // minHeight: "calc(100vh - 50px)",
+          // width: "calc(100% - 48px)",
+          border: "0.1em solid",
+          borderColor: "textColor.paletteGrey",
+          borderRadius: "5px",
+          pb: 3,
+        }}
+      >
         <Box sx={{ width: "100%" }}>
           <CustomGridBox
             data-test="networkTableHead"
@@ -136,6 +141,7 @@ const Network = () => {
               mt: 2,
               mb: 2,
               backgroundColor: "textColor.light",
+              // borderRadius: "5px",
             }}
           >
             {
@@ -151,7 +157,8 @@ const Network = () => {
               sx={{
                 mt: 0.5,
                 mb: 0.5,
-                height: 40,
+                height: 50,
+                // borderRadius: "5px",
                 cursor: "pointer",
               }}
               onClick={(e) => handleEmployeeClick(item)}
@@ -169,19 +176,19 @@ const Network = () => {
             </CustomGridBox>
           ))}
         </Box>
-        {/* pagination */}
-        <Box sx={{ width: 1, display: "flex", justifyContent: "center" }}>
-          <Pagination
-            data-test="pagination-test"
-            count={paginationInfo.totalPage}
-            page={paginationInfo.page}
-            onChange={handlePagination}
-            showFirstButton
-            showLastButton
-            color="primary"
-          />
-        </Box>
-      </Container>
+      </CustomContainer>
+      {/* pagination */}
+      <Box sx={{ width: 1, display: "flex", justifyContent: "center" }}>
+        <Pagination
+          data-test="pagination-test"
+          count={paginationInfo.totalPage}
+          page={paginationInfo.page}
+          onChange={handlePagination}
+          showFirstButton
+          showLastButton
+          color="primary"
+        />
+      </Box>
     </Box>
   );
 };

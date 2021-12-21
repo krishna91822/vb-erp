@@ -12,15 +12,14 @@ export const ContentBox = styled("div")(({ theme }) => ({
 export const ContentTypo = styled("p")(({ theme }) => ({
   ...theme.typography.h5,
   color: theme.palette.textColor.main,
-  fontSize: 13,
+  fontSize: 16,
   fontWeight: 600,
   margin: 0,
 }));
 export const ContentTypoList = styled("div")(({ theme }) => ({
   ...theme.typography.h5,
   color: theme.palette.textColor.main,
-  fontSize: 13,
-  fontWeight: 600,
+  fontSize: 16,
   listStyle: "none",
   display: "flex",
   flexWrap: "wrap",

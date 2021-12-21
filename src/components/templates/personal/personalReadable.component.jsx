@@ -2,10 +2,15 @@ import React, { memo } from "react";
 
 import { Grid, TextField, Box, Chip } from "@mui/material";
 
-import { ListItem, ContentBox, ContentTypo } from "./personalReadable.styles";
+import {
+  ListItem,
+  ContentBox,
+  ContentTypo,
+  TitleTypo,
+} from "./personalReadable.styles";
 import { personal } from "./personal.constant";
 
-import { TitleTypo } from "../../UI/commonStyles";
+// import { TitleTypo } from "../../UI/commonStyles";
 import {
   deepPurple,
   pink,
@@ -49,7 +54,7 @@ const PersonalReadable = ({ empData }) => {
           },
           "& .MuiFormControl-root": { minHeight: 200 },
           "& .MuiOutlinedInput-notchedOutline": {
-            border: "2px solid",
+            border: "0.1em solid",
             borderColor: "textColor.paletteGrey",
           },
         }}
@@ -71,17 +76,17 @@ const PersonalReadable = ({ empData }) => {
       <Grid item sm={7}>
         <Box sx={{ mt: 4, ml: 4 }}>
           <ContentBox>
-            <ContentTypo>{personal.personalEmail}</ContentTypo>
+            <TitleTypo>{personal.personalEmail}</TitleTypo>
             <ContentTypo>{empPersonalEmail}</ContentTypo>
           </ContentBox>
           <ContentBox>
-            <ContentTypo>{personal.dob}</ContentTypo>
+            <TitleTypo>{personal.dob}</TitleTypo>
             <ContentTypo>
               {empDob ? new Date(empDob).toDateString().slice(4) : ""}
             </ContentTypo>
           </ContentBox>
           <ContentBox>
-            <ContentTypo>{personal.hobbies}</ContentTypo>
+            <TitleTypo>{personal.hobbies}</TitleTypo>
             <ContentTypo>
               <Box
                 sx={{
@@ -117,7 +122,7 @@ const PersonalReadable = ({ empData }) => {
             <ContentTypo>{empConnections}</ContentTypo>
           </ContentBox> */}
           <ContentBox>
-            <ContentTypo>{personal.currentAddress}</ContentTypo>
+            <TitleTypo>{personal.currentAddress}</TitleTypo>
             <Box sx={{ width: 1 }}>
               {empCurrentAddress ? (
                 <ContentTypo>
@@ -131,7 +136,7 @@ const PersonalReadable = ({ empData }) => {
           </ContentBox>
 
           <ContentBox>
-            <ContentTypo>{personal.residentialAddress}</ContentTypo>
+            <TitleTypo>{personal.residentialAddress}</TitleTypo>
             <Box sx={{ width: 1 }}>
               {empResidentialAddress ? (
                 <ContentTypo>
@@ -146,7 +151,7 @@ const PersonalReadable = ({ empData }) => {
           {personalDetails
             ? personalDetails.map((field) => (
                 <ContentBox key={field._id}>
-                  <ContentTypo>{field.fieldName}</ContentTypo>
+                  <TitleTypo>{field.fieldName}:</TitleTypo>
                   {field.fieldType === "date" ? (
                     <ContentTypo>
                       {new Date(field.fieldValue).toDateString().slice(4)}

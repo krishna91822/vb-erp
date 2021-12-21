@@ -37,30 +37,36 @@ const ViewProfile = () => {
   const handleSwitchChange = (event) => {
     setEditEmployee(event.target.checked);
   };
+  const capitalize = (str, lower = false) =>
+    (lower ? str.toLowerCase() : str).replace(/(?:^|\s|["'([{])+\S/g, (match) =>
+      match.toUpperCase()
+    );
   const handlePdfClick = () => {
     var doc = new jsPDF();
-    doc.setFont("Roboto", "bold");
+    doc.setFont("Roboto");
     doc.addImage(template, "JPEG", 0, 0, 210, 298);
-    doc.setFontSize(10);
-    doc.text(`${viewedEmployee.empName}`, 30, 71, {
+    doc.setFontSize(12);
+    doc.text(`${capitalize(viewedEmployee.empName)}`, 30, 71, {
       align: "center",
     });
     doc.text(`${viewedEmployee.empId}`, 85, 42.5);
     doc.text(`${viewedEmployee.empEmail}`, 158, 42.5);
-    doc.text(`${viewedEmployee.empDepartment}`, 85, 49.5);
-    doc.text(`${viewedEmployee.empDesignation}`, 158, 49.5);
+    doc.text(`${capitalize(viewedEmployee.empDepartment)}`, 85, 49.5);
+    doc.text(`${capitalize(viewedEmployee.empDesignation)}`, 158, 49.5);
     doc.text(
       `${new Date(viewedEmployee.empDoj).toDateString().slice(4)}`,
       85,
       57
     );
-    doc.text(`${viewedEmployee.empReportingManager}`, 158, 57);
+    doc.text(`${capitalize(viewedEmployee.empReportingManager)}`, 158, 57);
 
     //Personal
+    doc.setFontSize(10.8);
     doc.text(`${viewedEmployee.empAboutMe}`, 5, 87, {
       maxWidth: 90,
       align: "justify",
     });
+    doc.setFontSize(12);
     doc.text(`${viewedEmployee.empPersonalEmail}`, 135, 86);
     doc.text(
       `${new Date(viewedEmployee.empDob).toDateString().slice(4)}`,
@@ -71,7 +77,13 @@ const ViewProfile = () => {
     doc.text(`${viewedEmployee.empConnections}`, 135, 107);
     doc.text(
       viewedEmployee.empCurrentAddress
-        ? `${viewedEmployee.empCurrentAddress.empAddressLineOne}, ${viewedEmployee.empCurrentAddress.empAddressCity}, ${viewedEmployee.empCurrentAddress.empAddressState}, ${viewedEmployee.empCurrentAddress.empAddressPinCode}`
+        ? `${capitalize(
+            viewedEmployee.empCurrentAddress.empAddressLineOne
+          )}, ${capitalize(
+            viewedEmployee.empCurrentAddress.empAddressCity
+          )}, ${capitalize(
+            viewedEmployee.empCurrentAddress.empAddressState
+          )}, ${viewedEmployee.empCurrentAddress.empAddressPinCode}`
         : "",
       135,
       113.5,
@@ -81,7 +93,13 @@ const ViewProfile = () => {
     );
     doc.text(
       viewedEmployee.empResidentialAddress
-        ? `${viewedEmployee.empResidentialAddress.empAddressLineOne}, ${viewedEmployee.empResidentialAddress.empAddressCity}, ${viewedEmployee.empResidentialAddress.empAddressState}, ${viewedEmployee.empResidentialAddress.empAddressPinCode}`
+        ? `${capitalize(
+            viewedEmployee.empResidentialAddress.empAddressLineOne
+          )}, ${capitalize(
+            viewedEmployee.empResidentialAddress.empAddressCity
+          )}, ${capitalize(
+            viewedEmployee.empResidentialAddress.empAddressState
+          )}, ${viewedEmployee.empResidentialAddress.empAddressPinCode}`
         : "",
       135,
       134.5,
@@ -100,7 +118,7 @@ const ViewProfile = () => {
                 148 + 8 * i++,
                 { maxWidth: 69 }
               )
-            : doc.text(`${person.fieldValue}`, 135, 148 + 8 * i++, {
+            : doc.text(`${capitalize(person.fieldValue)}`, 135, 148 + 8 * i++, {
                 maxWidth: 69,
               })
         )
@@ -112,20 +130,26 @@ const ViewProfile = () => {
 
     //Professional
     doc.text(`${viewedEmployee.empBand}`, 45, 176.5);
-    doc.text(`${viewedEmployee.empGraduation}`, 45, 183);
-    doc.text(`${viewedEmployee.empGraduationUniversity}`, 45, 190);
-    doc.text(`${viewedEmployee.empPostGraduation}`, 45, 197);
-    doc.text(`${viewedEmployee.empPostGraduationUniversity}`, 45, 204.5);
-    {
-      viewedEmployee.professionalDetails ? (
-        viewedEmployee.professionalDetails.map((prof) =>
-          doc.text(`${prof.fieldName}:`, 100, 176 + 7 * i++, { maxWidth: 30 })
-        )
-      ) : (
-        <></>
-      );
-      i = 0;
-    }
+    doc.text(`${capitalize(viewedEmployee.empGraduation)}`, 45, 183);
+    doc.text(`${capitalize(viewedEmployee.empGraduationUniversity)}`, 45, 190);
+    doc.text(`${capitalize(viewedEmployee.empPostGraduation)}`, 45, 197);
+    doc.text(
+      `${capitalize(viewedEmployee.empPostGraduationUniversity)}`,
+      45,
+      204.5
+    );
+    // {
+    //   viewedEmployee.professionalDetails ? (
+    //     viewedEmployee.professionalDetails.map((prof) =>
+    //       doc.text(`${capitalize(prof.fieldName)}:`, 100, 176 + 7 * i++, {
+    //         maxWidth: 30,
+    //       })
+    //     )
+    //   ) : (
+    //     <></>
+    //   );
+    //   i = 0;
+    // }
     {
       viewedEmployee.professionalDetails ? (
         viewedEmployee.professionalDetails.map((prof) =>
@@ -136,7 +160,7 @@ const ViewProfile = () => {
                 176 + 7 * i++,
                 { maxWidth: 69 }
               )
-            : doc.text(`${prof.fieldValue}`, 135, 176 + 7 * i++, {
+            : doc.text(`${capitalize(prof.fieldValue)}`, 135, 176 + 7 * i++, {
                 maxWidth: 69,
               })
         )
@@ -169,7 +193,7 @@ const ViewProfile = () => {
                 224 + 7 * i++,
                 { maxWidth: 69 }
               )
-            : doc.text(`${skill.fieldValue}`, 135, 224 + 7 * i++, {
+            : doc.text(`${capitalize(skill.fieldValue)}`, 135, 224 + 7 * i++, {
                 maxWidth: 69,
               })
         )
@@ -181,10 +205,13 @@ const ViewProfile = () => {
 
     //Extra Labels
     doc.setTextColor("#161F3C");
+    doc.setFont("Roboto", "bold");
     {
       viewedEmployee.personalDetails ? (
         viewedEmployee.personalDetails.map((person) =>
-          doc.text(`${person.fieldName}:`, 100, 148 + 8 * i++, { maxWidth: 30 })
+          doc.text(`${capitalize(person.fieldName)}:`, 100, 148 + 8 * i++, {
+            maxWidth: 30,
+          })
         )
       ) : (
         <></>
@@ -194,7 +221,9 @@ const ViewProfile = () => {
     {
       viewedEmployee.professionalDetails ? (
         viewedEmployee.professionalDetails.map((prof) =>
-          doc.text(`${prof.fieldName}:`, 100, 176 + 7 * i++, { maxWidth: 30 })
+          doc.text(`${capitalize(prof.fieldName)}:`, 100, 176 + 7 * i++, {
+            maxWidth: 30,
+          })
         )
       ) : (
         <></>
@@ -204,7 +233,9 @@ const ViewProfile = () => {
     {
       viewedEmployee.skillsDetails ? (
         viewedEmployee.skillsDetails.map((skill) =>
-          doc.text(`${skill.fieldName}:`, 100, 224 + 7 * i++, { maxWidth: 30 })
+          doc.text(`${capitalize(skill.fieldName)}:`, 100, 224 + 7 * i++, {
+            maxWidth: 30,
+          })
         )
       ) : (
         <></>
@@ -220,16 +251,23 @@ const ViewProfile = () => {
   ) : (
     <Container
       sx={{
-        pb: 3,
-        pt: 3,
+        pb: 1,
+        pt: 1,
         position: "relative",
       }}
     >
-      <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "space-between",
+          mb: 1,
+          alignItems: "center",
+        }}
+      >
         <Box
           sx={{
             display: "flex",
-            p: 2,
+            padding: 0,
             position: editEmployee ? "absolute" : "relative",
             mt: editEmployee ? 4 : "",
           }}

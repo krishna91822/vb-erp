@@ -54,11 +54,14 @@ export default function UseForm() {
   const ComCcode = useSelector((state) => state.cims.ComCcode);
   const countries = useSelector((state) => state.cims.countries);
   const brandFocus = useSelector((state) => state.cims.brandFocus);
+  const editMode = useSelector((state) => state.cims.editMode);
+
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(fetchCountries());
+    handelSetAddOthers(formData);
   }, []);
 
   const locReg = useSelector((state) => state.cims.locReg);

@@ -122,7 +122,12 @@ export default function AddressFields(props) {
           name={field.name}
           fullWidth
           size="small"
-          disabled={!editMode}
+          disabled={
+            !editMode ||
+            field.name === "state" ||
+            field.name === "district" ||
+            field.name === "area"
+          }
           value={formData[props.type][field.name]}
           onChange={(e) => setAddress(e, props.type)}
           onBlur={(e) => handelAddressOnBlur(e, props.type)}

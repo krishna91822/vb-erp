@@ -163,8 +163,9 @@ const ProfileContent = (props) => {
     <Box
       sx={{
         minHeight: "calc( 100% - 80px )",
-        border: "2px solid",
+        border: "0.1em solid",
         borderColor: "textColor.paletteGrey",
+        borderRadius: "5px",
       }}
     >
       <Container>

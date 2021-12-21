@@ -21,7 +21,6 @@ const EditMode = ({ updateRequest, handleOpen }) => {
   const handleToggleOpen = () => setOpen(true);
 
   const handleSubmit = () => {
-    // console.log({ ...updateRequest });
     axiosInstance
       .post("/reviews", {
         reqName: updateRequest.empName,
@@ -47,7 +46,8 @@ const EditMode = ({ updateRequest, handleOpen }) => {
         display: "flex",
         justifyContent: "flex-end",
         alignItems: "center",
-        padding: 2,
+        padding: 0,
+        pb: 1,
       }}
     >
       {inEditMode ? (
