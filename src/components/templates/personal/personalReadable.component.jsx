@@ -112,10 +112,10 @@ const PersonalReadable = ({ empData }) => {
               </Box>
             </ContentTypo>
           </ContentBox>
-          <ContentBox>
+          {/* <ContentBox>
             <ContentTypo>{personal.connections}</ContentTypo>
             <ContentTypo>{empConnections}</ContentTypo>
-          </ContentBox>
+          </ContentBox> */}
           <ContentBox>
             <ContentTypo>{personal.currentAddress}</ContentTypo>
             <Box sx={{ width: 1 }}>

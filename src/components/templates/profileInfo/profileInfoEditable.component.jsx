@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 
 import { Grid, Avatar, LinearProgress, Box, TextField } from "@mui/material";
 
@@ -8,6 +8,8 @@ import ImportContactsIcon from "@mui/icons-material/ImportContacts";
 import BadgeIcon from "@mui/icons-material/Badge";
 
 import { profileInfoConstant } from "./profileInfo.constant";
+import Select from "react-select";
+import CreatableSelect from "react-select/creatable";
 
 import {
   CustomTextField,
@@ -26,8 +28,18 @@ import {
   SubTitleTypo,
 } from "./../../UI/commonStyles";
 
+import axiosInstance from "./../../../helpers/axiosInstance";
+
 const ProfileInfoEditable = (props) => {
-  const { tab, setTab, employee, setEmployee, profileProgress } = props;
+  const {
+    tab,
+    setTab,
+    employee,
+    setEmployee,
+    profileProgress,
+    register,
+    errors,
+  } = props;
 
   const {
     empName,
@@ -42,12 +54,58 @@ const ProfileInfoEditable = (props) => {
 
   const handleChange = (event, newValue) => {
     const { value, name } = event.target;
-    setEmployee({ ...employee, [name]: value });
+    setEmployee({
+      ...employee,
+      [name]: value,
+    });
   };
 
   const handleTabChange = (event, newValue) => {
     setTab(newValue);
   };
+
+  const customStyles = {
+    control: (provided, state) => ({
+      ...provided,
+      minHeight: "30px",
+      height: "30px",
+      display: "flex",
+      alignContent: "center",
+    }),
+    indicatorsContainer: (provided, state) => ({
+      ...provided,
+      width: "30px",
+      padding: "0",
+      // paddingRight: "2px",
+      // color: "gray",
+    }),
+  };
+
+  const [empDetails, setEmpDetails] = useState({});
+  const [empNameLoading, setEmpNameLoading] = useState(true);
+  const [reportingTo, setReportingTo] = useState(null);
+
+  useEffect(() => {
+    axiosInstance
+      .get("/employees?fields=empName,empId,-_id")
+      .then((response) => {
+        const data = response.data.data.map((item) => {
+          return {
+            label: `${item.empName} (${item.empId})`,
+            value: item.empName,
+          };
+        });
+        setEmpDetails(data);
+        setReportingTo(data[0]);
+        setEmployee({
+          ...employee,
+          empReportingManager: data[0].value,
+        });
+        setEmpNameLoading((prev) => !prev);
+      })
+      .catch((err) => console.log(err));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <Grid
@@ -83,12 +141,17 @@ const ProfileInfoEditable = (props) => {
           <TitleTypo sx={{ mt: 1, textTransform: "capitalize" }}>
             <TextField
               id="standard-basic"
-              placeholder="Full Name"
+              placeholder="Full Name *"
               variant="standard"
               type="text"
               name="empName"
               value={empName}
               onChange={handleChange}
+              error={Boolean(errors.empName)}
+              helperText={errors.empName?.message}
+              inputRef={register({
+                required: "Full name is required.",
+              })}
               sx={{
                 "& .MuiInput-input": {
                   color: "textColor",
@@ -147,6 +210,9 @@ const ProfileInfoEditable = (props) => {
             <FieldBox>
               <ContentBoldTypo sx={{ textTransform: "capitalize", pl: 1 }}>
                 {profileInfoConstant.emailId}
+                <Box component="span" sx={{ color: "red" }}>
+                  &nbsp;*
+                </Box>
               </ContentBoldTypo>
               <CustomTextField
                 placeholder="company email"
@@ -158,11 +224,23 @@ const ProfileInfoEditable = (props) => {
                 type="text"
                 name="empEmail"
                 onChange={handleChange}
+                error={Boolean(errors.empEmail)}
+                helperText={errors.empEmail?.message}
+                inputRef={register({
+                  required: "Company email is required.",
+                  pattern: {
+                    value: /^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/,
+                    message: "Enter valid email.",
+                  },
+                })}
               />
             </FieldBox>
             <FieldBox>
               <ContentBoldTypo sx={{ textTransform: "capitalize", pl: 1 }}>
                 {profileInfoConstant.department}
+                <Box component="span" sx={{ color: "red" }}>
+                  &nbsp;*
+                </Box>
               </ContentBoldTypo>
               <CustomTextField
                 placeholder="Enter department"
@@ -174,11 +252,19 @@ const ProfileInfoEditable = (props) => {
                 type="text"
                 name="empDepartment"
                 onChange={handleChange}
+                error={Boolean(errors.empDepartment)}
+                helperText={errors.empDepartment?.message}
+                inputRef={register({
+                  required: "Department is required.",
+                })}
               />
             </FieldBox>
             <FieldBox>
               <ContentBoldTypo sx={{ textTransform: "capitalize", pl: 1 }}>
                 {profileInfoConstant.designation}
+                <Box component="span" sx={{ color: "red" }}>
+                  &nbsp;*
+                </Box>
               </ContentBoldTypo>
               <CustomTextField
                 placeholder="Enter designation"
@@ -190,16 +276,24 @@ const ProfileInfoEditable = (props) => {
                 type="text"
                 name="empDesignation"
                 onChange={handleChange}
+                error={Boolean(errors.empDesignation)}
+                helperText={errors.empDesignation?.message}
+                inputRef={register({
+                  required: "Department is required.",
+                })}
               />
             </FieldBox>
             <FieldBox>
               <ContentBoldTypo sx={{ textTransform: "capitalize", pl: 1 }}>
                 {profileInfoConstant.dateOfJoining}
+                <Box component="span" sx={{ color: "red" }}>
+                  &nbsp;*
+                </Box>
               </ContentBoldTypo>
               <LocalizationProvider dateAdapter={AdapterDateFns}>
                 <DesktopDatePicker
                   inputFormat="dd/MM/yyyy"
-                  value={empDoj ? empDoj : new Date()}
+                  value={empDoj}
                   onChange={(newValue) => {
                     setEmployee({ ...employee, empDoj: newValue });
                   }}
@@ -212,20 +306,34 @@ const ProfileInfoEditable = (props) => {
             <FieldBox>
               <ContentBoldTypo sx={{ textTransform: "capitalize", pl: 1 }}>
                 {profileInfoConstant.reportingManager}
+                <Box component="span" sx={{ color: "red" }}>
+                  &nbsp;*
+                </Box>
               </ContentBoldTypo>
-              <CustomTextField
-                placeholder="Enter Reporting manager"
-                autoComplete="off"
-                required
-                id="outlined-basic"
-                variant="outlined"
-                defaultValue={
-                  empReportingManager ? empReportingManager : "sunilee"
-                }
-                type="text"
-                name="empReportingManager"
-                onChange={handleChange}
-              />
+              <Box
+                sx={{
+                  width: "80%",
+                  height: "28px",
+                  fontSize: "14px",
+                  marginLeft: "8px",
+                }}
+              >
+                <CreatableSelect
+                  value={reportingTo ? reportingTo : null}
+                  isLoading={empNameLoading}
+                  styles={customStyles}
+                  isSearchable
+                  name="empReportingManager"
+                  options={empDetails}
+                  onChange={(value) => {
+                    setReportingTo(value);
+                    setEmployee({
+                      ...employee,
+                      empReportingManager: value.value,
+                    });
+                  }}
+                />
+              </Box>
             </FieldBox>
           </CustomGridBox>
         </Box>

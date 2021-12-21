@@ -28,7 +28,14 @@ import {
 } from "@mui/material/colors";
 
 const PersonalEditable = (props) => {
-  const { empData, setEmpData, personalDetails, setPersonalDetails } = props;
+  const {
+    empData,
+    setEmpData,
+    personalDetails,
+    setPersonalDetails,
+    register,
+    errors,
+  } = props;
 
   const {
     empConnections,
@@ -100,6 +107,7 @@ const PersonalEditable = (props) => {
   const [currentAddress, setCurrentAddress] = useState(
     empCurrentAddress ? { ...empCurrentAddress } : {}
   );
+
   const handleCurrentAddressChange = (event) => {
     const { value, name } = event.target;
     if (addresschecked) {
@@ -159,6 +167,20 @@ const PersonalEditable = (props) => {
           value={empAboutMe ? empAboutMe : ""}
           name="empAboutMe"
           onChange={handleChange}
+          error={Boolean(errors.empAboutMe)}
+          helperText={errors.empAboutMe?.message}
+          inputRef={register({
+            required: "Write something about user.",
+            minLength: {
+              value: 10,
+              message: "minimun leght should be 10",
+            },
+            maxLength: {
+              value: 300,
+              message: "minimun leght should be 300",
+            },
+            validate: true,
+          })}
         />
       </Grid>
       <Grid item sm={7}>
@@ -174,9 +196,16 @@ const PersonalEditable = (props) => {
               value={empPersonalEmail ? empPersonalEmail : ""}
               type="email"
               name="empPersonalEmail"
-              onChange={(event) => {
-                handleChange(event);
-              }}
+              onChange={(event) => handleChange(event)}
+              error={Boolean(errors.empPersonalEmail)}
+              helperText={errors.empPersonalEmail?.message}
+              inputRef={register({
+                required: "Personal email is required.",
+                pattern: {
+                  value: /^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/,
+                  message: "Enter valid email.",
+                },
+              })}
             />
           </ContentBox>
           <ContentBox>
@@ -184,7 +213,7 @@ const PersonalEditable = (props) => {
             <LocalizationProvider dateAdapter={AdapterDateFns}>
               <DesktopDatePicker
                 inputFormat="dd/MM/yyyy"
-                value={empDob ? empDob : new Date()}
+                value={empDob}
                 onChange={(newValue) => {
                   setEmpData({ ...empData, empDob: newValue });
                 }}
@@ -231,7 +260,7 @@ const PersonalEditable = (props) => {
               />
             </Box>
           </ContentBox>
-          <ContentBox>
+          {/* <ContentBox>
             <ContentTypo>{personal.connections}</ContentTypo>
             <CustomTextField
               placeholder="enter no. of connections"
@@ -244,7 +273,7 @@ const PersonalEditable = (props) => {
               name="empConnections"
               onChange={handleChange}
             />
-          </ContentBox>
+          </ContentBox> */}
           <ContentBox>
             <ContentTypo>{personal.currentAddress}</ContentTypo>
             <Box sx={{ width: 1 }}>
