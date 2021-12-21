@@ -3,8 +3,6 @@ import React, { useEffect, useState } from "react";
 import { LocalizationProvider, DesktopDatePicker } from "@mui/lab";
 import AdapterDateFns from "@mui/lab/AdapterDateFns";
 
-import validator from "validator";
-
 import {
   Box,
   Button,

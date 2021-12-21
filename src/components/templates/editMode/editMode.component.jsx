@@ -9,7 +9,7 @@ import { toggleEditMode } from "../../../store/employeeSlice";
 
 import axiosInstance from "./../../../helpers/axiosInstance";
 
-const EditMode = ({ updateRequest, handleOpen }) => {
+const EditMode = ({ updateRequest, handleOpen, handleSubmit }) => {
   const { inEditMode } = useSelector((state) => state.employee);
   const dispatch = useDispatch();
 
@@ -20,7 +20,7 @@ const EditMode = ({ updateRequest, handleOpen }) => {
   };
   const handleToggleOpen = () => setOpen(true);
 
-  const handleSubmit = () => {
+  const handleSubmitBtn = () => {
     axiosInstance
       .post("/reviews", {
         reqName: updateRequest.empName,
@@ -62,7 +62,7 @@ const EditMode = ({ updateRequest, handleOpen }) => {
           <Button
             sx={{ marginRight: "2rem" }}
             variant="contained"
-            onClick={handleSubmit}
+            onClick={handleSubmit(handleSubmitBtn)}
           >
             {editModeConstant.SubmitRequest}
           </Button>
