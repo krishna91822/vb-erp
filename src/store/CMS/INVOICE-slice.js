@@ -5,11 +5,11 @@ const projects = [];
 const clientFinController = [];
 const targetedResources = [];
 const clientSponsors = [];
-const invoiceRaised = [];
+const invoiceRaised = ["Yes", "No"];
 const invoiceRecieved = [];
 
 const invoiceAmount = [];
-const VbBankAcc = [];
+const VbBankAcc = ["40141411111222", "1212334432234", "2324345434245"];
 
 export const invoice_init_state = {
   inputFieldsData: {
