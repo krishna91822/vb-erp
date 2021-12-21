@@ -74,7 +74,7 @@ const ViewProfile = () => {
       93
     );
     doc.text(`${viewedEmployee.empHobbies}`, 135, 99.5);
-    doc.text(`${viewedEmployee.empConnections}`, 135, 107);
+    // doc.text(`${viewedEmployee.empConnections}`, 135, 107);
     doc.text(
       viewedEmployee.empCurrentAddress
         ? `${capitalize(
@@ -138,18 +138,6 @@ const ViewProfile = () => {
       45,
       204.5
     );
-    // {
-    //   viewedEmployee.professionalDetails ? (
-    //     viewedEmployee.professionalDetails.map((prof) =>
-    //       doc.text(`${capitalize(prof.fieldName)}:`, 100, 176 + 7 * i++, {
-    //         maxWidth: 30,
-    //       })
-    //     )
-    //   ) : (
-    //     <></>
-    //   );
-    //   i = 0;
-    // }
     {
       viewedEmployee.professionalDetails ? (
         viewedEmployee.professionalDetails.map((prof) =>
