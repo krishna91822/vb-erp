@@ -97,7 +97,7 @@ export const CapturePO_SOW = (props) => {
   let ReadPO_amt = "";
   let ReadType = "PO";
   let ReadCurr = "";
-  let init_Status = "Drafted";
+  let init_Status = "Active";
   let Readremarks = "";
   let ReadDocName = "";
   let initDocTypes = "";
@@ -350,7 +350,7 @@ export const CapturePO_SOW = (props) => {
                         data-testid="EditToggleBtn"
                         checked={editTglCheckedState}
                         onChange={handleEditTglChange}
-                        disabled={status === "Drafted" ? false : true}
+                        disabled={status === "Active" ? false : true}
                       />
                       <span className="slider round"></span>
                     </label>
@@ -711,7 +711,8 @@ export const CapturePO_SOW = (props) => {
                     }
                   />
                 </Grid>
-                <Grid
+                {/* might be required in future */}
+                {/* <Grid
                   item
                   lg={12}
                   md={12}
@@ -735,7 +736,7 @@ export const CapturePO_SOW = (props) => {
                   ) : (
                     <div></div>
                   )}
-                </Grid>
+                </Grid> */}
               </Grid>
             </Box>
           </Container>

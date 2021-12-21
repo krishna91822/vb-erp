@@ -265,7 +265,7 @@ export const Main = () => {
                       </Button>
                     </TableCell>
                   )} */}
-                  {row.Status === "Rejected" || row.Status === "Drafted" ? (
+                  {row.Status === "Active" ? (
                     <TableCell>
                       <EditIcon />
                     </TableCell>

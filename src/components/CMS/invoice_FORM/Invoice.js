@@ -148,7 +148,6 @@ function Invoice(props) {
       setClientFinController(filteredArr[0].client_finance_controller);
       setClientSponsor(filteredArr[0].client_sponsor);
       setInvoiceRaised(filteredArr[0].invoice_raised);
-      console.log(filteredArr[0].invoice_amount_received);
       setinvoiceAmount(filteredArr[0].invoice_amount_received);
       filteredArr[0].amount_received_on !== undefined
         ? setDate(filteredArr[0].amount_received_on)
@@ -174,6 +173,8 @@ function Invoice(props) {
   useEffect(() => {
     if (!invoicereceived) {
       setinvoiceAmount(null);
+      setDate(null);
+      setVbbankacc(null);
     }
   }, [invoicereceived]);
   const handleClientChange = (event) => {
