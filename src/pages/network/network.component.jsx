@@ -40,7 +40,8 @@ const Network = () => {
       )
       .then((response) => {
         setEmployees(response.data.data);
-        response.data.totalResult < paginationInfo.limit
+        response.data.totalResult < paginationInfo.limit &&
+        paginationInfo.page === 1
           ? setPaginationInfo({
               ...paginationInfo,
               totalPage: 1,
