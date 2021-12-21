@@ -8,6 +8,8 @@
 }
 .posow-SaveButton {
   margin: 1rem;
+  display: flex;
+  justify-content: flex-end;
 }
 .posow-status {
   display: flex;

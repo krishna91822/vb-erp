@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -293,26 +294,6 @@ export const CapturePO_SOW = (props) => {
         <React.Fragment>
           <CssBaseline />
           <Container fixed>
-            <div className="outermostHeader">
-              <div>
-                <h2 data-test="Doc Heading">PO/SOW</h2>
-              </div>
-              {props.editBtn && editTglCheckedState ? (
-                <div>
-                  <Button
-                    variant="contained"
-                    color="success"
-                    type="submit"
-                    onClick={(event) => submitForm(event)}
-                    data-test="UpdateBtn"
-                  >
-                    Update{" "}
-                  </Button>
-                </div>
-              ) : (
-                <div></div>
-              )}
-            </div>
             <Box
               sx={{
                 bgcolor: "white",
@@ -321,196 +302,214 @@ export const CapturePO_SOW = (props) => {
                 overflowY: "scroll",
               }}
             >
-              <div className="posow-ProjectInfoHeader">
-                <div className="ProjectHeaderTitle">
+              <Grid container>
+                <Grid item lg={6} md={6} sm={12} xs={12} className="finalgrid">
+                  <h2 data-test="Doc Heading">PO/SOW</h2>
+                </Grid>
+                <Grid item lg={6} md={6} sm={12} xs={12} className="finalgrid ">
+                  {props.editBtn && editTglCheckedState ? (
+                    <div className="posow-SaveButton">
+                      <Button
+                        variant="contained"
+                        color="success"
+                        type="submit"
+                        onClick={(event) => submitForm(event)}
+                        data-test="UpdateBtn"
+                      >
+                        Update{" "}
+                      </Button>
+                    </div>
+                  ) : (
+                    <div></div>
+                  )}
+                </Grid>
+              </Grid>
+              <Grid container>
+                <Grid item lg={4} md={4} sm={4} xs={12} className="finalgrid">
                   <h3>Project information</h3>
-                </div>
-                {props.editBtn ? (
-                  <div className="posow-status">
-                    <h5 data-test="status-label">STATUS</h5>
-                    <strong data-testid="status">
-                      {" - " + "  " + status}
-                    </strong>
-                  </div>
-                ) : (
-                  <div></div>
-                )}
-                {props.editBtn ? (
-                  <div className="posow-SaveButton">
-                    <strong
-                      className="editTxt"
-                      data-test="editModeSwitch-label"
-                    >
-                      Edit mode
-                    </strong>
-                    <label className="switch">
-                      <input
-                        type="checkbox"
-                        data-test="EditToggleBtn"
-                        data-testid="EditToggleBtn"
-                        checked={editTglCheckedState}
-                        onChange={handleEditTglChange}
-                        disabled={status === "Drafted" ? false : true}
-                      />
-                      <span className="slider round"></span>
-                    </label>
-                  </div>
-                ) : (
-                  <div className="posow-SaveButton">
-                    <Button
-                      variant="contained"
-                      color="success"
-                      type="submit"
-                      onClick={(event) => submitForm(event)}
-                      data-test="POSOW-save-btn"
-                      data-testid="save-btn"
-                    >
-                      Save
-                    </Button>
-                  </div>
-                )}
-              </div>
-              <hr className="projectInfoSeperator" />
-
-              <div className="posow-Dropdowns">
-                <div className="ClientDropdown">
-                  <label>
-                    <strong>Client name</strong>
-                  </label>
-                  <div>
-                    <Autocomplete
-                      disablePortal
-                      id="combo-box-demo"
-                      options={names}
-                      onChange={(event, value) =>
-                        handleClientChange(event, value)
-                      }
-                      disabled={
-                        (props.editBtn && !editTglCheckedState) ||
-                        editTglCheckedState
-                          ? true
-                          : false
-                      }
-                      value={clientName}
-                      getOptionLabel={(option) => option.clientName}
-                      isOptionEqualToValue={(option, value) =>
-                        option.clientName === value.clientName
-                      }
-                      data-testid="clientNameDropdown-ChangeTest"
-                      sx={{ width: 400 }}
-                      error={true}
-                      renderInput={(params) => (
-                        <TextField
-                          {...params}
-                          error={errors.Client_Name ? true : false}
+                </Grid>
+                <Grid item lg={4} md={4} sm={4} xs={12} className="finalgrid">
+                  {props.editBtn ? (
+                    <div className="posow-status">
+                      <h5 data-test="status-label">STATUS</h5>
+                      <strong data-testid="status">
+                        {" - " + "  " + status}
+                      </strong>
+                    </div>
+                  ) : (
+                    <div></div>
+                  )}
+                </Grid>
+                <Grid item lg={4} md={4} sm={4} xs={12} className="finalgrid">
+                  {props.editBtn ? (
+                    <div className="posow-SaveButton">
+                      <strong
+                        className="editTxt"
+                        data-test="editModeSwitch-label"
+                      >
+                        Edit
+                      </strong>
+                      <br />
+                      <label className="switch">
+                        <input
+                          type="checkbox"
+                          data-test="EditToggleBtn"
+                          data-testid="EditToggleBtn"
+                          checked={editTglCheckedState}
+                          onChange={handleEditTglChange}
+                          disabled={status === "Drafted" ? false : true}
                         />
-                      )}
-                    />
-                  </div>
-                </div>
-                <div className="ProjectDropdown">
-                  <label>
-                    <strong>Project name</strong>
-                  </label>
-                  <div>
-                    <Autocomplete
-                      disablePortal
-                      id="combo-box-demo"
-                      options={projects}
-                      onChange={(event, value) =>
-                        handleProjectChange(event, value)
-                      }
-                      disabled={
-                        (props.editBtn && !editTglCheckedState) ||
-                        editTglCheckedState
-                          ? true
-                          : false
-                      }
-                      value={projectName}
-                      getOptionLabel={(option) => option.projectName}
-                      isOptionEqualToValue={(option, value) =>
-                        option.projectName === value.projectName
-                      }
-                      data-testid="projectDropdown-ChangeTest"
-                      sx={{ width: 400 }}
-                      renderInput={(params) => (
-                        <TextField
-                          {...params}
-                          error={errors.Project_Name ? true : false}
-                        />
-                      )}
-                    />
-                  </div>
-                </div>
-              </div>
-
-              <div className="posow-CheckBoxInputs">
-                <div>
-                  <div className="clientSponsorCBs">
-                    <h3 data-test="client-sponsor-chkBox-label">
-                      Client Sponsor
-                    </h3>
-                    <ul className="">
-                      <li>{clientProjectSponsor}</li>
-                    </ul>
-                  </div>
-                </div>
-                <div>
-                  <div className="ClientFinContChkBoxs">
-                    <h3 data-test="client-finController-chkBox-label">
-                      Client Finance Controller
-                    </h3>
-                    <ul className="">
-                      <li>{clientFinanceController}</li>
-                    </ul>
-                  </div>
-                </div>
-                <div>
-                  <div className="targetedResChkBoxs">
-                    <h3 data-test="TargetedRes-chkBox-label">
-                      Targeted Resources
-                    </h3>
-                    <ul className="">
-                      {targetedResources.map((name, index) => {
-                        return (
-                          <li key={index}>
-                            <div className="">
-                              <div className="">
-                                <input
-                                  type="checkbox"
-                                  id={`custom-checkbox-${index}`}
-                                  name={name}
-                                  value={name}
-                                  data-test="targetedRes-chkBox-input"
-                                  data-testid={`targetedRes${index}`}
-                                  disabled={
-                                    props.editBtn && !editTglCheckedState
-                                      ? true
-                                      : false
-                                  }
-                                  onChange={() =>
-                                    handleTargetedResChkBoxOnChange(index)
-                                  }
-                                  checked={TargetedResChkBox[index]}
-                                />
-                                <label>{name}</label>
-                              </div>
-                            </div>
-                          </li>
-                        );
-                      })}
-                    </ul>
-                  </div>
-                </div>
-              </div>
-
+                        <span className="slider round"></span>
+                      </label>
+                    </div>
+                  ) : (
+                    <div className="posow-SaveButton">
+                      <Button
+                        variant="contained"
+                        color="success"
+                        type="submit"
+                        onClick={(event) => submitForm(event)}
+                        data-test="POSOW-save-btn"
+                        data-testid="save-btn"
+                      >
+                        Save
+                      </Button>
+                    </div>
+                  )}
+                </Grid>
+              </Grid>
               <hr className="projectInfoSeperator" />
 
               <Grid container>
                 <Grid item lg={6} md={6} sm={12} xs={12} className="finalgrid">
-                  <InputLabel id="demo-multiple-name-label">
+                  <label>
+                    <strong>Client name</strong>
+                  </label>
+                  <Autocomplete
+                    className="finalinput"
+                    disablePortal
+                    id="combo-box-demo"
+                    options={names}
+                    onChange={(event, value) =>
+                      handleClientChange(event, value)
+                    }
+                    disabled={
+                      (props.editBtn && !editTglCheckedState) ||
+                      editTglCheckedState
+                        ? true
+                        : false
+                    }
+                    value={clientName}
+                    getOptionLabel={(option) => option.clientName}
+                    isOptionEqualToValue={(option, value) =>
+                      option.clientName === value.clientName
+                    }
+                    data-testid="clientNameDropdown-ChangeTest"
+                    error={true}
+                    renderInput={(params) => (
+                      <TextField
+                        className="finalinput"
+                        {...params}
+                        error={errors.Client_Name ? true : false}
+                      />
+                    )}
+                  />
+                </Grid>
+                <Grid item lg={6} md={6} sm={12} xs={12} className="finalgrid">
+                  <label>
+                    <strong>Project name</strong>
+                  </label>
+                  <Autocomplete
+                    disablePortal
+                    id="combo-box-demo"
+                    options={projects}
+                    onChange={(event, value) =>
+                      handleProjectChange(event, value)
+                    }
+                    disabled={
+                      (props.editBtn && !editTglCheckedState) ||
+                      editTglCheckedState
+                        ? true
+                        : false
+                    }
+                    value={projectName}
+                    getOptionLabel={(option) => option.projectName}
+                    isOptionEqualToValue={(option, value) =>
+                      option.projectName === value.projectName
+                    }
+                    data-testid="projectDropdown-ChangeTest"
+                    renderInput={(params) => (
+                      <TextField
+                        className="finalinput"
+                        {...params}
+                        error={errors.Project_Name ? true : false}
+                      />
+                    )}
+                  />
+                </Grid>
+              </Grid>
+
+              <hr className="projectInfoSeperator" />
+
+              <Grid container>
+                <Grid item lg={4} md={4} sm={12} xs={12} className="finalgrid">
+                  <h3 data-test="client-sponsor-chkBox-label">
+                    Client Sponsor
+                  </h3>
+                  <ul className="">
+                    <li>{clientProjectSponsor}</li>
+                  </ul>
+                </Grid>
+                <Grid item lg={4} md={4} sm={12} xs={12} className="finalgrid">
+                  <h3 data-test="client-finController-chkBox-label">
+                    Client Finance Controller
+                  </h3>
+                  <ul className="">
+                    <li>{clientFinanceController}</li>
+                  </ul>
+                </Grid>
+                <Grid item lg={4} md={4} sm={12} xs={12} className="finalgrid">
+                  <h3 data-test="TargetedRes-chkBox-label">
+                    Targeted Resources
+                  </h3>
+                  <ul className="">
+                    {targetedResources.map((name, index) => {
+                      return (
+                        <li key={index}>
+                          <div className="">
+                            <div className="">
+                              <input
+                                type="checkbox"
+                                id={`custom-checkbox-${index}`}
+                                name={name}
+                                value={name}
+                                data-test="targetedRes-chkBox-input"
+                                data-testid={`targetedRes${index}`}
+                                disabled={
+                                  props.editBtn && !editTglCheckedState
+                                    ? true
+                                    : false
+                                }
+                                onChange={() =>
+                                  handleTargetedResChkBoxOnChange(index)
+                                }
+                                checked={TargetedResChkBox[index]}
+                              />
+                              <label>{name}</label>
+                            </div>
+                          </div>
+                        </li>
+                      );
+                    })}
+                  </ul>
+                </Grid>
+              </Grid>
+
+              <Grid container>
+                <Grid item lg={6} md={6} sm={12} xs={12} className="finalgrid">
+                  <label id="demo-multiple-name-label">
                     <strong>Type</strong>
-                  </InputLabel>
+                  </label>
                   <Select
                     className="finalinput"
                     value={typeName}
@@ -535,9 +534,9 @@ export const CapturePO_SOW = (props) => {
                 </Grid>
 
                 <Grid item lg={6} md={6} sm={12} xs={12} className="finalgrid">
-                  <InputLabel id="demo-multiple-name-label">
+                  <label id="demo-multiple-name-label">
                     <strong>Currency</strong>
-                  </InputLabel>
+                  </label>
                   <Select
                     className="finalinput"
                     value={CurrName}
@@ -566,9 +565,9 @@ export const CapturePO_SOW = (props) => {
                   </Select>
                 </Grid>
                 <Grid item lg={6} md={6} sm={12} xs={12} className="finalgrid">
-                  <InputLabel id="demo-multiple-name-label">
+                  <label id="demo-multiple-name-label">
                     <strong>{typeName} Amount</strong>
-                  </InputLabel>
+                  </label>
                   <TextField
                     className="finalinput"
                     variant="outlined"
@@ -585,9 +584,9 @@ export const CapturePO_SOW = (props) => {
                 <Grid item lg={6} md={6} sm={12} xs={12} className="finalgrid">
                   {props.editBtn ? (
                     <div>
-                      <InputLabel id="demo-multiple-name-label">
+                      <label id="demo-multiple-name-label">
                         <strong>{typeName} Number</strong>
-                      </InputLabel>
+                      </label>
                       <TextField
                         className="finalinput"
                         variant="outlined"
@@ -610,30 +609,11 @@ export const CapturePO_SOW = (props) => {
 
               <Grid container>
                 <Grid item lg={6} md={6} sm={12} xs={12} className="finalgrid">
-                  <InputLabel id="demo-multiple-name-label">
-                    <strong>{typeName + " End Date"}</strong>
-                  </InputLabel>
-                  <BasicDatePicker
-                    className="finalinput"
-                    // className="inputField txtBox"
-                    maxDate="POSOW"
-                    label={typeName + " End Date"}
-                    value={selectedDate}
-                    onChange={handleDateChange}
-                    helperText="Choose Date"
-                    disabled={
-                      props.editBtn && !editTglCheckedState ? true : false
-                    }
-                    data-testid="BasicdatePicker"
-                  />
-                </Grid>
-                <Grid item lg={6} md={6} sm={12} xs={12} className="finalgrid">
-                  <InputLabel id="demo-multiple-name-label">
+                  <label id="demo-multiple-name-label">
                     <strong>Uploaded Document</strong>
-                  </InputLabel>
+                  </label>
                   <TextField
                     className="finalinput"
-                    sx={{ m: 1, width: 400 }}
                     id="outlined-basic"
                     variant="outlined"
                     value={DocName}
@@ -682,6 +662,25 @@ export const CapturePO_SOW = (props) => {
                     )}
                   </div>
                 </Grid>
+                <Grid item lg={6} md={6} sm={12} xs={12} className="finalgrid">
+                  <label id="demo-multiple-name-label">
+                    <strong>{typeName + " End Date"}</strong>
+                  </label>
+                  <br />
+                  <BasicDatePicker
+                    className="finalinput"
+                    // className="inputField txtBox"
+                    maxDate="POSOW"
+                    label={typeName + " End Date"}
+                    value={selectedDate}
+                    onChange={handleDateChange}
+                    helperText="Choose Date"
+                    disabled={
+                      props.editBtn && !editTglCheckedState ? true : false
+                    }
+                    data-testid="BasicdatePicker"
+                  />
+                </Grid>
               </Grid>
 
               <Grid container>
@@ -693,9 +692,9 @@ export const CapturePO_SOW = (props) => {
                   xs={12}
                   className="finalgrid"
                 >
-                  <InputLabel id="demo-multiple-name-label">
+                  <label id="demo-multiple-name-label">
                     <strong>Remarks/Comments</strong>
-                  </InputLabel>
+                  </label>
                   <TextField
                     className="finalinput"
                     id="outlined-multiline-static"
