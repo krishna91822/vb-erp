@@ -299,6 +299,27 @@ function Invoice(props) {
     <div className="posowForm-container">
       <React.Fragment>
         <CssBaseline />
+        <Grid container className="posow-topGrid">
+          <Grid item lg={6} md={6} sm={12} xs={12}>
+            <h3>Invoice</h3>
+          </Grid>
+          <Grid item lg={6} md={6} sm={12} xs={12}>
+            {props.editBtn && editTglCheckedState ? (
+              <div className="posow-SaveButton">
+                <Button
+                  variant="contained"
+                  color="success"
+                  onClick={updatehandler}
+                  data-test="UpdateBtn"
+                >
+                  Update{" "}
+                </Button>
+              </div>
+            ) : (
+              <div></div>
+            )}
+          </Grid>
+        </Grid>
         <Container fixed>
           <Box
             sx={{
@@ -309,27 +330,6 @@ function Invoice(props) {
               padding: "1rem",
             }}
           >
-            <Grid container>
-              <Grid item lg={6} md={6} sm={12} xs={12}>
-                <h3>Invoice</h3>
-              </Grid>
-              <Grid item lg={6} md={6} sm={12} xs={12}>
-                {props.editBtn && editTglCheckedState ? (
-                  <div className="posow-SaveButton">
-                    <Button
-                      variant="contained"
-                      color="success"
-                      onClick={updatehandler}
-                      data-test="UpdateBtn"
-                    >
-                      Update{" "}
-                    </Button>
-                  </div>
-                ) : (
-                  <div></div>
-                )}
-              </Grid>
-            </Grid>
             <Grid container>
               <Grid item lg={6} md={6} sm={6} xs={12}>
                 <h4 className="heading">PO Information</h4>

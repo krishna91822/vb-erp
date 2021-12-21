@@ -135,7 +135,7 @@ function InvoiceInfo() {
           <TextField
             id="outlined-basic"
             onKeyPress={searchHandler}
-            label="search"
+            label="client name,project name..."
             variant="outlined"
           />
         </Grid>

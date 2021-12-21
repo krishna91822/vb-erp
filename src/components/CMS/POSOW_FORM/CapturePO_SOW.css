@@ -6,10 +6,18 @@
   display: flex;
   justify-content: space-between;
 }
+.posow-topGrid {
+  padding: 0 0.8rem;
+}
 .posow-SaveButton {
   margin: 1rem;
   display: flex;
   justify-content: flex-end;
+}
+.posow-updownBtn {
+  margin-top: 1rem;
+  display: flex;
+  justify-content: flex-start;
 }
 .posow-status {
   display: flex;

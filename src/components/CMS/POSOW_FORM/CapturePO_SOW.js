@@ -293,6 +293,28 @@ export const CapturePO_SOW = (props) => {
       <div className="posowForm-container">
         <React.Fragment>
           <CssBaseline />
+          <Grid container className="posow-topGrid">
+            <Grid item lg={6} md={6} sm={12} xs={12} className="finalgrid">
+              <h2 data-test="Doc Heading">PO/SOW</h2>
+            </Grid>
+            <Grid item lg={6} md={6} sm={12} xs={12} className="finalgrid ">
+              {props.editBtn && editTglCheckedState ? (
+                <div className="posow-SaveButton">
+                  <Button
+                    variant="contained"
+                    color="success"
+                    type="submit"
+                    onClick={(event) => submitForm(event)}
+                    data-test="UpdateBtn"
+                  >
+                    Update{" "}
+                  </Button>
+                </div>
+              ) : (
+                <div></div>
+              )}
+            </Grid>
+          </Grid>
           <Container fixed>
             <Box
               sx={{
@@ -302,28 +324,6 @@ export const CapturePO_SOW = (props) => {
                 overflowY: "scroll",
               }}
             >
-              <Grid container>
-                <Grid item lg={6} md={6} sm={12} xs={12} className="finalgrid">
-                  <h2 data-test="Doc Heading">PO/SOW</h2>
-                </Grid>
-                <Grid item lg={6} md={6} sm={12} xs={12} className="finalgrid ">
-                  {props.editBtn && editTglCheckedState ? (
-                    <div className="posow-SaveButton">
-                      <Button
-                        variant="contained"
-                        color="success"
-                        type="submit"
-                        onClick={(event) => submitForm(event)}
-                        data-test="UpdateBtn"
-                      >
-                        Update{" "}
-                      </Button>
-                    </div>
-                  ) : (
-                    <div></div>
-                  )}
-                </Grid>
-              </Grid>
               <Grid container>
                 <Grid item lg={4} md={4} sm={4} xs={12} className="finalgrid">
                   <h3>Project information</h3>
@@ -621,7 +621,7 @@ export const CapturePO_SOW = (props) => {
                     error={errors.Document_Name ? true : false}
                     disabled={true}
                   />
-                  <div className="posow-SaveButton">
+                  <div className="posow-updownBtn">
                     {(props.editBtn && editTglCheckedState) ||
                     !props.editBtn ? (
                       <Button

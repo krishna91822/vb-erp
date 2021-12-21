@@ -2,6 +2,9 @@
   width: 85%;
   margin-bottom: 10px;
 }
+.posow-topGrid {
+  padding: 0 0.8rem;
+}
 .posowForm-container {
   margin: 1rem;
 }
