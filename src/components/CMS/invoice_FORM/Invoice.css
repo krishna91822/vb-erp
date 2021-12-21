@@ -2,6 +2,14 @@
   width: 85%;
   margin-bottom: 10px;
 }
+.posowForm-container {
+  margin: 1rem;
+}
+.posow-SaveButton {
+  margin: 1rem;
+  display: flex;
+  justify-content: flex-end;
+}
 .gridcontainer {
   border: 0;
   width: 100%;
