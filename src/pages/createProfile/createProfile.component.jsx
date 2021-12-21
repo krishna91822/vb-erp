@@ -91,19 +91,19 @@ const CreateProfile = ({
       : { ...empInitial, empDoj: new Date(), empReportingManager: "sunilee" }
   );
 
-  const formValidation = {
-    email: !validator.isEmail(employee?.empEmail),
-    personalEmail: !validator.isEmail(employee?.empPersonalEmail),
-    name: employee?.empName === "",
-    department: employee?.empDepartment === "",
-    designation: employee?.empDesignation === "",
-    doj: employee?.empDoj === null,
-    dob: employee?.empDob === null,
-    reportingManager: employee?.empReportingManager === "",
-    connection: employee?.empConnections
-      ? !validator.isInt(employee?.empConnections)
-      : false,
-  };
+  // const formValidation = {
+  //   email: !validator.isEmail(employee?.empEmail),
+  //   personalEmail: !validator.isEmail(employee?.empPersonalEmail),
+  //   name: employee?.empName === "",
+  //   department: employee?.empDepartment === "",
+  //   designation: employee?.empDesignation === "",
+  //   doj: employee?.empDoj === null,
+  //   dob: employee?.empDob === null,
+  //   reportingManager: employee?.empReportingManager === "",
+  //   connection: employee?.empConnections
+  //     ? !validator.isInt(employee?.empConnections)
+  //     : false,
+  // };
 
   const [tab, setTab] = useState(0);
 
@@ -313,7 +313,7 @@ const CreateProfile = ({
             employee={employee}
             setEmployee={setEmployee}
             profileProgress={profileProgress}
-            formValidation={formValidation}
+            // formValidation={formValidation}
           />
         </Container>
         <Container sx={{ width: "calc(100% - 16px)" }}>
@@ -323,7 +323,7 @@ const CreateProfile = ({
               setEmpData={setEmployee}
               personalDetails={personalDetails}
               setPersonalDetails={setPersonalDetails}
-              formValidation={formValidation}
+              // formValidation={formValidation}
             />
           </TabPanelCustom>
           <TabPanelCustom value={tab} index={1}>
@@ -332,7 +332,7 @@ const CreateProfile = ({
               setEmpData={setEmployee}
               professionalDetails={professionalDetails}
               setProfessionalDetails={setProfessionalDetails}
-              formValidation={formValidation}
+              // formValidation={formValidation}
             />
           </TabPanelCustom>
           <TabPanelCustom value={tab} index={2}>
@@ -341,7 +341,7 @@ const CreateProfile = ({
               setEmpData={setEmployee}
               skillsDetails={skillsDetails}
               setSkillsDetails={setSkillsDetails}
-              formValidation={formValidation}
+              // formValidation={formValidation}
             />
           </TabPanelCustom>
         </Container>

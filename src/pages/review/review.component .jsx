@@ -7,6 +7,7 @@ import {
   ModalBoxItem,
   ContentTypo,
   ColorButton,
+  CustomeContainer,
 } from "./review.styles";
 
 import CloseIcon from "@mui/icons-material/Close";
@@ -132,41 +133,36 @@ const Review = () => {
   };
 
   return (
-    <Box sx={{ width: "100%", pt: 3, pb: 3 }}>
-      <Container
+    <Box sx={{ pt: 1 }}>
+      <Box
         sx={{
-          minHeight: "60vh",
-          width: "calc(100% - 48px)",
-          border: "2px solid",
-          borderColor: "textColor.paletteGrey",
-          pb: 3,
-          position: "relative",
+          display: "flex",
+          justifyContent: "space-between",
+          mb: 1,
+          flexDirection: "row",
+          alignItems: "center",
         }}
       >
-        <Box
+        <TitleTypo
           sx={{
-            width: "100%",
-            height: "56px",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-            pt: 2,
+            fontSize: "1.5em",
+            textTransform: "capitalize",
+            mb: 0.5,
+            mr: 2,
           }}
         >
-          <Box sx={{ width: "80%", display: "flex", alignItems: "center" }}>
-            <TitleTypo sx={{ textTransform: "capitalize", mb: 0.5, mr: 2 }}>
-              My Reviews
-            </TitleTypo>
-            <TextField
-              data-test="Search By Req Name-test"
-              onChange={searchHandleChange}
-              placeholder="Search By Req Name"
-              id="outlined-search"
-              size="small"
-              variant="outlined"
-              sx={{ width: "30%", height: "40px" }}
-            />
-          </Box>
+          My Reviews
+        </TitleTypo>
+        <Box>
+          <TextField
+            data-test="Search By Req Name-test"
+            onChange={searchHandleChange}
+            placeholder="Search By Req Name"
+            id="outlined-search"
+            size="small"
+            variant="outlined"
+            sx={{ width: "15vw", height: "40px", mr: 1 }}
+          />
           <CustomTextField
             data-test="Sort-test"
             label="Sort"
@@ -174,7 +170,7 @@ const Review = () => {
             select
             value={sort}
             onChange={handleChange}
-            sx={{ width: "15%" }}
+            sx={{ width: "15vw" }}
           >
             {sortOption.map((option) => (
               <MenuItem key={option.value} value={option.value}>
@@ -183,12 +179,25 @@ const Review = () => {
             ))}
           </CustomTextField>
         </Box>
+      </Box>
+      <CustomeContainer
+        sx={{
+          // minHeight: "60vh",
+          // height: "75vh",
+          border: "0.1em solid",
+          borderColor: "textColor.paletteGrey",
+          borderRadius: "5px",
+          pb: 3,
+          position: "relative",
+        }}
+      >
         <Box
           sx={{
             width: "100%-1",
             backgroundColor: "textColor.light",
             padding: 1,
             marginTop: 1,
+            borderRadius: "5px",
           }}
         >
           <CustomGridBox
@@ -213,7 +222,7 @@ const Review = () => {
               sx={{
                 mt: 1,
                 mb: 1,
-                height: 40,
+                height: 50,
                 cursor: "pointer",
               }}
               onClick={(e) => handleClickReviewItem(item)}
@@ -231,18 +240,18 @@ const Review = () => {
             </CustomGridBox>
           ))}
         </Box>
-        {/* pagination */}
-        <Box sx={{ width: 1, display: "flex", justifyContent: "center" }}>
-          <Pagination
-            count={paginationInfo.totalPage}
-            page={paginationInfo.page}
-            onChange={handlePagination}
-            showFirstButton
-            showLastButton
-            color="primary"
-          />
-        </Box>
-      </Container>
+      </CustomeContainer>
+      {/* pagination */}
+      <Box sx={{ width: 1, display: "flex", justifyContent: "center" }}>
+        <Pagination
+          count={paginationInfo.totalPage}
+          page={paginationInfo.page}
+          onChange={handlePagination}
+          showFirstButton
+          showLastButton
+          color="primary"
+        />
+      </Box>
       <Modal open={openModalForReview} onClose={handleCloseModalForReview}>
         <ModalBoxItem sx={{ height: "auto" }}>
           <Box
