@@ -264,9 +264,7 @@ const CreateProfile = ({
           }}
         >
           {editEmployeeData ? null : (
-            <TitleTypo
-              sx={{ textTransform: "capitalize", fontSize: 24, ml: 2 }}
-            >
+            <TitleTypo sx={{ textTransform: "capitalize", fontSize: 24 }}>
               {createProfileConstant.createUser}
             </TitleTypo>
           )}
@@ -289,7 +287,7 @@ const CreateProfile = ({
         </Box>
       </ContainerStyleTop>
       <ContainerStyle>
-        <Container>
+        <div>
           <ProfileInfoEditable
             tab={tab}
             setTab={setTab}
@@ -299,8 +297,8 @@ const CreateProfile = ({
             register={register}
             errors={errors}
           />
-        </Container>
-        <Container sx={{ width: "calc(100% - 16px)" }}>
+        </div>
+        <Box sx={{}}>
           <TabPanelCustom value={tab} index={0}>
             <PersonalEditable
               empData={employee}
@@ -331,7 +329,7 @@ const CreateProfile = ({
               errors={errors}
             />
           </TabPanelCustom>
-        </Container>
+        </Box>
       </ContainerStyle>
       <div>
         <Modal

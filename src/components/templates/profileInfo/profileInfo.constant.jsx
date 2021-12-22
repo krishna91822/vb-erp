@@ -1,5 +1,5 @@
 export const profileInfoConstant = {
-  profilePercentage: "% remains to complete the profile",
+  profilePercentage: "% profile is completed",
   employeeId: "employee ID",
   emailId: "email ID",
   department: "department",
