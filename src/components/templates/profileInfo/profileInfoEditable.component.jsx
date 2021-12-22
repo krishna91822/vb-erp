@@ -113,7 +113,7 @@ const ProfileInfoEditable = (props) => {
       spacing={0}
       sx={{
         minHeight: "100px",
-        borderBottom: "2px solid",
+        borderBottom: "0.1em solid",
         borderColor: "textColor.paletteGrey",
       }}
     >
@@ -185,22 +185,26 @@ const ProfileInfoEditable = (props) => {
             <StyledTab
               icon={<LocalCafeIcon />}
               label={profileInfoConstant.tabs.personal}
+              sx={{ fontSize: "16px" }}
             />
             <StyledTab
               icon={<ImportContactsIcon />}
               label={profileInfoConstant.tabs.professional}
+              sx={{ fontSize: "16px" }}
             />
             <StyledTab
               icon={<BadgeIcon />}
               label={profileInfoConstant.tabs.skills}
+              sx={{ fontSize: "16px" }}
             />
           </StyledTabs>
         </Box>
         <Box
           sx={{
-            width: "calc(100% - 20px)",
+            // width: "calc(100% - 20px)",
             minHeight: 90,
-            border: "2px solid",
+            border: "0.1em solid",
+            borderRadius: "5px",
             borderColor: "textColor.paletteGrey",
             mt: 1,
             mb: 1,

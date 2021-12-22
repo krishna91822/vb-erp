@@ -133,7 +133,7 @@ const Review = () => {
   };
 
   return (
-    <Box sx={{ pt: 1 }}>
+    <Box sx={{}}>
       <Box
         sx={{
           display: "flex",
@@ -222,7 +222,7 @@ const Review = () => {
               sx={{
                 mt: 1,
                 mb: 1,
-                height: 50,
+                height: 40,
                 cursor: "pointer",
               }}
               onClick={(e) => handleClickReviewItem(item)}
@@ -244,6 +244,7 @@ const Review = () => {
       {/* pagination */}
       <Box sx={{ width: 1, display: "flex", justifyContent: "center" }}>
         <Pagination
+          data-test="pagination-test"
           count={paginationInfo.totalPage}
           page={paginationInfo.page}
           onChange={handlePagination}

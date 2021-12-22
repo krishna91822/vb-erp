@@ -8,7 +8,7 @@ export const BoxStyle = styled(Box)(({ theme }) => ({
   paddingBottom: theme.spacing(3),
 }));
 
-export const ContainerStyleTop = styled(Container)(({ theme }) => ({
+export const ContainerStyleTop = styled("div")(({ theme }) => ({
   minHeight: "40px",
   width: "100%",
   marginTop: theme.spacing(2),
@@ -18,11 +18,13 @@ export const ContainerStyleTop = styled(Container)(({ theme }) => ({
   alignItems: "flex-end",
 }));
 
-export const ContainerStyle = styled(Container)(({ theme }) => ({
-  minHeight: "calc(100vh - 50px)",
-  width: "calc(100% - 48px)",
-  border: "2px solid",
+export const ContainerStyle = styled("div")(({ theme }) => ({
+  // minHeight: "calc(100vh - 50px)",
+  // width: "calc(100% - 48px)",
+  border: "0.1em solid",
+  borderRadius: "5px",
   borderColor: theme.palette.textColor.paletteGrey,
+  padding: "1em",
 }));
 
 export const GreenButton = styled(Button)({
@@ -72,7 +74,7 @@ export const CustomTextField = styled(TextField)({
   padding: "10px",
   width: "100%",
   "& .MuiOutlinedInput-input": {
-    fontSize: "16px",
+    fontSize: "14px",
   },
   "& .MuiOutlinedInput-root": {
     height: "40px",
