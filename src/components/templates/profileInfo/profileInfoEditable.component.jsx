@@ -90,7 +90,7 @@ const ProfileInfoEditable = (props) => {
   );
 
   //dropdown
-  const department = ["developer", "product", "human-resource", "acounts"];
+  const department = ["developer", "product", "human-resource", "accounts"];
   const designation = ["trainee", "Manager", "intern"];
   const departmentOptions = department.map((item) => {
     return {
@@ -109,7 +109,6 @@ const ProfileInfoEditable = (props) => {
       ? { label: empDepartment, value: empDepartment }
       : departmentOptions[0]
   );
-  console.log(departmentDropdown);
   const [designationDropdown, setDesignationDropdown] = useState(
     empDesignation
       ? { label: empDesignation, value: empDesignation }
