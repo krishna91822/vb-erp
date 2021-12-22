@@ -26,7 +26,14 @@ import {
   blue,
 } from "@mui/material/colors";
 
+import axiosInstance from "./../../../helpers/axiosInstance";
+import { useDispatch } from "react-redux";
+import { uiActions } from "./../../../store/ui-slice.js";
+
 const PersonalEditable = (props) => {
+  const { toggleLoader } = uiActions;
+  const dispatch = useDispatch();
+
   const {
     empData,
     setEmpData,
@@ -37,7 +44,7 @@ const PersonalEditable = (props) => {
   } = props;
 
   const {
-    empConnections,
+    // empConnections,
     empHobbies,
     empPersonalEmail,
     empDob,
@@ -136,6 +143,80 @@ const PersonalEditable = (props) => {
       ...empData,
       empResidentialAddress: { ...residentialAddress, [name]: value },
     });
+  };
+
+  const fetchCurrentAddress = (event) => {
+    if (event.key === "Enter") {
+      if (event.target.value.trim() === "") return;
+      dispatch(toggleLoader());
+      axiosInstance
+        .get("/location", {
+          headers: {
+            country: "in",
+            pincode: event.target.value,
+          },
+        })
+        .then((response) => {
+          if (addresschecked) {
+            setEmpData({
+              ...empData,
+              empResidentialAddress: {
+                ...currentAddress,
+                empAddressCity: Object.keys(response.data.data.districts)[0],
+                empAddressState: response.data.data.state,
+              },
+              empCurrentAddress: {
+                ...currentAddress,
+                empAddressCity: Object.keys(response.data.data.districts)[0],
+                empAddressState: response.data.data.state,
+              },
+            });
+          } else {
+            setEmpData({
+              ...empData,
+              empCurrentAddress: {
+                ...currentAddress,
+                empAddressCity: Object.keys(response.data.data.districts)[0],
+                empAddressState: response.data.data.state,
+              },
+            });
+          }
+          dispatch(toggleLoader());
+        })
+        .catch((err) => {
+          dispatch(toggleLoader());
+          console.log(err);
+        });
+    }
+  };
+
+  const fetchResidentialAddress = (event) => {
+    if (event.key === "Enter") {
+      if (event.target.value.trim() === "") return;
+      dispatch(toggleLoader());
+      axiosInstance
+        .get("/location", {
+          headers: {
+            country: "in",
+            pincode: event.target.value,
+          },
+        })
+        .then((response) => {
+          setEmpData({
+            ...empData,
+            empResidentialAddress: {
+              ...residentialAddress,
+              empAddressCity: Object.keys(response.data.data.districts)[0],
+              empAddressState: response.data.data.state,
+            },
+          });
+          dispatch(toggleLoader());
+        })
+        .catch((err) => {
+          dispatch(toggleLoader());
+          console.log(err);
+        });
+    }
   };
 
   return (
@@ -311,7 +392,7 @@ const PersonalEditable = (props) => {
                   variant="outlined"
                   value={
                     empCurrentAddress?.empAddressCity
-                      ? currentAddress.empAddressCity
+                      ? empCurrentAddress.empAddressCity
                       : ""
                   }
                   type="text"
@@ -327,7 +408,7 @@ const PersonalEditable = (props) => {
                   variant="outlined"
                   value={
                     empCurrentAddress?.empAddressState
-                      ? currentAddress.empAddressState
+                      ? empCurrentAddress.empAddressState
                       : ""
                   }
                   type="text"
@@ -343,11 +424,12 @@ const PersonalEditable = (props) => {
                   variant="outlined"
                   value={
                     empCurrentAddress?.empAddressPinCode
-                      ? currentAddress.empAddressPinCode
+                      ? empCurrentAddress.empAddressPinCode
                       : ""
                   }
                   type="number"
                   name="empAddressPinCode"
+                  onKeyDown={fetchCurrentAddress}
                   onChange={handleCurrentAddressChange}
                   placeholder="Pin code"
                   sx={{
@@ -385,7 +467,7 @@ const PersonalEditable = (props) => {
                 variant="outlined"
                 value={
                   empResidentialAddress?.empAddressLineOne
-                    ? residentialAddress.empAddressLineOne
+                    ? empResidentialAddress.empAddressLineOne
                     : ""
                 }
                 type="text"
@@ -411,7 +493,7 @@ const PersonalEditable = (props) => {
                   variant="outlined"
                   value={
                     empResidentialAddress?.empAddressCity
-                      ? residentialAddress.empAddressCity
+                      ? empResidentialAddress.empAddressCity
                       : ""
                   }
                   type="text"
@@ -428,7 +510,7 @@ const PersonalEditable = (props) => {
                   variant="outlined"
                   value={
                     empResidentialAddress?.empAddressState
-                      ? residentialAddress.empAddressState
+                      ? empResidentialAddress.empAddressState
                       : ""
                   }
                   type="text"
@@ -445,11 +527,12 @@ const PersonalEditable = (props) => {
                   variant="outlined"
                   value={
                     empResidentialAddress?.empAddressPinCode
-                      ? residentialAddress.empAddressPinCode
+                      ? empResidentialAddress.empAddressPinCode
                       : ""
                   }
                   type="text"
                   name="empAddressPinCode"
+                  onKeyDown={fetchResidentialAddress}
                   onChange={handleResidentialAddressChange}
                   placeholder="Pin code"
                   sx={{ width: "30%" }}

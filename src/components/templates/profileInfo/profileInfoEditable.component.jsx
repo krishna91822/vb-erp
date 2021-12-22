@@ -83,7 +83,38 @@ const ProfileInfoEditable = (props) => {
 
   const [empDetails, setEmpDetails] = useState({});
   const [empNameLoading, setEmpNameLoading] = useState(true);
-  const [reportingTo, setReportingTo] = useState(null);
+  const [reportingTo, setReportingTo] = useState(
+    empReportingManager
+      ? { label: empReportingManager, value: empReportingManager }
+      : null
+  );
+
+  //dropdown
+  const department = ["developer", "product", "human-resource", "acounts"];
+  const designation = ["trainee", "Manager", "intern"];
+  const departmentOptions = department.map((item) => {
+    return {
+      label: item,
+      value: item,
+    };
+  });
+  const designationOptions = designation.map((item) => {
+    return {
+      label: item,
+      value: item,
+    };
+  });
+  const [departmentDropdown, setDepartmentDropdown] = useState(
+    empDepartment
+      ? { label: empDepartment, value: empDepartment }
+      : departmentOptions[0]
+  );
+  console.log(departmentDropdown);
+  const [designationDropdown, setDesignationDropdown] = useState(
+    empDesignation
+      ? { label: empDesignation, value: empDesignation }
+      : designationOptions[0]
+  );
 
   useEffect(() => {
     axiosInstance
@@ -96,14 +127,18 @@ const ProfileInfoEditable = (props) => {
           };
         });
         setEmpDetails(data);
-        setReportingTo(data[0]);
-        setEmployee({
-          ...employee,
-          empReportingManager: data[0].value,
-        });
+        if (empReportingManager === "") setReportingTo(data[0]);
+        if (empDepartment === "" && empDesignation === "")
+          setEmployee({
+            ...employee,
+            empReportingManager: data[0].value,
+            empDepartment: departmentDropdown.value,
+            empDesignation: designationDropdown.value,
+          });
         setEmpNameLoading((prev) => !prev);
       })
       .catch((err) => console.log(err));
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -246,7 +281,31 @@ const ProfileInfoEditable = (props) => {
                   &nbsp;*
                 </Box>
               </ContentBoldTypo>
-              <CustomTextField
+              <Box
+                sx={{
+                  width: "80%",
+                  height: "28px",
+                  fontSize: "14px",
+                  marginLeft: "8px",
+                }}
+              >
+                <CreatableSelect
+                  value={departmentDropdown ? departmentDropdown : null}
+                  styles={customStyles}
+                  isLoading={empNameLoading}
+                  isSearchable
+                  name="empDepartment"
+                  options={departmentOptions}
+                  onChange={(value) => {
+                    setDepartmentDropdown(value);
+                    setEmployee({
+                      ...employee,
+                      empDepartment: value.value,
+                    });
+                  }}
+                />
+              </Box>
+              {/* <CustomTextField
                 placeholder="Enter department"
                 autoComplete="off"
                 required
@@ -261,7 +320,7 @@ const ProfileInfoEditable = (props) => {
                 inputRef={register({
                   required: "Department is required.",
                 })}
-              />
+              /> */}
             </FieldBox>
             <FieldBox>
               <ContentBoldTypo sx={{ textTransform: "capitalize", pl: 1 }}>
@@ -270,7 +329,31 @@ const ProfileInfoEditable = (props) => {
                   &nbsp;*
                 </Box>
               </ContentBoldTypo>
-              <CustomTextField
+              <Box
+                sx={{
+                  width: "80%",
+                  height: "28px",
+                  fontSize: "14px",
+                  marginLeft: "8px",
+                }}
+              >
+                <CreatableSelect
+                  value={designationDropdown ? designationDropdown : null}
+                  styles={customStyles}
+                  isLoading={empNameLoading}
+                  isSearchable
+                  name="empDesignation"
+                  options={designationOptions}
+                  onChange={(value) => {
+                    setDesignationDropdown(value);
+                    setEmployee({
+                      ...employee,
+                      empDesignation: value.value,
+                    });
+                  }}
+                />
+              </Box>
+              {/* <CustomTextField
                 placeholder="Enter designation"
                 autoComplete="off"
                 required
@@ -285,7 +368,7 @@ const ProfileInfoEditable = (props) => {
                 inputRef={register({
                   required: "Department is required.",
                 })}
-              />
+              /> */}
             </FieldBox>
             <FieldBox>
               <ContentBoldTypo sx={{ textTransform: "capitalize", pl: 1 }}>
@@ -322,7 +405,7 @@ const ProfileInfoEditable = (props) => {
                   marginLeft: "8px",
                 }}
               >
-                <CreatableSelect
+                <Select
                   value={reportingTo ? reportingTo : null}
                   isLoading={empNameLoading}
                   styles={customStyles}
