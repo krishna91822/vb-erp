@@ -264,9 +264,7 @@ const CreateProfile = ({
           }}
         >
           {editEmployeeData ? null : (
-            <TitleTypo
-              sx={{ textTransform: "capitalize", fontSize: 24, ml: 2 }}
-            >
+            <TitleTypo sx={{ textTransform: "capitalize", fontSize: 24 }}>
               {createProfileConstant.createUser}
             </TitleTypo>
           )}

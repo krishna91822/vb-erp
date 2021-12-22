@@ -11,7 +11,7 @@ export const BoxStyle = styled(Box)(({ theme }) => ({
 export const ContainerStyleTop = styled("div")(({ theme }) => ({
   minHeight: "40px",
   width: "100%",
-  marginTop: theme.spacing(2),
+  // marginTop: theme.spacing(2),
   marginBottom: theme.spacing(2),
   display: "flex",
   flexDirection: "column",
