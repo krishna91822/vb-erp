@@ -11,10 +11,14 @@ import { networkText } from "./network.constant";
 import { TextField } from "@mui/material";
 
 import axiosInstance from "./../../helpers/axiosInstance";
+import { useDispatch } from "react-redux";
+import { uiActions } from "./../../store/ui-slice";
 
 import { useNavigate } from "react-router-dom";
 
 const Network = () => {
+  const { toggleLoader } = uiActions;
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const [paginationInfo, setPaginationInfo] = React.useState({
@@ -34,11 +38,13 @@ const Network = () => {
   const [sort, setSort] = React.useState("empId");
 
   useEffect(() => {
+    dispatch(toggleLoader());
     axiosInstance
       .get(
         `/employees?search=${searchEmp}&sort=${sort}&page=${paginationInfo.page}&limit=${paginationInfo.limit}`
       )
       .then((response) => {
+        dispatch(toggleLoader());
         setEmployees(response.data.data);
         response.data.totalResult < paginationInfo.limit &&
         paginationInfo.page === 1
@@ -53,7 +59,10 @@ const Network = () => {
               ),
             });
       })
-      .catch((err) => console.error(err));
+      .catch((err) => {
+        dispatch(toggleLoader());
+        console.error(err);
+      });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchEmp, sort, paginationInfo.page]);
   const { title, sortOption } = networkText;

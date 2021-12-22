@@ -42,6 +42,8 @@ import { setCurrentEmployee } from "./../../store/employeeSlice";
 
 import axiosInstance from "./../../helpers/axiosInstance";
 
+import { uiActions } from "./../../store/ui-slice";
+
 import { useForm } from "react-hook-form";
 
 const CreateProfile = ({
@@ -51,6 +53,7 @@ const CreateProfile = ({
 }) => {
   const { currentEmployee } = useSelector((state) => state.employee);
   const dispatch = useDispatch();
+  const { toggleLoader } = uiActions;
 
   const { register, handleSubmit, errors } = useForm();
 
@@ -212,6 +215,7 @@ const CreateProfile = ({
   };
 
   const handleConfirm = (event) => {
+    dispatch(toggleLoader());
     // Profile - Update;
     let createEmployee;
     editEmployeeData
@@ -235,17 +239,35 @@ const CreateProfile = ({
             skillsDetails,
           },
         });
-    axiosInstance
-      .post("/reviews", createEmployee)
-      .then(function (response) {
-        setEmployee(empInitial);
-        handleOpenModal();
-        // console.log(response);
-      })
-      .catch(function (error) {
-        handleOpenModalError();
-        console.log(error);
-      });
+    if (createEmployee?.reqType === "profile-creation") {
+      axiosInstance
+        .post("/employees", createEmployee.employeeDetails)
+        .then(function (response) {
+          setEmployee(empInitial);
+          dispatch(toggleLoader());
+          handleOpenModal();
+          // console.log(response);
+        })
+        .catch(function (error) {
+          dispatch(toggleLoader());
+          handleOpenModalError();
+          console.log(error);
+        });
+    } else {
+      axiosInstance
+        .post("/reviews", createEmployee)
+        .then(function (response) {
+          setEmployee(empInitial);
+          dispatch(toggleLoader());
+          handleOpenModal();
+          // console.log(response);
+        })
+        .catch(function (error) {
+          dispatch(toggleLoader());
+          handleOpenModalError();
+          console.log(error);
+        });
+    }
   };
   // console.log(errors);
 

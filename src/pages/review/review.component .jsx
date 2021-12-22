@@ -26,7 +26,12 @@ import ProfileContent from "../../components/templates/profileContent/profileCon
 
 import axiosInstance from "./../../helpers/axiosInstance";
 
+import { useDispatch } from "react-redux";
+import { uiActions } from "./../../store/ui-slice";
+
 const Review = () => {
+  const { toggleLoader } = uiActions;
+  const dispatch = useDispatch();
   const { title, sortOption } = reviewText;
 
   const [paginationInfo, setPaginationInfo] = useState({
@@ -63,11 +68,13 @@ const Review = () => {
   const handleOpenModalForReview = () => setOpenModalForReview(true);
 
   useEffect(() => {
+    dispatch(toggleLoader());
     axiosInstance
       .get(
         `/reviews?search=${searchEmp}&sort=${sort},-reqId&page=${paginationInfo.page}&limit=${paginationInfo.limit}`
       )
       .then((response) => {
+        dispatch(toggleLoader());
         setReviewData(response.data.data.reviews);
         response.data.totalResult < paginationInfo.limit &&
         paginationInfo.page === 1
@@ -82,7 +89,10 @@ const Review = () => {
               ),
             });
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        dispatch(toggleLoader());
+        console.log(err);
+      });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [reviewItemData, sort, paginationInfo.page, searchEmp]);
 
