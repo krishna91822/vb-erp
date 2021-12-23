@@ -3,25 +3,29 @@ import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
-import Link from "@mui/material/Link";
-import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { validateUser } from "../../store/user-actions";
+import { useSelector, useDispatch } from "react-redux";
 
 const theme = createTheme();
 
 export default function SignIn() {
+  const dispatch = useDispatch();
+
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    // eslint-disable-next-line no-console
+    const email = data.get("username");
+    const password = data.get("password");
     console.log({
-      email: data.get("username"),
-      password: data.get("password"),
+      email,
+      password,
     });
+    dispatch(validateUser(email, password));
   };
 
   return (

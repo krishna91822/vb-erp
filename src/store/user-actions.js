@@ -20,28 +20,10 @@ export const validateUser = (username, password) => {
       );
     };
 
-    const fetchRoles = async (role) => {
-      const response = await axios.get(`/roles?role=${role}`);
-      if (response.data.code === 200 || response.data.status === "success") {
-        const data = response.data.data;
-        return data;
-      }
-      throw new Error(
-        response.data.error[0].message ||
-          response.data.error ||
-          response.data.message ||
-          "Something went wrong! Please try again..."
-      );
-    };
-
     try {
       dispatch(uiActions.toggleLoader());
-      const userData = await fetchData();
-      const roles = await fetchRoles(userData.roles[0]);
-      const data = {};
-      data.name = username;
-      data.roles = userData.roles;
-      data.permissions = roles.permission;
+      const data = await fetchData();
+      console.log(data);
       dispatch(userActions.setUser(data));
     } catch (error) {
       setTimeout(function () {
