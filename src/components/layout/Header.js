@@ -12,6 +12,7 @@ import Settings from "@mui/icons-material/Settings";
 import Logout from "@mui/icons-material/Logout";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import { createTheme, ThemeProvider } from "@mui/material";
+import { Link } from "react-router-dom";
 
 const theme = createTheme({
   components: {
@@ -82,7 +83,7 @@ const Header = () => {
             transformOrigin={{ horizontal: "center", vertical: "top" }}
             anchorOrigin={{ horizontal: "center", vertical: "bottom" }}
           >
-            <MenuItem onClick={handleClose}>
+            <MenuItem onClick={handleClose} component={Link} to="/">
               <Avatar /> Profile
             </MenuItem>
             <Divider />

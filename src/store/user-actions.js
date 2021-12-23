@@ -13,17 +13,13 @@ export const validateUser = (username, password) => {
         return data;
       }
       throw new Error(
-        response.data.error[0].message ||
-          response.data.error ||
-          response.data.message ||
-          "Something went wrong! Please try again..."
+        response.data.message || "Something went wrong! Please try again..."
       );
     };
 
     try {
       dispatch(uiActions.toggleLoader());
       const data = await fetchData();
-      console.log(data);
       dispatch(userActions.setUser(data));
     } catch (error) {
       setTimeout(function () {

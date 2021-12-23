@@ -21,10 +21,6 @@ export default function SignIn() {
     const data = new FormData(event.currentTarget);
     const email = data.get("username");
     const password = data.get("password");
-    console.log({
-      email,
-      password,
-    });
     dispatch(validateUser(email, password));
   };
 

@@ -50,8 +50,8 @@ function UpdateClientForm() {
                   </Button>
                 </Link>
               </Grid>
-              {user.permissions.includes("update_cims") && (
-                <div>
+              {user.permissions.includes("update_on_CIMS_module") && (
+                <>
                   <Grid item md={4}>
                     <Button
                       onClick={updateForm}
@@ -78,7 +78,7 @@ function UpdateClientForm() {
                       label="Edit mode"
                     />
                   </Grid>
-                </div>
+                </>
               )}
             </Grid>
           </Grid>
