@@ -8,6 +8,7 @@ import contentsSlice from "./contents-slice";
 import pmoSlice from "./pmo-slice";
 import rewardSlice from "./rewards-slice";
 import cimsSlice from "./cims-slice";
+import userSlice from "./user-slice";
 import POSOW_Slice from "./CMS/POSOW-slice";
 import invoice_Slice from "./CMS/INVOICE-slice";
 
@@ -20,6 +21,7 @@ export default configureStore({
     pmo: pmoSlice.reducer,
     reward: rewardSlice.reducer,
     cims: cimsSlice.reducer,
+    user: userSlice.reducer,
     CMS_state: POSOW_Slice.reducer,
     INVOICE_state: invoice_Slice.reducer,
     employee: employeeSlice,

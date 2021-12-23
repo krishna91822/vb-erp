@@ -21,6 +21,7 @@ function UpdateClientForm() {
   const editMode = useSelector((state) => state.cims.editMode);
   const navigateBack = useSelector((state) => state.cims.navigateBack);
   const { updateForm, validateOnSubmit } = UseForm();
+  const user = useSelector((state) => state.user.user);
 
   useEffect(() => {
     if (navigateBack) navigate("/cims");
@@ -49,32 +50,36 @@ function UpdateClientForm() {
                   </Button>
                 </Link>
               </Grid>
-              <Grid item md={4}>
-                <Button
-                  onClick={updateForm}
-                  type="submit"
-                  variant="contained"
-                  color="success"
-                  id="save-btn"
-                  disabled={!validateOnSubmit()}
-                >
-                  Update
-                </Button>
-              </Grid>
-              <Grid item md={5}>
-                <FormControlLabel
-                  control={
-                    <Switch
-                      checked={editMode}
-                      onChange={() =>
-                        dispatch(cimsActions.toggleEditMode(!editMode))
-                      }
+              {user.permissions.includes("update_cims") && (
+                <div>
+                  <Grid item md={4}>
+                    <Button
+                      onClick={updateForm}
+                      type="submit"
+                      variant="contained"
                       color="success"
+                      id="save-btn"
+                      disabled={!validateOnSubmit()}
+                    >
+                      Update
+                    </Button>
+                  </Grid>
+                  <Grid item md={5}>
+                    <FormControlLabel
+                      control={
+                        <Switch
+                          checked={editMode}
+                          onChange={() =>
+                            dispatch(cimsActions.toggleEditMode(!editMode))
+                          }
+                          color="success"
+                        />
+                      }
+                      label="Edit mode"
                     />
-                  }
-                  label="Edit mode"
-                />
-              </Grid>
+                  </Grid>
+                </div>
+              )}
             </Grid>
           </Grid>
         </div>

@@ -7,6 +7,7 @@ import PageLoader from "./components/UI/PageLoader";
 import { useSelector } from "react-redux";
 import { Fragment } from "react";
 import { CssBaseline } from "@mui/material";
+import ProtectedRoute from "./routes/protectedRoute";
 
 function App() {
   const notification = useSelector((state) => state.ui.notification);
@@ -26,11 +27,7 @@ function App() {
       <Layout>
         <Routes>
           {routes.map((route, index) => (
-            <Route
-              key={index}
-              path={route.path}
-              element={<route.component />}
-            ></Route>
+            <ProtectedRoute exact key={index} {...route}></ProtectedRoute>
           ))}
         </Routes>
       </Layout>
