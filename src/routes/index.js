@@ -17,6 +17,8 @@ import POSOW_EDIT from "../pages/ContractMgmtSys/POSOW_EDIT";
 import invoice_tabView from "../pages/ContractMgmtSys/invoice_tabView";
 import { INVOICE_Read } from "../pages/ContractMgmtSys/invoice_READ";
 import invoice_EDIT from "../pages/ContractMgmtSys/invoice_EDIT";
+import SignIn from "../pages/LoginPage/Login";
+import DescriptionAlerts from "../pages/LoginPage/Authorization";
 
 import Profile from "../pages/myProfile/profile.component";
 import ViewProfile from "./../components/templates/viewProfile/viewProfile.component";
@@ -126,7 +128,13 @@ const routes = [
   },
   {
     path: "/login",
-    title: "Login",
+    component: SignIn,
+    title: "Login Page",
+  },
+  {
+    path: "/authorization",
+    component: DescriptionAlerts,
+    title: "authorization",
   },
   {
     path: "/cims",
