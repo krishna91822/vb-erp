@@ -134,6 +134,7 @@ function Invoice(props) {
     readtargetedAllocation
   );
 
+  const user = useSelector((state) => state.user.user);
   const [invoice_raised_yesno, setInvoiceRaisedYesNo] = React.useState("No");
   let [sum, setsum] = useState(0);
   const targetedResourcesName = Object.keys(TargettedAllocation);
@@ -321,28 +322,31 @@ function Invoice(props) {
           <Grid item lg={11} md={11} sm={12} xs={12}>
             <h4 className="heading">PO Information</h4>
           </Grid>
-          <Grid item lg={1} md={1} sm={12} xs={12}>
-            <div className="posow-SaveButton">
-              <strong className="editTxt" data-test="editModeSwitch-label">
-                Edit
-              </strong>
-              <label className="switch">
-                <input
-                  type="checkbox"
-                  data-test="EditToggleBtn"
-                  data-testid="EditToggleBtn"
-                  checked={editTglCheckedState}
-                  onChange={handleEditTglChange}
-                  disabled={
-                    invoice_raised === "Yes" &&
-                    invoice_amount &&
-                    editTglCheckedState === false
-                  }
-                />
-                <span className="slider round"></span>
-              </label>
-            </div>
-          </Grid>
+
+          {user.permissions.includes("upload_invoice") && (
+            <Grid item lg={1} md={1} sm={12} xs={12}>
+              <div className="posow-SaveButton">
+                <strong className="editTxt" data-test="editModeSwitch-label">
+                  Edit
+                </strong>
+                <label className="switch">
+                  <input
+                    type="checkbox"
+                    data-test="EditToggleBtn"
+                    data-testid="EditToggleBtn"
+                    checked={editTglCheckedState}
+                    onChange={handleEditTglChange}
+                    disabled={
+                      invoice_raised === "Yes" &&
+                      invoice_amount &&
+                      editTglCheckedState === false
+                    }
+                  />
+                  <span className="slider round"></span>
+                </label>
+              </div>
+            </Grid>
+          )}
         </Grid>
 
         <hr />

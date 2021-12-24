@@ -90,6 +90,7 @@ export const CapturePO_SOW = (props) => {
   const allocationRateArr = useSelector(
     (state) => state.CMS_state.allocationRate
   );
+  const user = useSelector((state) => state.user.user);
 
   let DefaultClientName = null;
   let ReadProjectName = null;
@@ -335,41 +336,46 @@ export const CapturePO_SOW = (props) => {
                 ) : (
                   <div></div>
                 )}
-                {props.editBtn ? (
-                  <div className="posow-SaveButton">
-                    <strong
-                      className="editTxt"
-                      data-test="editModeSwitch-label"
-                    >
-                      Edit mode
-                    </strong>
-                    <label className="switch">
-                      <input
-                        type="checkbox"
-                        data-test="EditToggleBtn"
-                        data-testid="EditToggleBtn"
-                        checked={editTglCheckedState}
-                        onChange={handleEditTglChange}
-                        disabled={status === "Drafted" ? false : true}
-                      />
-                      <span className="slider round"></span>
-                    </label>
-                  </div>
-                ) : (
-                  <div className="posow-SaveButton">
-                    <Button
-                      variant="contained"
-                      color="success"
-                      type="submit"
-                      onClick={(event) => submitForm(event)}
-                      data-test="POSOW-save-btn"
-                      data-testid="save-btn"
-                    >
-                      Save
-                    </Button>
-                  </div>
+                {user.permissions.includes("upload_PO/SOW/contract") && (
+                  <>
+                    {props.editBtn ? (
+                      <div className="posow-SaveButton">
+                        <strong
+                          className="editTxt"
+                          data-test="editModeSwitch-label"
+                        >
+                          Edit mode
+                        </strong>
+                        <label className="switch">
+                          <input
+                            type="checkbox"
+                            data-test="EditToggleBtn"
+                            data-testid="EditToggleBtn"
+                            checked={editTglCheckedState}
+                            onChange={handleEditTglChange}
+                            disabled={status === "Drafted" ? false : true}
+                          />
+                          <span className="slider round"></span>
+                        </label>
+                      </div>
+                    ) : (
+                      <div className="posow-SaveButton">
+                        <Button
+                          variant="contained"
+                          color="success"
+                          type="submit"
+                          onClick={(event) => submitForm(event)}
+                          data-test="POSOW-save-btn"
+                          data-testid="save-btn"
+                        >
+                          Save
+                        </Button>
+                      </div>
+                    )}
+                  </>
                 )}
               </div>
+
               <hr className="projectInfoSeperator" />
 
               <div className="posow-Dropdowns">
@@ -711,31 +717,33 @@ export const CapturePO_SOW = (props) => {
                     }
                   />
                 </Grid>
-                <Grid
-                  item
-                  lg={12}
-                  md={12}
-                  sm={12}
-                  xs={12}
-                  className="finalgrid"
-                >
-                  {props.editBtn && status === "Drafted" ? (
-                    <Button
-                      className="finalinput"
-                      variant="contained"
-                      component="label"
-                      style={{ backgroundColor: "03A9F4", color: "#FFFFFF" }}
-                      onClick={handleSendForApprovalBtnOnClk}
-                      disabled={editTglCheckedState ? true : false}
-                      data-test="sendForApproval-btn"
-                      data-testid="sendForApproval-btn-ClickTest"
-                    >
-                      SEND FOR APPROVAL
-                    </Button>
-                  ) : (
-                    <div></div>
-                  )}
-                </Grid>
+                {user.permissions.includes("upload_PO/SOW/contract") && (
+                  <Grid
+                    item
+                    lg={12}
+                    md={12}
+                    sm={12}
+                    xs={12}
+                    className="finalgrid"
+                  >
+                    {props.editBtn && status === "Drafted" ? (
+                      <Button
+                        className="finalinput"
+                        variant="contained"
+                        component="label"
+                        style={{ backgroundColor: "03A9F4", color: "#FFFFFF" }}
+                        onClick={handleSendForApprovalBtnOnClk}
+                        disabled={editTglCheckedState ? true : false}
+                        data-test="sendForApproval-btn"
+                        data-testid="sendForApproval-btn-ClickTest"
+                      >
+                        SEND FOR APPROVAL
+                      </Button>
+                    ) : (
+                      <div></div>
+                    )}
+                  </Grid>
+                )}
               </Grid>
             </Box>
           </Container>

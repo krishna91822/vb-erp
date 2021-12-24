@@ -95,6 +95,8 @@ function InvoiceInfo() {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
 
+  const user = useSelector((state) => state.user.user);
+
   const [searchText, setsearchText] = useState("");
 
   const handleClick = (event) => {
@@ -223,7 +225,9 @@ function InvoiceInfo() {
                 <TableCell>Invoice raised</TableCell>
                 <TableCell>Invoice Received</TableCell>
                 <TableCell>Invoice Amount received</TableCell>
-                <TableCell>Action</TableCell>
+                {user.permissions.includes("upload_invoice") && (
+                  <TableCell>Action</TableCell>
+                )}
               </TableRow>
             </TableHead>
             <TableBody className="table-row-posow">
@@ -251,14 +255,19 @@ function InvoiceInfo() {
                   <TableCell>{row.invoice_raised}</TableCell>
                   <TableCell>{row.invoice_received}</TableCell>
                   <TableCell>{row.invoice_amount_received}</TableCell>
-                  {row.invoice_received === "No" ? (
-                    <TableCell>
-                      <EditIcon />
-                    </TableCell>
-                  ) : (
-                    <TableCell>
-                      <EditOffIcon />
-                    </TableCell>
+
+                  {user.permissions.includes("upload_invoice") && (
+                    <>
+                      {row.invoice_received === "No" ? (
+                        <TableCell>
+                          <EditIcon />
+                        </TableCell>
+                      ) : (
+                        <TableCell>
+                          <EditOffIcon />
+                        </TableCell>
+                      )}
+                    </>
                   )}
                 </TableRow>
               ))}
