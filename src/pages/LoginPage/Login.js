@@ -10,11 +10,13 @@ import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { validateUser } from "../../store/user-actions";
 import { useSelector, useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 const theme = createTheme();
 
 export default function SignIn() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -22,6 +24,7 @@ export default function SignIn() {
     const email = data.get("username");
     const password = data.get("password");
     dispatch(validateUser(email, password));
+    navigate("/my-profile");
   };
 
   return (

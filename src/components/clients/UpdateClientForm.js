@@ -20,8 +20,7 @@ function UpdateClientForm() {
   const navigate = useNavigate();
   const editMode = useSelector((state) => state.cims.editMode);
   const navigateBack = useSelector((state) => state.cims.navigateBack);
-  const { updateForm, validateOnSubmit } = UseForm();
-  const user = useSelector((state) => state.user.user);
+  const { updateForm, validateOnSubmit, user } = UseForm();
 
   useEffect(() => {
     if (navigateBack) navigate("/cims");
@@ -42,45 +41,51 @@ function UpdateClientForm() {
               <Typography variant="h4">Client Information</Typography>
             </Grid>
             <Grid item sm></Grid>
-            <Grid container pt={1} md={5} spacing={4}>
-              <Grid item md={3}>
+            {user.permissions.includes("update_on_CIMS_module") ? (
+              <Grid container pt={1} md={5} spacing={4}>
+                <Grid item md={3}>
+                  <Link to="/cims" style={{ textDecoration: "none" }}>
+                    <Button variant="contained" color="error" id="cancel-btn">
+                      Cancel
+                    </Button>
+                  </Link>
+                </Grid>
+                <Grid item md={4}>
+                  <Button
+                    onClick={updateForm}
+                    type="submit"
+                    variant="contained"
+                    color="success"
+                    id="save-btn"
+                    disabled={!validateOnSubmit()}
+                  >
+                    Update
+                  </Button>
+                </Grid>
+                <Grid item md={5}>
+                  <FormControlLabel
+                    control={
+                      <Switch
+                        checked={editMode}
+                        onChange={() =>
+                          dispatch(cimsActions.toggleEditMode(!editMode))
+                        }
+                        color="success"
+                      />
+                    }
+                    label="Edit mode"
+                  />
+                </Grid>
+              </Grid>
+            ) : (
+              <Grid item md={1} mr={2}>
                 <Link to="/cims" style={{ textDecoration: "none" }}>
                   <Button variant="contained" color="error" id="cancel-btn">
                     Cancel
                   </Button>
                 </Link>
               </Grid>
-              {user.permissions.includes("update_on_CIMS_module") && (
-                <>
-                  <Grid item md={4}>
-                    <Button
-                      onClick={updateForm}
-                      type="submit"
-                      variant="contained"
-                      color="success"
-                      id="save-btn"
-                      disabled={!validateOnSubmit()}
-                    >
-                      Update
-                    </Button>
-                  </Grid>
-                  <Grid item md={5}>
-                    <FormControlLabel
-                      control={
-                        <Switch
-                          checked={editMode}
-                          onChange={() =>
-                            dispatch(cimsActions.toggleEditMode(!editMode))
-                          }
-                          color="success"
-                        />
-                      }
-                      label="Edit mode"
-                    />
-                  </Grid>
-                </>
-              )}
-            </Grid>
+            )}
           </Grid>
         </div>
         <Form />

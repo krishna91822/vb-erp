@@ -13,6 +13,9 @@ import Logout from "@mui/icons-material/Logout";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import { createTheme, ThemeProvider } from "@mui/material";
 import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { userActions } from "../../store/user-slice";
+import { useNavigate } from "react-router-dom";
 
 const theme = createTheme({
   components: {
@@ -45,6 +48,9 @@ const customStyles = {
 };
 
 const Header = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -53,6 +59,13 @@ const Header = () => {
   const handleClose = () => {
     setAnchorEl(null);
   };
+
+  const handleLogOut = () => {
+    dispatch(userActions.resetForm());
+    handleClose();
+    navigate("/");
+  };
+
   return (
     <ThemeProvider theme={theme}>
       <AppBar sx={customStyles.appbar} position="static">
@@ -93,7 +106,7 @@ const Header = () => {
               </ListItemIcon>
               Settings
             </MenuItem>
-            <MenuItem onClick={handleClose}>
+            <MenuItem onClick={handleLogOut}>
               <ListItemIcon>
                 <Logout fontSize="small" />
               </ListItemIcon>

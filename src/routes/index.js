@@ -30,15 +30,21 @@ import CreateProfile from "./../pages/createProfile/createProfile.component";
 import UseRoles from "./roles";
 
 const Routes = () => {
-  const { isHrAdmin, isUser, isSuperAdmin } = UseRoles();
+  const {
+    isUser,
+    isApprover,
+    isLeader,
+    isHrAdmin,
+    isFinanceAdmin,
+    isPMSAdmin,
+    isSuperAdmin,
+  } = UseRoles();
+
   const routes = [
     {
       path: "/",
-      // component: Profile,
       component: SignIn,
       access: true,
-      //title: "Profile",
-      //access: [UseRoles.isHrAdmin, UseRoles.isUser].some((x) => x),
     },
     {
       path: "/posow/create",
@@ -122,24 +128,39 @@ const Routes = () => {
       path: "/cims",
       component: Clients,
       title: "Clients",
-      access: [isHrAdmin, isUser, isSuperAdmin].some((x) => x),
+      access: [
+        isApprover,
+        isLeader,
+        isHrAdmin,
+        isFinanceAdmin,
+        isPMSAdmin,
+        isSuperAdmin,
+      ].some((x) => x),
     },
     {
       path: "/cims/create",
       component: CreateClient,
       title: "Create Client",
-      access: [isHrAdmin, isSuperAdmin].some((x) => x),
+      access: [isApprover, isLeader, isPMSAdmin, isSuperAdmin].some((x) => x),
     },
     {
       path: "/cims/clientdetails/:id",
       component: UpdateClient,
       title: "Update Client",
-      access: [isHrAdmin, isUser, isSuperAdmin].some((x) => x),
+      access: [
+        isApprover,
+        isLeader,
+        isHrAdmin,
+        isFinanceAdmin,
+        isPMSAdmin,
+        isSuperAdmin,
+      ].some((x) => x),
     },
     {
       path: "my-profile",
       component: Profile,
       title: "Templates",
+      access: [isUser].some((x) => x),
     },
     {
       path: "my-profile/:empId",
