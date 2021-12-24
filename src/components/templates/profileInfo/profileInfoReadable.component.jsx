@@ -56,7 +56,7 @@ const ProfileInfoReadable = ({
       spacing={0}
       sx={{
         minHeight: "100px",
-        borderBottom: "2px solid",
+        borderBottom: "0.1em solid",
         borderColor: "textColor.paletteGrey",
       }}
     >
@@ -81,7 +81,9 @@ const ProfileInfoReadable = ({
               sx={{ height: "60%", width: "55%", color: "textColor.lightDark" }}
             />
           </Avatar>
-          <TitleTypo sx={{ mt: 1, textTransform: "capitalize" }}>
+          <TitleTypo
+            sx={{ mt: 1, textTransform: "capitalize", fontSize: "16px" }}
+          >
             {empName}
           </TitleTypo>
           <Box sx={{ width: "75%", margin: "8px 0" }}>
@@ -104,39 +106,64 @@ const ProfileInfoReadable = ({
       <Grid item sm={8}>
         <Box sx={{ width: "100%" }}>
           <StyledTabs value={value} onChange={handleChange}>
-            <StyledTab icon={<LocalCafeIcon />} label="Personal" />
-            <StyledTab icon={<ImportContactsIcon />} label="professional" />
-            <StyledTab icon={<BadgeIcon />} label="Skills And Qualifications" />
+            <StyledTab
+              icon={<LocalCafeIcon />}
+              label="Personal"
+              sx={{ fontSize: "16px" }}
+            />
+            <StyledTab
+              icon={<ImportContactsIcon />}
+              label="professional"
+              sx={{ fontSize: "16px" }}
+            />
+            <StyledTab
+              icon={<BadgeIcon />}
+              label="Skills And Qualifications"
+              sx={{ fontSize: "16px" }}
+            />
           </StyledTabs>
         </Box>
         <Box
           sx={{
             width: "calc(100% - 20px)",
             minHeight: 90,
-            border: "2px solid",
+            border: "0.1em solid",
             borderColor: "textColor.paletteGrey",
+            borderRadius: "5px",
             mt: 1,
             mb: 1,
           }}
         >
           <CustomGridBox sx={{ mt: 1, mb: 1 }}>
-            <ContentBoldTypo sx={{ textTransform: "capitalize", pl: 1 }}>
+            <ContentBoldTypo
+              sx={{ textTransform: "capitalize", pl: 1, fontSize: "16px" }}
+            >
               {profileInfoConstant.employeeId} - {empId}
             </ContentBoldTypo>
-            <ContentBoldTypo sx={{ textTransform: "capitalize", pl: 1 }}>
+            <ContentBoldTypo
+              sx={{ textTransform: "capitalize", pl: 1, fontSize: "16px" }}
+            >
               {profileInfoConstant.emailId} - {empEmail}
             </ContentBoldTypo>
-            <ContentBoldTypo sx={{ textTransform: "capitalize", pl: 1 }}>
+            <ContentBoldTypo
+              sx={{ textTransform: "capitalize", pl: 1, fontSize: "16px" }}
+            >
               {profileInfoConstant.department} - {empDepartment}
             </ContentBoldTypo>
-            <ContentBoldTypo sx={{ textTransform: "capitalize", pl: 1 }}>
+            <ContentBoldTypo
+              sx={{ textTransform: "capitalize", pl: 1, fontSize: "16px" }}
+            >
               {profileInfoConstant.designation} - {empDesignation}
             </ContentBoldTypo>
-            <ContentBoldTypo sx={{ textTransform: "capitalize", pl: 1 }}>
+            <ContentBoldTypo
+              sx={{ textTransform: "capitalize", pl: 1, fontSize: "16px" }}
+            >
               {profileInfoConstant.dateOfJoining} -{" "}
               {empDoj ? new Date(empDoj).toDateString().slice(4) : ""}
             </ContentBoldTypo>
-            <ContentBoldTypo sx={{ textTransform: "capitalize", pl: 1 }}>
+            <ContentBoldTypo
+              sx={{ textTransform: "capitalize", pl: 1, fontSize: "16px" }}
+            >
               {profileInfoConstant.reportingManager} - {empReportingManager}
             </ContentBoldTypo>
           </CustomGridBox>

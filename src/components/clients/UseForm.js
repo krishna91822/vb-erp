@@ -55,6 +55,7 @@ export default function UseForm() {
   const countries = useSelector((state) => state.cims.countries);
   const brandFocus = useSelector((state) => state.cims.brandFocus);
   const editMode = useSelector((state) => state.cims.editMode);
+  const user = useSelector((state) => state.user.user);
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -579,5 +580,7 @@ export default function UseForm() {
     handelComAddress,
     updateForm,
     handelBrandName,
+
+    user,
   };
 }

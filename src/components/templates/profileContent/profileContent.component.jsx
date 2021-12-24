@@ -36,6 +36,8 @@ const ProfileContent = (props) => {
     setSkillsDetails,
     open,
     handleClose,
+    register,
+    errors,
   } = props;
 
   //calculate percentage progress
@@ -163,8 +165,9 @@ const ProfileContent = (props) => {
     <Box
       sx={{
         minHeight: "calc( 100% - 80px )",
-        border: "2px solid",
+        border: "0.1em solid",
         borderColor: "textColor.paletteGrey",
+        borderRadius: "5px",
       }}
     >
       <Container>
@@ -183,6 +186,8 @@ const ProfileContent = (props) => {
               setEmpData={setUpdateRequest}
               personalDetails={personalDetails}
               setPersonalDetails={setPersonalDetails}
+              register={register}
+              errors={errors}
             />
           ) : (
             <PersonalReadable empData={currentEmployee} />
@@ -195,6 +200,8 @@ const ProfileContent = (props) => {
               setEmpData={setUpdateRequest}
               professionalDetails={professionalDetails}
               setProfessionalDetails={setProfessionalDetails}
+              register={register}
+              errors={errors}
             />
           ) : (
             <ProfessionalReadable empData={currentEmployee} />
@@ -207,6 +214,8 @@ const ProfileContent = (props) => {
               setEmpData={setUpdateRequest}
               skillsDetails={skillsDetails}
               setSkillsDetails={setSkillsDetails}
+              register={register}
+              errors={errors}
             />
           ) : (
             <SkillReadable empData={currentEmployee} />
