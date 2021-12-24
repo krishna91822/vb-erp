@@ -15,6 +15,7 @@ import { styled } from "@mui/material/styles";
 import { Avatar } from "@mui/material";
 import { Grid } from "@mui/material";
 import { Link } from "react-router-dom";
+import UseRoles from "../../helpers/roles";
 
 const boxStyles = {
   position: "fixed",
@@ -75,56 +76,186 @@ const SidebarNavigation = () => {
   const handleClickRR = (event) => {
     setOpenRR(!openRR);
   };
+
+  const {
+    isUser,
+    isApprover,
+    isLeader,
+    isHrAdmin,
+    isFinanceAdmin,
+    isPMSAdmin,
+    isSuperAdmin,
+  } = UseRoles();
+
   const sideMenu = [
     {
       name: "My Profile",
       link: "/my-profile",
+      access: [
+        isUser,
+        isApprover,
+        isLeader,
+        isHrAdmin,
+        isFinanceAdmin,
+        isPMSAdmin,
+        isSuperAdmin,
+      ].some((x) => x),
     },
     {
       name: "Tasks",
       dropDown: [
-        { name: "Create Profile", link: "/create-profile" },
-        { name: "Reviews", link: "/reviews" },
+        {
+          name: "Create Profile",
+          link: "/create-profile",
+          access: [isHrAdmin, isSuperAdmin].some((x) => x),
+        },
+        {
+          name: "Reviews",
+          link: "/reviews",
+          access: [
+            isApprover,
+            isLeader,
+            isHrAdmin,
+            isFinanceAdmin,
+            isPMSAdmin,
+            isSuperAdmin,
+          ].some((x) => x),
+        },
       ],
       open: openTasks,
       handle: handleClickTasks,
+      access: [
+        isApprover,
+        isLeader,
+        isHrAdmin,
+        isFinanceAdmin,
+        isPMSAdmin,
+        isSuperAdmin,
+      ].some((x) => x),
     },
     {
       name: "Network",
       link: "/network",
+      access: [
+        isUser,
+        isApprover,
+        isLeader,
+        isHrAdmin,
+        isFinanceAdmin,
+        isPMSAdmin,
+        isSuperAdmin,
+      ].some((x) => x),
     },
     {
       name: "CIMS",
       link: "/cims",
+      access: [
+        isApprover,
+        isLeader,
+        isHrAdmin,
+        isFinanceAdmin,
+        isPMSAdmin,
+        isSuperAdmin,
+      ].some((x) => x),
     },
     {
       name: "PMO",
       dropDown: [
-        { name: "Projects", link: "/pmo/projects" },
-        { name: "Create Projects", link: "/pmo/projects/create" },
-        { name: "Allocations", link: "/pmo/allocations" },
+        {
+          name: "Projects",
+          link: "/pmo/projects",
+          access: [
+            isApprover,
+            isLeader,
+            isHrAdmin,
+            isFinanceAdmin,
+            isPMSAdmin,
+            isSuperAdmin,
+          ].some((x) => x),
+        },
+        {
+          name: "Create Projects",
+          link: "/pmo/projects/create",
+          access: [isApprover, isLeader, isPMSAdmin, isSuperAdmin].some(
+            (x) => x
+          ),
+        },
+        {
+          name: "Allocations",
+          link: "/pmo/allocations",
+          access: [
+            isApprover,
+            isLeader,
+            isHrAdmin,
+            isFinanceAdmin,
+            isPMSAdmin,
+            isSuperAdmin,
+          ].some((x) => x),
+        },
       ],
       open: openPMO,
       handle: handleClickPMO,
+      access: [
+        isApprover,
+        isLeader,
+        isHrAdmin,
+        isFinanceAdmin,
+        isPMSAdmin,
+        isSuperAdmin,
+      ].some((x) => x),
     },
 
     {
       name: "CMS",
       dropDown: [
-        { name: "PO/SOW", link: "/posow" },
-        { name: "Invoicing", link: "/invoices" },
+        {
+          name: "PO/SOW",
+          link: "/posow",
+          access: [
+            isApprover,
+            isLeader,
+            isHrAdmin,
+            isFinanceAdmin,
+            isPMSAdmin,
+            isSuperAdmin,
+          ].some((x) => x),
+        },
+        {
+          name: "Invoicing",
+          link: "/invoices",
+          access: [
+            isApprover,
+            isLeader,
+            isHrAdmin,
+            isFinanceAdmin,
+            isPMSAdmin,
+            isSuperAdmin,
+          ].some((x) => x),
+        },
       ],
       open: openCMS,
       handle: handleClickCMS,
+      access: [
+        isApprover,
+        isLeader,
+        isHrAdmin,
+        isFinanceAdmin,
+        isPMSAdmin,
+        isSuperAdmin,
+      ].some((x) => x),
     },
     {
       name: "R&R",
       dropDown: [
-        // { name: "Catalog", link: "/" },
-        { name: "Reward", link: "/rewards" },
+        {
+          name: "Reward",
+          link: "/rewards",
+          access: [isLeader, isHrAdmin, isSuperAdmin].some((x) => x),
+        },
       ],
       open: openRR,
       handle: handleClickRR,
+      access: [isLeader, isHrAdmin, isSuperAdmin].some((x) => x),
     },
   ];
   return (
@@ -137,55 +268,62 @@ const SidebarNavigation = () => {
           {sideMenu.map((menuItem, i) => {
             if (!menuItem.dropDown) {
               return (
-                <CustomListItemButton
-                  component={Link}
-                  to={menuItem.link}
-                  selected={selectedIndex === i}
-                  onClick={() => handleListItemClick(i)}
-                >
-                  <ListItemIcon>
-                    <DonutLargeIcon style={{ color: "black" }} />
-                  </ListItemIcon>
-                  <ListItemText primary={menuItem.name} />
-                </CustomListItemButton>
-              );
-            } else {
-              return (
-                <>
+                menuItem.access && (
                   <CustomListItemButton
-                    onClick={() => {
-                      menuItem.handle();
-                      handleListItemClick(i);
-                    }}
-                    id={i}
+                    component={Link}
+                    to={menuItem.link}
                     selected={selectedIndex === i}
+                    onClick={() => handleListItemClick(i)}
                   >
                     <ListItemIcon>
                       <DonutLargeIcon style={{ color: "black" }} />
                     </ListItemIcon>
                     <ListItemText primary={menuItem.name} />
-                    {menuItem.open ? <ExpandLess /> : <ExpandMore />}
                   </CustomListItemButton>
-                  <Collapse in={menuItem.open} timeout="auto" unmountOnExit>
-                    <List component="div" disablePadding>
-                      {menuItem.dropDown.map((item) => (
-                        <CustomListItemButton
-                          component={Link}
-                          to={item.link}
-                          sx={{ pl: 4 }}
-                        >
-                          <ListItemIcon>
-                            <GridViewIcon style={{ color: "black" }} />
-                          </ListItemIcon>
-                          <ListItemText
-                            style={{ color: "black" }}
-                            primary={item.name}
-                          />
-                        </CustomListItemButton>
-                      ))}
-                    </List>
-                  </Collapse>
-                </>
+                )
+              );
+            } else {
+              return (
+                menuItem.access && (
+                  <>
+                    <CustomListItemButton
+                      onClick={() => {
+                        menuItem.handle();
+                        handleListItemClick(i);
+                      }}
+                      id={i}
+                      selected={selectedIndex === i}
+                    >
+                      <ListItemIcon>
+                        <DonutLargeIcon style={{ color: "black" }} />
+                      </ListItemIcon>
+                      <ListItemText primary={menuItem.name} />
+                      {menuItem.open ? <ExpandLess /> : <ExpandMore />}
+                    </CustomListItemButton>
+                    <Collapse in={menuItem.open} timeout="auto" unmountOnExit>
+                      <List component="div" disablePadding>
+                        {menuItem.dropDown.map(
+                          (item) =>
+                            item.access && (
+                              <CustomListItemButton
+                                component={Link}
+                                to={item.link}
+                                sx={{ pl: 4 }}
+                              >
+                                <ListItemIcon>
+                                  <GridViewIcon style={{ color: "black" }} />
+                                </ListItemIcon>
+                                <ListItemText
+                                  style={{ color: "black" }}
+                                  primary={item.name}
+                                />
+                              </CustomListItemButton>
+                            )
+                        )}
+                      </List>
+                    </Collapse>
+                  </>
+                )
               );
             }
           })}

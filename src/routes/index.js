@@ -27,7 +27,7 @@ import Network from "../pages/network/network.component";
 import Review from "./../pages/review/review.component ";
 import CreateProfile from "./../pages/createProfile/createProfile.component";
 
-import UseRoles from "./roles";
+import UseRoles from "../helpers/roles";
 
 const Routes = () => {
   const {
@@ -287,43 +287,19 @@ const Routes = () => {
       path: "/rewards/create",
       component: CreateReward,
       title: "Create Reward",
-      access: [
-        isUser,
-        isApprover,
-        isLeader,
-        isHrAdmin,
-        isFinanceAdmin,
-        isPMSAdmin,
-        isSuperAdmin,
-      ].some((x) => x),
+      access: [isLeader, isHrAdmin, isSuperAdmin].some((x) => x),
     },
     {
       path: "/rewards",
       component: RewardsList,
       title: "Rewards List",
-      access: [
-        isUser,
-        isApprover,
-        isLeader,
-        isHrAdmin,
-        isFinanceAdmin,
-        isPMSAdmin,
-        isSuperAdmin,
-      ].some((x) => x),
+      access: [isLeader, isHrAdmin, isSuperAdmin].some((x) => x),
     },
     {
       path: "/rewards/edit/:id",
       component: EditReward,
       title: "Edit Reward",
-      access: [
-        isUser,
-        isApprover,
-        isLeader,
-        isHrAdmin,
-        isFinanceAdmin,
-        isPMSAdmin,
-        isSuperAdmin,
-      ].some((x) => x),
+      access: [isLeader, isHrAdmin, isSuperAdmin].some((x) => x),
     },
     {
       path: "/templates",

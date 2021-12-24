@@ -13,7 +13,7 @@ import Logout from "@mui/icons-material/Logout";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import { createTheme, ThemeProvider } from "@mui/material";
 import { Link } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { userActions } from "../../store/user-slice";
 import { useNavigate } from "react-router-dom";
 
@@ -51,6 +51,8 @@ const Header = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  const user = useSelector((state) => state.user.user);
+
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -71,48 +73,56 @@ const Header = () => {
       <AppBar sx={customStyles.appbar} position="static">
         <Toolbar sx={customStyles.toolbar}>
           <img style={customStyles.image} src={vbLogo} alt="vb-logo" />
-          <IconButton size="large" edge="end" onClick={handleClick}>
-            <AccountCircle fontSize="large" />
-          </IconButton>
-          <Menu
-            id="profile-menu"
-            anchorEl={anchorEl}
-            open={open}
-            onClose={handleClose}
-            PaperProps={{
-              elevation: 0,
-              sx: {
-                overflow: "visible",
-                filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
-                mt: 0,
-                "& .MuiAvatar-root": {
-                  width: 32,
-                  height: 32,
-                  ml: -0.5,
-                  mr: 1,
-                },
-              },
-            }}
-            transformOrigin={{ horizontal: "center", vertical: "top" }}
-            anchorOrigin={{ horizontal: "center", vertical: "bottom" }}
-          >
-            <MenuItem onClick={handleClose} component={Link} to="/">
-              <Avatar /> Profile
-            </MenuItem>
-            <Divider />
-            <MenuItem onClick={handleClose}>
-              <ListItemIcon>
-                <Settings fontSize="small" />
-              </ListItemIcon>
-              Settings
-            </MenuItem>
-            <MenuItem onClick={handleLogOut}>
-              <ListItemIcon>
-                <Logout fontSize="small" />
-              </ListItemIcon>
-              Logout
-            </MenuItem>
-          </Menu>
+          {user.name && (
+            <>
+              <IconButton size="large" edge="end" onClick={handleClick}>
+                <AccountCircle fontSize="large" />
+              </IconButton>
+              <Menu
+                id="profile-menu"
+                anchorEl={anchorEl}
+                open={open}
+                onClose={handleClose}
+                PaperProps={{
+                  elevation: 0,
+                  sx: {
+                    overflow: "visible",
+                    filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
+                    mt: 0,
+                    "& .MuiAvatar-root": {
+                      width: 32,
+                      height: 32,
+                      ml: -0.5,
+                      mr: 1,
+                    },
+                  },
+                }}
+                transformOrigin={{ horizontal: "center", vertical: "top" }}
+                anchorOrigin={{ horizontal: "center", vertical: "bottom" }}
+              >
+                <MenuItem
+                  onClick={handleClose}
+                  component={Link}
+                  to="/my-profile"
+                >
+                  <Avatar /> Profile
+                </MenuItem>
+                <Divider />
+                <MenuItem onClick={handleClose}>
+                  <ListItemIcon>
+                    <Settings fontSize="small" />
+                  </ListItemIcon>
+                  Settings
+                </MenuItem>
+                <MenuItem onClick={handleLogOut}>
+                  <ListItemIcon>
+                    <Logout fontSize="small" />
+                  </ListItemIcon>
+                  Logout
+                </MenuItem>
+              </Menu>
+            </>
+          )}
         </Toolbar>
       </AppBar>
     </ThemeProvider>
