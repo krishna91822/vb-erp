@@ -27,7 +27,7 @@ import Network from "../pages/network/network.component";
 import Review from "./../pages/review/review.component ";
 import CreateProfile from "./../pages/createProfile/createProfile.component";
 
-import UseRoles from "./roles";
+import UseRoles from "../helpers/roles";
 
 const Routes = () => {
   const {
@@ -47,82 +47,71 @@ const Routes = () => {
       access: true,
     },
     {
-      path: "/posow/create",
-      component: POSOW_FORM,
-    },
-    {
-      path: "/posow",
-      component: POSOW_tabView,
-    },
-    {
-      path: "/posow/detail/:id",
-      component: POSOW_Read,
-    },
-    {
-      path: "/invoices",
-      component: invoice_tabView,
-    },
-    {
-      path: "/invoice/create-invoice",
-      component: invoice_FORM,
-    },
-    {
-      path: "/invoice_details/:id",
-      component: INVOICE_Read,
-    },
-    {
-      path: "/invoice/edit/:id",
-      component: invoice_EDIT,
-    },
-    {
-      path: "/posow/edit/:id",
-      component: POSOW_EDIT,
-    },
-    {
-      path: "/templates",
-      component: Templates,
-      title: "Templates",
-    },
-    {
-      path: "/pmo/projects",
-      component: Projects,
-    },
-    {
-      path: "/pmo/projects/create",
-      component: CreateProject,
-    },
-    {
-      path: "/pmo/projects/:id",
-      component: CreateProject,
-    },
-    {
-      path: "/pmo/projects/:id/edit",
-      component: CreateProject,
-    },
-    {
-      path: "/pmo/allocations",
-      component: Allocations,
-    },
-    {
-      path: "/rewards/create",
-      component: CreateReward,
-      title: "Create Reward",
-    },
-    {
-      path: "/rewards",
-      component: RewardsList,
-      title: "Rewards List",
-    },
-    {
-      path: "/rewards/edit/:id",
-      component: EditReward,
-      title: "Edit Reward",
-    },
-    {
       path: "/login",
       title: "Login",
       component: SignIn,
       access: true,
+    },
+    {
+      path: "my-profile",
+      component: Profile,
+      title: "Templates",
+      access: [
+        isUser,
+        isApprover,
+        isLeader,
+        isHrAdmin,
+        isFinanceAdmin,
+        isPMSAdmin,
+        isSuperAdmin,
+      ].some((x) => x),
+    },
+    {
+      path: "my-profile/:empId",
+      component: ViewProfile,
+      title: "Templates",
+      access: [
+        isUser,
+        isApprover,
+        isLeader,
+        isHrAdmin,
+        isFinanceAdmin,
+        isPMSAdmin,
+        isSuperAdmin,
+      ].some((x) => x),
+    },
+    {
+      path: "network",
+      component: Network,
+      title: "Login",
+      access: [
+        isUser,
+        isApprover,
+        isLeader,
+        isHrAdmin,
+        isFinanceAdmin,
+        isPMSAdmin,
+        isSuperAdmin,
+      ].some((x) => x),
+    },
+    {
+      path: "reviews",
+      component: Review,
+      title: "Login",
+      access: [
+        isApprover,
+        isLeader,
+        isHrAdmin,
+        isFinanceAdmin,
+        isPMSAdmin,
+        isSuperAdmin,
+      ].some((x) => x),
+    },
+    {
+      path: "create-profile",
+      component: CreateProfile,
+      title: "Login",
+      access: [isHrAdmin, isSuperAdmin].some((x) => x),
     },
     {
       path: "/cims",
@@ -157,40 +146,188 @@ const Routes = () => {
       ].some((x) => x),
     },
     {
-      path: "my-profile",
-      component: Profile,
+      path: "/pmo/projects",
+      component: Projects,
+      access: [
+        isApprover,
+        isLeader,
+        isHrAdmin,
+        isFinanceAdmin,
+        isPMSAdmin,
+        isSuperAdmin,
+      ].some((x) => x),
+    },
+    {
+      path: "/pmo/projects/create",
+      component: CreateProject,
+      access: [isApprover, isLeader, isPMSAdmin, isSuperAdmin].some((x) => x),
+    },
+    {
+      path: "/pmo/projects/:id",
+      component: CreateProject,
+      access: [
+        isApprover,
+        isLeader,
+        isHrAdmin,
+        isFinanceAdmin,
+        isPMSAdmin,
+        isSuperAdmin,
+      ].some((x) => x),
+    },
+    {
+      path: "/pmo/projects/:id/edit",
+      component: CreateProject,
+      access: [isApprover, isLeader, isPMSAdmin, isSuperAdmin].some((x) => x),
+    },
+    {
+      path: "/pmo/allocations",
+      component: Allocations,
+      access: [
+        isApprover,
+        isLeader,
+        isHrAdmin,
+        isFinanceAdmin,
+        isPMSAdmin,
+        isSuperAdmin,
+      ].some((x) => x),
+    },
+    {
+      path: "/posow/create",
+      component: POSOW_FORM,
+      access: [
+        isApprover,
+        isLeader,
+        isFinanceAdmin,
+        isPMSAdmin,
+        isSuperAdmin,
+      ].some((x) => x),
+    },
+    {
+      path: "/posow",
+      component: POSOW_tabView,
+      access: [
+        isApprover,
+        isLeader,
+        isHrAdmin,
+        isFinanceAdmin,
+        isPMSAdmin,
+        isSuperAdmin,
+      ].some((x) => x),
+    },
+    {
+      path: "/posow/detail/:id",
+      component: POSOW_Read,
+      access: [
+        isApprover,
+        isLeader,
+        isHrAdmin,
+        isFinanceAdmin,
+        isPMSAdmin,
+        isSuperAdmin,
+      ].some((x) => x),
+    },
+    {
+      path: "/posow/edit/:id",
+      component: POSOW_EDIT,
+      access: [
+        isApprover,
+        isLeader,
+        isFinanceAdmin,
+        isPMSAdmin,
+        isSuperAdmin,
+      ].some((x) => x),
+    },
+    {
+      path: "/invoices",
+      component: invoice_tabView,
+      access: [
+        isApprover,
+        isLeader,
+        isHrAdmin,
+        isFinanceAdmin,
+        isPMSAdmin,
+        isSuperAdmin,
+      ].some((x) => x),
+    },
+    {
+      path: "/invoice/create-invoice",
+      component: invoice_FORM,
+      access: [
+        isApprover,
+        isLeader,
+        isFinanceAdmin,
+        isPMSAdmin,
+        isSuperAdmin,
+      ].some((x) => x),
+    },
+    {
+      path: "/invoice_details/:id",
+      component: INVOICE_Read,
+      access: [
+        isApprover,
+        isLeader,
+        isHrAdmin,
+        isFinanceAdmin,
+        isPMSAdmin,
+        isSuperAdmin,
+      ].some((x) => x),
+    },
+    {
+      path: "/invoice/edit/:id",
+      component: invoice_EDIT,
+      access: [
+        isApprover,
+        isLeader,
+        isFinanceAdmin,
+        isPMSAdmin,
+        isSuperAdmin,
+      ].some((x) => x),
+    },
+    {
+      path: "/rewards/create",
+      component: CreateReward,
+      title: "Create Reward",
+      access: [isLeader, isHrAdmin, isSuperAdmin].some((x) => x),
+    },
+    {
+      path: "/rewards",
+      component: RewardsList,
+      title: "Rewards List",
+      access: [isLeader, isHrAdmin, isSuperAdmin].some((x) => x),
+    },
+    {
+      path: "/rewards/edit/:id",
+      component: EditReward,
+      title: "Edit Reward",
+      access: [isLeader, isHrAdmin, isSuperAdmin].some((x) => x),
+    },
+    {
+      path: "/templates",
+      component: Templates,
       title: "Templates",
-      access: [isUser].some((x) => x),
-    },
-    {
-      path: "my-profile/:empId",
-      component: ViewProfile,
-      title: "Templates",
-    },
-    {
-      path: "network",
-      component: Network,
-      title: "Login",
-    },
-    {
-      path: "reviews",
-      component: Review,
-      title: "Login",
-    },
-    {
-      path: "create-profile",
-      component: CreateProfile,
-      title: "Login",
-    },
-    {
-      path: "/not_auth",
-      component: DescriptionAlerts,
-      title: "Login",
+      access: [
+        isUser,
+        isApprover,
+        isLeader,
+        isHrAdmin,
+        isFinanceAdmin,
+        isPMSAdmin,
+        isSuperAdmin,
+      ].some((x) => x),
     },
     {
       path: "*",
       component: NotFound,
       title: "Not Found",
+      access: [
+        isUser,
+        isApprover,
+        isLeader,
+        isHrAdmin,
+        isFinanceAdmin,
+        isPMSAdmin,
+        isSuperAdmin,
+      ].some((x) => x),
     },
   ];
 
