@@ -36,6 +36,6 @@ export const CustomTextField = styled(TextField)({
 });
 
 export const CustomContainer = styled("div")({
-  padding: "0.5em",
+  // padding: "0.5em",
   height: "calc(100%-60px)",
 });

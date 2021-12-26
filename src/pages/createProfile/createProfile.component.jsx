@@ -51,6 +51,7 @@ const CreateProfile = ({
   toggleEditEmployee,
   setToggleEditEmployee,
 }) => {
+  const { user } = useSelector((state) => state.user);
   const { currentEmployee } = useSelector((state) => state.employee);
   const dispatch = useDispatch();
   const { toggleLoader } = uiActions;
@@ -71,14 +72,14 @@ const CreateProfile = ({
     empEmail: "",
     empDepartment: "",
     empDesignation: "",
-    empDoj: new Date(),
+    empDoj: null,
     empReportingManager: "",
     empAboutMe: "",
     empBand: "",
     empCertifications: [],
     empConnections: 0,
     empCurrentAddress: undefined,
-    empDob: new Date(),
+    empDob: null,
     empGraduation: "",
     empGraduationUniversity: "",
     empHobbies: [],
@@ -96,7 +97,6 @@ const CreateProfile = ({
       : {
           ...empInitial,
           empDoj: new Date(),
-          empDob: new Date(),
         }
   );
 
@@ -253,7 +253,29 @@ const CreateProfile = ({
           handleOpenModalError();
           console.log(error);
         });
-    } else {
+    }
+    //  else if (
+    //   createEmployee?.reqType === "profile-update" &&
+    //   ["hr_admin", "super_admin"].some((el) => user.roles.includes(el))
+    // ) {
+    //   axiosInstance
+    //     .patch(
+    //       `/employees/${editEmployeeData._id}`,
+    //       createEmployee.employeeDetails
+    //     )
+    //     .then(function (response) {
+    //       setEmployee(empInitial);
+    //       dispatch(toggleLoader());
+    //       handleOpenModal();
+    //       console.log(response.data);
+    //     })
+    //     .catch(function (error) {
+    //       dispatch(toggleLoader());
+    //       handleOpenModalError();
+    //       console.log(error);
+    //     });
+    // }
+    else if (createEmployee?.reqType === "profile-update") {
       axiosInstance
         .post("/reviews", createEmployee)
         .then(function (response) {
@@ -269,7 +291,6 @@ const CreateProfile = ({
         });
     }
   };
-  // console.log(errors);
 
   return currentEmployee && currentEmployee.role === "ADMIN" ? (
     <BoxStyle data-test="create-profile-test">

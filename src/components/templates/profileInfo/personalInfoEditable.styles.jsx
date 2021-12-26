@@ -7,7 +7,7 @@ export const CustomTextField = styled(TextField)({
   },
   "& .MuiOutlinedInput-root": {
     width: "80%",
-    height: "30px",
+    height: "35px",
     marginLeft: "8px",
   },
 });
@@ -24,14 +24,14 @@ export const FieldBox = styled(Box)({
   display: "grid",
   alignItems: "center",
   gridTemplateColumns: "30% 70%",
-  marginBottom: "8px",
+  gridTemplateRows: "50px",
 });
 
 export const CustomGridBox = styled("div")(({ theme }) => ({
   width: "100%",
   minHeight: "80px",
   display: "grid",
-  gridTemplateRows: "repeat(3,auto)",
+  gridTemplateRows: "repeat(3,50px)",
   gridTemplateColumns: "1fr 1fr",
   alignItems: "center",
 }));
