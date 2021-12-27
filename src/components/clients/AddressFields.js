@@ -58,6 +58,7 @@ export default function AddressFields(props) {
       field.name === "district" &&
       formData[props.type].pincode !== "" &&
       formData[props.type].state !== "" &&
+      Object.keys(loc["districts"]) &&
       Object.keys(loc["districts"]).length > 1
     ) {
       return (
@@ -87,6 +88,7 @@ export default function AddressFields(props) {
       field.name === "area" &&
       formData[props.type].district !== "" &&
       formData[props.type].pincode !== "" &&
+      loc["districts"][formData[props.type]["district"]] &&
       loc["districts"][formData[props.type]["district"]].length > 1
     ) {
       return (

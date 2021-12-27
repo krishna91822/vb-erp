@@ -3,11 +3,11 @@ import { styled } from "@mui/system";
 
 export const CustomTextField = styled(TextField)({
   "& .MuiOutlinedInput-input": {
-    fontSize: "14px",
+    fontSize: "16px",
   },
   "& .MuiOutlinedInput-root": {
     width: "80%",
-    height: "28px",
+    height: "30px",
     marginLeft: "8px",
   },
 });
@@ -15,7 +15,7 @@ export const CustomTextField = styled(TextField)({
 export const ContentBoldTypo = styled("div")(({ theme }) => ({
   ...theme.typography.h5,
   color: theme.palette.textColor.paletteGrey,
-  fontSize: 13,
+  fontSize: 16,
   fontWeight: 600,
 }));
 

@@ -27,6 +27,8 @@ export default function PageHeader() {
     handelSortBy,
     handelFilterBy,
     handelSortingOrder,
+
+    user,
   } = ClientHelpers();
 
   const sortByFields = [
@@ -68,17 +70,19 @@ export default function PageHeader() {
             <Typography variant="h4">CIMS</Typography>
           </Grid>
           <Grid item sm></Grid>
-          <Grid item>
-            <Link to="/cims/create" style={{ textDecoration: "none" }}>
-              <Button
-                onClick={handleCreate}
-                variant="contained"
-                style={{ backgroundColor: "chocolate" }}
-              >
-                Create a customer
-              </Button>
-            </Link>
-          </Grid>
+          {user.permissions.includes("create_CIMS_module") && (
+            <Grid item>
+              <Link to="/cims/create" style={{ textDecoration: "none" }}>
+                <Button
+                  onClick={handleCreate}
+                  variant="contained"
+                  style={{ backgroundColor: "chocolate" }}
+                >
+                  Create a customer
+                </Button>
+              </Link>
+            </Grid>
+          )}
           <Grid item>
             <FormControl size="small">
               <InputLabel id="filterBy">Filter By</InputLabel>

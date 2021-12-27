@@ -4,7 +4,6 @@ import { Grid, TextField, Box, Chip, Checkbox } from "@mui/material";
 import ClearIcon from "@mui/icons-material/Clear";
 
 import { personal } from "./personal.constant";
-import validator from "validator";
 
 import {
   ListItem,
@@ -27,11 +26,25 @@ import {
   blue,
 } from "@mui/material/colors";
 
+import axiosInstance from "./../../../helpers/axiosInstance";
+import { useDispatch } from "react-redux";
+import { uiActions } from "./../../../store/ui-slice.js";
+
 const PersonalEditable = (props) => {
-  const { empData, setEmpData, personalDetails, setPersonalDetails } = props;
+  const { toggleLoader } = uiActions;
+  const dispatch = useDispatch();
 
   const {
-    empConnections,
+    empData,
+    setEmpData,
+    personalDetails,
+    setPersonalDetails,
+    register,
+    errors,
+  } = props;
+
+  const {
+    // empConnections,
     empHobbies,
     empPersonalEmail,
     empDob,
@@ -100,6 +113,7 @@ const PersonalEditable = (props) => {
   const [currentAddress, setCurrentAddress] = useState(
     empCurrentAddress ? { ...empCurrentAddress } : {}
   );
+
   const handleCurrentAddressChange = (event) => {
     const { value, name } = event.target;
     if (addresschecked) {
@@ -131,6 +145,80 @@ const PersonalEditable = (props) => {
     });
   };
 
+  const fetchCurrentAddress = (event) => {
+    if (event.key === "Enter") {
+      if (event.target.value.trim() === "") return;
+      dispatch(toggleLoader());
+      axiosInstance
+        .get("/location", {
+          headers: {
+            country: "in",
+            pincode: event.target.value,
+          },
+        })
+        .then((response) => {
+          if (addresschecked) {
+            setEmpData({
+              ...empData,
+              empResidentialAddress: {
+                ...currentAddress,
+                empAddressCity: Object.keys(response.data.data.districts)[0],
+                empAddressState: response.data.data.state,
+              },
+              empCurrentAddress: {
+                ...currentAddress,
+                empAddressCity: Object.keys(response.data.data.districts)[0],
+                empAddressState: response.data.data.state,
+              },
+            });
+          } else {
+            setEmpData({
+              ...empData,
+              empCurrentAddress: {
+                ...currentAddress,
+                empAddressCity: Object.keys(response.data.data.districts)[0],
+                empAddressState: response.data.data.state,
+              },
+            });
+          }
+          dispatch(toggleLoader());
+        })
+        .catch((err) => {
+          dispatch(toggleLoader());
+          console.log(err);
+        });
+    }
+  };
+
+  const fetchResidentialAddress = (event) => {
+    if (event.key === "Enter") {
+      if (event.target.value.trim() === "") return;
+      dispatch(toggleLoader());
+      axiosInstance
+        .get("/location", {
+          headers: {
+            country: "in",
+            pincode: event.target.value,
+          },
+        })
+        .then((response) => {
+          setEmpData({
+            ...empData,
+            empResidentialAddress: {
+              ...residentialAddress,
+              empAddressCity: Object.keys(response.data.data.districts)[0],
+              empAddressState: response.data.data.state,
+            },
+          });
+          dispatch(toggleLoader());
+        })
+        .catch((err) => {
+          dispatch(toggleLoader());
+          console.log(err);
+        });
+    }
+  };
+
   return (
     <Grid container spacing={0} sx={{ minHeight: 150 }}>
       <Grid
@@ -142,8 +230,9 @@ const PersonalEditable = (props) => {
           },
           "& .MuiFormControl-root": { minHeight: 200 },
           "& .MuiOutlinedInput-notchedOutline": {
-            border: "2px solid",
+            border: "0.1em solid",
             borderColor: "textColor.paletteGrey",
+            borderRadius: "5px",
           },
         }}
       >
@@ -159,6 +248,20 @@ const PersonalEditable = (props) => {
           value={empAboutMe ? empAboutMe : ""}
           name="empAboutMe"
           onChange={handleChange}
+          error={Boolean(errors.empAboutMe)}
+          helperText={errors.empAboutMe?.message}
+          inputRef={register({
+            required: "Write something about user.",
+            minLength: {
+              value: 10,
+              message: "minimun leght should be 10",
+            },
+            maxLength: {
+              value: 300,
+              message: "minimun leght should be 300",
+            },
+            validate: true,
+          })}
         />
       </Grid>
       <Grid item sm={7}>
@@ -174,9 +277,16 @@ const PersonalEditable = (props) => {
               value={empPersonalEmail ? empPersonalEmail : ""}
               type="email"
               name="empPersonalEmail"
-              onChange={(event) => {
-                handleChange(event);
-              }}
+              onChange={(event) => handleChange(event)}
+              error={Boolean(errors.empPersonalEmail)}
+              helperText={errors.empPersonalEmail?.message}
+              inputRef={register({
+                required: "Personal email is required.",
+                pattern: {
+                  value: /^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/,
+                  message: "Enter valid email.",
+                },
+              })}
             />
           </ContentBox>
           <ContentBox>
@@ -184,7 +294,7 @@ const PersonalEditable = (props) => {
             <LocalizationProvider dateAdapter={AdapterDateFns}>
               <DesktopDatePicker
                 inputFormat="dd/MM/yyyy"
-                value={empDob ? empDob : new Date()}
+                value={empDob}
                 onChange={(newValue) => {
                   setEmpData({ ...empData, empDob: newValue });
                 }}
@@ -231,7 +341,7 @@ const PersonalEditable = (props) => {
               />
             </Box>
           </ContentBox>
-          <ContentBox>
+          {/* <ContentBox>
             <ContentTypo>{personal.connections}</ContentTypo>
             <CustomTextField
               placeholder="enter no. of connections"
@@ -244,7 +354,7 @@ const PersonalEditable = (props) => {
               name="empConnections"
               onChange={handleChange}
             />
-          </ContentBox>
+          </ContentBox> */}
           <ContentBox>
             <ContentTypo>{personal.currentAddress}</ContentTypo>
             <Box sx={{ width: 1 }}>
@@ -282,7 +392,7 @@ const PersonalEditable = (props) => {
                   variant="outlined"
                   value={
                     empCurrentAddress?.empAddressCity
-                      ? currentAddress.empAddressCity
+                      ? empCurrentAddress.empAddressCity
                       : ""
                   }
                   type="text"
@@ -298,7 +408,7 @@ const PersonalEditable = (props) => {
                   variant="outlined"
                   value={
                     empCurrentAddress?.empAddressState
-                      ? currentAddress.empAddressState
+                      ? empCurrentAddress.empAddressState
                       : ""
                   }
                   type="text"
@@ -314,11 +424,12 @@ const PersonalEditable = (props) => {
                   variant="outlined"
                   value={
                     empCurrentAddress?.empAddressPinCode
-                      ? currentAddress.empAddressPinCode
+                      ? empCurrentAddress.empAddressPinCode
                       : ""
                   }
                   type="number"
                   name="empAddressPinCode"
+                  onKeyDown={fetchCurrentAddress}
                   onChange={handleCurrentAddressChange}
                   placeholder="Pin code"
                   sx={{
@@ -356,7 +467,7 @@ const PersonalEditable = (props) => {
                 variant="outlined"
                 value={
                   empResidentialAddress?.empAddressLineOne
-                    ? residentialAddress.empAddressLineOne
+                    ? empResidentialAddress.empAddressLineOne
                     : ""
                 }
                 type="text"
@@ -382,7 +493,7 @@ const PersonalEditable = (props) => {
                   variant="outlined"
                   value={
                     empResidentialAddress?.empAddressCity
-                      ? residentialAddress.empAddressCity
+                      ? empResidentialAddress.empAddressCity
                       : ""
                   }
                   type="text"
@@ -399,7 +510,7 @@ const PersonalEditable = (props) => {
                   variant="outlined"
                   value={
                     empResidentialAddress?.empAddressState
-                      ? residentialAddress.empAddressState
+                      ? empResidentialAddress.empAddressState
                       : ""
                   }
                   type="text"
@@ -416,11 +527,12 @@ const PersonalEditable = (props) => {
                   variant="outlined"
                   value={
                     empResidentialAddress?.empAddressPinCode
-                      ? residentialAddress.empAddressPinCode
+                      ? empResidentialAddress.empAddressPinCode
                       : ""
                   }
                   type="text"
                   name="empAddressPinCode"
+                  onKeyDown={fetchResidentialAddress}
                   onChange={handleResidentialAddressChange}
                   placeholder="Pin code"
                   sx={{ width: "30%" }}
