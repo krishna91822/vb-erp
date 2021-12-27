@@ -255,7 +255,8 @@ const ViewProfile = () => {
           alignItems: "center",
         }}
       >
-        {user.permissions.includes("edit_employee_dashboard") ? (
+        {user.permissions.includes("edit_employee_dashboard") &&
+        ["hr_admin", "super_admin"].some((el) => user.roles.includes(el)) ? (
           <Box
             sx={{
               display: "flex",

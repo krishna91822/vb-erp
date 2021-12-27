@@ -18,27 +18,35 @@ const Profile = () => {
   const { currentEmployee, inEditMode } = useSelector(
     (state) => state.employee
   );
+  const { user } = useSelector((state) => state.user);
+
+  // const email = user.email;
+  const email = "admin@mail.com";
 
   const [loading, setLoading] = useState(true);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    axiosInstance
-      .get("/employees?empEmail=admin@mail.com")
-      .then((response) => {
-        dispatch(setCurrentEmployee(response.data.data[0]));
-        setUpdateRequest({
-          ...response.data.data[0],
-          personalDetails: [...response.data.data[0].personalDetails],
-          professionalDetails: [...response.data.data[0].professionalDetails],
-          skillsDetails: [...response.data.data[0].skillsDetails],
-        });
-        setPersonalDetails([...response.data.data[0].personalDetails]);
-        setProfessionalDetails([...response.data.data[0].professionalDetails]);
-        setSkillsDetails([...response.data.data[0].skillsDetails]);
-        setLoading(false);
-      })
-      .catch((err) => console.log(err));
+    setTimeout(() => {
+      axiosInstance
+        .get(`/employees?empEmail=${email}`)
+        .then((response) => {
+          dispatch(setCurrentEmployee(response.data.data[0]));
+          setUpdateRequest({
+            ...response.data.data[0],
+            personalDetails: [...response.data.data[0].personalDetails],
+            professionalDetails: [...response.data.data[0].professionalDetails],
+            skillsDetails: [...response.data.data[0].skillsDetails],
+          });
+          setPersonalDetails([...response.data.data[0].personalDetails]);
+          setProfessionalDetails([
+            ...response.data.data[0].professionalDetails,
+          ]);
+          setSkillsDetails([...response.data.data[0].skillsDetails]);
+          setLoading(false);
+        })
+        .catch((err) => console.log(err));
+    }, 2000);
   }, [dispatch]);
 
   const [personalDetails, setPersonalDetails] = useState([]);
