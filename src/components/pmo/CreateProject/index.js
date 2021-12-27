@@ -153,7 +153,7 @@ const CreateProject = () => {
         resources: projectById.resources.map((eachResource) => ({
           ...eachResource,
           empId: eachResource.empId.empId,
-          empName: eachResource.empId.empName,
+          empName: `${eachResource.empId.empName} (${eachResource.empId.empId})`,
         })),
       });
       dispatch(getClinetById(projectById.project.clientId));
@@ -175,7 +175,7 @@ const CreateProject = () => {
       ...state,
       resource: {
         ...state.resource,
-        empName: value.empName + " (" + value.empId + ")" || "",
+        empName: value.empName ? `${value.empName} (${value.empId})` : "",
         empId: value._id || "",
       },
     });

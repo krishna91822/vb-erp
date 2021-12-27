@@ -64,7 +64,20 @@ const ResourceInformation = ({
     }
     setTempEmpName("");
   };
-  useLayoutEffect(() => {
+  // useLayoutEffect(() => {
+  //   if (percentageAllocated === 100) {
+  //     dispatch(
+  //       uiActions.showNotification({
+  //         status: "error",
+  //         message: "Already allocated with 100% bandwidth",
+  //       })
+  //     );
+  //   }
+  //   // return () => {
+  //   //   dispatch(pmoActions.updatePercentageAllocated(0));
+  //   // };
+  // }, [percentageAllocated]);
+  const testing = () => {
     if (percentageAllocated === 100) {
       dispatch(
         uiActions.showNotification({
@@ -73,14 +86,19 @@ const ResourceInformation = ({
         })
       );
     }
-    return () => {
-      dispatch(pmoActions.updatePercentageAllocated(0));
-    };
-  }, [percentageAllocated]);
-  const resourcesIds = resources.map((eachRes) => eachRes.empId);
+  };
+
+  const resourcesIds = resources.map((eachRes) => eachRes._id || eachRes.empId);
   const filteredEmployees = allEmployees
-    ? allEmployees.filter((eachEmp) => !resourcesIds.includes(eachEmp.empId))
+    ? allEmployees.filter((eachEmp) => !resourcesIds.includes(eachEmp._id))
     : [];
+  console.log(
+    resourcesIds,
+    "asasas",
+    filteredEmployees,
+    "------------",
+    resources
+  );
   return (
     <Container>
       <ResourceInformationHeading data-test="resource-head">
@@ -101,9 +119,7 @@ const ResourceInformation = ({
                 setFocused(false);
               }}
               onInputChange={handleInputChange}
-              getOptionLabel={(option) =>
-                option.empName + " (" + option.empId + ")"
-              }
+              getOptionLabel={(option) => `${option.empName} (${option.empId})`}
               onChange={handleOnClick}
               options={filteredEmployees}
               open={open}
@@ -170,6 +186,7 @@ const ResourceInformation = ({
                   name="allocationPercentage"
                   value={allocationPercentage}
                   onChange={handleResourceChange}
+                  onClick={testing}
                   style={{ width: "60%" }}
                 />
                 <TextField

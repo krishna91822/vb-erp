@@ -187,7 +187,7 @@ export default function BenchModal({
                           borderBottom: "1px solid #afacacde",
                         }}
                       >
-                        Future Allocation
+                        Active Allocation
                       </h3>
                       <div
                         style={{
