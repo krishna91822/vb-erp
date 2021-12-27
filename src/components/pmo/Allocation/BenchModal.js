@@ -1,7 +1,6 @@
 import React from "react";
 import { Backdrop, Box, Modal, Fade, Typography } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
-
 const style = {
   position: "absolute",
   top: "50%",
@@ -17,7 +16,6 @@ const style = {
     lineHeight: "1",
   },
 };
-
 export default function BenchModal({
   modalDetails,
   setModalDetails,
@@ -26,7 +24,6 @@ export default function BenchModal({
   const onCloseHandle = () => {
     setModalDetails(false);
   };
-
   let current_Day = new Date().toISOString().slice(0, 10);
   return (
     <div>
@@ -93,140 +90,184 @@ export default function BenchModal({
             >
               {entryData.projects &&
                 (entryData.projects.length > 0 ? (
-                  <ul>
-                    {entryData.projects.map((currElem, index) => (
-                      <div key={index}>
-                        {currElem.allocationEndDate < current_Day ? (
-                          <div
-                            style={{
-                              // border: "1px solid",
-                              textAlign: "right",
-                            }}
-                          >
-                            <li
-                              style={{
-                                fontSize: "18px",
-                                marginBottom: "20px",
-                                flexBasis: "50%",
-                              }}
-                            >
-                              <span style={{ textTransform: "capitalize" }}>
-                                {currElem.projectName || ""}
-                              </span>
-                              <ul
+                  <>
+                    <div>
+                      <h3
+                        style={{
+                          margin: "5px",
+                          padding: "5px",
+                          borderBottom: "1px solid #afacacde",
+                        }}
+                      >
+                        Past Allocation
+                      </h3>
+                      <div
+                        style={{
+                          display: "flex",
+                          justifyContent: "space-around",
+                        }}
+                      >
+                        {entryData.projects.map(
+                          (currElem, index) =>
+                            currElem.allocationEndDate < current_Day && (
+                              <div
                                 style={{
-                                  padding: "0 10px",
-                                  fontSize: "14px",
-                                  listStylePosition: "inside",
+                                  border: "1px solid #afacacde",
+                                  borderRadius: "10px",
                                 }}
                               >
-                                <li>
-                                  <div
-                                    style={{
-                                      color: "gray",
-                                      width: "150px",
-                                      display: "inline-block",
-                                    }}
-                                  >
-                                    Allocated Percentage
-                                  </div>
-                                  {` ${currElem.allocationPercentage || ""}%`}
-                                </li>
-                                <li>
-                                  <div
-                                    style={{
-                                      color: "gray",
-                                      width: "155px",
-                                      display: "inline-block",
-                                    }}
-                                  >
-                                    Allocated Start Date
-                                  </div>
-                                  {currElem.allocationStartDate || ""}
-                                </li>
-                                <li>
-                                  <div
-                                    style={{
-                                      color: "gray",
-                                      width: "155px",
-                                      display: "inline-block",
-                                    }}
-                                  >
-                                    Allocated End Date
-                                  </div>
-                                  {currElem.allocationEndDate || ""}
-                                </li>
-                              </ul>
-                            </li>
-                          </div>
-                        ) : (
-                          <div
-                            style={
-                              {
-                                // border: "1px solid pink",
-                              }
-                            }
-                          >
-                            <li
-                              style={{
-                                fontSize: "18px",
-                                marginBottom: "20px",
-                                flexBasis: "50%",
-                              }}
-                            >
-                              <span style={{ textTransform: "capitalize" }}>
-                                {currElem.projectName || ""}
-                              </span>
-                              <ul
-                                style={{
-                                  padding: "0 10px",
-                                  fontSize: "14px",
-                                  listStylePosition: "inside",
-                                }}
-                              >
-                                <li>
-                                  <div
-                                    style={{
-                                      color: "gray",
-                                      width: "150px",
-                                      display: "inline-block",
-                                    }}
-                                  >
-                                    Allocated Percentage
-                                  </div>
-                                  {` ${currElem.allocationPercentage || ""}%`}
-                                </li>
-                                <li>
-                                  <div
-                                    style={{
-                                      color: "gray",
-                                      width: "155px",
-                                      display: "inline-block",
-                                    }}
-                                  >
-                                    Allocated Start Date
-                                  </div>
-                                  {currElem.allocationStartDate || ""}
-                                </li>
-                                <li>
-                                  <div
-                                    style={{
-                                      color: "gray",
-                                      width: "155px",
-                                      display: "inline-block",
-                                    }}
-                                  >
-                                    Allocated End Date
-                                  </div>
-                                  {currElem.allocationEndDate || ""}
-                                </li>
-                              </ul>
-                            </li>
-                          </div>
+                                <p
+                                  style={{
+                                    textTransform: "capitalize",
+                                    width: "100%",
+                                    margin: "0",
+                                    padding: "10px",
+                                    background: "#afacacde",
+                                    borderRadius: "10px",
+                                    fontWeight: "600",
+                                    textAlign: "center",
+                                  }}
+                                >
+                                  {currElem.projectName || ""}
+                                </p>
+                                <ul
+                                  style={{
+                                    padding: "0 10px",
+                                    fontSize: "14px",
+                                    listStylePosition: "inside",
+                                  }}
+                                >
+                                  <li>
+                                    <div
+                                      style={{
+                                        color: "gray",
+                                        width: "150px",
+                                        display: "inline-block",
+                                      }}
+                                    >
+                                      Allocated Percentage
+                                    </div>
+                                    {` ${currElem.allocationPercentage || ""}%`}
+                                  </li>
+                                  <li>
+                                    <div
+                                      style={{
+                                        color: "gray",
+                                        width: "155px",
+                                        display: "inline-block",
+                                      }}
+                                    >
+                                      Allocated Start Date
+                                    </div>
+                                    {currElem.allocationStartDate || ""}
+                                  </li>
+                                  <li>
+                                    <div
+                                      style={{
+                                        color: "gray",
+                                        width: "155px",
+                                        display: "inline-block",
+                                      }}
+                                    >
+                                      Allocated End Date
+                                    </div>
+                                    {currElem.allocationEndDate || ""}
+                                  </li>
+                                </ul>
+                              </div>
+                            )
                         )}
                       </div>
-                    ))}
-                  </ul>
+                    </div>
+                    <div>
+                      <h3
+                        style={{
+                          margin: "5px",
+                          padding: "5px",
+                          borderBottom: "1px solid #afacacde",
+                        }}
+                      >
+                        Future Allocation
+                      </h3>
+                      <div
+                        style={{
+                          display: "flex",
+                          justifyContent: "space-around",
+                        }}
+                      >
+                        {entryData.projects.map(
+                          (currElem, index) =>
+                            currElem.allocationEndDate >= current_Day && (
+                              <div
+                                style={{
+                                  border: "1px solid #afacacde",
+                                  borderRadius: "10px",
+                                }}
+                              >
+                                <p
+                                  style={{
+                                    textTransform: "capitalize",
+                                    width: "100%",
+                                    margin: "0",
+                                    padding: "10px",
+                                    background: "#afacacde",
+                                    borderRadius: "10px",
+                                    fontWeight: "600",
+                                    textAlign: "center",
+                                  }}
+                                >
+                                  {currElem.projectName || ""}
+                                </p>
+                                <ul
+                                  style={{
+                                    padding: "0 10px",
+                                    fontSize: "14px",
+                                    listStylePosition: "inside",
+                                  }}
+                                >
+                                  <li>
+                                    <div
+                                      style={{
+                                        color: "gray",
+                                        width: "150px",
+                                        display: "inline-block",
+                                      }}
+                                    >
+                                      Allocated Percentage
+                                    </div>
+                                    {` ${currElem.allocationPercentage || ""}%`}
+                                  </li>
+                                  <li>
+                                    <div
+                                      style={{
+                                        color: "gray",
+                                        width: "155px",
+                                        display: "inline-block",
+                                      }}
+                                    >
+                                      Allocated Start Date
+                                    </div>
+                                    {currElem.allocationStartDate || ""}
+                                  </li>
+                                  <li>
+                                    <div
+                                      style={{
+                                        color: "gray",
+                                        width: "155px",
+                                        display: "inline-block",
+                                      }}
+                                    >
+                                      Allocated End Date
+                                    </div>
+                                    {currElem.allocationEndDate || ""}
+                                  </li>
+                                </ul>
+                              </div>
+                            )
+                        )}
+                      </div>
+                    </div>
+                  </>
                 ) : (
                   <div
                     style={{
