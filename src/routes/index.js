@@ -27,7 +27,7 @@ import Network from "../pages/network/network.component";
 import Review from "./../pages/review/review.component ";
 import CreateProfile from "./../pages/createProfile/createProfile.component";
 
-import UseRoles from "./roles";
+import UseRoles from "../helpers/roles";
 
 const Routes = () => {
   const {
@@ -166,7 +166,6 @@ const Routes = () => {
       path: "/pmo/projects/:id",
       component: CreateProject,
       access: [
-        isUser,
         isApprover,
         isLeader,
         isHrAdmin,
@@ -178,15 +177,7 @@ const Routes = () => {
     {
       path: "/pmo/projects/:id/edit",
       component: CreateProject,
-      access: [
-        isUser,
-        isApprover,
-        isLeader,
-        isHrAdmin,
-        isFinanceAdmin,
-        isPMSAdmin,
-        isSuperAdmin,
-      ].some((x) => x),
+      access: [isApprover, isLeader, isPMSAdmin, isSuperAdmin].some((x) => x),
     },
     {
       path: "/pmo/allocations",
@@ -227,59 +218,6 @@ const Routes = () => {
       path: "/posow/detail/:id",
       component: POSOW_Read,
       access: [
-        isUser,
-        isApprover,
-        isLeader,
-        isHrAdmin,
-        isFinanceAdmin,
-        isPMSAdmin,
-        isSuperAdmin,
-      ].some((x) => x),
-    },
-    {
-      path: "/invoices",
-      component: invoice_tabView,
-      access: [
-        isUser,
-        isApprover,
-        isLeader,
-        isHrAdmin,
-        isFinanceAdmin,
-        isPMSAdmin,
-        isSuperAdmin,
-      ].some((x) => x),
-    },
-    {
-      path: "/invoice/create-invoice",
-      component: invoice_FORM,
-      access: [
-        isUser,
-        isApprover,
-        isLeader,
-        isHrAdmin,
-        isFinanceAdmin,
-        isPMSAdmin,
-        isSuperAdmin,
-      ].some((x) => x),
-    },
-    {
-      path: "/invoice_details/:id",
-      component: INVOICE_Read,
-      access: [
-        isUser,
-        isApprover,
-        isLeader,
-        isHrAdmin,
-        isFinanceAdmin,
-        isPMSAdmin,
-        isSuperAdmin,
-      ].some((x) => x),
-    },
-    {
-      path: "/invoice/edit/:id",
-      component: invoice_EDIT,
-      access: [
-        isUser,
         isApprover,
         isLeader,
         isHrAdmin,
@@ -292,7 +230,17 @@ const Routes = () => {
       path: "/posow/edit/:id",
       component: POSOW_EDIT,
       access: [
-        isUser,
+        isApprover,
+        isLeader,
+        isFinanceAdmin,
+        isPMSAdmin,
+        isSuperAdmin,
+      ].some((x) => x),
+    },
+    {
+      path: "/invoices",
+      component: invoice_tabView,
+      access: [
         isApprover,
         isLeader,
         isHrAdmin,
@@ -302,14 +250,34 @@ const Routes = () => {
       ].some((x) => x),
     },
     {
-      path: "/templates",
-      component: Templates,
-      title: "Templates",
+      path: "/invoice/create-invoice",
+      component: invoice_FORM,
       access: [
-        isUser,
+        isApprover,
+        isLeader,
+        isFinanceAdmin,
+        isPMSAdmin,
+        isSuperAdmin,
+      ].some((x) => x),
+    },
+    {
+      path: "/invoice_details/:id",
+      component: INVOICE_Read,
+      access: [
         isApprover,
         isLeader,
         isHrAdmin,
+        isFinanceAdmin,
+        isPMSAdmin,
+        isSuperAdmin,
+      ].some((x) => x),
+    },
+    {
+      path: "/invoice/edit/:id",
+      component: invoice_EDIT,
+      access: [
+        isApprover,
+        isLeader,
         isFinanceAdmin,
         isPMSAdmin,
         isSuperAdmin,
@@ -319,34 +287,24 @@ const Routes = () => {
       path: "/rewards/create",
       component: CreateReward,
       title: "Create Reward",
-      access: [
-        isUser,
-        isApprover,
-        isLeader,
-        isHrAdmin,
-        isFinanceAdmin,
-        isPMSAdmin,
-        isSuperAdmin,
-      ].some((x) => x),
+      access: [isLeader, isHrAdmin, isSuperAdmin].some((x) => x),
     },
     {
       path: "/rewards",
       component: RewardsList,
       title: "Rewards List",
-      access: [
-        isUser,
-        isApprover,
-        isLeader,
-        isHrAdmin,
-        isFinanceAdmin,
-        isPMSAdmin,
-        isSuperAdmin,
-      ].some((x) => x),
+      access: [isLeader, isHrAdmin, isSuperAdmin].some((x) => x),
     },
     {
       path: "/rewards/edit/:id",
       component: EditReward,
       title: "Edit Reward",
+      access: [isLeader, isHrAdmin, isSuperAdmin].some((x) => x),
+    },
+    {
+      path: "/templates",
+      component: Templates,
+      title: "Templates",
       access: [
         isUser,
         isApprover,
