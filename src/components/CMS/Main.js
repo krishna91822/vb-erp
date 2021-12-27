@@ -122,7 +122,7 @@ export const Main = () => {
     if (event.key === "Enter") {
       dispatch(searchPoSow(event.target.value));
     }
-  };
+  };     
   return (
     <>
       <Grid container>
@@ -131,8 +131,8 @@ export const Main = () => {
             id="outlined-basic"
             onKeyPress={searchHandler}
             label="client name,project name..."
-            variant="outlined"
-          />
+            variant="outlined"     
+          />     
         </Grid>
         <Grid item lg={6} md={6} sm={6} xs={6}>
           <div className="sortbtn">
