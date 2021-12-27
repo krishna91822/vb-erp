@@ -42,8 +42,8 @@ hr.projectInfoSeperator {
 
   flex-wrap: wrap;
 }
-.posow-CheckBoxInputs ul {
-  list-style: none;
+.posow-ul {
+  list-style-type: none;
 }
 .DocheaderTitle,
 .ProjectHeaderTitle {

@@ -7,6 +7,7 @@ import Button from "@mui/material/Button";
 import { useTheme } from "@mui/material/styles";
 import OutlinedInput from "@mui/material/OutlinedInput";
 import InputLabel from "@mui/material/InputLabel";
+import Stack from "@mui/material/Stack";
 import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
 import Autocomplete from "@mui/material/Autocomplete";
@@ -242,10 +243,12 @@ export const CapturePO_SOW = (props) => {
       setDocName("");
     }
   };
-  const handleSendForApprovalBtnOnClk = () => {
-    dispatch(SendForApproval({ Status: filteredArr[0].Status }, params.id));
+  const handleSendForApprovalBtnOnClk = (statusToChange) => {
+    dispatch(SendForApproval("Pending", params.id));
   };
-
+  const handleApproveReject = (statusToChange) => {
+    dispatch(SendForApproval(statusToChange, params.id));
+  };
   const submitForm = (event) => {
     event.preventDefault();
     let selectedTargetedRes = {};
@@ -266,7 +269,7 @@ export const CapturePO_SOW = (props) => {
       Client_Finance_Controller: clientFinanceController,
       Targetted_Resources: selectedTargetedRes,
       Targeted_Res_AllocationRate: selectedTargetedResAllocationRate,
-      Status: status,
+      // Status: status,
       Type: typeName,
       Document_Name: DocName,
       PO_Amount: PO_amt,
@@ -458,7 +461,7 @@ export const CapturePO_SOW = (props) => {
                   <h3 data-test="client-sponsor-chkBox-label">
                     Client Sponsor
                   </h3>
-                  <ul className="">
+                  <ul className="posow-ul">
                     <li>{clientProjectSponsor}</li>
                   </ul>
                 </Grid>
@@ -466,7 +469,7 @@ export const CapturePO_SOW = (props) => {
                   <h3 data-test="client-finController-chkBox-label">
                     Client Finance Controller
                   </h3>
-                  <ul className="">
+                  <ul className="posow-ul">
                     <li>{clientFinanceController}</li>
                   </ul>
                 </Grid>
@@ -474,7 +477,7 @@ export const CapturePO_SOW = (props) => {
                   <h3 data-test="TargetedRes-chkBox-label">
                     Targeted Resources
                   </h3>
-                  <ul className="">
+                  <ul className="posow-ul">
                     {targetedResources.map((name, index) => {
                       return (
                         <li key={index}>
@@ -734,6 +737,39 @@ export const CapturePO_SOW = (props) => {
                       >
                         SEND FOR APPROVAL
                       </Button>
+                    ) : (
+                      <div></div>
+                    )}
+                  </Grid>
+                )}
+                {user.permissions.includes("recieve_slack_notification") && (
+                  <Grid
+                    item
+                    lg={12}
+                    md={12}
+                    sm={12}
+                    xs={12}
+                    className="finalgrid"
+                  >
+                    {props.editBtn && status === "Pending" ? (
+                      <div>
+                        <Stack direction="row" spacing={2}>
+                          <Button
+                            variant="contained"
+                            color="success"
+                            onClick={() => handleApproveReject("Approved")}
+                          >
+                            Approve
+                          </Button>
+                          <Button
+                            variant="contained"
+                            color="error"
+                            onClick={() => handleApproveReject("Rejected")}
+                          >
+                            Reject
+                          </Button>
+                        </Stack>
+                      </div>
                     ) : (
                       <div></div>
                     )}

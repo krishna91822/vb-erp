@@ -329,7 +329,7 @@ function Invoice(props) {
             <h4 className="heading">PO Information</h4>
           </Grid> */}
 
-          {user.permissions.includes("upload_invoice") && (
+          {/* {user.permissions.includes("upload_invoice") && (
             <Grid item lg={1} md={1} sm={12} xs={12}>
               <div className="posow-SaveButton">
                 <strong className="editTxt" data-test="editModeSwitch-label">
@@ -352,7 +352,7 @@ function Invoice(props) {
                 </label>
               </div>
             </Grid>
-          )}
+          )} */}
         {/* </Grid> */}
 
         <hr />
@@ -387,34 +387,35 @@ function Invoice(props) {
               padding: "1rem",
             }}
           >
-            {/* <Grid container>
+            <Grid container>
               <Grid item lg={6} md={6} sm={6} xs={12}>
                 <h4 className="heading">PO Information</h4>
               </Grid>
-              <Grid item lg={6} md={6} sm={6} xs={12}>
-                <div className="posow-SaveButton">
-                  <strong className="editTxt" data-test="editModeSwitch-label">
-                    Edit
-                  </strong>
-                  <br />
-                  <label className="switch">
-                    <input
-                      type="checkbox"
-                      data-test="EditToggleBtn"
-                      data-testid="EditToggleBtn"
-                      checked={editTglCheckedState}
-                      onChange={handleEditTglChange}
-                      disabled={
-                        invoice_raised === "Yes" &&
-                        invoice_amount &&
-                        editTglCheckedState === false
-                      }
-                    />
-                    <span className="slider round"></span>
-                  </label>
-                </div>
-              </Grid>
-            </Grid> */}
+              {user.permissions.includes("upload_invoice") && (
+            <Grid item lg={1} md={1} sm={12} xs={12}>
+              <div className="posow-SaveButton">
+                <strong className="editTxt" data-test="editModeSwitch-label">
+                  Edit
+                </strong>
+                <label className="switch">
+                  <input
+                    type="checkbox"
+                    data-test="EditToggleBtn"
+                    data-testid="EditToggleBtn"
+                    checked={editTglCheckedState}
+                    onChange={handleEditTglChange}
+                    disabled={
+                      invoice_raised === "Yes" &&
+                      invoice_amount &&
+                      editTglCheckedState === false
+                    }
+                  />
+                  <span className="slider round"></span>
+                </label>
+              </div>
+            </Grid>
+          )}
+          </Grid>
 
             <hr />
             <Grid container columnSpacing={3}>

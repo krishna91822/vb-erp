@@ -64,13 +64,13 @@ export const UpdatePO_SOW = (formData, id) => {
 export const SendForApproval = (curr_status, id) => {
   return async function (dispatch) {
     try {
-      const response = await axios.patch(`/poSow/status/${id}?status=Pending`);
+      const response = await axios.patch(`/poSow/status/${id}?status=${curr_status}`);
       if (response.status === 200) {
         dispatch(
           uiActions.showNotification({
             status: "success",
             title: "Success!",
-            message: "Sent For Approval!",
+            message: "Status Changed Successfully",
           })
         );
         dispatch(PoSowActions.setRedirect(true));
@@ -82,7 +82,7 @@ export const SendForApproval = (curr_status, id) => {
         uiActions.showNotification({
           status: "error",
           title: "Error",
-          message: "Could not update data",
+          message: "Could not change status",
         })
       );
     }
