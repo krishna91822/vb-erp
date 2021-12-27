@@ -1,9 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useLayoutEffect } from "react";
 import { TextField, Button } from "@mui/material";
 import InputAdornment from "@mui/material/InputAdornment";
 import ResourceInformationTable from "../ResourceInformationTable";
 import Autocomplete from "@mui/material/Autocomplete";
 import { useDispatch } from "react-redux";
+import { uiActions } from "../../../store/ui-slice";
+import { pmoActions } from "../../../store/pmo-slice";
 
 import { getAllEmployees } from "../../../store/pmo-actions";
 import {
@@ -62,10 +64,22 @@ const ResourceInformation = ({
     }
     setTempEmpName("");
   };
-
+  useLayoutEffect(() => {
+    if (percentageAllocated === 100) {
+      dispatch(
+        uiActions.showNotification({
+          status: "error",
+          message: "Already allocated with 100% bandwidth",
+        })
+      );
+    }
+    return () => {
+      dispatch(pmoActions.updatePercentageAllocated(0));
+    };
+  }, [percentageAllocated]);
   const resourcesIds = resources.map((eachRes) => eachRes.empId);
   const filteredEmployees = allEmployees
-    ? allEmployees.filter((eachEmp) => !resourcesIds.includes(eachEmp._id))
+    ? allEmployees.filter((eachEmp) => !resourcesIds.includes(eachEmp.empId))
     : [];
   return (
     <Container>
@@ -76,7 +90,7 @@ const ResourceInformation = ({
         <AllElementsContainer>
           <ResourceForm>
             <Heading>
-              Associate Name <span>*</span>{" "}
+              Associate Name <span>*</span>
               <small>(min 3 letters required)</small>
             </Heading>
             <Autocomplete

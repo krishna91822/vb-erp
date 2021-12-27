@@ -46,10 +46,8 @@ const Allocated = ({ pressed, allocatedSortedValue }) => {
     }
   };
 
-  const changePage = (event) => {
-    dispatch(
-      getAllocatedData(filters, event.target.textContent, allocatedSortedValue)
-    );
+  const changePage = (event, value) => {
+    dispatch(getAllocatedData(filters, value, allocatedSortedValue));
   };
   return (
     <>

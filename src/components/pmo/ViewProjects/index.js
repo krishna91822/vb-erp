@@ -81,8 +81,8 @@ const ViewProjects = () => {
     }
   };
 
-  const changePage = (event) => {
-    dispatch(getAllProjects(filterProjects, event.target.textContent));
+  const changePage = (event, value) => {
+    dispatch(getAllProjects(filterProjects, value));
   };
   return (
     <>

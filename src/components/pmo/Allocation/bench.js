@@ -53,8 +53,8 @@ const Bench = ({ pressed, benchSortValue }) => {
     setModalDetails(true);
   };
 
-  const changePage = (event) => {
-    dispatch(getOnBench(filters, event.target.textContent, benchSortValue));
+  const changePage = (event, value) => {
+    dispatch(getOnBench(filters, value, benchSortValue));
   };
 
   return (
@@ -179,7 +179,9 @@ const Bench = ({ pressed, benchSortValue }) => {
                       onClick={() => entryLink(currElem)}
                       style={{ cursor: "pointer" }}
                     >
-                      <TableCell align="left">{index + 1}</TableCell>
+                      <TableCell align="left">
+                        {index + parseInt(data.currentPage) * 10 - 9}
+                      </TableCell>
                       <TableCell align="left">{currElem.empId}</TableCell>
                       <TableCell
                         align="left"
