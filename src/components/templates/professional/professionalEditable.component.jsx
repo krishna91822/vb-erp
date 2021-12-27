@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 import { Grid, Box, TextField } from "@mui/material";
 import ClearIcon from "@mui/icons-material/Clear";
@@ -13,6 +13,9 @@ import { professionalConstant } from "./professional.constant";
 import { DesktopDatePicker, LocalizationProvider } from "@mui/lab";
 import AdapterDateFns from "@mui/lab/AdapterDateFns";
 
+import AsyncSelect from "react-select/async";
+import axiosInstance from "./../../../helpers/axiosInstance";
+
 const ProfessionalEditable = ({
   empData,
   setEmpData,
@@ -26,6 +29,42 @@ const ProfessionalEditable = ({
     empPostGraduation,
     empPostGraduationUniversity,
   } = empData;
+
+  const [UGDropdown, setUGDropdown] = useState(
+    empGraduationUniversity
+      ? { label: empGraduationUniversity, value: empGraduationUniversity }
+      : null
+  );
+  const [PGDropdown, setPGDropdown] = useState(
+    empPostGraduationUniversity
+      ? {
+          label: empPostGraduationUniversity,
+          value: empPostGraduationUniversity,
+        }
+      : null
+  );
+  const handleUGChange = (newValue) => {
+    setEmpData({ ...empData, empGraduationUniversity: newValue.value });
+    setUGDropdown({ label: newValue.value, value: newValue.value });
+  };
+  const handlePGChange = (newValue) => {
+    setEmpData({ ...empData, empPostGraduationUniversity: newValue.value });
+    setPGDropdown({ label: newValue.value, value: newValue.value });
+  };
+  const loadUGOptions = (inputValue, callback) => {
+    axiosInstance
+      .get(`/universities/search?name=${inputValue}`)
+      .then(function (response) {
+        callback(
+          response.data.data.map((el) => {
+            return { label: `${el.university}`, value: `${el.university}` };
+          })
+        );
+      })
+      .catch(function (err) {
+        console.log(err);
+      });
+  };
 
   const handleNewFieldChange = (event, index) => {
     const updates = professionalDetails.map((professionalDetail, i) =>
@@ -81,7 +120,25 @@ const ProfessionalEditable = ({
             <ContentTypo>
               {professionalConstant.graduationUniversity}
             </ContentTypo>
-            <CustomTextField
+            <Box
+              sx={{
+                width: "100%",
+                fontSize: "16px",
+                fontWeight: "400",
+                textTransform: "capitalize",
+              }}
+            >
+              <AsyncSelect
+                value={UGDropdown}
+                cacheOptions
+                loadOptions={loadUGOptions}
+                defaultOptions
+                onChange={handleUGChange}
+                name="empGraduationUniversity"
+                placeholder="Select univeristy"
+              />
+            </Box>
+            {/* <CustomTextField
               autoComplete="off"
               required
               id="outlined-basic"
@@ -90,7 +147,7 @@ const ProfessionalEditable = ({
               name="empGraduationUniversity"
               onChange={handleChange}
               type="text"
-            />
+            /> */}
           </ContentBox>
           <ContentBox>
             <ContentTypo>{professionalConstant.postGraduation}</ContentTypo>
@@ -107,7 +164,25 @@ const ProfessionalEditable = ({
           </ContentBox>
           <ContentBox>
             <ContentTypo>{professionalConstant.PgUniversity}</ContentTypo>
-            <CustomTextField
+            <Box
+              sx={{
+                width: "100%",
+                fontSize: "16px",
+                fontWeight: "400",
+                textTransform: "capitalize",
+              }}
+            >
+              <AsyncSelect
+                value={PGDropdown}
+                cacheOptions
+                loadOptions={loadUGOptions}
+                defaultOptions
+                onChange={handlePGChange}
+                name="empPostGraduationUniversity"
+                placeholder="Select univeristy"
+              />
+            </Box>
+            {/* <CustomTextField
               autoComplete="off"
               required
               id="outlined-basic"
@@ -118,7 +193,7 @@ const ProfessionalEditable = ({
               name="empPostGraduationUniversity"
               onChange={handleChange}
               type="text"
-            />
+            /> */}
           </ContentBox>
           {professionalDetails.map((field, index) => (
             <ContentBox key={index} sx={{ position: "relative" }}>
