@@ -21,6 +21,7 @@ export const validateUser = (username, password) => {
       dispatch(uiActions.toggleLoader());
       const data = await fetchData();
       dispatch(userActions.setUser(data));
+      return true;
     } catch (error) {
       setTimeout(function () {
         dispatch(
@@ -31,6 +32,7 @@ export const validateUser = (username, password) => {
           })
         );
       }, 1000);
+      return false;
     } finally {
       dispatch(uiActions.toggleLoader());
     }
