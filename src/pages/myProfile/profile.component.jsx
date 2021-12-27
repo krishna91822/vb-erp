@@ -20,8 +20,8 @@ const Profile = () => {
   );
   const { user } = useSelector((state) => state.user);
 
-  // const email = user.email;
-  const email = "admin@mail.com";
+  const email = user.email;
+  // const email = "admin@mail.com";
 
   const [loading, setLoading] = useState(true);
   const dispatch = useDispatch();
