@@ -1,4 +1,9 @@
-import AccountCircle from "@mui/icons-material/AccountCircle";
+import {
+  AccountCircle,
+  Settings,
+  Logout,
+  LoginRounded as LoginRoundedIcon,
+} from "@mui/icons-material";
 import vbLogo from "../../assets/images/vb_logo.svg";
 import IconButton from "@mui/material/IconButton";
 import Toolbar from "@mui/material/Toolbar";
@@ -8,8 +13,6 @@ import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import Avatar from "@mui/material/Avatar";
 import Divider from "@mui/material/Divider";
-import Settings from "@mui/icons-material/Settings";
-import Logout from "@mui/icons-material/Logout";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import { createTheme, ThemeProvider } from "@mui/material";
 import { Link } from "react-router-dom";
@@ -73,7 +76,7 @@ const Header = () => {
       <AppBar sx={customStyles.appbar} position="static">
         <Toolbar sx={customStyles.toolbar}>
           <img style={customStyles.image} src={vbLogo} alt="vb-logo" />
-          {user.name && (
+          {user.name ? (
             <>
               <IconButton size="large" edge="end" onClick={handleClick}>
                 <AccountCircle fontSize="large" />
@@ -122,6 +125,11 @@ const Header = () => {
                 </MenuItem>
               </Menu>
             </>
+          ) : (
+            <IconButton size="medium" edge="end" component={Link} to="/">
+              <LoginRoundedIcon fontSize="large" />
+              Log In
+            </IconButton>
           )}
         </Toolbar>
       </AppBar>
