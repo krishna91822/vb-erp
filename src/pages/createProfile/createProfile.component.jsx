@@ -299,9 +299,9 @@ const CreateProfile = ({
   return currentEmployee && currentEmployee.role === "ADMIN" ? (
     <BoxStyle data-test="create-profile-test">
       <ContainerStyleTop>
-        <TitleTypo sx={{ textTransform: "capitalize", mb: 0.5 }}>
+        {/* <TitleTypo sx={{ textTransform: "capitalize", mb: 0.5 }}>
           {currentEmployee ? currentEmployee.empName : ""}
-        </TitleTypo>
+        </TitleTypo> */}
         <Box
           sx={{
             display: "flex",

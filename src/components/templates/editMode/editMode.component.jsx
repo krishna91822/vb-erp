@@ -6,11 +6,14 @@ import { editModeConstant } from "./editMode.constant";
 
 import { useSelector, useDispatch } from "react-redux";
 import { toggleEditMode } from "../../../store/employeeSlice";
+import { uiActions } from "./../../../store/ui-slice";
 
 import axiosInstance from "./../../../helpers/axiosInstance";
 
 const EditMode = ({ updateRequest, handleOpen, handleSubmit }) => {
   const { inEditMode } = useSelector((state) => state.employee);
+  const { user } = useSelector((state) => state.user);
+  const { toggleLoader, showNotification } = uiActions;
   const dispatch = useDispatch();
 
   const [open, setOpen] = useState(false);
@@ -21,18 +24,70 @@ const EditMode = ({ updateRequest, handleOpen, handleSubmit }) => {
   const handleToggleOpen = () => setOpen(true);
 
   const handleSubmitBtn = () => {
-    axiosInstance
-      .post("/reviews", {
-        reqName: updateRequest.empName,
-        reqType: "profile-update",
-        employeeDetails: { ...updateRequest },
-      })
-      .then(function (response) {
-        handleToggleOpen();
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
+    if (["hr_admin", "super_admin"].some((el) => user.roles.includes(el))) {
+      dispatch(toggleLoader());
+
+      let employeeObject = { ...updateRequest };
+
+      ["_id", "empId", "createdAt", "updatedAt", "count"].map(
+        (el) => delete employeeObject[el]
+      );
+
+      axiosInstance
+        .patch(`/employees/${updateRequest._id}`, employeeObject)
+        .then(function (response) {
+          dispatch(toggleLoader());
+          dispatch(
+            showNotification({
+              status: "success",
+              title: "Employee has been updated.",
+              message: "Employee has been updated.",
+            })
+          );
+          dispatch(toggleEditMode());
+        })
+        .catch(function (error) {
+          dispatch(toggleLoader());
+          dispatch(
+            showNotification({
+              status: "error",
+              title: "Something went wrong.",
+              message: "Something went wrong",
+            })
+          );
+          console.log(error);
+        });
+    } else {
+      dispatch(toggleLoader());
+      axiosInstance
+        .post("/reviews", {
+          reqName: updateRequest.empName,
+          reqType: "profile-update",
+          employeeDetails: { ...updateRequest },
+        })
+        .then(function (response) {
+          dispatch(toggleLoader());
+          dispatch(
+            showNotification({
+              status: "success",
+              title: "Employee has been sent for review.",
+              message: "Employee has been sent for review.",
+            })
+          );
+          dispatch(toggleEditMode());
+        })
+        .catch(function (error) {
+          dispatch(toggleLoader());
+          dispatch(
+            showNotification({
+              status: "error",
+              title: "Something went wrong.",
+              message: "Something went wrong",
+            })
+          );
+          console.log(error);
+        });
+    }
   };
 
   const handleChange = (event) => {
