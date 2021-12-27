@@ -39,6 +39,7 @@ const ViewProjects = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { projects } = useSelector((state) => state.pmo);
+  const user = useSelector((state) => state.user.user);
   const [pressed, setPressed] = useState(false);
   const [filterProjects, setFilterProjects] = useState("active");
   const [filters, setFilters] = useState({
@@ -81,8 +82,8 @@ const ViewProjects = () => {
     }
   };
 
-  const changePage = (event) => {
-    dispatch(getAllProjects(filterProjects, event.target.textContent));
+  const changePage = (event, value) => {
+    dispatch(getAllProjects(filterProjects, value));
   };
   return (
     <>
@@ -102,21 +103,23 @@ const ViewProjects = () => {
                   style={{ cursor: "pointer" }}
                 />
               )}
-              <Button
-                variant="contained"
-                sx={{
-                  backgroundColor: "#e8833a",
-                  textTransform: "none",
-                  ":hover": {
-                    bgcolor: "#ff862e",
-                  },
-                }}
-                onClick={() => {
-                  navigate("/pmo/projects/create");
-                }}
-              >
-                Create a project
-              </Button>
+              {user.permissions.includes("create_project_in_PMO") && (
+                <Button
+                  variant="contained"
+                  sx={{
+                    backgroundColor: "#e8833a",
+                    textTransform: "none",
+                    ":hover": {
+                      bgcolor: "#ff862e",
+                    },
+                  }}
+                  onClick={() => {
+                    navigate("/pmo/projects/create");
+                  }}
+                >
+                  Create a project
+                </Button>
+              )}
               <FormControl size="small">
                 <InputLabel id="filterBy">Sort By</InputLabel>
                 <Select
@@ -224,16 +227,18 @@ const ViewProjects = () => {
                   >
                     Status
                   </TableCell>
-                  <TableCell
-                    align="left"
-                    sx={{
-                      width: "146px",
-                      maxWidth: "146px",
-                      minWidth: "146px",
-                    }}
-                  >
-                    Actions
-                  </TableCell>
+                  {user.permissions.includes("update_project_in_PMO") && (
+                    <TableCell
+                      align="left"
+                      sx={{
+                        width: "146px",
+                        maxWidth: "146px",
+                        minWidth: "146px",
+                      }}
+                    >
+                      Actions
+                    </TableCell>
+                  )}
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -290,7 +295,9 @@ const ViewProjects = () => {
                         />
                       )}
                     </TableCell>
-                    <TableCell align="left"></TableCell>
+                    {user.permissions.includes("update_project_in_PMO") && (
+                      <TableCell align="left"></TableCell>
+                    )}
                   </TableRow>
                 )}
                 {projects.results
@@ -314,22 +321,24 @@ const ViewProjects = () => {
                         <TableCell align="left">
                           {currElem.vbProjectStatus || "----"}
                         </TableCell>
-                        <TableCell align="left">
-                          <Link
-                            to={`/pmo/projects/${currElem.vbProjectId}/edit`}
-                            onClick={stopClick}
-                          >
-                            <Button
-                              variant="fab"
-                              color="purple"
-                              size="small"
-                              endIcon={<EditIcon />}
-                              sx={{ padding: "0" }}
+                        {user.permissions.includes("update_project_in_PMO") && (
+                          <TableCell align="left">
+                            <Link
+                              to={`/pmo/projects/${currElem.vbProjectId}/edit`}
+                              onClick={stopClick}
                             >
-                              Edit
-                            </Button>
-                          </Link>
-                        </TableCell>
+                              <Button
+                                variant="fab"
+                                color="purple"
+                                size="small"
+                                endIcon={<EditIcon />}
+                                sx={{ padding: "0" }}
+                              >
+                                Edit
+                              </Button>
+                            </Link>
+                          </TableCell>
+                        )}
                       </TableRow>
                     ))
                   : null}
