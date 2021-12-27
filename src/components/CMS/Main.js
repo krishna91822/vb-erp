@@ -93,7 +93,7 @@ export const Main = () => {
     // dispatch(fetchPO_SOW_data);
     dispatch(paginationFetchPosow(filename, currentPage, postPerPage));
   }, []);
-
+  const user = useSelector((state) => state.user.user);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -193,18 +193,20 @@ export const Main = () => {
           <div>
             <h3 data-test="MainHeading">PO/SOW's Information</h3>
           </div>
-          <div className="buttondiv">
-            <Link to="/posow/create" style={{ textDecoration: "none" }}>
-              <Button
-                className="button1"
-                data-test="Capture-po-sow"
-                variant="contained"
-                color="success"
-              >
-                Capture PO/SOW{" "}
-              </Button>
-            </Link>
-          </div>
+          {user.permissions.includes("upload_PO/SOW/contract") && (
+            <div className="buttondiv">
+              <Link to="/posow/create" style={{ textDecoration: "none" }}>
+                <Button
+                  className="button1"
+                  data-test="Capture-po-sow"
+                  variant="contained"
+                  color="success"
+                >
+                  Capture PO/SOW{" "}
+                </Button>
+              </Link>
+            </div>
+          )}
         </div>
 
         <TableContainer component={Paper}>
@@ -222,7 +224,10 @@ export const Main = () => {
                 <TableCell>PO/SOW Number</TableCell>
                 <TableCell>PO/SOW Amount</TableCell>
                 <TableCell>Client Sponsor</TableCell>
-                <TableCell>Action</TableCell>
+
+                {user.permissions.includes("upload_PO/SOW/contract") && (
+                  <TableCell>Action</TableCell>
+                )}
                 <TableCell>Status</TableCell>
               </TableRow>
             </TableHead>
@@ -265,6 +270,7 @@ export const Main = () => {
                       </Button>
                     </TableCell>
                   )} */}
+<<<<<<< HEAD
                   {row.Status === "Active" ? (
                     <TableCell>
                       <EditIcon />
@@ -273,6 +279,21 @@ export const Main = () => {
                     <TableCell>
                       <EditOffIcon />
                     </TableCell>
+=======
+
+                  {user.permissions.includes("upload_PO/SOW/contract") && (
+                    <>
+                      {row.Status === "Rejected" || row.Status === "Drafted" ? (
+                        <TableCell>
+                          <EditIcon />
+                        </TableCell>
+                      ) : (
+                        <TableCell>
+                          <EditOffIcon />
+                        </TableCell>
+                      )}
+                    </>
+>>>>>>> 0a75e1f6e7d3e85d7ffbebce0ed849c954165a9c
                   )}
 
                   <TableCell>

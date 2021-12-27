@@ -136,6 +136,7 @@ function Invoice(props) {
     readtargetedAllocation
   );
 
+  const user = useSelector((state) => state.user.user);
   const [invoice_raised_yesno, setInvoiceRaisedYesNo] = React.useState("No");
   let [sum, setsum] = useState(0);
   const targetedResourcesName = Object.keys(TargettedAllocation);
@@ -296,10 +297,70 @@ function Invoice(props) {
   }, [filteredArr]);
 
   return (
+<<<<<<< HEAD
     <div className="posowForm-container">
       <React.Fragment>
         <CssBaseline />
         <Grid container className="posow-topGrid">
+=======
+    <div className="maincontainer">
+      <Grid container>
+        <Grid item lg={11} md={11} sm={12} xs={12}>
+          <h3>Invoice</h3>
+        </Grid>
+        <Grid item lg={1} md={1} sm={12} xs={12}>
+          {props.editBtn && editTglCheckedState ? (
+            <div>
+              <Button
+                variant="contained"
+                color="success"
+                onClick={updatehandler}
+                data-test="UpdateBtn"
+              >
+                Update{" "}
+              </Button>
+            </div>
+          ) : (
+            <div></div>
+          )}
+        </Grid>
+      </Grid>
+
+      <form onSubmit={submitForm}>
+        <Grid container>
+          <Grid item lg={11} md={11} sm={12} xs={12}>
+            <h4 className="heading">PO Information</h4>
+          </Grid>
+
+          {user.permissions.includes("upload_invoice") && (
+            <Grid item lg={1} md={1} sm={12} xs={12}>
+              <div className="posow-SaveButton">
+                <strong className="editTxt" data-test="editModeSwitch-label">
+                  Edit
+                </strong>
+                <label className="switch">
+                  <input
+                    type="checkbox"
+                    data-test="EditToggleBtn"
+                    data-testid="EditToggleBtn"
+                    checked={editTglCheckedState}
+                    onChange={handleEditTglChange}
+                    disabled={
+                      invoice_raised === "Yes" &&
+                      invoice_amount &&
+                      editTglCheckedState === false
+                    }
+                  />
+                  <span className="slider round"></span>
+                </label>
+              </div>
+            </Grid>
+          )}
+        </Grid>
+
+        <hr />
+        <Grid container columnSpacing={3}>
+>>>>>>> 0a75e1f6e7d3e85d7ffbebce0ed849c954165a9c
           <Grid item lg={6} md={6} sm={12} xs={12}>
             <h3>Invoice</h3>
           </Grid>

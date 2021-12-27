@@ -10,7 +10,11 @@ import ProfileContent from "../../components/templates/profileContent/profileCon
 import Spinner from "./../../components/UI/spinner/spinner";
 import axiosInstance from "../../helpers/axiosInstance";
 
+import { useForm } from "react-hook-form";
+
 const Profile = () => {
+  const { register, handleSubmit, errors } = useForm();
+
   const { currentEmployee, inEditMode } = useSelector(
     (state) => state.employee
   );
@@ -85,8 +89,12 @@ const Profile = () => {
     <Spinner data-test="profile-page-test" />
   ) : (
     <Container sx={{ pb: 3 }}>
-      <EditMode {...editModeProps} />
-      <ProfileContent {...profileContentProps} />
+      <EditMode handleSubmit={handleSubmit} {...editModeProps} />
+      <ProfileContent
+        register={register}
+        errors={errors}
+        {...profileContentProps}
+      />
     </Container>
   );
 };

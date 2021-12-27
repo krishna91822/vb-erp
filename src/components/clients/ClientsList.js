@@ -66,6 +66,8 @@ function ClientsList() {
     handelPageChange,
     handelSearch,
     handelClearSearch,
+
+    user,
   } = ClientHelpers();
 
   const [clientId, setClientId] = useState();
@@ -137,12 +139,16 @@ function ClientsList() {
       >
         {client.createdAt.slice(0, 10)}
       </StyledTableCell>
-      <StyledTableCell
-        onClick={() => handelMenu(client._id, client.status, client.brandName)}
-        align="center"
-      >
-        {menuIcon()}
-      </StyledTableCell>
+      {user.permissions.includes("update_on_CIMS_module") && (
+        <StyledTableCell
+          onClick={() =>
+            handelMenu(client._id, client.status, client.brandName)
+          }
+          align="center"
+        >
+          {menuIcon()}
+        </StyledTableCell>
+      )}
     </StyledTableRow>
   ));
 
@@ -251,7 +257,9 @@ function ClientsList() {
                 <StyledTableCell align="center">Location</StyledTableCell>
                 <StyledTableCell align="center">Status</StyledTableCell>
                 <StyledTableCell align="center">Registered On</StyledTableCell>
-                <StyledTableCell align="center">Actions</StyledTableCell>
+                {user.permissions.includes("update_on_CIMS_module") && (
+                  <StyledTableCell align="center">Actions</StyledTableCell>
+                )}
               </TableRow>
             </TableHead>
             <TableBody>{clientsList.length !== 0 && clients}</TableBody>
