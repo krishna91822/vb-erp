@@ -58,6 +58,7 @@ export default function AddressFields(props) {
       field.name === "district" &&
       formData[props.type].pincode !== "" &&
       formData[props.type].state !== "" &&
+      Object.keys(loc["districts"]) &&
       Object.keys(loc["districts"]).length > 1
     ) {
       return (
@@ -87,6 +88,7 @@ export default function AddressFields(props) {
       field.name === "area" &&
       formData[props.type].district !== "" &&
       formData[props.type].pincode !== "" &&
+      loc["districts"][formData[props.type]["district"]] &&
       loc["districts"][formData[props.type]["district"]].length > 1
     ) {
       return (
@@ -122,7 +124,12 @@ export default function AddressFields(props) {
           name={field.name}
           fullWidth
           size="small"
-          disabled={!editMode}
+          disabled={
+            !editMode ||
+            field.name === "state" ||
+            field.name === "district" ||
+            field.name === "area"
+          }
           value={formData[props.type][field.name]}
           onChange={(e) => setAddress(e, props.type)}
           onBlur={(e) => handelAddressOnBlur(e, props.type)}

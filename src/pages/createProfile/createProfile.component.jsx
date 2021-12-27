@@ -3,8 +3,6 @@ import React, { useEffect, useState } from "react";
 import { LocalizationProvider, DesktopDatePicker } from "@mui/lab";
 import AdapterDateFns from "@mui/lab/AdapterDateFns";
 
-import validator from "validator";
-
 import {
   Box,
   Button,
@@ -44,6 +42,10 @@ import { setCurrentEmployee } from "./../../store/employeeSlice";
 
 import axiosInstance from "./../../helpers/axiosInstance";
 
+import { uiActions } from "./../../store/ui-slice";
+
+import { useForm } from "react-hook-form";
+
 const CreateProfile = ({
   editEmployeeData,
   toggleEditEmployee,
@@ -51,6 +53,9 @@ const CreateProfile = ({
 }) => {
   const { currentEmployee } = useSelector((state) => state.employee);
   const dispatch = useDispatch();
+  const { toggleLoader } = uiActions;
+
+  const { register, handleSubmit, errors } = useForm();
 
   useEffect(() => {
     axiosInstance
@@ -66,14 +71,14 @@ const CreateProfile = ({
     empEmail: "",
     empDepartment: "",
     empDesignation: "",
-    empDoj: null,
+    empDoj: new Date(),
     empReportingManager: "",
     empAboutMe: "",
     empBand: "",
     empCertifications: [],
     empConnections: 0,
     empCurrentAddress: undefined,
-    empDob: null,
+    empDob: new Date(),
     empGraduation: "",
     empGraduationUniversity: "",
     empHobbies: [],
@@ -88,22 +93,12 @@ const CreateProfile = ({
   const [employee, setEmployee] = useState(
     editEmployeeData
       ? editEmployeeData
-      : { ...empInitial, empDoj: new Date(), empReportingManager: "sunilee" }
+      : {
+          ...empInitial,
+          empDoj: new Date(),
+          empDob: new Date(),
+        }
   );
-
-  const formValidation = {
-    email: !validator.isEmail(employee?.empEmail),
-    personalEmail: !validator.isEmail(employee?.empPersonalEmail),
-    name: employee?.empName === "",
-    department: employee?.empDepartment === "",
-    designation: employee?.empDesignation === "",
-    doj: employee?.empDoj === null,
-    dob: employee?.empDob === null,
-    reportingManager: employee?.empReportingManager === "",
-    connection: employee?.empConnections
-      ? !validator.isInt(employee?.empConnections)
-      : false,
-  };
 
   const [tab, setTab] = useState(0);
 
@@ -220,51 +215,61 @@ const CreateProfile = ({
   };
 
   const handleConfirm = (event) => {
-    if (
-      employee.empName === "" ||
-      employee.empEmail === "" ||
-      employee.empDoj === "" ||
-      employee.empDob === ""
-    ) {
-      alert("Fields are empty");
+    dispatch(toggleLoader());
+    // Profile - Update;
+    let createEmployee;
+    editEmployeeData
+      ? (createEmployee = {
+          reqName: currentEmployee.empName,
+          reqType: "profile-update",
+          employeeDetails: {
+            ...employee,
+            personalDetails,
+            professionalDetails,
+            skillsDetails,
+          },
+        })
+      : (createEmployee = {
+          reqName: currentEmployee.empName,
+          reqType: "profile-creation",
+          employeeDetails: {
+            ...employee,
+            personalDetails,
+            professionalDetails,
+            skillsDetails,
+          },
+        });
+    if (createEmployee?.reqType === "profile-creation") {
+      axiosInstance
+        .post("/employees", createEmployee.employeeDetails)
+        .then(function (response) {
+          setEmployee(empInitial);
+          dispatch(toggleLoader());
+          handleOpenModal();
+          // console.log(response);
+        })
+        .catch(function (error) {
+          dispatch(toggleLoader());
+          handleOpenModalError();
+          console.log(error);
+        });
     } else {
-      // Profile - Update;
-      let createEmployee;
-      editEmployeeData
-        ? (createEmployee = {
-            reqName: currentEmployee.empName,
-            reqType: "profile-update",
-            employeeDetails: {
-              ...employee,
-              personalDetails,
-              professionalDetails,
-              skillsDetails,
-            },
-          })
-        : (createEmployee = {
-            reqName: currentEmployee.empName,
-            reqType: "profile-creation",
-            employeeDetails: {
-              ...employee,
-              personalDetails,
-              professionalDetails,
-              skillsDetails,
-            },
-          });
-      console.log(createEmployee);
       axiosInstance
         .post("/reviews", createEmployee)
         .then(function (response) {
           setEmployee(empInitial);
+          dispatch(toggleLoader());
           handleOpenModal();
-          console.log(response);
+          // console.log(response);
         })
         .catch(function (error) {
+          dispatch(toggleLoader());
           handleOpenModalError();
           console.log(error);
         });
     }
   };
+  // console.log(errors);
 
   return currentEmployee && currentEmployee.role === "ADMIN" ? (
     <BoxStyle data-test="create-profile-test">
@@ -281,16 +286,14 @@ const CreateProfile = ({
           }}
         >
           {editEmployeeData ? null : (
-            <TitleTypo
-              sx={{ textTransform: "capitalize", fontSize: 24, ml: 2 }}
-            >
+            <TitleTypo sx={{ textTransform: "capitalize", fontSize: 24 }}>
               {createProfileConstant.createUser}
             </TitleTypo>
           )}
           <Box>
             <GreenButton
               data-test="confirm-button-test"
-              onClick={handleConfirm}
+              onClick={handleSubmit(handleConfirm)}
               variant="contained"
             >
               {createProfileConstant.confirm}
@@ -306,24 +309,26 @@ const CreateProfile = ({
         </Box>
       </ContainerStyleTop>
       <ContainerStyle>
-        <Container>
+        <div>
           <ProfileInfoEditable
             tab={tab}
             setTab={setTab}
             employee={employee}
             setEmployee={setEmployee}
             profileProgress={profileProgress}
-            formValidation={formValidation}
+            register={register}
+            errors={errors}
           />
-        </Container>
-        <Container sx={{ width: "calc(100% - 16px)" }}>
+        </div>
+        <Box sx={{}}>
           <TabPanelCustom value={tab} index={0}>
             <PersonalEditable
               empData={employee}
               setEmpData={setEmployee}
               personalDetails={personalDetails}
               setPersonalDetails={setPersonalDetails}
-              formValidation={formValidation}
+              register={register}
+              errors={errors}
             />
           </TabPanelCustom>
           <TabPanelCustom value={tab} index={1}>
@@ -332,7 +337,8 @@ const CreateProfile = ({
               setEmpData={setEmployee}
               professionalDetails={professionalDetails}
               setProfessionalDetails={setProfessionalDetails}
-              formValidation={formValidation}
+              register={register}
+              errors={errors}
             />
           </TabPanelCustom>
           <TabPanelCustom value={tab} index={2}>
@@ -341,10 +347,11 @@ const CreateProfile = ({
               setEmpData={setEmployee}
               skillsDetails={skillsDetails}
               setSkillsDetails={setSkillsDetails}
-              formValidation={formValidation}
+              register={register}
+              errors={errors}
             />
           </TabPanelCustom>
-        </Container>
+        </Box>
       </ContainerStyle>
       <div>
         <Modal

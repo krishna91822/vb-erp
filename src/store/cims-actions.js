@@ -282,7 +282,9 @@ export const addNewClient = (formData) => {
     try {
       dispatch(uiActions.toggleLoader());
       const data = await postData();
-      dispatch(cimsActions.resetForm());
+      setTimeout(function () {
+        dispatch(cimsActions.resetForm());
+      }, 2000);
       setTimeout(function () {
         dispatch(
           uiActions.showNotification({
@@ -291,7 +293,7 @@ export const addNewClient = (formData) => {
             message: data.message,
           })
         );
-      }, 1000);
+      }, 2000);
     } catch (error) {
       setTimeout(function () {
         dispatch(
@@ -321,7 +323,9 @@ export const updateClient = (formData) => {
     try {
       dispatch(uiActions.toggleLoader());
       const data = await postData();
-      dispatch(cimsActions.resetForm());
+      setTimeout(function () {
+        dispatch(cimsActions.resetForm());
+      }, 2000);
       setTimeout(function () {
         dispatch(
           uiActions.showNotification({
@@ -330,7 +334,7 @@ export const updateClient = (formData) => {
             message: data.message,
           })
         );
-      }, 1000);
+      }, 2000);
     } catch (error) {
       setTimeout(function () {
         dispatch(

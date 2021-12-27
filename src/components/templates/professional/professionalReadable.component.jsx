@@ -1,7 +1,11 @@
 import React from "react";
 
 import { Box } from "@mui/material";
-import { ContentBox, ContentTypo } from "./professionalReadable.styles";
+import {
+  ContentBox,
+  ContentTypo,
+  TitleTypo,
+} from "./professionalReadable.styles";
 import { professionalConstant } from "./professional.constant";
 
 const ProfessionalReadable = ({ empData }) => {
@@ -16,28 +20,28 @@ const ProfessionalReadable = ({ empData }) => {
   return (
     <Box>
       <ContentBox>
-        <ContentTypo>{professionalConstant.band}</ContentTypo>
+        <TitleTypo>{professionalConstant.band}</TitleTypo>
         <ContentTypo>{empBand}</ContentTypo>
       </ContentBox>
       <ContentBox>
-        <ContentTypo>{professionalConstant.graduation}</ContentTypo>
+        <TitleTypo>{professionalConstant.graduation}</TitleTypo>
         <ContentTypo>{empGraduation}</ContentTypo>
       </ContentBox>
       <ContentBox>
-        <ContentTypo>{professionalConstant.graduationUniversity}</ContentTypo>
+        <TitleTypo>{professionalConstant.graduationUniversity}</TitleTypo>
         <ContentTypo>{empGraduationUniversity}</ContentTypo>
       </ContentBox>
       <ContentBox>
-        <ContentTypo>{professionalConstant.postGraduation}</ContentTypo>
+        <TitleTypo>{professionalConstant.postGraduation}</TitleTypo>
         <ContentTypo>{empPostGraduation}</ContentTypo>
       </ContentBox>
       <ContentBox>
-        <ContentTypo>{professionalConstant.PgUniversity}</ContentTypo>
+        <TitleTypo>{professionalConstant.PgUniversity}</TitleTypo>
         <ContentTypo>{empPostGraduationUniversity}</ContentTypo>
       </ContentBox>
       {professionalDetails.map((field) => (
         <ContentBox key={field._id}>
-          <ContentTypo>{field.fieldName}</ContentTypo>
+          <TitleTypo>{field.fieldName}:</TitleTypo>
           {field.fieldType === "date" ? (
             <ContentTypo>
               {new Date(field.fieldValue).toDateString().slice(4)}

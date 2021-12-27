@@ -13,6 +13,9 @@ import { cimsActions } from "../../store/cims-slice";
 export default function ClientHelpers() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const user = useSelector((state) => state.user.user);
+
   const errors = useSelector((state) => state.cims.errors);
 
   // Pagination
@@ -39,7 +42,7 @@ export default function ClientHelpers() {
     setTimeout(() => {
       navigate(`/cims/clientdetails/${clientId}`);
       dispatch(uiActions.toggleLoader());
-    }, 4000);
+    }, 1000);
   };
 
   const handelActiveStatus = async (clientId, clientStatus, brandName) => {
@@ -106,5 +109,7 @@ export default function ClientHelpers() {
     handelSortingOrder,
     handelSearch,
     handelClearSearch,
+
+    user,
   };
 }

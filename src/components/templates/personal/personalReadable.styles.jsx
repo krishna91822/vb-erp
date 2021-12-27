@@ -16,6 +16,12 @@ export const ContentBox = styled("div")(({ theme }) => ({
 export const ContentTypo = styled("div")(({ theme }) => ({
   ...theme.typography.h5,
   color: theme.palette.textColor.main,
-  fontSize: 13,
+  fontSize: 16,
+}));
+
+export const TitleTypo = styled("div")(({ theme }) => ({
+  ...theme.typography.h5,
+  color: theme.palette.textColor.main,
+  fontSize: 16,
   fontWeight: 600,
 }));

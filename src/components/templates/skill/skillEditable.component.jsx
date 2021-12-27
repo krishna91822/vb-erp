@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 import { Grid, Box, TextField } from "@mui/material";
 import ClearIcon from "@mui/icons-material/Clear";
@@ -12,6 +12,8 @@ import {
 import { skillConstant } from "./skill.constant";
 import { DesktopDatePicker, LocalizationProvider } from "@mui/lab";
 import AdapterDateFns from "@mui/lab/AdapterDateFns";
+
+import CreatableSelect from "react-select/creatable";
 
 const SkillEditable = ({
   empData,
@@ -47,22 +49,69 @@ const SkillEditable = ({
     }
   };
 
+  const customStyles = {
+    control: (provided, state) => ({
+      ...provided,
+      minHeight: "40px",
+      // height: "40px",
+      display: "flex",
+      alignContent: "center",
+    }),
+  };
+
+  //dropdowns
+  const primarySkill = [
+    "aws",
+    "full-stack",
+    "mern",
+    "mean",
+    "react-native",
+    "drupal",
+  ];
+  const primarySkillOptions = primarySkill.map((item) => {
+    return {
+      label: item,
+      value: item,
+    };
+  });
+  const [primarySkillDropdown, setPrimarySkillDropdown] = useState([
+    ...empPrimaryCapability.map((item) => {
+      return {
+        label: item,
+        value: item,
+      };
+    }),
+  ]);
+
   return (
     <Grid container spacing={0} sx={{ minHeight: 150 }}>
       <Grid item sm={7}>
         <Box sx={{ ml: 4, mb: 5 }}>
           <ContentBox>
             <ContentTypo>{skillConstant.primaryCapability}</ContentTypo>
-            <CustomTextField
-              autoComplete="off"
-              required
-              id="outlined-basic"
-              variant="outlined"
-              value={empPrimaryCapability ? empPrimaryCapability : ""}
-              name="empPrimaryCapability"
-              onChange={handleChange}
-              type="text"
-            />
+            <Box
+              sx={{
+                width: "100%",
+                fontSize: "16px",
+                fontWeight: "400",
+              }}
+            >
+              <CreatableSelect
+                value={primarySkillDropdown}
+                isMulti
+                styles={customStyles}
+                isSearchable
+                name="empPrimaryCapability"
+                options={primarySkillOptions}
+                onChange={(value) => {
+                  setPrimarySkillDropdown(value);
+                  setEmpData({
+                    ...empData,
+                    empPrimaryCapability: value.map((item) => item.value),
+                  });
+                }}
+              />
+            </Box>
           </ContentBox>
           <ContentBox>
             <ContentTypo>{skillConstant.skillSet}</ContentTypo>
@@ -75,6 +124,11 @@ const SkillEditable = ({
               name="empSkillSet"
               onChange={handleChange}
               type="text"
+              sx={{
+                "& .MuiOutlinedInput-root": {
+                  width: "100%",
+                },
+              }}
             />
           </ContentBox>
           <ContentBox>
@@ -88,6 +142,11 @@ const SkillEditable = ({
               name="empCertifications"
               onChange={handleChange}
               type="text"
+              sx={{
+                "& .MuiOutlinedInput-root": {
+                  width: "100%",
+                },
+              }}
             />
           </ContentBox>
           {skillsDetails.map((field, index) => (
