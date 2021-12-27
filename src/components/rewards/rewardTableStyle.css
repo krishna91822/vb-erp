@@ -1,7 +1,6 @@
 .main-body {
   border-top: 1px solid grey;
   width: 98%;
-  height: 78%;
   margin: auto;
   margin-top: 2px;
   padding: 2px;
@@ -21,7 +20,6 @@
   width: 500px;
   height: auto;
   display: flex;
-  justify-content: center;
   align-items: center;
 }
 
@@ -34,13 +32,12 @@
   width: 300px;
   height: auto;
   display: flex;
-  justify-content: center;
+  justify-content: flex-end;
   align-items: center;
 }
 
 .table-container {
   width: 99%;
-  height: 500px;
   margin: auto;
   margin-top: 30px;
   padding: 2px;
@@ -141,7 +138,6 @@
 
 .data-row-container {
   width: 100%;
-  height: 380px;
   margin: auto;
   margin-top: 2px;
   margin-top: 10px;
@@ -198,7 +194,6 @@
   height: 32px;
   margin: 1px;
   display: flex;
-  justify-content: space-evenly;
   padding: 2px;
 }
 

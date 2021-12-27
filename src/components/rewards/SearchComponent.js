@@ -3,22 +3,26 @@ import "./searchStyle.css";
 import MenuItem from "@mui/material/MenuItem";
 import TextField from "@mui/material/TextField";
 import { useDispatch } from "react-redux";
-// import { rewardsActions } from "../../store/rewards-slice";
 import { filterData, searchData } from "../../store/rewards-actions";
 
 const Header = (props) => {
   const currencies = [
     {
-      value: "Draft",
-      label: "Draft",
-    },
-    {
-      value: "Launch",
-      label: "Launch",
-    },
-    {
       value: "Default",
       label: "Default",
+    },
+    {
+      value: "Stopped",
+      label: "Stopped",
+    },
+    {
+      value: "In Progress",
+      label: "In Progress",
+    },
+
+    {
+      value: "Created",
+      label: "Created",
     },
   ];
 
