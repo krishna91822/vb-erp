@@ -270,16 +270,6 @@ export const Main = () => {
                       </Button>
                     </TableCell>
                   )} */}
-<<<<<<< HEAD
-                  {row.Status === "Active" ? (
-                    <TableCell>
-                      <EditIcon />
-                    </TableCell>
-                  ) : (
-                    <TableCell>
-                      <EditOffIcon />
-                    </TableCell>
-=======
 
                   {user.permissions.includes("upload_PO/SOW/contract") && (
                     <>
@@ -293,7 +283,6 @@ export const Main = () => {
                         </TableCell>
                       )}
                     </>
->>>>>>> 0a75e1f6e7d3e85d7ffbebce0ed849c954165a9c
                   )}
 
                   <TableCell>

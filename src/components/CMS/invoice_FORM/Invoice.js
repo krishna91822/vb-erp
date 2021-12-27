@@ -263,23 +263,23 @@ function Invoice(props) {
       setPoId(filtered[0].PO_Id);
     }
   }, [projectName]);
-  const submitForm = async (event) => {
-    event.preventDefault();
+  // const submitForm = async (event) => {
+  //   event.preventDefault();
 
-    const DataToSend = {
-      PO_Id: poId,
-      invoice_raised: invoice_raised,
-      invoice_amount_received: invoice_amount,
-      vb_bank_account: Vb_Bank_Acc,
-      amount_received_on: new Date(Date_),
-      invoice_received: invoicereceived ? "Yes" : "No",
-    };
-    if (!props.invoicereceived) {
-      dispatch(Update_INVOICE(DataToSend, params.id));
-    } else {
-      dispatch(createNew_INVOICE(DataToSend));
-    }
-  };
+  //   const DataToSend = {
+  //     PO_Id: poId,
+  //     invoice_raised: invoice_raised,
+  //     invoice_amount_received: invoice_amount,
+  //     vb_bank_account: Vb_Bank_Acc,
+  //     amount_received_on: new Date(Date_),
+  //     invoice_received: invoicereceived ? "Yes" : "No",
+  //   };
+  //   if (!props.invoicereceived) {
+  //     dispatch(Update_INVOICE(DataToSend, params.id));
+  //   } else {
+  //     dispatch(createNew_INVOICE(DataToSend));
+  //   }
+  // };
   const filterinvoiceArr = allINVOICE.filter((val) => {
     return poId === val.purchase_orders._id;
   });
@@ -297,14 +297,11 @@ function Invoice(props) {
   }, [filteredArr]);
 
   return (
-<<<<<<< HEAD
     <div className="posowForm-container">
       <React.Fragment>
         <CssBaseline />
         <Grid container className="posow-topGrid">
-=======
-    <div className="maincontainer">
-      <Grid container>
+
         <Grid item lg={11} md={11} sm={12} xs={12}>
           <h3>Invoice</h3>
         </Grid>
@@ -326,11 +323,11 @@ function Invoice(props) {
         </Grid>
       </Grid>
 
-      <form onSubmit={submitForm}>
-        <Grid container>
+      {/* <form onSubmit={submitForm}> */}
+        {/* <Grid container>
           <Grid item lg={11} md={11} sm={12} xs={12}>
             <h4 className="heading">PO Information</h4>
-          </Grid>
+          </Grid> */}
 
           {user.permissions.includes("upload_invoice") && (
             <Grid item lg={1} md={1} sm={12} xs={12}>
@@ -356,11 +353,10 @@ function Invoice(props) {
               </div>
             </Grid>
           )}
-        </Grid>
+        {/* </Grid> */}
 
         <hr />
-        <Grid container columnSpacing={3}>
->>>>>>> 0a75e1f6e7d3e85d7ffbebce0ed849c954165a9c
+        {/* <Grid container columnSpacing={3}>
           <Grid item lg={6} md={6} sm={12} xs={12}>
             <h3>Invoice</h3>
           </Grid>
@@ -380,7 +376,7 @@ function Invoice(props) {
               <div></div>
             )}
           </Grid>
-        </Grid>
+        </Grid> */}
         <Container fixed>
           <Box
             sx={{
@@ -391,7 +387,7 @@ function Invoice(props) {
               padding: "1rem",
             }}
           >
-            <Grid container>
+            {/* <Grid container>
               <Grid item lg={6} md={6} sm={6} xs={12}>
                 <h4 className="heading">PO Information</h4>
               </Grid>
@@ -418,7 +414,7 @@ function Invoice(props) {
                   </label>
                 </div>
               </Grid>
-            </Grid>
+            </Grid> */}
 
             <hr />
             <Grid container columnSpacing={3}>
