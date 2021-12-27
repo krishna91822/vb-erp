@@ -46,10 +46,8 @@ const Allocated = ({ pressed, allocatedSortedValue }) => {
     }
   };
 
-  const changePage = (event) => {
-    dispatch(
-      getAllocatedData(filters, event.target.textContent, allocatedSortedValue)
-    );
+  const changePage = (event, value) => {
+    dispatch(getAllocatedData(filters, value, allocatedSortedValue));
   };
   return (
     <>
@@ -236,7 +234,9 @@ const Allocated = ({ pressed, allocatedSortedValue }) => {
                       <TableCell align="left">
                         {index + parseInt(data.currentPage) * 10 - 9}
                       </TableCell>
-                      <TableCell align="left">{currElem.empId.empId}</TableCell>
+                      <TableCell align="left">
+                        {currElem.empId ? currElem.empId.empId : "----"}
+                      </TableCell>
                       <TableCell
                         align="left"
                         style={{ textTransform: "capitalize" }}
@@ -247,7 +247,9 @@ const Allocated = ({ pressed, allocatedSortedValue }) => {
                         align="left"
                         style={{ textTransform: "capitalize" }}
                       >
-                        {currElem.projectId.projectName}
+                        {currElem.projectId
+                          ? currElem.projectId.projectName
+                          : "----"}
                       </TableCell>
                       <TableCell align="left">
                         {currElem.allocationPercentage}

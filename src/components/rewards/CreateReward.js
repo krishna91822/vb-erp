@@ -372,6 +372,7 @@ const CreateReward = () => {
                 updateSenderData={updateSenderData}
                 openPopup={openSenderPopup}
                 setOpenPopup={setOpenSenderPopup}
+                stateOfSelection="single"
               />
             </Popup>
           }
@@ -389,6 +390,7 @@ const CreateReward = () => {
                 updaterecipientsData={updaterecipientsData}
                 openPopup={openReceiverPopup}
                 setOpenPopup={setOpenReceiverPopup}
+                stateOfSelection="multiple"
               />
             </Popup>
           }

@@ -1,5 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
 import {
   Button,
   FormControlLabel,
@@ -72,6 +73,8 @@ const EditViewSwitchs = ({
 }) => {
   const navigate = useNavigate();
 
+  const user = useSelector((state) => state.user.user);
+
   const handleChange = ({ target }) => {
     if (target.checked) {
       setEdit(true);
@@ -83,34 +86,42 @@ const EditViewSwitchs = ({
   };
 
   return (
-    <EditViewSwitchStyled
-      style={{ display: id ? "flex" : "none", margin: "0" }}
-    >
-      <UpdateModal
-        setUpdateModal={setUpdateModal}
-        updateModal={updateModal}
-        id={id}
-      />
-      <Button
-        type="submit"
-        variant="contained"
-        size="small"
-        color="primary"
-        style={{ display: edit && id ? "block" : "none" }}
-        onClick={onUpdate}
-      >
-        Save
-      </Button>
-      <span data-test="edit-mode-title">Edit Mode</span>
-      <FormGroup data-test="edit-mode-formgroup">
-        <FormControlLabel
-          control={
-            <IOSSwitch checked={edit} onChange={handleChange} name="checkedB" />
-          }
-          label=""
-        />
-      </FormGroup>
-    </EditViewSwitchStyled>
+    <>
+      {user.permissions.includes("update_project_in_PMO") && (
+        <EditViewSwitchStyled
+          style={{ display: id ? "flex" : "none", margin: "0" }}
+        >
+          <UpdateModal
+            setUpdateModal={setUpdateModal}
+            updateModal={updateModal}
+            id={id}
+          />
+          <Button
+            type="submit"
+            variant="contained"
+            size="small"
+            color="primary"
+            style={{ display: edit && id ? "block" : "none" }}
+            onClick={onUpdate}
+          >
+            Save
+          </Button>
+          <span data-test="edit-mode-title">Edit Mode</span>
+          <FormGroup data-test="edit-mode-formgroup">
+            <FormControlLabel
+              control={
+                <IOSSwitch
+                  checked={edit}
+                  onChange={handleChange}
+                  name="checkedB"
+                />
+              }
+              label=""
+            />
+          </FormGroup>
+        </EditViewSwitchStyled>
+      )}
+    </>
   );
 };
 
