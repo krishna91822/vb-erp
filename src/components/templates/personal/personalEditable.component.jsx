@@ -105,9 +105,10 @@ const PersonalEditable = (props) => {
     setEmpData({ ...empData, [name]: value });
   };
 
-  const [addresschecked, setAddressChecked] = useState(true);
+  const [addresschecked, setAddressChecked] = useState(false);
   const handleAddressCheckedChange = (event) => {
     setAddressChecked(!addresschecked);
+    setEmpData({ ...empData, empResidentialAddress: { ...currentAddress } });
   };
 
   const [currentAddress, setCurrentAddress] = useState(
@@ -251,23 +252,22 @@ const PersonalEditable = (props) => {
           error={Boolean(errors.empAboutMe)}
           helperText={errors.empAboutMe?.message}
           inputRef={register({
-            required: "Write something about user.",
-            minLength: {
-              value: 10,
-              message: "minimun leght should be 10",
-            },
             maxLength: {
               value: 300,
-              message: "minimun leght should be 300",
+              message: "minimun length should be 300",
             },
-            validate: true,
           })}
         />
       </Grid>
       <Grid item sm={7}>
         <Box sx={{ mt: 4, ml: 4, mb: 5 }}>
           <ContentBox>
-            <ContentTypo>{personal.personalEmail}</ContentTypo>
+            <ContentTypo>
+              {personal.personalEmail}
+              <Box component="span" sx={{ color: "red" }}>
+                &nbsp;*
+              </Box>
+            </ContentTypo>
             <CustomTextField
               placeholder="Enter personal email"
               autoComplete="off"
@@ -290,9 +290,15 @@ const PersonalEditable = (props) => {
             />
           </ContentBox>
           <ContentBox>
-            <ContentTypo>{personal.dob}</ContentTypo>
+            <ContentTypo>
+              {personal.dob}
+              <Box component="span" sx={{ color: "red" }}>
+                &nbsp;*
+              </Box>
+            </ContentTypo>
             <LocalizationProvider dateAdapter={AdapterDateFns}>
               <DesktopDatePicker
+                maxDate={new Date()}
                 inputFormat="dd/MM/yyyy"
                 value={empDob}
                 onChange={(newValue) => {

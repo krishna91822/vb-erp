@@ -12,12 +12,15 @@ import ProfileContent from "../profileContent/profileContent.component";
 import WithSpinner from "../../hoc/withSpinner/withSpinner.component";
 import CreateProfile from "./../../../pages/createProfile/createProfile.component";
 import Spinner from "./../../UI/spinner/spinner";
+import { useSelector } from "react-redux";
 
 import axiosInstance from "./../../../helpers/axiosInstance";
 
 const ProfileContentWithSpinner = WithSpinner(ProfileContent);
 
 const ViewProfile = () => {
+  const { user } = useSelector((state) => state.user);
+
   const [loading, setLoading] = useState(true);
   const [viewedEmployee, setViewedEmployee] = useState({});
 
@@ -252,44 +255,49 @@ const ViewProfile = () => {
           alignItems: "center",
         }}
       >
-        <Box
-          sx={{
-            display: "flex",
-            padding: 0,
-            position: editEmployee ? "absolute" : "relative",
-            mt: editEmployee ? 4 : "",
-          }}
-        >
-          <TitleTypo sx={{ textTransform: "capitalize", pr: 1 }}>
-            Edit Employee
-          </TitleTypo>
-          <CustomSwitch
-            data-test="download-button-text"
-            checked={editEmployee}
-            onChange={handleSwitchChange}
-            inputProps={{ "aria-label": "controlled" }}
-          />
-        </Box>
-        <Box>
-          {!editEmployee ? (
-            <Button
-              id="download"
-              variant="contained"
-              onClick={handlePdfClick}
-              sx={{
-                backgroundColor: "#1AAE9F",
-                "&:hover": {
-                  backgroundColor: "hsl(173.9,74%,30%)",
-                },
-              }}
-            >
-              <PictureAsPdfIcon sx={{ marginRight: 1 }} />
-              Download as PDF
-            </Button>
-          ) : (
-            <></>
-          )}
-        </Box>
+        {user.permissions.includes("edit_employee_dashboard") &&
+        ["hr_admin", "super_admin"].some((el) => user.roles.includes(el)) ? (
+          <Box
+            sx={{
+              display: "flex",
+              padding: 0,
+              position: editEmployee ? "absolute" : "relative",
+              mt: editEmployee ? 4 : "",
+            }}
+          >
+            <TitleTypo sx={{ textTransform: "capitalize", pr: 1 }}>
+              Edit Employee
+            </TitleTypo>
+            <CustomSwitch
+              data-test="download-button-text"
+              checked={editEmployee}
+              onChange={handleSwitchChange}
+              inputProps={{ "aria-label": "controlled" }}
+            />
+          </Box>
+        ) : null}
+        {user.permissions.includes("download_employee_profile") ? (
+          <Box>
+            {!editEmployee ? (
+              <Button
+                id="download"
+                variant="contained"
+                onClick={handlePdfClick}
+                sx={{
+                  backgroundColor: "#1AAE9F",
+                  "&:hover": {
+                    backgroundColor: "hsl(173.9,74%,30%)",
+                  },
+                }}
+              >
+                <PictureAsPdfIcon sx={{ marginRight: 1 }} />
+                Download as PDF
+              </Button>
+            ) : (
+              <></>
+            )}
+          </Box>
+        ) : null}
       </Box>
       {editEmployee ? (
         <CreateProfile editEmployeeData={viewedEmployee} />
