@@ -109,7 +109,7 @@ export const searchData = (data) => {
           uiActions.showNotification({
             status: "error",
             title: "Error!",
-            message: "Fetching content data failed!",
+            message: "Nothing Found",
           })
         );
       }, 3000);
@@ -171,9 +171,9 @@ export const deleteRewardData = (id, defaultPage, sorting, searchValue) => {
         toast.success("Deleted", {
           icon: "🗑",
         });
-        if (defaultPage !== 1 && searchValue !== "") {
+        if (searchValue !== "") {
           dispatch(getRewardsDataWithPageAndSearch(searchValue, defaultPage));
-        } else if (defaultPage !== 1 && sorting !== "") {
+        } else if (sorting !== "") {
           dispatch(filterDataWithPageAndFilter(sorting, defaultPage));
         } else if (defaultPage !== 1) {
           dispatch(getRewardsDataWithPageNumber(defaultPage));
@@ -323,14 +323,11 @@ export const EditRewardData = (id) => {
 
       if (response.status === "failure") {
         throw new Error("Could not fetch cart data!");
-      } else {
-        toast.success("Reward Edited");
       }
       return response;
     };
 
     try {
-      // eslint-disable-next-line no-unused-vars
       const data = await fetchData();
 
       dispatch(
@@ -338,10 +335,7 @@ export const EditRewardData = (id) => {
           rewardData: data.data.data || {},
         })
       );
-
       dispatch(rewardsActions.updateRewardStatus());
-
-      //
     } catch (error) {
       dispatch(uiActions.toggleLoader());
       dispatch(
@@ -424,6 +418,7 @@ export const UpdateRewardData = (data, id) => {
 
     try {
       await fetchData();
+      toast.success("Reward Edited");
       dispatch(rewardsActions.updateRewardStatus());
 
       //
@@ -492,6 +487,37 @@ export const addselectedpopup = (employeeIdArrayData, reward) => {
       dispatch(uiActions.toggleLoader());
     } finally {
       dispatch(uiActions.toggleLoader());
+    }
+  };
+};
+
+export const sendInstanteMessage = (id) => {
+  return async (dispatch) => {
+    const fetchData = async () => {
+      const response = axios.get(`/rewards/launchinstantly/${id}`);
+      if (response.status === "failure") {
+        throw new Error("Could not fetch cart data!");
+      } else {
+        toast.success("Message Sent");
+      }
+      return response;
+    };
+    try {
+      const data = await fetchData();
+      console.log(data);
+      dispatch(getRewardsData());
+    } catch (error) {
+      dispatch(uiActions.toggleLoader());
+      setTimeout(function () {
+        dispatch(uiActions.toggleLoader());
+        dispatch(
+          uiActions.showNotification({
+            status: "error",
+            title: "Error!",
+            message: "Nothing Found",
+          })
+        );
+      }, 3000);
     }
   };
 };

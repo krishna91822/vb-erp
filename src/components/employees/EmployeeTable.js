@@ -4,7 +4,8 @@ import { DataGrid } from "@mui/x-data-grid";
 const columns = [
   { field: "id", headerName: "ID", width: 70 },
   { field: "name", headerName: "NAME", width: 130 },
-  { field: "email", headerName: "EMAIL", width: 230 },
+  { field: "email", headerName: "EMAIL", width: 200 },
+  { field: "selected", headerName: "✔️", width: 40 },
 ];
 
 export default function EmployeeTable({ onRowClicked, rows }) {
@@ -15,8 +16,9 @@ export default function EmployeeTable({ onRowClicked, rows }) {
         columns={columns}
         pageSize={10}
         rowsPerPageOptions={[5]}
-        checkboxSelection
         onRowClick={onRowClicked}
+        hideFooterSelectedRowCount
+        // checkboxSelection
       />
     </div>
   );
