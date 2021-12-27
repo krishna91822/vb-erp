@@ -273,7 +273,7 @@ export const Main = () => {
 
                   {user.permissions.includes("upload_PO/SOW/contract") && (
                     <>
-                      {row.Status === "Rejected" || row.Status === "Drafted" ? (
+                      {row.Status === "Drafted" ? (
                         <TableCell>
                           <EditIcon />
                         </TableCell>
