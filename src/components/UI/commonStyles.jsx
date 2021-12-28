@@ -40,6 +40,9 @@ export const ContentBoldTypo = styled("div")(({ theme }) => ({
 
 //custom components for tabs
 export const StyledTabs = styled(Tabs)(({ theme }) => ({
+  ".MuiTabs-flexContainer": {
+    justifyContent: "space-evenly",
+  },
   ".MuiTabs-indicator": {
     backgroundColor: theme.palette.primary.main,
     height: 3,
