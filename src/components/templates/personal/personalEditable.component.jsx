@@ -222,7 +222,7 @@ const PersonalEditable = (props) => {
 
   return (
     <Grid container spacing={0} sx={{ minHeight: 150 }}>
-      <Grid
+      {/* <Grid
         item
         sm={5}
         sx={{
@@ -258,9 +258,36 @@ const PersonalEditable = (props) => {
             },
           })}
         />
-      </Grid>
+      </Grid> */}
       <Grid item sm={7}>
         <Box sx={{ mt: 4, ml: 4, mb: 5 }}>
+          <ContentBox>
+            <TitleTypo sx={{ textTransform: "capitalize", mt: 1 }}>
+              {personal.aboutMe}
+            </TitleTypo>
+            <TextField
+              placeholder="Write something about you"
+              id="outlined-multiline-flexible"
+              multiline
+              value={empAboutMe ? empAboutMe : ""}
+              name="empAboutMe"
+              onChange={handleChange}
+              // error={Boolean(errors.empAboutMe)}
+              // helperText={errors.empAboutMe?.message}
+              // inputRef={register({
+              //   maxLength: {
+              //     value: 300,
+              //     message: "minimun length should be 300",
+              //   },
+              // })}
+              sx={{
+                "& .MuiOutlinedInput-root": {
+                  width: "100%",
+                  minHeight: "40px",
+                },
+              }}
+            />
+          </ContentBox>
           <ContentBox>
             <ContentTypo>
               {personal.personalEmail}

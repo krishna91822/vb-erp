@@ -9,6 +9,7 @@ import {
   TitleTypo,
 } from "./personalReadable.styles";
 import { personal } from "./personal.constant";
+import { CustomTextField } from "./personalEditable.styles";
 
 // import { TitleTypo } from "../../UI/commonStyles";
 import {
@@ -45,7 +46,7 @@ const PersonalReadable = ({ empData }) => {
 
   return (
     <Grid container spacing={0} sx={{ minHeight: 150 }}>
-      <Grid
+      {/* <Grid
         item
         sm={5}
         sx={{
@@ -72,9 +73,28 @@ const PersonalReadable = ({ empData }) => {
           }}
           defaultValue={empAboutMe}
         />
-      </Grid>
+      </Grid> */}
       <Grid item sm={7}>
         <Box sx={{ mt: 4, ml: 4 }}>
+          <ContentBox>
+            <TitleTypo sx={{ textTransform: "capitalize", mt: 1 }}>
+              {personal.aboutMe}
+            </TitleTypo>
+            <TextField
+              id="outlined-multiline-flexible"
+              multiline
+              InputProps={{
+                readOnly: true,
+              }}
+              defaultValue={empAboutMe}
+              sx={{
+                "& .MuiOutlinedInput-root": {
+                  width: "100%",
+                  minHeight: "40px",
+                },
+              }}
+            />
+          </ContentBox>
           <ContentBox>
             <TitleTypo>{personal.personalEmail}</TitleTypo>
             <ContentTypo>{empPersonalEmail}</ContentTypo>

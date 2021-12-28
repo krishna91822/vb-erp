@@ -10,6 +10,7 @@ import BadgeIcon from "@mui/icons-material/Badge";
 import { profileInfoConstant } from "./profileInfo.constant";
 import Select from "react-select";
 import CreatableSelect from "react-select/creatable";
+import AsyncSelect from "react-select/async";
 
 import {
   CustomTextField,
@@ -113,7 +114,7 @@ const ProfileInfoEditable = (props) => {
 
   useEffect(() => {
     axiosInstance
-      .get("/employees?fields=empName,empId,-_id")
+      .get(`/employees?fields=empName,empId,-_id&page=1&limit=200`)
       .then((response) => {
         const data = response.data.data.map((item) => {
           return {
@@ -136,6 +137,24 @@ const ProfileInfoEditable = (props) => {
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  const loadEmployeeOptions = (inputValue, callback) => {
+    axiosInstance
+      .get(`/employees?fields=empName,empId,-_id&search=${inputValue}`)
+      .then(function (response) {
+        callback(
+          response.data.data.map((item) => {
+            return {
+              label: `${item.empName} (${item.empId})`,
+              value: `${item.empName} (${item.empId})`,
+            };
+          })
+        );
+      })
+      .catch(function (err) {
+        console.log(err);
+      });
+  };
 
   return (
     <Grid
@@ -400,7 +419,23 @@ const ProfileInfoEditable = (props) => {
                   marginLeft: "8px",
                 }}
               >
-                <Select
+                <AsyncSelect
+                  value={reportingTo ? reportingTo : null}
+                  cacheOptions
+                  loadOptions={loadEmployeeOptions}
+                  defaultOptions
+                  onChange={(value) => {
+                    setReportingTo(value);
+                    setEmployee({
+                      ...employee,
+                      empReportingManager: value.value,
+                    });
+                  }}
+                  name="empReportingManager"
+                  styles={customStyles}
+                  // placeholder="Select univeristy"
+                />
+                {/* <Select
                   value={reportingTo ? reportingTo : null}
                   isLoading={empNameLoading}
                   styles={customStyles}
@@ -414,7 +449,7 @@ const ProfileInfoEditable = (props) => {
                       empReportingManager: value.value,
                     });
                   }}
-                />
+                /> */}
               </Box>
             </FieldBox>
           </CustomGridBox>

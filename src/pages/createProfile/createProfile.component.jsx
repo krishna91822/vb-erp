@@ -296,7 +296,7 @@ const CreateProfile = ({
     }
   };
 
-  return currentEmployee && currentEmployee.role === "ADMIN" ? (
+  return currentEmployee ? (
     <BoxStyle data-test="create-profile-test">
       <ContainerStyleTop>
         {/* <TitleTypo sx={{ textTransform: "capitalize", mb: 0.5 }}>
