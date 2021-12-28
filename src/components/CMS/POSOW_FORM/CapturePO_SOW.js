@@ -328,10 +328,10 @@ export const CapturePO_SOW = (props) => {
               }}
             >
               <Grid container>
-                <Grid item lg={4} md={4} sm={4} xs={12} className="finalgrid">
+                <Grid item lg={6} md={6} sm={6} xs={12} className="finalgrid">
                   <h3>Project information</h3>
                 </Grid>
-                <Grid item lg={4} md={4} sm={4} xs={12} className="finalgrid">
+                {/* <Grid item lg={4} md={4} sm={4} xs={12} className="finalgrid">
                   {props.editBtn ? (
                     <div className="posow-status">
                       <h5 data-test="status-label">STATUS</h5>
@@ -342,9 +342,9 @@ export const CapturePO_SOW = (props) => {
                   ) : (
                     <div></div>
                   )}
-                </Grid>
+                </Grid> */}
                 {user.permissions.includes("upload_PO/SOW/contract") && (
-                  <Grid item lg={4} md={4} sm={4} xs={12} className="finalgrid">
+                  <Grid item lg={6} md={6} sm={6} xs={12} className="finalgrid">
                     {props.editBtn ? (
                       <div className="posow-SaveButton">
                         <strong
@@ -361,7 +361,7 @@ export const CapturePO_SOW = (props) => {
                             data-testid="EditToggleBtn"
                             checked={editTglCheckedState}
                             onChange={handleEditTglChange}
-                            disabled={status === "Drafted" ? false : true}
+                            // disabled={status === "Drafted" ? false : true}
                           />
                           <span className="slider round"></span>
                         </label>
@@ -715,7 +715,7 @@ export const CapturePO_SOW = (props) => {
                     }
                   />
                 </Grid>
-                {user.permissions.includes("upload_PO/SOW/contract") && (
+                {/* {user.permissions.includes("upload_PO/SOW/contract") && (
                   <Grid
                     item
                     lg={12}
@@ -774,7 +774,7 @@ export const CapturePO_SOW = (props) => {
                       <div></div>
                     )}
                   </Grid>
-                )}
+                )} */}
               </Grid>
             </Box>
           </Container>

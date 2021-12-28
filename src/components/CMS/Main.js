@@ -225,10 +225,10 @@ export const Main = () => {
                 <TableCell>PO/SOW Amount</TableCell>
                 <TableCell>Client Sponsor</TableCell>
 
-                {user.permissions.includes("upload_PO/SOW/contract") && (
+                {/* {user.permissions.includes("upload_PO/SOW/contract") && (
                   <TableCell>Action</TableCell>
                 )}
-                <TableCell>Status</TableCell>
+                <TableCell>Status</TableCell> */}
               </TableRow>
             </TableHead>
             <TableBody className="table-row-posow" data-test="row-click1">
@@ -271,7 +271,7 @@ export const Main = () => {
                     </TableCell>
                   )} */}
 
-                  {user.permissions.includes("upload_PO/SOW/contract") && (
+                  {/* {user.permissions.includes("upload_PO/SOW/contract") && (
                     <>
                       {row.Status === "Drafted" ? (
                         <TableCell>
@@ -287,7 +287,7 @@ export const Main = () => {
 
                   <TableCell>
                     <strong>{row.Status}</strong>
-                  </TableCell>
+                  </TableCell> */}
                 </TableRow>
               ))}
             </TableBody>

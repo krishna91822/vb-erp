@@ -387,11 +387,11 @@ function Invoice(props) {
             }}
           >
             <Grid container>             
-              <Grid item lg={6} md={6} sm={6} xs={12}>
+              <Grid item lg={11} md={11} sm={11} xs={12}>
                 <h4 className="heading">PO Information</h4>
               </Grid>
               {user.permissions.includes("upload_invoice") && (
-            <Grid item lg={1} md={1} sm={12} xs={12}>
+            <Grid item lg={1} md={1} sm={1} xs={12}>
               <div className="invoice-editToggle">
                 <strong className="editTxt" data-test="editModeSwitch-label">
                   Edit
