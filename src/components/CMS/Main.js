@@ -255,22 +255,8 @@ export const Main = () => {
                   <TableCell>{row.PO_Number}</TableCell>
                   <TableCell>{row.PO_Amount}</TableCell>
                   <TableCell>{row.Client_Sponser}</TableCell>
-                  {/* {row.Status === "Rejected" || row.Status === "Drafted" ? (
-                    <TableCell
-                      component={Link}
-                      to={`/posow/edit/${row._id}`}
-                      style={{ textDecoration: "none" }}
-                    >
-                      <Button className="editbtn">EDIT</Button>
-                    </TableCell>
-                  ) : (
-                    <TableCell aria-disabled>
-                      <Button className="editbtn" disabled>
-                        EDIT
-                      </Button>
-                    </TableCell>
-                  )} */}
 
+                {/* might be required in future versions */}
                   {/* {user.permissions.includes("upload_PO/SOW/contract") && (
                     <>
                       {row.Status === "Drafted" ? (
@@ -305,11 +291,6 @@ export const Main = () => {
                 onChange={handlerowsPerpage}
                 defaultValue={30}
               >
-                {/* <Select value={postPerPage} onChange={handlerowsPerpage}>
-                  <MenuItem value={5}>5</MenuItem>
-                  <MenuItem value={10}>10</MenuItem>
-                  <MenuItem value={15}>15</MenuItem>
-                </Select> */}
                 <option value={5}>5</option>
                 <option value={10}>10</option>
                 <option value={15}>15</option>

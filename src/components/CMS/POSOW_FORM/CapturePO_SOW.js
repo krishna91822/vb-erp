@@ -331,6 +331,7 @@ export const CapturePO_SOW = (props) => {
                 <Grid item lg={6} md={6} sm={6} xs={12} className="finalgrid">
                   <h3>Project information</h3>
                 </Grid>
+                {/* might be required in future versions. */}
                 {/* <Grid item lg={4} md={4} sm={4} xs={12} className="finalgrid">
                   {props.editBtn ? (
                     <div className="posow-status">
@@ -674,7 +675,6 @@ export const CapturePO_SOW = (props) => {
                   <br />
                   <BasicDatePicker
                     className="finalinput"
-                    // className="inputField txtBox"
                     maxDate="POSOW"
                     label={typeName + " End Date"}
                     value={selectedDate}
@@ -715,6 +715,7 @@ export const CapturePO_SOW = (props) => {
                     }
                   />
                 </Grid>
+                {/* might be required in future versions */}
                 {/* {user.permissions.includes("upload_PO/SOW/contract") && (
                   <Grid
                     item
