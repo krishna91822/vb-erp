@@ -15,6 +15,8 @@ import {
   Select,
   Switch,
 } from "@mui/material";
+import CssBaseline from "@mui/material/CssBaseline";
+import Container from "@mui/material/Container";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -134,6 +136,7 @@ function Invoice(props) {
     readtargetedAllocation
   );
 
+  const user = useSelector((state) => state.user.user);
   const [invoice_raised_yesno, setInvoiceRaisedYesNo] = React.useState("No");
   let [sum, setsum] = useState(0);
   const targetedResourcesName = Object.keys(TargettedAllocation);
@@ -148,7 +151,6 @@ function Invoice(props) {
       setClientFinController(filteredArr[0].client_finance_controller);
       setClientSponsor(filteredArr[0].client_sponsor);
       setInvoiceRaised(filteredArr[0].invoice_raised);
-      console.log(filteredArr[0].invoice_amount_received);
       setinvoiceAmount(filteredArr[0].invoice_amount_received);
       filteredArr[0].amount_received_on !== undefined
         ? setDate(filteredArr[0].amount_received_on)
@@ -174,6 +176,8 @@ function Invoice(props) {
   useEffect(() => {
     if (!invoicereceived) {
       setinvoiceAmount(null);
+      setDate(null);
+      setVbbankacc(null);
     }
   }, [invoicereceived]);
   const handleClientChange = (event) => {
@@ -259,23 +263,23 @@ function Invoice(props) {
       setPoId(filtered[0].PO_Id);
     }
   }, [projectName]);
-  const submitForm = async (event) => {
-    event.preventDefault();
+  // const submitForm = async (event) => {
+  //   event.preventDefault();
 
-    const DataToSend = {
-      PO_Id: poId,
-      invoice_raised: invoice_raised,
-      invoice_amount_received: invoice_amount,
-      vb_bank_account: Vb_Bank_Acc,
-      amount_received_on: new Date(Date_),
-      invoice_received: invoicereceived ? "Yes" : "No",
-    };
-    if (!props.invoicereceived) {
-      dispatch(Update_INVOICE(DataToSend, params.id));
-    } else {
-      dispatch(createNew_INVOICE(DataToSend));
-    }
-  };
+  //   const DataToSend = {
+  //     PO_Id: poId,
+  //     invoice_raised: invoice_raised,
+  //     invoice_amount_received: invoice_amount,
+  //     vb_bank_account: Vb_Bank_Acc,
+  //     amount_received_on: new Date(Date_),
+  //     invoice_received: invoicereceived ? "Yes" : "No",
+  //   };
+  //   if (!props.invoicereceived) {
+  //     dispatch(Update_INVOICE(DataToSend, params.id));
+  //   } else {
+  //     dispatch(createNew_INVOICE(DataToSend));
+  //   }
+  // };
   const filterinvoiceArr = allINVOICE.filter((val) => {
     return poId === val.purchase_orders._id;
   });
@@ -293,14 +297,16 @@ function Invoice(props) {
   }, [filteredArr]);
 
   return (
-    <div className="maincontainer">
-      <Grid container>
+    <div className="invoiceForm-container">
+      <React.Fragment>
+        <CssBaseline />
+        <Grid container className="posow-topGrid">
         <Grid item lg={11} md={11} sm={12} xs={12}>
           <h3>Invoice</h3>
         </Grid>
         <Grid item lg={1} md={1} sm={12} xs={12}>
           {props.editBtn && editTglCheckedState ? (
-            <div>
+            <div className="posow-SaveButton">
               <Button
                 variant="contained"
                 color="success"
@@ -316,157 +322,236 @@ function Invoice(props) {
         </Grid>
       </Grid>
 
-      <form onSubmit={submitForm}>
-        <Grid container>
+      {/* <form onSubmit={submitForm}> */}
+        {/* <Grid container>
           <Grid item lg={11} md={11} sm={12} xs={12}>
             <h4 className="heading">PO Information</h4>
-          </Grid>
-          <Grid item lg={1} md={1} sm={12} xs={12}>
-            <div className="posow-SaveButton">
-              <strong className="editTxt" data-test="editModeSwitch-label">
-                Edit
-              </strong>
-              <label className="switch">
-                <input
-                  type="checkbox"
-                  data-test="EditToggleBtn"
-                  data-testid="EditToggleBtn"
-                  checked={editTglCheckedState}
-                  onChange={handleEditTglChange}
-                  disabled={
-                    invoice_raised === "Yes" &&
-                    invoice_amount &&
-                    editTglCheckedState === false
-                  }
-                />
-                <span className="slider round"></span>
-              </label>
-            </div>
-          </Grid>
-        </Grid>
+          </Grid> */}
 
-        <hr />
-        <Grid container columnSpacing={3}>
+          {/* {user.permissions.includes("upload_invoice") && (
+            <Grid item lg={1} md={1} sm={12} xs={12}>
+              <div className="posow-SaveButton">
+                <strong className="editTxt" data-test="editModeSwitch-label">
+                  Edit
+                </strong>
+                <label className="switch">
+                  <input
+                    type="checkbox"
+                    data-test="EditToggleBtn"
+                    data-testid="EditToggleBtn"
+                    checked={editTglCheckedState}
+                    onChange={handleEditTglChange}
+                    disabled={
+                      invoice_raised === "Yes" &&
+                      invoice_amount &&
+                      editTglCheckedState === false
+                    }
+                  />
+                  <span className="slider round"></span>
+                </label>
+              </div>
+            </Grid>
+          )} */}
+        {/* </Grid> */}
+
+        
+        {/* <Grid container columnSpacing={3}>
           <Grid item lg={6} md={6} sm={12} xs={12}>
-            <label>Project Name</label>
-            <br />
-            <Box sx={{ minWidth: 120 }}>
-              <FormControl fullWidth>
-                <Select
-                  disabled={true}
-                  value={projectName}
-                  onChange={handleProjectChange}
+            <h3>Invoice</h3>
+          </Grid>
+          <Grid item lg={6} md={6} sm={12} xs={12}>
+            {props.editBtn && editTglCheckedState ? (
+              <div className="posow-SaveButton">
+                <Button
+                  variant="contained"
+                  color="success"
+                  onClick={updatehandler}
+                  data-test="UpdateBtn"
                 >
-                  {allProjects.map((detail) => (
-                    <MenuItem value={detail}>{detail}</MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
-            </Box>
+                  Update{" "}
+                </Button>
+              </div>
+            ) : (
+              <div></div>
+            )}
           </Grid>
-          <Grid item lg={6} md={6} sm={12} xs={12}>
-            <label>Client Name</label>
-            <br />
-            <Box sx={{ minWidth: 120 }}>
-              <FormControl fullWidth>
-                <TextField disabled={true} value={personName} />
-              </FormControl>
-            </Box>
+        </Grid> */}
+        <Container fixed>
+          <Box
+            sx={{
+              bgcolor: "white",
+              height: "75vh",
+              border: "2px solid grey",
+              overflowY: "scroll",
+              padding: "1rem",
+            }}
+          >
+            <Grid container>             
+              <Grid item lg={11} md={11} sm={11} xs={12}>
+                <h4 className="heading">PO Information</h4>
+              </Grid>
+              {user.permissions.includes("upload_invoice") && (
+            <Grid item lg={1} md={1} sm={1} xs={12}>
+              <div className="invoice-editToggle">
+                <strong className="editTxt" data-test="editModeSwitch-label">
+                  Edit
+                </strong>
+                <br/>
+                <label className="switch">
+                  <input
+                    type="checkbox"
+                    data-test="EditToggleBtn"
+                    data-testid="EditToggleBtn"
+                    checked={editTglCheckedState}
+                    onChange={handleEditTglChange}
+                    disabled={
+                      invoice_raised === "Yes" &&
+                      invoice_amount &&
+                      editTglCheckedState === false
+                    }
+                  />
+                  <span className="slider round"></span>
+                </label>
+              </div>
+            </Grid>
+          )}
+         
           </Grid>
-          <Grid item lg={8} md={8} sm={12} xs={12}>
+            <hr />
             <Grid container columnSpacing={3}>
               <Grid item lg={6} md={6} sm={12} xs={12}>
-                <label>Client Sponsor</label>
+                <label>Project Name</label>
                 <br />
                 <Box sx={{ minWidth: 120 }}>
                   <FormControl fullWidth>
-                    <TextField
-                      //
+                    <Select
                       disabled={true}
-                      value={ClientSponsor}
-                      onChange={handleClientSponsor}
-                    />
+                      value={projectName}
+                      onChange={handleProjectChange}
+                    >
+                      {allProjects.map((detail) => (
+                        <MenuItem value={detail}>{detail}</MenuItem>
+                      ))}
+                    </Select>
                   </FormControl>
                 </Box>
               </Grid>
               <Grid item lg={6} md={6} sm={12} xs={12}>
-                <label>Client Finance Controller</label>
+                <label>Client Name</label>
                 <br />
                 <Box sx={{ minWidth: 120 }}>
                   <FormControl fullWidth>
-                    <TextField disabled={true} value={Client_Fin_controller} />
+                    <TextField disabled={true} value={personName} />
                   </FormControl>
                 </Box>
               </Grid>
-              <Grid item lg={4} md={4} sm={10} xs={10}>
-                <label>PO Amount</label>
-                <br />
-                <Box sx={{ minWidth: 120 }}>
-                  <FormControl fullWidth>
-                    <TextField
-                      disabled={true}
-                      value={PO_amt}
-                      onChange={handlePOAmtTxtBoxChange}
-                    />
-                  </FormControl>
-                </Box>
-                <span>{PoCurr}</span>
-              </Grid>
-              <Grid item lg={4} md={4} sm={10} xs={10}>
-                <label>PO Number</label>
-                <br />
-                <Box sx={{ minWidth: 120 }}>
-                  <FormControl fullWidth>
-                    <TextField
-                      disabled={true}
-                      value={PO_number}
-                      onChange={handlePoNumTxtBoxChange}
-                    />
-                  </FormControl>
-                </Box>
-              </Grid>
-              {props.readonly ? (
-                <></>
-              ) : (
-                <Grid item lg={4} md={4} sm={10} xs={10}>
-                  <label>PO Amount Left</label>
-                  <br />
-                  <Box sx={{ minWidth: 120 }}>
-                    <FormControl fullWidth>
-                      <TextField disabled={true} value={PO_amt - sum} />
-                    </FormControl>
-                  </Box>
-                  <span>{PoCurr}</span>
+              <Grid item lg={8} md={8} sm={12} xs={12}>
+                <Grid container columnSpacing={3}>
+                  <Grid item lg={6} md={6} sm={12} xs={12}>
+                    <label>Client Sponsor</label>
+                    <br />
+                    <Box sx={{ minWidth: 120 }}>
+                      <FormControl fullWidth>
+                        <TextField
+                          //
+                          disabled={true}
+                          value={ClientSponsor}
+                          onChange={handleClientSponsor}
+                        />
+                      </FormControl>
+                    </Box>
+                  </Grid>
+                  <Grid item lg={6} md={6} sm={12} xs={12}>
+                    <label>Client Finance Controller</label>
+                    <br />
+                    <Box sx={{ minWidth: 120 }}>
+                      <FormControl fullWidth>
+                        <TextField
+                          disabled={true}
+                          value={Client_Fin_controller}
+                        />
+                      </FormControl>
+                    </Box>
+                  </Grid>
+                  <Grid item lg={4} md={4} sm={12} xs={12}>
+                    <label>PO Amount</label>
+                    <br />
+                    <Box sx={{ minWidth: 120 }}>
+                      <FormControl fullWidth>
+                        <TextField
+                          disabled={true}
+                          value={PO_amt}
+                          onChange={handlePOAmtTxtBoxChange}
+                        />
+                      </FormControl>
+                    </Box>
+                    <span>{PoCurr}</span>
+                  </Grid>
+                  <Grid item lg={4} md={4} sm={12} xs={12}>
+                    <label>PO Number</label>
+                    <br />
+                    <Box sx={{ minWidth: 120 }}>
+                      <FormControl fullWidth>
+                        <TextField
+                          disabled={true}
+                          value={PO_number}
+                          onChange={handlePoNumTxtBoxChange}
+                        />
+                      </FormControl>
+                    </Box>
+                  </Grid>
+                  <Grid item lg={4} md={4} sm={12} xs={12}>
+                    {props.readonly ? (
+                      <></>
+                    ) : (
+                      <div>
+                        <label>PO Amount Left</label>
+                        <br />
+                        <Box sx={{ minWidth: 120 }}>
+                          <FormControl fullWidth>
+                            <TextField disabled={true} value={PO_amt - sum} />
+                          </FormControl>
+                        </Box>
+                        <span>{PoCurr}</span>
+                      </div>
+                    )}
+                  </Grid>
                 </Grid>
-              )}
+              </Grid>
+              <Grid item lg={4} md={4} sm={12} xs={12}>
+                <Table>
+                  <TableHead>
+                    <TableRow>
+                      <TableCell>Targeted Resources</TableCell>
+                      <TableCell>Percentage Allocation</TableCell>
+                    </TableRow>
+                  </TableHead>
+                  <TableBody className="table-row-posow">
+                    <TableCell
+                      component="th"
+                      scope="row"
+                      className="table-cell"
+                    >
+                      {targetedResourcesName.map((row, index) => (
+                        <TableRow>{row}</TableRow>
+                      ))}
+                    </TableCell>
+                    <TableCell
+                      component="th"
+                      scope="row"
+                      className="table-cell"
+                    >
+                      {percentageAllocation.map((row, index) => (
+                        <TableRow>{row}</TableRow>
+                      ))}
+                    </TableCell>
+                  </TableBody>
+                </Table>
+              </Grid>
             </Grid>
-          </Grid>
-          <Grid item lg={4} md={4} sm={12} xs={12}>
-            <Table>
-              <TableHead>
-                <TableRow>
-                  <TableCell>Targeted Resources</TableCell>
-                  <TableCell>Percentage Allocation</TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody className="table-row-posow">
-                <TableCell component="th" scope="row" className="table-cell">
-                  {targetedResourcesName.map((row, index) => (
-                    <TableRow>{row}</TableRow>
-                  ))}
-                </TableCell>
-                <TableCell component="th" scope="row" className="table-cell">
-                  {percentageAllocation.map((row, index) => (
-                    <TableRow>{row}</TableRow>
-                  ))}
-                </TableCell>
-              </TableBody>
-            </Table>
-          </Grid>
-        </Grid>
-        <hr />
+            <hr />
 
-        {/* <Accordion>
+            {/* <Accordion>
           <AccordionSummary
             expandIcon={<ExpandMoreIcon />}
             aria-controls="panel1a-content"
@@ -522,93 +607,97 @@ function Invoice(props) {
             </Typography>
           </AccordionDetails>
         </Accordion> */}
-        <h3>Invoice Status</h3>
-        <hr />
-        <Grid container>
-          <div className="gridcontainer">
-            <Grid item lg={12} md={12} sm={122} xs={12}>
-              <label>Invoice raised</label>
-              <br />
-              <Box sx={{ minWidth: 120 }}>
-                <FormControl fullWidth>
-                  <Select
-                    disabled={!editTglCheckedState}
-                    value={invoice_raised}
-                    onChange={handleInvoiceRaised}
-                  >
-                    {invoiceRaised.map((detail) => (
-                      <MenuItem value={detail}>{detail}</MenuItem>
-                    ))}
-                  </Select>
-                </FormControl>
-              </Box>
-            </Grid>
-          </div>
-          <Grid item lg={12} md={12} sm={122} xs={12}>
-            <div className="invoicereceived">
-              <span>Invoice Received</span>
-              <Switch
-                disabled={invoice_raised_yesno === "No" || !editTglCheckedState}
-                onChange={invoicereceivedhandler}
-                checked={invoicereceived}
-              />
-            </div>
-          </Grid>
-          <div className="gridcontainer">
-            <Grid item lg={12} md={12} sm={122} xs={12}>
-              <label>Invoice amount received</label>
-              <Box sx={{ minWidth: 120 }}>
-                <FormControl fullWidth>
-                  <TextField
+            <h3>Invoice Status</h3>
+            <hr />
+            <Grid container>
+              <div className="gridcontainer">
+                <Grid item lg={12} md={12} sm={122} xs={12}>
+                  <label>Invoice raised</label>
+                  <br />
+                  <Box sx={{ minWidth: 120 }}>
+                    <FormControl fullWidth>
+                      <Select
+                        disabled={!editTglCheckedState}
+                        value={invoice_raised}
+                        onChange={handleInvoiceRaised}
+                      >
+                        {invoiceRaised.map((detail) => (
+                          <MenuItem value={detail}>{detail}</MenuItem>
+                        ))}
+                      </Select>
+                    </FormControl>
+                  </Box>
+                </Grid>
+              </div>
+              <Grid item lg={12} md={12} sm={122} xs={12}>
+                <div className="invoicereceived">
+                  <span>Invoice Received</span>
+                  <Switch
                     disabled={
-                      !invoicereceived ||
-                      !editTglCheckedState ||
-                      invoice_raised_yesno === "No"
+                      invoice_raised_yesno === "No" || !editTglCheckedState
                     }
-                    value={invoice_amount}
-                    onChange={handleInvoiceAmount}
+                    onChange={invoicereceivedhandler}
+                    checked={invoicereceived}
                   />
-                  <span>{PoCurr}</span>
-                </FormControl>
-              </Box>
-              <br />
-              <label>VB Bank Account</label>
-              <br />
-              <Box sx={{ minWidth: 120 }}>
-                <FormControl fullWidth>
-                  <Select
+                </div>
+              </Grid>
+              <div className="gridcontainer">
+                <Grid item lg={12} md={12} sm={122} xs={12}>
+                  <label>Invoice amount received</label>
+                  <Box sx={{ minWidth: 120 }}>
+                    <FormControl fullWidth>
+                      <TextField
+                        disabled={
+                          !invoicereceived ||
+                          !editTglCheckedState ||
+                          invoice_raised_yesno === "No"
+                        }
+                        value={invoice_amount}
+                        onChange={handleInvoiceAmount}
+                      />
+                      <span>{PoCurr}</span>
+                    </FormControl>
+                  </Box>
+                  <br />
+                  <label>VB Bank Account</label>
+                  <br />
+                  <Box sx={{ minWidth: 120 }}>
+                    <FormControl fullWidth>
+                      <Select
+                        disabled={
+                          !invoicereceived ||
+                          invoice_raised_yesno === "No" ||
+                          !editTglCheckedState
+                        }
+                        value={Vb_Bank_Acc}
+                        onChange={handlevbbankacc}
+                      >
+                        {VbBankAcc.map((detail) => (
+                          <MenuItem value={detail}>{detail}</MenuItem>
+                        ))}
+                      </Select>
+                    </FormControl>
+                  </Box>
+                </Grid>
+                <Grid item lg={12} md={12} sm={122} xs={12}>
+                  <br />
+                  <label htmlFor="invoiceamount">Amount Received on</label>
+                  <br />
+                  <BasicDatePicker
+                    onChange={handleDate}
+                    value={Date_ ? new Date(Date_) : null}
                     disabled={
                       !invoicereceived ||
                       invoice_raised_yesno === "No" ||
                       !editTglCheckedState
                     }
-                    value={Vb_Bank_Acc}
-                    onChange={handlevbbankacc}
-                  >
-                    {VbBankAcc.map((detail) => (
-                      <MenuItem value={detail}>{detail}</MenuItem>
-                    ))}
-                  </Select>
-                </FormControl>
-              </Box>
+                  />
+                </Grid>
+              </div>
             </Grid>
-            <Grid item lg={12} md={12} sm={122} xs={12}>
-              <br />
-              <label htmlFor="invoiceamount">Amount Received on</label>
-              <br />
-              <BasicDatePicker
-                onChange={handleDate}
-                value={Date_ ? new Date(Date_) : null}
-                disabled={
-                  !invoicereceived ||
-                  invoice_raised_yesno === "No" ||
-                  !editTglCheckedState
-                }
-              />
-            </Grid>
-          </div>
-        </Grid>
-      </form>
+          </Box>
+        </Container>
+      </React.Fragment>
     </div>
   );
 }

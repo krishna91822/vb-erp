@@ -1,25 +1,15 @@
-/* eslint-disable prettier/prettier */
 import { createSlice } from "@reduxjs/toolkit";
 
-const names = [
-  "Harsha Bendi",
-  "John dave",
-  "Vimal K",
-  "Aquib",
-  "yash DY",
-  "tanmay k",
-  "Yussuf Sh",
-  "Ayushi S",
-];
-const projects = ["xyz23", "asd34", "abc56", "yusah98", "ydy APPs"];
-const clientFinController = ["ABC", "XYZ", "EFG"];
-const targetedResources = ["ABC", "XYZ", "EFG", "ZZZ"];
+const names = [];
+const projects = [];
+const clientFinController = [];
+const targetedResources = [];
 const clientSponsors = [];
 const invoiceRaised = ["Yes", "No"];
-const invoiceRecieved = ["Yes", "No"];
+const invoiceRecieved = [];
 
-const invoiceAmount = ["9349", "8243", "9753"];
-const VbBankAcc = ["0987", "7654", "2958"];
+const invoiceAmount = [];
+const VbBankAcc = ["40141411111222", "1212334432234", "2324345434245"];
 
 export const invoice_init_state = {
   inputFieldsData: {

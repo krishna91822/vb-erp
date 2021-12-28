@@ -8,7 +8,6 @@ export const createNew_INVOICE = (formData) => {
   return async function (dispatch) {
     try {
       const response = await axios.post(`/invoice`, formData);
-      console.log(response.status);
       if (response.status === 201) {
         dispatch(
           uiActions.showNotification({

@@ -18,9 +18,7 @@ import MenuItem from "@mui/material/MenuItem";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-// import { fetch_INVOICE_data } from "../../store/CMS/INVOICE-actions";
-// import setPosts from './Main/actions'
-// import { sortProducts } from "../../store/CMS/POSOW-actions";
+
 import {
   fetch_INVOICE_data,
   paginationFetchInvoice,
@@ -95,6 +93,8 @@ function InvoiceInfo() {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
 
+  const user = useSelector((state) => state.user.user);
+
   const [searchText, setsearchText] = useState("");
 
   const handleClick = (event) => {
@@ -135,7 +135,7 @@ function InvoiceInfo() {
           <TextField
             id="outlined-basic"
             onKeyPress={searchHandler}
-            label="search"
+            label="client name,project name..."
             variant="outlined"
           />
         </Grid>
@@ -223,7 +223,9 @@ function InvoiceInfo() {
                 <TableCell>Invoice raised</TableCell>
                 <TableCell>Invoice Received</TableCell>
                 <TableCell>Invoice Amount received</TableCell>
-                <TableCell>Action</TableCell>
+                {user.permissions.includes("upload_invoice") && (
+                  <TableCell>Action</TableCell>
+                )}
               </TableRow>
             </TableHead>
             <TableBody className="table-row-posow">
@@ -251,14 +253,19 @@ function InvoiceInfo() {
                   <TableCell>{row.invoice_raised}</TableCell>
                   <TableCell>{row.invoice_received}</TableCell>
                   <TableCell>{row.invoice_amount_received}</TableCell>
-                  {row.invoice_received === "No" ? (
-                    <TableCell>
-                      <EditIcon />
-                    </TableCell>
-                  ) : (
-                    <TableCell>
-                      <EditOffIcon />
-                    </TableCell>
+
+                  {user.permissions.includes("upload_invoice") && (
+                    <>
+                      {row.invoice_received === "No" ? (
+                        <TableCell>
+                          <EditIcon />
+                        </TableCell>
+                      ) : (
+                        <TableCell>
+                          <EditOffIcon />
+                        </TableCell>
+                      )}
+                    </>
                   )}
                 </TableRow>
               ))}

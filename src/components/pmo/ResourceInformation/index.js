@@ -92,13 +92,7 @@ const ResourceInformation = ({
   const filteredEmployees = allEmployees
     ? allEmployees.filter((eachEmp) => !resourcesIds.includes(eachEmp._id))
     : [];
-  console.log(
-    resourcesIds,
-    "asasas",
-    filteredEmployees,
-    "------------",
-    resources
-  );
+
   return (
     <Container>
       <ResourceInformationHeading data-test="resource-head">

@@ -93,7 +93,7 @@ export const Main = () => {
     // dispatch(fetchPO_SOW_data);
     dispatch(paginationFetchPosow(filename, currentPage, postPerPage));
   }, []);
-
+  const user = useSelector((state) => state.user.user);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -122,7 +122,7 @@ export const Main = () => {
     if (event.key === "Enter") {
       dispatch(searchPoSow(event.target.value));
     }
-  };
+  };     
   return (
     <>
       <Grid container>
@@ -130,9 +130,9 @@ export const Main = () => {
           <TextField
             id="outlined-basic"
             onKeyPress={searchHandler}
-            label="search"
-            variant="outlined"
-          />
+            label="client name,project name..."
+            variant="outlined"     
+          />     
         </Grid>
         <Grid item lg={6} md={6} sm={6} xs={6}>
           <div className="sortbtn">
@@ -193,18 +193,20 @@ export const Main = () => {
           <div>
             <h3 data-test="MainHeading">PO/SOW's Information</h3>
           </div>
-          <div className="buttondiv">
-            <Link to="/posow/create" style={{ textDecoration: "none" }}>
-              <Button
-                className="button1"
-                data-test="Capture-po-sow"
-                variant="contained"
-                color="success"
-              >
-                Capture PO/SOW{" "}
-              </Button>
-            </Link>
-          </div>
+          {user.permissions.includes("upload_PO/SOW/contract") && (
+            <div className="buttondiv">
+              <Link to="/posow/create" style={{ textDecoration: "none" }}>
+                <Button
+                  className="button1"
+                  data-test="Capture-po-sow"
+                  variant="contained"
+                  color="success"
+                >
+                  Capture PO/SOW{" "}
+                </Button>
+              </Link>
+            </div>
+          )}
         </div>
 
         <TableContainer component={Paper}>
@@ -222,8 +224,11 @@ export const Main = () => {
                 <TableCell>PO/SOW Number</TableCell>
                 <TableCell>PO/SOW Amount</TableCell>
                 <TableCell>Client Sponsor</TableCell>
-                <TableCell>Action</TableCell>
-                <TableCell>Status</TableCell>
+
+                {/* {user.permissions.includes("upload_PO/SOW/contract") && (
+                  <TableCell>Action</TableCell>
+                )}
+                <TableCell>Status</TableCell> */}
               </TableRow>
             </TableHead>
             <TableBody className="table-row-posow" data-test="row-click1">
@@ -250,34 +255,25 @@ export const Main = () => {
                   <TableCell>{row.PO_Number}</TableCell>
                   <TableCell>{row.PO_Amount}</TableCell>
                   <TableCell>{row.Client_Sponser}</TableCell>
-                  {/* {row.Status === "Rejected" || row.Status === "Drafted" ? (
-                    <TableCell
-                      component={Link}
-                      to={`/posow/edit/${row._id}`}
-                      style={{ textDecoration: "none" }}
-                    >
-                      <Button className="editbtn">EDIT</Button>
-                    </TableCell>
-                  ) : (
-                    <TableCell aria-disabled>
-                      <Button className="editbtn" disabled>
-                        EDIT
-                      </Button>
-                    </TableCell>
-                  )} */}
-                  {row.Status === "Rejected" || row.Status === "Drafted" ? (
-                    <TableCell>
-                      <EditIcon />
-                    </TableCell>
-                  ) : (
-                    <TableCell>
-                      <EditOffIcon />
-                    </TableCell>
+
+                {/* might be required in future versions */}
+                  {/* {user.permissions.includes("upload_PO/SOW/contract") && (
+                    <>
+                      {row.Status === "Drafted" ? (
+                        <TableCell>
+                          <EditIcon />
+                        </TableCell>
+                      ) : (
+                        <TableCell>
+                          <EditOffIcon />
+                        </TableCell>
+                      )}
+                    </>
                   )}
 
                   <TableCell>
                     <strong>{row.Status}</strong>
-                  </TableCell>
+                  </TableCell> */}
                 </TableRow>
               ))}
             </TableBody>
@@ -295,11 +291,6 @@ export const Main = () => {
                 onChange={handlerowsPerpage}
                 defaultValue={30}
               >
-                {/* <Select value={postPerPage} onChange={handlerowsPerpage}>
-                  <MenuItem value={5}>5</MenuItem>
-                  <MenuItem value={10}>10</MenuItem>
-                  <MenuItem value={15}>15</MenuItem>
-                </Select> */}
                 <option value={5}>5</option>
                 <option value={10}>10</option>
                 <option value={15}>15</option>

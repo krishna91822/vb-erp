@@ -134,7 +134,7 @@ const SidebarNavigation = () => {
       ].some((x) => x),
     },
     {
-      name: "Network",
+      name: "My Colleagues",
       link: "/network",
       access: [
         isUser,
