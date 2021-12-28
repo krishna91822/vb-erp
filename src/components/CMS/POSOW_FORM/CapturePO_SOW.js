@@ -708,7 +708,10 @@ export const CapturePO_SOW = (props) => {
                     value={remarks}
                     onChange={handleRemarksChange}
                     data-test="comments-remarks-txtBox"
-                    inputProps={{ "data-testid": "RemarksTxtBox" }}
+                    inputProps={{
+                      "data-testid": "RemarksTxtBox",
+                      maxLength: 150,
+                    }}
                     error={errors.Remarks ? true : false}
                     disabled={
                       props.editBtn && !editTglCheckedState ? true : false

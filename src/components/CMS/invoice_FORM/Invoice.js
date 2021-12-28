@@ -124,6 +124,7 @@ function Invoice(props) {
   const [invoice_amount, setinvoiceAmount] = React.useState(Readinvoiceamount);
   const [Vb_Bank_Acc, setVbbankacc] = React.useState(ReadVbBankAcc);
   const [Date_, setDate] = React.useState(undefined);
+  const [remarks, setRemarks] = React.useState(null);
 
   const [invoicereceived, setinvoicereceived] = useState(false);
   const [editTglCheckedState, seteditTglCheckedState] = React.useState(
@@ -159,6 +160,7 @@ function Invoice(props) {
       setTargetedResources(filteredArr[0].PO_Id.Targetted_Resources);
       setTargetedAllocation(filteredArr[0].PO_Id.Targeted_Res_AllocationRate);
       setPoId(filteredArr[0].PO_Id._id);
+      setRemarks(filteredArr[0].Remarks);
     }
   }, [filteredArr]);
   useEffect(() => {
@@ -178,6 +180,7 @@ function Invoice(props) {
       setinvoiceAmount(null);
       setDate(null);
       setVbbankacc(null);
+      setRemarks(null);
     }
   }, [invoicereceived]);
   const handleClientChange = (event) => {
@@ -196,6 +199,9 @@ function Invoice(props) {
 
   const handlePOAmtTxtBoxChange = (event) => {
     setPOAmt(event.target.value);
+  };
+  const handleRemarksChange = (event) => {
+    setRemarks(event.target.value);
   };
   const handleClientFinController = (event) => {
     setClientFinController(event.target.value);
@@ -228,6 +234,7 @@ function Invoice(props) {
       invoice_raised: invoice_raised,
       invoice_amount_received: invoice_amount,
       vb_bank_account: Vb_Bank_Acc,
+      Remarks:remarks,
       amount_received_on:
         new Date(Date_).getFullYear() === 1970 ? null : new Date(Date_),
       invoice_received: invoicereceived ? "Yes" : "No",
@@ -249,20 +256,20 @@ function Invoice(props) {
     }
   };
 
-  useEffect(() => {
-    if (projectName && !params.id) {
-      const filtered = allPOSOWs.filter((val) => {
-        return projectName === val.Project_Name;
-      });
-      setPO_number(filtered[0].PO_Number);
-      setPersonName(filtered[0].Client_Name);
-      setClientSponsorArr(filtered[0].Client_Sponser);
-      setClientFinControllerArr(filtered[0].Client_Finance_Controller);
-      setPOAmt(filtered[0].PO_Amount);
-      setPoCurr(filtered[0].Currency);
-      setPoId(filtered[0].PO_Id);
-    }
-  }, [projectName]);
+  // useEffect(() => {
+  //   if (projectName && !params.id) {
+  //     const filtered = allPOSOWs.filter((val) => {
+  //       return projectName === val.Project_Name;
+  //     });
+  //     setPO_number(filtered[0].PO_Number);
+  //     setPersonName(filtered[0].Client_Name);
+  //     setClientSponsorArr(filtered[0].Client_Sponser);
+  //     setClientFinControllerArr(filtered[0].Client_Finance_Controller);
+  //     setPOAmt(filtered[0].PO_Amount);
+  //     setPoCurr(filtered[0].Currency);
+  //     setPoId(filtered[0].PO_Id);
+  //   }
+  // }, [projectName]);
   // const submitForm = async (event) => {
   //   event.preventDefault();
 
@@ -686,6 +693,30 @@ function Invoice(props) {
                   <BasicDatePicker
                     onChange={handleDate}
                     value={Date_ ? new Date(Date_) : null}
+                    disabled={
+                      !invoicereceived ||
+                      invoice_raised_yesno === "No" ||
+                      !editTglCheckedState
+                    }
+                  />
+                </Grid>
+                <br/>
+                <Grid item lg={12} md={12} sm={122} xs={12}>
+                <label id="demo-multiple-name-label">
+                    Remarks
+                  </label>
+                <TextField
+                    className="finalinput"
+                    id="outlined-multiline-static"
+                    multiline
+                    rows={4}
+                    value={remarks}
+                    onChange={handleRemarksChange}
+                    data-test="comments-remarks-txtBox"
+                    inputProps={{
+                      "data-testid": "RemarksTxtBox",
+                      maxLength: 150,
+                    }}
                     disabled={
                       !invoicereceived ||
                       invoice_raised_yesno === "No" ||
