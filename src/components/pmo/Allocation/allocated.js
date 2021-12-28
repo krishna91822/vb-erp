@@ -241,7 +241,7 @@ const Allocated = ({ pressed, allocatedSortedValue }) => {
                         align="left"
                         style={{ textTransform: "capitalize" }}
                       >
-                        {currElem.empId.empName}
+                        {currElem.empId ? currElem.empId.empName : "----"}
                       </TableCell>
                       <TableCell
                         align="left"
