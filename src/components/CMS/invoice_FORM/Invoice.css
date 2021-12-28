@@ -8,11 +8,6 @@
 .posowForm-container {
   margin: 1rem;
 }
-.posow-SaveButton {
-  margin: 1rem;
-  display: flex;
-  justify-content: flex-end;
-}
 .gridcontainer {
   border: 0;
   width: 100%;
@@ -25,15 +20,15 @@ select {
   width: 85%;
   margin-bottom: 10px;
 }
-form {
+/* form {
   padding: 10px;
-}
+} */
 .invoicereceived {
   margin: 10px 0;
 }
-form {
+/* form {
   border: 1px solid grey;
-}
+} */
 h3 {
   padding-left: 10px;
 }
@@ -42,4 +37,10 @@ h3 {
 }
 .savebtn {
   margin-left: 100%;
+}
+.invoice-editToggle {
+  float: right;
+}
+.invoiceForm-container {
+  margin: 1rem;
 }

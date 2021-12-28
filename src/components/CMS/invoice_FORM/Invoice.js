@@ -297,17 +297,16 @@ function Invoice(props) {
   }, [filteredArr]);
 
   return (
-    <div className="posowForm-container">
+    <div className="invoiceForm-container">
       <React.Fragment>
         <CssBaseline />
         <Grid container className="posow-topGrid">
-
         <Grid item lg={11} md={11} sm={12} xs={12}>
           <h3>Invoice</h3>
         </Grid>
         <Grid item lg={1} md={1} sm={12} xs={12}>
           {props.editBtn && editTglCheckedState ? (
-            <div>
+            <div className="posow-SaveButton">
               <Button
                 variant="contained"
                 color="success"
@@ -355,7 +354,7 @@ function Invoice(props) {
           )} */}
         {/* </Grid> */}
 
-        <hr />
+        
         {/* <Grid container columnSpacing={3}>
           <Grid item lg={6} md={6} sm={12} xs={12}>
             <h3>Invoice</h3>
@@ -387,16 +386,17 @@ function Invoice(props) {
               padding: "1rem",
             }}
           >
-            <Grid container>
+            <Grid container>             
               <Grid item lg={6} md={6} sm={6} xs={12}>
                 <h4 className="heading">PO Information</h4>
               </Grid>
               {user.permissions.includes("upload_invoice") && (
             <Grid item lg={1} md={1} sm={12} xs={12}>
-              <div className="posow-SaveButton">
+              <div className="invoice-editToggle">
                 <strong className="editTxt" data-test="editModeSwitch-label">
                   Edit
                 </strong>
+                <br/>
                 <label className="switch">
                   <input
                     type="checkbox"
@@ -415,8 +415,8 @@ function Invoice(props) {
               </div>
             </Grid>
           )}
+         
           </Grid>
-
             <hr />
             <Grid container columnSpacing={3}>
               <Grid item lg={6} md={6} sm={12} xs={12}>
