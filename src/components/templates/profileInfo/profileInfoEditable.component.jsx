@@ -67,8 +67,8 @@ const ProfileInfoEditable = (props) => {
   const customStyles = {
     control: (provided, state) => ({
       ...provided,
-      minHeight: "30px",
-      height: "30px",
+      minHeight: "35px",
+      height: "35px",
       display: "flex",
       alignContent: "center",
     }),
@@ -105,14 +105,10 @@ const ProfileInfoEditable = (props) => {
     };
   });
   const [departmentDropdown, setDepartmentDropdown] = useState(
-    empDepartment
-      ? { label: empDepartment, value: empDepartment }
-      : departmentOptions[0]
+    empDepartment ? { label: empDepartment, value: empDepartment } : null
   );
   const [designationDropdown, setDesignationDropdown] = useState(
-    empDesignation
-      ? { label: empDesignation, value: empDesignation }
-      : designationOptions[0]
+    empDesignation ? { label: empDesignation, value: empDesignation } : null
   );
 
   useEffect(() => {
@@ -131,8 +127,8 @@ const ProfileInfoEditable = (props) => {
           setEmployee({
             ...employee,
             empReportingManager: data[0].value,
-            empDepartment: departmentDropdown.value,
-            empDesignation: designationDropdown.value,
+            // empDepartment: departmentDropdown.value,
+            // empDesignation: designationDropdown.value,
           });
         setEmpNameLoading((prev) => !prev);
       })
@@ -283,7 +279,7 @@ const ProfileInfoEditable = (props) => {
               <Box
                 sx={{
                   width: "80%",
-                  height: "28px",
+                  height: "35px",
                   fontSize: "14px",
                   marginLeft: "8px",
                 }}
@@ -291,7 +287,7 @@ const ProfileInfoEditable = (props) => {
                 <CreatableSelect
                   value={departmentDropdown ? departmentDropdown : null}
                   styles={customStyles}
-                  isLoading={empNameLoading}
+                  // isLoading={empNameLoading}
                   isSearchable
                   name="empDepartment"
                   options={departmentOptions}
@@ -331,7 +327,7 @@ const ProfileInfoEditable = (props) => {
               <Box
                 sx={{
                   width: "80%",
-                  height: "28px",
+                  height: "35px",
                   fontSize: "14px",
                   marginLeft: "8px",
                 }}
@@ -339,7 +335,7 @@ const ProfileInfoEditable = (props) => {
                 <CreatableSelect
                   value={designationDropdown ? designationDropdown : null}
                   styles={customStyles}
-                  isLoading={empNameLoading}
+                  // isLoading={empNameLoading}
                   isSearchable
                   name="empDesignation"
                   options={designationOptions}
@@ -399,7 +395,7 @@ const ProfileInfoEditable = (props) => {
               <Box
                 sx={{
                   width: "80%",
-                  height: "28px",
+                  height: "35px",
                   fontSize: "14px",
                   marginLeft: "8px",
                 }}

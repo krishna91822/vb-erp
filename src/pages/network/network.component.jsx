@@ -15,6 +15,7 @@ import { useDispatch } from "react-redux";
 import { uiActions } from "./../../store/ui-slice";
 
 import { useNavigate } from "react-router-dom";
+import { grey } from "@mui/material/colors";
 
 const Network = () => {
   const { toggleLoader } = uiActions;
@@ -98,7 +99,7 @@ const Network = () => {
           sx={{
             fontSize: "1.5em",
             textTransform: "capitalize",
-            mb: 0.5,
+            mb: 1,
             mr: 2,
           }}
         >
@@ -137,10 +138,10 @@ const Network = () => {
           // width: "100%",
           // minHeight: "calc(100vh - 50px)",
           // width: "calc(100% - 48px)",
-          border: "0.1em solid",
-          borderColor: "textColor.paletteGrey",
+          outline: "0.1em solid",
+          outlineColor: grey[500],
           borderRadius: "5px",
-          pb: 3,
+          // pb: 3,
         }}
       >
         <Box sx={{ width: "100%" }}>
@@ -148,10 +149,10 @@ const Network = () => {
             data-test="networkTableHead"
             sx={{
               height: 60,
-              mt: 2,
-              mb: 2,
+              // mb: 1,
               backgroundColor: "textColor.light",
-              // borderRadius: "5px",
+              border: "none",
+              borderRadius: "5px 5px 0 0",
             }}
           >
             {
@@ -165,10 +166,13 @@ const Network = () => {
             <CustomGridBox
               key={item.empId}
               sx={{
-                mt: 0.5,
-                mb: 0.5,
-                height: 50,
-                // borderRadius: "5px",
+                // mt: 0.5,
+                // mb: 0.5,
+                height: 43,
+                borderBottom: "none",
+                borderLeft: "none",
+                borderRight: "none",
+                borderRadius: "0",
                 cursor: "pointer",
               }}
               onClick={(e) => handleEmployeeClick(item)}

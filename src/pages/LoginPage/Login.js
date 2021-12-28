@@ -1,4 +1,4 @@
-import * as React from "react";
+import { useEffect } from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -15,16 +15,16 @@ import { useNavigate } from "react-router-dom";
 export default function SignIn() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const user = useSelector((state) => state.user.user);
 
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     const email = data.get("username");
     const password = data.get("password");
-    dispatch(validateUser(email, password));
-    setTimeout(() => {
-      navigate("/my-profile");
-    }, 1000);
+    dispatch(validateUser(email, password)).then((res) => {
+      res && navigate("/my-profile");
+    });
   };
 
   return (
@@ -55,7 +55,7 @@ export default function SignIn() {
               required
               fullWidth
               id="username"
-              label="username"
+              label="Email"
               name="username"
               //   autoComplete="username"
               autoFocus

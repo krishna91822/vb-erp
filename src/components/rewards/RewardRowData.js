@@ -8,6 +8,7 @@ import { faEllipsisV } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 import {
   deleteRewardData,
+  sendInstanteMessage,
   updateRewardStatus,
 } from "../../store/rewards-actions";
 import { useDispatch, useSelector } from "react-redux";
@@ -51,6 +52,11 @@ const RewardRowData = ({ data, StyledMenu, open }) => {
 
   const launchReward = (id) => {
     dispatch(updateRewardStatus(id, 2, defaultPage, sorting, searchValue)); //2 is for updating reward status to LAUNCH
+    setAnchorEl(null);
+  };
+
+  const sendMessage = (id) => {
+    dispatch(sendInstanteMessage(id));
     setAnchorEl(null);
   };
 
@@ -98,6 +104,14 @@ const RewardRowData = ({ data, StyledMenu, open }) => {
             open={Boolean(anchorEl)}
             onClose={handleClose}
           >
+            {data.status === "In Progress" ? (
+              <MenuItem onClick={() => sendMessage(data._id)} disableRipple>
+                Send Message
+              </MenuItem>
+            ) : (
+              ""
+            )}
+
             {data.status !== "In Progress" ? (
               <MenuItem onClick={() => launchReward(data._id)} disableRipple>
                 Launch
@@ -105,6 +119,7 @@ const RewardRowData = ({ data, StyledMenu, open }) => {
             ) : (
               ""
             )}
+
             {data.reward_receiver === "selected" ? (
               <MenuItem
                 onClick={() => relaunchReward(data.reward_receiver)}
@@ -115,7 +130,7 @@ const RewardRowData = ({ data, StyledMenu, open }) => {
             ) : (
               ""
             )}
-            {data.status !== "Stopped" ? (
+            {data.status !== "Stopped" && data.status === "In Progress" ? (
               <MenuItem onClick={() => stopReward(data._id)} disableRipple>
                 Stop
               </MenuItem>
@@ -162,6 +177,7 @@ const RewardRowData = ({ data, StyledMenu, open }) => {
             rewardList={true}
             openPopup={openPopup}
             setOpenPopup={setOpenPopup}
+            stateOfSelection="multiple"
           />
         </Popup>
       </div>

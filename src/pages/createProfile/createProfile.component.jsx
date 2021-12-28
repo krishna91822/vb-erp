@@ -3,15 +3,7 @@ import React, { useEffect, useState } from "react";
 import { LocalizationProvider, DesktopDatePicker } from "@mui/lab";
 import AdapterDateFns from "@mui/lab/AdapterDateFns";
 
-import {
-  Box,
-  Button,
-  Container,
-  MenuItem,
-  Modal,
-  Paper,
-  Typography,
-} from "@mui/material";
+import { Box, Button, MenuItem, Modal, Paper, Typography } from "@mui/material";
 
 import {
   createProfileConstant,
@@ -51,9 +43,10 @@ const CreateProfile = ({
   toggleEditEmployee,
   setToggleEditEmployee,
 }) => {
+  const { user } = useSelector((state) => state.user);
   const { currentEmployee } = useSelector((state) => state.employee);
   const dispatch = useDispatch();
-  const { toggleLoader } = uiActions;
+  const { toggleLoader, showNotification } = uiActions;
 
   const { register, handleSubmit, errors } = useForm();
 
@@ -71,14 +64,14 @@ const CreateProfile = ({
     empEmail: "",
     empDepartment: "",
     empDesignation: "",
-    empDoj: new Date(),
+    empDoj: null,
     empReportingManager: "",
     empAboutMe: "",
     empBand: "",
     empCertifications: [],
     empConnections: 0,
     empCurrentAddress: undefined,
-    empDob: new Date(),
+    empDob: null,
     empGraduation: "",
     empGraduationUniversity: "",
     empHobbies: [],
@@ -96,7 +89,6 @@ const CreateProfile = ({
       : {
           ...empInitial,
           empDoj: new Date(),
-          empDob: new Date(),
         }
   );
 
@@ -253,7 +245,41 @@ const CreateProfile = ({
           handleOpenModalError();
           console.log(error);
         });
-    } else {
+    } else if (
+      createEmployee?.reqType === "profile-update" &&
+      ["hr_admin", "super_admin"].some((el) => user.roles.includes(el))
+    ) {
+      let employeeObject = { ...createEmployee.employeeDetails };
+      ["_id", "empId", "createdAt", "updatedAt", "count"].map(
+        (el) => delete employeeObject[el]
+      );
+      axiosInstance
+        .patch(`/employees/${editEmployeeData._id}`, employeeObject)
+        .then(function (response) {
+          setEmployee(empInitial);
+          dispatch(toggleLoader());
+          dispatch(
+            showNotification({
+              status: "success",
+              title: "Employee has been updated.",
+              message: "Employee has been updated.",
+            })
+          );
+          // handleOpenModal();
+        })
+        .catch(function (error) {
+          dispatch(toggleLoader());
+          // handleOpenModalError();
+          dispatch(
+            showNotification({
+              status: "success",
+              title: "Something went wrong!",
+              message: "Something went wrong!",
+            })
+          );
+          console.log(error);
+        });
+    } else if (createEmployee?.reqType === "profile-update") {
       axiosInstance
         .post("/reviews", createEmployee)
         .then(function (response) {
@@ -269,7 +295,6 @@ const CreateProfile = ({
         });
     }
   };
-  // console.log(errors);
 
   return currentEmployee && currentEmployee.role === "ADMIN" ? (
     <BoxStyle data-test="create-profile-test">

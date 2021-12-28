@@ -14,7 +14,7 @@ import MenuItem from "@mui/material/MenuItem";
 import Avatar from "@mui/material/Avatar";
 import Divider from "@mui/material/Divider";
 import ListItemIcon from "@mui/material/ListItemIcon";
-import { createTheme, ThemeProvider } from "@mui/material";
+import { createTheme, ThemeProvider, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { userActions } from "../../store/user-slice";
@@ -80,6 +80,7 @@ const Header = () => {
             <>
               <IconButton size="large" edge="end" onClick={handleClick}>
                 <AccountCircle fontSize="large" />
+                <Typography variant="h6">{user.name}</Typography>
               </IconButton>
               <Menu
                 id="profile-menu"
