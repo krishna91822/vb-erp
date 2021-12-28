@@ -29,20 +29,20 @@ function CreateClientForm() {
       </Grid>
       <div className="CIMSFormContainer">
         <div className="cims-form-header">
-          <Grid container m={2} spacing={1}>
+          <Grid container m={2} pr={5} spacing={1}>
             <Grid item md={4}>
               <Typography variant="h4">Client Information</Typography>
             </Grid>
             <Grid item sm></Grid>
-            <Grid container pt={1} md={5} spacing={5}>
-              <Grid item md={3}>
+            <Grid container pt={1} md={2} spacing={2}>
+              <Grid item md={8}>
                 <Link to="/cims" style={{ textDecoration: "none" }}>
                   <Button variant="contained" color="error" id="cancel-btn">
                     Cancel
                   </Button>
                 </Link>
               </Grid>
-              <Grid item md={3}>
+              <Grid item md={4}>
                 <Button
                   onClick={submitForm}
                   type="submit"
@@ -53,20 +53,6 @@ function CreateClientForm() {
                 >
                   Save
                 </Button>
-              </Grid>
-              <Grid item md={6}>
-                <FormControlLabel
-                  control={
-                    <Switch
-                      checked={editMode}
-                      onChange={() =>
-                        dispatch(cimsActions.toggleEditMode(!editMode))
-                      }
-                      color="success"
-                    />
-                  }
-                  label="Edit mode"
-                />
               </Grid>
             </Grid>
           </Grid>
