@@ -47,7 +47,6 @@ const PersonalEditable = (props) => {
     // empConnections,
     empHobbies,
     empPersonalEmail,
-    empDob,
     empAboutMe,
     empCurrentAddress,
     empResidentialAddress,
@@ -316,7 +315,8 @@ const PersonalEditable = (props) => {
               })}
             />
           </ContentBox>
-          <ContentBox>
+
+          {/* <ContentBox>
             <ContentTypo>
               {personal.dob}
               <Box component="span" sx={{ color: "red" }}>
@@ -336,7 +336,8 @@ const PersonalEditable = (props) => {
                 )}
               />
             </LocalizationProvider>
-          </ContentBox>
+          </ContentBox> */}
+
           <ContentBox>
             <ContentTypo>{personal.hobbies}</ContentTypo>
             <Box

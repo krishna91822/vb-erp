@@ -27,7 +27,6 @@ const PersonalReadable = ({ empData }) => {
     empConnections,
     empHobbies,
     empPersonalEmail,
-    empDob,
     empAboutMe,
     empCurrentAddress,
     empResidentialAddress,
@@ -99,12 +98,12 @@ const PersonalReadable = ({ empData }) => {
             <TitleTypo>{personal.personalEmail}</TitleTypo>
             <ContentTypo>{empPersonalEmail}</ContentTypo>
           </ContentBox>
-          <ContentBox>
+          {/* <ContentBox>
             <TitleTypo>{personal.dob}</TitleTypo>
             <ContentTypo>
               {empDob ? new Date(empDob).toDateString().slice(4) : ""}
             </ContentTypo>
-          </ContentBox>
+          </ContentBox> */}
           <ContentBox>
             <TitleTypo>{personal.hobbies}</TitleTypo>
             <ContentTypo>
