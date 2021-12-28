@@ -40,7 +40,6 @@
   display: flex;
   flex-direction: row-reverse;
   margin: 10px;
-  margin-right: 28px;
 }
 .Pagination {
   display: flex;

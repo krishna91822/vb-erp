@@ -39,8 +39,27 @@ h3 {
   margin-left: 100%;
 }
 .invoice-editToggle {
-  float: right;
+  text-align: center;
+  margin-top: 15px;
+  position: relative;
 }
 .invoiceForm-container {
   margin: 1rem;
 }
+.invoice-updateBtn {
+  text-align: right;
+  margin-right: 10px;
+  margin-top: 15px;
+}
+.editTxt {
+  width: fit-content;
+  position: relative;
+  display: inline-block;
+  padding-top: 6px;
+  padding-right: 6px;
+  font-weight: bold;
+}
+/* .switch{
+  display: inline-block;
+  position: absolute;
+} */

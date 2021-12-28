@@ -110,6 +110,7 @@ export const CapturePO_SOW = (props) => {
   const [errors, setErrors] = useState({});
   const [projectId, setProjectId] = useState("");
   const [selectedDate, setPOSOWEndDate] = useState(null);
+  const [charsLeft, setCharsLeft] = useState(150);
   const [clientName, setClientName] = React.useState(DefaultClientName);
   const [projectName, setProjectName] = React.useState(ReadProjectName);
   const [clientProjectSponsor, setclientProjectSponsor] =
@@ -212,6 +213,10 @@ export const CapturePO_SOW = (props) => {
   const handleRemarksChange = (event) => {
     setRemarks(event.target.value);
   };
+  useEffect(() => {
+    const maxCount = 150;
+    setCharsLeft(maxCount - remarks.length);
+  }, [remarks]);
   const handlePoNumTxtBoxChange = (event) => {
     setPO_number(event.target.value);
   };
@@ -328,8 +333,15 @@ export const CapturePO_SOW = (props) => {
               }}
             >
               <Grid container>
-                <Grid item lg={6} md={6} sm={6} xs={12} className="finalgrid">
-                  <h3>Project information</h3>
+                <Grid
+                  item
+                  lg={10}
+                  md={10}
+                  sm={10}
+                  xs={12}
+                  className="finalgrid"
+                >
+                  <h3 className="cms-heading">Project information</h3>
                 </Grid>
                 {/* might be required in future versions. */}
                 {/* <Grid item lg={4} md={4} sm={4} xs={12} className="finalgrid">
@@ -345,16 +357,15 @@ export const CapturePO_SOW = (props) => {
                   )}
                 </Grid> */}
                 {user.permissions.includes("upload_PO/SOW/contract") && (
-                  <Grid item lg={6} md={6} sm={6} xs={12} className="finalgrid">
+                  <Grid item lg={2} md={2} sm={2} xs={12} className="finalgrid">
                     {props.editBtn ? (
-                      <div className="posow-SaveButton">
-                        <strong
+                      <div className="invoice-editToggle">
+                        <div
                           className="editTxt"
                           data-test="editModeSwitch-label"
                         >
                           Edit
-                        </strong>
-                        <br />
+                        </div>
                         <label className="switch">
                           <input
                             type="checkbox"
@@ -454,60 +465,72 @@ export const CapturePO_SOW = (props) => {
                   />
                 </Grid>
               </Grid>
-
-              <hr className="projectInfoSeperator" />
-
-              <Grid container>
+              <Grid container className="posow-parentProjectInfo">
                 <Grid item lg={4} md={4} sm={12} xs={12} className="finalgrid">
-                  <h3 data-test="client-sponsor-chkBox-label">
-                    Client Sponsor
-                  </h3>
-                  <ul className="posow-ul">
-                    <li>{clientProjectSponsor}</li>
-                  </ul>
+                  <div className="posow-projectInfo">
+                    <h3
+                      className="posow-projectInfoHeading"
+                      data-test="client-sponsor-chkBox-label"
+                    >
+                      Client Sponsor
+                    </h3>
+                    <ul className="posow-ul">
+                      <li>{clientProjectSponsor}</li>
+                    </ul>
+                  </div>
                 </Grid>
                 <Grid item lg={4} md={4} sm={12} xs={12} className="finalgrid">
-                  <h3 data-test="client-finController-chkBox-label">
-                    Client Finance Controller
-                  </h3>
-                  <ul className="posow-ul">
-                    <li>{clientFinanceController}</li>
-                  </ul>
+                  <div className="posow-projectInfo">
+                    <h3
+                      className="posow-projectInfoHeading"
+                      data-test="client-finController-chkBox-label"
+                    >
+                      Client Finance Controller
+                    </h3>
+                    <ul className="posow-ul">
+                      <li>{clientFinanceController}</li>
+                    </ul>
+                  </div>
                 </Grid>
                 <Grid item lg={4} md={4} sm={12} xs={12} className="finalgrid">
-                  <h3 data-test="TargetedRes-chkBox-label">
-                    Targeted Resources
-                  </h3>
-                  <ul className="posow-ul">
-                    {targetedResources.map((name, index) => {
-                      return (
-                        <li key={index}>
-                          <div className="">
+                  <div className="posow-projectInfo">
+                    <h3
+                      className="posow-projectInfoHeading"
+                      data-test="TargetedRes-chkBox-label"
+                    >
+                      Targeted Resources
+                    </h3>
+                    <ul className="posow-ul">
+                      {targetedResources.map((name, index) => {
+                        return (
+                          <li key={index}>
                             <div className="">
-                              <input
-                                type="checkbox"
-                                id={`custom-checkbox-${index}`}
-                                name={name}
-                                value={name}
-                                data-test="targetedRes-chkBox-input"
-                                data-testid={`targetedRes${index}`}
-                                disabled={
-                                  props.editBtn && !editTglCheckedState
-                                    ? true
-                                    : false
-                                }
-                                onChange={() =>
-                                  handleTargetedResChkBoxOnChange(index)
-                                }
-                                checked={TargetedResChkBox[index]}
-                              />
-                              <label>{name}</label>
+                              <div className="">
+                                <input
+                                  type="checkbox"
+                                  id={`custom-checkbox-${index}`}
+                                  name={name}
+                                  value={name}
+                                  data-test="targetedRes-chkBox-input"
+                                  data-testid={`targetedRes${index}`}
+                                  disabled={
+                                    props.editBtn && !editTglCheckedState
+                                      ? true
+                                      : false
+                                  }
+                                  onChange={() =>
+                                    handleTargetedResChkBoxOnChange(index)
+                                  }
+                                  checked={TargetedResChkBox[index]}
+                                />
+                                <label>{name}</label>
+                              </div>
                             </div>
-                          </div>
-                        </li>
-                      );
-                    })}
-                  </ul>
+                          </li>
+                        );
+                      })}
+                    </ul>
+                  </div>
                 </Grid>
               </Grid>
 
@@ -717,6 +740,9 @@ export const CapturePO_SOW = (props) => {
                       props.editBtn && !editTglCheckedState ? true : false
                     }
                   />
+                  <span className="cms-remarksCharCount">
+                    ({charsLeft}/150)
+                  </span>
                 </Grid>
                 {/* might be required in future versions */}
                 {/* {user.permissions.includes("upload_PO/SOW/contract") && (

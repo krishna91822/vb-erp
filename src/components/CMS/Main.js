@@ -130,8 +130,9 @@ export const Main = () => {
           <TextField
             id="outlined-basic"
             onKeyPress={searchHandler}
-            label="client name,project name..."
-            variant="outlined"     
+            label="Search by client/project name"
+            variant="outlined"   
+            sx={{ width:300 }}  
           />     
         </Grid>
         <Grid item lg={6} md={6} sm={6} xs={6}>
@@ -197,10 +198,12 @@ export const Main = () => {
             <div className="buttondiv">
               <Link to="/posow/create" style={{ textDecoration: "none" }}>
                 <Button
-                  className="button1"
+                  className="posow-SaveButton"
                   data-test="Capture-po-sow"
                   variant="contained"
-                  color="success"
+                  style={{
+                    backgroundColor: "#f57c00", color: "#FFFFFF"
+                  }}
                 >
                   Capture PO/SOW{" "}
                 </Button>
@@ -281,7 +284,7 @@ export const Main = () => {
         </TableContainer>
         <Stack spacing={10}>
           <div className="Pagination">
-            <Typography>Page: {currentPage}</Typography>
+            {/* <Typography className="pagenumber">Page: {currentPage}</Typography> */}
             <div className="numbering">
               <InputLabel variant="standard" htmlFor="uncontrolled-native">
                 Rows per page:

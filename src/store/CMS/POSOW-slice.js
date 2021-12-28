@@ -108,7 +108,7 @@ const POSOW_Slice = createSlice({
     setTargetedResources(state, action) {
       state.inputFieldsData.targetedResources = [...action.payload].map(
         (obj) => {
-          return obj.empId.empName;
+          return obj.empId.empName + " (" + obj.empId.empId + ")";
         }
       );
     },

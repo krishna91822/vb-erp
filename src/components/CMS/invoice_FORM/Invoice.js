@@ -125,6 +125,7 @@ function Invoice(props) {
   const [Vb_Bank_Acc, setVbbankacc] = React.useState(ReadVbBankAcc);
   const [Date_, setDate] = React.useState(undefined);
   const [remarks, setRemarks] = React.useState(null);
+  const [charsLeft, setCharsLeft] = useState(150);
 
   const [invoicereceived, setinvoicereceived] = useState(false);
   const [editTglCheckedState, seteditTglCheckedState] = React.useState(
@@ -156,11 +157,13 @@ function Invoice(props) {
       filteredArr[0].amount_received_on !== undefined
         ? setDate(filteredArr[0].amount_received_on)
         : setDate(null);
+      filteredArr[0].invoice_received==="Yes"?setinvoicereceived(true):setinvoicereceived(false)
       setVbbankacc(filteredArr[0].vb_bank_account);
       setTargetedResources(filteredArr[0].PO_Id.Targetted_Resources);
       setTargetedAllocation(filteredArr[0].PO_Id.Targeted_Res_AllocationRate);
       setPoId(filteredArr[0].PO_Id._id);
       setRemarks(filteredArr[0].Remarks);
+
     }
   }, [filteredArr]);
   useEffect(() => {
@@ -203,6 +206,12 @@ function Invoice(props) {
   const handleRemarksChange = (event) => {
     setRemarks(event.target.value);
   };
+  useEffect(() => {
+    if(remarks){
+      const maxCount = 150;
+      setCharsLeft(maxCount - remarks.length);
+    }
+  }, [remarks]);
   const handleClientFinController = (event) => {
     setClientFinController(event.target.value);
   };
@@ -308,13 +317,13 @@ function Invoice(props) {
       <React.Fragment>
         <CssBaseline />
         <Grid container className="posow-topGrid">
-        <Grid item lg={11} md={11} sm={12} xs={12}>
+        <Grid item lg={10} md={10} sm={12} xs={12}>
           <h3>Invoice</h3>
         </Grid>
-        <Grid item lg={1} md={1} sm={12} xs={12}>
+        <Grid item lg={2} md={2} sm={12} xs={12}>
           {props.editBtn && editTglCheckedState ? (
-            <div className="posow-SaveButton">
-              <Button
+            <div className="invoice-updateBtn">
+              <Button             
                 variant="contained"
                 color="success"
                 onClick={updatehandler}
@@ -394,16 +403,15 @@ function Invoice(props) {
             }}
           >
             <Grid container>             
-              <Grid item lg={11} md={11} sm={11} xs={12}>
+              <Grid item lg={10} md={10} sm={10} xs={12}>
                 <h4 className="heading">PO Information</h4>
               </Grid>
               {user.permissions.includes("upload_invoice") && (
-            <Grid item lg={1} md={1} sm={1} xs={12}>
+            <Grid item lg={2} md={2} sm={2} xs={12}>
               <div className="invoice-editToggle">
-                <strong className="editTxt" data-test="editModeSwitch-label">
+                <div className="editTxt" data-test="editModeSwitch-label">
                   Edit
-                </strong>
-                <br/>
+                </div>
                 <label className="switch">
                   <input
                     type="checkbox"
@@ -480,7 +488,7 @@ function Invoice(props) {
                       </FormControl>
                     </Box>
                   </Grid>
-                  <Grid item lg={4} md={4} sm={12} xs={12}>
+                  <Grid item lg={6} md={6} sm={12} xs={12}>
                     <label>PO Amount</label>
                     <br />
                     <Box sx={{ minWidth: 120 }}>
@@ -494,7 +502,7 @@ function Invoice(props) {
                     </Box>
                     <span>{PoCurr}</span>
                   </Grid>
-                  <Grid item lg={4} md={4} sm={12} xs={12}>
+                  <Grid item lg={6} md={6} sm={12} xs={12}>
                     <label>PO Number</label>
                     <br />
                     <Box sx={{ minWidth: 120 }}>
@@ -507,7 +515,7 @@ function Invoice(props) {
                       </FormControl>
                     </Box>
                   </Grid>
-                  <Grid item lg={4} md={4} sm={12} xs={12}>
+                  {/* <Grid item lg={4} md={4} sm={12} xs={12}>
                     {props.readonly ? (
                       <></>
                     ) : (
@@ -522,7 +530,7 @@ function Invoice(props) {
                         <span>{PoCurr}</span>
                       </div>
                     )}
-                  </Grid>
+                  </Grid> */}
                 </Grid>
               </Grid>
               <Grid item lg={4} md={4} sm={12} xs={12}>
@@ -723,6 +731,7 @@ function Invoice(props) {
                       !editTglCheckedState
                     }
                   />
+                  <span className="cms-remarksCharCount">({charsLeft}/150)</span>
                 </Grid>
               </div>
             </Grid>

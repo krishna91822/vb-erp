@@ -135,8 +135,9 @@ function InvoiceInfo() {
           <TextField
             id="outlined-basic"
             onKeyPress={searchHandler}
-            label="client name,project name..."
+            label="Search by client/project name"
             variant="outlined"
+            sx={{ width:300 }} 
           />
         </Grid>
         <Grid item lg={6} md={6} sm={6} xs={6}>
@@ -275,7 +276,7 @@ function InvoiceInfo() {
 
         <Stack spacing={10}>
           <div className="Pagination">
-            <Typography className="pagenumber">Page: {currentPage}</Typography>
+            {/* <Typography className="pagenumber">Page: {currentPage}</Typography> */}
             <div className="numbering">
               <InputLabel variant="standard" htmlFor="uncontrolled-native">
                 Rows per page:
