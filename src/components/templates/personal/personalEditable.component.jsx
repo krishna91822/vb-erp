@@ -27,7 +27,7 @@ import {
 } from "@mui/material/colors";
 
 import axiosInstance from "./../../../helpers/axiosInstance";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { uiActions } from "./../../../store/ui-slice.js";
 import { useLocation } from "react-router-dom";
 
@@ -35,6 +35,7 @@ const PersonalEditable = (props) => {
   const { toggleLoader } = uiActions;
   const dispatch = useDispatch();
   const { pathname } = useLocation();
+  const { user } = useSelector((state) => state.user);
 
   const {
     empData,
@@ -297,7 +298,8 @@ const PersonalEditable = (props) => {
               // helperText={errors.empPersonalEmail?.message}
             />
           </ContentBox>
-          {pathname === "/my-profile" ? (
+          {pathname === "/my-profile" &&
+          !["hr_admin", "super_admin"].some((el) => user.roles.includes(el)) ? (
             <ContentBox>
               <ContentTypo>
                 {personal.dob}
