@@ -335,7 +335,7 @@ const CreateReward = () => {
               />
               <br />
               <TextField
-                placeholder="Please Join Us"
+                placeholder="hii <@receiver> you have some msg from <@sender>"
                 multiline
                 className="textfield1"
                 name="channel_message"
