@@ -1,4 +1,4 @@
-import React, { memo, useEffect, useState } from "react";
+import React, { memo, useEffect, useState, useRef } from "react";
 
 import { Box, Container } from "@mui/material";
 
@@ -26,6 +26,8 @@ const Profile = () => {
   const [loading, setLoading] = useState(true);
   const dispatch = useDispatch();
 
+  const [employeeUpdateCount, setEmployeeUpdateCount] = useState(0);
+
   useEffect(() => {
     setTimeout(() => {
       axiosInstance
@@ -47,7 +49,7 @@ const Profile = () => {
         })
         .catch((err) => console.log(err));
     }, 2000);
-  }, [dispatch]);
+  }, [dispatch, employeeUpdateCount]);
 
   const [personalDetails, setPersonalDetails] = useState([]);
   const [professionalDetails, setProfessionalDetails] = useState([]);
@@ -91,6 +93,7 @@ const Profile = () => {
     updateRequest,
     inEditMode,
     handleOpen,
+    setEmployeeUpdateCount,
   };
 
   return loading ? (

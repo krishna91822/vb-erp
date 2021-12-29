@@ -21,7 +21,6 @@ export const TitleTypo = styled("div")(({ theme }) => ({
   fontWeight: 600,
   color: theme.palette.textColor.main,
   fontSize: 16,
-  padding: "0 10px",
 }));
 
 export const ContentTypo = styled("div")(({ theme }) => ({

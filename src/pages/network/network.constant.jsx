@@ -1,4 +1,5 @@
 export const networkText = {
+  header: "My Colleagues",
   title: ["Name", "EmpID", "Email", "Position", "Location", "Department"],
   sortOption: [
     {
