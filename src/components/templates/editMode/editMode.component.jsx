@@ -10,7 +10,12 @@ import { uiActions } from "./../../../store/ui-slice";
 
 import axiosInstance from "./../../../helpers/axiosInstance";
 
-const EditMode = ({ updateRequest, handleOpen, handleSubmit }) => {
+const EditMode = ({
+  updateRequest,
+  handleOpen,
+  handleSubmit,
+  setEmployeeUpdateCount,
+}) => {
   const { inEditMode } = useSelector((state) => state.employee);
   const { user } = useSelector((state) => state.user);
   const { toggleLoader, showNotification } = uiActions;
@@ -88,6 +93,7 @@ const EditMode = ({ updateRequest, handleOpen, handleSubmit }) => {
           console.log(error);
         });
     }
+    setEmployeeUpdateCount((prev) => prev + 1);
   };
 
   const handleChange = (event) => {
