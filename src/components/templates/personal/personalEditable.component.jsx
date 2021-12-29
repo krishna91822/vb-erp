@@ -253,7 +253,7 @@ const PersonalEditable = (props) => {
                   handleChange(event);
                   handleAboutMe(event);
                 }}
-                error={Boolean(aboutCount.current > 100)}
+                error={Boolean(aboutCount.current > 500)}
                 sx={{
                   width: "100%",
                   "& .MuiOutlinedInput-root": {
@@ -270,9 +270,9 @@ const PersonalEditable = (props) => {
                     position: "absolute",
                     left: "0",
                     bottom: "-20px",
-                    ...(aboutCount.current > 100 && { color: "#D32F2F" }),
+                    ...(aboutCount.current > 500 && { color: "#D32F2F" }),
                   }}
-                >{`${aboutCount.current}/100`}</Box>
+                >{`${aboutCount.current}/500`}</Box>
               )}
             </Box>
           </ContentBox>
