@@ -44,10 +44,20 @@ const ProfessionalEditable = ({
       : null
   );
   const handleUGChange = (newValue) => {
+    if (newValue.value === "others") {
+      setUGDropdown({ label: newValue.value, value: newValue.value });
+      setEmpData({ ...empData, empGraduationUniversity: "" });
+      return;
+    }
     setEmpData({ ...empData, empGraduationUniversity: newValue.value });
     setUGDropdown({ label: newValue.value, value: newValue.value });
   };
   const handlePGChange = (newValue) => {
+    if (newValue.value === "others") {
+      setPGDropdown({ label: newValue.value, value: newValue.value });
+      setEmpData({ ...empData, empPostGraduationUniversity: "" });
+      return;
+    }
     setEmpData({ ...empData, empPostGraduationUniversity: newValue.value });
     setPGDropdown({ label: newValue.value, value: newValue.value });
   };
@@ -99,6 +109,7 @@ const ProfessionalEditable = ({
               variant="outlined"
               value={empBand ? empBand : ""}
               name="empBand"
+              placeholder="Enter employee bandwidth"
               onChange={handleChange}
               type="text"
             />
@@ -113,11 +124,22 @@ const ProfessionalEditable = ({
               value={empGraduation ? empGraduation : ""}
               name="empGraduation"
               onChange={handleChange}
+              placeholder="Enter degree name"
               type="text"
             />
           </ContentBox>
           <ContentBox>
-            <ContentTypo>
+            <ContentTypo
+              sx={{
+                ...(UGDropdown?.value === "others" && {
+                  display: "grid",
+                  gridTemplateRows: "1fr 1fr",
+                  height: "100%",
+                  alignItems: "center",
+                  marginBottom: "8px",
+                }),
+              }}
+            >
               {professionalConstant.graduationUniversity}
             </ContentTypo>
             <Box
@@ -137,6 +159,20 @@ const ProfessionalEditable = ({
                 name="empGraduationUniversity"
                 placeholder="Select univeristy"
               />
+              {UGDropdown?.value === "others" && (
+                <CustomTextField
+                  autoComplete="off"
+                  required
+                  id="outlined-basic"
+                  variant="outlined"
+                  value={empGraduationUniversity ? empGraduationUniversity : ""}
+                  name="empGraduationUniversity"
+                  onChange={handleChange}
+                  placeholder="Enter graduation university"
+                  type="text"
+                  sx={{ width: "100%", mt: 2 }}
+                />
+              )}
             </Box>
             {/* <CustomTextField
               autoComplete="off"
@@ -158,12 +194,25 @@ const ProfessionalEditable = ({
               variant="outlined"
               value={empPostGraduation ? empPostGraduation : ""}
               name="empPostGraduation"
+              placeholder="Enter degree name"
               onChange={handleChange}
               type="text"
             />
           </ContentBox>
           <ContentBox>
-            <ContentTypo>{professionalConstant.PgUniversity}</ContentTypo>
+            <ContentTypo
+              sx={{
+                ...(UGDropdown?.value === "others" && {
+                  display: "grid",
+                  gridTemplateRows: "1fr 1fr",
+                  height: "100%",
+                  alignItems: "center",
+                  marginBottom: "8px",
+                }),
+              }}
+            >
+              {professionalConstant.PgUniversity}
+            </ContentTypo>
             <Box
               sx={{
                 width: "100%",
@@ -181,6 +230,24 @@ const ProfessionalEditable = ({
                 name="empPostGraduationUniversity"
                 placeholder="Select univeristy"
               />
+              {PGDropdown?.value === "others" && (
+                <CustomTextField
+                  autoComplete="off"
+                  required
+                  id="outlined-basic"
+                  variant="outlined"
+                  value={
+                    empPostGraduationUniversity
+                      ? empPostGraduationUniversity
+                      : ""
+                  }
+                  name="empPostGraduationUniversity"
+                  placeholder="Enter post-graduation university"
+                  onChange={handleChange}
+                  type="text"
+                  sx={{ width: "100%", mt: 2 }}
+                />
+              )}
             </Box>
             {/* <CustomTextField
               autoComplete="off"

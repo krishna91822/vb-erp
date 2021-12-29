@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 import { LocalizationProvider, DesktopDatePicker } from "@mui/lab";
 import AdapterDateFns from "@mui/lab/AdapterDateFns";
@@ -35,6 +35,7 @@ import { setCurrentEmployee } from "./../../store/employeeSlice";
 import axiosInstance from "./../../helpers/axiosInstance";
 
 import { uiActions } from "./../../store/ui-slice";
+import validator from "validator";
 
 import { useForm } from "react-hook-form";
 
@@ -44,15 +45,15 @@ const CreateProfile = ({
   setToggleEditEmployee,
 }) => {
   const { user } = useSelector((state) => state.user);
+  const email = user.email;
   const { currentEmployee } = useSelector((state) => state.employee);
   const dispatch = useDispatch();
   const { toggleLoader, showNotification } = uiActions;
 
-  const { register, handleSubmit, errors } = useForm();
-
+  // const { register, handleSubmit, errors } = useForm();
   useEffect(() => {
     axiosInstance
-      .get("/employees?empEmail=admin@mail.com")
+      .get(`/employees?${email}`)
       .then((response) => {
         dispatch(setCurrentEmployee(response.data.data[0]));
       })
@@ -65,22 +66,22 @@ const CreateProfile = ({
     empDepartment: "",
     empDesignation: "",
     empDoj: null,
+    empDob: null,
     empReportingManager: "",
+    empPersonalEmail: "",
     empAboutMe: "",
     empBand: "",
     empCertifications: [],
     empConnections: 0,
     empCurrentAddress: undefined,
-    empDob: null,
     empGraduation: "",
     empGraduationUniversity: "",
     empHobbies: [],
-    empPersonalEmail: "",
+    empSkillSet: [],
+    empPrimaryCapability: [],
     empPostGraduation: "",
     empPostGraduationUniversity: "",
-    empPrimaryCapability: [],
     empResidentialAddress: undefined,
-    empSkillSet: [],
   };
 
   const [employee, setEmployee] = useState(
@@ -206,7 +207,57 @@ const CreateProfile = ({
     handleClose();
   };
 
+  // empName: "",
+  // empEmail: "",
+  // empDepartment: "",
+  // empDesignation: "",
+  // empDoj: null,
+  // empDob: null,
+  // empReportingManager: "",
+  // empPersonalEmail: "",
+  const [errors, setErrors] = useState({});
+  const validate = (values) => {
+    const errorsObj = {};
+    if (values?.empName.length === 0) {
+      errorsObj.empName = "Full name is required";
+    }
+    if (values?.empEmail.length === 0) {
+      errorsObj.empEmail = "Company Email is required";
+    }
+    if (values?.empEmail.length !== 0 && !validator.isEmail(values?.empEmail)) {
+      errorsObj.empEmail = "Invalid email";
+    }
+    if (values?.empDepartment.length === 0) {
+      errorsObj.empDepartment = "Department is required";
+    }
+    if (values?.empDesignation.length === 0) {
+      errorsObj.empDesignation = "Department is required";
+    }
+    if (!values?.empDoj) {
+      errorsObj.empDoj = "doj is required";
+    }
+    if (!values?.empReportingManager.length === 0) {
+      errorsObj.empReportingManager = "Reporting manager is required";
+    }
+    if (!values?.empDob) {
+      errorsObj.empDob = "dob is required";
+    }
+    if (values?.empPersonalEmail.length === 0) {
+      errorsObj.empPersonalEmail = "Personal Email is required";
+    }
+    if (
+      values?.empPersonalEmail.length !== 0 &&
+      !validator.isEmail(values?.empPersonalEmail)
+    ) {
+      errorsObj.empPersonalEmail = "Invalid email";
+    }
+    setErrors(errorsObj);
+    return errorsObj;
+  };
+
   const handleConfirm = (event) => {
+    setErrors(validate(employee));
+    if (Object.keys(validate(employee)).length !== 0) return;
     dispatch(toggleLoader());
     // Profile - Update;
     let createEmployee;
@@ -272,7 +323,7 @@ const CreateProfile = ({
           // handleOpenModalError();
           dispatch(
             showNotification({
-              status: "success",
+              status: "error",
               title: "Something went wrong!",
               message: "Something went wrong!",
             })
@@ -285,7 +336,13 @@ const CreateProfile = ({
         .then(function (response) {
           setEmployee(empInitial);
           dispatch(toggleLoader());
-          handleOpenModal();
+          dispatch(
+            showNotification({
+              status: "success",
+              title: "Employee has been updated.",
+              message: "Employee has been updated.",
+            })
+          );
           // console.log(response);
         })
         .catch(function (error) {
@@ -296,7 +353,8 @@ const CreateProfile = ({
     }
   };
 
-  return currentEmployee ? (
+  return currentEmployee &&
+    ["super_admin", "hr_admin"].some((el) => user.roles.includes(el)) ? (
     <BoxStyle data-test="create-profile-test">
       <ContainerStyleTop>
         {/* <TitleTypo sx={{ textTransform: "capitalize", mb: 0.5 }}>
@@ -318,7 +376,8 @@ const CreateProfile = ({
           <Box>
             <GreenButton
               data-test="confirm-button-test"
-              onClick={handleSubmit(handleConfirm)}
+              // onClick={handleSubmit(handleConfirm)}
+              onClick={handleConfirm}
               variant="contained"
             >
               {createProfileConstant.confirm}
@@ -341,8 +400,9 @@ const CreateProfile = ({
             employee={employee}
             setEmployee={setEmployee}
             profileProgress={profileProgress}
-            register={register}
+            // register={register}
             errors={errors}
+            validate={validate}
           />
         </div>
         <Box sx={{}}>
@@ -352,7 +412,7 @@ const CreateProfile = ({
               setEmpData={setEmployee}
               personalDetails={personalDetails}
               setPersonalDetails={setPersonalDetails}
-              register={register}
+              // register={register}
               errors={errors}
             />
           </TabPanelCustom>
@@ -362,7 +422,7 @@ const CreateProfile = ({
               setEmpData={setEmployee}
               professionalDetails={professionalDetails}
               setProfessionalDetails={setProfessionalDetails}
-              register={register}
+              // register={register}
               errors={errors}
             />
           </TabPanelCustom>
@@ -372,7 +432,7 @@ const CreateProfile = ({
               setEmpData={setEmployee}
               skillsDetails={skillsDetails}
               setSkillsDetails={setSkillsDetails}
-              register={register}
+              // register={register}
               errors={errors}
             />
           </TabPanelCustom>
@@ -431,9 +491,7 @@ const CreateProfile = ({
       <Modal open={openModal} onClose={handleCloseModal}>
         <ModalBoxItem>
           <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-            {editEmployeeData
-              ? createProfileConstant.modalMessageSuccessEdit
-              : createProfileConstant.modalMessageSuccess}
+            {createProfileConstant.modalMessageSuccess}
           </Typography>
           <Button variant="contained" onClick={handleCloseModal}>
             {createProfileConstant.modalBtn}

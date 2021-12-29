@@ -38,7 +38,8 @@ const ProfileInfoEditable = (props) => {
     employee,
     setEmployee,
     profileProgress,
-    register,
+    // register,
+    validate,
     errors,
   } = props;
 
@@ -78,8 +79,6 @@ const ProfileInfoEditable = (props) => {
       ...provided,
       width: "30px",
       padding: "0",
-      // paddingRight: "2px",
-      // color: "gray",
     }),
   };
 
@@ -92,8 +91,8 @@ const ProfileInfoEditable = (props) => {
   );
 
   //dropdown
-  const department = ["developer", "product", "human-resource", "accounts"];
-  const designation = ["trainee", "Manager", "intern"];
+  const department = profileInfoConstant.departmentDropdown;
+  const designation = profileInfoConstant.designationDropdown;
   const departmentOptions = department.map((item) => {
     return {
       label: item,
@@ -201,12 +200,12 @@ const ProfileInfoEditable = (props) => {
                 type="text"
                 name="empName"
                 value={empName}
-                onChange={handleChange}
+                onChange={(e) => {
+                  handleChange(e);
+                  validate(employee);
+                }}
                 error={Boolean(errors.empName)}
-                helperText={errors.empName?.message}
-                inputRef={register({
-                  required: "Full name is required.",
-                })}
+                // helperText={errors.empName}
                 sx={{
                   "& .MuiInput-input": {
                     color: "textColor",
@@ -263,16 +262,12 @@ const ProfileInfoEditable = (props) => {
                   value={empEmail}
                   type="text"
                   name="empEmail"
-                  onChange={handleChange}
-                  error={Boolean(errors.empEmail)}
-                  helperText={errors.empEmail?.message}
-                  inputRef={register({
-                    required: "Company email is required.",
-                    pattern: {
-                      value: /^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/,
-                      message: "Enter valid email.",
-                    },
-                  })}
+                  onChange={(e) => {
+                    handleChange(e);
+                    validate(employee);
+                  }}
+                  error={Boolean(errors?.empEmail)}
+                  // helperText={errors?.empEmail}
                 />
               </FieldBox>
               <FieldBox>
@@ -292,7 +287,23 @@ const ProfileInfoEditable = (props) => {
                 >
                   <CreatableSelect
                     value={departmentDropdown ? departmentDropdown : null}
-                    styles={customStyles}
+                    styles={{
+                      control: (provided, state) => ({
+                        ...provided,
+                        minHeight: "35px",
+                        height: "35px",
+                        display: "flex",
+                        alignContent: "center",
+                        borderColor: errors?.empDepartment
+                          ? "#D32F2F"
+                          : "hsl(0, 0%, 80%)",
+                      }),
+                      indicatorsContainer: (provided, state) => ({
+                        ...provided,
+                        width: "30px",
+                        padding: "0",
+                      }),
+                    }}
                     // isLoading={empNameLoading}
                     isSearchable
                     name="empDepartment"
@@ -303,25 +314,10 @@ const ProfileInfoEditable = (props) => {
                         ...employee,
                         empDepartment: value.value,
                       });
+                      validate(employee);
                     }}
                   />
                 </Box>
-                {/* <CustomTextField
-                placeholder="Enter department"
-                autoComplete="off"
-                required
-                id="outlined-basic"
-                variant="outlined"
-                value={empDepartment}
-                type="text"
-                name="empDepartment"
-                onChange={handleChange}
-                error={Boolean(errors.empDepartment)}
-                helperText={errors.empDepartment?.message}
-                inputRef={register({
-                  required: "Department is required.",
-                })}
-              /> */}
               </FieldBox>
               <FieldBox>
                 <ContentBoldTypo sx={{ textTransform: "capitalize", pl: 1 }}>
@@ -340,7 +336,23 @@ const ProfileInfoEditable = (props) => {
                 >
                   <CreatableSelect
                     value={designationDropdown ? designationDropdown : null}
-                    styles={customStyles}
+                    styles={{
+                      control: (provided, state) => ({
+                        ...provided,
+                        minHeight: "35px",
+                        height: "35px",
+                        display: "flex",
+                        alignContent: "center",
+                        borderColor: errors?.empDesignation
+                          ? "#D32F2F"
+                          : "hsl(0, 0%, 80%)",
+                      }),
+                      indicatorsContainer: (provided, state) => ({
+                        ...provided,
+                        width: "30px",
+                        padding: "0",
+                      }),
+                    }}
                     // isLoading={empNameLoading}
                     isSearchable
                     name="empDesignation"
@@ -351,25 +363,10 @@ const ProfileInfoEditable = (props) => {
                         ...employee,
                         empDesignation: value.value,
                       });
+                      validate(employee);
                     }}
                   />
                 </Box>
-                {/* <CustomTextField
-                placeholder="Enter designation"
-                autoComplete="off"
-                required
-                id="outlined-basic"
-                variant="outlined"
-                value={empDesignation}
-                type="text"
-                name="empDesignation"
-                onChange={handleChange}
-                error={Boolean(errors.empDesignation)}
-                helperText={errors.empDesignation?.message}
-                inputRef={register({
-                  required: "Department is required.",
-                })}
-              /> */}
               </FieldBox>
               <FieldBox>
                 <ContentBoldTypo sx={{ textTransform: "capitalize", pl: 1 }}>
@@ -380,13 +377,19 @@ const ProfileInfoEditable = (props) => {
                 </ContentBoldTypo>
                 <LocalizationProvider dateAdapter={AdapterDateFns}>
                   <DesktopDatePicker
+                    errorText={"error"}
                     inputFormat="dd/MM/yyyy"
                     value={empDoj}
                     onChange={(newValue) => {
                       setEmployee({ ...employee, empDoj: newValue });
+                      validate(employee);
                     }}
                     renderInput={(params) => (
-                      <CustomTextField {...params} name="empDoj" />
+                      <CustomTextField
+                        {...params}
+                        name="empDoj"
+                        error={Boolean(errors?.empDoj)}
+                      />
                     )}
                   />
                 </LocalizationProvider>
@@ -408,6 +411,23 @@ const ProfileInfoEditable = (props) => {
                 >
                   <AsyncSelect
                     value={reportingTo ? reportingTo : null}
+                    styles={{
+                      control: (provided, state) => ({
+                        ...provided,
+                        minHeight: "35px",
+                        height: "35px",
+                        display: "flex",
+                        alignContent: "center",
+                        borderColor: errors?.empReportingManager
+                          ? "#D32F2F"
+                          : "hsl(0, 0%, 80%)",
+                      }),
+                      indicatorsContainer: (provided, state) => ({
+                        ...provided,
+                        width: "30px",
+                        padding: "0",
+                      }),
+                    }}
                     cacheOptions
                     loadOptions={loadEmployeeOptions}
                     defaultOptions
@@ -417,26 +437,11 @@ const ProfileInfoEditable = (props) => {
                         ...employee,
                         empReportingManager: value.value,
                       });
+                      validate(employee);
                     }}
                     name="empReportingManager"
-                    styles={customStyles}
                     // placeholder="Select univeristy"
                   />
-                  {/* <Select
-                  value={reportingTo ? reportingTo : null}
-                  isLoading={empNameLoading}
-                  styles={customStyles}
-                  isSearchable
-                  name="empReportingManager"
-                  options={empDetails}
-                  onChange={(value) => {
-                    setReportingTo(value);
-                    setEmployee({
-                      ...employee,
-                      empReportingManager: value.value,
-                    });
-                  }}
-                /> */}
                 </Box>
               </FieldBox>
               <FieldBox>
@@ -453,9 +458,14 @@ const ProfileInfoEditable = (props) => {
                     value={empDob}
                     onChange={(newValue) => {
                       setEmployee({ ...employee, empDob: newValue });
+                      validate(employee);
                     }}
                     renderInput={(params) => (
-                      <CustomTextField {...params} name="empDob" />
+                      <CustomTextField
+                        {...params}
+                        name="empDob"
+                        error={Boolean(errors?.empDob)}
+                      />
                     )}
                   />
                 </LocalizationProvider>

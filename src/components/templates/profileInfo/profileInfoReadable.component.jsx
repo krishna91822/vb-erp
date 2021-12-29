@@ -42,15 +42,6 @@ const ProfileInfoReadable = ({
     setValue(newValue);
   };
 
-  // const profileProgress = (employeeData) => {
-  //   const totalFields = Object.keys(employeeData).length;
-  //   const completedFields = Object.values(employeeData).filter(
-  //     (d) => d !== null && d !== "" && d.length !== 0 && d[0] !== ""
-  //   ).length;
-  //   const percentage = Math.floor((completedFields / totalFields) * 100);
-  //   return percentage;
-  // };
-
   return (
     <div>
       <Grid
@@ -109,11 +100,11 @@ const ProfileInfoReadable = ({
             </SubTitleTypo>
           </Box>
         </Grid>
-        <Grid item sm={8}>
+        <Grid item sm={8} sx={{ display: "flex", alignItems: "center" }}>
           <Box
             sx={{
-              width: "calc( 100% - 80px )",
-              minHeight: "80",
+              width: "100%",
+              minHeight: 80,
               border: "0.1em solid",
               borderColor: "textColor.paletteGrey",
               borderRadius: "5px",
@@ -123,35 +114,78 @@ const ProfileInfoReadable = ({
           >
             <CustomGridBox sx={{ mt: 1, mb: 1 }}>
               <ContentBoldTypo
-                sx={{ textTransform: "capitalize", pl: 1, fontSize: "16px" }}
+                sx={{
+                  textTransform: "capitalize",
+                  pl: 1,
+                  fontSize: "16px",
+                  display: "grid",
+                  gridTemplateColumns: "130px auto",
+                }}
               >
-                {profileInfoConstant.employeeId} - {empId}
+                <Box>{`${profileInfoConstant.employeeId} -`}</Box>
+                <Box>{empId}</Box>
               </ContentBoldTypo>
               <ContentBoldTypo
-                sx={{ textTransform: "capitalize", pl: 1, fontSize: "16px" }}
+                sx={{
+                  textTransform: "capitalize",
+                  pl: 1,
+                  fontSize: "16px",
+                  display: "grid",
+                  gridTemplateColumns: "130px auto",
+                }}
               >
-                {profileInfoConstant.emailId} - {empEmail}
+                <Box>{`${profileInfoConstant.emailId} -`}</Box>
+                <Box>{empEmail}</Box>
               </ContentBoldTypo>
               <ContentBoldTypo
-                sx={{ textTransform: "capitalize", pl: 1, fontSize: "16px" }}
+                sx={{
+                  textTransform: "capitalize",
+                  pl: 1,
+                  fontSize: "16px",
+                  display: "grid",
+                  gridTemplateColumns: "130px auto",
+                }}
               >
-                {profileInfoConstant.department} - {empDepartment}
+                <Box>{`${profileInfoConstant.department} -`}</Box>
+                <Box>{empDepartment}</Box>
               </ContentBoldTypo>
               <ContentBoldTypo
-                sx={{ textTransform: "capitalize", pl: 1, fontSize: "16px" }}
+                sx={{
+                  textTransform: "capitalize",
+                  pl: 1,
+                  fontSize: "16px",
+                  display: "grid",
+                  gridTemplateColumns: "130px auto",
+                }}
               >
-                {profileInfoConstant.designation} - {empDesignation}
+                <Box>{`${profileInfoConstant.designation} -`}</Box>
+                <Box>{empDesignation}</Box>
               </ContentBoldTypo>
               <ContentBoldTypo
-                sx={{ textTransform: "capitalize", pl: 1, fontSize: "16px" }}
+                sx={{
+                  textTransform: "capitalize",
+                  pl: 1,
+                  fontSize: "16px",
+                  display: "grid",
+                  gridTemplateColumns: "130px auto",
+                }}
               >
-                {profileInfoConstant.dateOfJoining} -{" "}
-                {empDoj ? new Date(empDoj).toDateString().slice(4) : ""}
+                <Box>{`${profileInfoConstant.dateOfJoining} -`}</Box>
+                <Box>
+                  {empDoj ? new Date(empDoj).toDateString().slice(4) : ""}
+                </Box>
               </ContentBoldTypo>
               <ContentBoldTypo
-                sx={{ textTransform: "capitalize", pl: 1, fontSize: "16px" }}
+                sx={{
+                  textTransform: "capitalize",
+                  pl: 1,
+                  fontSize: "16px",
+                  display: "grid",
+                  gridTemplateColumns: "130px auto",
+                }}
               >
-                {profileInfoConstant.reportingManager} - {empReportingManager}
+                <Box>{`${profileInfoConstant.reportingManager} -`}</Box>
+                <Box>{empReportingManager}</Box>
               </ContentBoldTypo>
             </CustomGridBox>
           </Box>

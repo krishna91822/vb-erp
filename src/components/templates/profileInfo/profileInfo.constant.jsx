@@ -12,4 +12,18 @@ export const profileInfoConstant = {
     professional: "professional",
     skills: "skills and qualifications",
   },
+  departmentDropdown: ["developer", "product", "human-resource", "accounts"],
+  designationDropdown: [
+    "Trainee",
+    "Manager",
+    "Intern",
+    "Jr Developer",
+    "Sr Developer",
+    "Tech Lead",
+    "Product Owner",
+    "Project Manager",
+    "Scrum Master",
+    "HR Executive",
+    "Leader",
+  ],
 };

@@ -1,6 +1,6 @@
 import React, { memo } from "react";
 
-import { Grid, TextField, Box, Chip } from "@mui/material";
+import { Grid, Box, Chip } from "@mui/material";
 
 import {
   ListItem,
@@ -24,6 +24,7 @@ import {
 
 const PersonalReadable = ({ empData }) => {
   const {
+    empDob,
     empConnections,
     empHobbies,
     empPersonalEmail,
@@ -45,65 +46,22 @@ const PersonalReadable = ({ empData }) => {
 
   return (
     <Grid container spacing={0} sx={{ minHeight: 150 }}>
-      {/* <Grid
-        item
-        sm={5}
-        sx={{
-          "& .MuiOutlinedInput-root .MuiOutlinedInput-input": {
-            minHeight: 200,
-          },
-          "& .MuiFormControl-root": { minHeight: 200 },
-          "& .MuiOutlinedInput-notchedOutline": {
-            border: "0.1em solid",
-            borderColor: "textColor.paletteGrey",
-          },
-        }}
-      >
-        <TitleTypo sx={{ textTransform: "capitalize", mb: 1, ml: 1 }}>
-          {personal.aboutMe}
-        </TitleTypo>
-        <TextField
-          id="outlined-multiline-flexible"
-          multiline
-          maxRows={4}
-          fullWidth
-          InputProps={{
-            readOnly: true,
-          }}
-          defaultValue={empAboutMe}
-        />
-      </Grid> */}
       <Grid item sm={7}>
-        <Box sx={{ mt: 4, ml: 4 }}>
+        <Box>
           <ContentBox>
-            <TitleTypo sx={{ textTransform: "capitalize", mt: 1 }}>
-              {personal.aboutMe}
-            </TitleTypo>
-            <TextField
-              id="outlined-multiline-flexible"
-              multiline
-              InputProps={{
-                readOnly: true,
-              }}
-              defaultValue={empAboutMe}
-              sx={{
-                "& .MuiOutlinedInput-root": {
-                  width: "100%",
-                  minHeight: "40px",
-                },
-              }}
-            />
+            <TitleTypo>{personal.aboutMe}</TitleTypo>
+            <ContentTypo>{empAboutMe}</ContentTypo>
           </ContentBox>
           <ContentBox>
             <TitleTypo>{personal.personalEmail}</TitleTypo>
             <ContentTypo>{empPersonalEmail}</ContentTypo>
           </ContentBox>
-          {/* <ContentBox>
+          <ContentBox>
             <TitleTypo>{personal.dob}</TitleTypo>
             <ContentTypo>
               {empDob ? new Date(empDob).toDateString().slice(4) : ""}
             </ContentTypo>
-          </ContentBox> */}
+          </ContentBox>
           <ContentBox>
             <TitleTypo>{personal.hobbies}</TitleTypo>
             <ContentTypo>
