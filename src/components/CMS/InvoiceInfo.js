@@ -137,7 +137,7 @@ function InvoiceInfo() {
             onKeyPress={searchHandler}
             label="Search by client/project name"
             variant="outlined"
-            sx={{ width:300 }} 
+            sx={{ width: 300 }}
           />
         </Grid>
         <Grid item lg={6} md={6} sm={6} xs={6}>
@@ -222,7 +222,7 @@ function InvoiceInfo() {
                 <TableCell>PO/SOW Order</TableCell>
                 <TableCell>PO/SOW Amount</TableCell>
                 <TableCell>Invoice raised</TableCell>
-                <TableCell>Invoice Received</TableCell>
+                <TableCell>Amount Received</TableCell>
                 <TableCell>Invoice Amount received</TableCell>
                 {user.permissions.includes("upload_invoice") && (
                   <TableCell>Action</TableCell>

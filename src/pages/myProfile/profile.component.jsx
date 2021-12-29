@@ -1,6 +1,6 @@
 import React, { memo, useEffect, useState } from "react";
 
-import { Container } from "@mui/material";
+import { Box, Container } from "@mui/material";
 
 import { useDispatch, useSelector } from "react-redux";
 import { setCurrentEmployee } from "./../../store/employeeSlice";
@@ -96,14 +96,14 @@ const Profile = () => {
   return loading ? (
     <Spinner data-test="profile-page-test" />
   ) : (
-    <Container sx={{ pb: 3 }}>
+    <Box sx={{ pb: 3 }}>
       <EditMode handleSubmit={handleSubmit} {...editModeProps} />
       <ProfileContent
         register={register}
         errors={errors}
         {...profileContentProps}
       />
-    </Container>
+    </Box>
   );
 };
 

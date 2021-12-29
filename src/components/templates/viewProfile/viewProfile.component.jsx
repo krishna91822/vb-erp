@@ -55,12 +55,11 @@ const ViewProfile = () => {
       },
     });
   };
-  console.log(viewedEmployee);
 
   return Object.keys(viewedEmployee).length === 0 ? (
     <Spinner />
   ) : (
-    <Container
+    <Box
       sx={{
         pb: 1,
         pt: 1,
@@ -129,7 +128,7 @@ const ViewProfile = () => {
           isLoading={loading}
         />
       )}
-    </Container>
+    </Box>
   );
 };
 

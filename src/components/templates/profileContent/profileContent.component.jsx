@@ -10,6 +10,7 @@ import ProfessionalReadable from "../professional/professionalReadable.component
 import ProfessionalEditable from "../professional/professionalEditable.component";
 import SkillReadable from "../skill/skillReadable.component";
 import SkillEditable from "../skill/skillEditable.component";
+import ProfileInfoEditable from "./../profileInfo/profileInfoEditable.component";
 
 import {
   modalStyle,
@@ -21,6 +22,8 @@ import { addFieldOptions } from "./profileContent.constant";
 
 import { LocalizationProvider, DesktopDatePicker } from "@mui/lab";
 import AdapterDateFns from "@mui/lab/AdapterDateFns";
+import validator from "validator";
+import { useSelector } from "react-redux";
 
 const ProfileContent = (props) => {
   const {
@@ -36,9 +39,9 @@ const ProfileContent = (props) => {
     setSkillsDetails,
     open,
     handleClose,
-    register,
-    errors,
   } = props;
+
+  const { user } = useSelector((state) => state.user);
 
   //calculate percentage progress
   const profileProgress = () => {
@@ -161,6 +164,82 @@ const ProfileContent = (props) => {
     handleClose();
   };
 
+  const [errors, setErrors] = useState({});
+  const validate = (values) => {
+    const errorsObj = {};
+    if (values?.empName.length === 0) {
+      errorsObj.empName = "Full name is required";
+    }
+    if (values?.empEmail.length === 0) {
+      errorsObj.empEmail = "Company Email is required";
+    }
+    if (values?.empEmail.length !== 0 && !validator.isEmail(values?.empEmail)) {
+      errorsObj.empEmail = "Invalid email";
+    }
+    if (values?.empDepartment.length === 0) {
+      errorsObj.empDepartment = "Department is required";
+    }
+    if (values?.empDesignation.length === 0) {
+      errorsObj.empDesignation = "Department is required";
+    }
+    if (!values?.empDoj) {
+      errorsObj.empDoj = "doj is required";
+    }
+    if (!values?.empReportingManager.length === 0) {
+      errorsObj.empReportingManager = "Reporting manager is required";
+    }
+    if (!values?.empDob) {
+      errorsObj.empDob = "dob is required";
+    }
+    if (values?.empPersonalEmail.length === 0) {
+      errorsObj.empPersonalEmail = "Personal Email is required";
+    }
+    if (
+      values?.empPersonalEmail.length !== 0 &&
+      !validator.isEmail(values?.empPersonalEmail)
+    ) {
+      errorsObj.empPersonalEmail = "Invalid email";
+    }
+    setErrors(errorsObj);
+    return errorsObj;
+  };
+
+  const renderProfileInfo = () => {
+    if (inEditMode) {
+      if (["super_admin", "hr_admin"].some((el) => user.roles.includes(el))) {
+        return (
+          <ProfileInfoEditable
+            tab={value}
+            setTab={setValue}
+            employee={updateRequest}
+            setEmployee={setUpdateRequest}
+            profileProgress={profileProgress}
+            errors={errors}
+            validate={validate}
+          />
+        );
+      } else {
+        return (
+          <ProfileInfoReadable
+            value={value}
+            setValue={setValue}
+            currentEmployee={currentEmployee}
+            profileProgress={profileProgress}
+          />
+        );
+      }
+    } else {
+      return (
+        <ProfileInfoReadable
+          value={value}
+          setValue={setValue}
+          currentEmployee={currentEmployee}
+          profileProgress={profileProgress}
+        />
+      );
+    }
+  };
+
   return (
     <Box
       sx={{
@@ -170,14 +249,7 @@ const ProfileContent = (props) => {
         borderRadius: "5px",
       }}
     >
-      <Container>
-        <ProfileInfoReadable
-          value={value}
-          setValue={setValue}
-          currentEmployee={currentEmployee}
-          profileProgress={profileProgress}
-        />
-      </Container>
+      <Box sx={{ p: 2 }}>{renderProfileInfo()}</Box>
       <Container sx={{ width: "calc(100% - 16px)" }}>
         <TabPanelCustom value={value} index={0}>
           {inEditMode ? (
@@ -186,8 +258,8 @@ const ProfileContent = (props) => {
               setEmpData={setUpdateRequest}
               personalDetails={personalDetails}
               setPersonalDetails={setPersonalDetails}
-              register={register}
               errors={errors}
+              validate={validate}
             />
           ) : (
             <PersonalReadable empData={currentEmployee} />
@@ -200,8 +272,8 @@ const ProfileContent = (props) => {
               setEmpData={setUpdateRequest}
               professionalDetails={professionalDetails}
               setProfessionalDetails={setProfessionalDetails}
-              register={register}
               errors={errors}
+              validate={validate}
             />
           ) : (
             <ProfessionalReadable empData={currentEmployee} />
@@ -214,8 +286,8 @@ const ProfileContent = (props) => {
               setEmpData={setUpdateRequest}
               skillsDetails={skillsDetails}
               setSkillsDetails={setSkillsDetails}
-              register={register}
               errors={errors}
+              validate={validate}
             />
           ) : (
             <SkillReadable empData={currentEmployee} />

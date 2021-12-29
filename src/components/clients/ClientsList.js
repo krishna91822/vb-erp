@@ -217,7 +217,7 @@ function ClientsList() {
   }
 
   return (
-    <div>
+    <div className="client-list-wrapper">
       <PageHeader />
       <Box m={2} mb={1}>
         <TextField

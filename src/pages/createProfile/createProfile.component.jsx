@@ -207,14 +207,6 @@ const CreateProfile = ({
     handleClose();
   };
 
-  // empName: "",
-  // empEmail: "",
-  // empDepartment: "",
-  // empDesignation: "",
-  // empDoj: null,
-  // empDob: null,
-  // empReportingManager: "",
-  // empPersonalEmail: "",
   const [errors, setErrors] = useState({});
   const validate = (values) => {
     const errorsObj = {};

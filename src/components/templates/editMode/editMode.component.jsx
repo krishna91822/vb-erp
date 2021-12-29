@@ -119,7 +119,9 @@ const EditMode = ({ updateRequest, handleOpen, handleSubmit }) => {
             variant="contained"
             onClick={handleSubmit(handleSubmitBtn)}
           >
-            {editModeConstant.SubmitRequest}
+            {["hr_admin", "super_admin"].some((el) => user.roles.includes(el))
+              ? editModeConstant.update
+              : editModeConstant.SubmitRequest}
           </Button>
           <Modal open={open} onClose={handleToggleClose}>
             <ModalBoxItem>

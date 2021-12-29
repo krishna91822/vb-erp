@@ -103,7 +103,7 @@ const Network = () => {
             mr: 2,
           }}
         >
-          Network
+          My Colleagues
         </TitleTypo>
         <Box sx={{}}>
           <TextField

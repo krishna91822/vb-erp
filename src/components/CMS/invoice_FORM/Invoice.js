@@ -157,13 +157,14 @@ function Invoice(props) {
       filteredArr[0].amount_received_on !== undefined
         ? setDate(filteredArr[0].amount_received_on)
         : setDate(null);
-      filteredArr[0].invoice_received==="Yes"?setinvoicereceived(true):setinvoicereceived(false)
+      filteredArr[0].invoice_received === "Yes"
+        ? setinvoicereceived(true)
+        : setinvoicereceived(false);
       setVbbankacc(filteredArr[0].vb_bank_account);
       setTargetedResources(filteredArr[0].PO_Id.Targetted_Resources);
       setTargetedAllocation(filteredArr[0].PO_Id.Targeted_Res_AllocationRate);
       setPoId(filteredArr[0].PO_Id._id);
       setRemarks(filteredArr[0].Remarks);
-
     }
   }, [filteredArr]);
   useEffect(() => {
@@ -207,7 +208,7 @@ function Invoice(props) {
     setRemarks(event.target.value);
   };
   useEffect(() => {
-    if(remarks){
+    if (remarks) {
       const maxCount = 150;
       setCharsLeft(maxCount - remarks.length);
     }
@@ -243,7 +244,7 @@ function Invoice(props) {
       invoice_raised: invoice_raised,
       invoice_amount_received: invoice_amount,
       vb_bank_account: Vb_Bank_Acc,
-      Remarks:remarks,
+      Remarks: remarks,
       amount_received_on:
         new Date(Date_).getFullYear() === 1970 ? null : new Date(Date_),
       invoice_received: invoicereceived ? "Yes" : "No",
@@ -317,34 +318,34 @@ function Invoice(props) {
       <React.Fragment>
         <CssBaseline />
         <Grid container className="posow-topGrid">
-        <Grid item lg={10} md={10} sm={12} xs={12}>
-          <h3>Invoice</h3>
+          <Grid item lg={10} md={10} sm={12} xs={12}>
+            <h3>Invoice</h3>
+          </Grid>
+          <Grid item lg={2} md={2} sm={12} xs={12}>
+            {props.editBtn && editTglCheckedState ? (
+              <div className="invoice-updateBtn">
+                <Button
+                  variant="contained"
+                  color="success"
+                  onClick={updatehandler}
+                  data-test="UpdateBtn"
+                >
+                  Update{" "}
+                </Button>
+              </div>
+            ) : (
+              <div></div>
+            )}
+          </Grid>
         </Grid>
-        <Grid item lg={2} md={2} sm={12} xs={12}>
-          {props.editBtn && editTglCheckedState ? (
-            <div className="invoice-updateBtn">
-              <Button             
-                variant="contained"
-                color="success"
-                onClick={updatehandler}
-                data-test="UpdateBtn"
-              >
-                Update{" "}
-              </Button>
-            </div>
-          ) : (
-            <div></div>
-          )}
-        </Grid>
-      </Grid>
 
-      {/* <form onSubmit={submitForm}> */}
+        {/* <form onSubmit={submitForm}> */}
         {/* <Grid container>
           <Grid item lg={11} md={11} sm={12} xs={12}>
             <h4 className="heading">PO Information</h4>
           </Grid> */}
 
-          {/* {user.permissions.includes("upload_invoice") && (
+        {/* {user.permissions.includes("upload_invoice") && (
             <Grid item lg={1} md={1} sm={12} xs={12}>
               <div className="posow-SaveButton">
                 <strong className="editTxt" data-test="editModeSwitch-label">
@@ -370,7 +371,6 @@ function Invoice(props) {
           )} */}
         {/* </Grid> */}
 
-        
         {/* <Grid container columnSpacing={3}>
           <Grid item lg={6} md={6} sm={12} xs={12}>
             <h3>Invoice</h3>
@@ -392,7 +392,7 @@ function Invoice(props) {
             )}
           </Grid>
         </Grid> */}
-        <Container fixed>
+        <Box fixed>
           <Box
             sx={{
               bgcolor: "white",
@@ -402,36 +402,35 @@ function Invoice(props) {
               padding: "1rem",
             }}
           >
-            <Grid container>             
+            <Grid container>
               <Grid item lg={10} md={10} sm={10} xs={12}>
                 <h4 className="heading">PO Information</h4>
               </Grid>
               {user.permissions.includes("upload_invoice") && (
-            <Grid item lg={2} md={2} sm={2} xs={12}>
-              <div className="invoice-editToggle">
-                <div className="editTxt" data-test="editModeSwitch-label">
-                  Edit
-                </div>
-                <label className="switch">
-                  <input
-                    type="checkbox"
-                    data-test="EditToggleBtn"
-                    data-testid="EditToggleBtn"
-                    checked={editTglCheckedState}
-                    onChange={handleEditTglChange}
-                    disabled={
-                      invoice_raised === "Yes" &&
-                      invoice_amount &&
-                      editTglCheckedState === false
-                    }
-                  />
-                  <span className="slider round"></span>
-                </label>
-              </div>
+                <Grid item lg={2} md={2} sm={2} xs={12}>
+                  <div className="invoice-editToggle">
+                    <div className="editTxt" data-test="editModeSwitch-label">
+                      Edit
+                    </div>
+                    <label className="switch">
+                      <input
+                        type="checkbox"
+                        data-test="EditToggleBtn"
+                        data-testid="EditToggleBtn"
+                        checked={editTglCheckedState}
+                        onChange={handleEditTglChange}
+                        disabled={
+                          invoice_raised === "Yes" &&
+                          invoice_amount &&
+                          editTglCheckedState === false
+                        }
+                      />
+                      <span className="slider round"></span>
+                    </label>
+                  </div>
+                </Grid>
+              )}
             </Grid>
-          )}
-         
-          </Grid>
             <hr />
             <Grid container columnSpacing={3}>
               <Grid item lg={6} md={6} sm={12} xs={12}>
@@ -708,12 +707,10 @@ function Invoice(props) {
                     }
                   />
                 </Grid>
-                <br/>
+                <br />
                 <Grid item lg={12} md={12} sm={122} xs={12}>
-                <label id="demo-multiple-name-label">
-                    Remarks
-                  </label>
-                <TextField
+                  <label id="demo-multiple-name-label">Remarks</label>
+                  <TextField
                     className="finalinput"
                     id="outlined-multiline-static"
                     multiline
@@ -731,12 +728,14 @@ function Invoice(props) {
                       !editTglCheckedState
                     }
                   />
-                  <span className="cms-remarksCharCount">({charsLeft}/150)</span>
+                  <span className="cms-remarksCharCount">
+                    ({charsLeft}/150)
+                  </span>
                 </Grid>
               </div>
             </Grid>
           </Box>
-        </Container>
+        </Box>
       </React.Fragment>
     </div>
   );

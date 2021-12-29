@@ -1,10 +1,13 @@
 .ListContainer {
-  position: absolute;
   height: 58%;
-  width: 80%;
+  width: 100%;
   overflow-y: scroll;
   border: 2px solid rgb(216, 213, 213);
   border-radius: 0.5rem;
+}
+
+.client-list-wrapper {
+  height: 100%;
 }
 
 .ListContainer::-webkit-scrollbar {

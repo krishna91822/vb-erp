@@ -323,7 +323,7 @@ export const CapturePO_SOW = (props) => {
               )}
             </Grid>
           </Grid>
-          <Container fixed>
+          <Box fixed>
             <Box
               sx={{
                 bgcolor: "white",
@@ -807,7 +807,7 @@ export const CapturePO_SOW = (props) => {
                 )} */}
               </Grid>
             </Box>
-          </Container>
+          </Box>
         </React.Fragment>
       </div>
     </div>
