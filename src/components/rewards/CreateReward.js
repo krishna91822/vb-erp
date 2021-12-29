@@ -262,7 +262,7 @@ const CreateReward = () => {
                   <MenuItem value="Manager">Manager</MenuItem>
                 )}
 
-                <MenuItem value="Employees">Employee</MenuItem>
+                <MenuItem value="Employees">All Employees</MenuItem>
                 <MenuItem
                   value="selected"
                   onChange={handledata}
