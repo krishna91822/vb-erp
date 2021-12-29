@@ -262,7 +262,7 @@ const CreateReward = () => {
                   <MenuItem value="Manager">Manager</MenuItem>
                 )}
 
-                <MenuItem value="Employees">Employee</MenuItem>
+                <MenuItem value="Employees">All Employees</MenuItem>
                 <MenuItem
                   value="selected"
                   onChange={handledata}
@@ -335,7 +335,7 @@ const CreateReward = () => {
               />
               <br />
               <TextField
-                placeholder="Please Join Us"
+                placeholder="hii <@receiver> you have some msg from <@sender>"
                 multiline
                 className="textfield1"
                 name="channel_message"
