@@ -40,6 +40,9 @@ export const ContentBoldTypo = styled("div")(({ theme }) => ({
 
 //custom components for tabs
 export const StyledTabs = styled(Tabs)(({ theme }) => ({
+  ".MuiTabs-flexContainer": {
+    justifyContent: "center",
+  },
   ".MuiTabs-indicator": {
     backgroundColor: theme.palette.primary.main,
     height: 3,
@@ -55,6 +58,9 @@ export const StyledTab = styled((props) => <Tab disableRipple {...props} />)(
     fontWeight: "600",
     "&.Mui-selected": {
       color: theme.palette.primary.main,
+    },
+    "&.MuiTab-root": {
+      minWidth: "200px",
     },
   })
 );

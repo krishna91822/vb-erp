@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 import { Grid, TextField, Box, Chip, Checkbox } from "@mui/material";
 import ClearIcon from "@mui/icons-material/Clear";
@@ -29,25 +29,27 @@ import {
 import axiosInstance from "./../../../helpers/axiosInstance";
 import { useDispatch } from "react-redux";
 import { uiActions } from "./../../../store/ui-slice.js";
+import { useLocation } from "react-router-dom";
 
 const PersonalEditable = (props) => {
   const { toggleLoader } = uiActions;
   const dispatch = useDispatch();
+  const { pathname } = useLocation();
 
   const {
     empData,
     setEmpData,
     personalDetails,
     setPersonalDetails,
-    register,
+    // register,
     errors,
   } = props;
 
   const {
     // empConnections,
+    empDob,
     empHobbies,
     empPersonalEmail,
-    empDob,
     empAboutMe,
     empCurrentAddress,
     empResidentialAddress,
@@ -220,47 +222,60 @@ const PersonalEditable = (props) => {
     }
   };
 
+  const aboutCount = useRef(0);
+  const handleAboutMe = (event) => {
+    aboutCount.current = event.target.value.length;
+    console.log(`${aboutCount.current}/100`);
+  };
+
   return (
     <Grid container spacing={0} sx={{ minHeight: 150 }}>
-      <Grid
-        item
-        sm={5}
-        sx={{
-          "& .MuiOutlinedInput-root .MuiOutlinedInput-input": {
-            minHeight: 200,
-          },
-          "& .MuiFormControl-root": { minHeight: 200 },
-          "& .MuiOutlinedInput-notchedOutline": {
-            border: "0.1em solid",
-            borderColor: "textColor.paletteGrey",
-            borderRadius: "5px",
-          },
-        }}
-      >
-        <TitleTypo sx={{ textTransform: "capitalize", mb: 1, ml: 1 }}>
-          {personal.aboutMe}
-        </TitleTypo>
-        <TextField
-          placeholder="Write something about you"
-          id="outlined-multiline-flexible"
-          multiline
-          maxRows={4}
-          fullWidth
-          value={empAboutMe ? empAboutMe : ""}
-          name="empAboutMe"
-          onChange={handleChange}
-          error={Boolean(errors.empAboutMe)}
-          helperText={errors.empAboutMe?.message}
-          inputRef={register({
-            maxLength: {
-              value: 300,
-              message: "minimun length should be 300",
-            },
-          })}
-        />
-      </Grid>
       <Grid item sm={7}>
-        <Box sx={{ mt: 4, ml: 4, mb: 5 }}>
+        <Box sx={{ ml: 4, mb: 5 }}>
+          <ContentBox>
+            <TitleTypo sx={{ textTransform: "capitalize", mt: 1 }}>
+              {personal.aboutMe}
+            </TitleTypo>
+            <Box
+              sx={{
+                width: "100%",
+                position: "relative",
+                ...(aboutCount.current !== 0 && { marginBottom: "15px" }),
+              }}
+            >
+              <TextField
+                placeholder="Write something about you"
+                id="outlined-multiline-flexible"
+                multiline
+                value={empAboutMe ? empAboutMe : ""}
+                name="empAboutMe"
+                onChange={(event) => {
+                  handleChange(event);
+                  handleAboutMe(event);
+                }}
+                error={Boolean(aboutCount.current > 100)}
+                sx={{
+                  width: "100%",
+                  "& .MuiOutlinedInput-root": {
+                    width: "100%",
+                    minHeight: "40px",
+                  },
+                }}
+              />
+              {aboutCount.current !== 0 && (
+                <Box
+                  component="span"
+                  sx={{
+                    fontSize: "12px",
+                    position: "absolute",
+                    left: "0",
+                    bottom: "-20px",
+                    ...(aboutCount.current > 100 && { color: "#D32F2F" }),
+                  }}
+                >{`${aboutCount.current}/100`}</Box>
+              )}
+            </Box>
+          </ContentBox>
           <ContentBox>
             <ContentTypo>
               {personal.personalEmail}
@@ -278,38 +293,33 @@ const PersonalEditable = (props) => {
               type="email"
               name="empPersonalEmail"
               onChange={(event) => handleChange(event)}
-              error={Boolean(errors.empPersonalEmail)}
-              helperText={errors.empPersonalEmail?.message}
-              inputRef={register({
-                required: "Personal email is required.",
-                pattern: {
-                  value: /^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/,
-                  message: "Enter valid email.",
-                },
-              })}
+              error={Boolean(errors?.empPersonalEmail)}
+              // helperText={errors.empPersonalEmail?.message}
             />
           </ContentBox>
-          <ContentBox>
-            <ContentTypo>
-              {personal.dob}
-              <Box component="span" sx={{ color: "red" }}>
-                &nbsp;*
-              </Box>
-            </ContentTypo>
-            <LocalizationProvider dateAdapter={AdapterDateFns}>
-              <DesktopDatePicker
-                maxDate={new Date()}
-                inputFormat="dd/MM/yyyy"
-                value={empDob}
-                onChange={(newValue) => {
-                  setEmpData({ ...empData, empDob: newValue });
-                }}
-                renderInput={(params) => (
-                  <CustomTextField {...params} name="empDob" />
-                )}
-              />
-            </LocalizationProvider>
-          </ContentBox>
+          {pathname === "/my-profile" ? (
+            <ContentBox>
+              <ContentTypo>
+                {personal.dob}
+                <Box component="span" sx={{ color: "red" }}>
+                  &nbsp;*
+                </Box>
+              </ContentTypo>
+              <LocalizationProvider dateAdapter={AdapterDateFns}>
+                <DesktopDatePicker
+                  maxDate={new Date()}
+                  inputFormat="dd/MM/yyyy"
+                  value={empDob}
+                  onChange={(newValue) => {
+                    setEmpData({ ...empData, empDob: newValue });
+                  }}
+                  renderInput={(params) => (
+                    <CustomTextField {...params} name="empDob" />
+                  )}
+                />
+              </LocalizationProvider>
+            </ContentBox>
+          ) : null}
           <ContentBox>
             <ContentTypo>{personal.hobbies}</ContentTypo>
             <Box
@@ -343,6 +353,7 @@ const PersonalEditable = (props) => {
               <CustomTextFieldForChip
                 onKeyDown={keyPress}
                 type="text"
+                placeholder="Enter hobby"
                 // onChange={handleChangeHobbies}
               />
             </Box>
@@ -362,7 +373,17 @@ const PersonalEditable = (props) => {
             />
           </ContentBox> */}
           <ContentBox>
-            <ContentTypo>{personal.currentAddress}</ContentTypo>
+            <ContentTypo
+              sx={{
+                display: "grid",
+                gridTemplateRows: "1fr 1fr",
+                height: "100%",
+                alignItems: "center",
+                marginBottom: "8px",
+              }}
+            >
+              {personal.currentAddress}
+            </ContentTypo>
             <Box sx={{ width: 1 }}>
               <CustomTextField
                 autoComplete="off"
@@ -463,7 +484,17 @@ const PersonalEditable = (props) => {
             </ContentTypo>
           </Box>
           <ContentBox>
-            <ContentTypo>{personal.residentialAddress}</ContentTypo>
+            <ContentTypo
+              sx={{
+                display: "grid",
+                gridTemplateRows: "1fr 1fr",
+                height: "100%",
+                alignItems: "center",
+                marginBottom: "8px",
+              }}
+            >
+              {personal.residentialAddress}
+            </ContentTypo>
             <Box sx={{ width: 1 }}>
               <CustomTextField
                 disabled={addresschecked}

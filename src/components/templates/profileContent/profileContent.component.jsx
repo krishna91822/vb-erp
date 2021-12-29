@@ -44,14 +44,14 @@ const ProfileContent = (props) => {
   const profileProgress = () => {
     const totalFields = inEditMode
       ? Object.keys(updateRequest).length +
-        updateRequest.personalDetails.length +
-        updateRequest.professionalDetails.length +
-        updateRequest.skillsDetails.length -
+        updateRequest?.personalDetails.length +
+        updateRequest?.professionalDetails.length +
+        updateRequest?.skillsDetails.length -
         3
       : Object.keys(currentEmployee).length +
-        currentEmployee.personalDetails.length +
-        currentEmployee.professionalDetails.length +
-        currentEmployee.skillsDetails.length -
+        currentEmployee?.personalDetails.length +
+        currentEmployee?.professionalDetails.length +
+        currentEmployee?.skillsDetails.length -
         3;
 
     const completedFields = inEditMode

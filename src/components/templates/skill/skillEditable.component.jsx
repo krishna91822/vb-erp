@@ -103,6 +103,7 @@ const SkillEditable = ({
                 isSearchable
                 name="empPrimaryCapability"
                 options={primarySkillOptions}
+                placeholder="Select primary skills"
                 onChange={(value) => {
                   setPrimarySkillDropdown(value);
                   setEmpData({
@@ -122,6 +123,7 @@ const SkillEditable = ({
               variant="outlined"
               value={empSkillSet ? empSkillSet : ""}
               name="empSkillSet"
+              placeholder="Enter employee skillset"
               onChange={handleChange}
               type="text"
               sx={{
@@ -140,6 +142,7 @@ const SkillEditable = ({
               variant="outlined"
               value={empCertifications ? empCertifications : ""}
               name="empCertifications"
+              placeholder="Enter employee certificates"
               onChange={handleChange}
               type="text"
               sx={{

@@ -5,7 +5,7 @@ export const CustomGridBox = styled("div")(({ theme }) => ({
   width: "100%",
   minHeight: "80px",
   display: "grid",
-  gridTemplateRows: "repeat(3,30px)",
+  gridTemplateRows: "repeat(3,minmax(45px,1fr))",
   gridTemplateColumns: "40% 60%",
   alignItems: "center",
 }));

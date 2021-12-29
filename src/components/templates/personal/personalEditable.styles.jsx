@@ -16,7 +16,7 @@ export const CustomTextField = styled(TextField)({
 
 export const CustomTextFieldForChip = styled(TextField)({
   "& .MuiOutlinedInput-root": {
-    width: "90px",
+    width: "120px",
     height: "35px",
   },
 });
@@ -24,7 +24,7 @@ export const CustomTextFieldForChip = styled(TextField)({
 export const ContentBox = styled("div")(({ theme }) => ({
   padding: theme.spacing(1),
   display: "grid",
-  alignItems: "start",
+  alignItems: "center",
   gridTemplateColumns: "1fr 2fr",
   gridColumnGap: 20,
   textTransform: "capitalize",

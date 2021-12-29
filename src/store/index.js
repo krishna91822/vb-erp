@@ -13,7 +13,7 @@ import userSlice from "./user-slice";
 import POSOW_Slice from "./CMS/POSOW-slice";
 import invoice_Slice from "./CMS/INVOICE-slice";
 
-// const middleware = [logger, thunk];
+const middleware = [logger, thunk];
 
 export default configureStore({
   reducer: {
@@ -27,5 +27,5 @@ export default configureStore({
     INVOICE_state: invoice_Slice.reducer,
     employee: employeeSlice,
   },
-  // middleware: [...middleware],
+  middleware: [...middleware],
 });
