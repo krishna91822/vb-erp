@@ -438,15 +438,14 @@ function Invoice(props) {
                 <br />
                 <Box sx={{ minWidth: 120 }}>
                   <FormControl fullWidth>
-                    <Select
+                    <TextField
                       disabled={true}
                       value={projectName}
-                      onChange={handleProjectChange}
                     >
-                      {allProjects.map((detail) => (
+                      {/* {allProjects.map((detail) => (
                         <MenuItem value={detail}>{detail}</MenuItem>
-                      ))}
-                    </Select>
+                      ))} */}
+                    </TextField>
                   </FormControl>
                 </Box>
               </Grid>

@@ -86,12 +86,13 @@ export const Main = () => {
   const [currentPage, setCurrentPage] = React.useState(1);
   const [postPerPage, setPostPerPage] = React.useState(5);
   const [filename, setFilename] = React.useState("Id");
+  const [searchKeyword , setSearchKeyword] = useState("");
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   useEffect(() => {
     // dispatch(fetchPO_SOW_data("Id"));
     // dispatch(fetchPO_SOW_data);
-    dispatch(paginationFetchPosow(filename, currentPage, postPerPage));
+    dispatch(paginationFetchPosow(filename, currentPage, postPerPage,searchKeyword));
   }, []);
   const user = useSelector((state) => state.user.user);
   const handleClick = (event) => {
@@ -108,19 +109,22 @@ export const Main = () => {
     setAnchorEl(null);
   };
   useEffect(() => {
-    dispatch(paginationFetchPosow(filename, currentPage, postPerPage));
+    dispatch(paginationFetchPosow(filename, currentPage, postPerPage,searchKeyword));
   }, [filename]);
   const handleChange = (event, value) => {
     setCurrentPage(value);
-    dispatch(paginationFetchPosow(filename, value, postPerPage));
+    dispatch(paginationFetchPosow(filename, value, postPerPage,searchKeyword));
   };
   const handlerowsPerpage = (event) => {
     setPostPerPage(event.target.value);
-    dispatch(paginationFetchPosow(filename, currentPage, event.target.value));
+    dispatch(paginationFetchPosow(filename, currentPage, event.target.value,searchKeyword));
   };
+  const SearchTextHandler = (event) =>{
+    setSearchKeyword(event.target.value)
+  }
   const searchHandler = (event) => {
     if (event.key === "Enter") {
-      dispatch(searchPoSow(event.target.value));
+      dispatch(paginationFetchPosow(filename, 1, 5,searchKeyword));
     }
   };     
   return (
@@ -130,6 +134,8 @@ export const Main = () => {
           <TextField
             id="outlined-basic"
             onKeyPress={searchHandler}
+            onChange={SearchTextHandler}
+            value={searchKeyword}
             label="Search by client/project name"
             variant="outlined"   
             sx={{ width:300 }}  

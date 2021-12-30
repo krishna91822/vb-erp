@@ -323,7 +323,7 @@ export const CapturePO_SOW = (props) => {
               )}
             </Grid>
           </Grid>
-          <Box fixed>
+          <Box>
             <Box
               sx={{
                 bgcolor: "white",

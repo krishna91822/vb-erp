@@ -90,6 +90,7 @@ export const SendForApproval = (curr_status, id) => {
 };
 export const fetchPO_SOW_data = (sortBy) => {
   return async function (dispatch) {
+    dispatch(uiActions.toggleLoader())
     try {
       const res = await axios.get(`poSow/sort/${sortBy}`);
       if (res.status === 200) {
@@ -108,18 +109,35 @@ export const fetchPO_SOW_data = (sortBy) => {
     }
   };
 };
-export const paginationFetchPosow = (filename, page, limit) => {
-  return async function (dispatch) {
-    const res = await axios.get(
-      `/poSow/sort/${filename}/?page=${page}&limit=${limit}`
-    );
-    const total = res.data.data.totalCount;
-    dispatch(PoSowActions.setTabViewData(res.data.data.results));
-    dispatch(PoSowActions.setTotalCount(total));
+export const paginationFetchPosow = (filename, page, limit,keyword) => {
+  return async function (dispatch) {    
+    dispatch(uiActions.toggleLoader())
+    try {
+      const res = await axios.get(
+        `/poSow/sort/${filename}/?keyword=${keyword}&page=${page}&limit=${limit}`
+      );
+      if(res.status===200){
+        const total = res.data.data.totalCount;
+        dispatch(PoSowActions.setTabViewData(res.data.data.results));
+        dispatch(PoSowActions.setTotalCount(total));
+      }
+    } catch (error) {
+      dispatch(
+        uiActions.showNotification({
+          status: "error",
+          title: "Error",
+          message: "Something went wrong",
+        })
+      );
+    }
+    finally{
+      dispatch(uiActions.toggleLoader())                                            
+    }
   };
 };
 export const fetchSpecificPO_SOW = (ROW_ID) => {
   return async function (dispatch) {
+    dispatch(uiActions.toggleLoader())
     try {
       const res = await axios.get(`/poSow/${ROW_ID}`);
       if (res.status === 200) {
@@ -135,6 +153,9 @@ export const fetchSpecificPO_SOW = (ROW_ID) => {
           message: "Could not update data",
         })
       );
+    }
+    finally{
+      dispatch(uiActions.toggleLoader())                                            
     }
   };
 };
@@ -322,6 +343,8 @@ export const searchPoSow = (keyword) => {
       const res = await axios.get(`poSow/sort/Id?keyword=${keyword}`);
       if (res.status === 200) {
         dispatch(PoSowActions.setTabViewData(res.data.data.results));
+        const total = res.data.data.totalCount;
+        dispatch(PoSowActions.setTotalCount(total));
       } else {
         throw new Error("Something went wrong!");
       }

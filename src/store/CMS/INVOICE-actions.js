@@ -80,19 +80,38 @@ export const fetch_INVOICE_data = (sortBy) => {
     }
   };
 };
-export const paginationFetchInvoice = (filename, page, limit) => {
+export const paginationFetchInvoice = (filename, page, limit,keyword) => {
   return async function (dispatch) {
-    const res = await axios.get(
-      `/invoice/sort/${filename}/?page=${page}&limit=${limit}`
-    );
-    const total = res.data.data.totalCount;
-    dispatch(invoiceActions.setTabViewData(res.data.data.results));
-    dispatch(invoiceActions.setTotalCount(total));
+    
+    try {
+      dispatch(uiActions.toggleLoader())
+      const res = await axios.get(
+        `/invoice/sort/${filename}/?keyword=${keyword}&page=${page}&limit=${limit}`
+      );
+      if(res.status===200){
+        const total = res.data.data.totalCount;
+        dispatch(invoiceActions.setTabViewData(res.data.data.results));
+        dispatch(invoiceActions.setTotalCount(total));
+      }
+    } catch (error) {
+      dispatch(
+        uiActions.showNotification({
+          status: "error",
+          title: "Error",
+          message: "Could'nt fetch data",
+        })
+      );
+    }
+    finally{
+      dispatch(uiActions.toggleLoader())                                            
+    }
+
   };
 };
 export const fetchSpecificINVOICE = (ROW_ID) => {
   return async function (dispatch) {
     try {
+      dispatch(uiActions.toggleLoader())
       const res = await axios.get(`/invoice/${ROW_ID}`);
       if (res.status === 200) {
         dispatch(invoiceActions.SetSpecific([res.data.data]));
@@ -107,6 +126,9 @@ export const fetchSpecificINVOICE = (ROW_ID) => {
           message: "Could'nt fetch data",
         })
       );
+    }
+    finally{
+      dispatch(uiActions.toggleLoader())                                            
     }
   };
 };

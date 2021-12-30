@@ -82,7 +82,7 @@ function InvoiceInfo() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(fetch_INVOICE_data);
+    // dispatch(fetch_INVOICE_data);
     dispatch(paginationFetchInvoice(filename, currentPage, postPerPage));
   }, []);
   const post = useSelector((state) => state.INVOICE_state.invoiceData);
@@ -90,12 +90,11 @@ function InvoiceInfo() {
   const [currentPage, setCurrentPage] = React.useState(1);
   const [postPerPage, setPostPerPage] = React.useState(5);
   const [filename, setFilename] = React.useState("Id");
+  const [searchKeyword , setSearchKeyword] = useState("");
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
 
   const user = useSelector((state) => state.user.user);
-
-  const [searchText, setsearchText] = useState("");
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -110,22 +109,25 @@ function InvoiceInfo() {
     setAnchorEl(null);
   };
   useEffect(() => {
-    dispatch(paginationFetchInvoice(filename, currentPage, postPerPage));
+    dispatch(paginationFetchInvoice(filename, currentPage, postPerPage,searchKeyword));
   }, [filename]);
   const handleChange = (event, value) => {
     setCurrentPage(value);
-    dispatch(paginationFetchInvoice(filename, value, postPerPage));
+    dispatch(paginationFetchInvoice(filename, value, postPerPage,searchKeyword));
   };
   const handlerowsPerpage = (event) => {
     setPostPerPage(event.target.value);
-    dispatch(paginationFetchInvoice(filename, currentPage, event.target.value));
+    dispatch(paginationFetchInvoice(filename, currentPage, event.target.value,searchKeyword));
   };
   const handleRowOnClick = (row_id) => {
     dispatch(fetchSpecificINVOICE(row_id));
   };
+  const SearchTextHandler = (event) =>{
+    setSearchKeyword(event.target.value)
+  }
   const searchHandler = (event) => {
     if (event.key === "Enter") {
-      dispatch(searchINVOICE(event.target.value));
+      dispatch(paginationFetchInvoice(filename, 1, 5,searchKeyword));
     }
   };
   return (
@@ -136,6 +138,8 @@ function InvoiceInfo() {
             id="outlined-basic"
             onKeyPress={searchHandler}
             label="Search by client/project name"
+            value={searchKeyword}
+            onChange={SearchTextHandler}
             variant="outlined"
             sx={{ width: 300 }}
           />

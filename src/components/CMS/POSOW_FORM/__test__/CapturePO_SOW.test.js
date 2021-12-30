@@ -3,11 +3,7 @@ import Adapter from "@wojtekmaj/enzyme-adapter-react-17";
 import { MemoryRouter } from "react-router-dom";
 import { Provider } from "react-redux";
 import { CapturePO_SOW } from "../CapturePO_SOW";
-import DenseTable from "../Table";
-import FormDialog from "../AddEmpToPO";
-import SimpleGrow from "../EmpList";
 
-// import AddEmpToPO from "../AddEmpToPO";
 import {
   render,
   fireEvent,
@@ -176,23 +172,6 @@ describe("POSOW EDIT", () => {
   });
 });
 
-describe("Adding Emp dialog box", () => {
-  const setup = () => {
-    const { container } = render(
-      <Provider store={store}>
-        <MemoryRouter>
-          <FormDialog edit={true} />
-        </MemoryRouter>
-      </Provider>
-    );
-    return container;
-  };
-  test("edit button should open form dialog", () => {
-    const component = setup();
-    const editformDialog = getByTestId(component, "editBtn");
-    fireEvent.click(editformDialog);
-  });
-});
 describe("testing on change/click on capture new PO/SOW page", () => {
   const setup = () => {
     const { container } = render(
@@ -293,49 +272,29 @@ describe("testing on change/click on capture new PO/SOW page", () => {
     fireEvent.change(uploadBtn);
   });
 });
-describe("testing send for approval button", () => {
-  const setup = () => {
-    const { container } = render(
-      <Provider store={store}>
-        <MemoryRouter>
-          <CapturePO_SOW editBtn={true} toggleState={false} />
-        </MemoryRouter>
-      </Provider>
-    );
-    return container;
-  };
-  test("send for approval button event triggered on click", () => {
-    const component = setup();
-    const sendForApprovalBtn = getByTestId(
-      component,
-      "sendForApproval-btn-ClickTest"
-    );
-    fireEvent.click(sendForApprovalBtn);
-  });
-  test("edit toggle button should change state", () => {
-    const component = setup();
-    const edittoggleBtn = getByTestId(component, "EditToggleBtn");
-    fireEvent.click(edittoggleBtn);
-    expect(edittoggleBtn.checked).toEqual(true);
-  });
-});
-describe("testing simplegrow", () => {
-  const setup = () => {
-    const { container } = render(
-      <Provider store={store}>
-        <MemoryRouter>
-          <SimpleGrow />
-        </MemoryRouter>
-      </Provider>
-    );
-    return container;
-  };
-  test("testing if simplegrow renders", () => {
-    const component = setup();
-    const expandAssignedEmpToggleSwitch = getByTestId(
-      component,
-      "empListGrowin"
-    );
-    fireEvent.click(expandAssignedEmpToggleSwitch);
-  });
-});
+// describe("testing send for approval button", () => {
+//   const setup = () => {
+//     const { container } = render(
+//       <Provider store={store}>
+//         <MemoryRouter>
+//           <CapturePO_SOW editBtn={true} toggleState={false} />
+//         </MemoryRouter>
+//       </Provider>
+//     );
+//     return container;
+//   };
+//   test("send for approval button event triggered on click", () => {
+//     const component = setup();
+//     const sendForApprovalBtn = getByTestId(
+//       component,
+//       "sendForApproval-btn-ClickTest"
+//     );
+//     fireEvent.click(sendForApprovalBtn);
+//   });
+//   test("edit toggle button should change state", () => {
+//     const component = setup();
+//     const edittoggleBtn = getByTestId(component, "EditToggleBtn");
+//     fireEvent.click(edittoggleBtn);
+//     expect(edittoggleBtn.checked).toEqual(true);
+//   });
+// });
