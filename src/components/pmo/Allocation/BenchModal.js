@@ -105,6 +105,9 @@ export default function BenchModal({
                         style={{
                           display: "flex",
                           justifyContent: "space-around",
+                          flexWrap: "wrap",
+                          columnGap: "normal",
+                          rowGap: "8px",
                         }}
                       >
                         {entryData.projects.map(
@@ -193,6 +196,9 @@ export default function BenchModal({
                         style={{
                           display: "flex",
                           justifyContent: "space-around",
+                          flexWrap: "wrap",
+                          columnGap: "normal",
+                          rowGap: "8px",
                         }}
                       >
                         {entryData.projects.map(
