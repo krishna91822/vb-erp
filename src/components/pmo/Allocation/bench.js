@@ -66,7 +66,10 @@ const Bench = ({ pressed, benchSortValue }) => {
       />
       <Container>
         <MiniHead data-test="main-heading">
-          Bench Capacity <span>{`(${data.totalCount || "0"})`}</span>
+          Bench Capacity{" "}
+          <span style={{ color: "grey", fontWeight: "500" }}>{`(${
+            data.totalCount || "0"
+          })`}</span>
         </MiniHead>
         <TableContainer
           sx={{
