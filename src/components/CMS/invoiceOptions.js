@@ -1,11 +1,12 @@
-import * as React from "react";
+import React, { useState, useEffect } from "react";
 import IconButton from "@mui/material/IconButton";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import FormDialog from "./invoiceEditDialog";
-import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
+import { invoiceActions } from "../../store/CMS/INVOICE-slice";
+import { useDispatch, useSelector } from "react-redux";
 
 const ITEM_HEIGHT = 48;
 
@@ -18,14 +19,14 @@ export default function LongMenu(props) {
   const handleClose = () => {
     setAnchorEl(null);
   };
-  let navigate = useNavigate();
-  //   const handleInvoiceView = () => {
-  //     navigate("/invoice_details/${props.invoiceID}");
-  //   };
-  const [popup, setPopup] = React.useState(false);
+  const dispatch = useDispatch();
   const handleEditClick = () => {
-    setPopup(!popup);
+    dispatch(invoiceActions.setPopupOpen());
+    dispatch(invoiceActions.setpopupVisibility());
   };
+  const visibility = useSelector(
+    (state) => state.INVOICE_state.popupVisibility
+  );
   return (
     <div>
       <IconButton
@@ -54,32 +55,18 @@ export default function LongMenu(props) {
         }}
       >
         <MenuItem
-          //   key={option}
-          //   selected={false}
           onClick={handleEditClick}
           disabled={props.invoice_received === "Yes"}
         >
           Edit
-          {popup ? (
-            <FormDialog
-              invoice_received={props.invoice_received}
-              popup={true}
-            />
-          ) : (
-            <></>
-          )}
-          {/* <FormDialog
-            invoice_received={props.invoice_received}
-            popup={true}
-          />{" "} */}
         </MenuItem>
-        <MenuItem
-          //   key={option}
-          //   selected={false}
-          //   onClick={handleInvoiceView}
-          component={Link}
-          to={`/invoice_details/${props.invoiceID}`}
-        >
+        {visibility ? (
+          <FormDialog
+            invoice_received={props.invoice_received}
+            invoiceID={props.invoiceID}
+          />
+        ) : null}
+        <MenuItem component={Link} to={`/invoice_details/${props.invoiceID}`}>
           View
         </MenuItem>
       </Menu>

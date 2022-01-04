@@ -58,3 +58,15 @@
 .pagenumber {
   display: flex;
 }
+.invoice-RadioButtons {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.invoice-radioInputs {
+  display: flex;
+  flex-direction: row;
+}
+.invoice-editDialog {
+  width: 100%;
+}
