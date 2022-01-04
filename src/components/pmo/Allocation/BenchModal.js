@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Backdrop, Box, Modal, Fade, Typography } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 const style = {
@@ -25,6 +25,21 @@ export default function BenchModal({
     setModalDetails(false);
   };
   let current_Day = new Date().toISOString().slice(0, 10);
+  let acitveArray = [];
+  let pastArray = [];
+
+  const testing = () => {
+    if (entryData.projects) {
+      entryData.projects.filter((test) => {
+        test.allocationEndDate > current_Day
+          ? acitveArray.push(test)
+          : pastArray.push(test);
+      });
+    }
+  };
+
+  testing();
+
   return (
     <div>
       <Modal
@@ -92,15 +107,17 @@ export default function BenchModal({
                 (entryData.projects.length > 0 ? (
                   <>
                     <div>
-                      <h3
-                        style={{
-                          margin: "5px",
-                          padding: "5px",
-                          borderBottom: "1px solid #afacacde",
-                        }}
-                      >
-                        Past Allocation
-                      </h3>
+                      {pastArray.length > 0 && (
+                        <h3
+                          style={{
+                            margin: "5px",
+                            padding: "5px",
+                            borderBottom: "1px solid #afacacde",
+                          }}
+                        >
+                          Past Allocation
+                        </h3>
+                      )}
                       <div
                         style={{
                           display: "flex",
@@ -183,15 +200,17 @@ export default function BenchModal({
                       </div>
                     </div>
                     <div>
-                      <h3
-                        style={{
-                          margin: "5px",
-                          padding: "5px",
-                          borderBottom: "1px solid #afacacde",
-                        }}
-                      >
-                        Active Allocation
-                      </h3>
+                      {acitveArray.length > 0 && (
+                        <h3
+                          style={{
+                            margin: "5px",
+                            padding: "5px",
+                            borderBottom: "1px solid #afacacde",
+                          }}
+                        >
+                          Active Allocation
+                        </h3>
+                      )}
                       <div
                         style={{
                           display: "flex",
