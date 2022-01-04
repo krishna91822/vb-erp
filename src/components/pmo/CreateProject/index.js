@@ -169,6 +169,16 @@ const CreateProject = () => {
     // eslint-disable-next-line
   }, [clientNames]);
 
+  useEffect(() => {
+    setState({
+      ...state,
+      resource: {
+        ...state.resource,
+        allocationPercentage: 100 - percentageAllocated,
+      },
+    });
+  }, [percentageAllocated]);
+
   const handelAssociate = (value) => {
     dispatch(getPercentageAllocated(value.empId));
     setState({
