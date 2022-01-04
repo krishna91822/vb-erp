@@ -16,9 +16,10 @@ import EditOffIcon from "@mui/icons-material/EditOff";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+import FormDialog from "./invoiceEditDialog"
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-
+import LongMenu from "./invoiceOptions";
 import {
   fetch_INVOICE_data,
   paginationFetchInvoice,
@@ -81,12 +82,10 @@ export const StyledMenu = styled((props) => (
 function InvoiceInfo() {
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    // dispatch(fetch_INVOICE_data);
-    dispatch(paginationFetchInvoice(filename, currentPage, postPerPage));
-  }, []);
   const post = useSelector((state) => state.INVOICE_state.invoiceData);
   const totalCount = useSelector((state) => state.INVOICE_state.totalCount);
+  const user = useSelector((state) => state.user.user);
+
   const [currentPage, setCurrentPage] = React.useState(1);
   const [postPerPage, setPostPerPage] = React.useState(5);
   const [filename, setFilename] = React.useState("Id");
@@ -94,7 +93,10 @@ function InvoiceInfo() {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
 
-  const user = useSelector((state) => state.user.user);
+
+  useEffect(() => {
+    dispatch(paginationFetchInvoice(filename, currentPage, postPerPage,searchKeyword));
+  }, []);
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -119,9 +121,9 @@ function InvoiceInfo() {
     setPostPerPage(event.target.value);
     dispatch(paginationFetchInvoice(filename, currentPage, event.target.value,searchKeyword));
   };
-  const handleRowOnClick = (row_id) => {
-    dispatch(fetchSpecificINVOICE(row_id));
-  };
+  // const handleRowOnClick = (row_id) => {
+  //   dispatch(fetchSpecificINVOICE(row_id));
+  // };
   const SearchTextHandler = (event) =>{
     setSearchKeyword(event.target.value)
   }
@@ -236,9 +238,9 @@ function InvoiceInfo() {
             <TableBody className="table-row-posow">
               {post.map((row, index) => (
                 <TableRow
-                  component={Link}
-                  to={`/invoice_details/${row._id}`}
-                  onClick={() => handleRowOnClick(row._id)}
+                  // component={Link}
+                  // to={`/invoice_details/${row._id}`}
+                  // onClick={() => handleRowOnClick(row._id)}
                   key={row.name}
                   style={{ textDecoration: "none" }}
                   sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
@@ -259,17 +261,28 @@ function InvoiceInfo() {
                   <TableCell>{row.invoice_received}</TableCell>
                   <TableCell>{row.invoice_amount_received}</TableCell>
 
-                  {user.permissions.includes("upload_invoice") && (
+                  {/* {user.permissions.includes("upload_invoice") && (
                     <>
                       {row.invoice_received === "No" ? (
                         <TableCell>
                           <EditIcon />
+                          <FormDialog invoice_received={row.invoice_received}/>
                         </TableCell>
                       ) : (
                         <TableCell>
                           <EditOffIcon />
                         </TableCell>
                       )}
+                    </>
+                  )} */}
+                    {user.permissions.includes("upload_invoice") && (
+                    <>
+                        <TableCell>
+                          {/* <EditIcon /> */}
+                          {/* <FormDialog invoice_received={row.invoice_received}/> */}
+                          <LongMenu invoiceID={row._id} invoice_received={row.invoice_received}/>
+                        </TableCell>
+ 
                     </>
                   )}
                 </TableRow>

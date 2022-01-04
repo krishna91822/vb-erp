@@ -5,16 +5,19 @@ import { uiActions } from "../ui-slice";
 
 export const createNewPO_SOW = (formData) => {
   return async function (dispatch) {
+    dispatch(uiActions.toggleLoader())
     try {
       const response = await axios.post(`/poSow`, formData);
       if (response.status === 200) {
-        dispatch(
-          uiActions.showNotification({
-            status: "success",
-            title: "Success!",
-            message: "Saved Successfully!",
-          })
-        );
+        setTimeout(function(){
+          dispatch(
+            uiActions.showNotification({
+              status: "success",
+              title: "Success!",
+              message: "PO/SOW captured successfully!",
+            })
+          )
+        },1000)
         dispatch(PoSowActions.setRedirect(true));
       } else {
         throw new Error("Could not Save data!");
@@ -32,20 +35,26 @@ export const createNewPO_SOW = (formData) => {
         );
       }, 1000);
     }
+    finally{
+      dispatch(uiActions.toggleLoader())
+    }
   };
 };
 export const UpdatePO_SOW = (formData, id) => {
   return async function (dispatch) {
+    dispatch(uiActions.toggleLoader())
     try {
       const response = await axios.patch(`/poSow/${id}`, formData);
       if (response.status === 200) {
-        dispatch(
-          uiActions.showNotification({
-            status: "success",
-            title: "Success!",
-            message: "Updated Successfully!",
-          })
-        );
+        setTimeout(function(){
+          dispatch(
+            uiActions.showNotification({
+              status: "success",
+              title: "Success!",
+              message: response.data.message,
+            })
+          )
+        },1000)
         dispatch(PoSowActions.setRedirect(true));
       } else {
         throw new Error("Could not Save data!");
@@ -58,6 +67,9 @@ export const UpdatePO_SOW = (formData, id) => {
           message: "Could not update data",
         })
       );
+    }
+    finally{
+      dispatch(uiActions.toggleLoader())
     }
   };
 };
@@ -263,6 +275,7 @@ export const UnAssignThisEmp = (emp_id) => {
 
 export const fetchAllClients = () => {
   return async function (dispatch) {
+    dispatch(uiActions.toggleLoader())
     try {
       const res = await axios.get("poSow/capturePO/clients");
       if (res.status === 200) {
@@ -279,10 +292,14 @@ export const fetchAllClients = () => {
         })
       );
     }
+    finally{
+      dispatch(uiActions.toggleLoader())
+    }
   };
 };
 export const fetchAllClientProjects = (clientName) => {
   return async function (dispatch) {
+    dispatch(uiActions.toggleLoader())
     try {
       const res = await axios.get(`poSow/capturePO/clients/${clientName}`);
       if (res.status === 200) {
@@ -299,10 +316,14 @@ export const fetchAllClientProjects = (clientName) => {
         })
       );
     }
+    finally{
+      dispatch(uiActions.toggleLoader())
+    }
   };
 };
 export const fetchClientProjectSponsor = (projectId) => {
   return async function (dispatch) {
+    dispatch(uiActions.toggleLoader())
     try {
       const res = await axios.get(
         `poSow/capturePO/details?projectId=${projectId}`
@@ -333,6 +354,9 @@ export const fetchClientProjectSponsor = (projectId) => {
           message: "Resources not allocated for this project",
         })
       );
+    }
+    finally{
+      dispatch(uiActions.toggleLoader())
     }
   };
 };

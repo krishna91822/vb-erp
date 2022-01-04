@@ -227,12 +227,12 @@ export const Main = () => {
           >
             <TableHead className="tablehead" data-test="row-click0">
               <TableRow>
-                <TableCell>ID</TableCell>
-                <TableCell>Client Name</TableCell>
-                <TableCell>Project Name</TableCell>
-                <TableCell>PO/SOW Number</TableCell>
-                <TableCell>PO/SOW Amount</TableCell>
-                <TableCell>Client Sponsor</TableCell>
+                <TableCell><strong>ID</strong></TableCell>
+                <TableCell><strong>Client Name</strong></TableCell>
+                <TableCell><strong>Project Name</strong></TableCell>
+                <TableCell><strong>PO/SOW Number</strong></TableCell>
+                <TableCell><strong>PO/SOW Amount</strong></TableCell>
+                <TableCell><strong>Client Sponsor</strong></TableCell>
 
                 {/* {user.permissions.includes("upload_PO/SOW/contract") && (
                   <TableCell>Action</TableCell>

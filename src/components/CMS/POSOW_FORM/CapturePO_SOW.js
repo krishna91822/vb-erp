@@ -140,10 +140,10 @@ export const CapturePO_SOW = (props) => {
     }
   }, [clientName]);
   useEffect(() => {
-    if ((!props.editBtn && projectName !== null) || editTglCheckedState) {
+    if (!props.editBtn && projectName !== null) {
       dispatch(fetchClientProjectSponsor(projectId));
     }
-  }, [projectName, editTglCheckedState]);
+  }, [projectName]);
 
   useEffect(() => {
     setclientProjectSponsor(clientSponsor);
@@ -217,9 +217,9 @@ export const CapturePO_SOW = (props) => {
     const maxCount = 150;
     setCharsLeft(maxCount - remarks.length);
   }, [remarks]);
-  const handlePoNumTxtBoxChange = (event) => {
-    setPO_number(event.target.value);
-  };
+  // const handlePoNumTxtBoxChange = (event) => {
+  //   setPO_number(event.target.value);
+  // };
   const handlePOAmtTxtBoxChange = (event) => {
     if (!isNaN(Number(event.target.value))) {
       setPOAmt(event.target.value);
@@ -248,12 +248,12 @@ export const CapturePO_SOW = (props) => {
       setDocName("");
     }
   };
-  const handleSendForApprovalBtnOnClk = (statusToChange) => {
-    dispatch(SendForApproval("Pending", params.id));
-  };
-  const handleApproveReject = (statusToChange) => {
-    dispatch(SendForApproval(statusToChange, params.id));
-  };
+  // const handleSendForApprovalBtnOnClk = (statusToChange) => {
+  //   dispatch(SendForApproval("Pending", params.id));
+  // };
+  // const handleApproveReject = (statusToChange) => {
+  //   dispatch(SendForApproval(statusToChange, params.id));
+  // };
   const submitForm = (event) => {
     event.preventDefault();
     let selectedTargetedRes = {};
@@ -422,7 +422,6 @@ export const CapturePO_SOW = (props) => {
                       option.clientName === value.clientName
                     }
                     data-testid="clientNameDropdown-ChangeTest"
-                    error={true}
                     renderInput={(params) => (
                       <TextField
                         className="finalinput"
@@ -511,7 +510,6 @@ export const CapturePO_SOW = (props) => {
                                   id={`custom-checkbox-${index}`}
                                   name={name}
                                   value={name}
-                                  data-test="targetedRes-chkBox-input"
                                   data-testid={`targetedRes${index}`}
                                   disabled={
                                     props.editBtn && !editTglCheckedState
@@ -620,7 +618,7 @@ export const CapturePO_SOW = (props) => {
                         className="finalinput"
                         variant="outlined"
                         value={PO_number}
-                        onChange={handlePoNumTxtBoxChange}
+                        // onChange={handlePoNumTxtBoxChange}
                         inputProps={{ "data-testid": "po-sow-num" }}
                         data-test="po-sow-num"
                         error={errors.PO_Number ? true : false}
