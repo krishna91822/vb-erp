@@ -1,9 +1,8 @@
 .ListContainer {
-  height: 67%;
+  margin-top: 5px;
+  height: 70%;
   width: 100%;
   overflow-y: scroll;
-  border: 2px solid rgb(216, 213, 213);
-  border-radius: 0.5rem;
 }
 
 .client-list-wrapper {
@@ -25,13 +24,27 @@
 .ListContainer::-webkit-scrollbar-thumb:hover {
   background: grey;
 }
+.table-header {
+  background-color: rgb(243, 244, 246);
+}
+
 .table-row {
   cursor: pointer;
 }
 
+.table-row:hover {
+  background-color: rgb(248, 248, 248);
+}
+
 .pagination {
   position: absolute;
-  top: 89%;
+  top: 92%;
   left: 50%;
   transform: translate((-50%, 0));
+}
+
+.sort-filters {
+  position: fixed;
+  margin-top: -60px;
+  margin-left: 50%;
 }

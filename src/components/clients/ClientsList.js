@@ -19,8 +19,14 @@ import {
   TextField,
   InputAdornment,
   Typography,
+  Card,
+  CardContent,
+  SvgIcon,
 } from "@mui/material";
+import { Search as SearchIcon } from "../../icons/search";
+
 import TableCell, { tableCellClasses } from "@mui/material/TableCell";
+
 import {
   Edit as EditIcon,
   MoreVert as MoreVertIcon,
@@ -90,66 +96,66 @@ function ClientsList() {
   };
 
   const clients = clientsList.map((client, idx) => (
-    <StyledTableRow className="table-row" key={client._id}>
-      <StyledTableCell
+    <TableRow className="table-row" key={client._id}>
+      <TableCell
         onClick={() => {
           handleClientData(client._id, false);
         }}
         align="center"
       >
         {client.rowNumber}
-      </StyledTableCell>
-      <StyledTableCell
+      </TableCell>
+      <TableCell
         onClick={() => {
           handleClientData(client._id, false);
         }}
         align="center"
       >
         {client.brandName}
-      </StyledTableCell>
-      <StyledTableCell
+      </TableCell>
+      <TableCell
         onClick={() => {
           handleClientData(client._id, false);
         }}
         align="center"
       >
         {`${client.contacts.primaryContact.firstName} ${client.contacts.primaryContact.lastName}`}
-      </StyledTableCell>
-      <StyledTableCell
+      </TableCell>
+      <TableCell
         onClick={() => {
           handleClientData(client._id, false);
         }}
         align="center"
       >
         {client.registeredAddress.country.split("-")[0]}
-      </StyledTableCell>
-      <StyledTableCell
+      </TableCell>
+      <TableCell
         onClick={() => {
           handleClientData(client._id, false);
         }}
         align="center"
       >
         {client.status ? "Active" : "Inactive"}
-      </StyledTableCell>
-      <StyledTableCell
+      </TableCell>
+      <TableCell
         onClick={() => {
           handleClientData(client._id, false);
         }}
         align="center"
       >
         {client.createdAt.slice(0, 10)}
-      </StyledTableCell>
+      </TableCell>
       {user.permissions.includes("update_on_CIMS_module") && (
-        <StyledTableCell
+        <TableCell
           onClick={() =>
             handelMenu(client._id, client.status, client.brandName)
           }
           align="center"
         >
           {menuIcon()}
-        </StyledTableCell>
+        </TableCell>
       )}
-    </StyledTableRow>
+    </TableRow>
   ));
 
   function menuIcon() {
@@ -218,8 +224,7 @@ function ClientsList() {
 
   return (
     <div className="client-list-wrapper">
-      <PageHeader />
-      <Box m={2} mb={1}>
+      {/* <Box m={2} mb={1}>
         <TextField
           fullWidth
           id="search"
@@ -245,20 +250,54 @@ function ClientsList() {
             ),
           }}
         />
+      </Box> */}
+      <PageHeader />
+      <Box m={2} mb={1}>
+        <Card>
+          <CardContent>
+            <Box sx={{ maxWidth: 500 }}>
+              <TextField
+                fullWidth
+                id="search"
+                placeholder="Search Company Name / Associate Name / Location"
+                value={searchBy}
+                onChange={handelSearch}
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <SvgIcon color="action" fontSize="small">
+                        <SearchIcon />
+                      </SvgIcon>
+                    </InputAdornment>
+                  ),
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <IconButton onClick={handelClearSearch}>
+                        <ClearRoundedIcon />
+                      </IconButton>
+                    </InputAdornment>
+                  ),
+                }}
+                placeholder="Search customer"
+                variant="outlined"
+              />
+            </Box>
+          </CardContent>
+        </Card>
       </Box>
       <div className="ListContainer">
-        <TableContainer component={Paper} align="right">
+        <TableContainer>
           <Table sx={{ maxWidth: "100%" }}>
             <TableHead>
-              <TableRow>
-                <StyledTableCell align="center">ID</StyledTableCell>
-                <StyledTableCell align="center">Company Name</StyledTableCell>
-                <StyledTableCell align="center">Associate Name</StyledTableCell>
-                <StyledTableCell align="center">Location</StyledTableCell>
-                <StyledTableCell align="center">Status</StyledTableCell>
-                <StyledTableCell align="center">Registered On</StyledTableCell>
+              <TableRow className="table-header">
+                <TableCell align="center">ID</TableCell>
+                <TableCell align="center">Company Name</TableCell>
+                <TableCell align="center">Associate Name</TableCell>
+                <TableCell align="center">Location</TableCell>
+                <TableCell align="center">Status</TableCell>
+                <TableCell align="center">Registered On</TableCell>
                 {user.permissions.includes("update_on_CIMS_module") && (
-                  <StyledTableCell align="center">Actions</StyledTableCell>
+                  <TableCell align="center">Actions</TableCell>
                 )}
               </TableRow>
             </TableHead>
