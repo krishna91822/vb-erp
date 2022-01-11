@@ -7,6 +7,7 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import EditIcon from "@mui/icons-material/Edit";
+import Box from "@mui/material/Box";
 import EditOffIcon from "@mui/icons-material/EditOff";
 import IconButton from "@mui/material/IconButton";
 import Menu from "@mui/material/Menu";
@@ -16,6 +17,8 @@ import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import FormControl from "@mui/material/FormControl";
+import Select from "@mui/material/Select";
+import BasicDatePicker from "../CMS/invoice_FORM/date";
 import FormLabel from "@mui/material/FormLabel";
 import { invoiceActions } from "../../store/CMS/INVOICE-slice";
 import { useDispatch, useSelector } from "react-redux";
@@ -25,7 +28,9 @@ export default function FormDialog(props) {
   const dispatch = useDispatch();
 
   const open = useSelector((state) => state.INVOICE_state.popup);
-
+  const VbBankAcc = useSelector(
+    (state) => state.INVOICE_state.inputFieldsData.VbBankAcc
+  );
   const handleClose = () => {
     dispatch(invoiceActions.setPopupOpen());
     dispatch(invoiceActions.setpopupVisibility());
@@ -33,6 +38,9 @@ export default function FormDialog(props) {
   const [invoiceRaisedFlag, setInvoiceRaisedFlag] = useState("No");
   const [amountReceivedFlag, setAmountReceivedFlag] = useState("No");
   const [amount, setAmount] = useState("");
+  const [Vb_Bank_Acc, setVbbankacc] = React.useState("");
+  const [Date_, setDate] = React.useState(undefined);
+  const [remarks, setRemarks] = React.useState(null);
   const handleInvoiceRaised = (event) => {
     setInvoiceRaisedFlag(event.target.value);
   };
@@ -42,11 +50,20 @@ export default function FormDialog(props) {
   const handleAmount = (event) => {
     setAmount(event.target.value);
   };
+  const handlevbbankacc = (event) => {
+    setVbbankacc(event.target.value);
+  };
+  const handleDate = (Date) => {
+    setDate(Date);
+  };
   const handleUpdate = () => {
     const dataToSend = {
       invoice_raised: invoiceRaisedFlag,
       invoice_received: amountReceivedFlag,
       invoice_amount_received: Number(amount),
+      vb_bank_account: Vb_Bank_Acc,
+      amount_received_on:
+        new Date(Date_).getFullYear() === 1970 ? null : new Date(Date_),
     };
     console.log("update clicked", dataToSend);
   };
@@ -112,10 +129,35 @@ export default function FormDialog(props) {
             id="invoiceAmt"
             value={amount}
             onChange={handleAmount}
+            disabled={amountReceivedFlag === "No"}
             label="Invoice amount received"
             type="number"
             fullWidth
             variant="standard"
+          />
+          <br />
+          <label>VB Bank Account</label>
+          <br />
+          <Box sx={{ minWidth: 120 }}>
+            <FormControl fullWidth>
+              <Select
+                disabled={amountReceivedFlag === "No"}
+                value={Vb_Bank_Acc}
+                onChange={handlevbbankacc}
+              >
+                {VbBankAcc.map((detail) => (
+                  <MenuItem value={detail}>{detail}</MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+          </Box>
+          <br />
+          <label htmlFor="invoiceamount">Amount Received on</label>
+          <br />
+          <BasicDatePicker
+            onChange={handleDate}
+            value={Date_ ? new Date(Date_) : null}
+            disabled={amountReceivedFlag === "No"}
           />
         </DialogContent>
         <DialogActions>
