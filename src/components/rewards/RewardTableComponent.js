@@ -1,48 +1,55 @@
 import React from "react";
 import "./rewardTableStyle.css";
 import Button from "@mui/material/Button";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faTrashAlt,
-  faEdit,
-  faFile,
-  faSyncAlt,
-  faRocket,
-} from "@fortawesome/free-solid-svg-icons";
-import { useDispatch } from "react-redux";
-import { deleteRewardData } from "../../store/rewards-actions";
+import { styled, alpha } from "@mui/material/styles";
+import Menu from "@mui/material/Menu";
 import { Link } from "react-router-dom";
+import RewardRowData from "./RewardRowData";
 
-const rocket = {
-  color: "blue",
-  fontSize: 20,
-};
+export const StyledMenu = styled((props) => (
+  <Menu
+    elevation={0}
+    anchorOrigin={{
+      vertical: "bottom",
+      horizontal: "right",
+    }}
+    transformOrigin={{
+      vertical: "top",
+      horizontal: "right",
+    }}
+    {...props}
+  />
+))(({ theme }) => ({
+  "& .MuiPaper-root": {
+    borderRadius: 6,
+    marginTop: theme.spacing(1),
+    minWidth: 180,
+    color:
+      theme.palette.mode === "light"
+        ? "rgb(55, 65, 81)"
+        : theme.palette.grey[300],
+    boxShadow:
+      "rgb(255, 255, 255) 0px 0px 0px 0px, rgba(0, 0, 0, 0.05) 0px 0px 0px 1px, rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, rgba(0, 0, 0, 0.05) 0px 4px 6px -2px",
+    "& .MuiMenu-list": {
+      padding: "4px 0",
+    },
+    "& .MuiMenuItem-root": {
+      "& .MuiSvgIcon-root": {
+        fontSize: 18,
+        color: theme.palette.text.secondary,
+        marginRight: theme.spacing(1.5),
+      },
+      "&:active": {
+        backgroundColor: alpha(
+          theme.palette.primary.main,
+          theme.palette.action.selectedOpacity
+        ),
+      },
+    },
+  },
+}));
 
-const refresh = {
-  color: "green",
-  fontSize: 20,
-};
-
-const file = {
-  color: "yellowgreen",
-  fontSize: 20,
-};
-
-const edit = {
-  color: "orange",
-  fontSize: 20,
-};
-
-const deleteStyle = {
-  color: "red",
-  fontSize: 20,
-};
-
-function Body(props) {
-  const dispatch = useDispatch();
-
-  // console.log(props.data);
-
+const Body = (props) => {
   return (
     <div className="main-body">
       <div className="middle-container">
@@ -50,7 +57,7 @@ function Body(props) {
           <p>R&R's Information</p>
         </div>
         <div className="middle-button">
-          <Link to="/rewards/create">
+          <Link className="remove-underline" to="/rewards/create">
             <Button color="success" variant="contained">
               Create a Reward
             </Button>
@@ -59,9 +66,6 @@ function Body(props) {
       </div>
       <div className="table-container">
         <div className="heading-row-container">
-          {/* <div className="heading-id">
-            <p>ID</p>
-          </div> */}
           <div className="heading-rewardname">
             <p>Reward Name</p>
           </div>
@@ -79,52 +83,13 @@ function Body(props) {
           </div>
         </div>
         <div className="data-row-container">
-          {props.data.map((d) => {
-            return (
-              <div className="multiple-rows-container">
-                {/* <div className="id">
-                  <p>{d.employee_id}</p>
-                </div> */}
-                <div className="rewardname">
-                  <p>{d.reward_name ? d.reward_name : d.reward_display_name}</p>
-                </div>
-                <div className="reward">
-                  <p>{d.reward_type}</p>
-                </div>
-                <div className="assignee">
-                  <p>{d.reward_sender}</p>
-                </div>
-                <div className="reward-state">
-                  <p>{d.status}</p>
-                </div>
-                <div className="actions">
-                  <div className="actions-icon">
-                    <FontAwesomeIcon style={rocket} icon={faRocket} />
-                  </div>
-                  <div className="actions-icon">
-                    <FontAwesomeIcon style={refresh} icon={faSyncAlt} />
-                  </div>
-                  <div className="actions-icon">
-                    <FontAwesomeIcon style={file} icon={faFile} />
-                  </div>
-                  <div className="actions-icon">
-                    <FontAwesomeIcon style={edit} icon={faEdit} />
-                  </div>
-                  <div className="actions-icon">
-                    <FontAwesomeIcon
-                      style={deleteStyle}
-                      onClick={() => dispatch(deleteRewardData(d._id))}
-                      icon={faTrashAlt}
-                    />
-                  </div>
-                </div>
-              </div>
-            );
+          {props.rewardData.map((data) => {
+            return <RewardRowData data={data} StyledMenu={StyledMenu} />;
           })}
         </div>
       </div>
     </div>
   );
-}
+};
 
 export default Body;

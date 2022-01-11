@@ -1,0 +1,69 @@
+.CIMSFormContainer {
+  position: fixed;
+  height: 75%;
+  margin-right: 1rem;
+  overflow-y: scroll;
+  border: 2px solid rgb(216, 213, 213);
+  border-radius: 0.5rem;
+}
+
+.CIMSFormContainer::-webkit-scrollbar {
+  width: 0.5rem;
+}
+.CIMSFormContainer::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 1rem white;
+  border-radius: 2rem;
+  margin: 0.5rem;
+}
+.CIMSFormContainer::-webkit-scrollbar-thumb {
+  background: darkgrey;
+  border-radius: 2rem;
+}
+.CIMSFormContainer::-webkit-scrollbar-thumb:hover {
+  background: grey;
+}
+.cims-form-header {
+  position: sticky;
+  top: 0;
+  z-index: 999;
+  background-color: white;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: auto;
+  width: 96%;
+  border-bottom: 3px solid rgb(114, 114, 114);
+}
+
+.cims-form-body {
+  margin: 2rem;
+}
+
+.cims-contact-form {
+  width: 98%;
+  height: 45%;
+  margin: 1%;
+  margin-top: 3%;
+  border: 1px solid rgb(216, 213, 213);
+}
+
+.react-tel-input .form-control {
+  padding-top: 11px;
+  padding-bottom: 10px;
+  width: 100%;
+}
+
+.react-tel-input .special-label {
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+  top: -10.5px;
+  font-size: 0.8rem;
+  font-weight: 400;
+  color: grey;
+}
+
+.error {
+  color: rgb(255, 31, 31);
+  font-size: 0.8rem;
+  margin: 0.1rem 0 0 1rem;
+}

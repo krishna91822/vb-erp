@@ -1,0 +1,65 @@
+.invoiceinputs {
+  width: 85%;
+  margin-bottom: 10px;
+}
+.posow-topGrid {
+  padding: 0 0.8rem;
+}
+.posowForm-container {
+  margin: 1rem;
+}
+.gridcontainer {
+  border: 0;
+  width: 100%;
+  padding: 15px 5px;
+}
+.maincontainer {
+  margin: 0 55px;
+}
+select {
+  width: 85%;
+  margin-bottom: 10px;
+}
+/* form {
+  padding: 10px;
+} */
+.invoicereceived {
+  margin: 10px 0;
+}
+/* form {
+  border: 1px solid grey;
+} */
+h3 {
+  padding-left: 10px;
+}
+.heading {
+  display: inline-block;
+}
+.savebtn {
+  margin-left: 100%;
+}
+.invoice-editToggle {
+  text-align: center;
+  margin-top: 15px;
+  position: relative;
+}
+.invoiceForm-container {
+  margin: 1rem;
+}
+.invoice-updateBtn {
+  text-align: right;
+  margin-right: 10px;
+  margin-top: 15px;
+}
+.editTxt {
+  width: fit-content;
+  position: relative;
+  display: inline-block;
+  padding-top: 6px;
+  padding-right: 6px;
+  font-weight: bold;
+}
+/* .switch{
+  display: inline-block;
+  position: absolute;
+} */

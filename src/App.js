@@ -1,18 +1,22 @@
 import { Route, Routes } from "react-router-dom";
 
-import routes from "./routes/index";
+import RRoutes from "./routes/index";
 import Layout from "./components/layout/Layout";
 import Notification from "./components/UI/Notification";
 import PageLoader from "./components/UI/PageLoader";
 import { useSelector } from "react-redux";
 import { Fragment } from "react";
+import { CssBaseline } from "@mui/material";
+import DescriptionAlerts from "./pages/LoginPage/Authorization";
 
 function App() {
   const notification = useSelector((state) => state.ui.notification);
   const loader = useSelector((state) => state.ui.loading);
+  const { routes } = RRoutes();
 
   return (
     <Fragment>
+      <CssBaseline />
       {notification && !loader && (
         <Notification
           status={notification.status}
@@ -27,8 +31,9 @@ function App() {
             <Route
               key={index}
               path={route.path}
-              exact
-              element={<route.component />}
+              element={
+                route.access ? <route.component /> : <DescriptionAlerts />
+              }
             ></Route>
           ))}
         </Routes>

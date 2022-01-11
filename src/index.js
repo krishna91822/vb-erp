@@ -6,14 +6,27 @@ import reportWebVitals from "./reportWebVitals";
 
 import { BrowserRouter } from "react-router-dom";
 import { Provider } from "react-redux";
+import { createGlobalStyle } from "styled-components";
+
+import { ThemeProvider } from "@mui/material/styles";
+import { theme } from "./theme";
 
 import store from "./store/index";
 
+const GlobalStyles = createGlobalStyle`
+  #root {
+    height: 100vh;
+  }
+`;
+
 ReactDOM.render(
   <Provider store={store}>
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>
+    <ThemeProvider theme={theme}>
+      <BrowserRouter>
+        <App />
+        <GlobalStyles />
+      </BrowserRouter>
+    </ThemeProvider>
   </Provider>,
   document.getElementById("root")
 );
