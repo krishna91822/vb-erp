@@ -45,8 +45,9 @@ const customStyles = {
   appbar: {
     backgroundColor: "white",
     position: "fixed",
-    width: "100%",
-    zIndex: 1000,
+    width: "calc(100% - 232px)",
+    left: "232px",
+    // zIndex: 1000,
   },
 };
 

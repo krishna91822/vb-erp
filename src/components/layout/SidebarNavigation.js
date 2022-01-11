@@ -9,23 +9,25 @@ import ListItemText from "@mui/material/ListItemText";
 import Collapse from "@mui/material/Collapse";
 import ExpandLess from "@mui/icons-material/ExpandLess";
 import ExpandMore from "@mui/icons-material/ExpandMore";
-import DonutLargeIcon from "@mui/icons-material/DonutLarge";
+// import DonutLargeIcon from "@mui/icons-material/DonutLarge";
 import GridViewIcon from "@mui/icons-material/GridView";
 import { styled } from "@mui/material/styles";
 import { Avatar } from "@mui/material";
 import { Grid } from "@mui/material";
 import { Link } from "react-router-dom";
 import UseRoles from "../../helpers/roles";
+import PersonIcon from "@mui/icons-material/Person";
 
 const boxStyles = {
   position: "fixed",
-  top: "70px",
-  left: "0",
+  // top: "70px",
+  // left: "0",
   height: "100vh",
   backgroundColor: "white",
   boxShadow:
     "rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px",
 };
+
 const listStyles = {
   width: "250px",
   height: "100%",
@@ -48,11 +50,28 @@ const paperStyles = {
   },
 };
 const CustomListItemButton = styled(ListItemButton)(({ theme }) => ({
-  "&.Mui-selected": {
-    backgroundColor: "#EFEFEF",
+  ".MuiTypography-root": {
+    fontFamily:
+      "Inter,-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji",
+    fontWeight: "600",
+    lineHeight: "1.75",
   },
-  "&.Mui-selected:hover": {
-    backgroundColor: "#EFEFEF",
+
+  ".MuiSvgIcon-root ": {
+    color: "rgb(156,163,175)",
+  },
+
+  "&.Mui-selected": {
+    backgroundColor: "rgb(36,42,56)",
+    color: "none",
+    ".MuiTypography-root": {
+      color: "rgb(16,185,129)",
+      fontWeight: "600",
+      lineHeight: "1.75",
+    },
+    ".MuiSvgIcon-root": {
+      color: "rgb(16,185,129)",
+    },
   },
 }));
 const SidebarNavigation = () => {
@@ -91,6 +110,7 @@ const SidebarNavigation = () => {
     {
       name: "My Profile",
       link: "/my-profile",
+      icon: <PersonIcon />,
       access: [
         isUser,
         isApprover,
@@ -103,6 +123,7 @@ const SidebarNavigation = () => {
     },
     {
       name: "Tasks",
+      icon: <PersonIcon />,
       dropDown: [
         {
           name: "Create Profile",
@@ -135,6 +156,7 @@ const SidebarNavigation = () => {
     },
     {
       name: "My Colleagues",
+      icon: <PersonIcon />,
       link: "/network",
       access: [
         isUser,
@@ -148,6 +170,7 @@ const SidebarNavigation = () => {
     },
     {
       name: "CIMS",
+      icon: <PersonIcon />,
       link: "/cims",
       access: [
         isApprover,
@@ -160,6 +183,7 @@ const SidebarNavigation = () => {
     },
     {
       name: "PMO",
+      icon: <PersonIcon />,
       dropDown: [
         {
           name: "Projects",
@@ -207,6 +231,7 @@ const SidebarNavigation = () => {
 
     {
       name: "CMS",
+      icon: <PersonIcon />,
       dropDown: [
         {
           name: "PO/SOW",
@@ -246,6 +271,7 @@ const SidebarNavigation = () => {
     },
     {
       name: "R&R",
+      icon: <PersonIcon />,
       dropDown: [
         {
           name: "Reward",
@@ -259,11 +285,19 @@ const SidebarNavigation = () => {
     },
   ];
   return (
-    <Box sx={boxStyles}>
-      <Paper sx={paperStyles} elevation={0}>
-        <List sx={listStyles} component="nav">
+    <Box sx={boxStyles} style={{ backgroundColor: "rgb(17,24,39)" }}>
+      <Paper
+        sx={paperStyles}
+        elevation={0}
+        style={{ backgroundColor: "rgb(17,24,39)" }}
+      >
+        <List
+          sx={listStyles}
+          component="nav"
+          style={{ backgroundColor: "rgb(17,24,39)" }}
+        >
           <Grid paddingY="20px" container justifyContent="center">
-            <Avatar style={{ width: "80px", height: "80px" }} />
+            <Avatar style={{ width: "50px", height: "50px" }} />
           </Grid>
           {sideMenu.map((menuItem, i) => {
             if (!menuItem.dropDown) {
@@ -275,10 +309,11 @@ const SidebarNavigation = () => {
                     selected={selectedIndex === i}
                     onClick={() => handleListItemClick(i)}
                   >
-                    <ListItemIcon>
-                      <DonutLargeIcon style={{ color: "black" }} />
-                    </ListItemIcon>
-                    <ListItemText primary={menuItem.name} />
+                    <ListItemIcon>{menuItem.icon}</ListItemIcon>
+                    <ListItemText
+                      primary={menuItem.name}
+                      style={{ color: "rgb(156,163,175)" }}
+                    />
                   </CustomListItemButton>
                 )
               );
@@ -294,10 +329,11 @@ const SidebarNavigation = () => {
                       id={i}
                       selected={selectedIndex === i}
                     >
-                      <ListItemIcon>
-                        <DonutLargeIcon style={{ color: "black" }} />
-                      </ListItemIcon>
-                      <ListItemText primary={menuItem.name} />
+                      <ListItemIcon>{menuItem.icon}</ListItemIcon>
+                      <ListItemText
+                        primary={menuItem.name}
+                        style={{ color: "rgb(156,163,175)" }}
+                      />
                       {menuItem.open ? <ExpandLess /> : <ExpandMore />}
                     </CustomListItemButton>
                     <Collapse in={menuItem.open} timeout="auto" unmountOnExit>
@@ -311,10 +347,12 @@ const SidebarNavigation = () => {
                                 sx={{ pl: 4 }}
                               >
                                 <ListItemIcon>
-                                  <GridViewIcon style={{ color: "black" }} />
+                                  <GridViewIcon
+                                    style={{ color: "rgb(156,163,175)" }}
+                                  />
                                 </ListItemIcon>
                                 <ListItemText
-                                  style={{ color: "black" }}
+                                  style={{ color: "rgb(156,163,175)" }}
                                   primary={item.name}
                                 />
                               </CustomListItemButton>
