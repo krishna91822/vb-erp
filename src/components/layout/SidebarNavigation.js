@@ -315,7 +315,7 @@ const SidebarNavigation = () => {
           style={{ backgroundColor: "rgb(17,24,39)" }}
         >
           <Grid paddingY="20px" container justifyContent="center">
-            <img style={customStyles.image} src={vbLogo} alt="vb-logo" />
+            {/* <img style={customStyles.image} src={vbLogo} alt="vb-logo" /> */}
           </Grid>
           {sideMenu.map((menuItem, i) => {
             if (!menuItem.dropDown) {
