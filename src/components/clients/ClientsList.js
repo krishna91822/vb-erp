@@ -9,10 +9,8 @@ import {
   Paper,
   IconButton,
   Menu,
-  MenuItem,
   ListItemIcon,
   ListItemText,
-  Divider,
   Stack,
   Pagination,
   Box,
@@ -22,10 +20,24 @@ import {
   Card,
   CardContent,
   SvgIcon,
+  Button,
+  Checkbox,
+  Divider,
+  FormControl,
+  FormControlLabel,
+  Grid,
+  InputLabel,
+  MenuItem,
+  Select,
 } from "@mui/material";
 import { Search as SearchIcon } from "../../icons/search";
+import { Link } from "react-router-dom";
 
 import TableCell, { tableCellClasses } from "@mui/material/TableCell";
+import { useDispatch } from "react-redux";
+import { cimsActions } from "../../store/cims-slice";
+import SortByAlphaIcon from "@mui/icons-material/SortByAlpha";
+import ClientHelpers from "./ClientHelpers";
 
 import {
   Edit as EditIcon,
@@ -38,25 +50,22 @@ import {
 import PageHeader from "./PageHeader";
 import "../../assets/styles/ClientListStyles.css";
 
-import ClientHelpers from "./ClientHelpers";
-
-const StyledTableCell = styled(TableCell)(({ theme }) => ({
+export const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
-    backgroundColor: theme.palette.grey[300],
-    color: theme.palette.common.black,
+    fontSize: "12px",
+    fontWeight: "600",
+    lineHeight: "1",
+    letterSpacing: "0.5px",
+    textTransform: "uppercase",
+    color: "rgb(55, 65, 81)",
+    fontFamily:
+      "Inter, -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji",
   },
   [`&.${tableCellClasses.body}`]: {
-    fontSize: 15,
-  },
-}));
-
-const StyledTableRow = styled(TableRow)(({ theme }) => ({
-  "&:nth-of-type(odd)": {
-    backgroundColor: theme.palette.action.hover,
-  },
-  // hide last border
-  "&:last-child td, &:last-child th": {
-    border: 0,
+    fontWeight: "400",
+    color: "rgb(18 24 40)",
+    fontFamily:
+      "Inter, -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji",
   },
 }));
 
@@ -65,16 +74,50 @@ function ClientsList() {
     clientsList,
     handleClientData,
     handelActiveStatus,
-
+    sortBy,
+    filterBy,
+    sortingOrder,
+    handelSortBy,
+    handelFilterBy,
+    handelSortingOrder,
+    user,
     pages,
     pageNo,
     searchBy,
     handelPageChange,
     handelSearch,
     handelClearSearch,
-
-    user,
   } = ClientHelpers();
+
+  const dispatch = useDispatch();
+
+  const sortByFields = [
+    { id: "createdAt", label: "By Start Date" },
+    { id: "brandName", label: "By Company" },
+    { id: "contacts.primaryContact.firstName", label: "By Associate Name" },
+    { id: "registeredAddress.country", label: "By Location" },
+  ];
+
+  const filterByFields = [
+    { id: 1, label: "Active Client" },
+    { id: 0, label: "Inactive Client" },
+  ];
+
+  const handleSortBy = (e) => {
+    handelSortBy(e.target.value);
+  };
+
+  const handleFilterBy = (e) => {
+    handelFilterBy(e.target.value);
+  };
+
+  const handleSortOrder = (e) => {
+    handelSortingOrder(e.target.checked);
+  };
+
+  const handleCreate = () => {
+    dispatch(cimsActions.resetForm());
+  };
 
   const [clientId, setClientId] = useState();
   const [clientStatus, setClientStatus] = useState();
@@ -97,63 +140,63 @@ function ClientsList() {
 
   const clients = clientsList.map((client, idx) => (
     <TableRow className="table-row" key={client._id}>
-      <TableCell
+      <StyledTableCell
         onClick={() => {
           handleClientData(client._id, false);
         }}
         align="center"
       >
         {client.rowNumber}
-      </TableCell>
-      <TableCell
+      </StyledTableCell>
+      <StyledTableCell
         onClick={() => {
           handleClientData(client._id, false);
         }}
         align="center"
       >
         {client.brandName}
-      </TableCell>
-      <TableCell
+      </StyledTableCell>
+      <StyledTableCell
         onClick={() => {
           handleClientData(client._id, false);
         }}
         align="center"
       >
         {`${client.contacts.primaryContact.firstName} ${client.contacts.primaryContact.lastName}`}
-      </TableCell>
-      <TableCell
+      </StyledTableCell>
+      <StyledTableCell
         onClick={() => {
           handleClientData(client._id, false);
         }}
         align="center"
       >
         {client.registeredAddress.country.split("-")[0]}
-      </TableCell>
-      <TableCell
+      </StyledTableCell>
+      <StyledTableCell
         onClick={() => {
           handleClientData(client._id, false);
         }}
         align="center"
       >
         {client.status ? "Active" : "Inactive"}
-      </TableCell>
-      <TableCell
+      </StyledTableCell>
+      <StyledTableCell
         onClick={() => {
           handleClientData(client._id, false);
         }}
         align="center"
       >
         {client.createdAt.slice(0, 10)}
-      </TableCell>
+      </StyledTableCell>
       {user.permissions.includes("update_on_CIMS_module") && (
-        <TableCell
+        <StyledTableCell
           onClick={() =>
             handelMenu(client._id, client.status, client.brandName)
           }
           align="center"
         >
           {menuIcon()}
-        </TableCell>
+        </StyledTableCell>
       )}
     </TableRow>
   ));
@@ -224,83 +267,145 @@ function ClientsList() {
 
   return (
     <div className="client-list-wrapper">
-      {/* <Box m={2} mb={1}>
-        <TextField
-          fullWidth
-          id="search"
-          placeholder="Search Company Name / Associate Name / Location"
-          value={searchBy}
-          variant="standard"
-          onChange={handelSearch}
-          size="small"
-          InputProps={{
-            startAdornment: (
-              <InputAdornment position="start">
-                <IconButton disableRipple>
-                  <ManageSearchRoundedIcon />
-                </IconButton>
-              </InputAdornment>
-            ),
-            endAdornment: (
-              <InputAdornment position="end">
-                <IconButton onClick={handelClearSearch}>
-                  <ClearRoundedIcon />
-                </IconButton>
-              </InputAdornment>
-            ),
-          }}
-        />
-      </Box> */}
-      <PageHeader />
-      <Box m={2} mb={1}>
-        <Card>
-          <CardContent>
-            <Box sx={{ maxWidth: 500 }}>
-              <TextField
-                fullWidth
-                id="search"
-                placeholder="Search Company Name / Associate Name / Location"
-                value={searchBy}
-                onChange={handelSearch}
-                InputProps={{
-                  startAdornment: (
-                    <InputAdornment position="start">
-                      <SvgIcon color="action" fontSize="small">
-                        <SearchIcon />
-                      </SvgIcon>
-                    </InputAdornment>
-                  ),
-                  endAdornment: (
-                    <InputAdornment position="end">
-                      <IconButton onClick={handelClearSearch}>
-                        <ClearRoundedIcon />
-                      </IconButton>
-                    </InputAdornment>
-                  ),
-                }}
-                placeholder="Search customer"
-                variant="outlined"
-              />
-            </Box>
-          </CardContent>
-        </Card>
-      </Box>
+      <Typography
+        variant="h4"
+        paddingLeft={"20px"}
+        sx={{
+          fontWeight: "700",
+          fontSize: "2rem",
+          lineHeight: "1.375",
+          fontFamily:
+            "Inter, -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif, Apple Color Emoji,Segoe UI Emoji",
+        }}
+      >
+        CIMS
+      </Typography>
+      <Card sx={{ textAlign: "right" }}>
+        <CardContent>
+          <Box sx={{ maxWidth: "100%" }}>
+            <Grid col={6}>
+              <Grid container spacing={3} mb={1}>
+                <Grid item>
+                  <Box m={1} mb={1}>
+                    <TextField
+                      fullWidth
+                      id="search"
+                      placeholder="Search Company Name / Associate Name / Location"
+                      value={searchBy}
+                      onChange={handelSearch}
+                      InputProps={{
+                        startAdornment: (
+                          <InputAdornment position="start">
+                            <SvgIcon color="action" fontSize="small">
+                              <SearchIcon />
+                            </SvgIcon>
+                          </InputAdornment>
+                        ),
+                        endAdornment: (
+                          <InputAdornment position="end">
+                            <IconButton onClick={handelClearSearch}>
+                              <ClearRoundedIcon />
+                            </IconButton>
+                          </InputAdornment>
+                        ),
+                      }}
+                      placeholder="Search customer"
+                      variant="outlined"
+                    />
+                  </Box>
+                </Grid>
+
+                <Grid item sx={{ marginLeft: "730px", marginTop: "15px" }}>
+                  <Box sx={{ display: "inline" }} m={1} mb={1}>
+                    {user.permissions.includes("create_CIMS_module") && (
+                      <Link
+                        to="/cims/create"
+                        style={{ textDecoration: "none" }}
+                      >
+                        <Button
+                          onClick={handleCreate}
+                          variant="contained"
+                          style={{ backgroundColor: "chocolate" }}
+                        >
+                          Create a customer
+                        </Button>
+                      </Link>
+                    )}
+                  </Box>
+                  <Box display={"inline"} m={1} mb={1}>
+                    <FormControl size="small">
+                      <InputLabel id="filterBy">Filter By</InputLabel>
+                      <Select
+                        labelId="filterBy"
+                        id="select"
+                        value={filterBy}
+                        label="filterBy"
+                        onChange={handleFilterBy}
+                      >
+                        {filterByFields.map((field) => (
+                          <MenuItem key={field.id} value={field.id}>
+                            {field.label}
+                          </MenuItem>
+                        ))}
+                      </Select>
+                    </FormControl>
+                  </Box>
+                  <Box display={"inline"} m={1} mb={1}>
+                    <FormControl size="small" sx={{ minWidth: 120 }}>
+                      <InputLabel id="sortBy">Sort By</InputLabel>
+                      <Select
+                        labelId="sortBy"
+                        id="select"
+                        value={sortBy}
+                        label="sortBy"
+                        onChange={handleSortBy}
+                      >
+                        {sortByFields.map((field) => (
+                          <MenuItem key={field.id} value={field.id}>
+                            {field.label}
+                          </MenuItem>
+                        ))}
+
+                        <FormControlLabel
+                          sx={{
+                            marginLeft: ".5rem",
+                          }}
+                          control={
+                            <Checkbox
+                              onChange={(e) => handleSortOrder(e)}
+                              size="small"
+                              checked={sortingOrder === 1}
+                            />
+                          }
+                          label={<SortByAlphaIcon />}
+                        />
+                      </Select>
+                    </FormControl>
+                  </Box>
+                </Grid>
+              </Grid>
+            </Grid>
+          </Box>
+        </CardContent>
+      </Card>
+
       <div className="ListContainer">
         <TableContainer>
           <Table sx={{ maxWidth: "100%" }}>
             <TableHead>
               <TableRow className="table-header">
-                <TableCell align="center">ID</TableCell>
-                <TableCell align="center">Company Name</TableCell>
-                <TableCell align="center">Associate Name</TableCell>
-                <TableCell align="center">Location</TableCell>
-                <TableCell align="center">Status</TableCell>
-                <TableCell align="center">Registered On</TableCell>
+                <StyledTableCell align="center">ID</StyledTableCell>
+                <StyledTableCell align="center">Company Name</StyledTableCell>
+                <StyledTableCell align="center">Associate Name</StyledTableCell>
+                <StyledTableCell align="center">Location</StyledTableCell>
+                <StyledTableCell align="center">Status</StyledTableCell>
+                <StyledTableCell align="center">Registered On</StyledTableCell>
                 {user.permissions.includes("update_on_CIMS_module") && (
-                  <TableCell align="center">Actions</TableCell>
+                  <StyledTableCell align="center">Actions</StyledTableCell>
                 )}
               </TableRow>
             </TableHead>
+
             <TableBody>{clientsList.length !== 0 && clients}</TableBody>
           </Table>
         </TableContainer>

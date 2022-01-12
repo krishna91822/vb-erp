@@ -35,6 +35,7 @@ const theme = createTheme({
 const customStyles = {
   image: {
     width: "180px",
+    visibility: "hidden",
   },
   toolbar: {
     display: "flex",

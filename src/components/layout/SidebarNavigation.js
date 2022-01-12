@@ -24,6 +24,7 @@ import AccountTreeIcon from "@mui/icons-material/AccountTree";
 import AssessmentIcon from "@mui/icons-material/Assessment";
 import EmojiEventsIcon from "@mui/icons-material/EmojiEvents";
 import vbLogo from "../../assets/images/vb_logo.svg";
+import "../../assets/styles/imageStyles.css";
 
 const boxStyles = {
   position: "fixed",
@@ -37,9 +38,13 @@ const boxStyles = {
 
 const customStyles = {
   image: {
-    width: "180px",
-    marginTop: "30px",
-    marginBottom: "30px",
+    width: "150px",
+    marginRight: "65px",
+    marginTop: "20px",
+    marginBottom: "20px",
+    padding: "25px",
+    borderRadius: "10px",
+    filter: "grayscale(30%)",
   },
 };
 
@@ -65,6 +70,10 @@ const paperStyles = {
   },
 };
 const CustomListItemButton = styled(ListItemButton)(({ theme }) => ({
+  "&.MuiListItemButton-root:hover": {
+    backgroundColor: "rgb(18 28 42)",
+  },
+
   ".MuiTypography-root": {
     fontFamily:
       "Inter,-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji",
@@ -81,15 +90,17 @@ const CustomListItemButton = styled(ListItemButton)(({ theme }) => ({
     borderRadius: ".4rem",
     marginLeft: ".5rem",
     marginRight: ".5rem",
-    color: "none",
     ".MuiTypography-root": {
-      color: "rgb(16,185,129)",
+      color: "rgb(210,79,31)",
       fontWeight: "600",
       lineHeight: "1.75",
     },
     ".MuiSvgIcon-root": {
-      color: "rgb(16,185,129)",
+      color: "rgb(210,79,31)",
     },
+  },
+  "&.Mui-selected:hover": {
+    backgroundColor: "rgb(36,42,56)",
   },
 }));
 const SidebarNavigation = () => {
@@ -315,7 +326,17 @@ const SidebarNavigation = () => {
           style={{ backgroundColor: "rgb(17,24,39)" }}
         >
           <Grid paddingY="20px" container justifyContent="center">
-            {/* <img style={customStyles.image} src={vbLogo} alt="vb-logo" /> */}
+            <img style={customStyles.image} src={vbLogo} alt="vb-logo" />
+            {/* <Avatar
+              sx={{
+                height: "90px",
+                width: "90px",
+                color: "#111827",
+                backgroundColor: "#9ca3af",
+                marginTop: "30px",
+                marginBottom: "30px",
+              }}
+            /> */}
           </Grid>
           {sideMenu.map((menuItem, i) => {
             if (!menuItem.dropDown) {

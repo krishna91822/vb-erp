@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-
+import { StyledTableCell } from "../../components/clients/ClientsList";
 import {
   CustomGridBox,
   CustomTextField,
@@ -17,10 +17,24 @@ import {
   Box,
   MenuItem,
   Modal,
+  Stack,
   Pagination,
   TextField,
+  TableCell,
+  TableRow,
+  Table,
+  TableBody,
+  TableContainer,
+  TableHead,
+  Card,
+  CardContent,
+  SvgIcon,
+  InputAdornment,
+  IconButton,
+  Divider,
 } from "@mui/material";
-
+import { Search as SearchIcon } from "../../icons/search";
+import { ClearRounded as ClearRoundedIcon } from "@mui/icons-material";
 import { reviewText } from "./review.constant";
 import ProfileContent from "../../components/templates/profileContent/profileContent.component";
 
@@ -28,6 +42,8 @@ import axiosInstance from "./../../helpers/axiosInstance";
 
 import { useDispatch } from "react-redux";
 import { uiActions } from "./../../store/ui-slice";
+
+import "../../assets/styles/ClientListStyles.css";
 
 const Review = () => {
   const { toggleLoader } = uiActions;
@@ -164,15 +180,6 @@ const Review = () => {
           My Reviews
         </TitleTypo>
         <Box>
-          <TextField
-            data-test="Search By Req Name-test"
-            onChange={searchHandleChange}
-            placeholder="Search By Req Name"
-            id="outlined-search"
-            size="small"
-            variant="outlined"
-            sx={{ width: "15vw", height: "40px", mr: 1 }}
-          />
           <CustomTextField
             data-test="Sort-test"
             label="Sort"
@@ -190,79 +197,109 @@ const Review = () => {
           </CustomTextField>
         </Box>
       </Box>
-      <CustomeContainer
-        sx={{
-          // minHeight: "60vh",
-          // height: "75vh",
-          border: "0.1em solid",
-          borderColor: "textColor.paletteGrey",
-          borderRadius: "5px",
-          pb: 3,
-          position: "relative",
-        }}
-      >
-        <Box
-          sx={{
-            width: "100%-1",
-            backgroundColor: "textColor.light",
-            padding: 1,
-            marginTop: 1,
-            borderRadius: "5px",
-          }}
-        >
-          <CustomGridBox
-            sx={{
-              height: 50,
-              backgroundColor: "#fff",
-              borderRadius: "5px",
-            }}
-          >
-            {
-              //title of the review table
-              title.map((item, i) => (
-                <TitleTypo key={i} sx={{ textTransform: "capitalize" }}>
-                  {item}
-                </TitleTypo>
-              ))
-            }
-          </CustomGridBox>
-          {reviewData.map((item) => (
-            <CustomGridBox
-              key={item.reqId}
-              sx={{
-                mt: 1,
-                mb: 1,
-                height: 40,
-                cursor: "pointer",
-              }}
-              onClick={(e) => handleClickReviewItem(item)}
-            >
-              <ContentTypo>{item.reqId}</ContentTypo>
-              <ContentTypo>{item.reqName}</ContentTypo>
-              <ContentTypo>
-                {new Date(item.createdAt).toISOString().slice(0, 10)}
-              </ContentTypo>
-              <ContentTypo>
-                {item.employeeDetails.empReportingManager}
-              </ContentTypo>
-              <ContentTypo>{item.reqType}</ContentTypo>
-              {renderChildStatus(item.status)}
-            </CustomGridBox>
-          ))}
+      <Divider sx={{ borderBottomWidth: 2 }} />
+
+      <div className="client-list-wrapper">
+        <Box m={2} mb={1}>
+          <Card>
+            <CardContent>
+              <Box sx={{ maxWidth: 500 }}>
+                <TextField
+                  data-test="Search By Req Name-test"
+                  onChange={searchHandleChange}
+                  placeholder="Search By Req Name"
+                  id="outlined-search"
+                  size="small"
+                  variant="outlined"
+                  sx={{ width: "15vw", height: "40px", mr: 1 }}
+                  InputProps={{
+                    startAdornment: (
+                      <InputAdornment position="start">
+                        <SvgIcon color="action" fontSize="small">
+                          <SearchIcon />
+                        </SvgIcon>
+                      </InputAdornment>
+                    ),
+                    //onClick={handelClearSearch}
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        <IconButton>
+                          <ClearRoundedIcon />
+                        </IconButton>
+                      </InputAdornment>
+                    ),
+                  }}
+                  variant="outlined"
+                />
+              </Box>
+            </CardContent>
+          </Card>
         </Box>
-      </CustomeContainer>
-      {/* pagination */}
-      <Box sx={{ width: 1, display: "flex", justifyContent: "center" }}>
-        <Pagination
-          data-test="pagination-test"
-          count={paginationInfo.totalPage}
-          page={paginationInfo.page}
-          onChange={handlePagination}
-          showFirstButton
-          showLastButton
-          color="primary"
-        />
-      </Box>
+
+        <div className="ListContainer">
+          <TableContainer>
+            <Table sx={{ maxWidth: "100%" }}>
+              <TableHead>
+                <TableRow className="table-header">
+                  <StyledTableCell align="center">Req Id</StyledTableCell>
+                  <StyledTableCell align="center">
+                    Requester Name
+                  </StyledTableCell>
+                  <StyledTableCell align="center">Requested on</StyledTableCell>
+                  <StyledTableCell align="center">Reporting to</StyledTableCell>
+                  <StyledTableCell align="center">Request type</StyledTableCell>
+                  <StyledTableCell align="center">Status</StyledTableCell>
+                </TableRow>
+              </TableHead>
+
+              <TableBody>
+                {reviewData.map((item) => (
+                  <TableRow
+                    className="table-row"
+                    key={item.reqId}
+                    sx={{
+                      mt: 1,
+                      mb: 1,
+                      height: 40,
+                      cursor: "pointer",
+                    }}
+                    onClick={(e) => handleClickReviewItem(item)}
+                  >
+                    <StyledTableCell align="center">
+                      {item.reqId}
+                    </StyledTableCell>
+                    <StyledTableCell align="center">
+                      {item.reqName}
+                    </StyledTableCell>
+                    <StyledTableCell align="center">
+                      {new Date(item.createdAt).toISOString().slice(0, 10)}
+                    </StyledTableCell>
+                    <StyledTableCell align="center">
+                      {item.employeeDetails.empReportingManager}
+                    </StyledTableCell>
+                    <StyledTableCell align="center">
+                      {item.reqType}
+                    </StyledTableCell>
+                    <StyledTableCell align="center">
+                      {renderChildStatus(item.status)}
+                    </StyledTableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </div>
+        {/* pagination */}
+        <div className="pagination">
+          <Stack spacing={2}>
+            <Pagination
+              count={paginationInfo.totalPage}
+              page={paginationInfo.page}
+              onChange={handlePagination}
+            />
+          </Stack>
+        </div>
+      </div>
       <Modal open={openModalForReview} onClose={handleCloseModalForReview}>
         <ModalBoxItem sx={{ height: "auto" }}>
           <Box
