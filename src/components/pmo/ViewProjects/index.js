@@ -34,6 +34,7 @@ import {
   SideButton,
   ProjectHead,
 } from "./styles";
+import { StyledTypography } from "../../../assets/GlobalStyle/style";
 
 const ViewProjects = () => {
   const dispatch = useDispatch();
@@ -90,7 +91,9 @@ const ViewProjects = () => {
       <MainComponent>
         <HeadingStyle>
           <Heading>
-            <ProjectHead data-test="main-heading">Projects</ProjectHead>
+            <StyledTypography data-test="main-heading">
+              Projects
+            </StyledTypography>
             <SideButton>
               {!pressed ? (
                 <FilterListIcon

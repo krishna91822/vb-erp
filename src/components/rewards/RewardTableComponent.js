@@ -5,6 +5,7 @@ import { styled, alpha } from "@mui/material/styles";
 import Menu from "@mui/material/Menu";
 import { Link } from "react-router-dom";
 import RewardRowData from "./RewardRowData";
+import { StyledTypography } from "../../assets/GlobalStyle/style";
 
 export const StyledMenu = styled((props) => (
   <Menu
@@ -53,9 +54,7 @@ const Body = (props) => {
   return (
     <div className="main-body">
       <div className="middle-container">
-        <div className="middle-title">
-          <p>R&R's Information</p>
-        </div>
+        <StyledTypography>R&R's Information</StyledTypography>
         <div className="middle-button">
           <Link className="remove-underline" to="/rewards/create">
             <Button color="success" variant="contained">

@@ -1,6 +1,6 @@
 export const createProfileConstant = {
   user: "user",
-  createUser: "create user",
+  createUser: "Create User",
   confirm: "Confirm",
   addCustomField: "Add Custom Field",
   modalMessageSuccess: "New employee has been created",

@@ -8,6 +8,7 @@ import FilterListIcon from "@mui/icons-material/FilterList";
 import FilterListOffIcon from "@mui/icons-material/FilterListOff";
 
 import { Heading, SideButton, ProjectHead, MainComponent } from "./style";
+import { StyledTypography } from "../../../assets/GlobalStyle/style";
 
 const Allocation = () => {
   const [pressed, setPressed] = useState(false);
@@ -37,7 +38,9 @@ const Allocation = () => {
   return (
     <MainComponent>
       <Heading>
-        <ProjectHead data-test="main-heading">Allocations</ProjectHead>
+        <StyledTypography data-test="main-heading">
+          Allocations
+        </StyledTypography>
         <SideButton>
           {!pressed ? (
             <FilterListIcon

@@ -34,6 +34,7 @@ import {
 } from "../../store/CMS/INVOICE-actions";
 import InputLabel from "@mui/material/InputLabel";
 import NativeSelect from "@mui/material/NativeSelect";
+import { StyledTypography } from "../../assets/GlobalStyle/style";
 
 export const StyledMenu = styled((props) => (
   <Menu
@@ -188,9 +189,7 @@ function InvoiceInfo() {
 
       <div className="container">
         <div className="innerheader">
-          <div>
-            <h3 data-test="MainHeading">Invoice Information</h3>
-          </div>
+          <StyledTypography>Invoice Information</StyledTypography>
           {/* will be required in future */}
           {/* <div className="buttondiv">
             <Link

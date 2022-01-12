@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { styled } from "@mui/material/styles";
 import {
   Table,
   TableBody,
@@ -33,11 +32,12 @@ import {
 import { Search as SearchIcon } from "../../icons/search";
 import { Link } from "react-router-dom";
 
-import TableCell, { tableCellClasses } from "@mui/material/TableCell";
 import { useDispatch } from "react-redux";
 import { cimsActions } from "../../store/cims-slice";
 import SortByAlphaIcon from "@mui/icons-material/SortByAlpha";
 import ClientHelpers from "./ClientHelpers";
+import { StyledTypography } from "../../assets/GlobalStyle/style";
+import { StyledTableCell } from "../../assets/GlobalStyle/style";
 
 import {
   Edit as EditIcon,
@@ -49,25 +49,6 @@ import {
 } from "@mui/icons-material";
 import PageHeader from "./PageHeader";
 import "../../assets/styles/ClientListStyles.css";
-
-export const StyledTableCell = styled(TableCell)(({ theme }) => ({
-  [`&.${tableCellClasses.head}`]: {
-    fontSize: "12px",
-    fontWeight: "600",
-    lineHeight: "1",
-    letterSpacing: "0.5px",
-    textTransform: "uppercase",
-    color: "rgb(55, 65, 81)",
-    fontFamily:
-      "Inter, -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji",
-  },
-  [`&.${tableCellClasses.body}`]: {
-    fontWeight: "400",
-    color: "rgb(18 24 40)",
-    fontFamily:
-      "Inter, -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji",
-  },
-}));
 
 function ClientsList() {
   const {
@@ -267,122 +248,112 @@ function ClientsList() {
 
   return (
     <div className="client-list-wrapper">
-      <Typography
-        variant="h4"
-        paddingLeft={"20px"}
-        sx={{
-          fontWeight: "700",
-          fontSize: "2rem",
-          lineHeight: "1.375",
-          fontFamily:
-            "Inter, -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif, Apple Color Emoji,Segoe UI Emoji",
-        }}
-      >
-        CIMS
-      </Typography>
-      <Card sx={{ textAlign: "right" }}>
+      <StyledTypography>CIMS</StyledTypography>
+      <Card>
         <CardContent>
           <Box sx={{ maxWidth: "100%" }}>
-            <Grid col={6}>
-              <Grid container spacing={3} mb={1}>
-                <Grid item>
-                  <Box m={1} mb={1}>
-                    <TextField
-                      fullWidth
-                      id="search"
-                      placeholder="Search Company Name / Associate Name / Location"
-                      value={searchBy}
-                      onChange={handelSearch}
-                      InputProps={{
-                        startAdornment: (
-                          <InputAdornment position="start">
-                            <SvgIcon color="action" fontSize="small">
-                              <SearchIcon />
-                            </SvgIcon>
-                          </InputAdornment>
-                        ),
-                        endAdornment: (
-                          <InputAdornment position="end">
-                            <IconButton onClick={handelClearSearch}>
-                              <ClearRoundedIcon />
-                            </IconButton>
-                          </InputAdornment>
-                        ),
-                      }}
-                      placeholder="Search customer"
-                      variant="outlined"
-                    />
-                  </Box>
-                </Grid>
+            <Grid container spacing={2}>
+              <Grid item xs={4}>
+                <Box>
+                  <TextField
+                    fullWidth
+                    id="search"
+                    placeholder="Search Company Name / Associate Name / Location"
+                    value={searchBy}
+                    onChange={handelSearch}
+                    InputProps={{
+                      startAdornment: (
+                        <InputAdornment position="start">
+                          <SvgIcon color="action" fontSize="small">
+                            <SearchIcon />
+                          </SvgIcon>
+                        </InputAdornment>
+                      ),
+                      endAdornment: (
+                        <InputAdornment position="end">
+                          <IconButton onClick={handelClearSearch}>
+                            <ClearRoundedIcon />
+                          </IconButton>
+                        </InputAdornment>
+                      ),
+                    }}
+                    placeholder="Search customer"
+                    variant="outlined"
+                  />
+                </Box>
+              </Grid>
 
-                <Grid item sx={{ marginLeft: "730px", marginTop: "15px" }}>
-                  <Box sx={{ display: "inline" }} m={1} mb={1}>
-                    {user.permissions.includes("create_CIMS_module") && (
-                      <Link
-                        to="/cims/create"
-                        style={{ textDecoration: "none" }}
+              <Grid
+                item
+                xs={8}
+                container
+                direction="row"
+                justifyContent="flex-end"
+                alignItems="center"
+              >
+                <Box m={1}>
+                  {user.permissions.includes("create_CIMS_module") && (
+                    <Link to="/cims/create" style={{ textDecoration: "none" }}>
+                      <Button
+                        onClick={handleCreate}
+                        variant="contained"
+                        style={{ backgroundColor: "chocolate" }}
                       >
-                        <Button
-                          onClick={handleCreate}
-                          variant="contained"
-                          style={{ backgroundColor: "chocolate" }}
-                        >
-                          Create a customer
-                        </Button>
-                      </Link>
-                    )}
-                  </Box>
-                  <Box display={"inline"} m={1} mb={1}>
-                    <FormControl size="small">
-                      <InputLabel id="filterBy">Filter By</InputLabel>
-                      <Select
-                        labelId="filterBy"
-                        id="select"
-                        value={filterBy}
-                        label="filterBy"
-                        onChange={handleFilterBy}
-                      >
-                        {filterByFields.map((field) => (
-                          <MenuItem key={field.id} value={field.id}>
-                            {field.label}
-                          </MenuItem>
-                        ))}
-                      </Select>
-                    </FormControl>
-                  </Box>
-                  <Box display={"inline"} m={1} mb={1}>
-                    <FormControl size="small" sx={{ minWidth: 120 }}>
-                      <InputLabel id="sortBy">Sort By</InputLabel>
-                      <Select
-                        labelId="sortBy"
-                        id="select"
-                        value={sortBy}
-                        label="sortBy"
-                        onChange={handleSortBy}
-                      >
-                        {sortByFields.map((field) => (
-                          <MenuItem key={field.id} value={field.id}>
-                            {field.label}
-                          </MenuItem>
-                        ))}
+                        Create a customer
+                      </Button>
+                    </Link>
+                  )}
+                </Box>
+                <Box m={1}>
+                  <FormControl size="small">
+                    <InputLabel id="filterBy">Filter By</InputLabel>
+                    <Select
+                      labelId="filterBy"
+                      id="select"
+                      value={filterBy}
+                      label="filterBy"
+                      onChange={handleFilterBy}
+                    >
+                      {filterByFields.map((field) => (
+                        <MenuItem key={field.id} value={field.id}>
+                          {field.label}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                  </FormControl>
+                </Box>
+                <Box m={1}>
+                  <FormControl size="small" sx={{ minWidth: 120 }}>
+                    <InputLabel id="sortBy">Sort By</InputLabel>
+                    <Select
+                      labelId="sortBy"
+                      id="select"
+                      value={sortBy}
+                      label="sortBy"
+                      onChange={handleSortBy}
+                    >
+                      {sortByFields.map((field) => (
+                        <MenuItem key={field.id} value={field.id}>
+                          {field.label}
+                        </MenuItem>
+                      ))}
 
-                        <FormControlLabel
-                          sx={{
-                            marginLeft: ".5rem",
-                          }}
-                          control={
-                            <Checkbox
-                              onChange={(e) => handleSortOrder(e)}
-                              size="small"
-                              checked={sortingOrder === 1}
-                            />
-                          }
-                          label={<SortByAlphaIcon />}
-                        />
-                      </Select>
-                    </FormControl>
-                  </Box>
-                </Grid>
+                      <FormControlLabel
+                        sx={{
+                          marginLeft: ".5rem",
+                        }}
+                        control={
+                          <Checkbox
+                            onChange={(e) => handleSortOrder(e)}
+                            size="small"
+                            checked={sortingOrder === 1}
+                          />
+                        }
+                        label={<SortByAlphaIcon />}
+                      />
+                    </Select>
+                  </FormControl>
+                </Box>
               </Grid>
             </Grid>
           </Box>

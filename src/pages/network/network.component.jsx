@@ -25,7 +25,8 @@ import {
   IconButton,
   Divider,
 } from "@mui/material";
-import { StyledTableCell } from "../../components/clients/ClientsList";
+import { StyledTableCell } from "../../assets/GlobalStyle/style";
+import { StyledTypography } from "../../assets/GlobalStyle/style";
 import { Search as SearchIcon } from "../../icons/search";
 import { ClearRounded as ClearRoundedIcon } from "@mui/icons-material";
 
@@ -114,16 +115,7 @@ const Network = () => {
           mb: 1,
         }}
       >
-        <TitleTypo
-          sx={{
-            fontSize: "1.5em",
-            textTransform: "capitalize",
-            mb: 1,
-            mr: 2,
-          }}
-        >
-          {networkText.header}
-        </TitleTypo>
+        <StyledTypography>{networkText.header}</StyledTypography>
         <Box sx={{}}>
           <TextField
             data-test="search-bar-test"

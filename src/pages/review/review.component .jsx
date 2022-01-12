@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { StyledTableCell } from "../../components/clients/ClientsList";
+import { StyledTableCell } from "../../assets/GlobalStyle/style";
+import { StyledTypography } from "../../assets/GlobalStyle/style";
+
 import {
   CustomGridBox,
   CustomTextField,
@@ -15,6 +17,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import {
   Container,
   Box,
+  Grid,
   MenuItem,
   Modal,
   Stack,
@@ -31,7 +34,6 @@ import {
   SvgIcon,
   InputAdornment,
   IconButton,
-  Divider,
 } from "@mui/material";
 import { Search as SearchIcon } from "../../icons/search";
 import { ClearRounded as ClearRoundedIcon } from "@mui/icons-material";
@@ -159,7 +161,7 @@ const Review = () => {
   };
 
   return (
-    <Box sx={{}}>
+    <Box>
       <Box
         sx={{
           display: "flex",
@@ -169,69 +171,65 @@ const Review = () => {
           alignItems: "center",
         }}
       >
-        <TitleTypo
-          sx={{
-            fontSize: "1.5em",
-            textTransform: "capitalize",
-            mb: 0.5,
-            mr: 2,
-          }}
-        >
-          My Reviews
-        </TitleTypo>
-        <Box>
-          <CustomTextField
-            data-test="Sort-test"
-            label="Sort"
-            id="outlined-select-currency"
-            select
-            value={sort}
-            onChange={handleChange}
-            sx={{ width: "15vw" }}
-          >
-            {sortOption.map((option) => (
-              <MenuItem key={option.value} value={option.value}>
-                {option.label}
-              </MenuItem>
-            ))}
-          </CustomTextField>
-        </Box>
+        <StyledTypography>My Reviews</StyledTypography>
       </Box>
-      <Divider sx={{ borderBottomWidth: 2 }} />
 
       <div className="client-list-wrapper">
         <Box m={2} mb={1}>
           <Card>
             <CardContent>
-              <Box sx={{ maxWidth: 500 }}>
-                <TextField
-                  data-test="Search By Req Name-test"
-                  onChange={searchHandleChange}
-                  placeholder="Search By Req Name"
-                  id="outlined-search"
-                  size="small"
-                  variant="outlined"
-                  sx={{ width: "15vw", height: "40px", mr: 1 }}
-                  InputProps={{
-                    startAdornment: (
-                      <InputAdornment position="start">
-                        <SvgIcon color="action" fontSize="small">
-                          <SearchIcon />
-                        </SvgIcon>
-                      </InputAdornment>
-                    ),
-                    //onClick={handelClearSearch}
-                    endAdornment: (
-                      <InputAdornment position="end">
-                        <IconButton>
-                          <ClearRoundedIcon />
-                        </IconButton>
-                      </InputAdornment>
-                    ),
-                  }}
-                  variant="outlined"
-                />
-              </Box>
+              <Grid container spacing={2}>
+                <Grid item xs={4}>
+                  <Box>
+                    <TextField
+                      data-test="Search By Req Name-test"
+                      onChange={searchHandleChange}
+                      placeholder="Search By Req Name"
+                      id="outlined-search"
+                      size="small"
+                      variant="outlined"
+                      sx={{ width: "15vw", height: "40px", mr: 1 }}
+                      InputProps={{
+                        startAdornment: (
+                          <InputAdornment position="start">
+                            <SvgIcon color="action" fontSize="small">
+                              <SearchIcon />
+                            </SvgIcon>
+                          </InputAdornment>
+                        ),
+                        //onClick={handelClearSearch}
+                      }}
+                      variant="outlined"
+                    />
+                  </Box>
+                </Grid>
+                <Grid
+                  item
+                  xs={8}
+                  container
+                  direction="row"
+                  justifyContent="flex-end"
+                  alignItems="center"
+                >
+                  <Box>
+                    <CustomTextField
+                      data-test="Sort-test"
+                      label="Sort"
+                      id="outlined-select-currency"
+                      select
+                      value={sort}
+                      onChange={handleChange}
+                      sx={{ width: "15vw" }}
+                    >
+                      {sortOption.map((option) => (
+                        <MenuItem key={option.value} value={option.value}>
+                          {option.label}
+                        </MenuItem>
+                      ))}
+                    </CustomTextField>
+                  </Box>
+                </Grid>
+              </Grid>
             </CardContent>
           </Card>
         </Box>

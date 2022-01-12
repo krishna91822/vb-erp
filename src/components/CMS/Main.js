@@ -34,6 +34,7 @@ import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
 import InputLabel from "@mui/material/InputLabel";
 import NativeSelect from "@mui/material/NativeSelect";
+import { StyledTypography } from "../../assets/GlobalStyle/style";
 
 export const StyledMenu = styled((props) => (
   <Menu
@@ -122,7 +123,7 @@ export const Main = () => {
     if (event.key === "Enter") {
       dispatch(searchPoSow(event.target.value));
     }
-  };     
+  };
   return (
     <>
       <Grid container>
@@ -131,9 +132,9 @@ export const Main = () => {
             id="outlined-basic"
             onKeyPress={searchHandler}
             label="Search by client/project name"
-            variant="outlined"   
-            sx={{ width:300 }}  
-          />     
+            variant="outlined"
+            sx={{ width: 300 }}
+          />
         </Grid>
         <Grid item lg={6} md={6} sm={6} xs={6}>
           <div className="sortbtn">
@@ -191,9 +192,7 @@ export const Main = () => {
       </Grid>
       <div className="container">
         <div className="innerheader">
-          <div>
-            <h3 data-test="MainHeading">PO/SOW's Information</h3>
-          </div>
+          <StyledTypography>PO/SOW's Information</StyledTypography>
           {user.permissions.includes("upload_PO/SOW/contract") && (
             <div className="buttondiv">
               <Link to="/posow/create" style={{ textDecoration: "none" }}>
@@ -202,7 +201,8 @@ export const Main = () => {
                   data-test="Capture-po-sow"
                   variant="contained"
                   style={{
-                    backgroundColor: "#f57c00", color: "#FFFFFF"
+                    backgroundColor: "#f57c00",
+                    color: "#FFFFFF",
                   }}
                 >
                   Capture PO/SOW{" "}
@@ -259,7 +259,7 @@ export const Main = () => {
                   <TableCell>{row.PO_Amount}</TableCell>
                   <TableCell>{row.Client_Sponser}</TableCell>
 
-                {/* might be required in future versions */}
+                  {/* might be required in future versions */}
                   {/* {user.permissions.includes("upload_PO/SOW/contract") && (
                     <>
                       {row.Status === "Drafted" ? (
