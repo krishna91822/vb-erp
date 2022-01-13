@@ -88,7 +88,7 @@ const RewardRowData = ({ data, StyledMenu, open }) => {
           )}
         </StyledTableCell>
         <StyledTableCell align="center">{data.status}</StyledTableCell>
-        <StyledTableCell align="center">
+        <StyledTableCell>
           <div className="actions">
             <StyledMenu
               id={`demo-customized-menu-${data._id}`}

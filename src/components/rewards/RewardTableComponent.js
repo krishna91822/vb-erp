@@ -15,6 +15,7 @@ import Header from "./SearchComponent";
 import { filterData, searchData } from "../../store/rewards-actions";
 import { StyledTableCell } from "../../assets/GlobalStyle/style";
 import { useDispatch } from "react-redux";
+import "../../assets/styles/ClientListStyles.css";
 
 import {
   Table,
@@ -163,7 +164,7 @@ const Body = (props) => {
                 <StyledTableCell align="center">Reward Type</StyledTableCell>
                 <StyledTableCell align="center">Issuer</StyledTableCell>
                 <StyledTableCell align="center">Status</StyledTableCell>
-                <StyledTableCell align="center">Actions</StyledTableCell>
+                <StyledTableCell>Actions</StyledTableCell>
               </TableRow>
             </TableHead>
             <TableBody>
