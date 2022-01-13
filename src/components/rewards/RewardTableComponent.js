@@ -141,7 +141,10 @@ const Body = (props) => {
                 </Box>
                 <Box m={1}>
                   <Link className="remove-underline" to="/rewards/create">
-                    <Button color="success" variant="contained">
+                    <Button
+                      style={{ backgroundColor: "chocolate" }}
+                      variant="contained"
+                    >
                       Create a Reward
                     </Button>
                   </Link>
