@@ -150,7 +150,9 @@ const CreateReward = () => {
             />
             <br />
             <TextField
+              size="small"
               id="outlined-name"
+              placeholder="Reward Display Name"
               name="reward_display_name"
               onChange={handleChangeForm}
               className="textfield1"
@@ -163,6 +165,7 @@ const CreateReward = () => {
             <FormControl id="RType">
               <Select
                 justify="justify"
+                size="small"
                 className="textfield"
                 name="reward_type"
                 value={type}
@@ -185,6 +188,7 @@ const CreateReward = () => {
               <br />
               <FormControl id="RType">
                 <Select
+                  size="small"
                   justify="justify"
                   className="textfield"
                   name="reward_subType"
@@ -208,6 +212,7 @@ const CreateReward = () => {
               <br />
               <FormControl id="RType">
                 <Select
+                  size="small"
                   justify="justify"
                   className="textfield"
                   name="reward_subType"
@@ -225,6 +230,7 @@ const CreateReward = () => {
             <br />
             <FormControl id="RSender">
               <Select
+                size="small"
                 justify="justify"
                 className="textfield"
                 name="reward_sender"
@@ -253,6 +259,7 @@ const CreateReward = () => {
             <FormControl id="Rreceiver">
               <Select
                 justify="justify"
+                size="small"
                 className="textfield"
                 value={receiver}
                 name="reward_receiver"
@@ -284,6 +291,7 @@ const CreateReward = () => {
             <TextField
               placeholder="hii <@receiver> you have some msg from <@sender>"
               multiline
+              size="small"
               className="textfield1"
               rows={3}
               name="receiver_message"
@@ -301,6 +309,7 @@ const CreateReward = () => {
               <Select
                 className="textfield"
                 justify="justify"
+                size="small"
                 value={announcement}
                 name="announcement_type"
                 onChange={announcementChange}
@@ -320,6 +329,7 @@ const CreateReward = () => {
               <br />
               <TextField
                 id="outlined-name"
+                size="small"
                 className="textfield1"
                 name="slack_channel"
                 onChange={handleChangeForm}
@@ -337,6 +347,7 @@ const CreateReward = () => {
               <TextField
                 placeholder="hii <@receiver> you have some msg from <@sender>"
                 multiline
+                size="small"
                 className="textfield1"
                 name="channel_message"
                 onChange={handleChangeForm}

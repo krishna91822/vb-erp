@@ -92,8 +92,6 @@ const Header = () => {
                 PaperProps={{
                   elevation: 0,
                   sx: {
-                    overflow: "visible",
-                    filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
                     mt: 0,
                     "& .MuiAvatar-root": {
                       width: 32,
