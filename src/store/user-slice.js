@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const userFields = {
-  name: "rupesh",
+  name: "Rahul",
   email: "rahul@valuebound.com",
   roles: ["super_admin"],
   permissions: [

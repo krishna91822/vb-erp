@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { Container, Box, MenuItem, Pagination } from "@mui/material";
 import {
   CustomGridBox,
   TitleTypo,
@@ -8,7 +7,29 @@ import {
   CustomContainer,
 } from "./network.styles";
 import { networkText } from "./network.constant";
-import { TextField } from "@mui/material";
+import {
+  MenuItem,
+  Box,
+  Stack,
+  Pagination,
+  TextField,
+  TableRow,
+  Table,
+  TableBody,
+  TableContainer,
+  TableHead,
+  Card,
+  CardContent,
+  SvgIcon,
+  InputAdornment,
+  Grid,
+  IconButton,
+  Divider,
+} from "@mui/material";
+import { StyledTableCell } from "../../assets/GlobalStyle/style";
+import { StyledTypography } from "../../assets/GlobalStyle/style";
+import { Search as SearchIcon } from "../../icons/search";
+import { ClearRounded as ClearRoundedIcon } from "@mui/icons-material";
 
 import axiosInstance from "./../../helpers/axiosInstance";
 import { useDispatch } from "react-redux";
@@ -83,127 +104,119 @@ const Network = () => {
   };
 
   return (
-    <Box data-test="network-page-test" sx={{ pt: 1 }}>
-      <Box
-        noValidate
-        autoComplete="off"
-        sx={{
-          display: "flex",
-          flexDirection: "row",
-          alignItems: "center",
-          justifyContent: "space-between",
-          mb: 1,
-        }}
-      >
-        <TitleTypo
-          sx={{
-            fontSize: "1.5em",
-            textTransform: "capitalize",
-            mb: 1,
-            mr: 2,
-          }}
-        >
-          {networkText.header}
-        </TitleTypo>
-        <Box sx={{}}>
-          <TextField
-            data-test="search-bar-test"
-            onChange={searchHandleChange}
-            placeholder="Search employee"
-            id="outlined-search"
-            size="small"
-            variant="outlined"
-            sx={{ width: "15vw", height: "40px", mr: 1 }}
-          />
-          <CustomTextField
-            data-test="sort-test"
-            label="Sort"
-            id="outlined-select-currency"
-            select
-            value={sort}
-            onChange={sortHandleChange}
-            sx={{ width: "15vw" }}
-          >
-            {sortOptions.map((option) => (
-              <MenuItem key={option.value} value={option.value}>
-                {option.label}
-              </MenuItem>
-            ))}
-          </CustomTextField>
-        </Box>
-      </Box>
-      <CustomContainer
-        sx={{
-          // height: "80vh",
-          // width: "100%",
-          // minHeight: "calc(100vh - 50px)",
-          // width: "calc(100% - 48px)",
-          outline: "0.1em solid",
-          outlineColor: grey[500],
-          borderRadius: "5px",
-          // pb: 3,
-        }}
-      >
-        <Box sx={{ width: "100%" }}>
-          <CustomGridBox
-            data-test="networkTableHead"
-            sx={{
-              height: 60,
-              // mb: 1,
-              backgroundColor: "textColor.light",
-              border: "none",
-              borderRadius: "5px 5px 0 0",
-            }}
-          >
-            {
-              //title of the network table
-              title.map((item, i) => (
-                <TitleTypo key={i}>{item}</TitleTypo>
-              ))
-            }
-          </CustomGridBox>
-          {employees.map((item) => (
-            <CustomGridBox
-              key={item.empId}
-              sx={{
-                // mt: 0.5,
-                // mb: 0.5,
-                height: 43,
-                borderBottom: "none",
-                borderLeft: "none",
-                borderRight: "none",
-                borderRadius: "0",
-                cursor: "pointer",
-              }}
-              onClick={(e) => handleEmployeeClick(item)}
+    <div className="client-list-wrapper">
+      <StyledTypography>{networkText.header}</StyledTypography>
+      <Card>
+        <CardContent>
+          <Grid container spacing={2}>
+            <Grid item xs={4}>
+              <Box>
+                <TextField
+                  data-test="search-bar-test"
+                  onChange={searchHandleChange}
+                  placeholder="Search employee"
+                  id="outlined-search"
+                  size="small"
+                  variant="outlined"
+                  sx={{ width: "15vw", height: "40px", mr: 1 }}
+                  InputProps={{
+                    startAdornment: (
+                      <InputAdornment position="start">
+                        <SvgIcon color="action" fontSize="small">
+                          <SearchIcon />
+                        </SvgIcon>
+                      </InputAdornment>
+                    ),
+                  }}
+                  variant="outlined"
+                />
+              </Box>
+            </Grid>
+            <Grid
+              item
+              xs={8}
+              container
+              direction="row"
+              justifyContent="flex-end"
+              alignItems="center"
             >
-              <ContentTypo>{item.empName}</ContentTypo>
-              <ContentTypo>{item.empId}</ContentTypo>
-              <ContentTypo>{item.empEmail}</ContentTypo>
-              <ContentTypo>{item.empDesignation}</ContentTypo>
-              <ContentTypo>
-                {item.empCurrentAddress
-                  ? item.empCurrentAddress.empAddressCity
-                  : ""}
-              </ContentTypo>
-              <ContentTypo>{item.empDepartment}</ContentTypo>
-            </CustomGridBox>
-          ))}
-        </Box>
-      </CustomContainer>
+              <Box sx={{}}>
+                <CustomTextField
+                  data-test="sort-test"
+                  label="Sort"
+                  id="outlined-select-currency"
+                  select
+                  value={sort}
+                  onChange={sortHandleChange}
+                  sx={{ width: "15vw" }}
+                >
+                  {sortOptions.map((option) => (
+                    <MenuItem key={option.value} value={option.value}>
+                      {option.label}
+                    </MenuItem>
+                  ))}
+                </CustomTextField>
+              </Box>
+            </Grid>
+          </Grid>
+        </CardContent>
+      </Card>
+      <div className="ListContainer">
+        <TableContainer>
+          <Table>
+            <TableHead>
+              <TableRow className="table-header">
+                <StyledTableCell align="center">Name</StyledTableCell>
+                <StyledTableCell align="center">Emp Id</StyledTableCell>
+                <StyledTableCell align="center">Email</StyledTableCell>
+                <StyledTableCell align="center">Position</StyledTableCell>
+                <StyledTableCell align="center">Location</StyledTableCell>
+                <StyledTableCell align="center">Department</StyledTableCell>
+              </TableRow>
+            </TableHead>
+
+            <TableBody>
+              {employees.map((item) => (
+                <TableRow
+                  key={item.empId}
+                  className="table-row"
+                  onClick={(e) => handleEmployeeClick(item)}
+                >
+                  <StyledTableCell align="center">
+                    {item.empName}
+                  </StyledTableCell>
+                  <StyledTableCell align="center">{item.empId}</StyledTableCell>
+                  <StyledTableCell align="center">
+                    {item.empEmail}
+                  </StyledTableCell>
+                  <StyledTableCell align="center">
+                    {item.empDesignation}
+                  </StyledTableCell>
+                  <StyledTableCell align="center">
+                    {item.empCurrentAddress
+                      ? item.empCurrentAddress.empAddressCity
+                      : ""}
+                  </StyledTableCell>
+                  <StyledTableCell align="center">
+                    {item.empDepartment}
+                  </StyledTableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </div>
       {/* pagination */}
-      <Box sx={{ width: 1, display: "flex", justifyContent: "center" }}>
-        <Pagination
-          data-test="pagination-test"
-          count={paginationInfo.totalPage}
-          page={paginationInfo.page}
-          onChange={handlePagination}
-          showFirstButton
-          showLastButton
-          color="primary"
-        />
-      </Box>
-    </Box>
+      <div className="pagination">
+        <Stack spacing={2}>
+          <Pagination
+            count={paginationInfo.totalPage}
+            page={paginationInfo.page}
+            onChange={handlePagination}
+          />
+        </Stack>
+      </div>
+    </div>
   );
 };
 

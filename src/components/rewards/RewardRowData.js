@@ -14,6 +14,9 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import Popup from "./Popup";
 import EmployeesList from "../employees/EmployeesList";
+import { StyledTableCell } from "../../assets/GlobalStyle/style";
+import { TableRow, Tab } from "@mui/material";
+import "../../assets/styles/ClientListStyles.css";
 
 const RewardRowData = ({ data, StyledMenu, open }) => {
   const dispatch = useDispatch();
@@ -67,120 +70,114 @@ const RewardRowData = ({ data, StyledMenu, open }) => {
         hideProgressBar={true}
         autoClose={3000}
       />
-      <div key={data["_id"]} className="multiple-rows-container">
-        <div className="rewardname">
-          <p>
-            {data.reward_name ? data.reward_name : data.reward_display_name}
-          </p>
-        </div>
-        <div className="reward">
-          <p>{data.reward_type}</p>
-        </div>
-        <div className="assignee">
+      <TableRow key={data["_id"]} className="table-row">
+        <StyledTableCell align="center">
+          {data.reward_name ? data.reward_name : data.reward_display_name}
+        </StyledTableCell>
+        <StyledTableCell align="center">{data.reward_type}</StyledTableCell>
+        <StyledTableCell align="center">
           {data.reward_sender === "selected" ? (
             // <p>{data.sender_id[0].empName}</p>
             <>
-              {data.sender_id[0] !== undefined ? (
-                <p>{data.sender_id[0].empName}</p>
-              ) : (
-                <p>{data.sender_id.empName}</p>
-              )}
+              {data.sender_id[0] !== undefined
+                ? data.sender_id[0].empName
+                : data.sender_id.empName}
             </>
           ) : (
-            <p>{data.reward_sender}</p>
+            data.reward_sender
           )}
-        </div>
-        <div className="reward-state">
-          <p>{data.status}</p>
-        </div>
-        <div className="actions">
-          <StyledMenu
-            id={`demo-customized-menu-${data._id}`}
-            keepMounted
-            MenuListProps={{
-              "aria-labelledby": "demo-customized-button",
-            }}
-            anchorEl={anchorEl}
-            open={Boolean(anchorEl)}
-            onClose={handleClose}
-          >
-            {data.status === "In Progress" ? (
-              <MenuItem onClick={() => sendMessage(data._id)} disableRipple>
-                Send Message
-              </MenuItem>
-            ) : (
-              ""
-            )}
-
-            {data.status !== "In Progress" ? (
-              <MenuItem onClick={() => launchReward(data._id)} disableRipple>
-                Launch
-              </MenuItem>
-            ) : (
-              ""
-            )}
-
-            {data.reward_receiver === "selected" ? (
-              <MenuItem
-                onClick={() => relaunchReward(data.reward_receiver)}
-                disableRipple
-              >
-                Re-Launch
-              </MenuItem>
-            ) : (
-              ""
-            )}
-            {data.status !== "Stopped" && data.status === "In Progress" ? (
-              <MenuItem onClick={() => stopReward(data._id)} disableRipple>
-                Stop
-              </MenuItem>
-            ) : (
-              ""
-            )}
-
-            <Link
-              style={{ textDecoration: "none", color: "black" }}
-              to={`/rewards/edit/${data._id}`}
+        </StyledTableCell>
+        <StyledTableCell align="center">{data.status}</StyledTableCell>
+        <StyledTableCell align="center">
+          <div className="actions">
+            <StyledMenu
+              id={`demo-customized-menu-${data._id}`}
+              keepMounted
+              MenuListProps={{
+                "aria-labelledby": "demo-customized-button",
+              }}
+              anchorEl={anchorEl}
+              open={Boolean(anchorEl)}
+              onClose={handleClose}
             >
-              <MenuItem onClick={handleClose} disableRipple>
-                Edit
+              {data.status === "In Progress" ? (
+                <MenuItem onClick={() => sendMessage(data._id)} disableRipple>
+                  Send Message
+                </MenuItem>
+              ) : (
+                ""
+              )}
+
+              {data.status !== "In Progress" ? (
+                <MenuItem onClick={() => launchReward(data._id)} disableRipple>
+                  Launch
+                </MenuItem>
+              ) : (
+                ""
+              )}
+
+              {data.reward_receiver === "selected" ? (
+                <MenuItem
+                  onClick={() => relaunchReward(data.reward_receiver)}
+                  disableRipple
+                >
+                  Re-Launch
+                </MenuItem>
+              ) : (
+                ""
+              )}
+              {data.status !== "Stopped" && data.status === "In Progress" ? (
+                <MenuItem onClick={() => stopReward(data._id)} disableRipple>
+                  Stop
+                </MenuItem>
+              ) : (
+                ""
+              )}
+
+              <Link
+                style={{ textDecoration: "none", color: "black" }}
+                to={`/rewards/edit/${data._id}`}
+              >
+                <MenuItem onClick={handleClose} disableRipple>
+                  Edit
+                </MenuItem>
+              </Link>
+              <MenuItem onClick={() => deleteReward(data._id)} disableRipple>
+                Delete
               </MenuItem>
-            </Link>
-            <MenuItem onClick={() => deleteReward(data._id)} disableRipple>
-              Delete
-            </MenuItem>
-          </StyledMenu>
-          <p
-            style={{
-              cursor: "pointer",
-              display: "flex",
-              alignItems: "center",
-              marginLeft: "30px",
-            }}
-            aria-controls="demo-customized-menu"
-            aria-haspopup="true"
-            aria-expanded={open ? "true" : undefined}
-            variant="contained"
-            disableElevation
-            onClick={handleClick}
-          >
-            <FontAwesomeIcon icon={faEllipsisV} />
-          </p>
-        </div>
-        <Popup
-          title="Team Members"
-          openPopup={openPopup}
-          setOpenPopup={setOpenPopup}
-        >
-          <EmployeesList
-            rewardId={data._id}
-            rewardList={true}
+            </StyledMenu>
+            <p
+              style={{
+                cursor: "pointer",
+                display: "flex",
+                alignItems: "center",
+                marginLeft: "30px",
+              }}
+              aria-controls="demo-customized-menu"
+              aria-haspopup="true"
+              aria-expanded={open ? "true" : undefined}
+              variant="contained"
+              disableElevation
+              onClick={handleClick}
+            >
+              <FontAwesomeIcon icon={faEllipsisV} />
+            </p>
+          </div>
+          <Popup
+            title="Team Members"
             openPopup={openPopup}
             setOpenPopup={setOpenPopup}
-            stateOfSelection="multiple"
-          />
-        </Popup>
-      </div>
+          >
+            <EmployeesList
+              rewardId={data._id}
+              rewardList={true}
+              openPopup={openPopup}
+              setOpenPopup={setOpenPopup}
+              stateOfSelection="multiple"
+            />
+          </Popup>
+        </StyledTableCell>
+      </TableRow>
     </>
   );
 };
