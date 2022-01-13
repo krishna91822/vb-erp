@@ -30,6 +30,7 @@
 
 .table-row {
   cursor: pointer;
+  height: 3rem;
 }
 
 .table-row:hover {

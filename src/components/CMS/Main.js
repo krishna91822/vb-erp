@@ -17,11 +17,17 @@ import EditOffIcon from "@mui/icons-material/EditOff";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Grid } from "@mui/material";
+import {
+  Grid,
+  Card,
+  CardContent,
+  Box,
+  InputAdornment,
+  SvgIcon,
+} from "@mui/material";
+import { Search as SearchIcon } from "../../icons/search";
+
 import TextField from "@mui/material/TextField";
-
-import "./Main.css";
-
 import {
   fetchSpecificPO_SOW,
   sortProducts,
@@ -29,11 +35,11 @@ import {
   searchPoSow,
 } from "../../store/CMS/POSOW-actions";
 import { fetchPO_SOW_data } from "../../store/CMS/POSOW-actions";
-import Typography from "@mui/material/Typography";
 import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
 import InputLabel from "@mui/material/InputLabel";
 import NativeSelect from "@mui/material/NativeSelect";
+import { StyledTableCell } from "../../assets/GlobalStyle/style";
 import { StyledTypography } from "../../assets/GlobalStyle/style";
 
 export const StyledMenu = styled((props) => (
@@ -125,171 +131,195 @@ export const Main = () => {
     }
   };
   return (
-    <>
-      <Grid container>
-        <Grid item lg={6} md={6} sm={6} xs={6}>
-          <TextField
-            id="outlined-basic"
-            onKeyPress={searchHandler}
-            label="Search by client/project name"
-            variant="outlined"
-            sx={{ width: 300 }}
-          />
-        </Grid>
-        <Grid item lg={6} md={6} sm={6} xs={6}>
-          <div className="sortbtn">
-            <Button
-              id="demo-customized-button"
-              aria-controls="demo-customized-menu"
-              aria-haspopup="true"
-              aria-expanded={open ? "true" : undefined}
-              variant="contained"
-              disableElevation
-              onClick={handleClick}
-              endIcon={<KeyboardArrowDownIcon />}
-              data-test="SortByButton"
-              className="sort-by-button"
-            >
-              Sort by
-            </Button>
-            <StyledMenu
-              id="demo-customized-menu"
-              MenuListProps={{
-                "aria-labelledby": "demo-customized-button",
-              }}
-              anchorEl={anchorEl}
-              open={open}
-              onClose={handleClose}
-              data-test="StyledMenu"
-            >
-              <MenuItem
-                onClick={() => handleSort("_id")}
-                disableRipple
-                className="menu-by-id"
+    <div className="client-list-wrapper">
+      <StyledTypography>PO/SOW's Information</StyledTypography>
+      <Card>
+        <CardContent>
+          <Box>
+            <Grid container spacing={2}>
+              <Grid item xs={4}>
+                <Box>
+                  <TextField
+                    fullWidth
+                    id="outlined-basic"
+                    label="Search by client/project name"
+                    onKeyPress={searchHandler}
+                    InputProps={{
+                      startAdornment: (
+                        <InputAdornment position="start">
+                          <SvgIcon color="action" fontSize="small">
+                            <SearchIcon />
+                          </SvgIcon>
+                        </InputAdornment>
+                      ),
+                    }}
+                    variant="outlined"
+                  />
+                </Box>
+              </Grid>
+              <Grid
+                item
+                xs={8}
+                container
+                direction="row"
+                justifyContent="flex-end"
+                alignItems="center"
               >
-                By ID
-              </MenuItem>
+                <Box m={1}>
+                  {user.permissions.includes("upload_PO/SOW/contract") && (
+                    <div className="buttondiv">
+                      <Link
+                        to="/posow/create"
+                        style={{ textDecoration: "none" }}
+                      >
+                        <Button
+                          className="posow-SaveButton"
+                          data-test="Capture-po-sow"
+                          variant="contained"
+                          style={{
+                            backgroundColor: "chocolate",
+                            color: "#FFFFFF",
+                          }}
+                        >
+                          Capture PO/SOW{" "}
+                        </Button>
+                      </Link>
+                    </div>
+                  )}
+                </Box>
+                <Box m={1}>
+                  <Button
+                    id="demo-customized-button"
+                    aria-controls="demo-customized-menu"
+                    aria-haspopup="true"
+                    aria-expanded={open ? "true" : undefined}
+                    variant="outlined"
+                    disableElevation
+                    onClick={handleClick}
+                    endIcon={<KeyboardArrowDownIcon />}
+                    data-test="SortByButton"
+                    style={{ borderColor: "black", color: "black" }}
+                  >
+                    Sort by
+                  </Button>
+                  <StyledMenu
+                    id="demo-customized-menu"
+                    MenuListProps={{
+                      "aria-labelledby": "demo-customized-button",
+                    }}
+                    anchorEl={anchorEl}
+                    open={open}
+                    onClose={handleClose}
+                    data-test="StyledMenu"
+                  >
+                    <MenuItem
+                      onClick={() => handleSort("_id")}
+                      disableRipple
+                      className="menu-by-id"
+                    >
+                      By ID
+                    </MenuItem>
 
-              <MenuItem
-                onClick={() => handleSort("Project_Name")}
-                disableRipple
-              >
-                By Project Name
-              </MenuItem>
+                    <MenuItem
+                      onClick={() => handleSort("Project_Name")}
+                      disableRipple
+                    >
+                      By Project Name
+                    </MenuItem>
 
-              <MenuItem
-                onClick={() => handleSort("Client_Sponser")}
-                disableRipple
-              >
-                By Client Sponsor
-              </MenuItem>
-              <MenuItem onClick={() => handleSort("Client_Name")} disableRipple>
-                By Client Name
-              </MenuItem>
-            </StyledMenu>
-          </div>
-        </Grid>
-      </Grid>
-      <div className="container">
-        <div className="innerheader">
-          <StyledTypography>PO/SOW's Information</StyledTypography>
-          {user.permissions.includes("upload_PO/SOW/contract") && (
-            <div className="buttondiv">
-              <Link to="/posow/create" style={{ textDecoration: "none" }}>
-                <Button
-                  className="posow-SaveButton"
-                  data-test="Capture-po-sow"
-                  variant="contained"
-                  style={{
-                    backgroundColor: "#f57c00",
-                    color: "#FFFFFF",
-                  }}
-                >
-                  Capture PO/SOW{" "}
-                </Button>
-              </Link>
-            </div>
-          )}
-        </div>
+                    <MenuItem
+                      onClick={() => handleSort("Client_Sponser")}
+                      disableRipple
+                    >
+                      By Client Sponsor
+                    </MenuItem>
+                    <MenuItem
+                      onClick={() => handleSort("Client_Name")}
+                      disableRipple
+                    >
+                      By Client Name
+                    </MenuItem>
+                  </StyledMenu>
+                </Box>
+              </Grid>
+            </Grid>
+          </Box>
+        </CardContent>
+      </Card>
 
-        <TableContainer component={Paper}>
-          <Table
-            sx={{ minWidth: 650 }}
-            aria-label="simple table"
-            className="Table-row-po-sow"
-            data-test="row-click-1"
-          >
-            <TableHead className="tablehead" data-test="row-click0">
-              <TableRow>
-                <TableCell>ID</TableCell>
-                <TableCell>Client Name</TableCell>
-                <TableCell>Project Name</TableCell>
-                <TableCell>PO/SOW Number</TableCell>
-                <TableCell>PO/SOW Amount</TableCell>
-                <TableCell>Client Sponsor</TableCell>
+      <div className="ListContainer">
+        <TableContainer>
+          <Table data-test="row-click-1">
+            <TableHead data-test="row-click0">
+              <TableRow className="table-header">
+                <StyledTableCell align="center">ID</StyledTableCell>
+                <StyledTableCell align="center">Client Name</StyledTableCell>
+                <StyledTableCell align="center">Project Name</StyledTableCell>
+                <StyledTableCell align="center">PO/SOW Number</StyledTableCell>
+                <StyledTableCell align="center">PO/SOW Amount</StyledTableCell>
+                <StyledTableCell align="center">Client Sponsor</StyledTableCell>
 
                 {/* {user.permissions.includes("upload_PO/SOW/contract") && (
-                  <TableCell>Action</TableCell>
+                  <StyledTableCell align="center">Action</StyledTableCell>
                 )}
-                <TableCell>Status</TableCell> */}
+                <StyledTableCell align="center">Status</StyledTableCell> */}
               </TableRow>
             </TableHead>
             <TableBody className="table-row-posow" data-test="row-click1">
               {post.map((row, index) => (
                 <TableRow
                   component={Link}
+                  style={{ textDecoration: "none" }}
                   to={`/posow/detail/${row._id}`}
                   onClick={() => handleRowOnClick(row._id)}
                   key={row.name}
-                  style={{ textDecoration: "none" }}
-                  sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                  className="table-row"
                   data-test="row-click2"
                 >
-                  <TableCell
-                    component="th"
-                    scope="row"
-                    className="table-cell"
-                    data-test="row-click3"
-                  >
+                  <StyledTableCell align="center" data-test="row-click3">
                     {postPerPage * (currentPage - 1) + (index + 1)}
-                  </TableCell>
-                  <TableCell>{row.Client_Name}</TableCell>
-                  <TableCell>{row.Project_Name}</TableCell>
-                  <TableCell>{row.PO_Number}</TableCell>
-                  <TableCell>{row.PO_Amount}</TableCell>
-                  <TableCell>{row.Client_Sponser}</TableCell>
+                  </StyledTableCell>
+                  <StyledTableCell align="center">
+                    {row.Client_Name}
+                  </StyledTableCell>
+                  <StyledTableCell align="center">
+                    {row.Project_Name}
+                  </StyledTableCell>
+                  <StyledTableCell align="center">
+                    {row.PO_Number}
+                  </StyledTableCell>
+                  <StyledTableCell align="center">
+                    {row.PO_Amount}
+                  </StyledTableCell>
+                  <StyledTableCell align="center">
+                    {row.Client_Sponser}
+                  </StyledTableCell>
 
                   {/* might be required in future versions */}
                   {/* {user.permissions.includes("upload_PO/SOW/contract") && (
                     <>
                       {row.Status === "Drafted" ? (
-                        <TableCell>
+                        <StyledTableCell align="center">
                           <EditIcon />
-                        </TableCell>
+                        </StyledTableCell>
                       ) : (
-                        <TableCell>
+                        <StyledTableCell align="center">
                           <EditOffIcon />
-                        </TableCell>
+                        </StyledTableCell>
                       )}
                     </>
                   )}
 
-                  <TableCell>
+                  <StyledTableCell align="center">
                     <strong>{row.Status}</strong>
-                  </TableCell> */}
+                  </StyledTableCell> */}
                 </TableRow>
               ))}
             </TableBody>
           </Table>
         </TableContainer>
-        <Stack spacing={10}>
-          <div className="Pagination">
-            {/* <Typography className="pagenumber">Page: {currentPage}</Typography> */}
-            <div className="numbering">
-              <InputLabel variant="standard" htmlFor="uncontrolled-native">
-                Rows per page:
-              </InputLabel>
-              <NativeSelect
+        <div className="pagination">
+          {/* <NativeSelect
                 value={postPerPage}
                 onChange={handlerowsPerpage}
                 defaultValue={30}
@@ -297,16 +327,16 @@ export const Main = () => {
                 <option value={5}>5</option>
                 <option value={10}>10</option>
                 <option value={15}>15</option>
-              </NativeSelect>
-              <Pagination
-                count={Math.ceil(totalCount / postPerPage)}
-                page={currentPage}
-                onChange={handleChange}
-              />
-            </div>
-          </div>
-        </Stack>
+              </NativeSelect> */}
+          <Stack spacing={2}>
+            <Pagination
+              count={Math.ceil(totalCount / postPerPage)}
+              page={currentPage}
+              onChange={handleChange}
+            />
+          </Stack>
+        </div>
       </div>
-    </>
+    </div>
   );
 };

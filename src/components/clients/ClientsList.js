@@ -251,7 +251,7 @@ function ClientsList() {
       <StyledTypography>CIMS</StyledTypography>
       <Card>
         <CardContent>
-          <Box sx={{ maxWidth: "100%" }}>
+          <Box>
             <Grid container spacing={2}>
               <Grid item xs={4}>
                 <Box>
