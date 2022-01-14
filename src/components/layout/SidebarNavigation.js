@@ -188,47 +188,40 @@ const SidebarNavigation = () => {
     setOpenRR(!openRR);
   };
 
-  const testing = (index) => {
+  const checkNestedlist = (index) => {
     setSelectedListIndex(index);
   };
 
-  const testing2 = () => {
+  const trackPathName = () => {
     if (location.pathname === "my-profile") {
-      console.log(location.pathname);
       setSelectedIndex(0);
     }
     if (location.pathname === "/create-profile") {
-      console.log(location.pathname);
       setSelectedIndex(1);
       setSelectedListIndex(0);
     }
     if (location.pathname === "/network") {
-      console.log(location.pathname);
       setSelectedIndex(2);
     }
     if (location.pathname === "/cims") {
-      console.log(location.pathname);
       setSelectedIndex(3);
     }
 
     if (location.pathname === "/pmo/projects") {
-      console.log(location.pathname);
       setSelectedIndex(4);
       setSelectedListIndex(0);
     }
     if (location.pathname === "/posow") {
-      console.log(location.pathname);
       setSelectedIndex(5);
     }
     if (location.pathname === "/rewards") {
-      console.log(location.pathname);
       setSelectedIndex(6);
       setSelectedListIndex(0);
     }
   };
 
   useEffect(() => {
-    testing2();
+    trackPathName();
   }, []);
 
   const {
@@ -491,7 +484,7 @@ const SidebarNavigation = () => {
                                 to={item.link}
                                 sx={{ pl: 4 }}
                                 selected={selectedListIndex === i}
-                                onClick={() => testing(i)}
+                                onClick={() => checkNestedlist(i)}
                               >
                                 <ListItemIcon>
                                   <GridViewIcon />
