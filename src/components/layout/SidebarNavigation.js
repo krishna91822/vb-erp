@@ -196,13 +196,23 @@ const SidebarNavigation = () => {
     if (location.pathname === "my-profile") {
       setSelectedIndex(0);
     }
+
     if (location.pathname === "/create-profile") {
       setSelectedIndex(1);
       setSelectedListIndex(0);
+      setOpenTasks(true);
     }
+
+    if (location.pathname === "/reviews") {
+      setSelectedIndex(1);
+      setSelectedListIndex(1);
+      setOpenTasks(true);
+    }
+
     if (location.pathname === "/network") {
       setSelectedIndex(2);
     }
+
     if (location.pathname === "/cims") {
       setSelectedIndex(3);
     }
@@ -210,13 +220,37 @@ const SidebarNavigation = () => {
     if (location.pathname === "/pmo/projects") {
       setSelectedIndex(4);
       setSelectedListIndex(0);
+      setOpenPMO(true);
     }
+
+    if (location.pathname === "/pmo/projects/create") {
+      setSelectedIndex(4);
+      setSelectedListIndex(1);
+      setOpenPMO(true);
+    }
+
+    if (location.pathname === "/pmo/allocations") {
+      setSelectedIndex(4);
+      setSelectedListIndex(2);
+      setOpenPMO(true);
+    }
+
     if (location.pathname === "/posow") {
       setSelectedIndex(5);
+      setSelectedListIndex(0);
+      setOpenCMS(true);
     }
+
+    if (location.pathname === "/invoices") {
+      setSelectedIndex(5);
+      setSelectedListIndex(1);
+      setOpenCMS(true);
+    }
+
     if (location.pathname === "/rewards") {
       setSelectedIndex(6);
       setSelectedListIndex(0);
+      setOpenRR(true);
     }
   };
 
