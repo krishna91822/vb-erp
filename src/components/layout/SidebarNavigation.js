@@ -1,5 +1,5 @@
 import Box from "@mui/material/Box";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import List from "@mui/material/List";
 import { Paper } from "@mui/material";
 import ListItemButton from "@mui/material/ListItemButton";
@@ -13,7 +13,7 @@ import GridViewIcon from "@mui/icons-material/GridView";
 import { styled } from "@mui/material/styles";
 import { Avatar } from "@mui/material";
 import { Grid } from "@mui/material";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import UseRoles from "../../helpers/roles";
 
 import PersonIcon from "@mui/icons-material/Person";
@@ -79,6 +79,7 @@ const CustomListItemButton = styled(ListItemButton)(({ theme }) => ({
       "Inter,-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji",
     fontWeight: "600",
     lineHeight: "1.75",
+    // padding: "10px 0px",
   },
 
   ".MuiSvgIcon-root ": {
@@ -103,14 +104,76 @@ const CustomListItemButton = styled(ListItemButton)(({ theme }) => ({
     backgroundColor: "rgb(36,42,56)",
   },
 }));
+
+const NestedListItemButton = styled(ListItemButton)(({ theme }) => ({
+  "&.MuiListItemButton-root:hover": {
+    backgroundColor: "rgb(18 28 42)",
+  },
+
+  ".MuiTypography-root": {
+    fontFamily:
+      "Inter,-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji",
+    fontWeight: "600",
+    lineHeight: "1.75",
+  },
+
+  ".MuiSvgIcon-root ": {
+    color: "rgb(156,163,175)",
+  },
+
+  "&.Mui-selected": {
+    backgroundColor: "rgb(17,24,39)",
+    borderRadius: ".4rem",
+    marginLeft: ".5rem",
+    marginRight: ".5rem",
+    ".MuiTypography-root": {
+      color: "rgb(210,79,31)",
+      fontWeight: "600",
+      lineHeight: "1.75",
+    },
+    ".MuiSvgIcon-root": {
+      color: "rgb(210,79,31)",
+    },
+  },
+  "&.Mui-selected:hover": {
+    backgroundColor: "rgb(36,42,56)",
+  },
+}));
+
 const SidebarNavigation = () => {
   const [openTasks, setOpenTasks] = useState(false);
   const [openPMO, setOpenPMO] = useState(false);
   const [openCMS, setOpenCMS] = useState(false);
   const [openRR, setOpenRR] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState(0);
+  const location = useLocation();
+  const [selectedListIndex, setSelectedListIndex] = useState();
+
   const handleListItemClick = (index) => {
     setSelectedIndex(index);
+    if (index === 1) {
+      setOpenPMO(false);
+      setOpenCMS(false);
+      setOpenRR(false);
+    } else if (index === 4) {
+      setOpenTasks(false);
+      setOpenCMS(false);
+      setOpenRR(false);
+    } else if (index === 5) {
+      setOpenTasks(false);
+      setOpenPMO(false);
+      setOpenRR(false);
+    } else if (index === 6) {
+      setOpenTasks(false);
+      setOpenCMS(false);
+      setOpenPMO(false);
+    } else {
+      setOpenTasks(false);
+      setOpenCMS(false);
+      setOpenPMO(false);
+      setOpenRR(false);
+    }
+    setSelectedListIndex(-1);
   };
   const handleClickTasks = (event) => {
     setOpenTasks(!openTasks);
@@ -124,6 +187,42 @@ const SidebarNavigation = () => {
   const handleClickRR = (event) => {
     setOpenRR(!openRR);
   };
+
+  const checkNestedlist = (index) => {
+    setSelectedListIndex(index);
+  };
+
+  const trackPathName = () => {
+    if (location.pathname === "my-profile") {
+      setSelectedIndex(0);
+    }
+    if (location.pathname === "/create-profile") {
+      setSelectedIndex(1);
+      setSelectedListIndex(0);
+    }
+    if (location.pathname === "/network") {
+      setSelectedIndex(2);
+    }
+    if (location.pathname === "/cims") {
+      setSelectedIndex(3);
+    }
+
+    if (location.pathname === "/pmo/projects") {
+      setSelectedIndex(4);
+      setSelectedListIndex(0);
+    }
+    if (location.pathname === "/posow") {
+      setSelectedIndex(5);
+    }
+    if (location.pathname === "/rewards") {
+      setSelectedIndex(6);
+      setSelectedListIndex(0);
+    }
+  };
+
+  useEffect(() => {
+    trackPathName();
+  }, []);
 
   const {
     isUser,
@@ -378,23 +477,23 @@ const SidebarNavigation = () => {
                     <Collapse in={menuItem.open} timeout="auto" unmountOnExit>
                       <List component="div" disablePadding>
                         {menuItem.dropDown.map(
-                          (item) =>
+                          (item, i) =>
                             item.access && (
-                              <CustomListItemButton
+                              <NestedListItemButton
                                 component={Link}
                                 to={item.link}
                                 sx={{ pl: 4 }}
+                                selected={selectedListIndex === i}
+                                onClick={() => checkNestedlist(i)}
                               >
                                 <ListItemIcon>
-                                  <GridViewIcon
-                                    style={{ color: "rgb(156,163,175)" }}
-                                  />
+                                  <GridViewIcon />
                                 </ListItemIcon>
                                 <ListItemText
-                                  style={{ color: "rgb(156,163,175)" }}
                                   primary={item.name}
+                                  style={{ color: "rgb(156,163,175)" }}
                                 />
-                              </CustomListItemButton>
+                              </NestedListItemButton>
                             )
                         )}
                       </List>
