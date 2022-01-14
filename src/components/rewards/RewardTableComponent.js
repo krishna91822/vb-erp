@@ -1,12 +1,36 @@
-import React from "react";
+import React, { useState } from "react";
 import "./rewardTableStyle.css";
-import Button from "@mui/material/Button";
+import {
+  Button,
+  FormControl,
+  FormControlLabel,
+  InputLabel,
+  Select,
+} from "@mui/material";
 import { styled, alpha } from "@mui/material/styles";
 import Menu from "@mui/material/Menu";
 import { Link } from "react-router-dom";
 import RewardRowData from "./RewardRowData";
-import { StyledTypography } from "../../assets/GlobalStyle/style";
+import Header from "./SearchComponent";
+import { filterData, searchData } from "../../store/rewards-actions";
+import { StyledTableCell } from "../../assets/GlobalStyle/style";
+import { useDispatch } from "react-redux";
+import "../../assets/styles/ClientListStyles.css";
 
+import {
+  Table,
+  TableHead,
+  TableRow,
+  TableContainer,
+  TableBody,
+  Card,
+  CardContent,
+  Box,
+  Grid,
+  MenuItem,
+  TextField,
+} from "@mui/material";
+import "../../assets/styles/ClientListStyles.css";
 export const StyledMenu = styled((props) => (
   <Menu
     elevation={0}
@@ -51,43 +75,107 @@ export const StyledMenu = styled((props) => (
 }));
 
 const Body = (props) => {
+  const dispatch = useDispatch();
+
+  const currencies = [
+    {
+      value: "Default",
+      label: "Default",
+    },
+    {
+      value: "Stopped",
+      label: "Stopped",
+    },
+    {
+      value: "In Progress",
+      label: "In Progress",
+    },
+
+    {
+      value: "Created",
+      label: "Created",
+    },
+  ];
+
+  const [currency, setCurrency] = useState("");
+
+  const handleChange = (event) => {
+    setCurrency(event.target.value);
+    const filterValue = event.target.value;
+    dispatch(filterData(filterValue));
+  };
+
   return (
-    <div className="main-body">
-      <div className="middle-container">
-        <StyledTypography>R&R's Information</StyledTypography>
-        <div className="middle-button">
-          <Link className="remove-underline" to="/rewards/create">
-            <Button color="success" variant="contained">
-              Create a Reward
-            </Button>
-          </Link>
-        </div>
+    <>
+      <Card>
+        <CardContent>
+          <Box>
+            <Grid container spacing={2}>
+              <Grid item xs={4}>
+                <Box>
+                  <Header />
+                </Box>
+              </Grid>
+              <Grid
+                item
+                xs={8}
+                container
+                direction="row"
+                justifyContent="flex-end"
+                alignItems="center"
+              >
+                <Box m={1}>
+                  <FormControl size="small" sx={{ minWidth: 120 }}>
+                    <InputLabel id="sortBy">Sort By</InputLabel>
+                    <Select
+                      label="Status"
+                      value={currency}
+                      onChange={handleChange}
+                    >
+                      {currencies.map((option) => (
+                        <MenuItem key={option.value} value={option.value}>
+                          {option.label}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                  </FormControl>
+                </Box>
+                <Box m={1}>
+                  <Link className="remove-underline" to="/rewards/create">
+                    <Button
+                      style={{ backgroundColor: "chocolate" }}
+                      variant="contained"
+                    >
+                      Create a Reward
+                    </Button>
+                  </Link>
+                </Box>
+              </Grid>
+            </Grid>
+          </Box>
+        </CardContent>
+      </Card>
+      <div className="ListContainer">
+        <TableContainer>
+          <Table>
+            <TableHead>
+              <TableRow className="table-header">
+                <StyledTableCell align="center">Reward Name</StyledTableCell>
+                <StyledTableCell align="center">Reward Type</StyledTableCell>
+                <StyledTableCell align="center">Issuer</StyledTableCell>
+                <StyledTableCell align="center">Status</StyledTableCell>
+                <StyledTableCell>Actions</StyledTableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {props.rewardData.map((data) => {
+                return <RewardRowData data={data} StyledMenu={StyledMenu} />;
+              })}
+            </TableBody>
+          </Table>
+        </TableContainer>
       </div>
-      <div className="table-container">
-        <div className="heading-row-container">
-          <div className="heading-rewardname">
-            <p>Reward Name</p>
-          </div>
-          <div className="heading-reward">
-            <p>Reward Type</p>
-          </div>
-          <div className="heading-assignee">
-            <p>Issuer</p>
-          </div>
-          <div className="heading-reward-state">
-            <p>Status</p>
-          </div>
-          <div className="heading-actions">
-            <p>Actions</p>
-          </div>
-        </div>
-        <div className="data-row-container">
-          {props.rewardData.map((data) => {
-            return <RewardRowData data={data} StyledMenu={StyledMenu} />;
-          })}
-        </div>
-      </div>
-    </div>
+    </>
   );
 };
 

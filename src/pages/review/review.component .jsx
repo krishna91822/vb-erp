@@ -161,142 +161,119 @@ const Review = () => {
   };
 
   return (
-    <Box>
-      <Box
-        sx={{
-          display: "flex",
-          justifyContent: "space-between",
-          mb: 1,
-          flexDirection: "row",
-          alignItems: "center",
-        }}
-      >
-        <StyledTypography>My Reviews</StyledTypography>
-      </Box>
-
-      <div className="client-list-wrapper">
-        <Box m={2} mb={1}>
-          <Card>
-            <CardContent>
-              <Grid container spacing={2}>
-                <Grid item xs={4}>
-                  <Box>
-                    <TextField
-                      data-test="Search By Req Name-test"
-                      onChange={searchHandleChange}
-                      placeholder="Search By Req Name"
-                      id="outlined-search"
-                      size="small"
-                      variant="outlined"
-                      sx={{ width: "15vw", height: "40px", mr: 1 }}
-                      InputProps={{
-                        startAdornment: (
-                          <InputAdornment position="start">
-                            <SvgIcon color="action" fontSize="small">
-                              <SearchIcon />
-                            </SvgIcon>
-                          </InputAdornment>
-                        ),
-                        //onClick={handelClearSearch}
-                      }}
-                      variant="outlined"
-                    />
-                  </Box>
-                </Grid>
-                <Grid
-                  item
-                  xs={8}
-                  container
-                  direction="row"
-                  justifyContent="flex-end"
-                  alignItems="center"
-                >
-                  <Box>
-                    <CustomTextField
-                      data-test="Sort-test"
-                      label="Sort"
-                      id="outlined-select-currency"
-                      select
-                      value={sort}
-                      onChange={handleChange}
-                      sx={{ width: "15vw" }}
-                    >
-                      {sortOption.map((option) => (
-                        <MenuItem key={option.value} value={option.value}>
-                          {option.label}
-                        </MenuItem>
-                      ))}
-                    </CustomTextField>
-                  </Box>
-                </Grid>
-              </Grid>
-            </CardContent>
-          </Card>
-        </Box>
-
-        <div className="ListContainer">
-          <TableContainer>
-            <Table sx={{ maxWidth: "100%" }}>
-              <TableHead>
-                <TableRow className="table-header">
-                  <StyledTableCell align="center">Req Id</StyledTableCell>
-                  <StyledTableCell align="center">
-                    Requester Name
-                  </StyledTableCell>
-                  <StyledTableCell align="center">Requested on</StyledTableCell>
-                  <StyledTableCell align="center">Reporting to</StyledTableCell>
-                  <StyledTableCell align="center">Request type</StyledTableCell>
-                  <StyledTableCell align="center">Status</StyledTableCell>
-                </TableRow>
-              </TableHead>
-
-              <TableBody>
-                {reviewData.map((item) => (
-                  <TableRow
-                    className="table-row"
-                    key={item.reqId}
-                    sx={{
-                      mt: 1,
-                      mb: 1,
-                      height: 40,
-                      cursor: "pointer",
+    <div className="client-list-wrapper">
+      <StyledTypography>My Reviews</StyledTypography>
+      <Card>
+        <CardContent>
+          <Box>
+            <Grid container spacing={2}>
+              <Grid item xs={4}>
+                <Box>
+                  <TextField
+                    data-test="Search By Req Name-test"
+                    onChange={searchHandleChange}
+                    placeholder="Search By Req Name"
+                    id="outlined-search"
+                    size="small"
+                    variant="outlined"
+                    sx={{ width: "15vw", height: "40px", mr: 1 }}
+                    InputProps={{
+                      startAdornment: (
+                        <InputAdornment position="start">
+                          <SvgIcon color="action" fontSize="small">
+                            <SearchIcon />
+                          </SvgIcon>
+                        </InputAdornment>
+                      ),
+                      //onClick={handelClearSearch}
                     }}
-                    onClick={(e) => handleClickReviewItem(item)}
+                    variant="outlined"
+                  />
+                </Box>
+              </Grid>
+              <Grid
+                item
+                xs={8}
+                container
+                direction="row"
+                justifyContent="flex-end"
+                alignItems="center"
+              >
+                <Box m={1}>
+                  <CustomTextField
+                    data-test="Sort-test"
+                    label="Sort"
+                    id="outlined-select-currency"
+                    select
+                    value={sort}
+                    onChange={handleChange}
+                    sx={{ width: "15vw" }}
                   >
-                    <StyledTableCell align="center">
-                      {item.reqId}
-                    </StyledTableCell>
-                    <StyledTableCell align="center">
-                      {item.reqName}
-                    </StyledTableCell>
-                    <StyledTableCell align="center">
-                      {new Date(item.createdAt).toISOString().slice(0, 10)}
-                    </StyledTableCell>
-                    <StyledTableCell align="center">
-                      {item.employeeDetails.empReportingManager}
-                    </StyledTableCell>
-                    <StyledTableCell align="center">
-                      {item.reqType}
-                    </StyledTableCell>
-                    <StyledTableCell align="center">
-                      {renderChildStatus(item.status)}
-                    </StyledTableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </TableContainer>
-        </div>
-        {/* pagination */}
-        <div className="pagination">
-          <Stack spacing={2}>
-            <Pagination
-              count={paginationInfo.totalPage}
-              page={paginationInfo.page}
-              onChange={handlePagination}
-            />
-          </Stack>
-        </div>
+                    {sortOption.map((option) => (
+                      <MenuItem key={option.value} value={option.value}>
+                        {option.label}
+                      </MenuItem>
+                    ))}
+                  </CustomTextField>
+                </Box>
+              </Grid>
+            </Grid>
+          </Box>
+        </CardContent>
+      </Card>
+
+      <div className="ListContainer">
+        <TableContainer>
+          <Table>
+            <TableHead>
+              <TableRow className="table-header">
+                <StyledTableCell align="center">Req Id</StyledTableCell>
+                <StyledTableCell align="center">Requester Name</StyledTableCell>
+                <StyledTableCell align="center">Requested on</StyledTableCell>
+                <StyledTableCell align="center">Reporting to</StyledTableCell>
+                <StyledTableCell align="center">Request type</StyledTableCell>
+                <StyledTableCell align="center">Status</StyledTableCell>
+              </TableRow>
+            </TableHead>
+
+            <TableBody>
+              {reviewData.map((item) => (
+                <TableRow
+                  className="table-row"
+                  key={item.reqId}
+                  onClick={(e) => handleClickReviewItem(item)}
+                >
+                  <StyledTableCell align="center">{item.reqId}</StyledTableCell>
+                  <StyledTableCell align="center">
+                    {item.reqName}
+                  </StyledTableCell>
+                  <StyledTableCell align="center">
+                    {new Date(item.createdAt).toISOString().slice(0, 10)}
+                  </StyledTableCell>
+                  <StyledTableCell align="center">
+                    {item.employeeDetails.empReportingManager}
+                  </StyledTableCell>
+                  <StyledTableCell align="center">
+                    {item.reqType}
+                  </StyledTableCell>
+                  <StyledTableCell align="center">
+                    {renderChildStatus(item.status)}
+                  </StyledTableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </div>
+      {/* pagination */}
+      <div className="pagination">
+        <Stack spacing={2}>
+          <Pagination
+            count={paginationInfo.totalPage}
+            page={paginationInfo.page}
+            onChange={handlePagination}
+          />
+        </Stack>
       </div>
       <Modal open={openModalForReview} onClose={handleCloseModalForReview}>
         <ModalBoxItem sx={{ height: "auto" }}>
@@ -398,7 +375,7 @@ const Review = () => {
           </Box>
         </ModalBoxItem>
       </Modal>
-    </Box>
+    </div>
   );
 };
 export default Review;

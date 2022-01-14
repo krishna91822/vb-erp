@@ -14,6 +14,7 @@ export const StyledTableCell = styled(TableCell)(({ theme }) => ({
       "Inter, -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji",
   },
   [`&.${tableCellClasses.body}`]: {
+    paddingTop: "20px",
     fontWeight: "400",
     color: "rgb(18 24 40)",
     fontFamily:
