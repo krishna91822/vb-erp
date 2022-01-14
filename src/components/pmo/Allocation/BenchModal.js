@@ -28,7 +28,7 @@ export default function BenchModal({
   let acitveArray = [];
   let pastArray = [];
 
-  const testing = () => {
+  const getProjects = () => {
     if (entryData.projects) {
       entryData.projects.filter((test) => {
         test.allocationEndDate > current_Day
@@ -38,7 +38,7 @@ export default function BenchModal({
     }
   };
 
-  testing();
+  getProjects();
 
   return (
     <div>

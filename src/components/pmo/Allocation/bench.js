@@ -118,7 +118,27 @@ const Bench = ({ pressed, benchSortValue }) => {
                     minWidth: "180px",
                   }}
                 >
+                  Designation
+                </TableCell>
+                <TableCell
+                  align="left"
+                  sx={{
+                    width: "180px",
+                    maxWidth: "180px",
+                    minWidth: "180px",
+                  }}
+                >
                   Primary Capabilities
+                </TableCell>
+                <TableCell
+                  align="left"
+                  sx={{
+                    width: "180px",
+                    maxWidth: "180px",
+                    minWidth: "180px",
+                  }}
+                >
+                  Skill Set
                 </TableCell>
                 <TableCell
                   align="left"
@@ -194,8 +214,20 @@ const Bench = ({ pressed, benchSortValue }) => {
                       >
                         {currElem.empName}
                       </TableCell>
+                      <TableCell
+                        align="left"
+                        style={{ textTransform: "capitalize" }}
+                      >
+                        {currElem.empDesignation}
+                      </TableCell>
                       <TableCell align="left">
                         {`${currElem.empPrimaryCapability}` || "-----"}
+                      </TableCell>
+                      <TableCell
+                        align="left"
+                        style={{ textTransform: "capitalize" }}
+                      >
+                        {currElem.empSkillSet}
                       </TableCell>
                       <TableCell align="left">
                         {currElem.remainingAllocation}
