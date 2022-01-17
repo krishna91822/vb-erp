@@ -50,11 +50,6 @@ export default function FormDialog(props) {
     }
   }, [remarks]);
 
-  // const [currentPage, setCurrentPage] = React.useState(1);
-  // const [postPerPage, setPostPerPage] = React.useState(5);
-  // const [filename, setFilename] = React.useState("Id");
-  // const [searchKeyword, setSearchKeyword] = useState("");`
-
   const open = useSelector((state) => state.INVOICE_state.popup);
 
   const VbBankAcc = useSelector(
@@ -129,14 +124,6 @@ export default function FormDialog(props) {
     setErrors(all_errors);
     if (Object.keys(all_errors).length === 0) {
       dispatch(Update_INVOICE(dataToSend, props.invoiceID));
-      // dispatch(
-      //   paginationFetchInvoice(
-      //     filename,
-      //     currentPage,
-      //     postPerPage,
-      //     searchKeyword
-      //   )
-      // );
     } else {
       alert("Error\nThere may be some missing inputs or bad inputs");
     }

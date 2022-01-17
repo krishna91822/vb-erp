@@ -147,9 +147,6 @@ function InvoiceInfo() {
       return <ContentTypo sx={{ color: "#212121" }}>{status}</ContentTypo>;
     }
   };
-  // const handleRowOnClick = (row_id) => {
-  //   dispatch(fetchSpecificINVOICE(row_id));
-  // };
 
   const SearchTextHandler = (event) => {
     setSearchKeyword(event.target.value);
