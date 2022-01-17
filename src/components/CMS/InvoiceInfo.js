@@ -16,10 +16,12 @@ import EditOffIcon from "@mui/icons-material/EditOff";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-import FormDialog from "./invoiceEditDialog"
+import FormDialog from "./invoiceEditDialog";
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import LongMenu from "./invoiceOptions";
+import { ContentTypo } from "../../pages/review/review.styles";
+
 import {
   fetch_INVOICE_data,
   paginationFetchInvoice,
@@ -89,13 +91,14 @@ function InvoiceInfo() {
   const [currentPage, setCurrentPage] = React.useState(1);
   const [postPerPage, setPostPerPage] = React.useState(5);
   const [filename, setFilename] = React.useState("Id");
-  const [searchKeyword , setSearchKeyword] = useState("");
+  const [searchKeyword, setSearchKeyword] = useState("");
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
 
-
   useEffect(() => {
-    dispatch(paginationFetchInvoice(filename, currentPage, postPerPage,searchKeyword));
+    dispatch(
+      paginationFetchInvoice(filename, currentPage, postPerPage, searchKeyword)
+    );
   }, []);
 
   const handleClick = (event) => {
@@ -111,25 +114,49 @@ function InvoiceInfo() {
     setAnchorEl(null);
   };
   useEffect(() => {
-    dispatch(paginationFetchInvoice(filename, currentPage, postPerPage,searchKeyword));
+    dispatch(
+      paginationFetchInvoice(filename, currentPage, postPerPage, searchKeyword)
+    );
   }, [filename]);
   const handleChange = (event, value) => {
     setCurrentPage(value);
-    dispatch(paginationFetchInvoice(filename, value, postPerPage,searchKeyword));
+    dispatch(
+      paginationFetchInvoice(filename, value, postPerPage, searchKeyword)
+    );
   };
   const handlerowsPerpage = (event) => {
     setPostPerPage(event.target.value);
-    dispatch(paginationFetchInvoice(filename, currentPage, event.target.value,searchKeyword));
+    dispatch(
+      paginationFetchInvoice(
+        filename,
+        currentPage,
+        event.target.value,
+        searchKeyword
+      )
+    );
+  };
+
+  const renderChildStatus = (status) => {
+    if (status === "Complete") {
+      return <ContentTypo sx={{ color: "#00e676" }}>{status}</ContentTypo>;
+    } else if (status === "Invoice raised") {
+      return <ContentTypo sx={{ color: "#ff9800" }}>{status}</ContentTypo>;
+    } else if (status === "Overdue") {
+      return <ContentTypo sx={{ color: "#b2102f" }}>{status}</ContentTypo>;
+    } else {
+      return <ContentTypo sx={{ color: "#212121" }}>{status}</ContentTypo>;
+    }
   };
   // const handleRowOnClick = (row_id) => {
   //   dispatch(fetchSpecificINVOICE(row_id));
   // };
-  const SearchTextHandler = (event) =>{
-    setSearchKeyword(event.target.value)
-  }
+
+  const SearchTextHandler = (event) => {
+    setSearchKeyword(event.target.value);
+  };
   const searchHandler = (event) => {
     if (event.key === "Enter") {
-      dispatch(paginationFetchInvoice(filename, 1, 5,searchKeyword));
+      dispatch(paginationFetchInvoice(filename, 1, 5, searchKeyword));
     }
   };
   return (
@@ -138,10 +165,10 @@ function InvoiceInfo() {
         <Grid item lg={6} md={6} sm={6} xs={6}>
           <TextField
             id="outlined-basic"
-            onKeyPress={searchHandler}
+            onChange={SearchTextHandler}
             label="Search by client/project name"
             value={searchKeyword}
-            onChange={SearchTextHandler}
+            onKeyPress={searchHandler}
             variant="outlined"
             sx={{ width: 300 }}
           />
@@ -230,6 +257,7 @@ function InvoiceInfo() {
                 <TableCell>Invoice raised</TableCell>
                 <TableCell>Amount Received</TableCell>
                 <TableCell>Invoice Amount received</TableCell>
+                <TableCell>Status</TableCell>
                 {user.permissions.includes("upload_invoice") && (
                   <TableCell>Action</TableCell>
                 )}
@@ -260,6 +288,7 @@ function InvoiceInfo() {
                   <TableCell>{row.invoice_raised}</TableCell>
                   <TableCell>{row.invoice_received}</TableCell>
                   <TableCell>{row.invoice_amount_received}</TableCell>
+                  <TableCell>{renderChildStatus(row.Status)}</TableCell>
 
                   {/* {user.permissions.includes("upload_invoice") && (
                     <>
@@ -275,14 +304,17 @@ function InvoiceInfo() {
                       )}
                     </>
                   )} */}
-                    {user.permissions.includes("upload_invoice") && (
+                  {user.permissions.includes("upload_invoice") && (
                     <>
-                        <TableCell>
-                          {/* <EditIcon /> */}
-                          {/* <FormDialog invoice_received={row.invoice_received}/> */}
-                          <LongMenu invoiceID={row._id} invoice_received={row.invoice_received}/>
-                        </TableCell>
- 
+                      <TableCell>
+                        {/* <EditIcon /> */}
+                        {/* <FormDialog invoice_received={row.invoice_received}/> */}
+                        <LongMenu
+                          invoiceID={row._id}
+                          invoice_received={row.invoice_received}
+                          invoice_raised={row.invoice_raised}
+                        />
+                      </TableCell>
                     </>
                   )}
                 </TableRow>

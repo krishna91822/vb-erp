@@ -23,11 +23,40 @@ import FormLabel from "@mui/material/FormLabel";
 import { invoiceActions } from "../../store/CMS/INVOICE-slice";
 import { useDispatch, useSelector } from "react-redux";
 import "./Main.css";
+import validateInvoice from "./invoice_FORM/validateInvoice";
+import { Update_INVOICE } from "../../store/CMS/INVOICE-actions";
+import { paginationFetchInvoice } from "../../store/CMS/INVOICE-actions";
+import { useNavigate } from "react-router-dom";
 
 export default function FormDialog(props) {
+  const [errors, setErrors] = useState({});
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const isRedirect = useSelector((state) => state.INVOICE_state.redirect);
+  const [remarks, setRemarks] = React.useState(null);
+  const [charsLeft, setCharsLeft] = useState(150);
+
+  useEffect(() => {
+    if (isRedirect) {
+      navigate("/invoices");
+      dispatch(invoiceActions.setRedirect(false));
+    }
+  }, [isRedirect]);
+
+  useEffect(() => {
+    if (remarks) {
+      const maxCount = 150;
+      setCharsLeft(maxCount - remarks.length);
+    }
+  }, [remarks]);
+
+  // const [currentPage, setCurrentPage] = React.useState(1);
+  // const [postPerPage, setPostPerPage] = React.useState(5);
+  // const [filename, setFilename] = React.useState("Id");
+  // const [searchKeyword, setSearchKeyword] = useState("");`
 
   const open = useSelector((state) => state.INVOICE_state.popup);
+
   const VbBankAcc = useSelector(
     (state) => state.INVOICE_state.inputFieldsData.VbBankAcc
   );
@@ -35,12 +64,30 @@ export default function FormDialog(props) {
     dispatch(invoiceActions.setPopupOpen());
     dispatch(invoiceActions.setpopupVisibility());
   };
-  const [invoiceRaisedFlag, setInvoiceRaisedFlag] = useState("No");
-  const [amountReceivedFlag, setAmountReceivedFlag] = useState("No");
+  const [invoiceRaisedFlag, setInvoiceRaisedFlag] = useState(
+    props.invoice_raised
+  );
+  const [amountReceivedFlag, setAmountReceivedFlag] = useState(
+    props.invoice_received
+  );
   const [amount, setAmount] = useState("");
   const [Vb_Bank_Acc, setVbbankacc] = React.useState("");
   const [Date_, setDate] = React.useState(undefined);
-  const [remarks, setRemarks] = React.useState(null);
+
+  useEffect(() => {
+    if (invoiceRaisedFlag === "No") {
+      setAmountReceivedFlag("No");
+    }
+  }, [invoiceRaisedFlag]);
+
+  useEffect(() => {
+    if (amountReceivedFlag === "No") {
+      setAmount("");
+      setVbbankacc(null);
+      setDate(null);
+    }
+  }, [amountReceivedFlag]);
+
   const handleInvoiceRaised = (event) => {
     setInvoiceRaisedFlag(event.target.value);
   };
@@ -50,14 +97,27 @@ export default function FormDialog(props) {
   const handleAmount = (event) => {
     setAmount(event.target.value);
   };
+  const handleRemarksChange = (event) => {
+    setRemarks(event.target.value);
+  };
   const handlevbbankacc = (event) => {
     setVbbankacc(event.target.value);
   };
   const handleDate = (Date) => {
     setDate(Date);
   };
+
   const handleUpdate = () => {
     const dataToSend = {
+      invoice_raised: invoiceRaisedFlag,
+      invoice_received: amountReceivedFlag,
+      invoice_amount_received: Number(amount),
+      Remarks: remarks,
+      vb_bank_account: Vb_Bank_Acc ? Vb_Bank_Acc : null,
+      amount_received_on:
+        new Date(Date_).getFullYear() === 1970 ? null : new Date(Date_),
+    };
+    const DataToValidate = {
       invoice_raised: invoiceRaisedFlag,
       invoice_received: amountReceivedFlag,
       invoice_amount_received: Number(amount),
@@ -65,7 +125,21 @@ export default function FormDialog(props) {
       amount_received_on:
         new Date(Date_).getFullYear() === 1970 ? null : new Date(Date_),
     };
-    console.log("update clicked", dataToSend);
+    const all_errors = validateInvoice(DataToValidate);
+    setErrors(all_errors);
+    if (Object.keys(all_errors).length === 0) {
+      dispatch(Update_INVOICE(dataToSend, props.invoiceID));
+      // dispatch(
+      //   paginationFetchInvoice(
+      //     filename,
+      //     currentPage,
+      //     postPerPage,
+      //     searchKeyword
+      //   )
+      // );
+    } else {
+      alert("Error\nThere may be some missing inputs or bad inputs");
+    }
   };
 
   return (
@@ -87,12 +161,14 @@ export default function FormDialog(props) {
                       value="Yes"
                       control={<Radio />}
                       label="Yes"
+                      checked={invoiceRaisedFlag === "Yes"}
                       onChange={handleInvoiceRaised}
                     />
                     <FormControlLabel
                       value="No"
                       control={<Radio />}
                       label="No"
+                      checked={invoiceRaisedFlag === "No"}
                       onChange={handleInvoiceRaised}
                     />
                   </div>
@@ -111,12 +187,16 @@ export default function FormDialog(props) {
                     value="Yes"
                     control={<Radio />}
                     label="Yes"
+                    disabled={invoiceRaisedFlag === "No"}
+                    checked={amountReceivedFlag === "Yes"}
                     onChange={handleAmountReceived}
                   />
                   <FormControlLabel
                     value="No"
                     control={<Radio />}
                     label="No"
+                    disabled={invoiceRaisedFlag === "No"}
+                    checked={amountReceivedFlag === "No"}
                     onChange={handleAmountReceived}
                   />
                 </RadioGroup>
@@ -159,6 +239,22 @@ export default function FormDialog(props) {
             value={Date_ ? new Date(Date_) : null}
             disabled={amountReceivedFlag === "No"}
           />
+          <br />
+          <label id="demo-multiple-name-label">Remarks</label>
+          <TextField
+            className="finalinput"
+            id="outlined-multiline-static"
+            multiline
+            rows={4}
+            value={remarks}
+            onChange={handleRemarksChange}
+            data-test="comments-remarks-txtBox"
+            inputProps={{
+              "data-testid": "RemarksTxtBox",
+              maxLength: 150,
+            }}
+          />
+          <span className="cms-remarksCharCount">({charsLeft}/150)</span>
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>

@@ -64,6 +64,7 @@ export default function LongMenu(props) {
           <FormDialog
             invoice_received={props.invoice_received}
             invoiceID={props.invoiceID}
+            invoice_raised={props.invoice_raised}
           />
         ) : null}
         <MenuItem component={Link} to={`/invoice_details/${props.invoiceID}`}>

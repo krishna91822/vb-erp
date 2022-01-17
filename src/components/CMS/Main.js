@@ -86,13 +86,15 @@ export const Main = () => {
   const [currentPage, setCurrentPage] = React.useState(1);
   const [postPerPage, setPostPerPage] = React.useState(5);
   const [filename, setFilename] = React.useState("Id");
-  const [searchKeyword , setSearchKeyword] = useState("");
+  const [searchKeyword, setSearchKeyword] = useState("");
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   useEffect(() => {
     // dispatch(fetchPO_SOW_data("Id"));
     // dispatch(fetchPO_SOW_data);
-    dispatch(paginationFetchPosow(filename, currentPage, postPerPage,searchKeyword));
+    dispatch(
+      paginationFetchPosow(filename, currentPage, postPerPage, searchKeyword)
+    );
   }, []);
   const user = useSelector((state) => state.user.user);
   const handleClick = (event) => {
@@ -109,24 +111,33 @@ export const Main = () => {
     setAnchorEl(null);
   };
   useEffect(() => {
-    dispatch(paginationFetchPosow(filename, currentPage, postPerPage,searchKeyword));
+    dispatch(
+      paginationFetchPosow(filename, currentPage, postPerPage, searchKeyword)
+    );
   }, [filename]);
   const handleChange = (event, value) => {
     setCurrentPage(value);
-    dispatch(paginationFetchPosow(filename, value, postPerPage,searchKeyword));
+    dispatch(paginationFetchPosow(filename, value, postPerPage, searchKeyword));
   };
   const handlerowsPerpage = (event) => {
     setPostPerPage(event.target.value);
-    dispatch(paginationFetchPosow(filename, currentPage, event.target.value,searchKeyword));
+    dispatch(
+      paginationFetchPosow(
+        filename,
+        currentPage,
+        event.target.value,
+        searchKeyword
+      )
+    );
   };
-  const SearchTextHandler = (event) =>{
-    setSearchKeyword(event.target.value)
-  }
+  const SearchTextHandler = (event) => {
+    setSearchKeyword(event.target.value);
+  };
   const searchHandler = (event) => {
     if (event.key === "Enter") {
-      dispatch(paginationFetchPosow(filename, 1, 5,searchKeyword));
+      dispatch(paginationFetchPosow(filename, 1, 5, searchKeyword));
     }
-  };     
+  };
   return (
     <>
       <Grid container>
@@ -137,9 +148,9 @@ export const Main = () => {
             onChange={SearchTextHandler}
             value={searchKeyword}
             label="Search by client/project name"
-            variant="outlined"   
-            sx={{ width:300 }}  
-          />     
+            variant="outlined"
+            sx={{ width: 300 }}
+          />
         </Grid>
         <Grid item lg={6} md={6} sm={6} xs={6}>
           <div className="sortbtn">
@@ -208,7 +219,8 @@ export const Main = () => {
                   data-test="Capture-po-sow"
                   variant="contained"
                   style={{
-                    backgroundColor: "#f57c00", color: "#FFFFFF"
+                    backgroundColor: "#f57c00",
+                    color: "#FFFFFF",
                   }}
                 >
                   Capture PO/SOW{" "}
@@ -227,12 +239,24 @@ export const Main = () => {
           >
             <TableHead className="tablehead" data-test="row-click0">
               <TableRow>
-                <TableCell><strong>ID</strong></TableCell>
-                <TableCell><strong>Client Name</strong></TableCell>
-                <TableCell><strong>Project Name</strong></TableCell>
-                <TableCell><strong>PO/SOW Number</strong></TableCell>
-                <TableCell><strong>PO/SOW Amount</strong></TableCell>
-                <TableCell><strong>Client Sponsor</strong></TableCell>
+                <TableCell>
+                  <strong>ID</strong>
+                </TableCell>
+                <TableCell>
+                  <strong>Client Name</strong>
+                </TableCell>
+                <TableCell>
+                  <strong>Project Name</strong>
+                </TableCell>
+                <TableCell>
+                  <strong>PO/SOW Number</strong>
+                </TableCell>
+                <TableCell>
+                  <strong>PO/SOW Amount</strong>
+                </TableCell>
+                <TableCell>
+                  <strong>Client Sponsor</strong>
+                </TableCell>
 
                 {/* {user.permissions.includes("upload_PO/SOW/contract") && (
                   <TableCell>Action</TableCell>
@@ -265,7 +289,7 @@ export const Main = () => {
                   <TableCell>{row.PO_Amount}</TableCell>
                   <TableCell>{row.Client_Sponser}</TableCell>
 
-                {/* might be required in future versions */}
+                  {/* might be required in future versions */}
                   {/* {user.permissions.includes("upload_PO/SOW/contract") && (
                     <>
                       {row.Status === "Drafted" ? (
