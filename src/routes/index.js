@@ -24,6 +24,7 @@ import DescriptionAlerts from "../pages/LoginPage/Authorization";
 import Profile from "../pages/myProfile/profile.component";
 import ViewProfile from "./../components/templates/viewProfile/viewProfile.component";
 import Network from "../pages/network/network.component";
+import Status from "./../pages/status/status.component";
 import Review from "./../pages/review/review.component ";
 import CreateProfile from "./../pages/createProfile/createProfile.component";
 
@@ -93,6 +94,12 @@ const Routes = () => {
         isPMSAdmin,
         isSuperAdmin,
       ].some((x) => x),
+    },
+    {
+      path: "status",
+      component: Status,
+      title: "status",
+      access: [isUser].some((x) => x),
     },
     {
       path: "reviews",

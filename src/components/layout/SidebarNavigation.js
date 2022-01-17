@@ -147,6 +147,11 @@ const SidebarNavigation = () => {
       ].some((x) => x),
     },
     {
+      name: "Status",
+      link: "/status",
+      access: [isUser].some((x) => x),
+    },
+    {
       name: "CIMS",
       link: "/cims",
       access: [
