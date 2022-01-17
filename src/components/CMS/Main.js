@@ -142,7 +142,7 @@ export const Main = () => {
                   <TextField
                     fullWidth
                     id="outlined-basic"
-                    label="Search by client/project name"
+                    placeholder="Search by client/project name"
                     onKeyPress={searchHandler}
                     InputProps={{
                       startAdornment: (

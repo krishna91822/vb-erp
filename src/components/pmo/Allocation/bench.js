@@ -17,6 +17,8 @@ import Tpagination from "../../UI/Pagination";
 import NoDataFound from "../NoDataFound";
 import { StyledTableCell } from "../../../assets/GlobalStyle/style";
 
+export let filterBenchData;
+
 const Bench = ({ pressed, benchSortValue }) => {
   const { benchData } = useSelector((state) => state.pmo);
   const dispatch = useDispatch();
@@ -35,7 +37,7 @@ const Bench = ({ pressed, benchSortValue }) => {
 
   let data = benchData;
 
-  const filterData = (event) => {
+  filterBenchData = (event) => {
     if (event.target.name === "empId") {
       setFilters({
         ...filters,
@@ -91,8 +93,8 @@ const Bench = ({ pressed, benchSortValue }) => {
                     type="text"
                     placeholder="Emp Id"
                     name="empId"
-                    onChange={filterData}
-                    onKeyPress={filterData}
+                    onChange={filterBenchData}
+                    onKeyPress={filterBenchData}
                     value={filters.empId}
                     inputProps={{ style: { fontSize: "small" } }}
                   />
@@ -103,8 +105,8 @@ const Bench = ({ pressed, benchSortValue }) => {
                     type="text"
                     placeholder="Associate Name"
                     name="employeeName"
-                    onChange={filterData}
-                    onKeyPress={filterData}
+                    onChange={filterBenchData}
+                    onKeyPress={filterBenchData}
                     value={filters.employeeName}
                     inputProps={{ style: { fontSize: "small" } }}
                   />
@@ -117,8 +119,8 @@ const Bench = ({ pressed, benchSortValue }) => {
                     type="number"
                     placeholder="Bandwidth"
                     name="remainingAllocation"
-                    onChange={filterData}
-                    onKeyPress={filterData}
+                    onChange={filterBenchData}
+                    onKeyPress={filterBenchData}
                     value={filters.remainingAllocation}
                     inputProps={{ style: { fontSize: "small" }, min: 0 }}
                   />

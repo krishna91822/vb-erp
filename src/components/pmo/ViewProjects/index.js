@@ -24,7 +24,6 @@ import {
 } from "@mui/material";
 import { Search as SearchIcon } from "../../../icons/search";
 
-import { ClearRounded as ClearRoundedIcon } from "@mui/icons-material";
 import NoDataFound from "../NoDataFound";
 import EditIcon from "@mui/icons-material/Edit";
 import FilterListIcon from "@mui/icons-material/FilterList";
@@ -98,14 +97,31 @@ const ViewProjects = () => {
   };
   return (
     <div className="client-list-wrapper">
+      <StyledTypography data-test="main-heading">Projects</StyledTypography>
       <Card>
         <CardContent>
           <Box sx={{ maxWidth: "100%" }}>
             <Grid container spacing={2}>
               <Grid item xs={4}>
-                <StyledTypography data-test="main-heading">
-                  Projects
-                </StyledTypography>
+                <TextField
+                  fullWidth
+                  id="outlined-basic"
+                  placeholder="Search by Project Name"
+                  name="projectName"
+                  onChange={filterData}
+                  onKeyPress={filterData}
+                  value={filters.projectName}
+                  InputProps={{
+                    startAdornment: (
+                      <InputAdornment position="start">
+                        <SvgIcon color="action" fontSize="small">
+                          <SearchIcon />
+                        </SvgIcon>
+                      </InputAdornment>
+                    ),
+                  }}
+                  variant="outlined"
+                />
               </Grid>
 
               <Grid
