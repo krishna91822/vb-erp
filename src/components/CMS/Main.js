@@ -90,8 +90,6 @@ export const Main = () => {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   useEffect(() => {
-    // dispatch(fetchPO_SOW_data("Id"));
-    // dispatch(fetchPO_SOW_data);
     dispatch(
       paginationFetchPosow(filename, currentPage, postPerPage, searchKeyword)
     );
@@ -257,11 +255,6 @@ export const Main = () => {
                 <TableCell>
                   <strong>Client Sponsor</strong>
                 </TableCell>
-
-                {/* {user.permissions.includes("upload_PO/SOW/contract") && (
-                  <TableCell>Action</TableCell>
-                )}
-                <TableCell>Status</TableCell> */}
               </TableRow>
             </TableHead>
             <TableBody className="table-row-posow" data-test="row-click1">
@@ -314,7 +307,6 @@ export const Main = () => {
         </TableContainer>
         <Stack spacing={10}>
           <div className="Pagination">
-            {/* <Typography className="pagenumber">Page: {currentPage}</Typography> */}
             <div className="numbering">
               <InputLabel variant="standard" htmlFor="uncontrolled-native">
                 Rows per page:

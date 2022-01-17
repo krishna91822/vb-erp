@@ -221,22 +221,6 @@ function InvoiceInfo() {
           <div>
             <h3 data-test="MainHeading">Invoice Information</h3>
           </div>
-          {/* will be required in future */}
-          {/* <div className="buttondiv">
-            <Link
-              to="/invoice/create-invoice"
-              style={{ textDecoration: "none" }}
-            >
-              <Button
-                className="button1"
-                data-test="Capture-po-sow"
-                variant="contained"
-                color="success"
-              >
-                Capture Invoice{" "}
-              </Button>
-            </Link>
-          </div> */}
         </div>
         <TableContainer component={Paper}>
           <Table
@@ -263,9 +247,6 @@ function InvoiceInfo() {
             <TableBody className="table-row-posow">
               {post.map((row, index) => (
                 <TableRow
-                  // component={Link}
-                  // to={`/invoice_details/${row._id}`}
-                  // onClick={() => handleRowOnClick(row._id)}
                   key={row.name}
                   style={{ textDecoration: "none" }}
                   sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
@@ -287,25 +268,9 @@ function InvoiceInfo() {
                   <TableCell>{row.invoice_amount_received}</TableCell>
                   <TableCell>{renderChildStatus(row.Status)}</TableCell>
 
-                  {/* {user.permissions.includes("upload_invoice") && (
-                    <>
-                      {row.invoice_received === "No" ? (
-                        <TableCell>
-                          <EditIcon />
-                          <FormDialog invoice_received={row.invoice_received}/>
-                        </TableCell>
-                      ) : (
-                        <TableCell>
-                          <EditOffIcon />
-                        </TableCell>
-                      )}
-                    </>
-                  )} */}
                   {user.permissions.includes("upload_invoice") && (
                     <>
                       <TableCell>
-                        {/* <EditIcon /> */}
-                        {/* <FormDialog invoice_received={row.invoice_received}/> */}
                         <LongMenu
                           invoiceID={row._id}
                           invoice_received={row.invoice_received}
@@ -322,7 +287,6 @@ function InvoiceInfo() {
 
         <Stack spacing={10}>
           <div className="Pagination">
-            {/* <Typography className="pagenumber">Page: {currentPage}</Typography> */}
             <div className="numbering">
               <InputLabel variant="standard" htmlFor="uncontrolled-native">
                 Rows per page:
@@ -332,11 +296,6 @@ function InvoiceInfo() {
                 onChange={handlerowsPerpage}
                 defaultValue={30}
               >
-                {/* <Select value={postPerPage} onChange={handlerowsPerpage}>
-                  <MenuItem value={5}>5</MenuItem>
-                  <MenuItem value={10}>10</MenuItem>
-                  <MenuItem value={15}>15</MenuItem>
-                </Select> */}
                 <option value={5}>5</option>
                 <option value={10}>10</option>
                 <option value={15}>15</option>
