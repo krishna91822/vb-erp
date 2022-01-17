@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import {
   Table,
   TableBody,
-  TableCell,
+  Stack,
   TableContainer,
   TableHead,
   TableRow,
@@ -15,6 +15,7 @@ import BenchModal from "./BenchModal";
 import { getOnBench } from "../../../store/pmo-actions";
 import Tpagination from "../../UI/Pagination";
 import NoDataFound from "../NoDataFound";
+import { StyledTableCell } from "../../../assets/GlobalStyle/style";
 
 const Bench = ({ pressed, benchSortValue }) => {
   const { benchData } = useSelector((state) => state.pmo);
@@ -58,166 +59,124 @@ const Bench = ({ pressed, benchSortValue }) => {
   };
 
   return (
-    <>
+    <div className="ListContainer">
       <BenchModal
         modalDetails={modalDetails}
         setModalDetails={setModalDetails}
         entryData={entryData}
       />
-      <Container>
-        <MiniHead data-test="main-heading">Bench Capacity</MiniHead>
-        <TableContainer
-          sx={{
-            border: "0.1em solid #afacacde",
-            borderRadius: "6px",
-          }}
-        >
-          <Table data-test="list-table">
-            <TableHead>
-              <TableRow>
-                <TableCell
-                  align="left"
-                  sx={{
-                    width: "150px",
-                    maxWidth: "150px",
-                    minWidth: "150px",
-                  }}
-                >
-                  SNO
-                </TableCell>
-                <TableCell
-                  align="left"
-                  sx={{
-                    width: "180px",
-                    maxWidth: "180px",
-                    minWidth: "180px",
-                  }}
-                >
-                  EmpID
-                </TableCell>
-                <TableCell
-                  align="left"
-                  sx={{
-                    width: "180px",
-                    maxWidth: "180px",
-                    minWidth: "180px",
-                  }}
-                >
-                  Associate Name
-                </TableCell>
-                <TableCell
-                  align="left"
-                  sx={{
-                    width: "180px",
-                    maxWidth: "180px",
-                    minWidth: "180px",
-                  }}
-                >
-                  Primary Capabilities
-                </TableCell>
-                <TableCell
-                  align="left"
-                  sx={{
-                    width: "180px",
-                    maxWidth: "180px",
-                    minWidth: "180px",
-                  }}
-                >
-                  Remaining Bandwidth
-                </TableCell>
+      <MiniHead data-test="main-heading">Bench Capacity</MiniHead>
+      <TableContainer>
+        <Table data-test="list-table">
+          <TableHead>
+            <TableRow className="table-header">
+              <StyledTableCell align="center">SNO</StyledTableCell>
+              <StyledTableCell align="center">EmpID</StyledTableCell>
+              <StyledTableCell align="center">Associate Name</StyledTableCell>
+              <StyledTableCell align="center">
+                Primary Capabilities
+              </StyledTableCell>
+              <StyledTableCell align="center">
+                Remaining Bandwidth
+              </StyledTableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {pressed && (
+              <TableRow className="table-row">
+                <StyledTableCell align="center"></StyledTableCell>
+                <StyledTableCell align="center">
+                  <TextField
+                    variant="standard"
+                    type="text"
+                    placeholder="Emp Id"
+                    name="empId"
+                    onChange={filterData}
+                    onKeyPress={filterData}
+                    value={filters.empId}
+                    inputProps={{ style: { fontSize: "small" } }}
+                  />
+                </StyledTableCell>
+                <StyledTableCell align="center">
+                  <TextField
+                    variant="standard"
+                    type="text"
+                    placeholder="Associate Name"
+                    name="employeeName"
+                    onChange={filterData}
+                    onKeyPress={filterData}
+                    value={filters.employeeName}
+                    inputProps={{ style: { fontSize: "small" } }}
+                  />
+                </StyledTableCell>
+
+                <StyledTableCell align="center"></StyledTableCell>
+                <StyledTableCell align="center">
+                  <TextField
+                    variant="standard"
+                    type="number"
+                    placeholder="Bandwidth"
+                    name="remainingAllocation"
+                    onChange={filterData}
+                    onKeyPress={filterData}
+                    value={filters.remainingAllocation}
+                    inputProps={{ style: { fontSize: "small" }, min: 0 }}
+                  />
+                </StyledTableCell>
               </TableRow>
-            </TableHead>
-            <TableBody>
-              {pressed && (
-                <TableRow>
-                  <TableCell align="left"></TableCell>
-                  <TableCell align="left">
-                    <TextField
-                      variant="standard"
-                      type="text"
-                      placeholder="Emp Id"
-                      name="empId"
-                      onChange={filterData}
-                      onKeyPress={filterData}
-                      value={filters.empId}
-                      inputProps={{ style: { fontSize: "small" } }}
-                    />
-                  </TableCell>
-                  <TableCell align="left">
-                    <TextField
-                      variant="standard"
-                      type="text"
-                      placeholder="Associate Name"
-                      name="employeeName"
-                      onChange={filterData}
-                      onKeyPress={filterData}
-                      value={filters.employeeName}
-                      inputProps={{ style: { fontSize: "small" } }}
-                    />
-                  </TableCell>
+            )}
 
-                  <TableCell align="left"></TableCell>
-                  <TableCell align="left">
-                    <TextField
-                      variant="standard"
-                      type="number"
-                      placeholder="Bandwidth"
-                      name="remainingAllocation"
-                      onChange={filterData}
-                      onKeyPress={filterData}
-                      value={filters.remainingAllocation}
-                      inputProps={{ style: { fontSize: "small" }, min: 0 }}
-                    />
-                  </TableCell>
-                </TableRow>
-              )}
-
-              {data.results
-                ? data.results.map((currElem, index) => (
-                    <TableRow
-                      key={index}
-                      onClick={() => entryLink(currElem)}
-                      style={{ cursor: "pointer" }}
+            {data.results
+              ? data.results.map((currElem, index) => (
+                  <TableRow
+                    key={index}
+                    onClick={() => entryLink(currElem)}
+                    className="table-row"
+                  >
+                    <StyledTableCell align="center">
+                      {index + parseInt(data.currentPage) * 10 - 9}
+                    </StyledTableCell>
+                    <StyledTableCell align="center">
+                      {currElem.empId}
+                    </StyledTableCell>
+                    <StyledTableCell
+                      align="center"
+                      style={{ textTransform: "capitalize" }}
                     >
-                      <TableCell align="left">
-                        {index + parseInt(data.currentPage) * 10 - 9}
-                      </TableCell>
-                      <TableCell align="left">{currElem.empId}</TableCell>
-                      <TableCell
-                        align="left"
-                        style={{ textTransform: "capitalize" }}
-                      >
-                        {currElem.empName}
-                      </TableCell>
-                      <TableCell align="left">
-                        {`${currElem.empPrimaryCapability}` || "-----"}
-                      </TableCell>
-                      <TableCell align="left">
-                        {currElem.remainingAllocation}
-                      </TableCell>
-                    </TableRow>
-                  ))
-                : null}
-            </TableBody>
-          </Table>
-          <NoDataFound
-            name={
-              data.results
-                ? !data.results.length
-                  ? "No Data Found !!!"
-                  : ""
-                : "No Data Yet !!!"
-            }
-            filter={pressed}
+                      {currElem.empName}
+                    </StyledTableCell>
+                    <StyledTableCell align="center">
+                      {`${currElem.empPrimaryCapability}` || "-----"}
+                    </StyledTableCell>
+                    <StyledTableCell align="center">
+                      {currElem.remainingAllocation}
+                    </StyledTableCell>
+                  </TableRow>
+                ))
+              : null}
+          </TableBody>
+        </Table>
+        <NoDataFound
+          name={
+            data.results
+              ? !data.results.length
+                ? "No Data Found !!!"
+                : ""
+              : "No Data Yet !!!"
+          }
+          filter={pressed}
+        />
+      </TableContainer>
+      <div className="pagination">
+        <Stack spacing={2}>
+          <Tpagination
+            count={data.pageCount}
+            changePage={changePage}
+            visi={data.results ? (!data.results.length ? "hidden" : "") : ""}
           />
-        </TableContainer>
-      </Container>
-      <Tpagination
-        count={data.pageCount}
-        changePage={changePage}
-        visi={data.results ? (!data.results.length ? "hidden" : "") : ""}
-      />
-    </>
+        </Stack>
+      </div>
+    </div>
   );
 };
 

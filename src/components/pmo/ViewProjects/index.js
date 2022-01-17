@@ -4,7 +4,10 @@ import { Link, useNavigate } from "react-router-dom";
 import {
   Table,
   TableBody,
-  TableCell,
+  Stack,
+  Card,
+  CardContent,
+  SvgIcon,
   TableContainer,
   TableHead,
   TableRow,
@@ -14,13 +17,20 @@ import {
   Select,
   InputLabel,
   FormControl,
+  Box,
+  Grid,
+  InputAdornment,
+  IconButton,
 } from "@mui/material";
+import { Search as SearchIcon } from "../../../icons/search";
+
+import { ClearRounded as ClearRoundedIcon } from "@mui/icons-material";
+import NoDataFound from "../NoDataFound";
 import EditIcon from "@mui/icons-material/Edit";
 import FilterListIcon from "@mui/icons-material/FilterList";
 import FilterListOffIcon from "@mui/icons-material/FilterListOff";
-
 import Tpagination from "../../UI/Pagination";
-import NoDataFound from "../NoDataFound";
+import { StyledTableCell } from "../../../assets/GlobalStyle/style";
 import {
   getAllProjects,
   getAllFilterProjects,
@@ -34,6 +44,7 @@ import {
   SideButton,
   ProjectHead,
 } from "./styles";
+import { StyledTypography } from "../../../assets/GlobalStyle/style";
 
 const ViewProjects = () => {
   const dispatch = useDispatch();
@@ -86,285 +97,261 @@ const ViewProjects = () => {
     dispatch(getAllProjects(filterProjects, value));
   };
   return (
-    <>
-      <MainComponent>
-        <HeadingStyle>
-          <Heading>
-            <ProjectHead data-test="main-heading">Projects</ProjectHead>
-            <SideButton>
-              {!pressed ? (
-                <FilterListIcon
-                  onClick={showfilter}
-                  style={{ cursor: "pointer" }}
-                />
-              ) : (
-                <FilterListOffIcon
-                  onClick={showfilter}
-                  style={{ cursor: "pointer" }}
-                />
-              )}
-              {user.permissions.includes("create_project_in_PMO") && (
-                <Button
-                  variant="contained"
-                  sx={{
-                    backgroundColor: "#e8833a",
-                    textTransform: "none",
-                    ":hover": {
-                      bgcolor: "#ff862e",
-                    },
-                  }}
-                  onClick={() => {
-                    navigate("/pmo/projects/create");
-                  }}
-                >
-                  Create a project
-                </Button>
-              )}
-              <FormControl size="small">
-                <InputLabel id="filterBy">Sort By</InputLabel>
-                <Select
-                  defaultValue="vbProjectId"
-                  labelId="filterBy"
-                  id="select"
-                  label="filterBy"
-                  onChange={entryValue}
-                  sx={{ fontSize: "14px", width: "150px" }}
-                >
-                  <MenuItem value="vbProjectId" sx={{ fontSize: "14px" }}>
-                    Project ID
-                  </MenuItem>
-                  <MenuItem value="clientName" sx={{ fontSize: "14px" }}>
-                    Client Name
-                  </MenuItem>
-                  <MenuItem value="projectName" sx={{ fontSize: "14px" }}>
-                    Project Name
-                  </MenuItem>
-                </Select>
-              </FormControl>
-              <FormControl size="small">
-                <InputLabel id="filterBy">Status</InputLabel>
-                <Select
-                  defaultValue="active"
-                  labelId="filterBy"
-                  id="select"
-                  data-test="sortby-dropdown"
-                  label="filterBy"
-                  // color="orange"
-                  onChange={FilterProjects}
-                  sx={{ fontSize: "14px", width: "150px" }}
-                >
-                  <MenuItem value="active" sx={{ fontSize: "14px" }}>
-                    Active
-                  </MenuItem>
-                  <MenuItem value="done" sx={{ fontSize: "14px" }}>
-                    Completed
-                  </MenuItem>
-                  <MenuItem value="others" sx={{ fontSize: "14px" }}>
-                    Others
-                  </MenuItem>
-                </Select>
-              </FormControl>
-            </SideButton>
-          </Heading>
-        </HeadingStyle>
-        <Container>
-          <TableContainer
-            sx={{
-              border: "0.1em solid #afacacde",
-              borderRadius: "5px",
-            }}
-          >
-            <Table data-test="list-table">
-              <TableHead>
+    <div className="client-list-wrapper">
+      <Card>
+        <CardContent>
+          <Box sx={{ maxWidth: "100%" }}>
+            <Grid container spacing={2}>
+              <Grid item xs={4}>
+                <StyledTypography data-test="main-heading">
+                  Projects
+                </StyledTypography>
+              </Grid>
+
+              <Grid
+                item
+                xs={8}
+                container
+                direction="row"
+                justifyContent="flex-end"
+                alignItems="center"
+              >
+                <SideButton>
+                  <Box m={1}>
+                    {!pressed ? (
+                      <FilterListIcon
+                        onClick={showfilter}
+                        style={{ cursor: "pointer" }}
+                      />
+                    ) : (
+                      <FilterListOffIcon
+                        onClick={showfilter}
+                        style={{ cursor: "pointer" }}
+                      />
+                    )}
+                  </Box>
+                  <Box m={1}>
+                    {user.permissions.includes("create_project_in_PMO") && (
+                      <Button
+                        variant="contained"
+                        sx={{
+                          backgroundColor: "chocolate",
+                        }}
+                        onClick={() => {
+                          navigate("/pmo/projects/create");
+                        }}
+                      >
+                        Create a project
+                      </Button>
+                    )}
+                  </Box>
+                  <Box m={1}>
+                    <FormControl size="small">
+                      <InputLabel id="filterBy">Sort By</InputLabel>
+                      <Select
+                        defaultValue="vbProjectId"
+                        labelId="filterBy"
+                        id="select"
+                        label="filterBy"
+                        onChange={entryValue}
+                        sx={{ fontSize: "14px", width: "150px" }}
+                      >
+                        <MenuItem value="vbProjectId" sx={{ fontSize: "14px" }}>
+                          Project ID
+                        </MenuItem>
+                        <MenuItem value="clientName" sx={{ fontSize: "14px" }}>
+                          Client Name
+                        </MenuItem>
+                        <MenuItem value="projectName" sx={{ fontSize: "14px" }}>
+                          Project Name
+                        </MenuItem>
+                      </Select>
+                    </FormControl>
+                  </Box>
+                  <Box m={1}>
+                    <FormControl size="small">
+                      <InputLabel id="filterBy">Status</InputLabel>
+                      <Select
+                        defaultValue="active"
+                        labelId="filterBy"
+                        id="select"
+                        data-test="sortby-dropdown"
+                        label="filterBy"
+                        // color="orange"
+                        onChange={FilterProjects}
+                        sx={{ fontSize: "14px", width: "150px" }}
+                      >
+                        <MenuItem value="active" sx={{ fontSize: "14px" }}>
+                          Active
+                        </MenuItem>
+                        <MenuItem value="done" sx={{ fontSize: "14px" }}>
+                          Completed
+                        </MenuItem>
+                        <MenuItem value="others" sx={{ fontSize: "14px" }}>
+                          Others
+                        </MenuItem>
+                      </Select>
+                    </FormControl>
+                  </Box>
+                </SideButton>
+              </Grid>
+            </Grid>
+          </Box>
+        </CardContent>
+      </Card>
+      <div className="ListContainer">
+        <TableContainer>
+          <Table data-test="list-table">
+            <TableHead>
+              <TableRow className="table-header">
+                <StyledTableCell align="center">SNO</StyledTableCell>
+                <StyledTableCell align="center">Client Name</StyledTableCell>
+                <StyledTableCell align="center">Project Name</StyledTableCell>
+                <StyledTableCell align="center">Project ID</StyledTableCell>
+                <StyledTableCell align="center">Status</StyledTableCell>
+                {user.permissions.includes("update_project_in_PMO") && (
+                  <StyledTableCell align="center">Actions</StyledTableCell>
+                )}
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {pressed && (
                 <TableRow>
-                  <TableCell
-                    align="left"
-                    sx={{
-                      width: "100px",
-                      maxWidth: "100px",
-                      minWidth: "100px",
-                    }}
-                  >
-                    SNO
-                  </TableCell>
-                  <TableCell
-                    align="left"
-                    sx={{
-                      width: "216px",
-                      maxWidth: "216px",
-                      minWidth: "216px",
-                    }}
-                  >
-                    Client Name
-                  </TableCell>
-                  <TableCell
-                    align="left"
-                    sx={{
-                      width: "210px",
-                      maxWidth: "210px",
-                      minWidth: "210px",
-                    }}
-                  >
-                    Project Name
-                  </TableCell>
-                  <TableCell
-                    align="left"
-                    sx={{
-                      width: "156px",
-                      maxWidth: "156px",
-                      minWidth: "156px",
-                    }}
-                  >
-                    Project ID
-                  </TableCell>
-                  <TableCell
-                    align="left"
-                    sx={{
-                      width: "146px",
-                      maxWidth: "146px",
-                      minWidth: "146px",
-                    }}
-                  >
-                    Status
-                  </TableCell>
+                  <StyledTableCell align="center"></StyledTableCell>
+                  <StyledTableCell align="center">
+                    <TextField
+                      variant="standard"
+                      type="text"
+                      placeholder="Client Name"
+                      name="clientName"
+                      onChange={filterData}
+                      onKeyPress={filterData}
+                      value={filters.clientName}
+                      inputProps={{ style: { fontSize: "small" } }}
+                    />
+                  </StyledTableCell>
+                  <StyledTableCell align="center">
+                    <TextField
+                      variant="standard"
+                      type="text"
+                      placeholder="Project Name"
+                      name="projectName"
+                      onChange={filterData}
+                      onKeyPress={filterData}
+                      value={filters.projectName}
+                      inputProps={{ style: { fontSize: "small" } }}
+                    />
+                  </StyledTableCell>
+                  <StyledTableCell align="center">
+                    <TextField
+                      variant="standard"
+                      type="text"
+                      placeholder="Project Id"
+                      name="vbProjectId"
+                      onChange={filterData}
+                      onKeyPress={filterData}
+                      value={filters.vbProjectId}
+                      inputProps={{ style: { fontSize: "small" } }}
+                    />
+                  </StyledTableCell>
+                  <StyledTableCell align="center">
+                    {filterProjects === "others" && (
+                      <TextField
+                        variant="standard"
+                        type="text"
+                        placeholder="Project Status"
+                        name="vbProjectStatus"
+                        onChange={filterData}
+                        onKeyPress={filterData}
+                        value={filters.vbProjectStatus}
+                        inputProps={{ style: { fontSize: "small" } }}
+                      />
+                    )}
+                  </StyledTableCell>
                   {user.permissions.includes("update_project_in_PMO") && (
-                    <TableCell
-                      align="left"
-                      sx={{
-                        width: "146px",
-                        maxWidth: "146px",
-                        minWidth: "146px",
-                      }}
-                    >
-                      Actions
-                    </TableCell>
+                    <StyledTableCell align="center"></StyledTableCell>
                   )}
                 </TableRow>
-              </TableHead>
-              <TableBody>
-                {pressed && (
-                  <TableRow>
-                    <TableCell align="left"></TableCell>
-                    <TableCell align="left">
-                      <TextField
-                        variant="standard"
-                        type="text"
-                        placeholder="Client Name"
-                        name="clientName"
-                        onChange={filterData}
-                        onKeyPress={filterData}
-                        value={filters.clientName}
-                        inputProps={{ style: { fontSize: "small" } }}
-                      />
-                    </TableCell>
-                    <TableCell align="left">
-                      <TextField
-                        variant="standard"
-                        type="text"
-                        placeholder="Project Name"
-                        name="projectName"
-                        onChange={filterData}
-                        onKeyPress={filterData}
-                        value={filters.projectName}
-                        inputProps={{ style: { fontSize: "small" } }}
-                      />
-                    </TableCell>
-                    <TableCell align="left">
-                      <TextField
-                        variant="standard"
-                        type="text"
-                        placeholder="Project Id"
-                        name="vbProjectId"
-                        onChange={filterData}
-                        onKeyPress={filterData}
-                        value={filters.vbProjectId}
-                        inputProps={{ style: { fontSize: "small" } }}
-                      />
-                    </TableCell>
-                    <TableCell align="left">
-                      {filterProjects === "others" && (
-                        <TextField
-                          variant="standard"
-                          type="text"
-                          placeholder="Project Status"
-                          name="vbProjectStatus"
-                          onChange={filterData}
-                          onKeyPress={filterData}
-                          value={filters.vbProjectStatus}
-                          inputProps={{ style: { fontSize: "small" } }}
-                        />
-                      )}
-                    </TableCell>
-                    {user.permissions.includes("update_project_in_PMO") && (
-                      <TableCell align="left"></TableCell>
-                    )}
-                  </TableRow>
-                )}
-                {projects.results
-                  ? projects.results.map((currElem, index) => (
-                      <TableRow key={index} onClick={() => entryLink(currElem)}>
-                        <TableCell align="left">
-                          {index + parseInt(projects.currentPage) * 10 - 9}
-                        </TableCell>
-                        <TableCell align="left">
-                          {currElem.clientName}
-                        </TableCell>
-                        <TableCell
-                          align="left"
-                          style={{ textTransform: "capitalize" }}
-                        >
-                          {currElem.projectName}
-                        </TableCell>
-                        <TableCell align="left">
-                          {currElem.vbProjectId}
-                        </TableCell>
-                        <TableCell align="left">
-                          {currElem.vbProjectStatus || "----"}
-                        </TableCell>
-                        {user.permissions.includes("update_project_in_PMO") && (
-                          <TableCell align="left">
-                            <Link
-                              to={`/pmo/projects/${currElem.vbProjectId}/edit`}
-                              onClick={stopClick}
+              )}
+              {projects.results
+                ? projects.results.map((currElem, index) => (
+                    <TableRow key={index} onClick={() => entryLink(currElem)}>
+                      <StyledTableCell align="center">
+                        {index + parseInt(projects.currentPage) * 10 - 9}
+                      </StyledTableCell>
+                      <StyledTableCell align="center">
+                        {currElem.clientName}
+                      </StyledTableCell>
+                      <StyledTableCell
+                        align="center"
+                        style={{ textTransform: "capitalize" }}
+                      >
+                        {currElem.projectName}
+                      </StyledTableCell>
+                      <StyledTableCell align="center">
+                        {currElem.vbProjectId}
+                      </StyledTableCell>
+                      <StyledTableCell align="center">
+                        {currElem.vbProjectStatus || "----"}
+                      </StyledTableCell>
+                      {user.permissions.includes("update_project_in_PMO") && (
+                        <StyledTableCell align="center">
+                          <Link
+                            to={`/pmo/projects/${currElem.vbProjectId}/edit`}
+                            onClick={stopClick}
+                            style={{ textDecoration: "none" }}
+                          >
+                            <Button
+                              size="small"
+                              variant="text"
+                              endIcon={<EditIcon />}
+                              sx={{
+                                color: "chocolate",
+                                ":hover": {
+                                  fontWeight: "bold",
+                                  color: "rgb(130, 56, 4)",
+                                },
+                              }}
                             >
-                              <Button
-                                variant="fab"
-                                color="purple"
-                                size="small"
-                                endIcon={<EditIcon />}
-                                sx={{ padding: "0" }}
-                              >
-                                Edit
-                              </Button>
-                            </Link>
-                          </TableCell>
-                        )}
-                      </TableRow>
-                    ))
-                  : null}
-              </TableBody>
-            </Table>
-            <NoDataFound
-              name={
+                              Edit
+                            </Button>
+                          </Link>
+                        </StyledTableCell>
+                      )}
+                    </TableRow>
+                  ))
+                : null}
+            </TableBody>
+          </Table>
+
+          <NoDataFound
+            name={
+              projects.results
+                ? !projects.results.length
+                  ? "No Project Yet !!!"
+                  : ""
+                : "No Project Yet !!!"
+            }
+            filter={pressed}
+          />
+        </TableContainer>
+        <div className="pagination">
+          <Stack spacing={2}>
+            <Tpagination
+              count={projects.pageCount}
+              changePage={changePage}
+              visi={
                 projects.results
                   ? !projects.results.length
-                    ? "No Project Yet !!!"
+                    ? "hidden"
                     : ""
-                  : "No Project Yet !!!"
+                  : ""
               }
-              filter={pressed}
             />
-          </TableContainer>
-        </Container>
-        <Tpagination
-          count={projects.pageCount}
-          changePage={changePage}
-          visi={
-            projects.results ? (!projects.results.length ? "hidden" : "") : ""
-          }
-        />
-      </MainComponent>
-    </>
+          </Stack>
+        </div>
+      </div>
+    </div>
   );
 };
 export default ViewProjects;

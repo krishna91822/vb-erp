@@ -35,6 +35,7 @@ const theme = createTheme({
 const customStyles = {
   image: {
     width: "180px",
+    visibility: "hidden",
   },
   toolbar: {
     display: "flex",
@@ -45,8 +46,9 @@ const customStyles = {
   appbar: {
     backgroundColor: "white",
     position: "fixed",
-    width: "100%",
-    zIndex: 1000,
+    width: "calc(100% - 232px)",
+    left: "232px",
+    // zIndex: 1000,
   },
 };
 
@@ -90,8 +92,6 @@ const Header = () => {
                 PaperProps={{
                   elevation: 0,
                   sx: {
-                    overflow: "visible",
-                    filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
                     mt: 0,
                     "& .MuiAvatar-root": {
                       width: 32,

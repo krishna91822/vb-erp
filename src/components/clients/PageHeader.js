@@ -62,79 +62,12 @@ export default function PageHeader() {
   return (
     <>
       <Grid mt={2}>
-        <Grid container spacing={2} mb={1}>
+        <Grid container spacing={2} mb={5}>
           <Grid item>
             <Typography variant="h4">CIMS</Typography>
           </Grid>
-          <Grid item sm></Grid>
-          {user.permissions.includes("create_CIMS_module") && (
-            <Grid item>
-              <Link to="/cims/create" style={{ textDecoration: "none" }}>
-                <Button
-                  onClick={handleCreate}
-                  variant="contained"
-                  style={{ backgroundColor: "chocolate" }}
-                >
-                  Create a customer
-                </Button>
-              </Link>
-            </Grid>
-          )}
-          <Grid item>
-            <FormControl size="small">
-              <InputLabel id="filterBy">Filter By</InputLabel>
-              <Select
-                labelId="filterBy"
-                id="select"
-                value={filterBy}
-                label="filterBy"
-                onChange={handleFilterBy}
-              >
-                {filterByFields.map((field) => (
-                  <MenuItem key={field.id} value={field.id}>
-                    {field.label}
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
-          </Grid>
-          <Grid item>
-            <FormControl size="small" sx={{ minWidth: 120 }}>
-              <InputLabel id="sortBy">Sort By</InputLabel>
-              <Select
-                labelId="sortBy"
-                id="select"
-                value={sortBy}
-                label="sortBy"
-                onChange={handleSortBy}
-              >
-                {sortByFields.map((field) => (
-                  <MenuItem key={field.id} value={field.id}>
-                    {field.label}
-                  </MenuItem>
-                ))}
-
-                <Divider sx={{ borderBottomWidth: 2 }} component="li" />
-
-                <FormControlLabel
-                  sx={{
-                    marginLeft: ".5rem",
-                  }}
-                  control={
-                    <Checkbox
-                      onChange={(e) => handleSortOrder(e)}
-                      size="small"
-                      checked={sortingOrder === 1}
-                    />
-                  }
-                  label={<SortByAlphaIcon />}
-                />
-              </Select>
-            </FormControl>
-          </Grid>
         </Grid>
       </Grid>
-      <Divider sx={{ borderBottomWidth: 2 }} />
     </>
   );
 }
