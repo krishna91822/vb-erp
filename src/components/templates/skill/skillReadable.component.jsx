@@ -65,8 +65,8 @@ const SkillReadable = ({ empData }) => {
                         backgroundColor: chipColors[i],
                         color: "#fff",
                         height: 30,
-                        fontSize: 12,
-                        fontWeight: 600,
+                        fontSize: 11,
+                        fontWeight: 500,
                       }}
                     />
                   </ListItem>

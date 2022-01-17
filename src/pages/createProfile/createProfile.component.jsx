@@ -2,8 +2,19 @@ import React, { useEffect, useRef, useState } from "react";
 
 import { LocalizationProvider, DesktopDatePicker } from "@mui/lab";
 import AdapterDateFns from "@mui/lab/AdapterDateFns";
-
-import { Box, Button, MenuItem, Modal, Paper, Typography } from "@mui/material";
+import { StyledTabs, StyledTab } from "../../components/UI/commonStyles";
+import {
+  Box,
+  Button,
+  MenuItem,
+  Modal,
+  Paper,
+  Typography,
+  Grid,
+  Card,
+  CardHeader,
+  Divider,
+} from "@mui/material";
 
 import {
   createProfileConstant,
@@ -23,13 +34,16 @@ import {
 } from "./createProfile.styles";
 
 import { StyledTypography } from "../../assets/GlobalStyle/style";
-
+import NavigateBeforeIcon from "@mui/icons-material/NavigateBefore";
 import ProfileInfoEditable from "./../../components/templates/profileInfo/profileInfoEditable.component";
 import TabPanelCustom from "./../../components/templates/tabPanelCustom.component";
 import PersonalEditable from "../../components/templates/personal/personalEditable.component";
 import ProfessionalEditable from "../../components/templates/professional/professionalEditable.component";
 import SkillEditable from "../../components/templates/skill/skillEditable.component";
 import Spinner from "../../components/UI/spinner/spinner";
+import BadgeIcon from "@mui/icons-material/Badge";
+import ImportContactsIcon from "@mui/icons-material/ImportContacts";
+import LocalCafeIcon from "@mui/icons-material/LocalCafe";
 
 import { useDispatch, useSelector } from "react-redux";
 import { setCurrentEmployee } from "./../../store/employeeSlice";
@@ -38,6 +52,7 @@ import axiosInstance from "./../../helpers/axiosInstance";
 
 import { uiActions } from "./../../store/ui-slice";
 import validator from "validator";
+import { profileviewActions } from "./../../store/profilepage/profileview-slice";
 
 import { useForm } from "react-hook-form";
 
@@ -51,6 +66,7 @@ const CreateProfile = ({
   const { currentEmployee } = useSelector((state) => state.employee);
   const dispatch = useDispatch();
   const { toggleLoader, showNotification } = uiActions;
+  const { changeprofileview } = profileviewActions;
 
   // const { register, handleSubmit, errors } = useForm();
   useEffect(() => {
@@ -61,6 +77,12 @@ const CreateProfile = ({
       })
       .catch((err) => console.log(err));
   }, [dispatch]);
+  const [value, setValue] = useState(0);
+
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+  };
+  const basicprofileview = useSelector((state) => state.profileview.cardview);
 
   const empInitial = {
     empName: "",
@@ -127,6 +149,9 @@ const CreateProfile = ({
     editEmployeeData ? [...editEmployeeData.skillsDetails] : []
   );
 
+  const showHidedetails = () => {
+    dispatch(changeprofileview());
+  };
   //calculate percentage progress
   const profileProgress = () => {
     const totalFields =
@@ -362,11 +387,7 @@ const CreateProfile = ({
             justifyContent: editEmployeeData ? "flex-end" : "space-between",
           }}
         >
-          {editEmployeeData ? null : (
-            <StyledTypography>
-              {createProfileConstant.createUser}
-            </StyledTypography>
-          )}
+          {editEmployeeData ? null : <StyledTypography></StyledTypography>}
           <Box>
             <GreenButton
               data-test="confirm-button-test"
@@ -386,52 +407,100 @@ const CreateProfile = ({
           </Box>
         </Box>
       </ContainerStyleTop>
-      <ContainerStyle>
-        <div>
-          <ProfileInfoEditable
-            tab={tab}
-            setTab={setTab}
-            employee={employee}
-            setEmployee={setEmployee}
-            profileProgress={profileProgress}
-            // register={register}
-            errors={errors}
-            validate={validate}
-          />
-        </div>
-        <Box sx={{}}>
-          <TabPanelCustom value={tab} index={0}>
-            <PersonalEditable
-              empData={employee}
-              setEmpData={setEmployee}
-              personalDetails={personalDetails}
-              setPersonalDetails={setPersonalDetails}
-              // register={register}
-              errors={errors}
+
+      <div>
+        <ProfileInfoEditable
+          tab={tab}
+          setTab={setTab}
+          employee={employee}
+          setEmployee={setEmployee}
+          profileProgress={profileProgress}
+          // register={register}
+          errors={errors}
+          validate={validate}
+        />
+      </div>
+      {!basicprofileview && (
+        <Grid
+          item
+          lg={8}
+          md={6}
+          xs={6}
+          sx={{ position: "fixed", marginTop: "-12%", marginLeft: "35%" }}
+        >
+          <Card>
+            <div
+              onClick={showHidedetails}
+              style={{
+                display: "flex",
+                flexDirection: "row",
+                marginLeft: "82%",
+                padding: ".5rem",
+                color: "chocolate",
+                cursor: "pointer",
+              }}
+            >
+              <NavigateBeforeIcon />
+              <span>Basic Info</span>
+            </div>
+            <CardHeader
+              title={
+                <Grid item sm={11}>
+                  <StyledTabs value={value} onChange={handleChange}>
+                    <StyledTab
+                      icon={<LocalCafeIcon />}
+                      label="Personal"
+                      sx={{ fontSize: "12px" }}
+                    />
+                    <StyledTab
+                      icon={<ImportContactsIcon />}
+                      label="professional"
+                      sx={{ fontSize: "12px" }}
+                    />
+                    <StyledTab
+                      icon={<BadgeIcon />}
+                      label="Skills And Qualifications"
+                      sx={{ fontSize: "12px" }}
+                    />
+                  </StyledTabs>
+                </Grid>
+              }
             />
-          </TabPanelCustom>
-          <TabPanelCustom value={tab} index={1}>
-            <ProfessionalEditable
-              empData={employee}
-              setEmpData={setEmployee}
-              professionalDetails={professionalDetails}
-              setProfessionalDetails={setProfessionalDetails}
-              // register={register}
-              errors={errors}
-            />
-          </TabPanelCustom>
-          <TabPanelCustom value={tab} index={2}>
-            <SkillEditable
-              empData={employee}
-              setEmpData={setEmployee}
-              skillsDetails={skillsDetails}
-              setSkillsDetails={setSkillsDetails}
-              // register={register}
-              errors={errors}
-            />
-          </TabPanelCustom>
-        </Box>
-      </ContainerStyle>
+            <Divider />
+            <TabPanelCustom value={value} index={0}>
+              <PersonalEditable
+                empData={employee}
+                setEmpData={setEmployee}
+                personalDetails={personalDetails}
+                setPersonalDetails={setPersonalDetails}
+                // register={register}
+                errors={errors}
+              />
+            </TabPanelCustom>
+
+            <TabPanelCustom value={value} index={1}>
+              <ProfessionalEditable
+                empData={employee}
+                setEmpData={setEmployee}
+                professionalDetails={professionalDetails}
+                setProfessionalDetails={setProfessionalDetails}
+                // register={register}
+                errors={errors}
+              />
+            </TabPanelCustom>
+            <TabPanelCustom value={value} index={2}>
+              <SkillEditable
+                empData={employee}
+                setEmpData={setEmployee}
+                skillsDetails={skillsDetails}
+                setSkillsDetails={setSkillsDetails}
+                // register={register}
+                errors={errors}
+              />
+            </TabPanelCustom>
+          </Card>
+        </Grid>
+      )}
       <div>
         <Modal
           open={open}

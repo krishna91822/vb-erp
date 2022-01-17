@@ -1,7 +1,18 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
-import { Box, Container, Modal, Paper, MenuItem } from "@mui/material";
-
+import {
+  Box,
+  Container,
+  Modal,
+  Paper,
+  MenuItem,
+  Grid,
+  Card,
+  CardContent,
+  CardHeader,
+  Divider,
+} from "@mui/material";
+import { StyledTabs, StyledTab } from "../../UI/commonStyles";
 import ProfileInfoReadable from "../profileInfo/profileInfoReadable.component";
 import TabPanelCustom from "../tabPanelCustom.component";
 import PersonalReadable from "../personal/personalReadable.component";
@@ -11,6 +22,9 @@ import ProfessionalEditable from "../professional/professionalEditable.component
 import SkillReadable from "../skill/skillReadable.component";
 import SkillEditable from "../skill/skillEditable.component";
 import ProfileInfoEditable from "./../profileInfo/profileInfoEditable.component";
+import LocalCafeIcon from "@mui/icons-material/LocalCafe";
+import ImportContactsIcon from "@mui/icons-material/ImportContacts";
+import BadgeIcon from "@mui/icons-material/Badge";
 
 import {
   modalStyle,
@@ -19,13 +33,16 @@ import {
 } from "./profileContent.styles";
 
 import { addFieldOptions } from "./profileContent.constant";
-
+import { profileviewActions } from "./../../../store/profilepage/profileview-slice";
+import { StyledGrid } from "../../UI/commonStyles";
 import { LocalizationProvider, DesktopDatePicker } from "@mui/lab";
 import AdapterDateFns from "@mui/lab/AdapterDateFns";
 import validator from "validator";
-import { useSelector } from "react-redux";
-
+import { useDispatch, useSelector } from "react-redux";
+import NavigateBeforeIcon from "@mui/icons-material/NavigateBefore";
 const ProfileContent = (props) => {
+  const { changeprofileview } = profileviewActions;
+  const dispatch = useDispatch();
   const {
     currentEmployee,
     inEditMode,
@@ -42,6 +59,7 @@ const ProfileContent = (props) => {
   } = props;
 
   const { user } = useSelector((state) => state.user);
+  const basicprofileview = useSelector((state) => state.profileview.cardview);
 
   //calculate percentage progress
   const profileProgress = () => {
@@ -102,6 +120,14 @@ const ProfileContent = (props) => {
       ...newFieldData,
       [event.target.name]: event.target.value,
     });
+  };
+
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+  };
+
+  const showHidedetails = () => {
+    dispatch(changeprofileview());
   };
 
   const newFieldTemplate = {
@@ -241,58 +267,107 @@ const ProfileContent = (props) => {
   };
 
   return (
-    <Box
-      sx={{
-        minHeight: "calc( 100% - 80px )",
-        border: "0.1em solid",
-        borderColor: "textColor.paletteGrey",
-        borderRadius: "5px",
-      }}
-    >
+    <>
       <Box sx={{ p: 2 }}>{renderProfileInfo()}</Box>
-      <Container sx={{ width: "calc(100% - 16px)" }}>
-        <TabPanelCustom value={value} index={0}>
-          {inEditMode ? (
-            <PersonalEditable
-              empData={updateRequest}
-              setEmpData={setUpdateRequest}
-              personalDetails={personalDetails}
-              setPersonalDetails={setPersonalDetails}
-              errors={errors}
-              validate={validate}
-            />
-          ) : (
-            <PersonalReadable empData={currentEmployee} />
-          )}
-        </TabPanelCustom>
-        <TabPanelCustom value={value} index={1}>
-          {inEditMode ? (
-            <ProfessionalEditable
-              empData={updateRequest}
-              setEmpData={setUpdateRequest}
-              professionalDetails={professionalDetails}
-              setProfessionalDetails={setProfessionalDetails}
-              errors={errors}
-              validate={validate}
-            />
-          ) : (
-            <ProfessionalReadable empData={currentEmployee} />
-          )}
-        </TabPanelCustom>
-        <TabPanelCustom value={value} index={2}>
-          {inEditMode ? (
-            <SkillEditable
-              empData={updateRequest}
-              setEmpData={setUpdateRequest}
-              skillsDetails={skillsDetails}
-              setSkillsDetails={setSkillsDetails}
-              errors={errors}
-              validate={validate}
-            />
-          ) : (
-            <SkillReadable empData={currentEmployee} />
-          )}
-        </TabPanelCustom>
+      <Container>
+        {true && (
+          <StyledGrid item lg={8} md={6} xs={6}>
+            <Card>
+              {/* <div
+                onClick={showHidedetails}
+                style={{
+                  display: "flex",
+                  flexDirection: "row",
+                  marginLeft: "82%",
+                  padding: ".5rem",
+                  color: "chocolate",
+                  cursor: "pointer",
+                }}
+              >
+                <NavigateBeforeIcon />
+                <span>Basic Info</span>
+              </div> */}
+              <CardHeader
+                title={
+                  <Grid item sm={11}>
+                    <StyledTabs value={value} onChange={handleChange}>
+                      <StyledTab
+                        icon={<LocalCafeIcon />}
+                        label="Personal"
+                        sx={{ fontSize: "12px" }}
+                      />
+                      <StyledTab
+                        icon={<ImportContactsIcon />}
+                        label="professional"
+                        sx={{ fontSize: "12px" }}
+                      />
+                      <StyledTab
+                        icon={<BadgeIcon />}
+                        label="Skills And Qualifications"
+                        sx={{ fontSize: "12px" }}
+                      />
+                    </StyledTabs>
+                  </Grid>
+                }
+              />
+              <Divider />
+              <TabPanelCustom value={value} index={0}>
+                {inEditMode ? (
+                  <PersonalEditable
+                    empData={updateRequest}
+                    setEmpData={setUpdateRequest}
+                    personalDetails={personalDetails}
+                    setPersonalDetails={setPersonalDetails}
+                    errors={errors}
+                    validate={validate}
+                  />
+                ) : (
+                  <Grid item lg={12} md={6} xs={6}>
+                    <Grid item>
+                      <PersonalReadable empData={currentEmployee} />
+                    </Grid>
+                  </Grid>
+                )}
+              </TabPanelCustom>
+              <TabPanelCustom value={value} index={1}>
+                {inEditMode ? (
+                  <ProfessionalEditable
+                    empData={updateRequest}
+                    setEmpData={setUpdateRequest}
+                    professionalDetails={professionalDetails}
+                    setProfessionalDetails={setProfessionalDetails}
+                    errors={errors}
+                    validate={validate}
+                  />
+                ) : (
+                  <Grid item lg={12} md={6} xs={6}>
+                    <Grid item>
+                      <ProfessionalReadable empData={currentEmployee} />
+                    </Grid>
+                  </Grid>
+                )}
+              </TabPanelCustom>
+              <TabPanelCustom value={value} index={2}>
+                {inEditMode ? (
+                  <SkillEditable
+                    empData={updateRequest}
+                    setEmpData={setUpdateRequest}
+                    skillsDetails={skillsDetails}
+                    setSkillsDetails={setSkillsDetails}
+                    errors={errors}
+                    validate={validate}
+                  />
+                ) : (
+                  <Grid item lg={12} md={6} xs={6}>
+                    <Grid item>
+                      <SkillReadable empData={currentEmployee} />
+                    </Grid>
+                  </Grid>
+                )}
+              </TabPanelCustom>
+            </Card>
+          </StyledGrid>
+        )}
       </Container>
       <div>
         <Modal
@@ -344,7 +419,7 @@ const ProfileContent = (props) => {
           </Paper>
         </Modal>
       </div>
-    </Box>
+    </>
   );
 };
 
