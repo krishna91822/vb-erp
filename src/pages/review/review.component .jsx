@@ -165,31 +165,27 @@ const Review = () => {
       <StyledTypography>My Reviews</StyledTypography>
       <Card>
         <CardContent>
-          <Box>
+          <Box sx={{ maxWidth: "100%" }}>
             <Grid container spacing={2}>
               <Grid item xs={4}>
-                <Box>
-                  <TextField
-                    data-test="Search By Req Name-test"
-                    onChange={searchHandleChange}
-                    placeholder="Search By Req Name"
-                    id="outlined-search"
-                    size="small"
-                    variant="outlined"
-                    sx={{ width: "15vw", height: "40px", mr: 1 }}
-                    InputProps={{
-                      startAdornment: (
-                        <InputAdornment position="start">
-                          <SvgIcon color="action" fontSize="small">
-                            <SearchIcon />
-                          </SvgIcon>
-                        </InputAdornment>
-                      ),
-                      //onClick={handelClearSearch}
-                    }}
-                    variant="outlined"
-                  />
-                </Box>
+                <TextField
+                  data-test="Search By Req Name-test"
+                  fullWidth
+                  onChange={searchHandleChange}
+                  placeholder="Search By Req Name"
+                  id="outlined-search"
+                  InputProps={{
+                    startAdornment: (
+                      <InputAdornment position="start">
+                        <SvgIcon color="action" fontSize="small">
+                          <SearchIcon />
+                        </SvgIcon>
+                      </InputAdornment>
+                    ),
+                    //onClick={handelClearSearch}
+                  }}
+                  variant="outlined"
+                />
               </Grid>
               <Grid
                 item
