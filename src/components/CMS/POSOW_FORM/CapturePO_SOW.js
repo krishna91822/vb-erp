@@ -376,7 +376,6 @@ export const CapturePO_SOW = (props) => {
                             data-testid="EditToggleBtn"
                             checked={editTglCheckedState}
                             onChange={handleEditTglChange}
-                            // disabled={status === "Drafted" ? false : true}
                           />
                           <span className="slider round"></span>
                         </label>

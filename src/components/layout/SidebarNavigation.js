@@ -9,7 +9,6 @@ import ListItemText from "@mui/material/ListItemText";
 import Collapse from "@mui/material/Collapse";
 import ExpandLess from "@mui/icons-material/ExpandLess";
 import ExpandMore from "@mui/icons-material/ExpandMore";
-// import DonutLargeIcon from "@mui/icons-material/DonutLarge";
 import GridViewIcon from "@mui/icons-material/GridView";
 import { styled } from "@mui/material/styles";
 import { Avatar } from "@mui/material";
@@ -475,16 +474,6 @@ const SidebarNavigation = () => {
           >
             <Grid paddingY="20px" container justifyContent="center">
               <img style={customStyles.image} src={vbLogo} alt="vb-logo" />
-              {/* <Avatar
-              sx={{
-                height: "90px",
-                width: "90px",
-                color: "#111827",
-                backgroundColor: "#9ca3af",
-                marginTop: "30px",
-                marginBottom: "30px",
-              }}
-            /> */}
             </Grid>
             {sideMenu.map((menuItem, i) => {
               if (!menuItem.dropDown) {

@@ -36,7 +36,6 @@ const Allocated = ({ pressed, allocatedSortedValue }) => {
 
   let data = allocatedData;
   filterData = (event) => {
-    console.log(filters);
     if (event.target.name === "empId") {
       setFilters({
         ...filters,
