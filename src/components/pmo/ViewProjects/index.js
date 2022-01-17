@@ -93,7 +93,6 @@ const ViewProjects = () => {
   };
 
   const changePage = (event, value) => {
-    console.log(value);
     dispatch(getAllProjects(filterProjects, value));
   };
   return (
