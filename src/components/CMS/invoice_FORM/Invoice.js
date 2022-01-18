@@ -43,6 +43,10 @@ import { fetchPO_SOW_data } from "../../../store/CMS/POSOW-actions";
 import { fetch_INVOICE_data } from "../../../store/CMS/INVOICE-actions";
 import { invoiceActions } from "../../../store/CMS/INVOICE-slice";
 import { paginationFetchPosow } from "../../../store/CMS/POSOW-actions";
+import {
+  StyledTypography,
+  MiniHeadingTypography,
+} from "../../../assets/GlobalStyle/style";
 
 function Invoice(props) {
   const params = useParams();
@@ -319,7 +323,7 @@ function Invoice(props) {
         <CssBaseline />
         <Grid container className="posow-topGrid">
           <Grid item lg={10} md={10} sm={12} xs={12}>
-            <h3>Invoice</h3>
+            <StyledTypography>Invoice</StyledTypography>
           </Grid>
           <Grid item lg={2} md={2} sm={12} xs={12}>
             {props.editBtn && editTglCheckedState ? (
@@ -404,7 +408,9 @@ function Invoice(props) {
           >
             <Grid container>
               <Grid item lg={10} md={10} sm={10} xs={12}>
-                <h4 className="heading">PO Information</h4>
+                <MiniHeadingTypography className="heading">
+                  PO Information
+                </MiniHeadingTypography>
               </Grid>
               {user.permissions.includes("upload_invoice") && (
                 <Grid item lg={2} md={2} sm={2} xs={12}>
@@ -441,6 +447,7 @@ function Invoice(props) {
                     <Select
                       disabled={true}
                       value={projectName}
+                      size="small"
                       onChange={handleProjectChange}
                     >
                       {allProjects.map((detail) => (
@@ -455,7 +462,11 @@ function Invoice(props) {
                 <br />
                 <Box sx={{ minWidth: 120 }}>
                   <FormControl fullWidth>
-                    <TextField disabled={true} value={personName} />
+                    <TextField
+                      disabled={true}
+                      value={personName}
+                      size="small"
+                    />
                   </FormControl>
                 </Box>
               </Grid>
@@ -467,6 +478,7 @@ function Invoice(props) {
                     <Box sx={{ minWidth: 120 }}>
                       <FormControl fullWidth>
                         <TextField
+                          size="small"
                           //
                           disabled={true}
                           value={ClientSponsor}
@@ -481,6 +493,7 @@ function Invoice(props) {
                     <Box sx={{ minWidth: 120 }}>
                       <FormControl fullWidth>
                         <TextField
+                          size="small"
                           disabled={true}
                           value={Client_Fin_controller}
                         />
@@ -493,6 +506,7 @@ function Invoice(props) {
                     <Box sx={{ minWidth: 120 }}>
                       <FormControl fullWidth>
                         <TextField
+                          size="small"
                           disabled={true}
                           value={PO_amt}
                           onChange={handlePOAmtTxtBoxChange}
@@ -507,6 +521,7 @@ function Invoice(props) {
                     <Box sx={{ minWidth: 120 }}>
                       <FormControl fullWidth>
                         <TextField
+                          size="small"
                           disabled={true}
                           value={PO_number}
                           onChange={handlePoNumTxtBoxChange}
@@ -621,7 +636,7 @@ function Invoice(props) {
             </Typography>
           </AccordionDetails>
         </Accordion> */}
-            <h3>Invoice Status</h3>
+            <MiniHeadingTypography>Invoice Status</MiniHeadingTypography>
             <hr />
             <Grid container>
               <div className="gridcontainer">
@@ -631,6 +646,7 @@ function Invoice(props) {
                   <Box sx={{ minWidth: 120 }}>
                     <FormControl fullWidth>
                       <Select
+                        size="small"
                         disabled={!editTglCheckedState}
                         value={invoice_raised}
                         onChange={handleInvoiceRaised}
@@ -661,6 +677,7 @@ function Invoice(props) {
                   <Box sx={{ minWidth: 120 }}>
                     <FormControl fullWidth>
                       <TextField
+                        size="small"
                         disabled={
                           !invoicereceived ||
                           !editTglCheckedState ||
@@ -678,6 +695,7 @@ function Invoice(props) {
                   <Box sx={{ minWidth: 120 }}>
                     <FormControl fullWidth>
                       <Select
+                        size="small"
                         disabled={
                           !invoicereceived ||
                           invoice_raised_yesno === "No" ||
@@ -712,6 +730,7 @@ function Invoice(props) {
                   <label id="demo-multiple-name-label">Remarks</label>
                   <TextField
                     className="finalinput"
+                    size="small"
                     id="outlined-multiline-static"
                     multiline
                     rows={4}

@@ -19,40 +19,47 @@ import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { userActions } from "../../store/user-slice";
 import { useNavigate } from "react-router-dom";
+import useMediaQuery from "@mui/material/useMediaQuery";
 import { logoutUser } from "../../store/user-actions";
 
-const theme = createTheme({
-  components: {
-    MuiAppBar: {
-      styleOverrides: {
-        root: {
-          boxShadow: "inset  0 -10px 3px -10px grey",
-        },
-      },
-    },
-  },
-});
-
-const customStyles = {
-  image: {
-    width: "180px",
-  },
-  toolbar: {
-    display: "flex",
-    height: "70px",
-    justifyContent: "space-between",
-    padding: "0 40px",
-  },
-  appbar: {
-    backgroundColor: "white",
-    position: "fixed",
-    width: "100%",
-    zIndex: 1000,
-  },
-};
 const Header = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const lgUp = useMediaQuery((theme) => theme.breakpoints.up("sm"), {
+    defaultMatches: true,
+    noSsr: false,
+  });
+  const theme = createTheme({
+    components: {
+      MuiAppBar: {
+        styleOverrides: {
+          root: {
+            boxShadow: "inset  0 -10px 3px -10px grey",
+          },
+        },
+      },
+    },
+  });
+
+  const customStyles = {
+    image: {
+      width: "180px",
+      visibility: "hidden",
+    },
+    toolbar: {
+      display: "flex",
+      height: "70px",
+      justifyContent: "space-between",
+      padding: "0 40px",
+    },
+    appbar: {
+      backgroundColor: "white",
+      position: "fixed",
+      width: lgUp ? "calc(100% - 250px)" : "calc(100% - 50px)",
+      left: lgUp ? "250px" : "50px",
+      zIndex: 1000,
+    },
+  };
 
   const user = useSelector((state) => state.user.user);
 
@@ -78,7 +85,12 @@ const Header = () => {
           <img style={customStyles.image} src={vbLogo} alt="vb-logo" />
           {user.name ? (
             <>
-              <IconButton size="large" edge="end" onClick={handleClick}>
+              <IconButton
+                size="large"
+                edge="end"
+                onClick={handleClick}
+                style={{ backgroundColor: "transparent" }}
+              >
                 <AccountCircle fontSize="large" />
                 <Typography variant="h6">{user.name}</Typography>
               </IconButton>
@@ -88,7 +100,6 @@ const Header = () => {
                 open={open}
                 onClose={handleClose}
                 PaperProps={{
-                  elevation: 0,
                   sx: {
                     overflow: "visible",
                     filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",

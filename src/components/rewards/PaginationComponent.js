@@ -1,6 +1,6 @@
 import React from "react";
-import "./paginationStyle.css";
-import Pagination from "@mui/material/Pagination";
+import "../../assets/styles/ClientListStyles.css";
+import { Stack, Pagination } from "@mui/material";
 import {
   filterData,
   filterDataWithPageAndFilter,
@@ -31,7 +31,7 @@ const PaginationPage = () => {
   };
 
   return (
-    <div className="pagination-container">
+    <div className="pagination">
       {(() => {
         if (totalRewards === 0) {
           count = 0;
@@ -61,12 +61,13 @@ const PaginationPage = () => {
           count = 13;
         }
       })()}
-      <Pagination
-        defaultPage={defaultPage}
-        count={count}
-        color="primary"
-        onChange={getPageNumber}
-      />
+      <Stack spacing={2}>
+        <Pagination
+          count={count}
+          defaultPage={defaultPage}
+          onChange={getPageNumber}
+        />
+      </Stack>
     </div>
   );
 };

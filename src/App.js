@@ -23,9 +23,7 @@ function App() {
   useEffect(() => {
     if (cookie.load("token")) {
       dispatch(tokenValidate()).then((res) => {
-        if (res) {
-          navigate("/my-profile");
-        } else {
+        if (!res) {
           cookie.remove("token");
           navigate("/");
         }

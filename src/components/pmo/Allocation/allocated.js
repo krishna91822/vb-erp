@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import {
   Table,
   TableBody,
-  TableCell,
+  Stack,
   TableContainer,
   TableHead,
   TableRow,
@@ -14,6 +14,9 @@ import { getAllocatedData } from "../../../store/pmo-actions";
 import Tpagination from "../../UI/Pagination";
 import NoDataFound from "../NoDataFound";
 import { Container, MiniHead, DateContainerStyled } from "./style";
+import { StyledTableCell } from "../../../assets/GlobalStyle/style";
+
+export let filterData;
 
 const Allocated = ({ pressed, allocatedSortedValue }) => {
   const { allocatedData } = useSelector((state) => state.pmo);
@@ -32,7 +35,7 @@ const Allocated = ({ pressed, allocatedSortedValue }) => {
   }, [allocatedSortedValue]);
 
   let data = allocatedData;
-  const filterData = (event) => {
+  filterData = (event) => {
     if (event.target.name === "empId") {
       setFilters({
         ...filters,
@@ -50,239 +53,175 @@ const Allocated = ({ pressed, allocatedSortedValue }) => {
     dispatch(getAllocatedData(filters, value, allocatedSortedValue));
   };
   return (
-    <>
-      <Container>
-        <MiniHead data-test="main-heading">Allocation Information</MiniHead>
-        <TableContainer
-          sx={{
-            border: "0.1em solid #afacacde",
-            borderRadius: "6px",
-          }}
-        >
-          <Table data-test="list-table">
-            <TableHead>
+    <div className="ListContainer">
+      <MiniHead data-test="main-heading">Allocation Information</MiniHead>
+      <TableContainer>
+        <Table data-test="list-table">
+          <TableHead>
+            <TableRow className="table-header">
+              <StyledTableCell align="center">SNO</StyledTableCell>
+              <StyledTableCell align="center">EmpID</StyledTableCell>
+              <StyledTableCell align="center">Associate Name</StyledTableCell>
+              <StyledTableCell align="center">
+                Allocated Project
+              </StyledTableCell>
+              <StyledTableCell align="center">
+                Percentage Allocated
+              </StyledTableCell>
+              <StyledTableCell align="center">Start Date</StyledTableCell>
+              <StyledTableCell align="center">End Date</StyledTableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {pressed && (
               <TableRow>
-                <TableCell
-                  align="left"
-                  sx={{
-                    width: "100px",
-                    maxWidth: "100px",
-                    minWidth: "100px",
-                  }}
-                >
-                  SNO
-                </TableCell>
-                <TableCell
-                  align="left"
-                  sx={{
-                    width: "140px",
-                    maxWidth: "140px",
-                    minWidth: "140px",
-                  }}
-                >
-                  EmpID
-                </TableCell>
-                <TableCell
-                  align="left"
-                  sx={{
-                    width: "180px",
-                    maxWidth: "180px",
-                    minWidth: "180px",
-                  }}
-                >
-                  Associate Name
-                </TableCell>
-                <TableCell
-                  align="left"
-                  sx={{
-                    width: "180px",
-                    maxWidth: "180px",
-                    minWidth: "180px",
-                  }}
-                >
-                  Allocated Project
-                </TableCell>
-                <TableCell
-                  align="left"
-                  sx={{
-                    width: "180px",
-                    maxWidth: "180px",
-                    minWidth: "180px",
-                  }}
-                >
-                  Percentage Allocated
-                </TableCell>
-                <TableCell
-                  align="left"
-                  sx={{
-                    width: "180px",
-                    maxWidth: "180px",
-                    minWidth: "180px",
-                  }}
-                >
-                  Start Date
-                </TableCell>
-                <TableCell
-                  align="left"
-                  sx={{
-                    width: "180px",
-                    maxWidth: "180px",
-                    minWidth: "180px",
-                  }}
-                >
-                  End Date
-                </TableCell>
+                <StyledTableCell align="center"></StyledTableCell>
+                <StyledTableCell align="center">
+                  <TextField
+                    variant="standard"
+                    type="text"
+                    placeholder="Emp Id"
+                    name="empId"
+                    onChange={filterData}
+                    onKeyPress={filterData}
+                    value={filters.empId}
+                    inputProps={{ style: { fontSize: "small" } }}
+                  />
+                </StyledTableCell>
+                <StyledTableCell align="center">
+                  <TextField
+                    variant="standard"
+                    type="text"
+                    placeholder="Associate Name"
+                    name="employeeName"
+                    onChange={filterData}
+                    onKeyPress={filterData}
+                    value={filters.employeeName}
+                    inputProps={{ style: { fontSize: "small" } }}
+                  />
+                </StyledTableCell>
+                <StyledTableCell align="center">
+                  <TextField
+                    variant="standard"
+                    type="text"
+                    placeholder="Project Allocated"
+                    name="projectAllocated"
+                    onChange={filterData}
+                    onKeyPress={filterData}
+                    value={filters.projectAllocated}
+                    inputProps={{ style: { fontSize: "small" } }}
+                  />
+                </StyledTableCell>
+                <StyledTableCell align="center">
+                  <TextField
+                    variant="standard"
+                    type="Number"
+                    placeholder="Percentage Allocated"
+                    name="allocationPercentage"
+                    onChange={filterData}
+                    onKeyPress={filterData}
+                    value={filters.allocationPercentage}
+                    inputProps={{
+                      style: { fontSize: "small" },
+                      min: 0,
+                    }}
+                  />
+                </StyledTableCell>
+
+                <StyledTableCell align="center">
+                  <DateContainerStyled
+                    sColor={!filters.allocationStartDate ? "#a2a2a2" : "black"}
+                  >
+                    <TextField
+                      variant="standard"
+                      type="date"
+                      name="allocationStartDate"
+                      onChange={filterData}
+                      onKeyPress={filterData}
+                      format="yyyy-mm-dd"
+                      value={filters.allocationStartDate}
+                      inputProps={{ style: { fontSize: "small" } }}
+                    />
+                  </DateContainerStyled>
+                </StyledTableCell>
+
+                <StyledTableCell align="center">
+                  <DateContainerStyled
+                    eColor={!filters.allocationEndDate ? "#a2a2a2" : "black"}
+                  >
+                    <TextField
+                      variant="standard"
+                      type="date"
+                      data-date-format="YYYY MM DD"
+                      inputProps={{ style: { fontSize: "small" } }}
+                      name="allocationEndDate"
+                      onChange={filterData}
+                      onKeyPress={filterData}
+                      value={filters.allocationEndDate}
+                    />
+                  </DateContainerStyled>
+                </StyledTableCell>
               </TableRow>
-            </TableHead>
-            <TableBody>
-              {pressed && (
-                <TableRow>
-                  <TableCell align="left"></TableCell>
-                  <TableCell align="left">
-                    <TextField
-                      variant="standard"
-                      type="text"
-                      placeholder="Emp Id"
-                      name="empId"
-                      onChange={filterData}
-                      onKeyPress={filterData}
-                      value={filters.empId}
-                      inputProps={{ style: { fontSize: "small" } }}
-                    />
-                  </TableCell>
-                  <TableCell align="left">
-                    <TextField
-                      variant="standard"
-                      type="text"
-                      placeholder="Associate Name"
-                      name="employeeName"
-                      onChange={filterData}
-                      onKeyPress={filterData}
-                      value={filters.employeeName}
-                      inputProps={{ style: { fontSize: "small" } }}
-                    />
-                  </TableCell>
-                  <TableCell align="left">
-                    <TextField
-                      variant="standard"
-                      type="text"
-                      placeholder="Project Allocated"
-                      name="projectAllocated"
-                      onChange={filterData}
-                      onKeyPress={filterData}
-                      value={filters.projectAllocated}
-                      inputProps={{ style: { fontSize: "small" } }}
-                    />
-                  </TableCell>
-                  <TableCell align="left">
-                    <TextField
-                      variant="standard"
-                      type="Number"
-                      placeholder="Percentage Allocated"
-                      name="allocationPercentage"
-                      onChange={filterData}
-                      onKeyPress={filterData}
-                      value={filters.allocationPercentage}
-                      inputProps={{
-                        style: { fontSize: "small" },
-                        min: 0,
-                      }}
-                    />
-                  </TableCell>
+            )}
 
-                  <TableCell align="left">
-                    <DateContainerStyled
-                      sColor={
-                        !filters.allocationStartDate ? "#a2a2a2" : "black"
-                      }
+            {data.results
+              ? data.results.map((currElem, index) => (
+                  <TableRow key={index}>
+                    <StyledTableCell align="center">
+                      {index + parseInt(data.currentPage) * 10 - 9}
+                    </StyledTableCell>
+                    <StyledTableCell align="center">
+                      {currElem.empId ? currElem.empId.empId : "----"}
+                    </StyledTableCell>
+                    <StyledTableCell
+                      align="center"
+                      style={{ textTransform: "capitalize" }}
                     >
-                      <TextField
-                        variant="standard"
-                        type="date"
-                        name="allocationStartDate"
-                        onChange={filterData}
-                        onKeyPress={filterData}
-                        format="yyyy-mm-dd"
-                        value={filters.allocationStartDate}
-                        inputProps={{ style: { fontSize: "small" } }}
-                      />
-                    </DateContainerStyled>
-                  </TableCell>
-
-                  <TableCell align="left">
-                    <DateContainerStyled
-                      eColor={!filters.allocationEndDate ? "#a2a2a2" : "black"}
+                      {currElem.empId ? currElem.empId.empName : "----"}
+                    </StyledTableCell>
+                    <StyledTableCell
+                      align="center"
+                      style={{ textTransform: "capitalize" }}
                     >
-                      <TextField
-                        variant="standard"
-                        type="date"
-                        data-date-format="YYYY MM DD"
-                        inputProps={{ style: { fontSize: "small" } }}
-                        name="allocationEndDate"
-                        onChange={filterData}
-                        onKeyPress={filterData}
-                        value={filters.allocationEndDate}
-                      />
-                    </DateContainerStyled>
-                  </TableCell>
-                </TableRow>
-              )}
-
-              {data.results
-                ? data.results.map((currElem, index) => (
-                    <TableRow key={index}>
-                      <TableCell align="left">
-                        {index + parseInt(data.currentPage) * 10 - 9}
-                      </TableCell>
-                      <TableCell align="left">
-                        {currElem.empId ? currElem.empId.empId : "----"}
-                      </TableCell>
-                      <TableCell
-                        align="left"
-                        style={{ textTransform: "capitalize" }}
-                      >
-                        {currElem.empId ? currElem.empId.empName : "----"}
-                      </TableCell>
-                      <TableCell
-                        align="left"
-                        style={{ textTransform: "capitalize" }}
-                      >
-                        {currElem.projectId
-                          ? currElem.projectId.projectName
-                          : "----"}
-                      </TableCell>
-                      <TableCell align="left">
-                        {currElem.allocationPercentage}
-                      </TableCell>
-                      <TableCell align="left">
-                        {currElem.allocationStartDate}
-                      </TableCell>
-                      <TableCell align="left">
-                        {currElem.allocationEndDate}
-                      </TableCell>
-                    </TableRow>
-                  ))
-                : null}
-            </TableBody>
-          </Table>
-          <NoDataFound
-            name={
-              data.results
-                ? !data.results.length
-                  ? "No Allocation Found !!!"
-                  : ""
-                : "No Allocation Yet !!!"
-            }
-            filter={pressed}
+                      {currElem.projectId
+                        ? currElem.projectId.projectName
+                        : "----"}
+                    </StyledTableCell>
+                    <StyledTableCell align="center">
+                      {currElem.allocationPercentage}
+                    </StyledTableCell>
+                    <StyledTableCell align="center">
+                      {currElem.allocationStartDate}
+                    </StyledTableCell>
+                    <StyledTableCell align="center">
+                      {currElem.allocationEndDate}
+                    </StyledTableCell>
+                  </TableRow>
+                ))
+              : null}
+          </TableBody>
+        </Table>
+        <NoDataFound
+          name={
+            data.results
+              ? !data.results.length
+                ? "No Allocation Found !!!"
+                : ""
+              : "No Allocation Yet !!!"
+          }
+          filter={pressed}
+        />
+      </TableContainer>
+      <div className="pagination">
+        <Stack spacing={2}>
+          <Tpagination
+            count={data.pageCount || 1}
+            changePage={changePage}
+            visi={data.results ? (!data.results.length ? "hidden" : "") : ""}
           />
-        </TableContainer>
-      </Container>
-      <Tpagination
-        count={data.pageCount || 1}
-        changePage={changePage}
-        visi={data.results ? (!data.results.length ? "hidden" : "") : ""}
-      />
-    </>
+        </Stack>
+      </div>
+    </div>
   );
 };
 export default Allocated;
