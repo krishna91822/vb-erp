@@ -17,6 +17,7 @@ import EditOffIcon from "@mui/icons-material/EditOff";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import LongMenu from "./ClonePO";
 import { Grid } from "@mui/material";
 import TextField from "@mui/material/TextField";
 
@@ -281,6 +282,13 @@ export const Main = () => {
                   <TableCell>{row.PO_Number}</TableCell>
                   <TableCell>{row.PO_Amount}</TableCell>
                   <TableCell>{row.Client_Sponser}</TableCell>
+                  {user.permissions.includes("upload_PO/SOW/contract") && (
+                    <>
+                      <TableCell>
+                        <LongMenu posowID={row._id} />
+                      </TableCell>
+                    </>
+                  )}
 
                   {/* might be required in future versions */}
                   {/* {user.permissions.includes("upload_PO/SOW/contract") && (
