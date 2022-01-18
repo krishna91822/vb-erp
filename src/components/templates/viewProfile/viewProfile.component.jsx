@@ -35,7 +35,6 @@ const ViewProfile = () => {
       })
       .catch((err) => console.error(err));
   }, [empId]);
-
   const [editEmployee, setEditEmployee] = React.useState(false);
 
   const handleSwitchChange = (event) => {

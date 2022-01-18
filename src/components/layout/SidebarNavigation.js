@@ -3,6 +3,7 @@ import { useState } from "react";
 import List from "@mui/material/List";
 import { Paper } from "@mui/material";
 import ListItemButton from "@mui/material/ListItemButton";
+import NotificationsIcon from "@mui/icons-material/Notifications";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import Collapse from "@mui/material/Collapse";
@@ -199,6 +200,7 @@ const SidebarNavigation = () => {
     },
     {
       name: "Status",
+      icon: <NotificationsIcon />,
       link: "/status",
       access: [isUser].some((x) => x),
     },

@@ -10,12 +10,7 @@ import { uiActions } from "./../../../store/ui-slice";
 
 import axiosInstance from "./../../../helpers/axiosInstance";
 
-const EditMode = ({
-  updateRequest,
-  handleOpen,
-  handleSubmit,
-  setEmployeeUpdateCount,
-}) => {
+const EditMode = ({ updateRequest, handleOpen, setEmployeeUpdateCount }) => {
   const { inEditMode } = useSelector((state) => state.employee);
   const { user } = useSelector((state) => state.user);
   const { toggleLoader, showNotification } = uiActions;
@@ -123,7 +118,7 @@ const EditMode = ({
           <Button
             sx={{ marginRight: "2rem" }}
             variant="contained"
-            onClick={handleSubmit(handleSubmitBtn)}
+            onClick={handleSubmitBtn}
           >
             {["hr_admin", "super_admin"].some((el) => user.roles.includes(el))
               ? editModeConstant.update

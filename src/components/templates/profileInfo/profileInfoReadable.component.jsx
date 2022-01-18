@@ -8,6 +8,7 @@ import PersonIcon from "@mui/icons-material/Person";
 import LocalCafeIcon from "@mui/icons-material/LocalCafe";
 import ImportContactsIcon from "@mui/icons-material/ImportContacts";
 import BadgeIcon from "@mui/icons-material/Badge";
+import PlagiarismIcon from "@mui/icons-material/Plagiarism";
 
 import { profileInfoConstant } from "./profileInfo.constant";
 
@@ -190,7 +191,6 @@ const ProfileInfoReadable = ({
             </CustomGridBox>
           </Box>
         </Grid>
-
         <Grid item></Grid>
       </Grid>
       <Grid>
@@ -208,6 +208,11 @@ const ProfileInfoReadable = ({
           <StyledTab
             icon={<BadgeIcon />}
             label="Skills And Qualifications"
+            sx={{ fontSize: "16px" }}
+          />
+          <StyledTab
+            icon={<PlagiarismIcon />}
+            label="Project"
             sx={{ fontSize: "16px" }}
           />
         </StyledTabs>

@@ -41,11 +41,6 @@ const SkillReadable = ({ empData }) => {
       <ContentBox>
         <ContentTypo>{skillConstant.primaryCapability}</ContentTypo>
         <ContentTypoList>
-          {/* {!!empPrimaryCapability
-            ? empPrimaryCapability.map((data) => (
-                <ListItem key={data}>{data}</ListItem>
-              ))
-            : null} */}
           <Box
             sx={{
               listStyle: "none",

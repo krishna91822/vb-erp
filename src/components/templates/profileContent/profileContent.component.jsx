@@ -11,6 +11,7 @@ import ProfessionalEditable from "../professional/professionalEditable.component
 import SkillReadable from "../skill/skillReadable.component";
 import SkillEditable from "../skill/skillEditable.component";
 import ProfileInfoEditable from "./../profileInfo/profileInfoEditable.component";
+import ProjectTab from "./../project/project.component";
 
 import {
   modalStyle,
@@ -292,6 +293,17 @@ const ProfileContent = (props) => {
           ) : (
             <SkillReadable empData={currentEmployee} />
           )}
+        </TabPanelCustom>
+        <TabPanelCustom value={value} index={3}>
+          <ProjectTab
+            editable={inEditMode}
+            empData={inEditMode ? updateRequest : currentEmployee}
+            setEmpData={setUpdateRequest}
+            // projectDetails={skillsDetails}
+            // setProjectDetails={setSkillsDetails}
+            errors={errors}
+            validate={validate}
+          />
         </TabPanelCustom>
       </Container>
       <div>

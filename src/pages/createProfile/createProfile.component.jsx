@@ -40,6 +40,7 @@ import { uiActions } from "./../../store/ui-slice";
 import validator from "validator";
 
 import { useForm } from "react-hook-form";
+import ProjectTab from "../../components/templates/project/project.component";
 
 const CreateProfile = ({
   editEmployeeData,
@@ -55,7 +56,7 @@ const CreateProfile = ({
   // const { register, handleSubmit, errors } = useForm();
   useEffect(() => {
     axiosInstance
-      .get(`/employees?${email}`)
+      .get(`/employees?empEmail=${email}`)
       .then((response) => {
         dispatch(setCurrentEmployee(response.data.data[0]));
       })
@@ -428,6 +429,17 @@ const CreateProfile = ({
               setSkillsDetails={setSkillsDetails}
               // register={register}
               errors={errors}
+            />
+          </TabPanelCustom>
+          <TabPanelCustom value={tab} index={3}>
+            <ProjectTab
+              editable={true}
+              empData={employee}
+              setEmpData={setEmployee}
+              // projectDetails={skillsDetails}
+              // setProjectDetails={setSkillsDetails}
+              errors={errors}
+              validate={validate}
             />
           </TabPanelCustom>
         </Box>

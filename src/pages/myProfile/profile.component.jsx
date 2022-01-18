@@ -10,18 +10,13 @@ import ProfileContent from "../../components/templates/profileContent/profileCon
 import Spinner from "./../../components/UI/spinner/spinner";
 import axiosInstance from "../../helpers/axiosInstance";
 
-import { useForm } from "react-hook-form";
-
 const Profile = () => {
-  const { register, handleSubmit, errors } = useForm();
-
   const { currentEmployee, inEditMode } = useSelector(
     (state) => state.employee
   );
   const { user } = useSelector((state) => state.user);
 
   const email = user.email;
-  // const email = "admin@mail.com";
 
   const [loading, setLoading] = useState(true);
   const dispatch = useDispatch();
@@ -100,12 +95,8 @@ const Profile = () => {
     <Spinner data-test="profile-page-test" />
   ) : (
     <Box sx={{ pb: 3 }}>
-      <EditMode handleSubmit={handleSubmit} {...editModeProps} />
-      <ProfileContent
-        register={register}
-        errors={errors}
-        {...profileContentProps}
-      />
+      <EditMode {...editModeProps} />
+      <ProfileContent {...profileContentProps} />
     </Box>
   );
 };
