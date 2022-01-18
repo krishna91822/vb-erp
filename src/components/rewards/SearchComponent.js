@@ -4,36 +4,10 @@ import MenuItem from "@mui/material/MenuItem";
 import TextField from "@mui/material/TextField";
 import { useDispatch } from "react-redux";
 import { filterData, searchData } from "../../store/rewards-actions";
+import { Box, InputAdornment, SvgIcon } from "@mui/material";
+import { Search as SearchIcon } from "../../icons/search";
 
 const Header = (props) => {
-  const currencies = [
-    {
-      value: "Default",
-      label: "Default",
-    },
-    {
-      value: "Stopped",
-      label: "Stopped",
-    },
-    {
-      value: "In Progress",
-      label: "In Progress",
-    },
-
-    {
-      value: "Created",
-      label: "Created",
-    },
-  ];
-
-  const [currency, setCurrency] = useState("");
-
-  const handleChange = (event) => {
-    setCurrency(event.target.value);
-    const filterValue = event.target.value;
-    dispatch(filterData(filterValue));
-  };
-
   const dispatch = useDispatch();
 
   const getTextFieldData = (e) => {
@@ -44,32 +18,24 @@ const Header = (props) => {
   };
 
   return (
-    <div className="header">
-      <div className="header-title">
-        <TextField
-          onKeyPress={getTextFieldData}
-          id="searchbar"
-          label="Search Rewards"
-        />
-      </div>
-
-      <div className="header-sortby">
-        <TextField
-          id="outlined-select-currency"
-          select
-          label="Status"
-          value={currency}
-          onChange={handleChange}
-          className="filter-dropdown"
-        >
-          {currencies.map((option) => (
-            <MenuItem key={option.value} value={option.value}>
-              {option.label}
-            </MenuItem>
-          ))}
-        </TextField>
-      </div>
-    </div>
+    <Box>
+      <TextField
+        fullWidth
+        onKeyPress={getTextFieldData}
+        id="searchbar"
+        InputProps={{
+          startAdornment: (
+            <InputAdornment position="start">
+              <SvgIcon color="action" fontSize="small">
+                <SearchIcon />
+              </SvgIcon>
+            </InputAdornment>
+          ),
+        }}
+        placeholder="Search rewards"
+        variant="outlined"
+      />
+    </Box>
   );
 };
 

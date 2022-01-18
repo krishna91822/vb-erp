@@ -28,6 +28,7 @@ import {
 import { PoSowActions } from "../../../store/CMS/POSOW-slice";
 import { useNavigate } from "react-router-dom";
 import validateForm from "./validateForm";
+import { MiniHeadingTypography } from "../../../assets/GlobalStyle/style";
 
 // materialUI stylings for select dropdowns.
 const ITEM_HEIGHT = 48;
@@ -217,9 +218,9 @@ export const CapturePO_SOW = (props) => {
     const maxCount = 150;
     setCharsLeft(maxCount - remarks.length);
   }, [remarks]);
-  // const handlePoNumTxtBoxChange = (event) => {
-  //   setPO_number(event.target.value);
-  // };
+  const handlePoNumTxtBoxChange = (event) => {
+    setPO_number(event.target.value);
+  };
   const handlePOAmtTxtBoxChange = (event) => {
     if (!isNaN(Number(event.target.value))) {
       setPOAmt(event.target.value);
@@ -341,7 +342,9 @@ export const CapturePO_SOW = (props) => {
                   xs={12}
                   className="finalgrid"
                 >
-                  <h3 className="cms-heading">Project information</h3>
+                  <MiniHeadingTypography className="cms-heading">
+                    Project information
+                  </MiniHeadingTypography>
                 </Grid>
                 {/* might be required in future versions. */}
                 {/* <Grid item lg={4} md={4} sm={4} xs={12} className="finalgrid">
@@ -373,7 +376,6 @@ export const CapturePO_SOW = (props) => {
                             data-testid="EditToggleBtn"
                             checked={editTglCheckedState}
                             onChange={handleEditTglChange}
-                            // disabled={status === "Drafted" ? false : true}
                           />
                           <span className="slider round"></span>
                         </label>
@@ -405,6 +407,7 @@ export const CapturePO_SOW = (props) => {
                   <Autocomplete
                     className="finalinput"
                     disablePortal
+                    size="small"
                     id="combo-box-demo"
                     options={names}
                     onChange={(event, value) =>
@@ -426,6 +429,7 @@ export const CapturePO_SOW = (props) => {
                       <TextField
                         className="finalinput"
                         {...params}
+                        placeholder="Enter Client Name"
                         error={errors.Client_Name ? true : false}
                       />
                     )}
@@ -437,6 +441,7 @@ export const CapturePO_SOW = (props) => {
                   </label>
                   <Autocomplete
                     disablePortal
+                    size="small"
                     id="combo-box-demo"
                     options={projects}
                     onChange={(event, value) =>
@@ -458,6 +463,7 @@ export const CapturePO_SOW = (props) => {
                       <TextField
                         className="finalinput"
                         {...params}
+                        placeholder="Ente Project Name"
                         error={errors.Project_Name ? true : false}
                       />
                     )}
@@ -467,12 +473,12 @@ export const CapturePO_SOW = (props) => {
               <Grid container className="posow-parentProjectInfo">
                 <Grid item lg={4} md={4} sm={12} xs={12} className="finalgrid">
                   <div className="posow-projectInfo">
-                    <h3
+                    <MiniHeadingTypography
                       className="posow-projectInfoHeading"
                       data-test="client-sponsor-chkBox-label"
                     >
                       Client Sponsor
-                    </h3>
+                    </MiniHeadingTypography>
                     <ul className="posow-ul">
                       <li>{clientProjectSponsor}</li>
                     </ul>
@@ -480,12 +486,12 @@ export const CapturePO_SOW = (props) => {
                 </Grid>
                 <Grid item lg={4} md={4} sm={12} xs={12} className="finalgrid">
                   <div className="posow-projectInfo">
-                    <h3
+                    <MiniHeadingTypography
                       className="posow-projectInfoHeading"
                       data-test="client-finController-chkBox-label"
                     >
                       Client Finance Controller
-                    </h3>
+                    </MiniHeadingTypography>
                     <ul className="posow-ul">
                       <li>{clientFinanceController}</li>
                     </ul>
@@ -493,12 +499,12 @@ export const CapturePO_SOW = (props) => {
                 </Grid>
                 <Grid item lg={4} md={4} sm={12} xs={12} className="finalgrid">
                   <div className="posow-projectInfo">
-                    <h3
+                    <MiniHeadingTypography
                       className="posow-projectInfoHeading"
                       data-test="TargetedRes-chkBox-label"
                     >
                       Targeted Resources
-                    </h3>
+                    </MiniHeadingTypography>
                     <ul className="posow-ul">
                       {targetedResources.map((name, index) => {
                         return (
@@ -540,6 +546,7 @@ export const CapturePO_SOW = (props) => {
                   <Select
                     className="finalinput"
                     value={typeName}
+                    size="small"
                     onChange={handleTypeChange}
                     input={<OutlinedInput label="Name" />}
                     MenuProps={MenuProps}
@@ -567,6 +574,7 @@ export const CapturePO_SOW = (props) => {
                   <Select
                     className="finalinput"
                     value={CurrName}
+                    size="small"
                     onChange={handleCurrencyChange}
                     input={<OutlinedInput label="Currency" />}
                     variant="outlined"
@@ -598,7 +606,9 @@ export const CapturePO_SOW = (props) => {
                   <TextField
                     className="finalinput"
                     variant="outlined"
+                    placeholder="Enter Amount"
                     value={PO_amt}
+                    size="small"
                     onChange={handlePOAmtTxtBoxChange}
                     inputProps={{ "data-testid": "po-sow-amt" }}
                     error={errors.PO_Amount ? true : false}
@@ -617,8 +627,10 @@ export const CapturePO_SOW = (props) => {
                       <TextField
                         className="finalinput"
                         variant="outlined"
+                        placeholder="Number"
                         value={PO_number}
-                        // onChange={handlePoNumTxtBoxChange}
+                        size="small"
+                        onChange={handlePoNumTxtBoxChange}
                         inputProps={{ "data-testid": "po-sow-num" }}
                         data-test="po-sow-num"
                         error={errors.PO_Number ? true : false}
@@ -643,6 +655,7 @@ export const CapturePO_SOW = (props) => {
                     className="finalinput"
                     id="outlined-basic"
                     variant="outlined"
+                    placeholder="Enter Uploaded Document"
                     value={DocName}
                     data-test="uploaded-doc-name-txtBox"
                     error={errors.Document_Name ? true : false}
@@ -725,6 +738,8 @@ export const CapturePO_SOW = (props) => {
                     className="finalinput"
                     id="outlined-multiline-static"
                     multiline
+                    size="small"
+                    placeholder="Enter Remarks/Comments"
                     rows={4}
                     value={remarks}
                     onChange={handleRemarksChange}
