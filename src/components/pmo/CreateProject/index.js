@@ -40,6 +40,7 @@ import {
 import { pmoActions } from "../../../store/pmo-slice";
 import validateForm from "./validateCreateForm";
 import validateResourceForm from "../ResourceInformation/validateResourceForm";
+import { StyledTypography } from "../../../assets/GlobalStyle/style";
 
 const initialState = {
   project: {
@@ -417,7 +418,7 @@ const CreateProject = () => {
     <>
       <PmoContainer>
         <Heading>
-          <h2 data-test="page-title">PMO</h2>
+          <StyledTypography data-test="page-title">PMO</StyledTypography>
           <EditViewSwitchs
             edit={edit}
             setEdit={setEdit}
