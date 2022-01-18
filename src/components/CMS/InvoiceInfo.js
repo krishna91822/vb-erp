@@ -285,18 +285,17 @@ function InvoiceInfo() {
                 <StyledTableCell align="center">
                   Invoice Amount received
                 </StyledTableCell>
-                {user.permissions.includes("upload_invoice") && (
-                  <StyledTableCell align="center">Action</StyledTableCell>
-                )}
+                <StyledTableCell align="center">Status</StyledTableCell>
+                <StyledTableCell align="center">Options</StyledTableCell>
               </TableRow>
             </TableHead>
             <TableBody>
               {post.map((row, index) => (
                 <TableRow
-                  component={Link}
                   style={{ textDecoration: "none" }}
-                  to={`/invoice_details/${row._id}`}
-                  onClick={() => handleRowOnClick(row._id)}
+                  // component={Link}
+                  // to={`/invoice_details/${row._id}`}
+                  // onClick={() => handleRowOnClick(row._id)}
                   key={row.name}
                   className="table-row"
                 >
@@ -331,15 +330,14 @@ function InvoiceInfo() {
                     {row.invoice_amount_received}
                   </StyledTableCell>
                   <StyledTableCell align="center">
-                    {user.permissions.includes("upload_invoice") && (
-                      <>
-                        {row.invoice_received === "No" ? (
-                          <EditIcon />
-                        ) : (
-                          <EditOffIcon />
-                        )}
-                      </>
-                    )}
+                    {renderChildStatus(row.Status)}
+                  </StyledTableCell>
+                  <StyledTableCell align="center">
+                    <LongMenu
+                      invoice_received={row.invoice_received}
+                      invoiceID={row._id}
+                      invoice_raised={row.invoice_raised}
+                    />
                   </StyledTableCell>
                 </TableRow>
               ))}
