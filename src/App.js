@@ -12,6 +12,7 @@ import { useEffect } from "react";
 import { tokenValidate } from "./store/user-actions";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import cookie from "react-cookies";
 
 function App() {
   const navigate = useNavigate();
@@ -20,12 +21,12 @@ function App() {
   const loader = useSelector((state) => state.ui.loading);
   const { routes } = RRoutes();
   useEffect(() => {
-    if (localStorage.getItem("token")) {
+    if (cookie.load("token")) {
       dispatch(tokenValidate()).then((res) => {
         if (res) {
           navigate("/my-profile");
         } else {
-          localStorage.removeItem("token");
+          cookie.remove("token");
           navigate("/");
         }
       });

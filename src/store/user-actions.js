@@ -1,19 +1,22 @@
 import { uiActions } from "./ui-slice";
 import { userActions } from "./user-slice";
 import axios from "../helpers/axiosInstance";
+import cookie from "react-cookies";
+
 export const validateUser = (username, password) => {
   return async (dispatch) => {
     const fetchData = async () => {
       const userDetail = {};
       userDetail.email = username;
       userDetail.password = password;
-      // const response = await axios.get(
-      //   `/tempUsers?username=${username}&pass=${password}`
-      // );
       const response = await axios.post("/login", userDetail);
       if (response.data.code === 200 || response.data.status === "success") {
         const data = response.data.data;
-        localStorage.setItem("token", data.token);
+        // localStorage.setItem("token", data.token);
+        cookie.save("token", data.token, {
+          secure: true,
+          httpOnly: false,
+        });
         axios.defaults.headers.common["Authorization"] = data.token;
         return data;
       } else if (response.data.code === 422) {
@@ -49,10 +52,9 @@ export const validateUser = (username, password) => {
 export const tokenValidate = () => {
   return async (dispatch) => {
     const fetchTOkenandSetData = async () => {
-      const token = localStorage.getItem("token");
+      const token = cookie.load("token");
       if (token) {
-        axios.defaults.headers.common["Authorization"] =
-          localStorage.getItem("token");
+        axios.defaults.headers.common["Authorization"] = cookie.load("token");
         const response = await axios.get("/validateToken");
         if (response.data.code === 200 || response.data.status === "success") {
           const data = response.data.data;
@@ -90,7 +92,7 @@ export const logoutUser = () => {
       dispatch(uiActions.toggleLoader());
       const data = await logout();
       dispatch(userActions.resetForm());
-      localStorage.removeItem("token");
+      cookie.remove("token");
       return true;
     } catch (error) {
       setTimeout(function () {
