@@ -37,3 +37,10 @@ export const MiniHeadingTypography = styled(Typography)(({ theme }) => ({
   fontFamily:
     "Inter, -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif, Apple Color Emoji,Segoe UI Emoji",
 }));
+
+// export const LabelStyling = styled(Typography)(({ theme }) => ({
+//   fontWeight: "500",
+//   fontSize: "1rem",
+//   fontFamily:
+//     "Inter, -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif, Apple Color Emoji,Segoe UI Emoji",
+// }));

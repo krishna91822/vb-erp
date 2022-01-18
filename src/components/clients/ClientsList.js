@@ -48,7 +48,7 @@ import {
   ClearRounded as ClearRoundedIcon,
 } from "@mui/icons-material";
 import PageHeader from "./PageHeader";
-import "../../assets/styles/ClientListStyles.css";
+import "./styles/ClientListStyles.css";
 
 function ClientsList() {
   const {

@@ -152,6 +152,9 @@ const ViewProjects = () => {
                         variant="contained"
                         sx={{
                           backgroundColor: "chocolate",
+                          ":hover": {
+                            background: "chocolate",
+                          },
                         }}
                         onClick={() => {
                           navigate("/pmo/projects/create");

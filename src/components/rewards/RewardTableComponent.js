@@ -15,7 +15,7 @@ import Header from "./SearchComponent";
 import { filterData, searchData } from "../../store/rewards-actions";
 import { StyledTableCell } from "../../assets/GlobalStyle/style";
 import { useDispatch } from "react-redux";
-import "../../assets/styles/ClientListStyles.css";
+import "../clients/styles/ClientListStyles.css";
 
 import {
   Table,
@@ -30,7 +30,7 @@ import {
   MenuItem,
   TextField,
 } from "@mui/material";
-import "../../assets/styles/ClientListStyles.css";
+// import "../../assets/styles/ClientListStyles.css";
 export const StyledMenu = styled((props) => (
   <Menu
     elevation={0}
