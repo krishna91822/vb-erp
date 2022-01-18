@@ -148,6 +148,16 @@ const Bench = ({ pressed, benchSortValue }) => {
                     minWidth: "180px",
                   }}
                 >
+                  YOE
+                </TableCell>
+                <TableCell
+                  align="left"
+                  sx={{
+                    width: "180px",
+                    maxWidth: "180px",
+                    minWidth: "180px",
+                  }}
+                >
                   Remaining Bandwidth
                 </TableCell>
               </TableRow>
@@ -228,6 +238,12 @@ const Bench = ({ pressed, benchSortValue }) => {
                         style={{ textTransform: "capitalize" }}
                       >
                         {currElem.empSkillSet}
+                      </TableCell>
+                      <TableCell
+                        align="left"
+                        style={{ textTransform: "capitalize" }}
+                      >
+                        {currElem.yearsOfExperience}
                       </TableCell>
                       <TableCell align="left">
                         {currElem.remainingAllocation}

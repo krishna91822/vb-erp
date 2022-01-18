@@ -96,6 +96,9 @@ const Allocation = () => {
                 <MenuItem value="remainingAllocation" sx={{ fontSize: "14px" }}>
                   Bandwidth
                 </MenuItem>
+                <MenuItem value="yearsOfExperience" sx={{ fontSize: "14px" }}>
+                  Years Of Experience
+                </MenuItem>
               </Select>
             </FormControl>
           )}
