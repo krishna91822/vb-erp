@@ -37,3 +37,13 @@
 ::-webkit-scrollbar-thumb:hover {
   background: #efefef;
 }
+
+@media (max-width: 600px) {
+  .container {
+    box-sizing: border-box;
+    overflow-y: scroll;
+    margin: calc(70px + 0px) 0px 0px calc(50px + 0px);
+    width: 100%;
+    padding: 10px;
+  }
+}

@@ -22,6 +22,8 @@ import {
   ModalBoxItem,
 } from "./createProfile.styles";
 
+import { StyledTypography } from "../../assets/GlobalStyle/style";
+
 import ProfileInfoEditable from "./../../components/templates/profileInfo/profileInfoEditable.component";
 import TabPanelCustom from "./../../components/templates/tabPanelCustom.component";
 import PersonalEditable from "../../components/templates/personal/personalEditable.component";
@@ -361,9 +363,9 @@ const CreateProfile = ({
           }}
         >
           {editEmployeeData ? null : (
-            <TitleTypo sx={{ textTransform: "capitalize", fontSize: 24 }}>
+            <StyledTypography>
               {createProfileConstant.createUser}
-            </TitleTypo>
+            </StyledTypography>
           )}
           <Box>
             <GreenButton

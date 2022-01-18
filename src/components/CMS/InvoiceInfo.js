@@ -7,7 +7,8 @@ import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import Paper from "@mui/material/Paper";
+import { Card, CardContent, Box, InputAdornment, SvgIcon } from "@mui/material";
+import { Search as SearchIcon } from "../../icons/search";
 import TextField from "@mui/material/TextField";
 import { styled, alpha } from "@mui/material/styles";
 import Button from "@mui/material/Button";
@@ -34,6 +35,8 @@ import {
 } from "../../store/CMS/INVOICE-actions";
 import InputLabel from "@mui/material/InputLabel";
 import NativeSelect from "@mui/material/NativeSelect";
+import { StyledTypography } from "../../assets/GlobalStyle/style";
+import { StyledTableCell } from "../../assets/GlobalStyle/style";
 
 export const StyledMenu = styled((props) => (
   <Menu
@@ -129,70 +132,97 @@ function InvoiceInfo() {
     }
   };
   return (
-    <>
-      <Grid container>
-        <Grid item lg={6} md={6} sm={6} xs={6}>
-          <TextField
-            id="outlined-basic"
-            onKeyPress={searchHandler}
-            label="Search by client/project name"
-            variant="outlined"
-            sx={{ width: 300 }}
-          />
-        </Grid>
-        <Grid item lg={6} md={6} sm={6} xs={6}>
-          <div className="sortbtn">
-            <Button
-              id="demo-customized-button"
-              aria-controls="demo-customized-menu"
-              aria-haspopup="true"
-              aria-expanded={open ? "true" : undefined}
-              variant="contained"
-              disableElevation
-              onClick={handleClick}
-              endIcon={<KeyboardArrowDownIcon />}
-              data-test="SortByButton"
-              className="sort-by-button"
-            >
-              Sort by
-            </Button>
-            <StyledMenu
-              id="demo-customized-menu"
-              MenuListProps={{
-                "aria-labelledby": "demo-customized-button",
-              }}
-              anchorEl={anchorEl}
-              open={open}
-              onClose={handleClose}
-            >
-              <MenuItem
-                onClick={() => handleSort("Project_Name")}
-                disableRipple
-              >
-                By Project Name
-              </MenuItem>
+    <div className="client-list-wrapper">
+      <StyledTypography>Invoice Information</StyledTypography>
+      <Card>
+        <CardContent>
+          <Box>
+            <Grid container spacing={2}>
+              <Grid item xs={4}>
+                <Box>
+                  <TextField
+                    fullWidth
+                    id="outlined-basic"
+                    placeholder="Search by client/project name"
+                    onKeyPress={searchHandler}
+                    InputProps={{
+                      startAdornment: (
+                        <InputAdornment position="start">
+                          <SvgIcon color="action" fontSize="small">
+                            <SearchIcon />
+                          </SvgIcon>
+                        </InputAdornment>
+                      ),
+                    }}
+                    variant="outlined"
+                  />
+                </Box>
+              </Grid>
 
-              <MenuItem
-                onClick={() => handleSort("invoice_amount_received")}
-                disableRipple
+              <Grid
+                item
+                xs={8}
+                container
+                direction="row"
+                justifyContent="flex-end"
+                alignItems="center"
               >
-                By invoice amount recieved
-              </MenuItem>
-              <MenuItem onClick={() => handleSort("Client_Name")} disableRipple>
-                By Client Name
-              </MenuItem>
-            </StyledMenu>
-          </div>
-        </Grid>
-      </Grid>
+                <Box m={1}>
+                  <Button
+                    id="demo-customized-button"
+                    aria-controls="demo-customized-menu"
+                    aria-haspopup="true"
+                    aria-expanded={open ? "true" : undefined}
+                    variant="outlined"
+                    disableElevation
+                    onClick={handleClick}
+                    endIcon={<KeyboardArrowDownIcon />}
+                    data-test="SortByButton"
+                    style={{ borderColor: "black", color: "black" }}
+                  >
+                    Sort by
+                  </Button>
+                  <StyledMenu
+                    id="demo-customized-menu"
+                    MenuListProps={{
+                      "aria-labelledby": "demo-customized-button",
+                    }}
+                    anchorEl={anchorEl}
+                    open={open}
+                    onClose={handleClose}
+                  >
+                    <MenuItem
+                      onClick={() => handleSort("Project_Name")}
+                      disableRipple
+                    >
+                      By Project Name
+                    </MenuItem>
 
-      <div className="container">
-        <div className="innerheader">
-          <div>
-            <h3 data-test="MainHeading">Invoice Information</h3>
-          </div>
-          {/* will be required in future */}
-          {/* <div className="buttondiv">
+                    <MenuItem
+                      onClick={() => handleSort("invoice_amount_received")}
+                      disableRipple
+                    >
+                      By invoice amount recieved
+                    </MenuItem>
+                    <MenuItem
+                      onClick={() => handleSort("Client_Name")}
+                      disableRipple
+                    >
+                      By Client Name
+                    </MenuItem>
+                  </StyledMenu>
+                </Box>
+              </Grid>
+            </Grid>
+          </Box>
+        </CardContent>
+      </Card>
+
+      <div className="ListContainer">
+        {/* <div className="innerheader">
+          
+          will be required in future
+          <div className="buttondiv">
             <Link
               to="/invoice/create-invoice"
               style={{ textDecoration: "none" }}
@@ -207,104 +237,111 @@ function InvoiceInfo() {
               </Button>
             </Link>
           </div> */}
-        </div>
-        <TableContainer component={Paper}>
-          <Table
-            sx={{ minWidth: 650 }}
-            aria-label="simple table"
-            className="Table-row-po-sow"
-          >
-            <TableHead className="tablehead">
-              <TableRow>
-                <TableCell></TableCell>
-                <TableCell>Client Name</TableCell>
-                <TableCell>Project Name</TableCell>
-                <TableCell>PO/SOW Order</TableCell>
-                <TableCell>PO/SOW Amount</TableCell>
-                <TableCell>Invoice raised</TableCell>
-                <TableCell>Amount Received</TableCell>
-                <TableCell>Invoice Amount received</TableCell>
+
+        <TableContainer>
+          <Table>
+            <TableHead>
+              <TableRow className="table-header">
+                <StyledTableCell align="center"></StyledTableCell>
+                <StyledTableCell align="center">Client Name</StyledTableCell>
+                <StyledTableCell align="center">Project Name</StyledTableCell>
+                <StyledTableCell align="center">PO/SOW Order</StyledTableCell>
+                <StyledTableCell align="center">PO/SOW Amount</StyledTableCell>
+                <StyledTableCell align="center">Invoice raised</StyledTableCell>
+                <StyledTableCell align="center">
+                  Amount Received
+                </StyledTableCell>
+                <StyledTableCell align="center">
+                  Invoice Amount received
+                </StyledTableCell>
                 {user.permissions.includes("upload_invoice") && (
-                  <TableCell>Action</TableCell>
+                  <StyledTableCell align="center">Action</StyledTableCell>
                 )}
               </TableRow>
             </TableHead>
-            <TableBody className="table-row-posow">
+            <TableBody>
               {post.map((row, index) => (
                 <TableRow
                   component={Link}
+                  style={{ textDecoration: "none" }}
                   to={`/invoice_details/${row._id}`}
                   onClick={() => handleRowOnClick(row._id)}
                   key={row.name}
-                  style={{ textDecoration: "none" }}
-                  sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                  className="table-row"
                 >
-                  <TableCell
+                  <StyledTableCell
+                    align="center"
                     component="th"
                     scope="row"
                     className="table-cell"
                     data-test="clickable-row"
                   >
                     {postPerPage * (currentPage - 1) + (index + 1)}
-                  </TableCell>
-                  <TableCell>{row.purchase_orders.Client_Name}</TableCell>
-                  <TableCell>{row.purchase_orders.Project_Name}</TableCell>
-                  <TableCell>{row.purchase_orders.PO_Number}</TableCell>
-                  <TableCell>{row.purchase_orders.PO_Amount}</TableCell>
-                  <TableCell>{row.invoice_raised}</TableCell>
-                  <TableCell>{row.invoice_received}</TableCell>
-                  <TableCell>{row.invoice_amount_received}</TableCell>
-
-                  {user.permissions.includes("upload_invoice") && (
-                    <>
-                      {row.invoice_received === "No" ? (
-                        <TableCell>
+                  </StyledTableCell>
+                  <StyledTableCell align="center">
+                    {row.purchase_orders.Client_Name}
+                  </StyledTableCell>
+                  <StyledTableCell align="center">
+                    {row.purchase_orders.Project_Name}
+                  </StyledTableCell>
+                  <StyledTableCell align="center">
+                    {row.purchase_orders.PO_Number}
+                  </StyledTableCell>
+                  <StyledTableCell align="center">
+                    {row.purchase_orders.PO_Amount}
+                  </StyledTableCell>
+                  <StyledTableCell align="center">
+                    {row.invoice_raised}
+                  </StyledTableCell>
+                  <StyledTableCell align="center">
+                    {row.invoice_received}
+                  </StyledTableCell>
+                  <StyledTableCell align="center">
+                    {row.invoice_amount_received}
+                  </StyledTableCell>
+                  <StyledTableCell align="center">
+                    {user.permissions.includes("upload_invoice") && (
+                      <>
+                        {row.invoice_received === "No" ? (
                           <EditIcon />
-                        </TableCell>
-                      ) : (
-                        <TableCell>
+                        ) : (
                           <EditOffIcon />
-                        </TableCell>
-                      )}
-                    </>
-                  )}
+                        )}
+                      </>
+                    )}
+                  </StyledTableCell>
                 </TableRow>
               ))}
             </TableBody>
           </Table>
         </TableContainer>
-
-        <Stack spacing={10}>
-          <div className="Pagination">
-            {/* <Typography className="pagenumber">Page: {currentPage}</Typography> */}
-            <div className="numbering">
-              <InputLabel variant="standard" htmlFor="uncontrolled-native">
-                Rows per page:
-              </InputLabel>
-              <NativeSelect
+        <div className="pagination">
+          {/* <Typography className="pagenumber">Page: {currentPage}</Typography> */}
+          {/* <div className="numbering"> */}
+          {/* <NativeSelect
                 value={postPerPage}
                 onChange={handlerowsPerpage}
                 defaultValue={30}
               >
-                {/* <Select value={postPerPage} onChange={handlerowsPerpage}>
+                 <Select value={postPerPage} onChange={handlerowsPerpage}>
                   <MenuItem value={5}>5</MenuItem>
                   <MenuItem value={10}>10</MenuItem>
                   <MenuItem value={15}>15</MenuItem>
-                </Select> */}
+                </Select> 
                 <option value={5}>5</option>
                 <option value={10}>10</option>
                 <option value={15}>15</option>
-              </NativeSelect>
-              <Pagination
-                count={Math.ceil(totalCount / postPerPage)}
-                page={currentPage}
-                onChange={handleChange}
-              />
-            </div>
-          </div>
-        </Stack>
+              </NativeSelect> */}
+          <Stack spacing={2}>
+            <Pagination
+              count={Math.ceil(totalCount / postPerPage)}
+              page={currentPage}
+              onChange={handleChange}
+            />
+          </Stack>
+        </div>
       </div>
-    </>
+    </div>
   );
 }
 
