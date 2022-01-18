@@ -45,7 +45,7 @@ const PersonalReadable = ({ empData }) => {
   ];
 
   return (
-    <Grid container spacing={0} sx={{ minHeight: 150 }}>
+    <Grid container sx={{ minHeight: 150 }}>
       <Grid item sm={7}>
         <Box>
           <ContentBox>
@@ -84,8 +84,8 @@ const PersonalReadable = ({ empData }) => {
                             backgroundColor: chipColors[i],
                             color: "#fff",
                             height: 30,
-                            fontSize: 12,
-                            fontWeight: 600,
+                            fontSize: 11,
+                            fontWeight: 400,
                           }}
                         />
                       </ListItem>

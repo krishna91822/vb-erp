@@ -10,6 +10,9 @@ import ProfileContent from "../../components/templates/profileContent/profileCon
 import Spinner from "./../../components/UI/spinner/spinner";
 import axiosInstance from "../../helpers/axiosInstance";
 
+import { useForm } from "react-hook-form";
+import { roundToNearestMinutes } from "date-fns/esm";
+
 const Profile = () => {
   const { currentEmployee, inEditMode } = useSelector(
     (state) => state.employee
@@ -95,8 +98,19 @@ const Profile = () => {
     <Spinner data-test="profile-page-test" />
   ) : (
     <Box sx={{ pb: 3 }}>
-      <EditMode {...editModeProps} />
-      <ProfileContent {...profileContentProps} />
+      {/* <Box sx={{ position: "fixed", marginLeft: "70%", marginTop: "20px" }}> */}
+      <EditMode
+        {...editModeProps}
+        switchOnly={roundToNearestMinutes}
+        btnsOnly={false}
+      />
+      {/* </Box> */}
+      <ProfileContent
+        {...profileContentProps}
+        btns={
+          <EditMode {...editModeProps} switchOnly={false} btnsOnly={true} />
+        }
+      />
     </Box>
   );
 };

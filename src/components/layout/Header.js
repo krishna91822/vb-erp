@@ -80,7 +80,12 @@ const Header = () => {
           <img style={customStyles.image} src={vbLogo} alt="vb-logo" />
           {user.name ? (
             <>
-              <IconButton size="large" edge="end" onClick={handleClick}>
+              <IconButton
+                size="large"
+                edge="end"
+                onClick={handleClick}
+                style={{ backgroundColor: "transparent" }}
+              >
                 <AccountCircle fontSize="large" />
                 <Typography variant="h6">{user.name}</Typography>
               </IconButton>
@@ -90,8 +95,9 @@ const Header = () => {
                 open={open}
                 onClose={handleClose}
                 PaperProps={{
-                  elevation: 0,
                   sx: {
+                    overflow: "visible",
+                    filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
                     mt: 0,
                     "& .MuiAvatar-root": {
                       width: 32,

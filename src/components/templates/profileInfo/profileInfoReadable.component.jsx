@@ -1,9 +1,19 @@
-import React from "react";
-
-import { Grid, Avatar, LinearProgress, Box } from "@mui/material";
-
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  Container,
+  Grid,
+  Avatar,
+  LinearProgress,
+  Box,
+  Card,
+  CardContent,
+  Typography,
+  Divider,
+  CardHeader,
+} from "@mui/material";
+import { StyledTypography } from "../../../assets/GlobalStyle/style";
 import { CustomGridBox } from "./profileInfoReadable.styles";
-
 import PersonIcon from "@mui/icons-material/Person";
 import LocalCafeIcon from "@mui/icons-material/LocalCafe";
 import ImportContactsIcon from "@mui/icons-material/ImportContacts";
@@ -11,15 +21,17 @@ import BadgeIcon from "@mui/icons-material/Badge";
 import PlagiarismIcon from "@mui/icons-material/Plagiarism";
 
 import { profileInfoConstant } from "./profileInfo.constant";
-
+import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 import {
   StyledTabs,
   StyledTab,
   TitleTypo,
   SubTitleTypo,
   ContentBoldTypo,
+  ContentTypo,
+  ProfileNameTypo,
 } from "./../../UI/commonStyles";
-import { grid } from "@mui/system";
+import { ContentBox } from "../personal/personalReadable.styles";
 
 const ProfileInfoReadable = ({
   value,
@@ -38,185 +50,142 @@ const ProfileInfoReadable = ({
   } = currentEmployee;
 
   const profilePercentage = profileProgress();
-
+  const dispatch = useDispatch();
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
 
+  const [changeVariant, setChangeVariant] = useState(false);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setChangeVariant(true);
+    }, 2000);
+  });
   return (
     <div>
-      <Grid
-        container
-        spacing={0}
+      <Box
+        component="main"
         sx={{
-          minHeight: "100px",
-          borderBottom: "0.1em solid",
-          borderColor: "textColor.paletteGrey",
+          flexGrow: 1,
+          py: 0,
         }}
       >
-        <Grid item sm={4}>
-          <Box
-            sx={{
-              width: "100%",
-              display: "flex",
-              alignItems: "center",
-              flexDirection: "column",
-              padding: "20px 0",
-            }}
-          >
-            <Avatar
-              sx={{
-                width: 80,
-                height: 80,
-                backgroundColor: "textColor.light",
-              }}
-            >
-              <PersonIcon
-                sx={{
-                  height: "60%",
-                  width: "55%",
-                  color: "textColor.lightDark",
-                }}
-              />
-            </Avatar>
-            <TitleTypo
-              sx={{ mt: 1, textTransform: "capitalize", fontSize: "16px" }}
-            >
-              {empName}
-            </TitleTypo>
-            <Box sx={{ width: "75%", margin: "8px 0" }}>
-              <LinearProgress
-                variant="determinate"
-                value={profilePercentage ? profilePercentage : 0}
-                color="primary"
-                sx={{
-                  height: 5,
-                  borderRadius: 50,
-                }}
-              />
-            </Box>
-            <SubTitleTypo sx={{ textTransform: "lowercase" }}>
-              {profilePercentage ? profilePercentage : 0}
-              {profileInfoConstant.profilePercentage}
-            </SubTitleTypo>
-          </Box>
-        </Grid>
-        <Grid item sm={8} sx={{ display: "flex", alignItems: "center" }}>
-          <Box
-            sx={{
-              width: "100%",
-              minHeight: 80,
-              border: "0.1em solid",
-              borderColor: "textColor.paletteGrey",
-              borderRadius: "5px",
-              mt: 1,
-              mb: 1,
-            }}
-          >
-            <CustomGridBox sx={{ mt: 1, mb: 1 }}>
-              <ContentBoldTypo
-                sx={{
-                  textTransform: "capitalize",
-                  pl: 1,
-                  fontSize: "16px",
-                  display: "grid",
-                  gridTemplateColumns: "130px auto",
-                }}
-              >
-                <Box>{`${profileInfoConstant.employeeId} -`}</Box>
-                <Box>{empId}</Box>
-              </ContentBoldTypo>
-              <ContentBoldTypo
-                sx={{
-                  textTransform: "capitalize",
-                  pl: 1,
-                  fontSize: "16px",
-                  display: "grid",
-                  gridTemplateColumns: "130px auto",
-                }}
-              >
-                <Box>{`${profileInfoConstant.emailId} -`}</Box>
-                <Box>{empEmail}</Box>
-              </ContentBoldTypo>
-              <ContentBoldTypo
-                sx={{
-                  textTransform: "capitalize",
-                  pl: 1,
-                  fontSize: "16px",
-                  display: "grid",
-                  gridTemplateColumns: "130px auto",
-                }}
-              >
-                <Box>{`${profileInfoConstant.department} -`}</Box>
-                <Box>{empDepartment}</Box>
-              </ContentBoldTypo>
-              <ContentBoldTypo
-                sx={{
-                  textTransform: "capitalize",
-                  pl: 1,
-                  fontSize: "16px",
-                  display: "grid",
-                  gridTemplateColumns: "130px auto",
-                }}
-              >
-                <Box>{`${profileInfoConstant.designation} -`}</Box>
-                <Box>{empDesignation}</Box>
-              </ContentBoldTypo>
-              <ContentBoldTypo
-                sx={{
-                  textTransform: "capitalize",
-                  pl: 1,
-                  fontSize: "16px",
-                  display: "grid",
-                  gridTemplateColumns: "130px auto",
-                }}
-              >
-                <Box>{`${profileInfoConstant.dateOfJoining} -`}</Box>
-                <Box>
-                  {empDoj ? new Date(empDoj).toDateString().slice(4) : ""}
-                </Box>
-              </ContentBoldTypo>
-              <ContentBoldTypo
-                sx={{
-                  textTransform: "capitalize",
-                  pl: 1,
-                  fontSize: "16px",
-                  display: "grid",
-                  gridTemplateColumns: "130px auto",
-                }}
-              >
-                <Box>{`${profileInfoConstant.reportingManager} -`}</Box>
-                <Box>{empReportingManager}</Box>
-              </ContentBoldTypo>
-            </CustomGridBox>
-          </Box>
-        </Grid>
-        <Grid item></Grid>
-      </Grid>
-      <Grid>
-        <StyledTabs value={value} onChange={handleChange}>
-          <StyledTab
-            icon={<LocalCafeIcon />}
-            label="Personal"
-            sx={{ fontSize: "16px" }}
-          />
-          <StyledTab
-            icon={<ImportContactsIcon />}
-            label="professional"
-            sx={{ fontSize: "16px" }}
-          />
-          <StyledTab
-            icon={<BadgeIcon />}
-            label="Skills And Qualifications"
-            sx={{ fontSize: "16px" }}
-          />
-          <StyledTab
-            icon={<PlagiarismIcon />}
-            label="Project"
-            sx={{ fontSize: "16px" }}
-          />
-        </StyledTabs>
-      </Grid>
+        <Container maxWidth="xl">
+          <StyledTypography sx={{ mb: 3 }} variant="h4">
+            Account
+          </StyledTypography>
+          <Grid container spacing={3}>
+            <Grid item lg={4} md={6} xs={12}>
+              <Card>
+                <CardContent>
+                  <Box
+                    mt={6.5}
+                    mb={6}
+                    sx={{
+                      alignItems: "center",
+                      display: "flex",
+                      flexDirection: "column",
+                    }}
+                  >
+                    <Avatar
+                      mt={2}
+                      sx={{
+                        height: 64,
+                        mb: 2,
+                        width: 64,
+                      }}
+                    >
+                      <PersonIcon
+                        sx={{
+                          height: "60%",
+                          width: "60%",
+                          color: "rgb(17,24,39)",
+                        }}
+                      />
+                    </Avatar>
+
+                    <ProfileNameTypo>{empName}</ProfileNameTypo>
+
+                    <Box sx={{ width: "75%", margin: "15px 0" }}>
+                      <LinearProgress
+                        variant="indeterminate"
+                        value={profilePercentage ? profilePercentage : 0}
+                        color="warning"
+                        sx={{
+                          height: 5,
+                          borderRadius: 50,
+                        }}
+                        {...(changeVariant && {
+                          variant: "determinate",
+                        })}
+                      />
+                    </Box>
+
+                    <Typography color="textSecondary" variant="body2">
+                      {profilePercentage ? profilePercentage : 0}
+                      {profileInfoConstant.profilePercentage}
+                    </Typography>
+                  </Box>
+                </CardContent>
+              </Card>
+            </Grid>
+
+            <Grid item lg={8} md={6} xs={6}>
+              <Card>
+                <CardContent>
+                  <Grid item sm={8}>
+                    <Box mt={2}>
+                      <ContentBox>
+                        <TitleTypo>{profileInfoConstant.employeeId}</TitleTypo>
+                        <ContentTypo>{empId}</ContentTypo>
+                      </ContentBox>
+                    </Box>
+                    <Box mt={2}>
+                      <ContentBox>
+                        <TitleTypo>{profileInfoConstant.emailId}</TitleTypo>
+                        <ContentTypo>{empEmail}</ContentTypo>
+                      </ContentBox>
+                    </Box>
+                    <Box mt={2}>
+                      <ContentBox>
+                        <TitleTypo>{profileInfoConstant.department}</TitleTypo>
+                        <ContentTypo>{empDepartment}</ContentTypo>
+                      </ContentBox>
+                    </Box>
+                    <Box mt={2}>
+                      <ContentBox>
+                        <TitleTypo>{profileInfoConstant.designation}</TitleTypo>
+                        <ContentTypo>{empDesignation}</ContentTypo>
+                      </ContentBox>
+                    </Box>
+                    <Box mt={2}>
+                      <ContentBox>
+                        <TitleTypo>
+                          {profileInfoConstant.dateOfJoining}
+                        </TitleTypo>
+                        <ContentTypo>
+                          {empDoj
+                            ? new Date(empDoj).toDateString().slice(4)
+                            : ""}
+                        </ContentTypo>
+                      </ContentBox>
+                    </Box>
+                    <Box mt={2}>
+                      <ContentBox>
+                        <TitleTypo>
+                          {profileInfoConstant.reportingManager}
+                        </TitleTypo>
+                        <ContentTypo>{empReportingManager}</ContentTypo>
+                      </ContentBox>
+                    </Box>
+                  </Grid>
+                </CardContent>
+              </Card>
+            </Grid>
+          </Grid>
+        </Container>
+      </Box>
     </div>
   );
 };

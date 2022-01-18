@@ -14,9 +14,14 @@ import {
 //custom components for typograpphy
 export const TitleTypo = styled("div")(({ theme }) => ({
   ...theme.typography.h5,
-  fontWeight: 600,
-  color: theme.palette.textColor.main,
-  fontSize: 18,
+  fontSize: 13,
+  fontWeight: "600",
+  lineHeight: "1",
+  letterSpacing: "0.3px",
+  textTransform: "uppercase",
+  color: "rgb(55, 65, 81)",
+  fontFamily:
+    "Inter, -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji",
 }));
 
 export const SubTitleTypo = styled("div")(({ theme }) => ({
@@ -27,15 +32,31 @@ export const SubTitleTypo = styled("div")(({ theme }) => ({
 
 export const ContentTypo = styled("div")(({ theme }) => ({
   ...theme.typography.h5,
-  color: theme.palette.textColor.paletteGrey,
   fontSize: 13,
+  fontWeight: "400",
+  lineHeight: "1",
+  letterSpacing: "0.5px",
+  color: "rgb(55, 65, 81)",
+  fontFamily:
+    "Inter, -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji",
 }));
 
 export const ContentBoldTypo = styled("div")(({ theme }) => ({
   ...theme.typography.h5,
-  color: theme.palette.textColor.paletteGrey,
+  color: theme.palette.textColor.main,
   fontSize: 13,
   fontWeight: 600,
+}));
+
+export const ProfileNameTypo = styled("div")(({ theme }) => ({
+  ...theme.typography.h5,
+  fontWeight: 600,
+  fontSize: "1.5rem",
+  lineHeight: 1.375,
+  textTransform: "capitalize",
+  fontFamily:
+    "Inter, -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji",
+  color: "rgb(18, 24, 40)",
 }));
 
 //custom components for tabs
@@ -44,7 +65,7 @@ export const StyledTabs = styled(Tabs)(({ theme }) => ({
     justifyContent: "center",
   },
   ".MuiTabs-indicator": {
-    backgroundColor: theme.palette.primary.main,
+    backgroundColor: "chocolate",
     height: 3,
     width: "80%",
   },
@@ -57,13 +78,21 @@ export const StyledTab = styled((props) => <Tab disableRipple {...props} />)(
     fontSize: 14,
     fontWeight: "600",
     "&.Mui-selected": {
-      color: theme.palette.primary.main,
+      color: "chocolate",
     },
     "&.MuiTab-root": {
       minWidth: "200px",
     },
   })
 );
+
+export const StyledGrid = styled("div")(({ theme }) => ({
+  ...theme.grid,
+  gridtemplateColumns: "1fr",
+  gridTemplateRows: "100vh",
+  alignItems: "center",
+  justifyItems: "center",
+}));
 
 //get random color
 const colours = [

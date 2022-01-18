@@ -1,7 +1,23 @@
 import React, { useState, useEffect } from "react";
-
-import { Grid, Avatar, LinearProgress, Box, TextField } from "@mui/material";
-
+import { useDispatch, useSelector } from "react-redux";
+import {
+  Grid,
+  Avatar,
+  LinearProgress,
+  Box,
+  TextField,
+  Container,
+  Card,
+  CardContent,
+  Typography,
+} from "@mui/material";
+import { StyledTypography } from "../../../assets/GlobalStyle/style";
+import { ContentBox } from "../personal/personalReadable.styles";
+import {
+  TitleTypo,
+  ContentTypo,
+  ProfileNameTypo,
+} from "./../../UI/commonStyles";
 import PersonIcon from "@mui/icons-material/Person";
 import LocalCafeIcon from "@mui/icons-material/LocalCafe";
 import ImportContactsIcon from "@mui/icons-material/ImportContacts";
@@ -23,16 +39,18 @@ import {
 import { LocalizationProvider, DesktopDatePicker } from "@mui/lab";
 import AdapterDateFns from "@mui/lab/AdapterDateFns";
 
-import {
-  StyledTabs,
-  StyledTab,
-  TitleTypo,
-  SubTitleTypo,
-} from "./../../UI/commonStyles";
+// import {
+//   StyledTabs,
+//   StyledTab,
+//   TitleTypo,
+//   SubTitleTypo,
+// } from "./../../UI/commonStyles";
 
 import axiosInstance from "./../../../helpers/axiosInstance";
 
 const ProfileInfoEditable = (props) => {
+  const dispatch = useDispatch();
+
   const {
     tab,
     setTab,
@@ -159,348 +177,311 @@ const ProfileInfoEditable = (props) => {
 
   return (
     <div>
-      <Grid
-        container
-        spacing={0}
+      <Box
+        component="main"
         sx={{
-          minHeight: "100px",
-          borderBottom: "0.1em solid",
-          borderColor: "textColor.paletteGrey",
+          flexGrow: 1,
+          py: 0,
         }}
       >
-        <Grid item sm={4}>
-          <Box
-            sx={{
-              width: "100%",
-              display: "flex",
-              alignItems: "center",
-              flexDirection: "column",
-              padding: "20px 0",
-            }}
-          >
-            <Avatar
-              sx={{
-                width: 80,
-                height: 80,
-                backgroundColor: "textColor.light",
-              }}
-            >
-              <PersonIcon
-                sx={{
-                  height: "60%",
-                  width: "55%",
-                  color: "textColor.lightDark",
-                }}
-              />
-            </Avatar>
-            <TitleTypo sx={{ mt: 1, textTransform: "capitalize" }}>
-              <TextField
-                id="standard-basic"
-                placeholder="Full Name *"
-                variant="standard"
-                type="text"
-                name="empName"
-                value={empName}
-                onChange={(e) => {
-                  handleChange(e);
-                  validate(employee);
-                }}
-                error={Boolean(errors.empName)}
-                // helperText={errors.empName}
-                sx={{
-                  "& .MuiInput-input": {
-                    color: "textColor",
-                    fontSize: 16,
-                    fontWeight: 600,
-                    textAlign: "center",
-                  },
-                }}
-              />
-            </TitleTypo>
-            <Box sx={{ width: "75%", margin: "8px 0" }}>
-              <LinearProgress
-                variant="determinate"
-                value={profilePercentage}
-                color="primary"
-                sx={{
-                  height: 5,
-                  borderRadius: 50,
-                }}
-              />
-            </Box>
-            <SubTitleTypo sx={{ textTransform: "lowercase" }}>
-              {profilePercentage}
-              {profileInfoConstant.profilePercentage}
-            </SubTitleTypo>
-          </Box>
-        </Grid>
-        <Grid item sm={8}>
-          <Box
-            sx={{
-              // width: "calc(100% - 20px)",
-              minHeight: 90,
-              border: "0.1em solid",
-              borderRadius: "5px",
-              borderColor: "textColor.paletteGrey",
-              mt: 1,
-              mb: 1,
-            }}
-          >
-            <CustomGridBox sx={{ mt: 1, mb: 1 }}>
-              <FieldBox>
-                <ContentBoldTypo sx={{ textTransform: "capitalize", pl: 1 }}>
-                  {profileInfoConstant.emailId}
-                  <Box component="span" sx={{ color: "red" }}>
-                    &nbsp;*
-                  </Box>
-                </ContentBoldTypo>
-                <CustomTextField
-                  placeholder="company email"
-                  autoComplete="off"
-                  required
-                  id="outlined-basic"
-                  variant="outlined"
-                  value={empEmail}
-                  type="text"
-                  name="empEmail"
-                  onChange={(e) => {
-                    handleChange(e);
-                    validate(employee);
-                  }}
-                  error={Boolean(errors?.empEmail)}
-                  // helperText={errors?.empEmail}
-                />
-              </FieldBox>
-              <FieldBox>
-                <ContentBoldTypo sx={{ textTransform: "capitalize", pl: 1 }}>
-                  {profileInfoConstant.department}
-                  <Box component="span" sx={{ color: "red" }}>
-                    &nbsp;*
-                  </Box>
-                </ContentBoldTypo>
-                <Box
-                  sx={{
-                    width: "80%",
-                    height: "35px",
-                    fontSize: "14px",
-                    marginLeft: "8px",
-                  }}
-                >
-                  <CreatableSelect
-                    value={departmentDropdown ? departmentDropdown : null}
-                    styles={{
-                      control: (provided, state) => ({
-                        ...provided,
-                        minHeight: "35px",
-                        height: "35px",
-                        display: "flex",
-                        alignContent: "center",
-                        borderColor: errors?.empDepartment
-                          ? "#D32F2F"
-                          : "hsl(0, 0%, 80%)",
-                      }),
-                      indicatorsContainer: (provided, state) => ({
-                        ...provided,
-                        width: "30px",
-                        padding: "0",
-                      }),
+        <Container maxWidth="xl">
+          <StyledTypography sx={{ mb: 3 }} variant="h4">
+            Account
+          </StyledTypography>
+          <Grid container spacing={3}>
+            <Grid item lg={4} md={6} xs={12}>
+              <Card>
+                <CardContent>
+                  <Box
+                    mt={8}
+                    mb={7}
+                    sx={{
+                      alignItems: "center",
+                      display: "flex",
+                      flexDirection: "column",
                     }}
-                    // isLoading={empNameLoading}
-                    isSearchable
-                    name="empDepartment"
-                    options={departmentOptions}
-                    onChange={(value) => {
-                      setDepartmentDropdown(value);
-                      setEmployee({
-                        ...employee,
-                        empDepartment: value.value,
-                      });
-                      validate(employee);
-                    }}
-                  />
-                </Box>
-              </FieldBox>
-              <FieldBox>
-                <ContentBoldTypo sx={{ textTransform: "capitalize", pl: 1 }}>
-                  {profileInfoConstant.designation}
-                  <Box component="span" sx={{ color: "red" }}>
-                    &nbsp;*
-                  </Box>
-                </ContentBoldTypo>
-                <Box
-                  sx={{
-                    width: "80%",
-                    height: "35px",
-                    fontSize: "14px",
-                    marginLeft: "8px",
-                  }}
-                >
-                  <CreatableSelect
-                    value={designationDropdown ? designationDropdown : null}
-                    styles={{
-                      control: (provided, state) => ({
-                        ...provided,
-                        minHeight: "35px",
-                        height: "35px",
-                        display: "flex",
-                        alignContent: "center",
-                        borderColor: errors?.empDesignation
-                          ? "#D32F2F"
-                          : "hsl(0, 0%, 80%)",
-                      }),
-                      indicatorsContainer: (provided, state) => ({
-                        ...provided,
-                        width: "30px",
-                        padding: "0",
-                      }),
-                    }}
-                    // isLoading={empNameLoading}
-                    isSearchable
-                    name="empDesignation"
-                    options={designationOptions}
-                    onChange={(value) => {
-                      setDesignationDropdown(value);
-                      setEmployee({
-                        ...employee,
-                        empDesignation: value.value,
-                      });
-                      validate(employee);
-                    }}
-                  />
-                </Box>
-              </FieldBox>
-              <FieldBox>
-                <ContentBoldTypo sx={{ textTransform: "capitalize", pl: 1 }}>
-                  {profileInfoConstant.dateOfJoining}
-                  <Box component="span" sx={{ color: "red" }}>
-                    &nbsp;*
-                  </Box>
-                </ContentBoldTypo>
-                <LocalizationProvider dateAdapter={AdapterDateFns}>
-                  <DesktopDatePicker
-                    errorText={"error"}
-                    inputFormat="dd/MM/yyyy"
-                    value={empDoj}
-                    onChange={(newValue) => {
-                      setEmployee({ ...employee, empDoj: newValue });
-                      validate(employee);
-                    }}
-                    renderInput={(params) => (
-                      <CustomTextField
-                        {...params}
-                        name="empDoj"
-                        error={Boolean(errors?.empDoj)}
+                  >
+                    <Avatar
+                      mt={2}
+                      sx={{
+                        height: 64,
+                        mb: 2,
+                        width: 64,
+                      }}
+                    >
+                      <PersonIcon
+                        sx={{
+                          height: "60%",
+                          width: "60%",
+                          color: "rgb(17,24,39)",
+                        }}
                       />
-                    )}
-                  />
-                </LocalizationProvider>
-              </FieldBox>
-              <FieldBox>
-                <ContentBoldTypo sx={{ textTransform: "capitalize", pl: 1 }}>
-                  {profileInfoConstant.reportingManager}
-                  <Box component="span" sx={{ color: "red" }}>
-                    &nbsp;*
-                  </Box>
-                </ContentBoldTypo>
-                <Box
-                  sx={{
-                    width: "80%",
-                    height: "35px",
-                    fontSize: "14px",
-                    marginLeft: "8px",
-                  }}
-                >
-                  <AsyncSelect
-                    value={reportingTo ? reportingTo : null}
-                    styles={{
-                      control: (provided, state) => ({
-                        ...provided,
-                        minHeight: "35px",
-                        height: "35px",
-                        display: "flex",
-                        alignContent: "center",
-                        borderColor: errors?.empReportingManager
-                          ? "#D32F2F"
-                          : "hsl(0, 0%, 80%)",
-                      }),
-                      indicatorsContainer: (provided, state) => ({
-                        ...provided,
-                        width: "30px",
-                        padding: "0",
-                      }),
-                    }}
-                    cacheOptions
-                    loadOptions={loadEmployeeOptions}
-                    defaultOptions
-                    onChange={(value) => {
-                      setReportingTo(value);
-                      setEmployee({
-                        ...employee,
-                        empReportingManager: value.value,
-                      });
-                      validate(employee);
-                    }}
-                    name="empReportingManager"
-                    // placeholder="Select univeristy"
-                  />
-                </Box>
-              </FieldBox>
-              <FieldBox>
-                <ContentBoldTypo sx={{ textTransform: "capitalize", pl: 1 }}>
-                  {profileInfoConstant.dob}
-                  <Box component="span" sx={{ color: "red" }}>
-                    &nbsp;*
-                  </Box>
-                </ContentBoldTypo>
-                <LocalizationProvider dateAdapter={AdapterDateFns}>
-                  <DesktopDatePicker
-                    maxDate={new Date()}
-                    inputFormat="dd/MM/yyyy"
-                    value={empDob}
-                    onChange={(newValue) => {
-                      setEmployee({ ...employee, empDob: newValue });
-                      validate(employee);
-                    }}
-                    renderInput={(params) => (
-                      <CustomTextField
-                        {...params}
-                        name="empDob"
-                        error={Boolean(errors?.empDob)}
+                    </Avatar>
+                    <TitleTypo sx={{ mt: 1, textTransform: "capitalize" }}>
+                      <TextField
+                        id="standard-basic"
+                        placeholder="Full Name *"
+                        variant="standard"
+                        type="text"
+                        name="empName"
+                        value={empName}
+                        onChange={(e) => {
+                          handleChange(e);
+                          validate(employee);
+                        }}
+                        error={Boolean(errors.empName)}
+                        // helperText={errors.empName}
+                        sx={{
+                          "& .MuiInput-input": {
+                            color: "textColor",
+                            fontSize: 16,
+                            fontWeight: 600,
+                            textAlign: "center",
+                          },
+                        }}
                       />
-                    )}
-                  />
-                </LocalizationProvider>
-              </FieldBox>
-            </CustomGridBox>
-          </Box>
-        </Grid>
-      </Grid>
-      <Box sx={{ width: "100%" }}>
-        <StyledTabs value={tab} onChange={handleTabChange}>
-          <StyledTab
-            icon={<LocalCafeIcon />}
-            label={profileInfoConstant.tabs.personal}
-            sx={{ fontSize: "16px" }}
-          />
-          <StyledTab
-            icon={<ImportContactsIcon />}
-            label={profileInfoConstant.tabs.professional}
-            sx={{ fontSize: "16px" }}
-          />
-          <StyledTab
-            icon={<BadgeIcon />}
-            label={profileInfoConstant.tabs.skills}
-            sx={{ fontSize: "16px" }}
-          />
-          <StyledTab
-            icon={<PlagiarismIcon />}
-            label="Project"
-            sx={{ fontSize: "16px" }}
-          />
-        </StyledTabs>
+                    </TitleTypo>
+
+                    <Box sx={{ width: "75%", margin: "20px 0" }}>
+                      <LinearProgress
+                        variant="determinate"
+                        value={profilePercentage}
+                        color="warning"
+                        sx={{
+                          height: 5,
+                          borderRadius: 50,
+                        }}
+                      />
+                    </Box>
+                    <Typography color="textSecondary" variant="body2">
+                      {profilePercentage ? profilePercentage : 0}
+                      {profileInfoConstant.profilePercentage}
+                    </Typography>
+                  </Box>
+                </CardContent>
+              </Card>
+            </Grid>
+
+            <Grid item lg={8} md={6} xs={6}>
+              <Card>
+                <CardContent>
+                  <Grid item sm={8}>
+                    <Box>
+                      <ContentBox>
+                        <TitleTypo>{profileInfoConstant.emailId}</TitleTypo>
+                        <ContentTypo>
+                          <CustomTextField
+                            placeholder="company email"
+                            autoComplete="off"
+                            required
+                            id="outlined-basic"
+                            variant="outlined"
+                            value={empEmail}
+                            type="text"
+                            name="empEmail"
+                            onChange={(e) => {
+                              handleChange(e);
+                              validate(employee);
+                            }}
+                            error={Boolean(errors?.empEmail)}
+                            // helperText={errors?.empEmail}
+                          />
+                        </ContentTypo>
+                      </ContentBox>
+                    </Box>
+
+                    <Box>
+                      <ContentBox>
+                        <TitleTypo>{profileInfoConstant.department}</TitleTypo>
+                        <ContentTypo>
+                          <CreatableSelect
+                            value={
+                              departmentDropdown ? departmentDropdown : null
+                            }
+                            styles={{
+                              control: (provided, state) => ({
+                                ...provided,
+                                minHeight: "35px",
+                                height: "35px",
+                                display: "flex",
+                                alignContent: "center",
+                                borderColor: errors?.empDepartment
+                                  ? "#D32F2F"
+                                  : "hsl(0, 0%, 80%)",
+                              }),
+                              indicatorsContainer: (provided, state) => ({
+                                ...provided,
+                                width: "30px",
+                                padding: "0",
+                              }),
+                            }}
+                            // isLoading={empNameLoading}
+                            isSearchable
+                            name="empDepartment"
+                            options={departmentOptions}
+                            onChange={(value) => {
+                              setDepartmentDropdown(value);
+                              setEmployee({
+                                ...employee,
+                                empDepartment: value.value,
+                              });
+                              validate(employee);
+                            }}
+                          />
+                        </ContentTypo>
+                      </ContentBox>
+                    </Box>
+
+                    <Box>
+                      <ContentBox>
+                        <TitleTypo>{profileInfoConstant.designation}</TitleTypo>
+                        <ContentTypo>
+                          <CreatableSelect
+                            value={
+                              designationDropdown ? designationDropdown : null
+                            }
+                            styles={{
+                              control: (provided, state) => ({
+                                ...provided,
+                                minHeight: "35px",
+                                height: "35px",
+                                display: "flex",
+                                alignContent: "center",
+                                borderColor: errors?.empDesignation
+                                  ? "#D32F2F"
+                                  : "hsl(0, 0%, 80%)",
+                              }),
+                              indicatorsContainer: (provided, state) => ({
+                                ...provided,
+                                width: "30px",
+                                padding: "0",
+                              }),
+                            }}
+                            // isLoading={empNameLoading}
+                            isSearchable
+                            name="empDesignation"
+                            options={designationOptions}
+                            onChange={(value) => {
+                              setDesignationDropdown(value);
+                              setEmployee({
+                                ...employee,
+                                empDesignation: value.value,
+                              });
+                              validate(employee);
+                            }}
+                          />
+                        </ContentTypo>
+                      </ContentBox>
+                    </Box>
+                    <Box>
+                      <ContentBox>
+                        <TitleTypo>
+                          {profileInfoConstant.dateOfJoining}
+                        </TitleTypo>
+                        <ContentTypo>
+                          <LocalizationProvider dateAdapter={AdapterDateFns}>
+                            <DesktopDatePicker
+                              errorText={"error"}
+                              inputFormat="dd/MM/yyyy"
+                              value={empDoj}
+                              onChange={(newValue) => {
+                                setEmployee({
+                                  ...employee,
+                                  empDoj: newValue,
+                                });
+                                validate(employee);
+                              }}
+                              renderInput={(params) => (
+                                <CustomTextField
+                                  {...params}
+                                  name="empDoj"
+                                  error={Boolean(errors?.empDoj)}
+                                />
+                              )}
+                            />
+                          </LocalizationProvider>
+                        </ContentTypo>
+                      </ContentBox>
+                    </Box>
+                    <Box>
+                      <ContentBox>
+                        <TitleTypo>
+                          {profileInfoConstant.reportingManager}
+                        </TitleTypo>
+                        <ContentTypo>
+                          <AsyncSelect
+                            value={reportingTo ? reportingTo : null}
+                            styles={{
+                              control: (provided, state) => ({
+                                ...provided,
+                                minHeight: "35px",
+                                height: "35px",
+                                display: "flex",
+                                alignContent: "center",
+                                borderColor: errors?.empReportingManager
+                                  ? "#D32F2F"
+                                  : "hsl(0, 0%, 80%)",
+                              }),
+                              indicatorsContainer: (provided, state) => ({
+                                ...provided,
+                                width: "30px",
+                                padding: "0",
+                              }),
+                            }}
+                            cacheOptions
+                            loadOptions={loadEmployeeOptions}
+                            defaultOptions
+                            onChange={(value) => {
+                              setReportingTo(value);
+                              setEmployee({
+                                ...employee,
+                                empReportingManager: value.value,
+                              });
+                              validate(employee);
+                            }}
+                            name="empReportingManager"
+                            // placeholder="Select univeristy"
+                          />
+                        </ContentTypo>
+                      </ContentBox>
+                    </Box>
+
+                    <Box>
+                      <ContentBox>
+                        <TitleTypo>{profileInfoConstant.dob}</TitleTypo>
+                        <ContentTypo>
+                          <LocalizationProvider dateAdapter={AdapterDateFns}>
+                            <DesktopDatePicker
+                              maxDate={new Date()}
+                              inputFormat="dd/MM/yyyy"
+                              value={empDob}
+                              onChange={(newValue) => {
+                                setEmployee({
+                                  ...employee,
+                                  empDob: newValue,
+                                });
+                                validate(employee);
+                              }}
+                              renderInput={(params) => (
+                                <CustomTextField
+                                  {...params}
+                                  name="empDob"
+                                  error={Boolean(errors?.empDob)}
+                                />
+                              )}
+                            />
+                          </LocalizationProvider>
+                        </ContentTypo>
+                      </ContentBox>
+                    </Box>
+                  </Grid>
+                </CardContent>
+              </Card>
+            </Grid>
+          </Grid>
+        </Container>
       </Box>
     </div>
   );
 };
-
 export default ProfileInfoEditable;
