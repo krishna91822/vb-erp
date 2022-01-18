@@ -8,12 +8,30 @@ import { useSelector } from "react-redux";
 import { Fragment } from "react";
 import { CssBaseline } from "@mui/material";
 import DescriptionAlerts from "./pages/LoginPage/Authorization";
+import { useEffect } from "react";
+import { tokenValidate } from "./store/user-actions";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import cookie from "react-cookies";
 
 function App() {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   const notification = useSelector((state) => state.ui.notification);
   const loader = useSelector((state) => state.ui.loading);
   const { routes } = RRoutes();
-
+  useEffect(() => {
+    if (cookie.load("token")) {
+      dispatch(tokenValidate()).then((res) => {
+        if (!res) {
+          cookie.remove("token");
+          navigate("/");
+        }
+      });
+    } else {
+      navigate("/");
+    }
+  }, []);
   return (
     <Fragment>
       <CssBaseline />

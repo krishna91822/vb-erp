@@ -5,6 +5,7 @@ const userFields = {
   email: "",
   roles: [],
   permissions: [],
+  token: "",
   has_permission: false,
 };
 
