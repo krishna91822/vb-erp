@@ -30,7 +30,7 @@ export const ContainerStyle = styled("div")(({ theme }) => ({
 export const GreenButton = styled(Button)({
   color: "#fff",
   backgroundColor: teal[400],
-  fontWeight: 600,
+  fontWeight: 500,
   fontSize: 16,
   textTransform: "capitalize",
   margin: "0 8px",
@@ -42,8 +42,10 @@ export const GreenButton = styled(Button)({
 export const BlueButton = styled(Button)({
   color: "#fff",
   backgroundColor: blue[600],
-  fontWeight: 600,
+  fontWeight: 500,
   fontSize: 16,
+  margin: "0 20px",
+
   textTransform: "capitalize",
   "&:hover": {
     backgroundColor: blue[800],

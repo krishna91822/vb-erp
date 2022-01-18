@@ -4,7 +4,6 @@ import thunk from "redux-thunk";
 
 import uiSlice from "./ui-slice";
 import employeeSlice from "./employeeSlice";
-import profileviewSlice from "./profilepage/profileview-slice";
 import contentsSlice from "./contents-slice";
 import pmoSlice from "./pmo-slice";
 import rewardSlice from "./rewards-slice";
@@ -26,7 +25,6 @@ export default configureStore({
     CMS_state: POSOW_Slice.reducer,
     INVOICE_state: invoice_Slice.reducer,
     employee: employeeSlice,
-    profileview: profileviewSlice.reducer,
   },
   middleware: [...middleware],
 });

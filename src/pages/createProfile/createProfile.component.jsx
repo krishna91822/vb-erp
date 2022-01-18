@@ -14,7 +14,10 @@ import {
   Card,
   CardHeader,
   Divider,
+  Container,
 } from "@mui/material";
+
+import { StyledGrid } from "../../components/UI/commonStyles";
 
 import {
   createProfileConstant,
@@ -52,7 +55,6 @@ import axiosInstance from "./../../helpers/axiosInstance";
 
 import { uiActions } from "./../../store/ui-slice";
 import validator from "validator";
-import { profileviewActions } from "./../../store/profilepage/profileview-slice";
 
 import { useForm } from "react-hook-form";
 
@@ -66,7 +68,6 @@ const CreateProfile = ({
   const { currentEmployee } = useSelector((state) => state.employee);
   const dispatch = useDispatch();
   const { toggleLoader, showNotification } = uiActions;
-  const { changeprofileview } = profileviewActions;
 
   // const { register, handleSubmit, errors } = useForm();
   useEffect(() => {
@@ -82,7 +83,6 @@ const CreateProfile = ({
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
-  const basicprofileview = useSelector((state) => state.profileview.cardview);
 
   const empInitial = {
     empName: "",
@@ -149,9 +149,6 @@ const CreateProfile = ({
     editEmployeeData ? [...editEmployeeData.skillsDetails] : []
   );
 
-  const showHidedetails = () => {
-    dispatch(changeprofileview());
-  };
   //calculate percentage progress
   const profileProgress = () => {
     const totalFields =
@@ -362,7 +359,6 @@ const CreateProfile = ({
               message: "Employee has been updated.",
             })
           );
-          // console.log(response);
         })
         .catch(function (error) {
           dispatch(toggleLoader());
@@ -375,39 +371,6 @@ const CreateProfile = ({
   return currentEmployee &&
     ["super_admin", "hr_admin"].some((el) => user.roles.includes(el)) ? (
     <BoxStyle data-test="create-profile-test">
-      <ContainerStyleTop>
-        {/* <TitleTypo sx={{ textTransform: "capitalize", mb: 0.5 }}>
-          {currentEmployee ? currentEmployee.empName : ""}
-        </TitleTypo> */}
-        <Box
-          sx={{
-            display: "flex",
-            width: 1,
-            alignItems: "center",
-            justifyContent: editEmployeeData ? "flex-end" : "space-between",
-          }}
-        >
-          {editEmployeeData ? null : <StyledTypography></StyledTypography>}
-          <Box>
-            <GreenButton
-              data-test="confirm-button-test"
-              // onClick={handleSubmit(handleConfirm)}
-              onClick={handleConfirm}
-              variant="contained"
-            >
-              {createProfileConstant.confirm}
-            </GreenButton>
-            <BlueButton
-              data-test="custome-button-test"
-              onClick={handleOpen}
-              variant="contained"
-            >
-              {createProfileConstant.addCustomField}
-            </BlueButton>
-          </Box>
-        </Box>
-      </ContainerStyleTop>
-
       <div>
         <ProfileInfoEditable
           tab={tab}
@@ -420,87 +383,107 @@ const CreateProfile = ({
           validate={validate}
         />
       </div>
-      {!basicprofileview && (
-        <Grid
-          item
-          lg={8}
-          md={6}
-          xs={6}
-          sx={{ position: "fixed", marginTop: "-12%", marginLeft: "35%" }}
-        >
-          <Card>
-            <div
-              onClick={showHidedetails}
-              style={{
-                display: "flex",
-                flexDirection: "row",
-                marginLeft: "82%",
-                padding: ".5rem",
-                color: "chocolate",
-                cursor: "pointer",
-              }}
-            >
-              <NavigateBeforeIcon />
-              <span>Basic Info</span>
-            </div>
-            <CardHeader
-              title={
-                <Grid item sm={11}>
-                  <StyledTabs value={value} onChange={handleChange}>
-                    <StyledTab
-                      icon={<LocalCafeIcon />}
-                      label="Personal"
-                      sx={{ fontSize: "12px" }}
-                    />
-                    <StyledTab
-                      icon={<ImportContactsIcon />}
-                      label="professional"
-                      sx={{ fontSize: "12px" }}
-                    />
-                    <StyledTab
-                      icon={<BadgeIcon />}
-                      label="Skills And Qualifications"
-                      sx={{ fontSize: "12px" }}
-                    />
-                  </StyledTabs>
-                </Grid>
-              }
-            />
-            <Divider />
-            <TabPanelCustom value={value} index={0}>
-              <PersonalEditable
-                empData={employee}
-                setEmpData={setEmployee}
-                personalDetails={personalDetails}
-                setPersonalDetails={setPersonalDetails}
-                // register={register}
-                errors={errors}
+      <Box mt={3}>
+        <Container maxWidth="xl">
+          <StyledGrid>
+            <Card>
+              <CardHeader
+                title={
+                  <Grid item sm={11}>
+                    <StyledTabs value={value} onChange={handleChange}>
+                      <StyledTab
+                        icon={<LocalCafeIcon />}
+                        label="Personal"
+                        sx={{ fontSize: "12px" }}
+                      />
+                      <StyledTab
+                        icon={<ImportContactsIcon />}
+                        label="professional"
+                        sx={{ fontSize: "12px" }}
+                      />
+                      <StyledTab
+                        icon={<BadgeIcon />}
+                        label="Skills And Qualifications"
+                        sx={{ fontSize: "12px" }}
+                      />
+                    </StyledTabs>
+                  </Grid>
+                }
               />
-            </TabPanelCustom>
+              <Divider />
+              <TabPanelCustom value={value} index={0}>
+                <PersonalEditable
+                  empData={employee}
+                  setEmpData={setEmployee}
+                  personalDetails={personalDetails}
+                  setPersonalDetails={setPersonalDetails}
+                  // register={register}
+                  errors={errors}
+                />
+              </TabPanelCustom>
 
-            <TabPanelCustom value={value} index={1}>
-              <ProfessionalEditable
-                empData={employee}
-                setEmpData={setEmployee}
-                professionalDetails={professionalDetails}
-                setProfessionalDetails={setProfessionalDetails}
-                // register={register}
-                errors={errors}
-              />
-            </TabPanelCustom>
-            <TabPanelCustom value={value} index={2}>
-              <SkillEditable
-                empData={employee}
-                setEmpData={setEmployee}
-                skillsDetails={skillsDetails}
-                setSkillsDetails={setSkillsDetails}
-                // register={register}
-                errors={errors}
-              />
-            </TabPanelCustom>
-          </Card>
-        </Grid>
-      )}
+              <TabPanelCustom value={value} index={1}>
+                <ProfessionalEditable
+                  empData={employee}
+                  setEmpData={setEmployee}
+                  professionalDetails={professionalDetails}
+                  setProfessionalDetails={setProfessionalDetails}
+                  // register={register}
+                  errors={errors}
+                />
+              </TabPanelCustom>
+              <TabPanelCustom value={value} index={2}>
+                <SkillEditable
+                  empData={employee}
+                  setEmpData={setEmployee}
+                  skillsDetails={skillsDetails}
+                  setSkillsDetails={setSkillsDetails}
+                  // register={register}
+                  errors={errors}
+                />
+              </TabPanelCustom>
+              <ContainerStyleTop>
+                {/* <TitleTypo sx={{ textTransform: "capitalize", mb: 0.5 }}>
+          {currentEmployee ? currentEmployee.empName : ""}
+        </TitleTypo> */}
+                <Box
+                  sx={{
+                    display: "flex",
+                    width: 1,
+                    alignItems: "center",
+                    justifyContent: editEmployeeData
+                      ? "flex-end"
+                      : "space-between",
+                  }}
+                >
+                  {editEmployeeData ? null : (
+                    <StyledTypography></StyledTypography>
+                  )}
+                  <Box>
+                    <GreenButton
+                      data-test="confirm-button-test"
+                      // onClick={handleSubmit(handleConfirm)}
+                      onClick={handleConfirm}
+                      variant="contained"
+                      size="small"
+                    >
+                      {createProfileConstant.confirm}
+                    </GreenButton>
+                    <BlueButton
+                      data-test="custome-button-test"
+                      onClick={handleOpen}
+                      variant="contained"
+                      size="small"
+                    >
+                      {createProfileConstant.addCustomField}
+                    </BlueButton>
+                  </Box>
+                </Box>
+              </ContainerStyleTop>
+            </Card>
+          </StyledGrid>
+        </Container>
+      </Box>
       <div>
         <Modal
           open={open}

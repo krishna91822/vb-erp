@@ -11,6 +11,7 @@ import Spinner from "./../../components/UI/spinner/spinner";
 import axiosInstance from "../../helpers/axiosInstance";
 
 import { useForm } from "react-hook-form";
+import { roundToNearestMinutes } from "date-fns/esm";
 
 const Profile = () => {
   const { register, handleSubmit, errors } = useForm();
@@ -100,11 +101,26 @@ const Profile = () => {
     <Spinner data-test="profile-page-test" />
   ) : (
     <Box sx={{ pb: 3 }}>
-      <EditMode handleSubmit={handleSubmit} {...editModeProps} />
+      {/* <Box sx={{ position: "fixed", marginLeft: "70%", marginTop: "20px" }}> */}
+      <EditMode
+        handleSubmit={handleSubmit}
+        {...editModeProps}
+        switchOnly={roundToNearestMinutes}
+        btnsOnly={false}
+      />
+      {/* </Box> */}
       <ProfileContent
         register={register}
         errors={errors}
         {...profileContentProps}
+        btns={
+          <EditMode
+            handleSubmit={handleSubmit}
+            {...editModeProps}
+            switchOnly={false}
+            btnsOnly={true}
+          />
+        }
       />
     </Box>
   );

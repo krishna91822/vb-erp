@@ -28,6 +28,7 @@ export const ContentTypo = styled("div")(({ theme }) => ({
 export const TitleTypo = styled("div")(({ theme }) => ({
   ...theme.typography.h5,
   fontSize: 13,
+  marginLeft: "1rem",
   marginTop: "1rem",
   fontWeight: "600",
   lineHeight: "1",

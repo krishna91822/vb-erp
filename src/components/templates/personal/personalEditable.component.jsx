@@ -230,7 +230,7 @@ const PersonalEditable = (props) => {
   };
 
   return (
-    <Grid container spacing={0} sx={{ minHeight: 150 }}>
+    <Grid container mb={5} spacing={0} sx={{ minHeight: 150 }}>
       <Grid item sm={7}>
         <Box>
           <ContentBox>
@@ -470,23 +470,19 @@ const PersonalEditable = (props) => {
           </ContentBox>
         </Box>
 
-        <Box
-          sx={{
-            width: 1,
-            display: "flex",
-            alignItems: "center",
-            textTransform: "capitalize",
-          }}
-        >
-          <Checkbox
-            checked={addresschecked}
-            onChange={handleAddressCheckedChange}
-            inputProps={{ "aria-label": "controlled" }}
-          />
+        <ContentBox>
+          <TitleTypo></TitleTypo>
+
           <ContentTypo sx={{ fontWeight: "400" }}>
+            <Checkbox
+              size="small"
+              checked={addresschecked}
+              onChange={handleAddressCheckedChange}
+              inputProps={{ "aria-label": "controlled" }}
+            />
             {personal.addressCheckbox}
           </ContentTypo>
-        </Box>
+        </ContentBox>
 
         <Box>
           <ContentBox>

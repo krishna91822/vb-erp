@@ -84,7 +84,7 @@ const SkillEditable = ({
   ]);
 
   return (
-    <Grid container sx={{ minHeight: 150 }}>
+    <Grid container mb={5} sx={{ minHeight: 150 }}>
       <Grid item sm={7}>
         <Box>
           <ContentBox>

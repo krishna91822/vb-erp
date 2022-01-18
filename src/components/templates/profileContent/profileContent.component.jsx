@@ -33,15 +33,12 @@ import {
 } from "./profileContent.styles";
 
 import { addFieldOptions } from "./profileContent.constant";
-import { profileviewActions } from "./../../../store/profilepage/profileview-slice";
 import { StyledGrid } from "../../UI/commonStyles";
 import { LocalizationProvider, DesktopDatePicker } from "@mui/lab";
 import AdapterDateFns from "@mui/lab/AdapterDateFns";
 import validator from "validator";
 import { useDispatch, useSelector } from "react-redux";
-import NavigateBeforeIcon from "@mui/icons-material/NavigateBefore";
 const ProfileContent = (props) => {
-  const { changeprofileview } = profileviewActions;
   const dispatch = useDispatch();
   const {
     currentEmployee,
@@ -59,7 +56,6 @@ const ProfileContent = (props) => {
   } = props;
 
   const { user } = useSelector((state) => state.user);
-  const basicprofileview = useSelector((state) => state.profileview.cardview);
 
   //calculate percentage progress
   const profileProgress = () => {
@@ -124,10 +120,6 @@ const ProfileContent = (props) => {
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
-  };
-
-  const showHidedetails = () => {
-    dispatch(changeprofileview());
   };
 
   const newFieldTemplate = {
@@ -267,26 +259,14 @@ const ProfileContent = (props) => {
   };
 
   return (
-    <>
-      <Box sx={{ p: 2 }}>{renderProfileInfo()}</Box>
-      <Container>
-        {true && (
+    <Grid>
+      <Grid item>
+        <Box>{renderProfileInfo()}</Box>
+      </Grid>
+      <Grid item mt={1}>
+        <Container maxWidth="xl">
           <StyledGrid item lg={8} md={6} xs={6}>
             <Card>
-              {/* <div
-                onClick={showHidedetails}
-                style={{
-                  display: "flex",
-                  flexDirection: "row",
-                  marginLeft: "82%",
-                  padding: ".5rem",
-                  color: "chocolate",
-                  cursor: "pointer",
-                }}
-              >
-                <NavigateBeforeIcon />
-                <span>Basic Info</span>
-              </div> */}
               <CardHeader
                 title={
                   <Grid item sm={11}>
@@ -365,10 +345,12 @@ const ProfileContent = (props) => {
                   </Grid>
                 )}
               </TabPanelCustom>
+
+              <Box>{inEditMode && props.btns}</Box>
             </Card>
           </StyledGrid>
-        )}
-      </Container>
+        </Container>
+      </Grid>
       <div>
         <Modal
           open={open ? open : false}
@@ -419,7 +401,7 @@ const ProfileContent = (props) => {
           </Paper>
         </Modal>
       </div>
-    </>
+    </Grid>
   );
 };
 

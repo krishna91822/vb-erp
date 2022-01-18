@@ -15,6 +15,8 @@ const EditMode = ({
   handleOpen,
   handleSubmit,
   setEmployeeUpdateCount,
+  switchOnly,
+  btnsOnly,
 }) => {
   const { inEditMode } = useSelector((state) => state.employee);
   const { user } = useSelector((state) => state.user);
@@ -111,17 +113,17 @@ const EditMode = ({
         pb: 1,
       }}
     >
-      {inEditMode ? (
+      {inEditMode && !switchOnly && btnsOnly ? (
         <div>
           <Button
-            sx={{ marginRight: "2rem" }}
+            sx={{ margin: "0 1.5rem 1rem 0" }}
             variant="contained"
             onClick={handleOpen}
           >
             add Custom Field
           </Button>
           <Button
-            sx={{ marginRight: "2rem" }}
+            sx={{ margin: "0 1.5rem 1rem 0" }}
             variant="contained"
             onClick={handleSubmit(handleSubmitBtn)}
           >
@@ -143,18 +145,23 @@ const EditMode = ({
       ) : (
         ""
       )}
-      <TitleTypo
-        data-test="edit-text-test"
-        sx={{ textTransform: "capitalize", pr: 1 }}
-      >
-        {editModeConstant.editModeBtn}
-      </TitleTypo>
-      <CustomSwitch
-        data-test="edit-switch-test"
-        checked={inEditMode}
-        onChange={handleChange}
-        inputProps={{ "aria-label": "switch" }}
-      />
+
+      {!btnsOnly && (
+        <>
+          <TitleTypo
+            data-test="edit-text-test"
+            sx={{ textTransform: "capitalize", pr: 1 }}
+          >
+            {editModeConstant.editModeBtn}
+          </TitleTypo>
+          <CustomSwitch
+            data-test="edit-switch-test"
+            checked={inEditMode}
+            onChange={handleChange}
+            inputProps={{ "aria-label": "switch" }}
+          />
+        </>
+      )}
     </Box>
   );
 };
