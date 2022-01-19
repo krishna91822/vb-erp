@@ -92,22 +92,59 @@ const ProjectTab = (props) => {
     setProjects(updatedProjects);
   };
 
+  const handleDropdownChange = (value, index) => {
+    const updatedSkills = projects.map((project, i) =>
+      index === i
+        ? Object.assign(project, {
+            projectSkill: value.map((el) => el.value),
+          })
+        : project
+    );
+    setProjects(updatedSkills);
+    const skillArray = projects.map((el) =>
+      el.projectSkill.map((arr) => {
+        return { label: arr, value: arr };
+      })
+    );
+    setProjectSkillDropdown(skillArray);
+  };
+
   useEffect(() => {
     setEmpData && setEmpData({ ...empData, project: projects });
   }, [projects]);
 
   //dropdown
+  const projectSkillOptions = [
+    {
+      label: "aws",
+      value: "aws",
+    },
+    {
+      label: "full-stack",
+      value: "full-stack",
+    },
+    {
+      label: "mern",
+      value: "mern",
+    },
+    {
+      label: "react-native",
+      value: "react-native",
+    },
+    {
+      label: "drupal",
+      value: "drupal",
+    },
+  ];
+
   const [projectSkillDropdown, setProjectSkillDropdown] = useState(
-    project && [
-      ...project.map((el) =>
-        el.projectSkill.map((item) => {
-          return {
-            label: item,
-            value: item,
-          };
-        })
-      ),
-    ]
+    projects
+      ? projects.map((el) =>
+          el.projectSkill.map((arr) => {
+            return { label: arr, value: arr };
+          })
+        )
+      : []
   );
 
   return editable ? (
@@ -140,23 +177,14 @@ const ProjectTab = (props) => {
             <ContentBox sx={{ fontSize: "16px", fontWeight: "400" }}>
               <TitleTypo>{projectConstant.projectSkills}</TitleTypo>
               <CreatableSelect
-                // value={primarySkillDropdown}
+                value={projectSkillDropdown[index]}
                 isMulti
                 styles={customStyles}
                 isSearchable
                 name="projectSkill"
-                // options={projectSkillDropdown[index]}
+                options={projectSkillOptions}
                 placeholder="Select primary skills"
-                onChange={(value) => {
-                  const updatedSkills = projects.map((project, i) =>
-                    index === i
-                      ? Object.assign(project, {
-                          projectSkill: value.map((el) => el.value),
-                        })
-                      : project
-                  );
-                  setProjects(updatedSkills);
-                }}
+                onChange={(value) => handleDropdownChange(value, index)}
               />
             </ContentBox>
             <ContentBox>
