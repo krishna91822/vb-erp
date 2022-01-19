@@ -25,6 +25,7 @@ export const invoice_init_state = {
   },
 
   popup: false,
+  popupVisibility: false,
   redirect: false,
   response_message: "",
   invoiceData: [],
@@ -51,12 +52,11 @@ const invoice_Slice = createSlice({
   name: "invoice_state",
   initialState: invoice_init_state,
   reducers: {
-    PopUpON(state, action) {
+    setPopupOpen(state) {
       state.popup = !state.popup;
-      state.response_message = action.payload;
     },
-    PopUpOF(state, action) {
-      state.popup = !state.popup;
+    setpopupVisibility(state) {
+      state.popupVisibility = !state.popupVisibility;
     },
     setTotalCount(state, action) {
       state.totalCount = action.payload;
