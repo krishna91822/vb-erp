@@ -172,6 +172,12 @@ const Allocation = () => {
                             EmpName
                           </MenuItem>
                           <MenuItem
+                            value="yearsOfExperience"
+                            sx={{ fontSize: "14px" }}
+                          >
+                            Years Of Experience
+                          </MenuItem>
+                          <MenuItem
                             value="remainingAllocation"
                             sx={{ fontSize: "14px" }}
                           >
