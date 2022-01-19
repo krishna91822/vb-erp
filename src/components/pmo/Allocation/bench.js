@@ -60,6 +60,8 @@ const Bench = ({ pressed, benchSortValue }) => {
     dispatch(getOnBench(filters, value, benchSortValue));
   };
 
+  console.log(data.results);
+
   return (
     <div className="ListContainer">
       <BenchModal
