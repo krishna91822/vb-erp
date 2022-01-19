@@ -1,11 +1,11 @@
-import React, { useState, useLayoutEffect } from "react";
+import React, { useState, useLayoutEffect, useEffect } from "react";
 import { TextField, Button } from "@mui/material";
 import InputAdornment from "@mui/material/InputAdornment";
 import ResourceInformationTable from "../ResourceInformationTable";
 import Autocomplete from "@mui/material/Autocomplete";
 import { useDispatch } from "react-redux";
 import { uiActions } from "../../../store/ui-slice";
-import { pmoActions } from "../../../store/pmo-slice";
+import { MiniHeadingTypography } from "../../../assets/GlobalStyle/style";
 
 import { getAllEmployees } from "../../../store/pmo-actions";
 import {
@@ -64,19 +64,7 @@ const ResourceInformation = ({
     }
     setTempEmpName("");
   };
-  // useLayoutEffect(() => {
-  //   if (percentageAllocated === 100) {
-  //     dispatch(
-  //       uiActions.showNotification({
-  //         status: "error",
-  //         message: "Already allocated with 100% bandwidth",
-  //       })
-  //     );
-  //   }
-  //   // return () => {
-  //   //   dispatch(pmoActions.updatePercentageAllocated(0));
-  //   // };
-  // }, [percentageAllocated]);
+
   const testing = () => {
     if (percentageAllocated === 100) {
       dispatch(
@@ -95,9 +83,12 @@ const ResourceInformation = ({
 
   return (
     <Container>
-      <ResourceInformationHeading data-test="resource-head">
+      <MiniHeadingTypography
+        data-test="resource-head"
+        style={{ padding: "0.8em 0", borderBottom: "0.1em solid #afacacde" }}
+      >
         Resource Information
-      </ResourceInformationHeading>
+      </MiniHeadingTypography>
       {edit && (
         <AllElementsContainer>
           <ResourceForm>
@@ -185,7 +176,7 @@ const ResourceInformation = ({
                 />
                 <TextField
                   name="allocationPercentagetxt"
-                  readonly
+                  readOnly
                   placeholder="50%"
                   variant="outlined"
                   size="small"

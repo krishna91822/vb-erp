@@ -16,7 +16,7 @@ import Popup from "./Popup";
 import EmployeesList from "../employees/EmployeesList";
 import { StyledTableCell } from "../../assets/GlobalStyle/style";
 import { TableRow, Tab } from "@mui/material";
-import "../../assets/styles/ClientListStyles.css";
+import "../clients/styles/ClientListStyles.css";
 
 const RewardRowData = ({ data, StyledMenu, open }) => {
   const dispatch = useDispatch();
@@ -88,7 +88,7 @@ const RewardRowData = ({ data, StyledMenu, open }) => {
           )}
         </StyledTableCell>
         <StyledTableCell align="center">{data.status}</StyledTableCell>
-        <StyledTableCell align="center">
+        <StyledTableCell>
           <div className="actions">
             <StyledMenu
               id={`demo-customized-menu-${data._id}`}

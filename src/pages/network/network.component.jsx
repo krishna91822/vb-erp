@@ -100,37 +100,37 @@ const Network = () => {
   const sortOptions = [...sortOption];
 
   const searchHandleChange = (event) => {
-    setSearchEmp(event.target.value);
+    const searchFields = event.target.value;
+    if (event.key === "Enter") {
+      setSearchEmp(searchFields);
+    }
   };
 
   return (
-    <div className="client-list-wrapper">
+    <div className="list-wrapper">
       <StyledTypography>{networkText.header}</StyledTypography>
       <Card>
         <CardContent>
           <Grid container spacing={2}>
             <Grid item xs={4}>
-              <Box>
-                <TextField
-                  data-test="search-bar-test"
-                  onChange={searchHandleChange}
-                  placeholder="Search employee"
-                  id="outlined-search"
-                  size="small"
-                  variant="outlined"
-                  sx={{ width: "15vw", height: "40px", mr: 1 }}
-                  InputProps={{
-                    startAdornment: (
-                      <InputAdornment position="start">
-                        <SvgIcon color="action" fontSize="small">
-                          <SearchIcon />
-                        </SvgIcon>
-                      </InputAdornment>
-                    ),
-                  }}
-                  variant="outlined"
-                />
-              </Box>
+              <TextField
+                fullWidth
+                data-test="search-bar-test"
+                onChange={searchHandleChange}
+                onKeyPress={searchHandleChange}
+                placeholder="Search employee"
+                id="outlined-search"
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <SvgIcon color="action" fontSize="small">
+                        <SearchIcon />
+                      </SvgIcon>
+                    </InputAdornment>
+                  ),
+                }}
+                variant="outlined"
+              />
             </Grid>
             <Grid
               item

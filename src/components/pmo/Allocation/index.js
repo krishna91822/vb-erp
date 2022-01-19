@@ -2,6 +2,8 @@ import React, { useState } from "react";
 
 import Allocated from "./allocated";
 import Bench from "./bench";
+import { filterData } from "./allocated";
+import { filterBenchData } from "./bench";
 
 import {
   MenuItem,
@@ -12,9 +14,13 @@ import {
   CardContent,
   Box,
   Grid,
+  SvgIcon,
+  TextField,
+  InputAdornment,
 } from "@mui/material";
 import FilterListIcon from "@mui/icons-material/FilterList";
 import FilterListOffIcon from "@mui/icons-material/FilterListOff";
+import { Search as SearchIcon } from "../../../icons/search";
 
 import { Heading, SideButton, ProjectHead, MainComponent } from "./style";
 import { StyledTypography } from "../../../assets/GlobalStyle/style";
@@ -46,14 +52,51 @@ const Allocation = () => {
 
   return (
     <div className="list-wrapper">
+      <StyledTypography data-test="main-heading">Allocations</StyledTypography>
       <Card>
         <CardContent>
           <Box sx={{ maxWidth: "100%" }}>
             <Grid container spacing={2}>
               <Grid item xs={4}>
-                <StyledTypography data-test="main-heading">
-                  Allocations
-                </StyledTypography>
+                {!bench ? (
+                  <TextField
+                    fullWidth
+                    id="outlined-basic"
+                    placeholder="Search by Associate name"
+                    name="employeeName"
+                    onChange={filterData}
+                    onKeyPress={(event) => filterData(event)}
+                    InputProps={{
+                      startAdornment: (
+                        <InputAdornment position="start">
+                          <SvgIcon color="action" fontSize="small">
+                            <SearchIcon />
+                          </SvgIcon>
+                        </InputAdornment>
+                      ),
+                    }}
+                    variant="outlined"
+                  />
+                ) : (
+                  <TextField
+                    fullWidth
+                    id="outlined-basic"
+                    placeholder="Search by Associate name"
+                    name="employeeName"
+                    onChange={filterBenchData}
+                    onKeyPress={(event) => filterBenchData(event)}
+                    InputProps={{
+                      startAdornment: (
+                        <InputAdornment position="start">
+                          <SvgIcon color="action" fontSize="small">
+                            <SearchIcon />
+                          </SvgIcon>
+                        </InputAdornment>
+                      ),
+                    }}
+                    variant="outlined"
+                  />
+                )}
               </Grid>
 
               <Grid
@@ -127,6 +170,12 @@ const Allocation = () => {
                           </MenuItem>
                           <MenuItem value="empName" sx={{ fontSize: "14px" }}>
                             EmpName
+                          </MenuItem>
+                          <MenuItem
+                            value="yearsOfExperience"
+                            sx={{ fontSize: "14px" }}
+                          >
+                            Years Of Experience
                           </MenuItem>
                           <MenuItem
                             value="remainingAllocation"

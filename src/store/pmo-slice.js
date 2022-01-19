@@ -46,6 +46,7 @@ const pmoSlice = createSlice({
       state.redirect = initialState.redirect;
       state.updateModal = initialState.updateModal;
       state.projectById = initialState.projectById;
+      state.percentageAllocated = initialState.percentageAllocated;
     },
     updateAllocatedData: (state, action) => {
       state.allocatedData = action.payload;

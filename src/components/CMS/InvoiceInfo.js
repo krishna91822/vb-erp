@@ -132,7 +132,7 @@ function InvoiceInfo() {
     }
   };
   return (
-    <div className="client-list-wrapper">
+    <div className="list-wrapper">
       <StyledTypography>Invoice Information</StyledTypography>
       <Card>
         <CardContent>
@@ -143,7 +143,7 @@ function InvoiceInfo() {
                   <TextField
                     fullWidth
                     id="outlined-basic"
-                    label="Search by client/project name"
+                    placeholder="Search by client/project name"
                     onKeyPress={searchHandler}
                     InputProps={{
                       startAdornment: (

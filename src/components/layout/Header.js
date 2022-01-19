@@ -5,56 +5,73 @@ import {
   LoginRounded as LoginRoundedIcon,
 } from "@mui/icons-material";
 import vbLogo from "../../assets/images/vb_logo.svg";
-import IconButton from "@mui/material/IconButton";
-import Toolbar from "@mui/material/Toolbar";
-import AppBar from "@mui/material/AppBar";
+// import {} from "@mui/material";
+// import Toolbar from "@mui/material/Toolbar";
+// import AppBar from "@mui/material/AppBar";
 import { useState } from "react";
-import Menu from "@mui/material/Menu";
-import MenuItem from "@mui/material/MenuItem";
-import Avatar from "@mui/material/Avatar";
-import Divider from "@mui/material/Divider";
-import ListItemIcon from "@mui/material/ListItemIcon";
-import { createTheme, ThemeProvider, Typography } from "@mui/material";
-import { Link } from "react-router-dom";
+// import Menu from "@mui/material/Menu";
+// import MenuItem from "@mui/material/MenuItem";
+// import Avatar from "@mui/material/Avatar";
+// import Divider from "@mui/material/Divider";
+// import ListItemIcon from "@mui/material/ListItemIcon";
+import {
+  createTheme,
+  ThemeProvider,
+  Typography,
+  IconButton,
+  useMediaQuery,
+  Divider,
+  ListItemIcon,
+  Avatar,
+  MenuItem,
+  Menu,
+  AppBar,
+  Toolbar,
+} from "@mui/material";
+
+import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { userActions } from "../../store/user-slice";
-import { useNavigate } from "react-router-dom";
-
-const theme = createTheme({
-  components: {
-    MuiAppBar: {
-      styleOverrides: {
-        root: {
-          boxShadow: "inset  0 -10px 3px -10px grey",
-        },
-      },
-    },
-  },
-});
-
-const customStyles = {
-  image: {
-    width: "180px",
-    visibility: "hidden",
-  },
-  toolbar: {
-    display: "flex",
-    height: "70px",
-    justifyContent: "space-between",
-    padding: "0 40px",
-  },
-  appbar: {
-    backgroundColor: "white",
-    position: "fixed",
-    width: "calc(100% - 232px)",
-    left: "232px",
-    // zIndex: 1000,
-  },
-};
+import { logoutUser } from "../../store/user-actions";
 
 const Header = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const lgUp = useMediaQuery((theme) => theme.breakpoints.up("sm"), {
+    defaultMatches: true,
+    noSsr: false,
+  });
+
+  const theme = createTheme({
+    components: {
+      MuiAppBar: {
+        styleOverrides: {
+          root: {
+            boxShadow: "inset  0 -10px 3px -10px grey",
+          },
+        },
+      },
+    },
+  });
+
+  const customStyles = {
+    image: {
+      width: "180px",
+      visibility: "hidden",
+    },
+    toolbar: {
+      display: "flex",
+      height: "70px",
+      justifyContent: "space-between",
+      padding: "0 40px",
+    },
+    appbar: {
+      backgroundColor: "white",
+      position: "fixed",
+      width: lgUp ? "calc(100% - 250px)" : "calc(100% - 50px)",
+      left: lgUp ? "250px" : "50px",
+      zIndex: 1000,
+    },
+  };
 
   const user = useSelector((state) => state.user.user);
 
@@ -68,9 +85,9 @@ const Header = () => {
   };
 
   const handleLogOut = () => {
-    dispatch(userActions.resetForm());
-    handleClose();
-    navigate("/");
+    dispatch(logoutUser()).then((res) => {
+      res && navigate("/");
+    });
   };
 
   return (

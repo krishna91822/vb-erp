@@ -131,7 +131,7 @@ export const Main = () => {
     }
   };
   return (
-    <div className="client-list-wrapper">
+    <div className="list-wrapper">
       <StyledTypography>PO/SOW's Information</StyledTypography>
       <Card>
         <CardContent>
@@ -142,7 +142,7 @@ export const Main = () => {
                   <TextField
                     fullWidth
                     id="outlined-basic"
-                    label="Search by client/project name"
+                    placeholder="Search by client/project name"
                     onKeyPress={searchHandler}
                     InputProps={{
                       startAdornment: (

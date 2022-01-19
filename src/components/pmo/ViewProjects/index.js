@@ -24,7 +24,6 @@ import {
 } from "@mui/material";
 import { Search as SearchIcon } from "../../../icons/search";
 
-import { ClearRounded as ClearRoundedIcon } from "@mui/icons-material";
 import NoDataFound from "../NoDataFound";
 import EditIcon from "@mui/icons-material/Edit";
 import FilterListIcon from "@mui/icons-material/FilterList";
@@ -36,14 +35,7 @@ import {
   getAllFilterProjects,
   getAllProjectsBySroting,
 } from "../../../store/pmo-actions";
-import {
-  MainComponent,
-  HeadingStyle,
-  Heading,
-  Container,
-  SideButton,
-  ProjectHead,
-} from "./styles";
+import { SideButton } from "./styles";
 import { StyledTypography } from "../../../assets/GlobalStyle/style";
 
 const ViewProjects = () => {
@@ -97,15 +89,32 @@ const ViewProjects = () => {
     dispatch(getAllProjects(filterProjects, value));
   };
   return (
-    <div className="client-list-wrapper">
+    <div className="list-wrapper">
+      <StyledTypography data-test="main-heading">Projects</StyledTypography>
       <Card>
         <CardContent>
           <Box sx={{ maxWidth: "100%" }}>
             <Grid container spacing={2}>
               <Grid item xs={4}>
-                <StyledTypography data-test="main-heading">
-                  Projects
-                </StyledTypography>
+                <TextField
+                  fullWidth
+                  id="outlined-basic"
+                  placeholder="Search by Project Name"
+                  name="projectName"
+                  onChange={filterData}
+                  onKeyPress={filterData}
+                  value={filters.projectName}
+                  InputProps={{
+                    startAdornment: (
+                      <InputAdornment position="start">
+                        <SvgIcon color="action" fontSize="small">
+                          <SearchIcon />
+                        </SvgIcon>
+                      </InputAdornment>
+                    ),
+                  }}
+                  variant="outlined"
+                />
               </Grid>
 
               <Grid
@@ -136,6 +145,9 @@ const ViewProjects = () => {
                         variant="contained"
                         sx={{
                           backgroundColor: "chocolate",
+                          ":hover": {
+                            background: "chocolate",
+                          },
                         }}
                         onClick={() => {
                           navigate("/pmo/projects/create");
@@ -275,7 +287,11 @@ const ViewProjects = () => {
               )}
               {projects.results
                 ? projects.results.map((currElem, index) => (
-                    <TableRow key={index} onClick={() => entryLink(currElem)}>
+                    <TableRow
+                      key={index}
+                      onClick={() => entryLink(currElem)}
+                      className="table-row"
+                    >
                       <StyledTableCell align="center">
                         {index + parseInt(projects.currentPage) * 10 - 9}
                       </StyledTableCell>

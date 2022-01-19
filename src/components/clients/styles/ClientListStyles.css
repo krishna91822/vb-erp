@@ -43,7 +43,9 @@
   left: 50%;
   transform: translate((-50%, 0));
 }
-
+.pagination .MuiPagination-ul {
+  padding: 0px 20px;
+}
 .sort-filters {
   position: fixed;
   margin-top: -60px;

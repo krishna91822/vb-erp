@@ -9,10 +9,15 @@ import {
 } from "@mui/material";
 import UseForm from "./UseForm";
 import Form from "./Form";
-import "../../assets/styles/ClientFormStyles.css";
+import "./styles/ClientFormStyles.css";
 import { cimsActions } from "../../store/cims-slice";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import {
+  StyledTypography,
+  MiniHeadingTypography,
+} from "../../assets/GlobalStyle/style";
+
 import MidPopUp from "./MidPopUp";
 
 function UpdateClientForm() {
@@ -29,16 +34,18 @@ function UpdateClientForm() {
   return (
     <>
       <MidPopUp />
-      <Grid container m={1}>
+      <Grid container>
         <Grid item>
-          <Typography variant="h4">CIMS</Typography>
+          <StyledTypography variant="h4">CIMS</StyledTypography>
         </Grid>
       </Grid>
       <div className="CIMSFormContainer">
         <div className="cims-form-header">
           <Grid container m={2} spacing={1}>
             <Grid item md={4}>
-              <Typography variant="h4">Client Information</Typography>
+              <MiniHeadingTypography variant="h4">
+                Client Information
+              </MiniHeadingTypography>
             </Grid>
             <Grid item sm></Grid>
             {user.permissions.includes("update_on_CIMS_module") ? (
