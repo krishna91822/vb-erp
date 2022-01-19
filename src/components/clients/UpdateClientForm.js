@@ -13,7 +13,10 @@ import "./styles/ClientFormStyles.css";
 import { cimsActions } from "../../store/cims-slice";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { StyledTypography } from "../../assets/GlobalStyle/style";
+import {
+  StyledTypography,
+  MiniHeadingTypography,
+} from "../../assets/GlobalStyle/style";
 
 import MidPopUp from "./MidPopUp";
 
@@ -40,9 +43,9 @@ function UpdateClientForm() {
         <div className="cims-form-header">
           <Grid container m={2} spacing={1}>
             <Grid item md={4}>
-              <StyledTypography variant="h4">
+              <MiniHeadingTypography variant="h4">
                 Client Information
-              </StyledTypography>
+              </MiniHeadingTypography>
             </Grid>
             <Grid item sm></Grid>
             {user.permissions.includes("update_on_CIMS_module") ? (

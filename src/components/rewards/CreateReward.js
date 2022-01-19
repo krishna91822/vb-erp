@@ -15,7 +15,6 @@ import { useNavigate, Link } from "react-router-dom";
 import Popup from "./Popup";
 import EmployeesList from "../employees/EmployeesList";
 import { ToastContainer } from "react-toastify";
-import { StyledTypography } from "../../assets/GlobalStyle/style";
 
 const CreateReward = () => {
   const dispatch = useDispatch();
@@ -145,16 +144,12 @@ const CreateReward = () => {
           <hr />
           <br />
           <Grid item>
-            {/* <FormLabel
-              children="Reward Display Name"
-              style={{ color: " black " }}
-            /> */}
             <label>Reward Display Name</label>
             <br />
             <TextField
               size="small"
               id="outlined-name"
-              placeholder="Reward Display Name"
+              placeholder="Enter Reward Name"
               name="reward_display_name"
               onChange={handleChangeForm}
               className="textfield1"
@@ -162,7 +157,6 @@ const CreateReward = () => {
           </Grid>
           <br />
           <Grid item>
-            {/* <FormLabel children="Reward Type" style={{ color: " black " }} /> */}
             <label>Reward Type</label>
             <br />
             <FormControl id="RType">
@@ -184,10 +178,6 @@ const CreateReward = () => {
           <br />
           {type === "Daily" && (
             <Grid item>
-              {/* <FormLabel
-                children="Reward Sub Type"
-                style={{ color: " black " }}
-              /> */}
               <label>Reward Sub Type</label>
               <br />
               <FormControl id="RType">
@@ -209,10 +199,6 @@ const CreateReward = () => {
           )}
           {type === "Monthly" && (
             <Grid item>
-              {/* <FormLabel
-                children="Reward Sub Type"
-                style={{ color: " black " }}
-              /> */}
               <label>Reward Sub Type</label>
               <br />
               <FormControl id="RType">
@@ -231,7 +217,6 @@ const CreateReward = () => {
           )}
           <br />
           <Grid item>
-            {/* <FormLabel children="Reward Sender" style={{ color: " black " }} /> */}
             <label>Reward Sender</label>
             <br />
             <FormControl id="RSender">
@@ -257,10 +242,6 @@ const CreateReward = () => {
           </Grid>
           <br />
           <Grid item>
-            {/* <FormLabel
-              children="Reward Receiver"
-              style={{ color: " black " }}
-            /> */}
             <label>Reward Receiver</label>
             <br />
             <FormControl id="Rreceiver">
@@ -290,10 +271,6 @@ const CreateReward = () => {
           </Grid>
           <br />
           <Grid item>
-            {/* <FormLabel
-              children="Receiver Message"
-              style={{ color: " black " }}
-            /> */}
             <label>Reward Receiver</label>
             <br />
             <TextField
@@ -308,10 +285,6 @@ const CreateReward = () => {
           </Grid>
           <br />
           <Grid item>
-            {/* <FormLabel
-              children="Announcement Type"
-              style={{ color: " black " }}
-            /> */}
             <label>Announcement Type</label>
             <br />
             <FormControl id="Atype">
@@ -331,10 +304,6 @@ const CreateReward = () => {
           <br />
           {announcement === "public" && (
             <Grid item>
-              {/* <FormLabel
-                children="Slack Channel"
-                style={{ color: " black " }}
-              /> */}
               <label>Slack Channel</label>
               <br />
               <TextField
@@ -349,10 +318,6 @@ const CreateReward = () => {
           <br />
           {announcement === "public" && (
             <Grid item>
-              {/* <FormLabel
-                children="Channel Message"
-                style={{ color: " black " }}
-              /> */}
               <label htmlFor="">Channel Message</label>
               <br />
               <TextField
@@ -398,7 +363,6 @@ const CreateReward = () => {
               />
             </Popup>
           }
-
           {
             <Popup
               title="Team Members"

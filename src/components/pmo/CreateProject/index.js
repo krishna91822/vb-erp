@@ -40,7 +40,10 @@ import {
 import { pmoActions } from "../../../store/pmo-slice";
 import validateForm from "./validateCreateForm";
 import validateResourceForm from "../ResourceInformation/validateResourceForm";
-import { StyledTypography } from "../../../assets/GlobalStyle/style";
+import {
+  StyledTypography,
+  MiniHeadingTypography,
+} from "../../../assets/GlobalStyle/style";
 
 const initialState = {
   project: {
@@ -428,13 +431,15 @@ const CreateProject = () => {
         </Heading>
         <StyledHeader onSubmit={handleSubmit} data-test="create-project-form">
           <FormHeadingStyled>
-            <h3 data-test="form-title">Project Information </h3>
-            <h3
+            <MiniHeadingTypography data-test="form-title">
+              Project Information{" "}
+            </MiniHeadingTypography>
+            <MiniHeadingTypography
               style={{ display: id ? "block" : "none" }}
               data-test="project-id"
             >
               Project Id - {id}
-            </h3>
+            </MiniHeadingTypography>
             <Button
               type="submit"
               data-test="submit-button"
