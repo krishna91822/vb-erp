@@ -29,6 +29,7 @@ import CreateProfile from "./../pages/createProfile/createProfile.component";
 
 import UseRoles from "../helpers/roles";
 import CreateUserProfile from "../pages/User/CreateUser";
+import SetUserPassword from "../pages/User/SetUserPassword";
 
 const Routes = () => {
   const {
@@ -342,6 +343,11 @@ const Routes = () => {
         isPMSAdmin,
         isSuperAdmin,
       ].some((x) => x),
+    },
+    {
+      path: "/setnewpassword",
+      component: SetUserPassword,
+      access: true,
     },
   ];
 
