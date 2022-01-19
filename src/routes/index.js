@@ -28,6 +28,7 @@ import Review from "./../pages/review/review.component ";
 import CreateProfile from "./../pages/createProfile/createProfile.component";
 
 import UseRoles from "../helpers/roles";
+import CreateUserProfile from "../pages/User/CreateUser";
 
 const Routes = () => {
   const {
@@ -318,6 +319,19 @@ const Routes = () => {
     {
       path: "*",
       component: NotFound,
+      access: [
+        isUser,
+        isApprover,
+        isLeader,
+        isHrAdmin,
+        isFinanceAdmin,
+        isPMSAdmin,
+        isSuperAdmin,
+      ].some((x) => x),
+    },
+    {
+      path: "/createuserprofile",
+      component: CreateUserProfile,
       title: "Not Found",
       access: [
         isUser,

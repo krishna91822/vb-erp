@@ -135,7 +135,11 @@ const Header = () => {
                   <Avatar /> Profile
                 </MenuItem>
                 <Divider />
-                <MenuItem onClick={handleClose}>
+                <MenuItem
+                  onClick={handleClose}
+                  component={Link}
+                  to="/createuserprofile"
+                >
                   <ListItemIcon>
                     <Settings fontSize="small" />
                   </ListItemIcon>
