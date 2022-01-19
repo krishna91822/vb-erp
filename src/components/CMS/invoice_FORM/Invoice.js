@@ -171,6 +171,13 @@ function Invoice(props) {
       setRemarks(filteredArr[0].Remarks);
     }
   }, [filteredArr]);
+
+  useEffect(() => {
+    if (invoice_raised === "No") {
+      setinvoicereceived(false);
+    }
+  }, [invoice_raised]);
+
   useEffect(() => {
     if (invoicereceived) {
       if (invoice_raised === "Yes" && invoice_amount !== undefined) {
@@ -188,9 +195,9 @@ function Invoice(props) {
       setinvoiceAmount(null);
       setDate(null);
       setVbbankacc(null);
-      setRemarks(null);
     }
   }, [invoicereceived]);
+
   const handleClientChange = (event) => {
     setPersonName(event.target.value);
   };
@@ -254,6 +261,7 @@ function Invoice(props) {
       invoice_received: invoicereceived ? "Yes" : "No",
     };
     const DataToValidate = {
+      invoice_raised: invoice_raised,
       invoice_received: invoicereceived ? "Yes" : "No",
       invoice_amount_received: invoice_amount,
       PO_amt: PO_amt,
@@ -444,16 +452,11 @@ function Invoice(props) {
                 <br />
                 <Box sx={{ minWidth: 120 }}>
                   <FormControl fullWidth>
-                    <Select
-                      disabled={true}
-                      value={projectName}
-                      size="small"
-                      onChange={handleProjectChange}
-                    >
-                      {allProjects.map((detail) => (
+                    <TextField disabled={true} value={projectName}>
+                      {/* {allProjects.map((detail) => (
                         <MenuItem value={detail}>{detail}</MenuItem>
-                      ))}
-                    </Select>
+                      ))} */}
+                    </TextField>
                   </FormControl>
                 </Box>
               </Grid>
@@ -741,11 +744,7 @@ function Invoice(props) {
                       "data-testid": "RemarksTxtBox",
                       maxLength: 150,
                     }}
-                    disabled={
-                      !invoicereceived ||
-                      invoice_raised_yesno === "No" ||
-                      !editTglCheckedState
-                    }
+                    disabled={!editTglCheckedState}
                   />
                   <span className="cms-remarksCharCount">
                     ({charsLeft}/150)
