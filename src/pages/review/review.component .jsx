@@ -161,7 +161,7 @@ const Review = () => {
   };
 
   return (
-    <div className="client-list-wrapper">
+    <div className="list-wrapper">
       <StyledTypography>My Reviews</StyledTypography>
       <Card>
         <CardContent>
@@ -369,6 +369,7 @@ const Review = () => {
               outlineColor: "#9e9e9e",
               borderRadius: "5px",
               mt: 1,
+              backgroundColor: "rgb(249, 250, 252)",
             }}
           >
             <ProfileContent currentEmployee={reviewItemData} />

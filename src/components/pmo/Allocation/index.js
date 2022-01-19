@@ -45,7 +45,7 @@ const Allocation = () => {
   };
 
   return (
-    <div className="client-list-wrapper">
+    <div className="list-wrapper">
       <Card>
         <CardContent>
           <Box sx={{ maxWidth: "100%" }}>

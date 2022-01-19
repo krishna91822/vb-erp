@@ -101,18 +101,18 @@ const Profile = () => {
     <Spinner data-test="profile-page-test" />
   ) : (
     <Box sx={{ pb: 3 }}>
-      {/* <Box sx={{ position: "fixed", marginLeft: "70%", marginTop: "20px" }}> */}
-      <EditMode
-        handleSubmit={handleSubmit}
-        {...editModeProps}
-        switchOnly={roundToNearestMinutes}
-        btnsOnly={false}
-      />
-      {/* </Box> */}
       <ProfileContent
         register={register}
         errors={errors}
         {...profileContentProps}
+        switch={
+          <EditMode
+            handleSubmit={handleSubmit}
+            {...editModeProps}
+            switchOnly={roundToNearestMinutes}
+            btnsOnly={false}
+          />
+        }
         btns={
           <EditMode
             handleSubmit={handleSubmit}

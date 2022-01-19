@@ -17,7 +17,7 @@ const ViewReward = () => {
   }, [dispatch]);
 
   return (
-    <div className="client-list-wrapper">
+    <div className="list-wrapper">
       <StyledTypography>R&R's Information</StyledTypography>
       <RewardTableComponent rewardData={rewards} />
       <PaginationComponent />

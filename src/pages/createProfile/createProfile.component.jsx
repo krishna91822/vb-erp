@@ -62,6 +62,7 @@ const CreateProfile = ({
   editEmployeeData,
   toggleEditEmployee,
   setToggleEditEmployee,
+  editSwitch,
 }) => {
   const { user } = useSelector((state) => state.user);
   const email = user.email;
@@ -367,7 +368,8 @@ const CreateProfile = ({
         });
     }
   };
-
+  {
+  }
   return currentEmployee &&
     ["super_admin", "hr_admin"].some((el) => user.roles.includes(el)) ? (
     <BoxStyle data-test="create-profile-test">
@@ -381,6 +383,7 @@ const CreateProfile = ({
           // register={register}
           errors={errors}
           validate={validate}
+          editSwitch={editSwitch}
         />
       </div>
       <Box mt={3}>

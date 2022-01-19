@@ -25,6 +25,7 @@ export const TitleTypo = styled("div")(({ theme }) => ({
   ...theme.typography.h5,
   fontSize: 13,
   marginTop: "1rem",
+  marginLeft: "1rem",
   fontWeight: "600",
   lineHeight: "1",
   letterSpacing: "0.3px",

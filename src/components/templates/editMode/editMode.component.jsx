@@ -110,7 +110,6 @@ const EditMode = ({
         justifyContent: "flex-end",
         alignItems: "center",
         padding: 0,
-        pb: 1,
       }}
     >
       {inEditMode && !switchOnly && btnsOnly ? (

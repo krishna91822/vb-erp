@@ -56,21 +56,12 @@ const ViewProfile = () => {
     });
   };
 
-  return Object.keys(viewedEmployee).length === 0 ? (
-    <Spinner />
-  ) : (
-    <Box
-      sx={{
-        pb: 1,
-        pt: 1,
-        position: "relative",
-      }}
-    >
+  const component = () => {
+    return (
       <Box
         sx={{
           display: "flex",
-          justifyContent: "space-between",
-          mb: 1,
+          justifyContent: "flex-end",
           alignItems: "center",
         }}
       >
@@ -79,14 +70,13 @@ const ViewProfile = () => {
           <Box
             sx={{
               display: "flex",
-              padding: 0,
-              position: editEmployee ? "absolute" : "relative",
+              paddingRight: "1rem",
+              // position: editEmployee ? "absolute" : "relative",
               mt: editEmployee ? 4 : "",
+              alignItems: "center",
             }}
           >
-            <TitleTypo sx={{ textTransform: "capitalize", pr: 1 }}>
-              Edit Employee
-            </TitleTypo>
+            <TitleTypo>Edit Employee</TitleTypo>
             <CustomSwitch
               data-test="download-button-text"
               checked={editEmployee}
@@ -103,7 +93,9 @@ const ViewProfile = () => {
                 variant="contained"
                 onClick={handlePdfClick}
                 sx={{
-                  backgroundColor: "#1AAE9F",
+                  backgroundColor: "chocolate",
+                  paddingRight: "1rem",
+
                   "&:hover": {
                     backgroundColor: "hsl(173.9,74%,30%)",
                   },
@@ -118,14 +110,24 @@ const ViewProfile = () => {
           </Box>
         ) : null}
       </Box>
+    );
+  };
+  return Object.keys(viewedEmployee).length === 0 ? (
+    <Spinner />
+  ) : (
+    <Box>
       {editEmployee ? (
-        <CreateProfile editEmployeeData={viewedEmployee} />
+        <CreateProfile
+          editEmployeeData={viewedEmployee}
+          editSwitch={component()}
+        />
       ) : (
         <ProfileContentWithSpinner
           currentEmployee={viewedEmployee}
           toggleEditEmployee={editEmployee}
           setToggleEditEmployee={setEditEmployee}
           isLoading={loading}
+          switch={component()}
         />
       )}
     </Box>

@@ -33,7 +33,7 @@ export const GreenButton = styled(Button)({
   fontWeight: 500,
   fontSize: 16,
   textTransform: "capitalize",
-  margin: "0 8px",
+  margin: "0 5px",
   "&:hover": {
     backgroundColor: teal[600],
   },
@@ -44,7 +44,7 @@ export const BlueButton = styled(Button)({
   backgroundColor: blue[600],
   fontWeight: 500,
   fontSize: 16,
-  margin: "0 20px",
+  margin: "0 10px",
 
   textTransform: "capitalize",
   "&:hover": {
