@@ -261,6 +261,7 @@ function ClientsList() {
                     placeholder="Search Company Name / Associate Name / Location"
                     value={searchBy}
                     onChange={handelSearch}
+                    onKeyPress={handelSearch}
                     InputProps={{
                       startAdornment: (
                         <InputAdornment position="start">

@@ -270,10 +270,6 @@ const SidebarNavigation = () => {
     trackPathName();
   }, []);
 
-  if (lgUp) {
-    console.log(lgUp);
-  }
-
   const {
     isUser,
     isApprover,
