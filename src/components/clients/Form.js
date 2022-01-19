@@ -10,7 +10,7 @@ import {
 import UseForm from "./UseForm";
 import AddressFields from "./AddressFields";
 import ContactForm from "./ContactForm";
-import "../../assets/styles/ClientFormStyles.css";
+import "./styles/ClientFormStyles.css";
 import { useSelector } from "react-redux";
 
 export default function Form() {

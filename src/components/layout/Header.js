@@ -5,21 +5,32 @@ import {
   LoginRounded as LoginRoundedIcon,
 } from "@mui/icons-material";
 import vbLogo from "../../assets/images/vb_logo.svg";
-import IconButton from "@mui/material/IconButton";
-import Toolbar from "@mui/material/Toolbar";
-import AppBar from "@mui/material/AppBar";
+// import {} from "@mui/material";
+// import Toolbar from "@mui/material/Toolbar";
+// import AppBar from "@mui/material/AppBar";
 import { useState } from "react";
-import Menu from "@mui/material/Menu";
-import MenuItem from "@mui/material/MenuItem";
-import Avatar from "@mui/material/Avatar";
-import Divider from "@mui/material/Divider";
-import ListItemIcon from "@mui/material/ListItemIcon";
-import { createTheme, ThemeProvider, Typography } from "@mui/material";
-import { Link } from "react-router-dom";
+// import Menu from "@mui/material/Menu";
+// import MenuItem from "@mui/material/MenuItem";
+// import Avatar from "@mui/material/Avatar";
+// import Divider from "@mui/material/Divider";
+// import ListItemIcon from "@mui/material/ListItemIcon";
+import {
+  createTheme,
+  ThemeProvider,
+  Typography,
+  IconButton,
+  useMediaQuery,
+  Divider,
+  ListItemIcon,
+  Avatar,
+  MenuItem,
+  Menu,
+  AppBar,
+  Toolbar,
+} from "@mui/material";
+
+import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { userActions } from "../../store/user-slice";
-import { useNavigate } from "react-router-dom";
-import useMediaQuery from "@mui/material/useMediaQuery";
 import { logoutUser } from "../../store/user-actions";
 
 const Header = () => {
@@ -29,6 +40,7 @@ const Header = () => {
     defaultMatches: true,
     noSsr: false,
   });
+
   const theme = createTheme({
     components: {
       MuiAppBar: {
@@ -123,7 +135,11 @@ const Header = () => {
                   <Avatar /> Profile
                 </MenuItem>
                 <Divider />
-                <MenuItem onClick={handleClose}>
+                <MenuItem
+                  onClick={handleClose}
+                  component={Link}
+                  to="/createuserprofile"
+                >
                   <ListItemIcon>
                     <Settings fontSize="small" />
                   </ListItemIcon>

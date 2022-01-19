@@ -14,7 +14,10 @@ import { getAllocatedData } from "../../../store/pmo-actions";
 import Tpagination from "../../UI/Pagination";
 import NoDataFound from "../NoDataFound";
 import { Container, MiniHead, DateContainerStyled } from "./style";
-import { StyledTableCell } from "../../../assets/GlobalStyle/style";
+import {
+  StyledTableCell,
+  MiniHeadingTypography,
+} from "../../../assets/GlobalStyle/style";
 
 export let filterData;
 
@@ -54,7 +57,9 @@ const Allocated = ({ pressed, allocatedSortedValue }) => {
   };
   return (
     <div className="ListContainer">
-      <MiniHead data-test="main-heading">Allocation Information</MiniHead>
+      <MiniHeadingTypography data-test="main-heading">
+        Allocation Information
+      </MiniHeadingTypography>
       <TableContainer>
         <Table data-test="list-table">
           <TableHead>

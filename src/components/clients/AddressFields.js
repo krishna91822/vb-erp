@@ -8,7 +8,7 @@ import {
   FormControl,
 } from "@mui/material";
 import UseForm from "./UseForm";
-import "../../assets/styles/ClientFormStyles.css";
+import "./styles/ClientFormStyles.css";
 import { useSelector } from "react-redux";
 
 export default function AddressFields(props) {

@@ -35,14 +35,7 @@ import {
   getAllFilterProjects,
   getAllProjectsBySroting,
 } from "../../../store/pmo-actions";
-import {
-  MainComponent,
-  HeadingStyle,
-  Heading,
-  Container,
-  SideButton,
-  ProjectHead,
-} from "./styles";
+import { SideButton } from "./styles";
 import { StyledTypography } from "../../../assets/GlobalStyle/style";
 
 const ViewProjects = () => {
@@ -152,6 +145,9 @@ const ViewProjects = () => {
                         variant="contained"
                         sx={{
                           backgroundColor: "chocolate",
+                          ":hover": {
+                            background: "chocolate",
+                          },
                         }}
                         onClick={() => {
                           navigate("/pmo/projects/create");
