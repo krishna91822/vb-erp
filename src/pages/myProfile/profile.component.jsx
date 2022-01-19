@@ -1,6 +1,6 @@
-import React, { memo, useEffect, useState, useRef } from "react";
+import React, { memo, useEffect, useState } from "react";
 
-import { Box, Container } from "@mui/material";
+import { Box } from "@mui/material";
 
 import { useDispatch, useSelector } from "react-redux";
 import { setCurrentEmployee } from "./../../store/employeeSlice";
@@ -10,7 +10,6 @@ import ProfileContent from "../../components/templates/profileContent/profileCon
 import Spinner from "./../../components/UI/spinner/spinner";
 import axiosInstance from "../../helpers/axiosInstance";
 
-import { useForm } from "react-hook-form";
 import { roundToNearestMinutes } from "date-fns/esm";
 
 const Profile = () => {
@@ -47,6 +46,7 @@ const Profile = () => {
         })
         .catch((err) => console.log(err));
     }, 2000);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch, employeeUpdateCount]);
 
   const [personalDetails, setPersonalDetails] = useState([]);
