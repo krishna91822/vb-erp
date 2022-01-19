@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const userFields = {
   name: "",
   email: "",
-  roles: [""],
+  roles: [],
   permissions: [],
   has_permission: false,
 };
