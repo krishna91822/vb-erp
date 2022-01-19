@@ -20,6 +20,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { userActions } from "../../store/user-slice";
 import { useNavigate } from "react-router-dom";
 import useMediaQuery from "@mui/material/useMediaQuery";
+import { logoutUser } from "../../store/user-actions";
 
 const Header = () => {
   const dispatch = useDispatch();
@@ -72,9 +73,9 @@ const Header = () => {
   };
 
   const handleLogOut = () => {
-    dispatch(userActions.resetForm());
-    handleClose();
-    navigate("/");
+    dispatch(logoutUser()).then((res) => {
+      res && navigate("/");
+    });
   };
 
   return (
