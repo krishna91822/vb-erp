@@ -15,7 +15,10 @@ import BenchModal from "./BenchModal";
 import { getOnBench } from "../../../store/pmo-actions";
 import Tpagination from "../../UI/Pagination";
 import NoDataFound from "../NoDataFound";
-import { StyledTableCell } from "../../../assets/GlobalStyle/style";
+import {
+  StyledTableCell,
+  MiniHeadingTypography,
+} from "../../../assets/GlobalStyle/style";
 
 export let filterBenchData;
 
@@ -67,12 +70,12 @@ const Bench = ({ pressed, benchSortValue }) => {
         setModalDetails={setModalDetails}
         entryData={entryData}
       />
-      <MiniHead data-test="main-heading">
+      <MiniHeadingTypography data-test="main-heading">
         Bench Capacity{" "}
         <span style={{ color: "grey", fontWeight: "500" }}>{`(${
           data.totalCount || "0"
         })`}</span>
-      </MiniHead>
+      </MiniHeadingTypography>
       <TableContainer>
         <Table data-test="list-table">
           <TableHead>

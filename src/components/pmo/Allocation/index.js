@@ -51,7 +51,7 @@ const Allocation = () => {
   };
 
   return (
-    <div className="client-list-wrapper">
+    <div className="list-wrapper">
       <StyledTypography data-test="main-heading">Allocations</StyledTypography>
       <Card>
         <CardContent>

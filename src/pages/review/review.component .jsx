@@ -45,7 +45,7 @@ import axiosInstance from "./../../helpers/axiosInstance";
 import { useDispatch } from "react-redux";
 import { uiActions } from "./../../store/ui-slice";
 
-import "../../assets/styles/ClientListStyles.css";
+import "../../components/clients/styles/ClientListStyles.css";
 
 const Review = () => {
   const { toggleLoader } = uiActions;
@@ -74,7 +74,10 @@ const Review = () => {
   };
 
   const searchHandleChange = (event) => {
-    setSearchEmp(event.target.value);
+    const searchFileds = event.target.value;
+    if (event.key === "Enter") {
+      setSearchEmp(searchFileds);
+    }
   };
 
   //modal
@@ -207,7 +210,7 @@ const Review = () => {
   };
 
   return (
-    <div className="client-list-wrapper">
+    <div className="list-wrapper">
       <StyledTypography>My Reviews</StyledTypography>
       <Card>
         <CardContent>
@@ -218,6 +221,7 @@ const Review = () => {
                   data-test="Search By Req Name-test"
                   fullWidth
                   onChange={searchHandleChange}
+                  onKeyPress={searchHandleChange}
                   placeholder="Search By Req Name"
                   id="outlined-search"
                   InputProps={{
@@ -430,6 +434,7 @@ const Review = () => {
               outlineColor: "#9e9e9e",
               borderRadius: "5px",
               mt: 1,
+              backgroundColor: "rgb(249, 250, 252)",
             }}
           >
             <ProfileContent currentEmployee={reviewItemData} />

@@ -236,6 +236,7 @@ const ProfileContent = (props) => {
             profileProgress={profileProgress}
             errors={errors}
             validate={validate}
+            editSwitch={props.switch}
           />
         );
       } else {
@@ -245,6 +246,7 @@ const ProfileContent = (props) => {
             setValue={setValue}
             currentEmployee={currentEmployee}
             profileProgress={profileProgress}
+            editSwitch={props.switch}
           />
         );
       }
@@ -255,6 +257,7 @@ const ProfileContent = (props) => {
           setValue={setValue}
           currentEmployee={currentEmployee}
           profileProgress={profileProgress}
+          editSwitch={props.switch}
         />
       );
     }
@@ -263,7 +266,7 @@ const ProfileContent = (props) => {
   return (
     <Grid>
       <Grid item>
-        <Box>{renderProfileInfo()}</Box>
+        <Box sx={{ p: 2 }}>{renderProfileInfo()}</Box>
       </Grid>
       <Grid item mt={1}>
         <Container maxWidth="xl">
@@ -271,7 +274,7 @@ const ProfileContent = (props) => {
             <Card>
               <CardHeader
                 title={
-                  <Grid item sm={11}>
+                  <Grid item>
                     <StyledTabs value={value} onChange={handleChange}>
                       <StyledTab
                         icon={<LocalCafeIcon />}

@@ -100,11 +100,14 @@ const Network = () => {
   const sortOptions = [...sortOption];
 
   const searchHandleChange = (event) => {
-    setSearchEmp(event.target.value);
+    const searchFields = event.target.value;
+    if (event.key === "Enter") {
+      setSearchEmp(searchFields);
+    }
   };
 
   return (
-    <div className="client-list-wrapper">
+    <div className="list-wrapper">
       <StyledTypography>{networkText.header}</StyledTypography>
       <Card>
         <CardContent>
@@ -114,6 +117,7 @@ const Network = () => {
                 fullWidth
                 data-test="search-bar-test"
                 onChange={searchHandleChange}
+                onKeyPress={searchHandleChange}
                 placeholder="Search employee"
                 id="outlined-search"
                 InputProps={{

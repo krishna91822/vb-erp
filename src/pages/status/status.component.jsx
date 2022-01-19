@@ -259,6 +259,7 @@ const Status = (props) => {
                 outlineColor: "#9e9e9e",
                 borderRadius: "5px",
                 mt: 1,
+                backgroundColor: "rgb(249, 250, 252)",
               }}
             >
               <ProfileContent currentEmployee={reviewItemData} />

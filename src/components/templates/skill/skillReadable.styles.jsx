@@ -12,6 +12,7 @@ export const ContentBox = styled("div")(({ theme }) => ({
 export const ContentTypo = styled("p")(({ theme }) => ({
   ...theme.typography.h5,
   fontSize: 13,
+  marginLeft: "1rem",
   fontWeight: "600",
   lineHeight: "1",
   textTransform: "uppercase",
