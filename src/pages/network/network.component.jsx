@@ -110,27 +110,23 @@ const Network = () => {
         <CardContent>
           <Grid container spacing={2}>
             <Grid item xs={4}>
-              <Box>
-                <TextField
-                  data-test="search-bar-test"
-                  onChange={searchHandleChange}
-                  placeholder="Search employee"
-                  id="outlined-search"
-                  size="small"
-                  variant="outlined"
-                  sx={{ width: "15vw", height: "40px", mr: 1 }}
-                  InputProps={{
-                    startAdornment: (
-                      <InputAdornment position="start">
-                        <SvgIcon color="action" fontSize="small">
-                          <SearchIcon />
-                        </SvgIcon>
-                      </InputAdornment>
-                    ),
-                  }}
-                  variant="outlined"
-                />
-              </Box>
+              <TextField
+                fullWidth
+                data-test="search-bar-test"
+                onChange={searchHandleChange}
+                placeholder="Search employee"
+                id="outlined-search"
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <SvgIcon color="action" fontSize="small">
+                        <SearchIcon />
+                      </SvgIcon>
+                    </InputAdornment>
+                  ),
+                }}
+                variant="outlined"
+              />
             </Grid>
             <Grid
               item

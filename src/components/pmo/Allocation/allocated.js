@@ -16,6 +16,8 @@ import NoDataFound from "../NoDataFound";
 import { Container, MiniHead, DateContainerStyled } from "./style";
 import { StyledTableCell } from "../../../assets/GlobalStyle/style";
 
+export let filterData;
+
 const Allocated = ({ pressed, allocatedSortedValue }) => {
   const { allocatedData } = useSelector((state) => state.pmo);
   const dispatch = useDispatch();
@@ -33,7 +35,7 @@ const Allocated = ({ pressed, allocatedSortedValue }) => {
   }, [allocatedSortedValue]);
 
   let data = allocatedData;
-  const filterData = (event) => {
+  filterData = (event) => {
     if (event.target.name === "empId") {
       setFilters({
         ...filters,

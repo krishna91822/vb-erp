@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const INITIAL_STATE = {
   currentEmployee: null,
-  inEditMode: true,
+  inEditMode: false,
   createEmployee: null,
   employees: [],
 };

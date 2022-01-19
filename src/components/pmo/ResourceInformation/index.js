@@ -1,4 +1,4 @@
-import React, { useState, useLayoutEffect } from "react";
+import React, { useState, useLayoutEffect, useEffect } from "react";
 import { TextField, Button } from "@mui/material";
 import InputAdornment from "@mui/material/InputAdornment";
 import ResourceInformationTable from "../ResourceInformationTable";
@@ -185,7 +185,7 @@ const ResourceInformation = ({
                 />
                 <TextField
                   name="allocationPercentagetxt"
-                  readonly
+                  readOnly
                   placeholder="50%"
                   variant="outlined"
                   size="small"

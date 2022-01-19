@@ -19,42 +19,47 @@ import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { userActions } from "../../store/user-slice";
 import { useNavigate } from "react-router-dom";
-
-const theme = createTheme({
-  components: {
-    MuiAppBar: {
-      styleOverrides: {
-        root: {
-          boxShadow: "inset  0 -10px 3px -10px grey",
-        },
-      },
-    },
-  },
-});
-
-const customStyles = {
-  image: {
-    width: "180px",
-    visibility: "hidden",
-  },
-  toolbar: {
-    display: "flex",
-    height: "70px",
-    justifyContent: "space-between",
-    padding: "0 40px",
-  },
-  appbar: {
-    backgroundColor: "white",
-    position: "fixed",
-    width: "calc(100% - 232px)",
-    left: "232px",
-    // zIndex: 1000,
-  },
-};
+import useMediaQuery from "@mui/material/useMediaQuery";
+import { logoutUser } from "../../store/user-actions";
 
 const Header = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const lgUp = useMediaQuery((theme) => theme.breakpoints.up("sm"), {
+    defaultMatches: true,
+    noSsr: false,
+  });
+  const theme = createTheme({
+    components: {
+      MuiAppBar: {
+        styleOverrides: {
+          root: {
+            boxShadow: "inset  0 -10px 3px -10px grey",
+          },
+        },
+      },
+    },
+  });
+
+  const customStyles = {
+    image: {
+      width: "180px",
+      visibility: "hidden",
+    },
+    toolbar: {
+      display: "flex",
+      height: "70px",
+      justifyContent: "space-between",
+      padding: "0 40px",
+    },
+    appbar: {
+      backgroundColor: "white",
+      position: "fixed",
+      width: lgUp ? "calc(100% - 250px)" : "calc(100% - 50px)",
+      left: lgUp ? "250px" : "50px",
+      zIndex: 1000,
+    },
+  };
 
   const user = useSelector((state) => state.user.user);
 
@@ -68,9 +73,9 @@ const Header = () => {
   };
 
   const handleLogOut = () => {
-    dispatch(userActions.resetForm());
-    handleClose();
-    navigate("/");
+    dispatch(logoutUser()).then((res) => {
+      res && navigate("/");
+    });
   };
 
   return (
