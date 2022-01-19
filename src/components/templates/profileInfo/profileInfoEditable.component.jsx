@@ -193,7 +193,7 @@ const ProfileInfoEditable = (props) => {
             </Grid>
           </Grid>
           <Grid container spacing={3}>
-            <Grid item lg={4} md={6} xs={12}>
+            <Grid item lg={4} md={12} xs={12}>
               <Card>
                 <CardContent>
                   <Box
@@ -266,7 +266,7 @@ const ProfileInfoEditable = (props) => {
               </Card>
             </Grid>
 
-            <Grid item lg={8} md={6} xs={6}>
+            <Grid item lg={8} md={12} xs={12}>
               <Card>
                 <CardContent>
                   <Grid item sm={8}>

@@ -72,18 +72,18 @@ const ProfileInfoReadable = ({
       >
         <Container maxWidth="xl">
           <Grid container>
-            <Grid item lg={6}>
+            <Grid item lg={6} md={6} xs={6}>
               <StyledTypography sx={{ mb: 3 }} variant="h4">
                 Account
               </StyledTypography>
             </Grid>
-            <Grid item lg={6}>
+            <Grid item lg={6} md={6} xs={6}>
               <Box>{editSwitch}</Box>
             </Grid>
           </Grid>
 
           <Grid container spacing={3}>
-            <Grid item lg={4} md={6} xs={12}>
+            <Grid item lg={4} md={12} xs={12}>
               <Card>
                 <CardContent>
                   <Box
@@ -138,7 +138,7 @@ const ProfileInfoReadable = ({
               </Card>
             </Grid>
 
-            <Grid item lg={8} md={6} xs={6}>
+            <Grid item lg={8} md={12} xs={12}>
               <Card>
                 <CardContent>
                   <Grid item sm={8}>

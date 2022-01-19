@@ -54,14 +54,10 @@ const Header = () => {
   });
 
   const customStyles = {
-    image: {
-      width: "180px",
-      visibility: "hidden",
-    },
     toolbar: {
       display: "flex",
       height: "70px",
-      justifyContent: "space-between",
+      justifyContent: "flex-end",
       padding: "0 40px",
     },
     appbar: {
@@ -94,12 +90,10 @@ const Header = () => {
     <ThemeProvider theme={theme}>
       <AppBar sx={customStyles.appbar} position="static">
         <Toolbar sx={customStyles.toolbar}>
-          <img style={customStyles.image} src={vbLogo} alt="vb-logo" />
           {user.name ? (
             <>
               <IconButton
                 size="large"
-                edge="end"
                 onClick={handleClick}
                 style={{ backgroundColor: "transparent" }}
               >

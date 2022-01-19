@@ -272,7 +272,7 @@ const ProfileContent = (props) => {
             <Card>
               <CardHeader
                 title={
-                  <Grid item sm={11}>
+                  <Grid item>
                     <StyledTabs value={value} onChange={handleChange}>
                       <StyledTab
                         icon={<LocalCafeIcon />}
