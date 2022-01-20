@@ -1,6 +1,6 @@
-import React, { memo, useEffect, useState, useRef } from "react";
+import React, { memo, useEffect, useState } from "react";
 
-import { Box, Container } from "@mui/material";
+import { Box } from "@mui/material";
 
 import { useDispatch, useSelector } from "react-redux";
 import { setCurrentEmployee } from "./../../store/employeeSlice";
@@ -10,19 +10,15 @@ import ProfileContent from "../../components/templates/profileContent/profileCon
 import Spinner from "./../../components/UI/spinner/spinner";
 import axiosInstance from "../../helpers/axiosInstance";
 
-import { useForm } from "react-hook-form";
 import { roundToNearestMinutes } from "date-fns/esm";
 
 const Profile = () => {
-  const { register, handleSubmit, errors } = useForm();
-
   const { currentEmployee, inEditMode } = useSelector(
     (state) => state.employee
   );
   const { user } = useSelector((state) => state.user);
 
   const email = user.email;
-  // const email = "admin@mail.com";
 
   const [loading, setLoading] = useState(true);
   const dispatch = useDispatch();
@@ -50,6 +46,7 @@ const Profile = () => {
         })
         .catch((err) => console.log(err));
     }, 2000);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch, employeeUpdateCount]);
 
   const [personalDetails, setPersonalDetails] = useState([]);
@@ -102,24 +99,17 @@ const Profile = () => {
   ) : (
     <Box sx={{ pb: 3 }}>
       <ProfileContent
-        register={register}
-        errors={errors}
         {...profileContentProps}
         switch={
           <EditMode
-            handleSubmit={handleSubmit}
+            // handleSubmit={handleSubmit}
             {...editModeProps}
             switchOnly={roundToNearestMinutes}
             btnsOnly={false}
           />
         }
         btns={
-          <EditMode
-            handleSubmit={handleSubmit}
-            {...editModeProps}
-            switchOnly={false}
-            btnsOnly={true}
-          />
+          <EditMode {...editModeProps} switchOnly={false} btnsOnly={true} />
         }
       />
     </Box>

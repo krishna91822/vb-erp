@@ -100,7 +100,7 @@ const ProfessionalEditable = ({
   return (
     <Grid container mb={10} sx={{ minHeight: 150 }}>
       <Grid item sm={7}>
-        <Box sx={{ ml: 4, mb: 5 }}>
+        <Box>
           <ContentBox>
             <TitleTypo>{professionalConstant.band}</TitleTypo>
             <CustomTextField

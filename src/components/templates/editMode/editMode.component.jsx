@@ -124,7 +124,7 @@ const EditMode = ({
           <Button
             sx={{ margin: "0 1.5rem 1rem 0" }}
             variant="contained"
-            onClick={handleSubmit(handleSubmitBtn)}
+            onClick={handleSubmitBtn}
           >
             {["hr_admin", "super_admin"].some((el) => user.roles.includes(el))
               ? editModeConstant.update

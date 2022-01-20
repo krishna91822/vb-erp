@@ -22,9 +22,11 @@ import ProfessionalEditable from "../professional/professionalEditable.component
 import SkillReadable from "../skill/skillReadable.component";
 import SkillEditable from "../skill/skillEditable.component";
 import ProfileInfoEditable from "./../profileInfo/profileInfoEditable.component";
+import ProjectTab from "./../project/project.component";
 import LocalCafeIcon from "@mui/icons-material/LocalCafe";
 import ImportContactsIcon from "@mui/icons-material/ImportContacts";
 import BadgeIcon from "@mui/icons-material/Badge";
+import PlagiarismIcon from "@mui/icons-material/Plagiarism";
 
 import {
   modalStyle,
@@ -290,6 +292,11 @@ const ProfileContent = (props) => {
                         label="Skills And Qualifications"
                         sx={{ fontSize: "12px" }}
                       />
+                      <StyledTab
+                        icon={<PlagiarismIcon />}
+                        label="Project"
+                        sx={{ fontSize: "12px" }}
+                      />
                     </StyledTabs>
                   </Grid>
                 }
@@ -349,7 +356,17 @@ const ProfileContent = (props) => {
                   </Grid>
                 )}
               </TabPanelCustom>
-
+              <TabPanelCustom value={value} index={3}>
+                <ProjectTab
+                  editable={inEditMode}
+                  empData={inEditMode ? updateRequest : currentEmployee}
+                  setEmpData={setUpdateRequest}
+                  // projectDetails={skillsDetails}
+                  // setProjectDetails={setSkillsDetails}
+                  errors={errors}
+                  validate={validate}
+                />
+              </TabPanelCustom>
               <Box>{inEditMode && props.btns}</Box>
             </Card>
           </StyledGrid>

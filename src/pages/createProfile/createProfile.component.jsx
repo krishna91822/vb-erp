@@ -57,6 +57,8 @@ import { uiActions } from "./../../store/ui-slice";
 import validator from "validator";
 
 import { useForm } from "react-hook-form";
+import ProjectTab from "../../components/templates/project/project.component";
+import PlagiarismIcon from "@mui/icons-material/Plagiarism";
 
 const CreateProfile = ({
   editEmployeeData,
@@ -73,7 +75,7 @@ const CreateProfile = ({
   // const { register, handleSubmit, errors } = useForm();
   useEffect(() => {
     axiosInstance
-      .get(`/employees?${email}`)
+      .get(`/employees?empEmail=${email}`)
       .then((response) => {
         dispatch(setCurrentEmployee(response.data.data[0]));
       })
@@ -409,6 +411,11 @@ const CreateProfile = ({
                         label="Skills And Qualifications"
                         sx={{ fontSize: "12px" }}
                       />
+                      <StyledTab
+                        icon={<PlagiarismIcon />}
+                        label="Project"
+                        sx={{ fontSize: "12px" }}
+                      />
                     </StyledTabs>
                   </Grid>
                 }
@@ -443,6 +450,17 @@ const CreateProfile = ({
                   setSkillsDetails={setSkillsDetails}
                   // register={register}
                   errors={errors}
+                />
+              </TabPanelCustom>
+              <TabPanelCustom value={value} index={3}>
+                <ProjectTab
+                  editable={true}
+                  empData={employee}
+                  setEmpData={setEmployee}
+                  // projectDetails={skillsDetails}
+                  // setProjectDetails={setSkillsDetails}
+                  errors={errors}
+                  validate={validate}
                 />
               </TabPanelCustom>
               <ContainerStyleTop>

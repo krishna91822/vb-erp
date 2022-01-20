@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { StyledTableCell } from "../../assets/GlobalStyle/style";
 import { StyledTypography } from "../../assets/GlobalStyle/style";
 
@@ -122,19 +122,27 @@ const Review = () => {
       .get(`/reviews?reqId=${item.reqId}`)
       .then((response) => {
         setReviewItemData({
-          ...response.data.data.reviews[0].employeeDetails,
-          _id: response.data.data.reviews[0]._id,
-          status: response.data.data.reviews[0].status,
+          ...item.employeeDetails,
+          _id: item._id,
+          status: item.status,
+          message: item.message,
         });
         handleOpenModalForReview();
       })
       .catch((err) => console.log(err));
   };
 
+  const reviewMessage = useRef("");
+  const handleReviewMessage = (event) => {
+    reviewMessage.current = event.target.value;
+  };
+
   const handleReject = () => {
+    console.log(reviewMessage.current);
     axiosInstance
       .patch(`/reviews/${reviewItemData._id}`, {
         status: "rejected",
+        message: reviewMessage.current,
       })
       .then((response) => {
         handleCloseModalForReview();
@@ -143,9 +151,11 @@ const Review = () => {
   };
 
   const handleApprove = () => {
+    console.log(reviewMessage.current);
     axiosInstance
       .patch(`/reviews/${reviewItemData._id}`, {
         status: "accepted",
+        message: reviewMessage.current,
       })
       .then((response) => {
         handleCloseModalForReview();
@@ -155,11 +165,47 @@ const Review = () => {
 
   const renderChildStatus = (status) => {
     if (status === "accepted") {
-      return <ContentTypo sx={{ color: "#2AB3A6" }}>{status}</ContentTypo>;
+      return (
+        <ContentTypo
+          sx={{
+            backgroundColor: "#2AB3A6",
+            color: "white",
+            padding: "5px 15px",
+            borderRadius: "20px",
+            fontSize: "16px",
+          }}
+        >
+          {status}
+        </ContentTypo>
+      );
     } else if (status === "pending") {
-      return <ContentTypo sx={{ color: "#F7C839" }}>{status}</ContentTypo>;
+      return (
+        <ContentTypo
+          sx={{
+            backgroundColor: "#F7C839",
+            color: "white",
+            padding: "5px 15px",
+            borderRadius: "20px",
+            fontSize: "16px",
+          }}
+        >
+          {status}
+        </ContentTypo>
+      );
     } else {
-      return <ContentTypo sx={{ color: "#D3455B" }}>{status}</ContentTypo>;
+      return (
+        <ContentTypo
+          sx={{
+            backgroundColor: "#D3455B",
+            color: "white",
+            padding: "5px 15px",
+            borderRadius: "20px",
+            fontSize: "16px",
+          }}
+        >
+          {status}
+        </ContentTypo>
+      );
     }
   };
 
@@ -289,76 +335,95 @@ const Review = () => {
               sx={{ cursor: "pointer" }}
             />
           </Box>
-          <Box sx={{ width: 1, display: "flex", justifyContent: "flex-end" }}>
-            {reviewItemData.status === "rejected" ||
-            reviewItemData.status === "accepted" ? (
-              <ColorButton
-                disabled
-                size="medium"
-                variant="contained"
-                // color='hsl(350.7,61.7%,54.9%)'
-                onClick={handleReject}
-                sx={{
-                  m: 1,
-                  backgroundColor: "hsl(350.7,61.7%,54.9%)",
-                  "&:hover": {
-                    backgroundColor: "hsl(350.7,61.7%,45.9%)",
-                  },
-                }}
-              >
-                Reject
-              </ColorButton>
-            ) : (
-              <ColorButton
-                size="medium"
-                variant="contained"
-                // color='hsl(350.7,61.7%,54.9%)'
-                onClick={handleReject}
-                sx={{
-                  m: 1,
-                  backgroundColor: "hsl(350.7,61.7%,54.9%)",
-                  "&:hover": {
-                    backgroundColor: "hsl(350.7,61.7%,45.9%)",
-                  },
-                }}
-              >
-                Reject
-              </ColorButton>
-            )}
-            {reviewItemData.status === "accepted" ? (
-              <ColorButton
-                disabled
-                size="medium"
-                variant="contained"
-                // color='#1AAE9F'
-                onClick={handleApprove}
-                sx={{
-                  m: 1,
-                  backgroundColor: "#1AAE9F",
-                  "&:hover": {
-                    backgroundColor: "hsl(173.9,74%,30%)",
-                  },
-                }}
-              >
-                Approve
-              </ColorButton>
-            ) : (
-              <ColorButton
-                size="medium"
-                variant="contained"
-                // color='#1AAE9F'
-                onClick={handleApprove}
-                sx={{
-                  m: 1,
-                  backgroundColor: "#1AAE9F",
-                  "&:hover": {
-                    backgroundColor: "hsl(173.9,74%,30%)",
-                  },
-                }}
-              >
-                Approve
-              </ColorButton>
-            )}
+          <Box
+            sx={{
+              width: 1,
+              display: "flex",
+              justifyContent: "space-between",
+              alignItem: "center",
+            }}
+          >
+            <Box sx={{ width: "60%", display: "flex", alignItems: "center" }}>
+              <TextField
+                id="outlined-basic"
+                variant="outlined"
+                size="small"
+                placeholder="Any Message"
+                onChange={(event) => handleReviewMessage(event)}
+                fullWidth
+              />
+            </Box>
+            <Box>
+              {reviewItemData.status === "rejected" ||
+              reviewItemData.status === "accepted" ? (
+                <ColorButton
+                  disabled
+                  size="medium"
+                  variant="contained"
+                  // color='hsl(350.7,61.7%,54.9%)'
+                  onClick={handleReject}
+                  sx={{
+                    m: 1,
+                    backgroundColor: "hsl(350.7,61.7%,54.9%)",
+                    "&:hover": {
+                      backgroundColor: "hsl(350.7,61.7%,45.9%)",
+                    },
+                  }}
+                >
+                  Reject
+                </ColorButton>
+              ) : (
+                <ColorButton
+                  size="medium"
+                  variant="contained"
+                  // color='hsl(350.7,61.7%,54.9%)'
+                  onClick={handleReject}
+                  sx={{
+                    m: 1,
+                    backgroundColor: "hsl(350.7,61.7%,54.9%)",
+                    "&:hover": {
+                      backgroundColor: "hsl(350.7,61.7%,45.9%)",
+                    },
+                  }}
+                >
+                  Reject
+                </ColorButton>
+              )}
+              {reviewItemData.status === "accepted" ? (
+                <ColorButton
+                  disabled
+                  size="medium"
+                  variant="contained"
+                  // color='#1AAE9F'
+                  onClick={handleApprove}
+                  sx={{
+                    m: 1,
+                    backgroundColor: "#1AAE9F",
+                    "&:hover": {
+                      backgroundColor: "hsl(173.9,74%,30%)",
+                    },
+                  }}
+                >
+                  Approve
+                </ColorButton>
+              ) : (
+                <ColorButton
+                  size="medium"
+                  variant="contained"
+                  // color='#1AAE9F'
+                  onClick={handleApprove}
+                  sx={{
+                    m: 1,
+                    backgroundColor: "#1AAE9F",
+                    "&:hover": {
+                      backgroundColor: "hsl(173.9,74%,30%)",
+                    },
+                  }}
+                >
+                  Approve
+                </ColorButton>
+              )}
+            </Box>
           </Box>
           <Box
             sx={{

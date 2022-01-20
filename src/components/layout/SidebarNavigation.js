@@ -10,6 +10,7 @@ import Collapse from "@mui/material/Collapse";
 import ExpandLess from "@mui/icons-material/ExpandLess";
 import ExpandMore from "@mui/icons-material/ExpandMore";
 import GridViewIcon from "@mui/icons-material/GridView";
+import NotificationsIcon from "@mui/icons-material/Notifications";
 import { styled } from "@mui/material/styles";
 // import { Avatar } from "@mui/material";
 import { Grid } from "@mui/material";
@@ -456,6 +457,12 @@ const SidebarNavigation = () => {
       open: openRR,
       handle: handleClickRR,
       access: [isLeader, isHrAdmin, isSuperAdmin].some((x) => x),
+    },
+    {
+      name: "Status",
+      icon: <NotificationsIcon />,
+      link: "/status",
+      access: [isUser].some((x) => x),
     },
   ];
   if (lgUp) {

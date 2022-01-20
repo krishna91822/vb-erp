@@ -22,6 +22,8 @@ import PersonIcon from "@mui/icons-material/Person";
 import LocalCafeIcon from "@mui/icons-material/LocalCafe";
 import ImportContactsIcon from "@mui/icons-material/ImportContacts";
 import BadgeIcon from "@mui/icons-material/Badge";
+import PlagiarismIcon from "@mui/icons-material/Plagiarism";
+
 import { profileInfoConstant } from "./profileInfo.constant";
 import Select from "react-select";
 import CreatableSelect from "react-select/creatable";
