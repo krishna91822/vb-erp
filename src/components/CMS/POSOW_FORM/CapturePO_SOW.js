@@ -59,6 +59,8 @@ export const CapturePO_SOW = (props) => {
 
   let filteredArr = useSelector((state) => state.CMS_state.dataByID);
   const isRedirect = useSelector((state) => state.CMS_state.redirect);
+  const clone = useSelector((state) => state.CMS_state.clone);
+
   useEffect(() => {
     if (isRedirect) {
       navigate("/posow");
@@ -92,19 +94,20 @@ export const CapturePO_SOW = (props) => {
   const allocationRateArr = useSelector(
     (state) => state.CMS_state.allocationRate
   );
+  console.log(allocationRateArr);
   const user = useSelector((state) => state.user.user);
 
-  let DefaultClientName = null;
-  let ReadProjectName = null;
-  let ReadPO_num = "";
-  let ReadPO_amt = "";
-  let ReadType = "PO";
-  let ReadCurr = "";
-  let init_Status = "Active";
-  let Readremarks = "";
-  let ReadDocName = "";
+  let initClientName = null;
+  let initProjectName = null;
+  let initPO_num = "";
+  let initPO_amt = "";
+  let initType = "PO";
+  let initCurr = "";
+  let initStatus = "Active";
+  let initremarks = "";
+  let initDocName = "";
   let initDocTypes = "";
-  let userTargetResCheckedElems = new Array(targetedResources.length).fill(
+  let initTargetResCheckedElems = new Array(targetedResources.length).fill(
     false
   );
 
@@ -112,36 +115,39 @@ export const CapturePO_SOW = (props) => {
   const [projectId, setProjectId] = useState("");
   const [selectedDate, setPOSOWEndDate] = useState(null);
   const [charsLeft, setCharsLeft] = useState(150);
-  const [clientName, setClientName] = React.useState(DefaultClientName);
-  const [projectName, setProjectName] = React.useState(ReadProjectName);
+  const [clientName, setClientName] = React.useState(initClientName);
+  const [projectName, setProjectName] = React.useState(initProjectName);
   const [clientProjectSponsor, setclientProjectSponsor] =
     React.useState(clientSponsor);
-  const [clientFinanceController, setClientFinanceController] =
-    React.useState(clientFinController);
-  const [typeName, setTypeName] = React.useState(ReadType);
-  const [CurrName, setCurrName] = React.useState(ReadCurr);
-  const [remarks, setRemarks] = React.useState(Readremarks);
-  const [PO_number, setPO_number] = React.useState(ReadPO_num);
-  const [PO_amt, setPOAmt] = React.useState(ReadPO_amt);
-  const [DocName, setDocName] = React.useState(ReadDocName);
+  const [clientFinanceController, setClientFinanceController] = React.useState(
+    clone ? filteredArr[0].Client_Finance_Controller : clientFinController
+  );
+  const [typeName, setTypeName] = React.useState(initType);
+  const [CurrName, setCurrName] = React.useState(initCurr);
+  const [remarks, setRemarks] = React.useState(initremarks);
+  const [PO_number, setPO_number] = React.useState(initPO_num);
+  const [PO_amt, setPOAmt] = React.useState(initPO_amt);
+  const [DocName, setDocName] = React.useState(initDocName);
   const [uploadFile, setUploadFile] = React.useState();
-  const [status, setStatus] = React.useState(init_Status);
+  const [status, setStatus] = React.useState(initStatus);
   const [editTglCheckedState, seteditTglCheckedState] = React.useState(
     props.toggleState
   );
 
   const [TargetedResChkBox, setTargetedResChkBox] = useState(
-    userTargetResCheckedElems
+    initTargetResCheckedElems
   );
+
   useEffect(() => {
-    if (clientName !== null && !params.id) {
+    if (clientName !== null && !params.id && !clone) {
       setProjectName(null);
       dispatch(PoSowActions.clearData());
       dispatch(fetchAllClientProjects(clientName.clientName));
     }
   }, [clientName]);
+
   useEffect(() => {
-    if (!props.editBtn && projectName !== null) {
+    if (!props.editBtn && projectName !== null && !clone) {
       dispatch(fetchClientProjectSponsor(projectId));
     }
   }, [projectName]);
@@ -181,7 +187,34 @@ export const CapturePO_SOW = (props) => {
     }
   }, [filteredArr]);
   useEffect(() => {
-    if (props.editBtn && params.id) {
+    if (clone) {
+      setClientName({ clientName: filteredArr[0].Client_Name });
+      setProjectName({ _id: "", projectName: filteredArr[0].Project_Name });
+      setPO_number(filteredArr[0].PO_Number);
+      setPOAmt(filteredArr[0].PO_Amount);
+      setTypeName(filteredArr[0].Type);
+      setCurrName(filteredArr[0].Currency);
+      setProjectId(filteredArr[0].Project_Id);
+
+      dispatch(
+        PoSowActions.setClientProjectSponsor(filteredArr[0].Client_Sponser)
+      );
+      dispatch(
+        PoSowActions.setClientFinanceController(
+          filteredArr[0].Client_Finance_Controller
+        )
+      );
+
+      dispatch(
+        PoSowActions.setTargetedResourcesOnReadPage(
+          Object.keys(filteredArr[0].Targetted_Resources)
+        )
+      );
+    }
+  }, [filteredArr]);
+
+  useEffect(() => {
+    if ((props.editBtn && params.id) || clone) {
       setTargetedResChkBox(Object.values(filteredArr[0].Targetted_Resources));
     } else {
       setTargetedResChkBox(new Array(targetedResources.length).fill(false));
@@ -191,7 +224,7 @@ export const CapturePO_SOW = (props) => {
     if (!!value) {
       setClientName(value);
     } else {
-      setClientName(DefaultClientName);
+      setClientName(initClientName);
     }
   };
   const handleProjectChange = (event, val) => {
@@ -199,7 +232,7 @@ export const CapturePO_SOW = (props) => {
       setProjectName(val);
       setProjectId(val._id);
     } else {
-      setProjectName(ReadProjectName);
+      setProjectName(initProjectName);
     }
   };
   const handleTypeChange = (event) => {
@@ -249,12 +282,7 @@ export const CapturePO_SOW = (props) => {
       setDocName("");
     }
   };
-  // const handleSendForApprovalBtnOnClk = (statusToChange) => {
-  //   dispatch(SendForApproval("Pending", params.id));
-  // };
-  // const handleApproveReject = (statusToChange) => {
-  //   dispatch(SendForApproval(statusToChange, params.id));
-  // };
+
   const submitForm = (event) => {
     event.preventDefault();
     let selectedTargetedRes = {};
@@ -415,9 +443,8 @@ export const CapturePO_SOW = (props) => {
                     }
                     disabled={
                       (props.editBtn && !editTglCheckedState) ||
-                      editTglCheckedState
-                        ? true
-                        : false
+                      (editTglCheckedState ? true : false) ||
+                      clone
                     }
                     value={clientName}
                     getOptionLabel={(option) => option.clientName}
@@ -449,9 +476,8 @@ export const CapturePO_SOW = (props) => {
                     }
                     disabled={
                       (props.editBtn && !editTglCheckedState) ||
-                      editTglCheckedState
-                        ? true
-                        : false
+                      (editTglCheckedState ? true : false) ||
+                      clone
                     }
                     value={projectName}
                     getOptionLabel={(option) => option.projectName}

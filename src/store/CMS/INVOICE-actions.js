@@ -47,6 +47,7 @@ export const Update_INVOICE = (formData, id) => {
         dispatch(invoiceActions.setPopupOpen());
         dispatch(invoiceActions.setpopupVisibility());
         dispatch(invoiceActions.setRedirect(true));
+        dispatch(invoiceActions.setReload());
       } else {
         throw new Error("Could not Save data!");
       }

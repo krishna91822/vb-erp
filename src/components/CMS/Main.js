@@ -158,6 +158,7 @@ export const Main = () => {
                   <TextField
                     fullWidth
                     id="outlined-basic"
+                    onChange={SearchTextHandler}
                     placeholder="Search by client/project name"
                     onKeyPress={searchHandler}
                     InputProps={{
@@ -274,20 +275,13 @@ export const Main = () => {
                 <StyledTableCell align="center">PO/SOW Number</StyledTableCell>
                 <StyledTableCell align="center">PO/SOW Amount</StyledTableCell>
                 <StyledTableCell align="center">Client Sponsor</StyledTableCell>
-
-                {/* {user.permissions.includes("upload_PO/SOW/contract") && (
-                  <StyledTableCell align="center">Action</StyledTableCell>
-                )}
-                <StyledTableCell align="center">Status</StyledTableCell> */}
+                <StyledTableCell align="center">Options</StyledTableCell>
               </TableRow>
             </TableHead>
             <TableBody className="table-row-posow" data-test="row-click1">
               {post.map((row, index) => (
                 <TableRow
-                  component={Link}
                   style={{ textDecoration: "none" }}
-                  to={`/posow/detail/${row._id}`}
-                  onClick={() => handleRowOnClick(row._id)}
                   key={row.name}
                   className="table-row"
                   data-test="row-click2"
@@ -309,6 +303,9 @@ export const Main = () => {
                   </StyledTableCell>
                   <StyledTableCell align="center">
                     {row.Client_Sponser}
+                  </StyledTableCell>
+                  <StyledTableCell align="center">
+                    <LongMenu posowID={row._id} />
                   </StyledTableCell>
 
                   {/* might be required in future versions */}
@@ -335,15 +332,6 @@ export const Main = () => {
           </Table>
         </TableContainer>
         <div className="pagination">
-          {/* <NativeSelect
-                value={postPerPage}
-                onChange={handlerowsPerpage}
-                defaultValue={30}
-              >
-                <option value={5}>5</option>
-                <option value={10}>10</option>
-                <option value={15}>15</option>
-              </NativeSelect> */}
           <Stack spacing={2}>
             <Pagination
               count={Math.ceil(totalCount / postPerPage)}
