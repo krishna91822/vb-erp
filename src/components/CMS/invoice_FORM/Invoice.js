@@ -193,7 +193,7 @@ function Invoice(props) {
   }, [editTglCheckedState]);
   useEffect(() => {
     if (!invoicereceived) {
-      setinvoiceAmount(null);
+      setinvoiceAmount(0);
       setDate(null);
       setVbbankacc(null);
     }
@@ -368,7 +368,11 @@ function Invoice(props) {
                 <br />
                 <Box sx={{ minWidth: 120 }}>
                   <FormControl fullWidth>
-                    <TextField disabled={true} value={projectName}></TextField>
+                    <TextField
+                      disabled={true}
+                      value={projectName}
+                      size="small"
+                    ></TextField>
                   </FormControl>
                 </Box>
               </Grid>

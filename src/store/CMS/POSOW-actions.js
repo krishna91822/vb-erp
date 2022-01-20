@@ -6,6 +6,7 @@ import { uiActions } from "../ui-slice";
 export const createNewPO_SOW = (formData) => {
   return async function (dispatch) {
     dispatch(uiActions.toggleLoader());
+    dispatch(PoSowActions.setRedirect(true));
     try {
       const response = await axios.post(`/poSow`, formData);
       if (response.status === 200) {
@@ -18,7 +19,6 @@ export const createNewPO_SOW = (formData) => {
             })
           );
         }, 1000);
-        dispatch(PoSowActions.setRedirect(true));
       } else {
         throw new Error("Could not Save data!");
       }
@@ -202,37 +202,6 @@ export const AddEmpToThisPO = (formData) => {
             status: "error",
             title: "Error!",
             message: "Could not Save data!",
-          })
-        );
-      }, 1000);
-    }
-  };
-};
-export const UpdateEmpData = (formData, emp_id) => {
-  return async function (dispatch) {
-    try {
-      const response = await axios.patch(`/assign/${emp_id}`, formData);
-      if (response.status === 200) {
-        dispatch(
-          uiActions.showNotification({
-            status: "success",
-            title: "Success!",
-            message: "Updated Successfully!",
-          })
-        );
-        dispatch(PoSowActions.setRedirect(false));
-      } else {
-        throw new Error("Could not update!");
-      }
-    } catch (error) {
-      dispatch(uiActions.toggleLoader());
-      setTimeout(function () {
-        dispatch(uiActions.toggleLoader());
-        dispatch(
-          uiActions.showNotification({
-            status: "error",
-            title: "Error!",
-            message: "Could not update!",
           })
         );
       }, 1000);
