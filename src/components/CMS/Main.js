@@ -143,6 +143,7 @@ export const Main = () => {
   };
   const searchHandler = (event) => {
     if (event.key === "Enter") {
+      setCurrentPage(1);
       dispatch(paginationFetchPosow(filename, 1, 5, searchKeyword));
     }
   };

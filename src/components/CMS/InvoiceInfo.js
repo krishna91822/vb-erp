@@ -164,6 +164,7 @@ function InvoiceInfo() {
   };
   const searchHandler = (event) => {
     if (event.key === "Enter") {
+      setCurrentPage(1);
       dispatch(paginationFetchInvoice(filename, 1, 5, searchKeyword));
     }
   };
