@@ -18,20 +18,13 @@ import {
 } from "@mui/material/colors";
 import CreatableSelect from "react-select/creatable";
 
-import { Box, Button, Chip, Grid, Divider } from "@mui/material";
+import { Box, Chip, Grid, Divider } from "@mui/material";
 import ClearIcon from "@mui/icons-material/Clear";
 
 const ProjectTab = (props) => {
-  const {
-    editable,
-    empData,
-    setEmpData,
-    // projectDetails,
-    // setProjectDetails,
-    errors,
-    validate,
-  } = props;
+  const { editable, empData, setEmpData } = props;
 
+  // eslint-disable-next-line no-unused-vars
   const { project } = empData;
 
   const customStyles = {
@@ -111,6 +104,7 @@ const ProjectTab = (props) => {
 
   useEffect(() => {
     setEmpData && setEmpData({ ...empData, project: projects });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [projects]);
 
   //dropdown

@@ -25,6 +25,7 @@ const CreateReward = () => {
   const [announcement, setAnnouncement] = React.useState("");
   const [subtype, setSubType] = React.useState("");
   const [receiver, setReceiver] = React.useState("");
+  // eslint-disable-next-line no-unused-vars
   const [multipleEmployeeData, setMultipleEmployeeData] = React.useState([]);
 
   const [formData, setFormData] = useState({});

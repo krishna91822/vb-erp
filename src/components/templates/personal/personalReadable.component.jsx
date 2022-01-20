@@ -9,9 +9,7 @@ import {
   TitleTypo,
 } from "./personalReadable.styles";
 import { personal } from "./personal.constant";
-import { CustomTextField } from "./personalEditable.styles";
 
-// import { TitleTypo } from "../../UI/commonStyles";
 import {
   deepPurple,
   pink,

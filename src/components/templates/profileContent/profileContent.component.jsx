@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 
 import {
   Box,
@@ -8,7 +8,6 @@ import {
   MenuItem,
   Grid,
   Card,
-  CardContent,
   CardHeader,
   Divider,
 } from "@mui/material";
@@ -41,6 +40,7 @@ import AdapterDateFns from "@mui/lab/AdapterDateFns";
 import validator from "validator";
 import { useDispatch, useSelector } from "react-redux";
 const ProfileContent = (props) => {
+  // eslint-disable-next-line no-unused-vars
   const dispatch = useDispatch();
   const {
     currentEmployee,
@@ -361,8 +361,6 @@ const ProfileContent = (props) => {
                   editable={inEditMode}
                   empData={inEditMode ? updateRequest : currentEmployee}
                   setEmpData={setUpdateRequest}
-                  // projectDetails={skillsDetails}
-                  // setProjectDetails={setSkillsDetails}
                   errors={errors}
                   validate={validate}
                 />
@@ -391,7 +389,6 @@ const ProfileContent = (props) => {
                 required
                 id="outlined-basic"
                 variant="outlined"
-                // value={field.name}
                 type="text"
                 name="fieldName"
                 onChange={(event) => handleFieldChange(event)}

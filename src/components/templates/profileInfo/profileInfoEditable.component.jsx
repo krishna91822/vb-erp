@@ -1,5 +1,5 @@
+/* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import {
   Grid,
   Avatar,
@@ -13,38 +13,17 @@ import {
 } from "@mui/material";
 import { StyledTypography } from "../../../assets/GlobalStyle/style";
 import { ContentBox } from "../personal/personalReadable.styles";
-import {
-  TitleTypo,
-  ContentTypo,
-  ProfileNameTypo,
-} from "./../../UI/commonStyles";
+import { TitleTypo, ContentTypo } from "./../../UI/commonStyles";
 import PersonIcon from "@mui/icons-material/Person";
-import LocalCafeIcon from "@mui/icons-material/LocalCafe";
-import ImportContactsIcon from "@mui/icons-material/ImportContacts";
-import BadgeIcon from "@mui/icons-material/Badge";
-import PlagiarismIcon from "@mui/icons-material/Plagiarism";
 
 import { profileInfoConstant } from "./profileInfo.constant";
-import Select from "react-select";
 import CreatableSelect from "react-select/creatable";
 import AsyncSelect from "react-select/async";
 
-import {
-  CustomTextField,
-  CustomGridBox,
-  FieldBox,
-  ContentBoldTypo,
-} from "./personalInfoEditable.styles";
+import { CustomTextField } from "./personalInfoEditable.styles";
 
 import { LocalizationProvider, DesktopDatePicker } from "@mui/lab";
 import AdapterDateFns from "@mui/lab/AdapterDateFns";
-
-// import {
-//   StyledTabs,
-//   StyledTab,
-//   TitleTypo,
-//   SubTitleTypo,
-// } from "./../../UI/commonStyles";
 
 import axiosInstance from "./../../../helpers/axiosInstance";
 
@@ -55,7 +34,6 @@ const ProfileInfoEditable = (props) => {
     employee,
     setEmployee,
     profileProgress,
-    // register,
     validate,
     errors,
     editSwitch,
@@ -146,8 +124,6 @@ const ProfileInfoEditable = (props) => {
           setEmployee({
             ...employee,
             empReportingManager: data[0].value,
-            // empDepartment: departmentDropdown.value,
-            // empDesignation: designationDropdown.value,
           });
         setEmpNameLoading((prev) => !prev);
       })
@@ -236,7 +212,6 @@ const ProfileInfoEditable = (props) => {
                           validate(employee);
                         }}
                         error={Boolean(errors.empName)}
-                        // helperText={errors.empName}
                         sx={{
                           "& .MuiInput-input": {
                             color: "textColor",
@@ -290,7 +265,6 @@ const ProfileInfoEditable = (props) => {
                               validate(employee);
                             }}
                             error={Boolean(errors?.empEmail)}
-                            // helperText={errors?.empEmail}
                           />
                         </ContentTypo>
                       </ContentBox>
@@ -321,7 +295,6 @@ const ProfileInfoEditable = (props) => {
                                 padding: "0",
                               }),
                             }}
-                            // isLoading={empNameLoading}
                             isSearchable
                             name="empDepartment"
                             options={departmentOptions}
@@ -363,7 +336,6 @@ const ProfileInfoEditable = (props) => {
                                 padding: "0",
                               }),
                             }}
-                            // isLoading={empNameLoading}
                             isSearchable
                             name="empDesignation"
                             options={designationOptions}
@@ -446,7 +418,6 @@ const ProfileInfoEditable = (props) => {
                               validate(employee);
                             }}
                             name="empReportingManager"
-                            // placeholder="Select univeristy"
                           />
                         </ContentTypo>
                       </ContentBox>

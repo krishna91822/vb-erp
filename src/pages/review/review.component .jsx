@@ -3,19 +3,15 @@ import { StyledTableCell } from "../../assets/GlobalStyle/style";
 import { StyledTypography } from "../../assets/GlobalStyle/style";
 
 import {
-  CustomGridBox,
   CustomTextField,
-  TitleTypo,
   ModalBoxItem,
   ContentTypo,
   ColorButton,
-  CustomeContainer,
 } from "./review.styles";
 
 import CloseIcon from "@mui/icons-material/Close";
 
 import {
-  Container,
   Box,
   Grid,
   MenuItem,
@@ -23,7 +19,6 @@ import {
   Stack,
   Pagination,
   TextField,
-  TableCell,
   TableRow,
   Table,
   TableBody,
@@ -33,9 +28,9 @@ import {
   CardContent,
   SvgIcon,
   InputAdornment,
-  IconButton,
 } from "@mui/material";
 import { Search as SearchIcon } from "../../icons/search";
+// eslint-disable-next-line no-unused-vars
 import { ClearRounded as ClearRoundedIcon } from "@mui/icons-material";
 import { reviewText } from "./review.constant";
 import ProfileContent from "../../components/templates/profileContent/profileContent.component";
@@ -232,7 +227,6 @@ const Review = () => {
                         </SvgIcon>
                       </InputAdornment>
                     ),
-                    //onClick={handelClearSearch}
                   }}
                   variant="outlined"
                 />
@@ -360,7 +354,6 @@ const Review = () => {
                   disabled
                   size="medium"
                   variant="contained"
-                  // color='hsl(350.7,61.7%,54.9%)'
                   onClick={handleReject}
                   sx={{
                     m: 1,
@@ -376,7 +369,6 @@ const Review = () => {
                 <ColorButton
                   size="medium"
                   variant="contained"
-                  // color='hsl(350.7,61.7%,54.9%)'
                   onClick={handleReject}
                   sx={{
                     m: 1,
@@ -394,7 +386,6 @@ const Review = () => {
                   disabled
                   size="medium"
                   variant="contained"
-                  // color='#1AAE9F'
                   onClick={handleApprove}
                   sx={{
                     m: 1,
@@ -410,7 +401,6 @@ const Review = () => {
                 <ColorButton
                   size="medium"
                   variant="contained"
-                  // color='#1AAE9F'
                   onClick={handleApprove}
                   sx={{
                     m: 1,

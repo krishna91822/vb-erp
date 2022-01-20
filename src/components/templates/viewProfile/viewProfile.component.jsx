@@ -52,7 +52,6 @@ const ViewProfile = () => {
       callback: function (doc) {
         doc.addImage(logo, "JPEG", 358, 2, 86, 16);
         doc.save(`${viewedEmployee.empName}_resume`);
-        // doc.output("dataurlnewwindow");
       },
     });
   };
@@ -72,7 +71,6 @@ const ViewProfile = () => {
             sx={{
               display: "flex",
               paddingRight: "1rem",
-              // position: editEmployee ? "absolute" : "relative",
               mt: editEmployee ? 4 : "",
               alignItems: "center",
             }}

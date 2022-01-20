@@ -62,10 +62,6 @@ const ResourceInformationTable = ({ resources, removeResource, edit }) => {
                       <DeleteIcon
                         style={{
                           cursor: "pointer",
-                          // "&:hover": {
-                          //   backgroundColor: "red",
-                          //   color: "red",
-                          // },
                         }}
                       />
                     </TableCell>
