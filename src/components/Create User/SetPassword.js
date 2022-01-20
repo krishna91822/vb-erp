@@ -1,16 +1,26 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   StyledTypography,
   MiniHeadingTypography,
 } from "../../assets/GlobalStyle/style";
 import { TextField, Grid, Button, Box } from "@mui/material";
 
-const CreateUser = () => {
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    alert("click");
-  };
+const SetPassword = () => {
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
 
+  const handleSubmit = (password) => {
+    alert(password);
+  };
+  const validatePassword = (event) => {
+    event.preventDefault();
+    const data = new FormData(event.currentTarget);
+    const password = data.get("password");
+    const confirmPassword = data.get("confirm_password");
+    password === confirmPassword
+      ? handleSubmit(password)
+      : alert("password and confirm password are not same");
+  };
   return (
     <>
       <Grid>
@@ -24,7 +34,7 @@ const CreateUser = () => {
       </Grid>
 
       <form
-        onSubmit={handleSubmit}
+        onSubmit={validatePassword}
         style={{
           border: "1px solid gray",
           margin: "100px",
@@ -43,13 +53,15 @@ const CreateUser = () => {
             Password:
           </label>
           <TextField
+            type="password"
             name="password"
+            id="password"
             size="small"
             variant="outlined"
             placeholder="New Password "
-            //   value={projectName}
+            value={password}
             style={{ width: "80%" }}
-            //   onChange={handleProjectChange}
+            onChange={(e) => setPassword(e.target.value)}
           />
         </div>
         <div
@@ -65,12 +77,13 @@ const CreateUser = () => {
           </label>
           <TextField
             name="confirm_password"
+            id="confirm_password"
             size="small"
             variant="outlined"
             placeholder="Confirm Password "
-            //   value={projectName}
+            value={confirmPassword}
             style={{ width: "80%" }}
-            //   onChange={handleProjectChange}
+            onChange={(e) => setConfirmPassword(e.target.value)}
           />
         </div>
 
@@ -95,4 +108,4 @@ const CreateUser = () => {
   );
 };
 
-export default CreateUser;
+export default SetPassword;

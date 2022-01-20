@@ -12,6 +12,7 @@ import cimsSlice from "./cims-slice";
 import userSlice from "./user-slice";
 import POSOW_Slice from "./CMS/POSOW-slice";
 import invoice_Slice from "./CMS/INVOICE-slice";
+import userAccountSlice from "./userAccount-slice";
 
 const middleware = [logger, thunk];
 
@@ -26,6 +27,7 @@ export default configureStore({
     CMS_state: POSOW_Slice.reducer,
     INVOICE_state: invoice_Slice.reducer,
     employee: employeeSlice,
+    createUser: userAccountSlice.reducer,
   },
   middleware: [...middleware],
 });

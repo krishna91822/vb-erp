@@ -333,7 +333,6 @@ const Routes = () => {
     {
       path: "/createuserprofile",
       component: CreateUserProfile,
-      title: "Not Found",
       access: [
         isUser,
         isApprover,
@@ -345,7 +344,7 @@ const Routes = () => {
       ].some((x) => x),
     },
     {
-      path: "/setnewpassword",
+      path: "/:id/setpassword",
       component: SetUserPassword,
       access: true,
     },
