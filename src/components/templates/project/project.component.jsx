@@ -172,6 +172,7 @@ const ProjectTab = (props) => {
                 placeholder="Enter Project Name"
                 onChange={(e) => handleChange(e, index)}
                 type="text"
+                sx={{ height: "40px" }}
               />
             </ContentBox>
             <ContentBox sx={{ fontSize: "16px", fontWeight: "400" }}>
@@ -191,6 +192,7 @@ const ProjectTab = (props) => {
               <TitleTypo>{projectConstant.projectDes}</TitleTypo>
               <CustomTextField
                 autoComplete="off"
+                multiline
                 required
                 id="outlined-basic"
                 variant="outlined"

@@ -1,0 +1,115 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.project-box {
+  margin-top: 9px;
+}
+
+div#pdf {
+}
+
+div#content-box {
+  width: 278px;
+}
+
+div#content-box2 {
+  display: flex;
+}
+
+div#outer {
+  display: flex;
+}
+
+div#left-bar {
+  height: 631px;
+  width: 150px;
+  background-color: #ccc;
+  padding: 9px;
+}
+
+div#imag {
+  height: 19px;
+  width: 19px;
+  border-radius: 50%;
+  margin: 9px;
+  background-color: cyan;
+}
+
+div#right-bar {
+  margin-top: 20px;
+  height: 611px;
+  width: 298px;
+  padding: 9px;
+}
+
+div#line {
+  width: 280px;
+  height: 1px;
+  border-radius: 40%;
+  background-color: #5c5b5b;
+}
+
+p#content1 {
+  font-size: 7px;
+  text-transform: capitalize;
+}
+
+p#abttme {
+  font-size: 7px;
+  text-align: justify;
+}
+
+p#title2 {
+  margin-right: 2px;
+  font-size: 7px;
+  font-weight: bold;
+  text-transform: capitalize;
+}
+
+p#title1 {
+  font-weight: bold;
+  font-size: 16px;
+  text-transform: capitalize;
+}
+
+p#title3 {
+  font-weight: bold;
+  font-size: 9px;
+}
+
+p#email {
+  font-size: 7px;
+}
+
+p#email2 {
+  font-size: 7px;
+}
+
+p#subtitle {
+  font-size: 7px;
+  color: #8a867c;
+  text-transform: capitalize;
+}
+
+div#chip {
+  display: inline-flex;
+  height: 14px;
+  font-size: 7px;
+  padding-left: 3px;
+  padding-right: 3px;
+  margin-right: 3px;
+  margin-bottom: 3px;
+  border-radius: 7px;
+  background-color: #5c5b5b;
+  text-transform: capitalize;
+  color: white;
+}
+
+div#chip-box {
+  padding-top: 3px;
+  display: flex;
+  flex-wrap: wrap;
+}
