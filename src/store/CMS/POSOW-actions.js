@@ -152,7 +152,6 @@ export const fetchSpecificPO_SOW = (ROW_ID) => {
     try {
       const res = await axios.get(`/poSow/${ROW_ID}`);
       if (res.status === 200) {
-        console.log(res.data.data);
         dispatch(PoSowActions.SetSpecific([res.data.data]));
       } else {
         throw new Error("Something went wrong!");
@@ -162,7 +161,7 @@ export const fetchSpecificPO_SOW = (ROW_ID) => {
         uiActions.showNotification({
           status: "error",
           title: "Error",
-          message: "Could not update data",
+          message: "Could not get data",
         })
       );
     } finally {
