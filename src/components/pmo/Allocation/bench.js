@@ -67,7 +67,12 @@ const Bench = ({ pressed, benchSortValue }) => {
         setModalDetails={setModalDetails}
         entryData={entryData}
       />
-      <MiniHead data-test="main-heading">Bench Capacity</MiniHead>
+      <MiniHead data-test="main-heading">
+        Bench Capacity{" "}
+        <span style={{ color: "grey", fontWeight: "500" }}>{`(${
+          data.totalCount || "0"
+        })`}</span>
+      </MiniHead>
       <TableContainer>
         <Table data-test="list-table">
           <TableHead>
@@ -78,6 +83,9 @@ const Bench = ({ pressed, benchSortValue }) => {
               <StyledTableCell align="center">
                 Primary Capabilities
               </StyledTableCell>
+              <StyledTableCell align="center">Skill Set</StyledTableCell>
+              <StyledTableCell align="center">Designation</StyledTableCell>
+              <StyledTableCell align="center">YOE</StyledTableCell>
               <StyledTableCell align="center">
                 Remaining Bandwidth
               </StyledTableCell>
@@ -149,6 +157,15 @@ const Bench = ({ pressed, benchSortValue }) => {
                     </StyledTableCell>
                     <StyledTableCell align="center">
                       {`${currElem.empPrimaryCapability}` || "-----"}
+                    </StyledTableCell>
+                    <StyledTableCell align="center">
+                      {`${currElem.empSkillSet}` || "-----"}
+                    </StyledTableCell>
+                    <StyledTableCell align="center">
+                      {`${currElem.empDesignation}` || "-----"}
+                    </StyledTableCell>
+                    <StyledTableCell align="center">
+                      {`${currElem.yearsOfExperience}` || "-----"}
                     </StyledTableCell>
                     <StyledTableCell align="center">
                       {currElem.remainingAllocation}
