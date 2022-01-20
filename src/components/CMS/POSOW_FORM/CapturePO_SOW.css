@@ -29,6 +29,12 @@ hr.projectInfoSeperator {
   margin: 0.2rem;
   border: 1px solid gray;
 }
+
+hr.projectInfoSeperator2 {
+  margin: 1rem;
+  border: 1px solid rgb(180, 180, 180);
+}
+
 .cms-heading {
   padding-top: 1.5rem;
 }

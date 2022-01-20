@@ -635,7 +635,7 @@ export const CapturePO_SOW = (props) => {
                 </Grid>
               </Grid>
 
-              <hr className="projectInfoSeperator" />
+              <hr className="projectInfoSeperator2" />
 
               <Grid container mt={3}>
                 <Grid item lg={6} md={6} sm={12} xs={12} className="finalgrid">
