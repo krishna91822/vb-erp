@@ -1,7 +1,7 @@
 import { styled } from "@mui/system";
 
 export const ContentBox = styled("div")(({ theme }) => ({
-  padding: theme.spacing(0.5),
+  padding: theme.spacing(1),
   display: "grid",
   gridTemplateColumns: "1fr 1fr",
   gridColumnGap: 20,

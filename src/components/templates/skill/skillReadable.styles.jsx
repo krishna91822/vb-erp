@@ -33,5 +33,5 @@ export const ContentTypoList = styled("div")(({ theme }) => ({
 }));
 
 export const ListItem = styled("li")(({ theme }) => ({
-  margin: theme.spacing(0.5),
+  margin: theme.spacing(1),
 }));

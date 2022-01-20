@@ -6,7 +6,7 @@ import {
   CustomTextField,
 } from "./project.styles";
 import { projectConstant } from "./project.constant";
-
+import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import {
   deepPurple,
   pink,
@@ -18,7 +18,7 @@ import {
 } from "@mui/material/colors";
 import CreatableSelect from "react-select/creatable";
 
-import { Box, Button, Chip, Grid } from "@mui/material";
+import { Box, Button, Chip, Grid, Divider } from "@mui/material";
 import ClearIcon from "@mui/icons-material/Clear";
 
 const ProjectTab = (props) => {
@@ -148,7 +148,7 @@ const ProjectTab = (props) => {
   );
 
   return editable ? (
-    <Grid container spacing={0} sx={{ minHeight: 150 }}>
+    <Grid container sx={{ minHeight: 150 }}>
       <Grid item sm={7}>
         {projects.map((project, index) => (
           <Box
@@ -216,54 +216,66 @@ const ProjectTab = (props) => {
             )}
           </Box>
         ))}
-        <Button variant="contained" onClick={addProject} sx={{ mt: 2 }}>
-          {projectConstant.addProject}
-        </Button>
+        <Grid
+          container
+          onClick={addProject}
+          sx={{ mt: 2, ml: 1, cursor: "pointer" }}
+        >
+          <Grid item>
+            <AddCircleOutlineIcon />
+          </Grid>
+          <Grid item sx={{ marginLeft: "5px" }}>
+            <ContentTypo>Add more</ContentTypo>
+          </Grid>
+        </Grid>
       </Grid>
     </Grid>
   ) : (
-    <Box>
-      {empData?.project &&
-        empData.project.map(
-          ({ projectName, projectSkill, projectDescription }, index) => (
-            <Box
-              key={index}
-              sx={{
-                borderBottom: "1px solid",
-                borderColor: "#9e9e9e",
-                padding: index === 0 ? "0 0 16px" : "16px 0",
-              }}
-            >
-              <ContentBox>
-                <TitleTypo>{projectConstant.projectName}</TitleTypo>
-                <ContentTypo>{projectName}</ContentTypo>
-              </ContentBox>
-              <ContentBox>
-                <TitleTypo>{projectConstant.projectSkills}</TitleTypo>
-                <Box sx={{ width: 1, display: "flex" }}>
-                  {projectSkill.length !== 0 &&
-                    projectSkill.map((el, index) => (
-                      <Chip
-                        key={index}
-                        label={el}
-                        size="small"
-                        sx={{
-                          margin: index === 0 ? "0 3px 0 0" : "0 3px",
-                          backgroundColor: chipColors[index],
-                          color: "#fff",
-                        }}
-                      />
-                    ))}
+    <Grid container mb={10} sx={{ minHeight: 150 }}>
+      <Grid item sm={7}>
+        <Box>
+          {empData?.project &&
+            empData.project.map(
+              ({ projectName, projectSkill, projectDescription }, index) => (
+                <Box
+                  key={index}
+                  sx={{
+                    padding: index === 0 ? "0 0 16px" : "16px 0",
+                  }}
+                >
+                  <ContentBox>
+                    <TitleTypo>{projectConstant.projectName}</TitleTypo>
+                    <ContentTypo>{projectName}</ContentTypo>
+                  </ContentBox>
+                  <ContentBox>
+                    <TitleTypo>{projectConstant.projectSkills}</TitleTypo>
+                    <Box sx={{ width: 1, display: "flex" }}>
+                      {projectSkill.length !== 0 &&
+                        projectSkill.map((el, index) => (
+                          <Chip
+                            key={index}
+                            label={el}
+                            size="small"
+                            sx={{
+                              margin: index === 0 ? "0 3px 0 0" : "0 3px",
+                              backgroundColor: chipColors[index],
+                              color: "#fff",
+                            }}
+                          />
+                        ))}
+                    </Box>
+                  </ContentBox>
+                  <ContentBox>
+                    <TitleTypo>{projectConstant.projectDes}</TitleTypo>
+                    <ContentTypo>{projectDescription}</ContentTypo>
+                  </ContentBox>
+                  {index < empData.project.length - 1 && <Divider />}
                 </Box>
-              </ContentBox>
-              <ContentBox>
-                <TitleTypo>{projectConstant.projectDes}</TitleTypo>
-                <ContentTypo>{projectDescription}</ContentTypo>
-              </ContentBox>
-            </Box>
-          )
-        )}
-    </Box>
+              )
+            )}
+        </Box>
+      </Grid>
+    </Grid>
   );
 };
 

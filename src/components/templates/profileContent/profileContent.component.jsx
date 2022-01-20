@@ -273,6 +273,7 @@ const ProfileContent = (props) => {
           <StyledGrid item lg={8} md={6} xs={6}>
             <Card>
               <CardHeader
+                sx={{ overflow: "scroll" }}
                 title={
                   <Grid item>
                     <StyledTabs value={value} onChange={handleChange}>

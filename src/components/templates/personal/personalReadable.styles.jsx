@@ -1,7 +1,7 @@
 import { styled } from "@mui/system";
 
 export const ListItem = styled("li")(({ theme }) => ({
-  margin: theme.spacing(0.5),
+  margin: theme.spacing(1),
 }));
 
 export const ContentBox = styled("div")(({ theme }) => ({

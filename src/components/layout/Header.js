@@ -28,7 +28,7 @@ import {
   AppBar,
   Toolbar,
 } from "@mui/material";
-
+import PersonIcon from "@mui/icons-material/Person";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { logoutUser } from "../../store/user-actions";
@@ -94,10 +94,19 @@ const Header = () => {
             <>
               <IconButton
                 size="large"
+                edge="end"
                 onClick={handleClick}
-                style={{ backgroundColor: "transparent" }}
+                style={{
+                  backgroundColor: "transparent",
+                }}
               >
-                <AccountCircle fontSize="large" />
+                <PersonIcon
+                  sx={{
+                    fontSize: "2rem",
+                    paddingRight: "5px",
+                    color: "rgb(17,24,39)",
+                  }}
+                />
                 <Typography variant="h6">{user.name}</Typography>
               </IconButton>
               <Menu
