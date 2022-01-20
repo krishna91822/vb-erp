@@ -1,3 +1,9 @@
+.rewards-form-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
 .textfield {
   width: 900px;
 }

@@ -45,7 +45,7 @@ import axiosInstance from "./../../helpers/axiosInstance";
 import { useDispatch } from "react-redux";
 import { uiActions } from "./../../store/ui-slice";
 
-import "../../components/clients/styles/ClientListStyles.css";
+import "../../assets/GlobalStyle/TableStyles.css";
 
 const Review = () => {
   const { toggleLoader } = uiActions;

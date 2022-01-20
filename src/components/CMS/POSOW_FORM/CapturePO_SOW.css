@@ -11,6 +11,7 @@
 }
 .posow-SaveButton {
   margin: 1rem;
+  padding-top: 0.5rem;
   display: flex;
   justify-content: flex-end;
 }
@@ -25,12 +26,11 @@
   align-items: center;
 }
 hr.projectInfoSeperator {
-  /* margin: 0.2rem; */
+  margin: 0.2rem;
   border: 1px solid gray;
 }
 .cms-heading {
-  margin-top: 1rem;
-  padding-top: 0.5rem;
+  padding-top: 1.5rem;
 }
 .posow-Dropdowns {
   margin: 1rem;

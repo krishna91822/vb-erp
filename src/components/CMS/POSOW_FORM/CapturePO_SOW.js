@@ -2,12 +2,11 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import CssBaseline from "@mui/material/CssBaseline";
 import Box from "@mui/material/Box";
+import { Card } from "@mui/material";
 import Container from "@mui/material/Container";
 import Button from "@mui/material/Button";
 import { useTheme } from "@mui/material/styles";
 import OutlinedInput from "@mui/material/OutlinedInput";
-import InputLabel from "@mui/material/InputLabel";
-import Stack from "@mui/material/Stack";
 import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
 import Autocomplete from "@mui/material/Autocomplete";
@@ -324,14 +323,7 @@ export const CapturePO_SOW = (props) => {
             </Grid>
           </Grid>
           <Box>
-            <Box
-              sx={{
-                bgcolor: "white",
-                height: "75vh",
-                border: "2px solid grey",
-                overflowY: "scroll",
-              }}
-            >
+            <Card>
               <Grid container>
                 <Grid
                   item
@@ -398,7 +390,7 @@ export const CapturePO_SOW = (props) => {
               </Grid>
               <hr className="projectInfoSeperator" />
 
-              <Grid container>
+              <Grid container pr={2} mt={2}>
                 <Grid item lg={6} md={6} sm={12} xs={12} className="finalgrid">
                   <label>
                     Client Name <span style={{ color: "red" }}>*</span>
@@ -537,7 +529,7 @@ export const CapturePO_SOW = (props) => {
                 </Grid>
               </Grid>
 
-              <Grid container>
+              <Grid container pr={2}>
                 <Grid item lg={6} md={6} sm={12} xs={12} className="finalgrid">
                   <label id="demo-multiple-name-label">
                     Type <span style={{ color: "red" }}>*</span>
@@ -645,7 +637,7 @@ export const CapturePO_SOW = (props) => {
 
               <hr className="projectInfoSeperator" />
 
-              <Grid container>
+              <Grid container mt={3}>
                 <Grid item lg={6} md={6} sm={12} xs={12} className="finalgrid">
                   <label id="demo-multiple-name-label">Uploaded Document</label>
                   <TextField
@@ -664,7 +656,10 @@ export const CapturePO_SOW = (props) => {
                       <Button
                         variant="contained"
                         component="label"
-                        style={{ backgroundColor: "#f57c00", color: "#FFFFFF" }}
+                        style={{
+                          backgroundColor: "chocolate",
+                          color: "#FFFFFF",
+                        }}
                         disabled={
                           props.editBtn && !editTglCheckedState ? true : false
                         }
@@ -719,7 +714,7 @@ export const CapturePO_SOW = (props) => {
                 </Grid>
               </Grid>
 
-              <Grid container>
+              <Grid container pr={2}>
                 <Grid
                   item
                   lg={12}
@@ -814,7 +809,7 @@ export const CapturePO_SOW = (props) => {
                   </Grid>
                 )} */}
               </Grid>
-            </Box>
+            </Card>
           </Box>
         </React.Fragment>
       </div>

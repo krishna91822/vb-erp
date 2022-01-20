@@ -6,7 +6,7 @@ import PaginationComponent from "./PaginationComponent";
 import { useDispatch, useSelector } from "react-redux";
 import { getRewardsData } from "../../store/rewards-actions";
 import { StyledTypography } from "../../assets/GlobalStyle/style";
-import "../clients/styles/ClientListStyles.css";
+import "../../assets/GlobalStyle/TableStyles.css";
 
 const ViewReward = () => {
   const rewards = useSelector((state) => state.reward.rewards);
