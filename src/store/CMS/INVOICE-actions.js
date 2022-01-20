@@ -38,7 +38,6 @@ export const Update_INVOICE = (formData, id) => {
       const response = await axios.patch(`/invoice/${id}`, formData);
       if (response.status === 200) {
         setTimeout(function () {
-          console.log("Hii");
           dispatch(invoiceActions.setPopupOpen());
           dispatch(invoiceActions.setpopupVisibility());
           dispatch(invoiceActions.setRedirect(true));

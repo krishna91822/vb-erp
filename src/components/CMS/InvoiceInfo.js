@@ -260,7 +260,7 @@ function InvoiceInfo() {
           <Table>
             <TableHead>
               <TableRow className="table-header">
-                <StyledTableCell align="center"></StyledTableCell>
+                <StyledTableCell align="center">ID</StyledTableCell>
                 <StyledTableCell align="center">Client Name</StyledTableCell>
                 <StyledTableCell align="center">Project Name</StyledTableCell>
                 <StyledTableCell align="center">PO/SOW Order</StyledTableCell>
