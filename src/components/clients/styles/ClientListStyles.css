@@ -1,6 +1,6 @@
 .ListContainer {
   margin-top: 5px;
-  height: calc;
+  height: 70%;
   width: 100%;
   overflow-y: scroll;
 }
