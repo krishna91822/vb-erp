@@ -39,12 +39,6 @@ export const searchEmployees = (empName) => {
 export const createUserAccount = (user) => {
   return async (dispatch) => {
     const createAccount = async () => {
-      // const user = {
-      //   first_name: "Rupesh Sharma",
-      //   email: "rupesh@valuebound,com",
-      //   role: ["user"],
-      //   password: " ",
-      // };
       const response = await axios.post("/users", user);
       if (response.status === "failure") {
         throw new Error("Could not fetch employeesName");
@@ -56,6 +50,13 @@ export const createUserAccount = (user) => {
     try {
       dispatch(uiActions.toggleLoader());
       const data = await createAccount();
+      dispatch(
+        uiActions.showNotification({
+          status: "success",
+          message:
+            "User created successfull and email sent to user to reset password",
+        })
+      );
     } catch (error) {
       setTimeout(function () {
         dispatch(
@@ -72,16 +73,13 @@ export const createUserAccount = (user) => {
   };
 };
 
-export const setUserPassword = () => {
+export const setUserPassword = (id, password) => {
   return async (dispatch) => {
     const setPassword = async () => {
       const user = {
         password: " ",
       };
-      const response = await axios.post(
-        "/61e40c58e616cc19530f9003/setPassword",
-        user
-      );
+      const response = await axios.put(`/${id}/setPassword`, password);
       console.log(response.data.data, "=====CreateUSer");
       if (response.status === "failure") {
         throw new Error("Could not fetch employeesName");
@@ -93,6 +91,12 @@ export const setUserPassword = () => {
     try {
       dispatch(uiActions.toggleLoader());
       const data = await setPassword();
+      dispatch(
+        uiActions.showNotification({
+          status: "success",
+          message: "password change successfully",
+        })
+      );
     } catch (error) {
       setTimeout(function () {
         dispatch(

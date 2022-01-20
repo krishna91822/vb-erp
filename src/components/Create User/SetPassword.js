@@ -1,4 +1,9 @@
 import React, { useState } from "react";
+import { uiActions } from "../../store/ui-slice";
+import { useDispatch } from "react-redux";
+import { setUserPassword } from "../../store/userAccount-action";
+import { useParams } from "react-router-dom";
+
 import {
   StyledTypography,
   MiniHeadingTypography,
@@ -8,10 +13,15 @@ import { TextField, Grid, Button, Box } from "@mui/material";
 const SetPassword = () => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const dispatch = useDispatch();
+  let { id } = useParams();
+  console.log(id, "------------------");
 
-  const handleSubmit = (password) => {
-    alert(password);
+  const handleSubmit = (pass) => {
+    const password = { password: pass };
+    dispatch(setUserPassword(id, password));
   };
+
   const validatePassword = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -19,7 +29,12 @@ const SetPassword = () => {
     const confirmPassword = data.get("confirm_password");
     password === confirmPassword
       ? handleSubmit(password)
-      : alert("password and confirm password are not same");
+      : dispatch(
+          uiActions.showNotification({
+            status: "error",
+            message: "password not match with confirm password",
+          })
+        );
   };
   return (
     <>

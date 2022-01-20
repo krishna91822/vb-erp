@@ -3,25 +3,28 @@ import {
   StyledTypography,
   MiniHeadingTypography,
 } from "../../assets/GlobalStyle/style";
-import { TextField, Grid, Button } from "@mui/material";
+import { TextField, Grid, Button, Autocomplete } from "@mui/material";
 import {
   searchEmployees,
   createUserAccount,
 } from "../../store/userAccount-action";
 import { useSelector, useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 const CreateUser = () => {
   const dispatch = useDispatch();
   const [username, setUsername] = useState("");
   const [useremail, setUseremail] = useState("");
+  const [open, setOpen] = useState(false);
   const [check, setCheck] = useState(false);
+  const navigate = useNavigate();
 
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     let userDetail = {};
-    userDetail.first_name = data.get("username");
-    userDetail.email = data.get("useremail");
+    userDetail.first_name = data.get("username").split(" (")[0];
+    userDetail.email = useremail;
     userDetail.role = [];
     data.get("user") && userDetail.role.push(data.get("user"));
     data.get("leader") && userDetail.role.push(data.get("leader"));
@@ -31,22 +34,37 @@ const CreateUser = () => {
       userDetail.role.push(data.get("finance_admin"));
     data.get("pms_admin") && userDetail.role.push(data.get("pms_admin"));
     data.get("super_admin") && userDetail.role.push(data.get("super_admin"));
-    userDetail.password = " ";
-    console.log(userDetail);
-    // console.log(event.target.value);
-
-    // dispatch(createUserAccount(userDetail));
+    userDetail.password = "qwerty123";
+    // console.log(userDetail);
+    dispatch(createUserAccount(userDetail));
+    navigate("/my-profile");
     setUsername("");
     setUseremail("");
     setCheck(false);
-    // event.target;
   };
   const userAccount = useSelector((state) => state.createUser);
   useEffect(() => {
     dispatch(searchEmployees(username));
   }, [username]);
-  // console.log(username, "createsuer============");
-  console.log(userAccount, "createuser======");
+
+  const handleUserName = (event, value) => {
+    if (event) {
+      setUsername(event.target.value);
+      setOpen(false);
+      if (event.target.value && event.target.value.length > 2) {
+        setOpen(true);
+      }
+    }
+  };
+  const handleOnClick = (event, value) => {
+    if (value) {
+      setUsername(value.empName);
+      setUseremail(value.empEmail);
+      setOpen(false);
+    }
+    setUsername("");
+  };
+
   return (
     <>
       <Grid>
@@ -76,17 +94,35 @@ const CreateUser = () => {
           }}
         >
           <label style={{ padding: "10px ", fontWeight: "600" }}>Name:</label>
-          <TextField
-            name="username"
-            //   data-test="project-name-input"
-            id="username"
+          <Autocomplete
             size="small"
-            variant="outlined"
-            //   disabled={!edit}
-            placeholder="Enter Name"
-            value={username}
+            onBlur={() => {
+              setUsername("");
+              setOpen(false);
+            }}
+            onInputChange={handleUserName}
+            getOptionLabel={(option) => `${option.empName} (${option.empId})`}
+            onChange={handleOnClick}
+            options={userAccount.employees}
+            open={open}
             style={{ width: "100%" }}
-            onChange={(e) => setUsername(e.target.value)}
+            inputValue={
+              userAccount.employees ? userAccount.employees.empName : username
+            }
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                required
+                id="username"
+                name="username"
+                value={
+                  userAccount.employees
+                    ? userAccount.employees.empName
+                    : username
+                }
+                placeholder="Enter Name"
+              />
+            )}
           />
         </div>
         <div
@@ -100,15 +136,13 @@ const CreateUser = () => {
           <label style={{ padding: "10px ", fontWeight: "600" }}>Email:</label>
           <TextField
             name="useremail"
-            //   data-test="project-name-input"
+            disabled
             id="useremail"
             size="small"
             variant="outlined"
-            //   disabled={!edit}
             placeholder="Enter Email Id"
             value={useremail}
             style={{ width: "100%" }}
-            onChange={(e) => setUseremail(e.target.value)}
           />
         </div>
         <Grid item>
