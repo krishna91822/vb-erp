@@ -77,7 +77,6 @@ const RewardRowData = ({ data, StyledMenu, open }) => {
         <StyledTableCell align="center">{data.reward_type}</StyledTableCell>
         <StyledTableCell align="center">
           {data.reward_sender === "selected" ? (
-            // <p>{data.sender_id[0].empName}</p>
             <>
               {data.sender_id[0] !== undefined
                 ? data.sender_id[0].empName

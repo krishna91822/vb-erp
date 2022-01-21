@@ -29,7 +29,7 @@ export const Heading = styled.div`
 
 export const StyledHeader = styled.form`
   padding: 0.5em;
-  border: 0.1em solid #afacacde;
+  background-color: white;
   border-radius: 5px;
 `;
 

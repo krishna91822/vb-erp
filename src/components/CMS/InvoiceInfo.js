@@ -17,8 +17,11 @@ import EditOffIcon from "@mui/icons-material/EditOff";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+import FormDialog from "./invoiceEditDialog";
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import LongMenu from "./invoiceOptions";
+import { ContentTypo } from "../../pages/review/review.styles";
 
 import {
   fetch_INVOICE_data,
@@ -84,21 +87,22 @@ export const StyledMenu = styled((props) => (
 function InvoiceInfo() {
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    dispatch(fetch_INVOICE_data);
-    dispatch(paginationFetchInvoice(filename, currentPage, postPerPage));
-  }, []);
   const post = useSelector((state) => state.INVOICE_state.invoiceData);
   const totalCount = useSelector((state) => state.INVOICE_state.totalCount);
+  const user = useSelector((state) => state.user.user);
+
   const [currentPage, setCurrentPage] = React.useState(1);
   const [postPerPage, setPostPerPage] = React.useState(5);
   const [filename, setFilename] = React.useState("Id");
+  const [searchKeyword, setSearchKeyword] = useState("");
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
 
-  const user = useSelector((state) => state.user.user);
-
-  const [searchText, setsearchText] = useState("");
+  useEffect(() => {
+    dispatch(
+      paginationFetchInvoice(filename, currentPage, postPerPage, searchKeyword)
+    );
+  }, []);
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -113,26 +117,53 @@ function InvoiceInfo() {
     setAnchorEl(null);
   };
   useEffect(() => {
-    dispatch(paginationFetchInvoice(filename, currentPage, postPerPage));
+    dispatch(
+      paginationFetchInvoice(filename, currentPage, postPerPage, searchKeyword)
+    );
   }, [filename]);
   const handleChange = (event, value) => {
     setCurrentPage(value);
-    dispatch(paginationFetchInvoice(filename, value, postPerPage));
+    dispatch(
+      paginationFetchInvoice(filename, value, postPerPage, searchKeyword)
+    );
   };
   const handlerowsPerpage = (event) => {
     setPostPerPage(event.target.value);
-    dispatch(paginationFetchInvoice(filename, currentPage, event.target.value));
+    dispatch(
+      paginationFetchInvoice(
+        filename,
+        currentPage,
+        event.target.value,
+        searchKeyword
+      )
+    );
+  };
+
+  const renderChildStatus = (status) => {
+    if (status === "Complete") {
+      return <ContentTypo sx={{ color: "#00e676" }}>{status}</ContentTypo>;
+    } else if (status === "Invoice raised") {
+      return <ContentTypo sx={{ color: "#ff9800" }}>{status}</ContentTypo>;
+    } else if (status === "Overdue") {
+      return <ContentTypo sx={{ color: "#b2102f" }}>{status}</ContentTypo>;
+    } else {
+      return <ContentTypo sx={{ color: "#212121" }}>{status}</ContentTypo>;
+    }
   };
   const handleRowOnClick = (row_id) => {
     dispatch(fetchSpecificINVOICE(row_id));
   };
+
+  const SearchTextHandler = (event) => {
+    setSearchKeyword(event.target.value);
+  };
   const searchHandler = (event) => {
     if (event.key === "Enter") {
-      dispatch(searchINVOICE(event.target.value));
+      dispatch(paginationFetchInvoice(filename, 1, 5, searchKeyword));
     }
   };
   return (
-    <div className="client-list-wrapper">
+    <div className="list-wrapper">
       <StyledTypography>Invoice Information</StyledTypography>
       <Card>
         <CardContent>
@@ -254,18 +285,17 @@ function InvoiceInfo() {
                 <StyledTableCell align="center">
                   Invoice Amount received
                 </StyledTableCell>
-                {user.permissions.includes("upload_invoice") && (
-                  <StyledTableCell align="center">Action</StyledTableCell>
-                )}
+                <StyledTableCell align="center">Status</StyledTableCell>
+                <StyledTableCell align="center">Options</StyledTableCell>
               </TableRow>
             </TableHead>
             <TableBody>
               {post.map((row, index) => (
                 <TableRow
-                  component={Link}
                   style={{ textDecoration: "none" }}
-                  to={`/invoice_details/${row._id}`}
-                  onClick={() => handleRowOnClick(row._id)}
+                  // component={Link}
+                  // to={`/invoice_details/${row._id}`}
+                  // onClick={() => handleRowOnClick(row._id)}
                   key={row.name}
                   className="table-row"
                 >
@@ -300,15 +330,14 @@ function InvoiceInfo() {
                     {row.invoice_amount_received}
                   </StyledTableCell>
                   <StyledTableCell align="center">
-                    {user.permissions.includes("upload_invoice") && (
-                      <>
-                        {row.invoice_received === "No" ? (
-                          <EditIcon />
-                        ) : (
-                          <EditOffIcon />
-                        )}
-                      </>
-                    )}
+                    {renderChildStatus(row.Status)}
+                  </StyledTableCell>
+                  <StyledTableCell align="center">
+                    <LongMenu
+                      invoice_received={row.invoice_received}
+                      invoiceID={row._id}
+                      invoice_raised={row.invoice_raised}
+                    />
                   </StyledTableCell>
                 </TableRow>
               ))}

@@ -1,10 +1,8 @@
 import {
-  AccountCircle,
   Settings,
   Logout,
   LoginRounded as LoginRoundedIcon,
 } from "@mui/icons-material";
-import vbLogo from "../../assets/images/vb_logo.svg";
 import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettings";
 import { useState } from "react";
 
@@ -22,7 +20,7 @@ import {
   AppBar,
   Toolbar,
 } from "@mui/material";
-
+import PersonIcon from "@mui/icons-material/Person";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { logoutUser } from "../../store/user-actions";
@@ -48,14 +46,10 @@ const Header = () => {
   });
 
   const customStyles = {
-    image: {
-      width: "180px",
-      visibility: "hidden",
-    },
     toolbar: {
       display: "flex",
       height: "70px",
-      justifyContent: "space-between",
+      justifyContent: "flex-end",
       padding: "0 40px",
     },
     appbar: {
@@ -88,16 +82,23 @@ const Header = () => {
     <ThemeProvider theme={theme}>
       <AppBar sx={customStyles.appbar} position="static">
         <Toolbar sx={customStyles.toolbar}>
-          <img style={customStyles.image} src={vbLogo} alt="vb-logo" />
           {user.name ? (
             <>
               <IconButton
                 size="large"
                 edge="end"
                 onClick={handleClick}
-                style={{ backgroundColor: "transparent" }}
+                style={{
+                  backgroundColor: "transparent",
+                }}
               >
-                <AccountCircle fontSize="large" />
+                <PersonIcon
+                  sx={{
+                    fontSize: "2rem",
+                    paddingRight: "5px",
+                    color: "rgb(17,24,39)",
+                  }}
+                />
                 <Typography variant="h6">{user.name}</Typography>
               </IconButton>
               <Menu
