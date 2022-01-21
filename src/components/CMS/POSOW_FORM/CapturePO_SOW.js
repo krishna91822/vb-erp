@@ -323,7 +323,7 @@ export const CapturePO_SOW = (props) => {
             </Grid>
           </Grid>
           <Box>
-            <Card>
+            <Card sx={{ margin: "0.5rem" }}>
               <Grid container>
                 <Grid
                   item

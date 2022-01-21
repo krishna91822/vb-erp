@@ -13,6 +13,7 @@ import {
   Select,
   MenuItem,
   Autocomplete,
+  Card,
 } from "@mui/material";
 
 import EditViewSwitchs from "../EditViewSwitch";
@@ -429,342 +430,347 @@ const CreateProject = () => {
             onUpdate={handleSubmit}
           />
         </Heading>
-        <StyledHeader onSubmit={handleSubmit} data-test="create-project-form">
-          <FormHeadingStyled>
-            <MiniHeadingTypography data-test="form-title">
-              Project Information{" "}
-            </MiniHeadingTypography>
-            <MiniHeadingTypography
-              style={{ display: id ? "block" : "none" }}
-              data-test="project-id"
-            >
-              Project Id - {id}
-            </MiniHeadingTypography>
-            <Button
-              type="submit"
-              data-test="submit-button"
-              variant="contained"
-              color="primary"
-              style={{ display: !id ? "block" : "none" }}
-            >
-              Save
-            </Button>
-          </FormHeadingStyled>
-          <FormContainerStyled>
-            <FormElementsStyled>
-              <label htmlFor="cn" data-test="client-name-label">
-                Client Name <span>*</span>{" "}
-                <small>(min 3 letters required)</small>
-              </label>
-              <Autocomplete
-                name="clientName"
-                id="cn"
-                data-test="client-name-input"
-                disabled={!edit}
-                size="small"
-                onInputChange={handleInputChange}
-                onBlur={() => {
-                  setTempClientName("");
-                  setOpen(false);
-                }}
-                getOptionLabel={(option) => option.brandName}
-                onChange={handleOnClick}
-                style={{ width: "100%" }}
-                options={allClients || []}
-                open={open}
-                disableClearable
-                inputValue={tempClientName || clientName}
-                renderInput={(params) => (
+        <Card sx={{ margin: "1rem", padding: "0.5rem" }}>
+          <StyledHeader onSubmit={handleSubmit} data-test="create-project-form">
+            <FormHeadingStyled>
+              <MiniHeadingTypography data-test="form-title">
+                Project Information{" "}
+              </MiniHeadingTypography>
+              <MiniHeadingTypography
+                style={{ display: id ? "block" : "none" }}
+                data-test="project-id"
+              >
+                Project Id - {id}
+              </MiniHeadingTypography>
+              <Button
+                type="submit"
+                data-test="submit-button"
+                variant="contained"
+                color="primary"
+                style={{ display: !id ? "block" : "none" }}
+              >
+                Save
+              </Button>
+            </FormHeadingStyled>
+            <FormContainerStyled>
+              <FormElementsStyled>
+                <label htmlFor="cn" data-test="client-name-label">
+                  Client Name <span>*</span>{" "}
+                  <small>(min 3 letters required)</small>
+                </label>
+                <Autocomplete
+                  name="clientName"
+                  id="cn"
+                  data-test="client-name-input"
+                  disabled={!edit}
+                  size="small"
+                  onInputChange={handleInputChange}
+                  onBlur={() => {
+                    setTempClientName("");
+                    setOpen(false);
+                  }}
+                  getOptionLabel={(option) => option.brandName}
+                  onChange={handleOnClick}
+                  style={{ width: "100%" }}
+                  options={allClients || []}
+                  open={open}
+                  disableClearable
+                  inputValue={tempClientName || clientName}
+                  renderInput={(params) => (
+                    <TextField
+                      {...params}
+                      placeholder="Enter Client name"
+                      name="clientName"
+                      error={errors.clientName ? true : false}
+                      width="100%"
+                      onChange={handleProjectChange}
+                    />
+                  )}
+                />
+              </FormElementsStyled>
+              <FormElementsStyled>
+                <label htmlFor="pn" data-test="project-name-label">
+                  Project Name <span>*</span>
+                </label>
+                <TextField
+                  error={errors.projectName ? true : false}
+                  id="pn"
+                  name="projectName"
+                  data-test="project-name-input"
+                  size="small"
+                  variant="outlined"
+                  disabled={!edit}
+                  placeholder="Enter Project Name"
+                  value={projectName}
+                  style={{ width: "100%" }}
+                  onChange={handleProjectChange}
+                />
+              </FormElementsStyled>
+              <FormElementsStyled>
+                <label htmlFor="pn" data-test="project-name-label">
+                  Client Primary Contact Name
+                </label>
+                <TextField
+                  error={errors.clientPrimaryContactName ? true : false}
+                  id="cpcn"
+                  name="clientPrimaryContactName"
+                  data-test="client-primary-contact-name-input"
+                  size="small"
+                  variant="outlined"
+                  disabled
+                  placeholder="Enter Client Primary Contact Name"
+                  value={clientPrimaryContactName}
+                  style={{ width: "100%" }}
+                  onChange={handleProjectChange}
+                />
+              </FormElementsStyled>
+              <FormElementsStyled>
+                <label htmlFor="cpc" data-test="client-primary-contact-label">
+                  Client Primary Contact
+                </label>
+                <PhoneInput
+                  disabled
+                  error={errors.clientPrimaryContact ? true : false}
+                  onChange={(e) => handlePhoneNumber(e)}
+                  value={clientPrimaryContact.toString() || "+91"}
+                  name="clientPrimaryContact"
+                  inputProps={{
+                    name: "phone",
+                    autoFocus: true,
+                  }}
+                  inputStyle={{
+                    height: "40px",
+                    width: "100%",
+                    fontSize: "inherit",
+                    color: "#a2a2a2",
+                  }}
+                />
+              </FormElementsStyled>
+              <FormElementsStyled>
+                <label htmlFor="cpm" data-test="client-project-manager-label">
+                  Client Project Manager <span>*</span>
+                </label>
+                <Select
+                  id="cpm"
+                  name="clientProjectManager"
+                  data-test="client-project-manager-input"
+                  defaultValue="1"
+                  error={errors.clientProjectManager ? true : false}
+                  disabled={!edit}
+                  value={clientProjectManager}
+                  size="small"
+                  variant="outlined"
+                  displayEmpty
+                  style={{ width: "100%" }}
+                  onChange={handleProjectChange}
+                >
+                  <MenuItem value="" disabled>
+                    <span style={{ color: "rgb(190, 190, 190)" }}>
+                      Select Client Project
+                    </span>
+                  </MenuItem>
+                  {names.map((value) => {
+                    return <MenuItem value={value}>{value}</MenuItem>;
+                  })}
+                </Select>
+              </FormElementsStyled>
+              <FormElementsStyled>
+                <label htmlFor="cps" data-test="client-project-sponsor-label">
+                  Client Project Sponsor <span>*</span>
+                </label>
+                <Select
+                  id="cps"
+                  name="clientProjectSponsor"
+                  data-test="client-project-sponsor-input"
+                  defaultValue="1"
+                  error={errors.clientProjectSponsor ? true : false}
+                  value={clientProjectSponsor}
+                  disabled={!edit}
+                  size="small"
+                  variant="outlined"
+                  displayEmpty
+                  style={{ width: "100%" }}
+                  onChange={handleProjectChange}
+                >
+                  <MenuItem value="" hidden>
+                    <span style={{ color: "rgb(190, 190, 190)" }}>
+                      Select Client Project Sponser
+                    </span>
+                  </MenuItem>
+                  {names.map((value) => {
+                    return <MenuItem value={value}>{value}</MenuItem>;
+                  })}
+                </Select>
+              </FormElementsStyled>
+              <FormElementsStyled>
+                <label
+                  htmlFor="cfc"
+                  data-test="client-finance-controller-label"
+                >
+                  Client Finance Controller <span>*</span>
+                </label>
+                <Select
+                  id="cfc"
+                  name="clientFinanceController"
+                  data-test="client-finance-controller-input"
+                  defaultValue="1"
+                  error={errors.clientFinanceController ? true : false}
+                  value={clientFinanceController}
+                  disabled={!edit}
+                  size="small"
+                  variant="outlined"
+                  displayEmpty
+                  style={{ width: "100%" }}
+                  onChange={handleProjectChange}
+                >
+                  <MenuItem value="" disabled>
+                    <span style={{ color: "rgb(190, 190, 190)" }}>
+                      Select Client Project Sponser
+                    </span>
+                  </MenuItem>
+                  {names.map((value) => {
+                    return <MenuItem value={value}>{value}</MenuItem>;
+                  })}
+                </Select>
+              </FormElementsStyled>
+              <FormElementsStyled>
+                <label htmlFor="ds" data-test="domain-sector-label">
+                  Domain/Sector
+                </label>
+                <TextField
+                  id="ds"
+                  name="domainSector"
+                  data-test="domain-sector-input"
+                  size="small"
+                  variant="outlined"
+                  disabled
+                  value={domainSector}
+                  placeholder="Enter Domain/Sector"
+                  style={{ width: "100%" }}
+                  onChange={handleProjectChange}
+                />
+              </FormElementsStyled>
+              <DateContainerStyled
+                sColor={!startDate ? "#a2a2a2" : "black"}
+                eColor={!endDate ? "#a2a2a2" : "black"}
+              >
+                <DateElementStyled>
+                  <label htmlFor="sd" data-test="start-date-label">
+                    Start Date <span>*</span>
+                  </label>
                   <TextField
-                    {...params}
-                    placeholder="Enter Client name"
-                    name="clientName"
-                    error={errors.clientName ? true : false}
-                    width="100%"
+                    type="date"
+                    id="sd"
+                    name="startDate"
+                    data-test="start-date-input"
+                    size="small"
+                    variant="outlined"
+                    disabled={!edit}
+                    error={errors.startDate ? true : false}
+                    value={startDate}
+                    style={{ width: "100%" }}
                     onChange={handleProjectChange}
                   />
-                )}
-              />
-            </FormElementsStyled>
-            <FormElementsStyled>
-              <label htmlFor="pn" data-test="project-name-label">
-                Project Name <span>*</span>
-              </label>
-              <TextField
-                error={errors.projectName ? true : false}
-                id="pn"
-                name="projectName"
-                data-test="project-name-input"
-                size="small"
-                variant="outlined"
-                disabled={!edit}
-                placeholder="Enter Project Name"
-                value={projectName}
-                style={{ width: "100%" }}
-                onChange={handleProjectChange}
-              />
-            </FormElementsStyled>
-            <FormElementsStyled>
-              <label htmlFor="pn" data-test="project-name-label">
-                Client Primary Contact Name
-              </label>
-              <TextField
-                error={errors.clientPrimaryContactName ? true : false}
-                id="cpcn"
-                name="clientPrimaryContactName"
-                data-test="client-primary-contact-name-input"
-                size="small"
-                variant="outlined"
-                disabled
-                placeholder="Enter Client Primary Contact Name"
-                value={clientPrimaryContactName}
-                style={{ width: "100%" }}
-                onChange={handleProjectChange}
-              />
-            </FormElementsStyled>
-            <FormElementsStyled>
-              <label htmlFor="cpc" data-test="client-primary-contact-label">
-                Client Primary Contact
-              </label>
-              <PhoneInput
-                disabled
-                error={errors.clientPrimaryContact ? true : false}
-                onChange={(e) => handlePhoneNumber(e)}
-                value={clientPrimaryContact.toString() || "+91"}
-                name="clientPrimaryContact"
-                inputProps={{
-                  name: "phone",
-                  autoFocus: true,
-                }}
-                inputStyle={{
-                  height: "40px",
-                  width: "100%",
-                  fontSize: "inherit",
-                  color: "#a2a2a2",
-                }}
-              />
-            </FormElementsStyled>
-            <FormElementsStyled>
-              <label htmlFor="cpm" data-test="client-project-manager-label">
-                Client Project Manager <span>*</span>
-              </label>
-              <Select
-                id="cpm"
-                name="clientProjectManager"
-                data-test="client-project-manager-input"
-                defaultValue="1"
-                error={errors.clientProjectManager ? true : false}
-                disabled={!edit}
-                value={clientProjectManager}
-                size="small"
-                variant="outlined"
-                displayEmpty
-                style={{ width: "100%" }}
-                onChange={handleProjectChange}
-              >
-                <MenuItem value="" disabled>
-                  <span style={{ color: "rgb(190, 190, 190)" }}>
-                    Select Client Project
-                  </span>
-                </MenuItem>
-                {names.map((value) => {
-                  return <MenuItem value={value}>{value}</MenuItem>;
-                })}
-              </Select>
-            </FormElementsStyled>
-            <FormElementsStyled>
-              <label htmlFor="cps" data-test="client-project-sponsor-label">
-                Client Project Sponsor <span>*</span>
-              </label>
-              <Select
-                id="cps"
-                name="clientProjectSponsor"
-                data-test="client-project-sponsor-input"
-                defaultValue="1"
-                error={errors.clientProjectSponsor ? true : false}
-                value={clientProjectSponsor}
-                disabled={!edit}
-                size="small"
-                variant="outlined"
-                displayEmpty
-                style={{ width: "100%" }}
-                onChange={handleProjectChange}
-              >
-                <MenuItem value="" hidden>
-                  <span style={{ color: "rgb(190, 190, 190)" }}>
-                    Select Client Project Sponser
-                  </span>
-                </MenuItem>
-                {names.map((value) => {
-                  return <MenuItem value={value}>{value}</MenuItem>;
-                })}
-              </Select>
-            </FormElementsStyled>
-            <FormElementsStyled>
-              <label htmlFor="cfc" data-test="client-finance-controller-label">
-                Client Finance Controller <span>*</span>
-              </label>
-              <Select
-                id="cfc"
-                name="clientFinanceController"
-                data-test="client-finance-controller-input"
-                defaultValue="1"
-                error={errors.clientFinanceController ? true : false}
-                value={clientFinanceController}
-                disabled={!edit}
-                size="small"
-                variant="outlined"
-                displayEmpty
-                style={{ width: "100%" }}
-                onChange={handleProjectChange}
-              >
-                <MenuItem value="" disabled>
-                  <span style={{ color: "rgb(190, 190, 190)" }}>
-                    Select Client Project Sponser
-                  </span>
-                </MenuItem>
-                {names.map((value) => {
-                  return <MenuItem value={value}>{value}</MenuItem>;
-                })}
-              </Select>
-            </FormElementsStyled>
-            <FormElementsStyled>
-              <label htmlFor="ds" data-test="domain-sector-label">
-                Domain/Sector
-              </label>
-              <TextField
-                id="ds"
-                name="domainSector"
-                data-test="domain-sector-input"
-                size="small"
-                variant="outlined"
-                disabled
-                value={domainSector}
-                placeholder="Enter Domain/Sector"
-                style={{ width: "100%" }}
-                onChange={handleProjectChange}
-              />
-            </FormElementsStyled>
-            <DateContainerStyled
-              sColor={!startDate ? "#a2a2a2" : "black"}
-              eColor={!endDate ? "#a2a2a2" : "black"}
-            >
-              <DateElementStyled>
-                <label htmlFor="sd" data-test="start-date-label">
-                  Start Date <span>*</span>
-                </label>
-                <TextField
-                  type="date"
-                  id="sd"
-                  name="startDate"
-                  data-test="start-date-input"
-                  size="small"
-                  variant="outlined"
-                  disabled={!edit}
-                  error={errors.startDate ? true : false}
-                  value={startDate}
-                  style={{ width: "100%" }}
-                  onChange={handleProjectChange}
-                />
-              </DateElementStyled>
-              <DateElementStyled>
-                <label htmlFor="ed" data-test="end-date-label">
-                  End Date <span>*</span>
-                </label>
-                <TextField
-                  type="date"
-                  id="ed"
-                  name="endDate"
-                  data-test="end-date-input"
-                  size="small"
-                  variant="outlined"
-                  disabled={!edit}
-                  error={errors.endDate ? true : false}
-                  value={endDate}
-                  style={{ width: "100%" }}
-                  onChange={handleProjectChange}
-                />
-              </DateElementStyled>
-            </DateContainerStyled>
-            <FormElementsStyled>
-              <label htmlFor="vpm" data-test="vb-project-manager-label">
-                VB Project Manager <span>*</span>{" "}
-                <small>(min 3 letters required)</small>
-              </label>
-              <Autocomplete
-                id="cn"
-                data-test="client-name-input"
-                disabled={!edit}
-                disableClearable
-                size="small"
-                onOpen={handleVbManOpen}
-                onClose={() => setOpenVbMan(false)}
-                getOptionLabel={(option) =>
-                  option.empName + " (" + option.empId + ")"
-                }
-                onChange={(event, value) => {
-                  handleVbManAutoselect(value);
-                }}
-                style={{ width: "100%" }}
-                options={vbManagers || []}
-                open={openVbMan}
-                inputValue={vbManInput}
-                renderInput={(params) => (
+                </DateElementStyled>
+                <DateElementStyled>
+                  <label htmlFor="ed" data-test="end-date-label">
+                    End Date <span>*</span>
+                  </label>
                   <TextField
-                    {...params}
-                    placeholder="Enter VB Manager"
-                    name="vbProjectManager"
-                    error={errors.vbProjectManager ? true : false}
-                    width="100%"
-                    onChange={handleVbManInputChange}
+                    type="date"
+                    id="ed"
+                    name="endDate"
+                    data-test="end-date-input"
+                    size="small"
+                    variant="outlined"
+                    disabled={!edit}
+                    error={errors.endDate ? true : false}
+                    value={endDate}
+                    style={{ width: "100%" }}
+                    onChange={handleProjectChange}
                   />
-                )}
-              />
-            </FormElementsStyled>
-            <FormElementsStyled>
-              <label htmlFor="vpm" data-test="project-status-label">
-                Project Status <span>*</span>
-              </label>
-              <Select
-                error={errors.vbProjectStatus ? true : false}
-                id="vpm"
-                name="vbProjectStatus"
-                data-test="project-status-input"
-                defaultValue="Un Assigned"
-                value={vbProjectStatus}
-                size="small"
-                variant="outlined"
-                disabled={!edit}
-                displayEmpty
-                style={{ width: "100%" }}
-                onChange={handleProjectChange}
-              >
-                <MenuItem value="" disabled>
-                  <span style={{ color: "rgb(190, 190, 190)" }}>
-                    Select Project Status
-                  </span>
-                </MenuItem>
-                <MenuItem value="Yet to Begin">Yet to Begin</MenuItem>
-                <MenuItem value="Active">Active</MenuItem>
-                <MenuItem value="On Hold">On Hold</MenuItem>
-                <MenuItem value="Completed">Completed</MenuItem>
-              </Select>
-            </FormElementsStyled>
-          </FormContainerStyled>
-          <ResourceInformation
-            edit={edit}
-            id={id}
-            resource={resource}
-            resources={resources}
-            handleResourceChange={handleResourceChange}
-            addResource={addResource}
-            handelAssociate={handelAssociate}
-            removeResource={removeResource}
-            resourceErrors={resourceErrors}
-            allEmployees={allEmployees}
-            percentageAllocated={percentageAllocated}
-          />
-        </StyledHeader>
+                </DateElementStyled>
+              </DateContainerStyled>
+              <FormElementsStyled>
+                <label htmlFor="vpm" data-test="vb-project-manager-label">
+                  VB Project Manager <span>*</span>{" "}
+                  <small>(min 3 letters required)</small>
+                </label>
+                <Autocomplete
+                  id="cn"
+                  data-test="client-name-input"
+                  disabled={!edit}
+                  disableClearable
+                  size="small"
+                  onOpen={handleVbManOpen}
+                  onClose={() => setOpenVbMan(false)}
+                  getOptionLabel={(option) =>
+                    option.empName + " (" + option.empId + ")"
+                  }
+                  onChange={(event, value) => {
+                    handleVbManAutoselect(value);
+                  }}
+                  style={{ width: "100%" }}
+                  options={vbManagers || []}
+                  open={openVbMan}
+                  inputValue={vbManInput}
+                  renderInput={(params) => (
+                    <TextField
+                      {...params}
+                      placeholder="Enter VB Manager"
+                      name="vbProjectManager"
+                      error={errors.vbProjectManager ? true : false}
+                      width="100%"
+                      onChange={handleVbManInputChange}
+                    />
+                  )}
+                />
+              </FormElementsStyled>
+              <FormElementsStyled>
+                <label htmlFor="vpm" data-test="project-status-label">
+                  Project Status <span>*</span>
+                </label>
+                <Select
+                  error={errors.vbProjectStatus ? true : false}
+                  id="vpm"
+                  name="vbProjectStatus"
+                  data-test="project-status-input"
+                  defaultValue="Un Assigned"
+                  value={vbProjectStatus}
+                  size="small"
+                  variant="outlined"
+                  disabled={!edit}
+                  displayEmpty
+                  style={{ width: "100%" }}
+                  onChange={handleProjectChange}
+                >
+                  <MenuItem value="" disabled>
+                    <span style={{ color: "rgb(190, 190, 190)" }}>
+                      Select Project Status
+                    </span>
+                  </MenuItem>
+                  <MenuItem value="Yet to Begin">Yet to Begin</MenuItem>
+                  <MenuItem value="Active">Active</MenuItem>
+                  <MenuItem value="On Hold">On Hold</MenuItem>
+                  <MenuItem value="Completed">Completed</MenuItem>
+                </Select>
+              </FormElementsStyled>
+            </FormContainerStyled>
+            <ResourceInformation
+              edit={edit}
+              id={id}
+              resource={resource}
+              resources={resources}
+              handleResourceChange={handleResourceChange}
+              addResource={addResource}
+              handelAssociate={handelAssociate}
+              removeResource={removeResource}
+              resourceErrors={resourceErrors}
+              allEmployees={allEmployees}
+              percentageAllocated={percentageAllocated}
+            />
+          </StyledHeader>
+        </Card>
       </PmoContainer>
     </>
   );

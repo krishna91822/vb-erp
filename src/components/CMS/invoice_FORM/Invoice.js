@@ -411,6 +411,7 @@ function Invoice(props) {
               bgcolor: "white",
               overflowY: "scroll",
               padding: "1rem",
+              margin: "0.5rem",
             }}
           >
             <Grid container>
