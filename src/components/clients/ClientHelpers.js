@@ -57,11 +57,16 @@ export default function ClientHelpers() {
 
   const handelSearch = (e) => {
     const target = e.target.value.replace(/[^\w\s]/gi, "");
+
     dispatch(cimsActions.setSearchBy(target));
-    if (target !== "" && target.length > 1)
-      dispatch(getClientsData(1, sortBy, filterBy, sortingOrder, target));
-    else if (target === "")
-      dispatch(getClientsData(pageNo, sortBy, filterBy, sortingOrder, target));
+    if (e.key === "Enter") {
+      if (target !== "" && target.length > 1)
+        dispatch(getClientsData(1, sortBy, filterBy, sortingOrder, target));
+      else if (target === "")
+        dispatch(
+          getClientsData(pageNo, sortBy, filterBy, sortingOrder, target)
+        );
+    }
   };
 
   const handelClearSearch = () => {

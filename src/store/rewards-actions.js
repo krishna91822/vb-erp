@@ -420,8 +420,6 @@ export const UpdateRewardData = (data, id) => {
       await fetchData();
       toast.success("Reward Edited");
       dispatch(rewardsActions.updateRewardStatus());
-
-      //
     } catch (error) {
       dispatch(uiActions.toggleLoader());
     }

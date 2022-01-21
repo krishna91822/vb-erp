@@ -35,14 +35,7 @@ import {
   getAllFilterProjects,
   getAllProjectsBySroting,
 } from "../../../store/pmo-actions";
-import {
-  MainComponent,
-  HeadingStyle,
-  Heading,
-  Container,
-  SideButton,
-  ProjectHead,
-} from "./styles";
+import { SideButton } from "./styles";
 import { StyledTypography } from "../../../assets/GlobalStyle/style";
 
 const ViewProjects = () => {
@@ -96,7 +89,7 @@ const ViewProjects = () => {
     dispatch(getAllProjects(filterProjects, value));
   };
   return (
-    <div className="client-list-wrapper">
+    <div className="list-wrapper">
       <StyledTypography data-test="main-heading">Projects</StyledTypography>
       <Card>
         <CardContent>
@@ -152,6 +145,9 @@ const ViewProjects = () => {
                         variant="contained"
                         sx={{
                           backgroundColor: "chocolate",
+                          ":hover": {
+                            background: "chocolate",
+                          },
                         }}
                         onClick={() => {
                           navigate("/pmo/projects/create");
@@ -291,7 +287,11 @@ const ViewProjects = () => {
               )}
               {projects.results
                 ? projects.results.map((currElem, index) => (
-                    <TableRow key={index} onClick={() => entryLink(currElem)}>
+                    <TableRow
+                      key={index}
+                      onClick={() => entryLink(currElem)}
+                      className="table-row"
+                    >
                       <StyledTableCell align="center">
                         {index + parseInt(projects.currentPage) * 10 - 9}
                       </StyledTableCell>

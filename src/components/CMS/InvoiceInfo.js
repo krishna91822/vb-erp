@@ -169,7 +169,7 @@ function InvoiceInfo() {
     }
   };
   return (
-    <div className="client-list-wrapper">
+    <div className="list-wrapper">
       <StyledTypography>Invoice Information</StyledTypography>
       <Card>
         <CardContent>

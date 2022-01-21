@@ -1,12 +1,11 @@
+import { Box } from "@mui/material";
 import { styled } from "@mui/system";
-import { TextField, Box, Button } from "@mui/material";
 
-export const ColorButton = styled(Button)(({ theme }) => ({
-  color: "#fff",
-  fontSize: "14px",
-  textTransform: "capitalize",
-  fontWeight: "600",
-  letterSpacing: "1px",
+export const TitleTypo = styled("div")(({ theme }) => ({
+  ...theme.typography.h5,
+  fontWeight: 600,
+  color: theme.palette.textColor.main,
+  fontSize: 16,
 }));
 
 export const CustomGridBox = styled("div")(({ theme }) => ({
@@ -20,26 +19,19 @@ export const CustomGridBox = styled("div")(({ theme }) => ({
   borderColor: theme.palette.textColor.paletteGrey,
 }));
 
-export const TitleTypo = styled("div")(({ theme }) => ({
-  ...theme.typography.h5,
-  fontWeight: 600,
-  color: theme.palette.textColor.main,
-  fontSize: 16,
-}));
-
 export const ContentTypo = styled("div")(({ theme }) => ({
   ...theme.typography.h5,
   color: theme.palette.textColor.main,
   fontSize: 16,
   textTransform: "capitalize",
 }));
-
-export const CustomTextField = styled(TextField)({
-  "& .MuiOutlinedInput-root": {
-    width: "100%",
-    height: "40px",
-  },
-});
+export const NoteTypo = styled("div")(({ theme }) => ({
+  ...theme.typography.h5,
+  color: theme.palette.textColor.main,
+  fontSize: 16,
+  fontWeight: 600,
+  textTransform: "capitalize",
+}));
 
 export const ModalBoxItem = styled(Box)({
   width: "80vw",
@@ -53,8 +45,4 @@ export const ModalBoxItem = styled(Box)({
   borderRadius: "5px",
   padding: "20px",
   paddingTop: "10px",
-});
-
-export const CustomeContainer = styled("div")({
-  padding: "0.5em",
 });

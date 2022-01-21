@@ -3,12 +3,11 @@ import { styled } from "@mui/system";
 
 export const CustomTextField = styled(TextField)({
   "& .MuiOutlinedInput-input": {
-    fontSize: "16px",
+    fontSize: "14px",
   },
   "& .MuiOutlinedInput-root": {
-    width: "80%",
+    width: "100%",
     height: "35px",
-    marginLeft: "8px",
   },
 });
 

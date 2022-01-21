@@ -1,25 +1,26 @@
 import {
-  AccountCircle,
   Settings,
   Logout,
   LoginRounded as LoginRoundedIcon,
 } from "@mui/icons-material";
-import vbLogo from "../../assets/images/vb_logo.svg";
-import IconButton from "@mui/material/IconButton";
-import Toolbar from "@mui/material/Toolbar";
-import AppBar from "@mui/material/AppBar";
 import { useState } from "react";
-import Menu from "@mui/material/Menu";
-import MenuItem from "@mui/material/MenuItem";
-import Avatar from "@mui/material/Avatar";
-import Divider from "@mui/material/Divider";
-import ListItemIcon from "@mui/material/ListItemIcon";
-import { createTheme, ThemeProvider, Typography } from "@mui/material";
-import { Link } from "react-router-dom";
+import {
+  createTheme,
+  ThemeProvider,
+  Typography,
+  IconButton,
+  useMediaQuery,
+  Divider,
+  ListItemIcon,
+  Avatar,
+  MenuItem,
+  Menu,
+  AppBar,
+  Toolbar,
+} from "@mui/material";
+import PersonIcon from "@mui/icons-material/Person";
+import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { userActions } from "../../store/user-slice";
-import { useNavigate } from "react-router-dom";
-import useMediaQuery from "@mui/material/useMediaQuery";
 import { logoutUser } from "../../store/user-actions";
 
 const Header = () => {
@@ -29,6 +30,7 @@ const Header = () => {
     defaultMatches: true,
     noSsr: false,
   });
+
   const theme = createTheme({
     components: {
       MuiAppBar: {
@@ -42,14 +44,10 @@ const Header = () => {
   });
 
   const customStyles = {
-    image: {
-      width: "180px",
-      visibility: "hidden",
-    },
     toolbar: {
       display: "flex",
       height: "70px",
-      justifyContent: "space-between",
+      justifyContent: "flex-end",
       padding: "0 40px",
     },
     appbar: {
@@ -82,16 +80,23 @@ const Header = () => {
     <ThemeProvider theme={theme}>
       <AppBar sx={customStyles.appbar} position="static">
         <Toolbar sx={customStyles.toolbar}>
-          <img style={customStyles.image} src={vbLogo} alt="vb-logo" />
           {user.name ? (
             <>
               <IconButton
                 size="large"
                 edge="end"
                 onClick={handleClick}
-                style={{ backgroundColor: "transparent" }}
+                style={{
+                  backgroundColor: "transparent",
+                }}
               >
-                <AccountCircle fontSize="large" />
+                <PersonIcon
+                  sx={{
+                    fontSize: "2rem",
+                    paddingRight: "5px",
+                    color: "rgb(17,24,39)",
+                  }}
+                />
                 <Typography variant="h6">{user.name}</Typography>
               </IconButton>
               <Menu

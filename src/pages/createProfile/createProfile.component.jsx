@@ -1,9 +1,23 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import { LocalizationProvider, DesktopDatePicker } from "@mui/lab";
 import AdapterDateFns from "@mui/lab/AdapterDateFns";
+import { StyledTabs, StyledTab } from "../../components/UI/commonStyles";
+import {
+  Box,
+  Button,
+  MenuItem,
+  Modal,
+  Paper,
+  Typography,
+  Grid,
+  Card,
+  CardHeader,
+  Divider,
+  Container,
+} from "@mui/material";
 
-import { Box, Button, MenuItem, Modal, Paper, Typography } from "@mui/material";
+import { StyledGrid } from "../../components/UI/commonStyles";
 
 import {
   createProfileConstant,
@@ -11,11 +25,9 @@ import {
 } from "./createProfile.constant";
 
 import {
-  ContainerStyle,
   BoxStyle,
   GreenButton,
   BlueButton,
-  TitleTypo,
   ContainerStyleTop,
   modalStyle,
   CustomTextField,
@@ -23,13 +35,15 @@ import {
 } from "./createProfile.styles";
 
 import { StyledTypography } from "../../assets/GlobalStyle/style";
-
 import ProfileInfoEditable from "./../../components/templates/profileInfo/profileInfoEditable.component";
 import TabPanelCustom from "./../../components/templates/tabPanelCustom.component";
 import PersonalEditable from "../../components/templates/personal/personalEditable.component";
 import ProfessionalEditable from "../../components/templates/professional/professionalEditable.component";
 import SkillEditable from "../../components/templates/skill/skillEditable.component";
 import Spinner from "../../components/UI/spinner/spinner";
+import BadgeIcon from "@mui/icons-material/Badge";
+import ImportContactsIcon from "@mui/icons-material/ImportContacts";
+import LocalCafeIcon from "@mui/icons-material/LocalCafe";
 
 import { useDispatch, useSelector } from "react-redux";
 import { setCurrentEmployee } from "./../../store/employeeSlice";
@@ -39,12 +53,14 @@ import axiosInstance from "./../../helpers/axiosInstance";
 import { uiActions } from "./../../store/ui-slice";
 import validator from "validator";
 
-import { useForm } from "react-hook-form";
+import ProjectTab from "../../components/templates/project/project.component";
+import PlagiarismIcon from "@mui/icons-material/Plagiarism";
 
 const CreateProfile = ({
   editEmployeeData,
   toggleEditEmployee,
   setToggleEditEmployee,
+  editSwitch,
 }) => {
   const { user } = useSelector((state) => state.user);
   const email = user.email;
@@ -52,15 +68,19 @@ const CreateProfile = ({
   const dispatch = useDispatch();
   const { toggleLoader, showNotification } = uiActions;
 
-  // const { register, handleSubmit, errors } = useForm();
   useEffect(() => {
     axiosInstance
-      .get(`/employees?${email}`)
+      .get(`/employees?empEmail=${email}`)
       .then((response) => {
         dispatch(setCurrentEmployee(response.data.data[0]));
       })
       .catch((err) => console.log(err));
   }, [dispatch]);
+  const [value, setValue] = useState(0);
+
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+  };
 
   const empInitial = {
     empName: "",
@@ -283,7 +303,6 @@ const CreateProfile = ({
           setEmployee(empInitial);
           dispatch(toggleLoader());
           handleOpenModal();
-          // console.log(response);
         })
         .catch(function (error) {
           dispatch(toggleLoader());
@@ -310,11 +329,9 @@ const CreateProfile = ({
               message: "Employee has been updated.",
             })
           );
-          // handleOpenModal();
         })
         .catch(function (error) {
           dispatch(toggleLoader());
-          // handleOpenModalError();
           dispatch(
             showNotification({
               status: "error",
@@ -337,7 +354,6 @@ const CreateProfile = ({
               message: "Employee has been updated.",
             })
           );
-          // console.log(response);
         })
         .catch(function (error) {
           dispatch(toggleLoader());
@@ -346,92 +362,129 @@ const CreateProfile = ({
         });
     }
   };
-
   return currentEmployee &&
     ["super_admin", "hr_admin"].some((el) => user.roles.includes(el)) ? (
     <BoxStyle data-test="create-profile-test">
-      <ContainerStyleTop>
-        {/* <TitleTypo sx={{ textTransform: "capitalize", mb: 0.5 }}>
-          {currentEmployee ? currentEmployee.empName : ""}
-        </TitleTypo> */}
-        <Box
-          sx={{
-            display: "flex",
-            width: 1,
-            alignItems: "center",
-            justifyContent: editEmployeeData ? "flex-end" : "space-between",
-          }}
-        >
-          {editEmployeeData ? null : (
-            <StyledTypography>
-              {createProfileConstant.createUser}
-            </StyledTypography>
-          )}
-          <Box>
-            <GreenButton
-              data-test="confirm-button-test"
-              // onClick={handleSubmit(handleConfirm)}
-              onClick={handleConfirm}
-              variant="contained"
-            >
-              {createProfileConstant.confirm}
-            </GreenButton>
-            <BlueButton
-              data-test="custome-button-test"
-              onClick={handleOpen}
-              variant="contained"
-            >
-              {createProfileConstant.addCustomField}
-            </BlueButton>
-          </Box>
-        </Box>
-      </ContainerStyleTop>
-      <ContainerStyle>
-        <div>
-          <ProfileInfoEditable
-            tab={tab}
-            setTab={setTab}
-            employee={employee}
-            setEmployee={setEmployee}
-            profileProgress={profileProgress}
-            // register={register}
-            errors={errors}
-            validate={validate}
-          />
-        </div>
-        <Box sx={{}}>
-          <TabPanelCustom value={tab} index={0}>
-            <PersonalEditable
-              empData={employee}
-              setEmpData={setEmployee}
-              personalDetails={personalDetails}
-              setPersonalDetails={setPersonalDetails}
-              // register={register}
-              errors={errors}
-            />
-          </TabPanelCustom>
-          <TabPanelCustom value={tab} index={1}>
-            <ProfessionalEditable
-              empData={employee}
-              setEmpData={setEmployee}
-              professionalDetails={professionalDetails}
-              setProfessionalDetails={setProfessionalDetails}
-              // register={register}
-              errors={errors}
-            />
-          </TabPanelCustom>
-          <TabPanelCustom value={tab} index={2}>
-            <SkillEditable
-              empData={employee}
-              setEmpData={setEmployee}
-              skillsDetails={skillsDetails}
-              setSkillsDetails={setSkillsDetails}
-              // register={register}
-              errors={errors}
-            />
-          </TabPanelCustom>
-        </Box>
-      </ContainerStyle>
+      <div>
+        <ProfileInfoEditable
+          tab={tab}
+          setTab={setTab}
+          employee={employee}
+          setEmployee={setEmployee}
+          profileProgress={profileProgress}
+          errors={errors}
+          validate={validate}
+          editSwitch={editSwitch}
+        />
+      </div>
+      <Box mt={3}>
+        <Container maxWidth="xl">
+          <StyledGrid>
+            <Card>
+              <CardHeader
+                title={
+                  <Grid item sm={11}>
+                    <StyledTabs value={value} onChange={handleChange}>
+                      <StyledTab
+                        icon={<LocalCafeIcon />}
+                        label="Personal"
+                        sx={{ fontSize: "12px" }}
+                      />
+                      <StyledTab
+                        icon={<ImportContactsIcon />}
+                        label="professional"
+                        sx={{ fontSize: "12px" }}
+                      />
+                      <StyledTab
+                        icon={<BadgeIcon />}
+                        label="Skills And Qualifications"
+                        sx={{ fontSize: "12px" }}
+                      />
+                      <StyledTab
+                        icon={<PlagiarismIcon />}
+                        label="Project"
+                        sx={{ fontSize: "12px" }}
+                      />
+                    </StyledTabs>
+                  </Grid>
+                }
+              />
+              <Divider />
+              <TabPanelCustom value={value} index={0}>
+                <PersonalEditable
+                  empData={employee}
+                  setEmpData={setEmployee}
+                  personalDetails={personalDetails}
+                  setPersonalDetails={setPersonalDetails}
+                  errors={errors}
+                />
+              </TabPanelCustom>
+
+              <TabPanelCustom value={value} index={1}>
+                <ProfessionalEditable
+                  empData={employee}
+                  setEmpData={setEmployee}
+                  professionalDetails={professionalDetails}
+                  setProfessionalDetails={setProfessionalDetails}
+                  errors={errors}
+                />
+              </TabPanelCustom>
+              <TabPanelCustom value={value} index={2}>
+                <SkillEditable
+                  empData={employee}
+                  setEmpData={setEmployee}
+                  skillsDetails={skillsDetails}
+                  setSkillsDetails={setSkillsDetails}
+                  errors={errors}
+                />
+              </TabPanelCustom>
+              <TabPanelCustom value={value} index={3}>
+                <ProjectTab
+                  editable={true}
+                  empData={employee}
+                  setEmpData={setEmployee}
+                  errors={errors}
+                  validate={validate}
+                />
+              </TabPanelCustom>
+              <ContainerStyleTop>
+                <Box
+                  sx={{
+                    display: "flex",
+                    width: 1,
+                    alignItems: "center",
+                    justifyContent: editEmployeeData
+                      ? "flex-end"
+                      : "space-between",
+                  }}
+                >
+                  {editEmployeeData ? null : (
+                    <StyledTypography></StyledTypography>
+                  )}
+                  <Box>
+                    <GreenButton
+                      data-test="confirm-button-test"
+                      onClick={handleConfirm}
+                      variant="contained"
+                      size="small"
+                    >
+                      {createProfileConstant.confirm}
+                    </GreenButton>
+                    <BlueButton
+                      data-test="custome-button-test"
+                      onClick={handleOpen}
+                      variant="contained"
+                      size="small"
+                    >
+                      {createProfileConstant.addCustomField}
+                    </BlueButton>
+                  </Box>
+                </Box>
+              </ContainerStyleTop>
+            </Card>
+          </StyledGrid>
+        </Container>
+      </Box>
       <div>
         <Modal
           open={open}
@@ -451,7 +504,6 @@ const CreateProfile = ({
                 required
                 id="outlined-basic"
                 variant="outlined"
-                // value={field.name}
                 type="text"
                 name="fieldName"
                 onChange={(event) => handleFieldChange(event)}

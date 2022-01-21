@@ -6,7 +6,6 @@ import { uiActions } from "../ui-slice";
 export const createNewPO_SOW = (formData) => {
   return async function (dispatch) {
     dispatch(uiActions.toggleLoader());
-    dispatch(PoSowActions.setRedirect(true));
     try {
       const response = await axios.post(`/poSow`, formData);
       if (response.status === 200) {
@@ -19,6 +18,7 @@ export const createNewPO_SOW = (formData) => {
             })
           );
         }, 1000);
+        dispatch(PoSowActions.setRedirect(true));
       } else {
         throw new Error("Could not Save data!");
       }

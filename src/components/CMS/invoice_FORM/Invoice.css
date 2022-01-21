@@ -41,6 +41,7 @@ h3 {
 .invoice-editToggle {
   text-align: center;
   position: relative;
+  margin-bottom: 18px;
 }
 .invoiceForm-container {
   margin: 1rem;

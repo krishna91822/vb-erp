@@ -248,8 +248,30 @@ export default function FormDialog(props) {
           <span className="cms-remarksCharCount">({charsLeft}/150)</span>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose}>Cancel</Button>
-          <Button onClick={handleUpdate}>Update</Button>
+          <Button
+            sx={{
+              backgroundColor: "chocolate",
+              ":hover": {
+                background: "chocolate",
+              },
+            }}
+            variant="contained"
+            onClick={handleClose}
+          >
+            Cancel
+          </Button>
+          <Button
+            sx={{
+              backgroundColor: "chocolate",
+              ":hover": {
+                background: "chocolate",
+              },
+            }}
+            variant="contained"
+            onClick={handleUpdate}
+          >
+            Update
+          </Button>
         </DialogActions>
       </Dialog>
     </div>

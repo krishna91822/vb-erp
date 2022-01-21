@@ -53,7 +53,6 @@ const SkillEditable = ({
     control: (provided, state) => ({
       ...provided,
       minHeight: "40px",
-      // height: "40px",
       display: "flex",
       alignContent: "center",
     }),
@@ -84,9 +83,9 @@ const SkillEditable = ({
   ]);
 
   return (
-    <Grid container spacing={0} sx={{ minHeight: 150 }}>
+    <Grid container mb={5} sx={{ minHeight: 150 }}>
       <Grid item sm={7}>
-        <Box sx={{ ml: 4, mb: 5 }}>
+        <Box>
           <ContentBox>
             <ContentTypo>{skillConstant.primaryCapability}</ContentTypo>
             <Box

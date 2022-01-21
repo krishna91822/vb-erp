@@ -37,17 +37,10 @@ const PersonalEditable = (props) => {
   const { pathname } = useLocation();
   const { user } = useSelector((state) => state.user);
 
-  const {
-    empData,
-    setEmpData,
-    personalDetails,
-    setPersonalDetails,
-    // register,
-    errors,
-  } = props;
+  const { empData, setEmpData, personalDetails, setPersonalDetails, errors } =
+    props;
 
   const {
-    // empConnections,
     empDob,
     empHobbies,
     empPersonalEmail,
@@ -97,7 +90,6 @@ const PersonalEditable = (props) => {
   };
 
   const handleDelete = (i) => {
-    // setChipData((chips) => chips.filter((chip) => chip !== chipToDelete));
     const filteredHobbies = [...chipData];
     filteredHobbies.splice(i, 1);
     setChipData(filteredHobbies);
@@ -230,20 +222,12 @@ const PersonalEditable = (props) => {
   };
 
   return (
-    <Grid container spacing={0} sx={{ minHeight: 150 }}>
+    <Grid container mb={5} spacing={0} sx={{ minHeight: 150 }}>
       <Grid item sm={7}>
-        <Box sx={{ ml: 4, mb: 5 }}>
+        <Box>
           <ContentBox>
-            <TitleTypo sx={{ textTransform: "capitalize", mt: 1 }}>
-              {personal.aboutMe}
-            </TitleTypo>
-            <Box
-              sx={{
-                width: "100%",
-                position: "relative",
-                ...(aboutCount.current !== 0 && { marginBottom: "15px" }),
-              }}
-            >
+            <TitleTypo>{personal.aboutMe}</TitleTypo>
+            <ContentTypo>
               <TextField
                 placeholder="Write something about you"
                 id="outlined-multiline-flexible"
@@ -275,107 +259,97 @@ const PersonalEditable = (props) => {
                   }}
                 >{`${aboutCount.current}/500`}</Box>
               )}
-            </Box>
+            </ContentTypo>
           </ContentBox>
+        </Box>
+
+        <Box>
           <ContentBox>
+            <TitleTypo>{personal.personalEmail}</TitleTypo>
             <ContentTypo>
-              {personal.personalEmail}
-              <Box component="span" sx={{ color: "red" }}>
-                &nbsp;*
+              <CustomTextField
+                placeholder="Enter personal email"
+                autoComplete="off"
+                required
+                id="outlined-basic"
+                variant="outlined"
+                value={empPersonalEmail ? empPersonalEmail : ""}
+                type="email"
+                name="empPersonalEmail"
+                onChange={(event) => handleChange(event)}
+                error={Boolean(errors?.empPersonalEmail)}
+              />
+            </ContentTypo>
+          </ContentBox>
+        </Box>
+
+        {pathname === "/my-profile" &&
+        !["hr_admin", "super_admin"].some((el) => user.roles.includes(el)) ? (
+          <Box>
+            <ContentBox>
+              <TitleTypo>{personal.dob}</TitleTypo>
+              <ContentTypo>
+                <LocalizationProvider dateAdapter={AdapterDateFns}>
+                  <DesktopDatePicker
+                    maxDate={new Date()}
+                    inputFormat="dd/MM/yyyy"
+                    value={empDob}
+                    onChange={(newValue) => {
+                      setEmpData({ ...empData, empDob: newValue });
+                    }}
+                    renderInput={(params) => (
+                      <CustomTextField {...params} name="empDob" />
+                    )}
+                  />
+                </LocalizationProvider>
+              </ContentTypo>
+            </ContentBox>
+          </Box>
+        ) : null}
+        <Box>
+          <ContentBox>
+            <TitleTypo>{personal.hobbies}</TitleTypo>
+            <ContentTypo>
+              <Box
+                noValidate
+                autoComplete="off"
+                sx={{
+                  width: 1,
+                  listStyle: "none",
+                  display: "flex",
+                  flexWrap: "wrap",
+                  alignItems: "center",
+                }}
+              >
+                {chipData[0] !== ""
+                  ? chipData.map((data, i) => (
+                      <ListItem key={i}>
+                        <Chip
+                          label={data}
+                          onDelete={() => handleDelete(i)}
+                          sx={{
+                            backgroundColor: chipColor[i],
+                            color: "#fff",
+                            height: 30,
+                            fontSize: 12,
+                            fontWeight: 600,
+                          }}
+                        />
+                      </ListItem>
+                    ))
+                  : ""}
+                <CustomTextFieldForChip
+                  onKeyDown={keyPress}
+                  type="text"
+                  placeholder="Enter hobby"
+                />
               </Box>
             </ContentTypo>
-            <CustomTextField
-              placeholder="Enter personal email"
-              autoComplete="off"
-              required
-              id="outlined-basic"
-              variant="outlined"
-              value={empPersonalEmail ? empPersonalEmail : ""}
-              type="email"
-              name="empPersonalEmail"
-              onChange={(event) => handleChange(event)}
-              error={Boolean(errors?.empPersonalEmail)}
-              // helperText={errors.empPersonalEmail?.message}
-            />
           </ContentBox>
-          {pathname === "/my-profile" &&
-          !["hr_admin", "super_admin"].some((el) => user.roles.includes(el)) ? (
-            <ContentBox>
-              <ContentTypo>
-                {personal.dob}
-                <Box component="span" sx={{ color: "red" }}>
-                  &nbsp;*
-                </Box>
-              </ContentTypo>
-              <LocalizationProvider dateAdapter={AdapterDateFns}>
-                <DesktopDatePicker
-                  maxDate={new Date()}
-                  inputFormat="dd/MM/yyyy"
-                  value={empDob}
-                  onChange={(newValue) => {
-                    setEmpData({ ...empData, empDob: newValue });
-                  }}
-                  renderInput={(params) => (
-                    <CustomTextField {...params} name="empDob" />
-                  )}
-                />
-              </LocalizationProvider>
-            </ContentBox>
-          ) : null}
+        </Box>
+        <Box>
           <ContentBox>
-            <ContentTypo>{personal.hobbies}</ContentTypo>
-            <Box
-              noValidate
-              autoComplete="off"
-              sx={{
-                width: 1,
-                listStyle: "none",
-                display: "flex",
-                flexWrap: "wrap",
-                alignItems: "center",
-              }}
-            >
-              {chipData[0] !== ""
-                ? chipData.map((data, i) => (
-                    <ListItem key={i}>
-                      <Chip
-                        label={data}
-                        onDelete={() => handleDelete(i)}
-                        sx={{
-                          backgroundColor: chipColor[i],
-                          color: "#fff",
-                          height: 30,
-                          fontSize: 12,
-                          fontWeight: 600,
-                        }}
-                      />
-                    </ListItem>
-                  ))
-                : ""}
-              <CustomTextFieldForChip
-                onKeyDown={keyPress}
-                type="text"
-                placeholder="Enter hobby"
-                // onChange={handleChangeHobbies}
-              />
-            </Box>
-          </ContentBox>
-          {/* <ContentBox>
-            <ContentTypo>{personal.connections}</ContentTypo>
-            <CustomTextField
-              placeholder="enter no. of connections"
-              autoComplete="off"
-              required
-              id="outlined-basic"
-              variant="outlined"
-              value={empConnections ? empConnections : ""}
-              type="number"
-              name="empConnections"
-              onChange={handleChange}
-            />
-          </ContentBox> */}
-          <ContentBox>
-            <ContentTypo
+            <TitleTypo
               sx={{
                 display: "grid",
                 gridTemplateRows: "1fr 1fr",
@@ -385,108 +359,110 @@ const PersonalEditable = (props) => {
               }}
             >
               {personal.currentAddress}
-            </ContentTypo>
-            <Box sx={{ width: 1 }}>
-              <CustomTextField
-                autoComplete="off"
-                required
-                id="outlined-basic"
-                variant="outlined"
-                value={
-                  empCurrentAddress?.empAddressLineOne
-                    ? currentAddress.empAddressLineOne
-                    : ""
-                }
-                type="text"
-                name="empAddressLineOne"
-                onChange={(event) => {
-                  handleCurrentAddressChange(event);
-                }}
-                placeholder="Address line 1"
-                sx={{ width: "100%" }}
-              />
-              <Box
-                sx={{
-                  width: 1,
-                  display: "flex",
-                  justifyContent: "space-between",
-                  flexWrap: "wrap",
-                  mt: 1,
-                }}
-              >
+            </TitleTypo>
+            <ContentTypo>
+              <Box sx={{ width: 1 }}>
                 <CustomTextField
                   autoComplete="off"
                   required
                   id="outlined-basic"
                   variant="outlined"
                   value={
-                    empCurrentAddress?.empAddressCity
-                      ? empCurrentAddress.empAddressCity
+                    empCurrentAddress?.empAddressLineOne
+                      ? currentAddress.empAddressLineOne
                       : ""
                   }
                   type="text"
-                  name="empAddressCity"
-                  onChange={handleCurrentAddressChange}
-                  placeholder="City"
-                  sx={{ width: "30%" }}
-                />
-                <CustomTextField
-                  autoComplete="off"
-                  required
-                  id="outlined-basic"
-                  variant="outlined"
-                  value={
-                    empCurrentAddress?.empAddressState
-                      ? empCurrentAddress.empAddressState
-                      : ""
-                  }
-                  type="text"
-                  name="empAddressState"
-                  onChange={handleCurrentAddressChange}
-                  placeholder="State"
-                  sx={{ width: "30%" }}
-                />
-                <CustomTextField
-                  autoComplete="off"
-                  required
-                  id="outlined-basic"
-                  variant="outlined"
-                  value={
-                    empCurrentAddress?.empAddressPinCode
-                      ? empCurrentAddress.empAddressPinCode
-                      : ""
-                  }
-                  type="number"
-                  name="empAddressPinCode"
-                  onKeyDown={fetchCurrentAddress}
-                  onChange={handleCurrentAddressChange}
-                  placeholder="Pin code"
-                  sx={{
-                    width: "30%",
+                  name="empAddressLineOne"
+                  onChange={(event) => {
+                    handleCurrentAddressChange(event);
                   }}
+                  placeholder="Address line 1"
+                  sx={{ width: "100%" }}
                 />
+                <Box
+                  sx={{
+                    width: 1,
+                    display: "flex",
+                    justifyContent: "space-between",
+                    flexWrap: "wrap",
+                    mt: 1,
+                  }}
+                >
+                  <CustomTextField
+                    autoComplete="off"
+                    required
+                    id="outlined-basic"
+                    variant="outlined"
+                    value={
+                      empCurrentAddress?.empAddressCity
+                        ? empCurrentAddress.empAddressCity
+                        : ""
+                    }
+                    type="text"
+                    name="empAddressCity"
+                    onChange={handleCurrentAddressChange}
+                    placeholder="City"
+                    sx={{ width: "30%" }}
+                  />
+                  <CustomTextField
+                    autoComplete="off"
+                    required
+                    id="outlined-basic"
+                    variant="outlined"
+                    value={
+                      empCurrentAddress?.empAddressState
+                        ? empCurrentAddress.empAddressState
+                        : ""
+                    }
+                    type="text"
+                    name="empAddressState"
+                    onChange={handleCurrentAddressChange}
+                    placeholder="State"
+                    sx={{ width: "30%" }}
+                  />
+                  <CustomTextField
+                    autoComplete="off"
+                    required
+                    id="outlined-basic"
+                    variant="outlined"
+                    value={
+                      empCurrentAddress?.empAddressPinCode
+                        ? empCurrentAddress.empAddressPinCode
+                        : ""
+                    }
+                    type="number"
+                    name="empAddressPinCode"
+                    onKeyDown={fetchCurrentAddress}
+                    onChange={handleCurrentAddressChange}
+                    placeholder="Pin code"
+                    sx={{
+                      width: "30%",
+                    }}
+                  />
+                </Box>
               </Box>
-            </Box>
+            </ContentTypo>
           </ContentBox>
-          <Box
-            sx={{
-              width: 1,
-              display: "flex",
-              alignItems: "center",
-              textTransform: "capitalize",
-            }}
-          >
+        </Box>
+
+        <ContentBox>
+          <TitleTypo></TitleTypo>
+
+          <ContentTypo sx={{ fontWeight: "400" }}>
             <Checkbox
+              size="small"
               checked={addresschecked}
               onChange={handleAddressCheckedChange}
               inputProps={{ "aria-label": "controlled" }}
             />
-            <ContentTypo sx={{ fontWeight: "400" }}>
-              {personal.addressCheckbox}
-            </ContentTypo>
-          </Box>
+            {personal.addressCheckbox}
+          </ContentTypo>
+        </ContentBox>
+
+        <Box>
           <ContentBox>
-            <ContentTypo
+            <TitleTypo
               sx={{
                 display: "grid",
                 gridTemplateRows: "1fr 1fr",
@@ -496,143 +472,146 @@ const PersonalEditable = (props) => {
               }}
             >
               {personal.residentialAddress}
+            </TitleTypo>
+            <ContentTypo>
+              <Box sx={{ width: 1 }}>
+                <CustomTextField
+                  disabled={addresschecked}
+                  autoComplete="off"
+                  required
+                  id="outlined-basic"
+                  variant="outlined"
+                  value={
+                    empResidentialAddress?.empAddressLineOne
+                      ? empResidentialAddress.empAddressLineOne
+                      : ""
+                  }
+                  type="text"
+                  name="empAddressLineOne"
+                  onChange={handleResidentialAddressChange}
+                  placeholder="Address line 1"
+                  sx={{ width: "100%" }}
+                />
+                <Box
+                  sx={{
+                    width: 1,
+                    display: "flex",
+                    justifyContent: "space-between",
+                    flexWrap: "wrap",
+                    mt: 1,
+                  }}
+                >
+                  <CustomTextField
+                    disabled={addresschecked}
+                    autoComplete="off"
+                    required
+                    id="outlined-basic"
+                    variant="outlined"
+                    value={
+                      empResidentialAddress?.empAddressCity
+                        ? empResidentialAddress.empAddressCity
+                        : ""
+                    }
+                    type="text"
+                    name="empAddressCity"
+                    onChange={handleResidentialAddressChange}
+                    placeholder="City"
+                    sx={{ width: "30%" }}
+                  />
+                  <CustomTextField
+                    disabled={addresschecked}
+                    autoComplete="off"
+                    required
+                    id="outlined-basic"
+                    variant="outlined"
+                    value={
+                      empResidentialAddress?.empAddressState
+                        ? empResidentialAddress.empAddressState
+                        : ""
+                    }
+                    type="text"
+                    name="empAddressState"
+                    onChange={handleResidentialAddressChange}
+                    placeholder="State"
+                    sx={{ width: "30%" }}
+                  />
+                  <CustomTextField
+                    disabled={addresschecked}
+                    autoComplete="off"
+                    required
+                    id="outlined-basic"
+                    variant="outlined"
+                    value={
+                      empResidentialAddress?.empAddressPinCode
+                        ? empResidentialAddress.empAddressPinCode
+                        : ""
+                    }
+                    type="text"
+                    name="empAddressPinCode"
+                    onKeyDown={fetchResidentialAddress}
+                    onChange={handleResidentialAddressChange}
+                    placeholder="Pin code"
+                    sx={{ width: "30%" }}
+                  />
+                </Box>
+              </Box>
             </ContentTypo>
-            <Box sx={{ width: 1 }}>
-              <CustomTextField
-                disabled={addresschecked}
+          </ContentBox>
+        </Box>
+
+        {personalDetails.map((field, index) => (
+          <ContentBox key={index} sx={{ position: "relative" }}>
+            <ContentTypo>{field.fieldName}</ContentTypo>
+            {field.fieldType === "date" ? (
+              <LocalizationProvider dateAdapter={AdapterDateFns}>
+                <DesktopDatePicker
+                  inputFormat="dd/MM/yyyy"
+                  value={field.fieldValue ? field.fieldValue : null}
+                  onChange={(newValue) => {
+                    const updates = personalDetails.map((personalDetail, i) =>
+                      index === i
+                        ? {
+                            ...personalDetail,
+                            fieldValue: newValue,
+                          }
+                        : personalDetail
+                    );
+                    setPersonalDetails(updates);
+                  }}
+                  renderInput={(params) => (
+                    <CustomTextField {...params} name="fieldValue" />
+                  )}
+                />
+              </LocalizationProvider>
+            ) : (
+              <TextField
                 autoComplete="off"
                 required
                 id="outlined-basic"
                 variant="outlined"
-                value={
-                  empResidentialAddress?.empAddressLineOne
-                    ? empResidentialAddress.empAddressLineOne
-                    : ""
-                }
-                type="text"
-                name="empAddressLineOne"
-                onChange={handleResidentialAddressChange}
-                placeholder="Address line 1"
-                sx={{ width: "100%" }}
-              />
-              <Box
+                value={field.fieldValue}
+                type={field.fieldType}
+                name={field.fieldName}
+                onChange={(event) => handleNewFieldChange(event, index)}
                 sx={{
-                  width: 1,
-                  display: "flex",
-                  justifyContent: "space-between",
-                  flexWrap: "wrap",
-                  mt: 1,
+                  "& .MuiOutlinedInput-root": {
+                    width: "80%",
+                    height: "40px",
+                  },
                 }}
-              >
-                <CustomTextField
-                  disabled={addresschecked}
-                  autoComplete="off"
-                  required
-                  id="outlined-basic"
-                  variant="outlined"
-                  value={
-                    empResidentialAddress?.empAddressCity
-                      ? empResidentialAddress.empAddressCity
-                      : ""
-                  }
-                  type="text"
-                  name="empAddressCity"
-                  onChange={handleResidentialAddressChange}
-                  placeholder="City"
-                  sx={{ width: "30%" }}
-                />
-                <CustomTextField
-                  disabled={addresschecked}
-                  autoComplete="off"
-                  required
-                  id="outlined-basic"
-                  variant="outlined"
-                  value={
-                    empResidentialAddress?.empAddressState
-                      ? empResidentialAddress.empAddressState
-                      : ""
-                  }
-                  type="text"
-                  name="empAddressState"
-                  onChange={handleResidentialAddressChange}
-                  placeholder="State"
-                  sx={{ width: "30%" }}
-                />
-                <CustomTextField
-                  disabled={addresschecked}
-                  autoComplete="off"
-                  required
-                  id="outlined-basic"
-                  variant="outlined"
-                  value={
-                    empResidentialAddress?.empAddressPinCode
-                      ? empResidentialAddress.empAddressPinCode
-                      : ""
-                  }
-                  type="text"
-                  name="empAddressPinCode"
-                  onKeyDown={fetchResidentialAddress}
-                  onChange={handleResidentialAddressChange}
-                  placeholder="Pin code"
-                  sx={{ width: "30%" }}
-                />
-              </Box>
-            </Box>
+              />
+            )}
+            <ClearIcon
+              onClick={() => removeFields(index)}
+              sx={{
+                fontSize: "20px",
+                cursor: "pointer",
+                position: "absolute",
+                right: "30px",
+              }}
+            />
           </ContentBox>
-          {personalDetails.map((field, index) => (
-            <ContentBox key={index} sx={{ position: "relative" }}>
-              <ContentTypo>{field.fieldName}</ContentTypo>
-              {field.fieldType === "date" ? (
-                <LocalizationProvider dateAdapter={AdapterDateFns}>
-                  <DesktopDatePicker
-                    inputFormat="dd/MM/yyyy"
-                    value={field.fieldValue ? field.fieldValue : null}
-                    onChange={(newValue) => {
-                      const updates = personalDetails.map((personalDetail, i) =>
-                        index === i
-                          ? {
-                              ...personalDetail,
-                              fieldValue: newValue,
-                            }
-                          : personalDetail
-                      );
-                      setPersonalDetails(updates);
-                    }}
-                    renderInput={(params) => (
-                      <CustomTextField {...params} name="fieldValue" />
-                    )}
-                  />
-                </LocalizationProvider>
-              ) : (
-                <TextField
-                  autoComplete="off"
-                  required
-                  id="outlined-basic"
-                  variant="outlined"
-                  value={field.fieldValue}
-                  type={field.fieldType}
-                  name={field.fieldName}
-                  onChange={(event) => handleNewFieldChange(event, index)}
-                  sx={{
-                    "& .MuiOutlinedInput-root": {
-                      width: "80%",
-                      height: "40px",
-                    },
-                  }}
-                />
-              )}
-              <ClearIcon
-                onClick={() => removeFields(index)}
-                sx={{
-                  fontSize: "20px",
-                  cursor: "pointer",
-                  position: "absolute",
-                  right: "30px",
-                }}
-              />
-            </ContentBox>
-          ))}
-        </Box>
+        ))}
       </Grid>
     </Grid>
   );

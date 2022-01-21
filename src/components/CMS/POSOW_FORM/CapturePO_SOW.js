@@ -28,7 +28,10 @@ import {
 import { PoSowActions } from "../../../store/CMS/POSOW-slice";
 import { useNavigate } from "react-router-dom";
 import validateForm from "./validateForm";
-import { MiniHeadingTypography } from "../../../assets/GlobalStyle/style";
+import {
+  MiniHeadingTypography,
+  StyledTypography,
+} from "../../../assets/GlobalStyle/style";
 
 // materialUI stylings for select dropdowns.
 const ITEM_HEIGHT = 48;
@@ -321,8 +324,6 @@ export const CapturePO_SOW = (props) => {
       } else {
         dispatch(createNewPO_SOW(DataToSend));
       }
-    } else {
-      alert("Error\nThere may be some missing inputs or bad inputs");
     }
   };
   return (
@@ -330,10 +331,8 @@ export const CapturePO_SOW = (props) => {
       <div className="posowForm-container">
         <React.Fragment>
           <CssBaseline />
+          <StyledTypography data-test="Doc Heading">PO/SOW</StyledTypography>
           <Grid container className="posow-topGrid">
-            <Grid item lg={6} md={6} sm={12} xs={12} className="finalgrid">
-              <h2 data-test="Doc Heading">PO/SOW</h2>
-            </Grid>
             <Grid item lg={6} md={6} sm={12} xs={12} className="finalgrid ">
               {props.editBtn && editTglCheckedState ? (
                 <div className="posow-SaveButton">
@@ -430,7 +429,7 @@ export const CapturePO_SOW = (props) => {
               <Grid container>
                 <Grid item lg={6} md={6} sm={12} xs={12} className="finalgrid">
                   <label>
-                    <strong>Client name</strong>
+                    Client Name <span style={{ color: "red" }}>*</span>
                   </label>
                   <Autocomplete
                     className="finalinput"
@@ -464,7 +463,7 @@ export const CapturePO_SOW = (props) => {
                 </Grid>
                 <Grid item lg={6} md={6} sm={12} xs={12} className="finalgrid">
                   <label>
-                    <strong>Project name</strong>
+                    Project Name <span style={{ color: "red" }}>*</span>
                   </label>
                   <Autocomplete
                     disablePortal
@@ -567,7 +566,7 @@ export const CapturePO_SOW = (props) => {
               <Grid container>
                 <Grid item lg={6} md={6} sm={12} xs={12} className="finalgrid">
                   <label id="demo-multiple-name-label">
-                    <strong>Type</strong>
+                    Type <span style={{ color: "red" }}>*</span>
                   </label>
                   <Select
                     className="finalinput"
@@ -595,7 +594,7 @@ export const CapturePO_SOW = (props) => {
 
                 <Grid item lg={6} md={6} sm={12} xs={12} className="finalgrid">
                   <label id="demo-multiple-name-label">
-                    <strong>Currency</strong>
+                    Currency <span style={{ color: "red" }}>*</span>
                   </label>
                   <Select
                     className="finalinput"
@@ -627,7 +626,7 @@ export const CapturePO_SOW = (props) => {
                 </Grid>
                 <Grid item lg={6} md={6} sm={12} xs={12} className="finalgrid">
                   <label id="demo-multiple-name-label">
-                    <strong>{typeName} Amount</strong>
+                    {typeName} Amount <span style={{ color: "red" }}>*</span>
                   </label>
                   <TextField
                     className="finalinput"
@@ -648,7 +647,7 @@ export const CapturePO_SOW = (props) => {
                   {props.editBtn ? (
                     <div>
                       <label id="demo-multiple-name-label">
-                        <strong>{typeName} Number</strong>
+                        {typeName} Number
                       </label>
                       <TextField
                         className="finalinput"
@@ -674,9 +673,7 @@ export const CapturePO_SOW = (props) => {
 
               <Grid container>
                 <Grid item lg={6} md={6} sm={12} xs={12} className="finalgrid">
-                  <label id="demo-multiple-name-label">
-                    <strong>Uploaded Document</strong>
-                  </label>
+                  <label id="demo-multiple-name-label">Uploaded Document</label>
                   <TextField
                     className="finalinput"
                     id="outlined-basic"
@@ -730,7 +727,7 @@ export const CapturePO_SOW = (props) => {
                 </Grid>
                 <Grid item lg={6} md={6} sm={12} xs={12} className="finalgrid">
                   <label id="demo-multiple-name-label">
-                    <strong>{typeName + " End Date"}</strong>
+                    {typeName + " End Date"}
                   </label>
                   <br />
                   <BasicDatePicker
@@ -757,9 +754,7 @@ export const CapturePO_SOW = (props) => {
                   xs={12}
                   className="finalgrid"
                 >
-                  <label id="demo-multiple-name-label">
-                    <strong>Remarks/Comments</strong>
-                  </label>
+                  <label id="demo-multiple-name-label">Remarks/Comments</label>
                   <TextField
                     className="finalinput"
                     id="outlined-multiline-static"

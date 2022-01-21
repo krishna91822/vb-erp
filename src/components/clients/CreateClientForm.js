@@ -6,13 +6,18 @@ import {
   FormControlLabel,
   Grid,
   Typography,
+  Card,
 } from "@mui/material";
 import UseForm from "./UseForm";
 import Form from "./Form";
 import MidPopUp from "./MidPopUp";
-import "../../assets/styles/ClientFormStyles.css";
+import "./styles/ClientFormStyles.css";
 import { cimsActions } from "../../store/cims-slice";
 import { useDispatch, useSelector } from "react-redux";
+import {
+  StyledTypography,
+  MiniHeadingTypography,
+} from "../../assets/GlobalStyle/style";
 
 function CreateClientForm() {
   const dispatch = useDispatch();
@@ -22,43 +27,47 @@ function CreateClientForm() {
   return (
     <>
       <MidPopUp />
-      <Grid container m={1}>
+      <Grid>
         <Grid item>
-          <Typography variant="h4">CIMS</Typography>
+          <StyledTypography>CIMS</StyledTypography>
         </Grid>
       </Grid>
-      <div className="CIMSFormContainer">
-        <div className="cims-form-header">
-          <Grid container m={2} pr={5} spacing={1}>
-            <Grid item md={4}>
-              <Typography variant="h4">Client Information</Typography>
-            </Grid>
-            <Grid item sm></Grid>
-            <Grid container pt={1} md={2} spacing={2}>
-              <Grid item md={8}>
-                <Link to="/cims" style={{ textDecoration: "none" }}>
-                  <Button variant="contained" color="error" id="cancel-btn">
-                    Cancel
+      <Card>
+        <div className="CIMSFormContainer">
+          <div className="cims-form-header">
+            <Grid container m={1} spacing={1}>
+              <Grid item>
+                <MiniHeadingTypography>
+                  Client Information
+                </MiniHeadingTypography>
+              </Grid>
+              <Grid item sm></Grid>
+              <Grid container pt={1} md={2} pl={5} spacing={2}>
+                <Grid item>
+                  <Link to="/cims" style={{ textDecoration: "none" }}>
+                    <Button variant="contained" color="error" id="cancel-btn">
+                      Cancel
+                    </Button>
+                  </Link>
+                </Grid>
+                <Grid item>
+                  <Button
+                    onClick={submitForm}
+                    type="submit"
+                    variant="contained"
+                    color="success"
+                    id="save-btn"
+                    disabled={!validateOnSubmit()}
+                  >
+                    Save
                   </Button>
-                </Link>
-              </Grid>
-              <Grid item md={4}>
-                <Button
-                  onClick={submitForm}
-                  type="submit"
-                  variant="contained"
-                  color="success"
-                  id="save-btn"
-                  disabled={!validateOnSubmit()}
-                >
-                  Save
-                </Button>
+                </Grid>
               </Grid>
             </Grid>
-          </Grid>
+          </div>
+          <Form />
         </div>
-        <Form />
-      </div>
+      </Card>
     </>
   );
 }

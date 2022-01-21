@@ -22,7 +22,7 @@ import FilterListIcon from "@mui/icons-material/FilterList";
 import FilterListOffIcon from "@mui/icons-material/FilterListOff";
 import { Search as SearchIcon } from "../../../icons/search";
 
-import { Heading, SideButton, ProjectHead, MainComponent } from "./style";
+import { SideButton } from "./style";
 import { StyledTypography } from "../../../assets/GlobalStyle/style";
 
 const Allocation = () => {
@@ -51,7 +51,7 @@ const Allocation = () => {
   };
 
   return (
-    <div className="client-list-wrapper">
+    <div className="list-wrapper">
       <StyledTypography data-test="main-heading">Allocations</StyledTypography>
       <Card>
         <CardContent>
@@ -195,7 +195,6 @@ const Allocation = () => {
                         labelId="Sort by"
                         data-test="sortby-dropdown"
                         label="Sort by"
-                        // color="orange"
                         onChange={ChangeAllocation}
                         sx={{ fontSize: "14px", width: "150px" }}
                       >
