@@ -163,11 +163,7 @@ const Review = () => {
       return (
         <ContentTypo
           sx={{
-            backgroundColor: "#2AB3A6",
-            color: "white",
-            padding: "5px 15px",
-            borderRadius: "20px",
-            fontSize: "16px",
+            color: "#2AB3A6",
           }}
         >
           {status}
@@ -177,11 +173,7 @@ const Review = () => {
       return (
         <ContentTypo
           sx={{
-            backgroundColor: "#F7C839",
-            color: "white",
-            padding: "5px 15px",
-            borderRadius: "20px",
-            fontSize: "16px",
+            color: "#F7C839",
           }}
         >
           {status}
@@ -191,11 +183,7 @@ const Review = () => {
       return (
         <ContentTypo
           sx={{
-            backgroundColor: "#D3455B",
-            color: "white",
-            padding: "5px 15px",
-            borderRadius: "20px",
-            fontSize: "16px",
+            color: "#D3455B",
           }}
         >
           {status}

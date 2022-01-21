@@ -141,9 +141,9 @@ function InvoiceInfo() {
 
   const renderChildStatus = (status) => {
     if (status === "Complete") {
-      return <ContentTypo sx={{ color: "#00e676" }}>{status}</ContentTypo>;
+      return <ContentTypo sx={{ color: "#2AB3A6" }}>{status}</ContentTypo>;
     } else if (status === "Invoice raised") {
-      return <ContentTypo sx={{ color: "#ff9800" }}>{status}</ContentTypo>;
+      return <ContentTypo sx={{ color: "#F7C839" }}>{status}</ContentTypo>;
     } else if (status === "Overdue") {
       return <ContentTypo sx={{ color: "#b2102f" }}>{status}</ContentTypo>;
     } else {
