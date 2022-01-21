@@ -3,7 +3,20 @@ import {
   StyledTypography,
   MiniHeadingTypography,
 } from "../../assets/GlobalStyle/style";
-import { TextField, Grid, Button, Autocomplete } from "@mui/material";
+import {
+  TextField,
+  Box,
+  Button,
+  Card,
+  CardContent,
+  CardHeader,
+  Checkbox,
+  Divider,
+  FormControlLabel,
+  Grid,
+  Typography,
+  Autocomplete,
+} from "@mui/material";
 import {
   searchEmployees,
   createUserAccount,
@@ -67,92 +80,88 @@ const CreateUser = () => {
 
   return (
     <>
-      <Grid>
-        <Grid item>
-          <StyledTypography
-            style={{ borderBottom: "1px solid gray", padding: "5px 15px" }}
-          >
-            New User
-          </StyledTypography>
-        </Grid>
+      <Card sx={{ mx: 15, p: 3 }}>
+        <StyledTypography
+          style={{ borderBottom: "1px solid gray", padding: "5px 15px" }}
+        >
+          New User
+        </StyledTypography>
 
-        <Grid item>
-          <MiniHeadingTypography
-            style={{ borderBottom: "1px solid gray", padding: "5px 15px" }}
-          >
-            Account
-          </MiniHeadingTypography>
-        </Grid>
-      </Grid>
-      <form onSubmit={(e) => handleSubmit(e)}>
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            padding: "10px 100px",
-          }}
-        >
-          <label style={{ padding: "10px ", fontWeight: "600" }}>Name:</label>
-          <Autocomplete
-            size="small"
-            onBlur={() => {
-              setUsername("");
-              setOpen(false);
+        {/* <Grid item>
+            <MiniHeadingTypography
+              style={{ borderBottom: "1px solid gray", padding: "5px 15px" }}
+            >
+              Account
+            </MiniHeadingTypography>
+          </Grid> */}
+
+        <CardHeader title="Account" />
+        <Divider />
+        <form onSubmit={(e) => handleSubmit(e)}>
+          <CardContent
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              padding: "10px 100px",
             }}
-            onInputChange={handleUserName}
-            getOptionLabel={(option) => `${option.empName} (${option.empId})`}
-            onChange={handleOnClick}
-            options={userAccount.employees}
-            open={open}
-            style={{ width: "100%" }}
-            inputValue={
-              userAccount.employees ? userAccount.employees.empName : username
-            }
-            renderInput={(params) => (
-              <TextField
-                {...params}
-                required
-                id="username"
-                name="username"
-                value={
-                  userAccount.employees
-                    ? userAccount.employees.empName
-                    : username
-                }
-                placeholder="Enter Name"
-              />
-            )}
-          />
-        </div>
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            padding: "10px 100px",
-          }}
-        >
-          <label style={{ padding: "10px ", fontWeight: "600" }}>Email:</label>
-          <TextField
-            name="useremail"
-            disabled
-            id="useremail"
-            size="small"
-            variant="outlined"
-            placeholder="Enter Email Id"
-            value={useremail}
-            style={{ width: "100%" }}
-          />
-        </div>
-        <Grid item>
-          <MiniHeadingTypography
-            style={{ borderBottom: "1px solid gray", padding: "5px 15px" }}
           >
-            Roles
-          </MiniHeadingTypography>
-        </Grid>
-        <div
+            <label style={{ padding: "10px ", fontWeight: "600" }}>Name:</label>
+            <Autocomplete
+              size="small"
+              onBlur={() => {
+                setUsername("");
+                setOpen(false);
+              }}
+              onInputChange={handleUserName}
+              getOptionLabel={(option) => `${option.empName} (${option.empId})`}
+              onChange={handleOnClick}
+              options={userAccount.employees}
+              open={open}
+              style={{ width: "100%" }}
+              inputValue={
+                userAccount.employees ? userAccount.employees.empName : username
+              }
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  required
+                  id="username"
+                  name="username"
+                  value={
+                    userAccount.employees
+                      ? userAccount.employees.empName
+                      : username
+                  }
+                  placeholder="Enter Name"
+                />
+              )}
+            />
+          </CardContent>
+          <CardContent
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              padding: "10px 100px",
+            }}
+          >
+            <label style={{ padding: "10px ", fontWeight: "600" }}>
+              Email:
+            </label>
+            <TextField
+              name="useremail"
+              disabled
+              id="useremail"
+              size="small"
+              variant="outlined"
+              placeholder="Enter Email Id"
+              value={useremail}
+              style={{ width: "100%" }}
+            />
+          </CardContent>
+
+          {/* <div
           style={{
             display: "flex",
             justifyContent: "center",
@@ -223,23 +232,99 @@ const CreateUser = () => {
             />
             <label>Super Admin</label>
           </div>
-        </div>
-        <div style={{ display: "flex", justifyContent: "center" }}>
-          <Button
-            type="submit"
-            variant="contained"
+        </div> */}
+
+          <CardHeader subheader="Select Roles:" title="Role" />
+          <Divider />
+          <CardContent sx={{ mx: 20 }}>
+            <Grid container spacing={6} wrap="wrap">
+              <Grid
+                item
+                md={4}
+                sm={6}
+                sx={{
+                  display: "flex",
+                  flexDirection: "column",
+                }}
+                xs={12}
+              >
+                <FormControlLabel
+                  control={<Checkbox color="primary" />}
+                  label="User"
+                  value="user"
+                  id="user"
+                  name="user"
+                />
+                <FormControlLabel
+                  control={<Checkbox color="primary" />}
+                  label="Approver"
+                  value="approver"
+                  id="approver"
+                  name="approver"
+                />
+                <FormControlLabel
+                  control={<Checkbox />}
+                  label="HR Admin"
+                  value="hr_admin"
+                  id="hr_admin"
+                  name="hr_admin"
+                />
+                <FormControlLabel
+                  control={<Checkbox color="primary" />}
+                  label="Finance Admin"
+                  value="finance_admin"
+                  id="finance_admin"
+                  name="finance_admin"
+                />
+              </Grid>
+              <Grid
+                item
+                md={4}
+                sm={6}
+                sx={{
+                  display: "flex",
+                  flexDirection: "column",
+                }}
+                xs={12}
+              >
+                <FormControlLabel
+                  control={<Checkbox />}
+                  label="Leader"
+                  value="leader"
+                  id="leader"
+                  name="leader"
+                />
+                <FormControlLabel
+                  control={<Checkbox color="primary" />}
+                  label="PMS Admin"
+                  value="pms_admin"
+                  id="pms_admin"
+                  name="pms_admin"
+                />
+                <FormControlLabel
+                  control={<Checkbox color="primary" />}
+                  label="Super Admin"
+                  value="super_admin"
+                  id="super_admin"
+                  name="super_admin"
+                />
+              </Grid>
+            </Grid>
+          </CardContent>
+          <Divider />
+          <Box
             sx={{
-              backgroundColor: "chocolate",
-              ":hover": {
-                background: "chocolate",
-              },
+              display: "flex",
+              justifyContent: "flex-end",
+              p: 2,
             }}
-            size="large"
           >
-            Submit
-          </Button>
-        </div>
-      </form>
+            <Button type="submit" color="primary" variant="contained">
+              Save
+            </Button>
+          </Box>
+        </form>
+      </Card>
     </>
   );
 };

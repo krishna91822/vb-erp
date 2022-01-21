@@ -1,25 +1,28 @@
 import React, { useState } from "react";
-import { uiActions } from "../../store/ui-slice";
-import { useDispatch } from "react-redux";
-import { setUserPassword } from "../../store/userAccount-action";
+import Button from "@mui/material/Button";
+import TextField from "@mui/material/TextField";
+import Box from "@mui/material/Box";
 import { useParams } from "react-router-dom";
+import Typography from "@mui/material/Typography";
+import Container from "@mui/material/Container";
+import { ThemeProvider } from "@mui/material/styles";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { uiActions } from "../../store/ui-slice";
+import { setUserPassword } from "../../store/userAccount-action";
+import vbLogo from "../../assets/images/vb_logo.svg";
 
-import {
-  StyledTypography,
-  MiniHeadingTypography,
-} from "../../assets/GlobalStyle/style";
-import { TextField, Grid, Button, Box } from "@mui/material";
-
-const SetPassword = () => {
+export default function SetPassword() {
+  const navigate = useNavigate();
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const dispatch = useDispatch();
   let { id } = useParams();
-  console.log(id, "------------------");
 
   const handleSubmit = (pass) => {
     const password = { password: pass };
     dispatch(setUserPassword(id, password));
+    navigate("/");
   };
 
   const validatePassword = (event) => {
@@ -36,96 +39,81 @@ const SetPassword = () => {
           })
         );
   };
+
   return (
-    <>
-      <Grid>
-        <Grid item>
-          <StyledTypography
-            style={{ borderBottom: "1px solid gray", padding: "5px 15px" }}
-          >
-            Set Password
-          </StyledTypography>
-        </Grid>
-      </Grid>
-
-      <form
-        onSubmit={validatePassword}
-        style={{
-          border: "1px solid gray",
-          margin: "100px",
-          padding: "50px",
-        }}
-      >
-        <div
-          style={{
+    <ThemeProvider>
+      <Container component="main" maxWidth="xs">
+        <Box
+          sx={{
+            marginTop: 8,
+            padding: "50px",
+            border: "2px solid gray",
             display: "flex",
-            padding: "10px",
+            flexDirection: "column",
+            alignItems: "center",
           }}
         >
-          <label
-            style={{ padding: "10px ", fontWeight: "600", width: "200px" }}
-          >
-            Password:
-          </label>
-          <TextField
-            type="password"
-            name="password"
-            id="password"
-            size="small"
-            variant="outlined"
-            placeholder="New Password "
-            value={password}
-            style={{ width: "80%" }}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-        </div>
-        <div
-          style={{
-            display: "flex",
-            padding: "10px",
-          }}
-        >
-          <label
-            style={{ padding: "10px ", fontWeight: "600", width: "200px" }}
-          >
-            Confirm Password:
-          </label>
-          <TextField
-            name="confirm_password"
-            id="confirm_password"
-            size="small"
-            variant="outlined"
-            placeholder="Confirm Password "
-            value={confirmPassword}
-            style={{ width: "80%" }}
-            onChange={(e) => setConfirmPassword(e.target.value)}
-          />
-        </div>
-
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            paddingTop: "20px",
-          }}
-        >
-          <Button
-            type="submit"
-            variant="contained"
-            sx={{
-              backgroundColor: "chocolate",
-              ":hover": {
-                background: "chocolate",
-              },
+          <img
+            style={{
+              width: "150px",
+              marginRight: "80px",
+              borderRadius: "10px",
+              filter: "grayscale(30%)",
             }}
-            size="large"
-          >
-            Submit
-          </Button>
-        </div>
-      </form>
-    </>
-  );
-};
+            src={vbLogo}
+            alt="vb-logo"
+          />
 
-export default SetPassword;
+          <Typography sx={{ fontWeight: "600" }} variant="h5">
+            Set password
+          </Typography>
+          <Box
+            component="form"
+            onSubmit={validatePassword}
+            noValidate
+            sx={{ mt: 1 }}
+          >
+            <TextField
+              margin="normal"
+              required
+              type="password"
+              fullWidth
+              id="password"
+              label="Password"
+              name="password"
+              value={password}
+              onChange={(event) => setPassword(event.target.value)}
+              autoFocus
+            />
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              name="confirm_password"
+              label="Confirm Password"
+              id="confirm_password"
+              value={confirmPassword}
+              autoComplete="none"
+              onChange={(event) => setConfirmPassword(event.target.value)}
+            />
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              sx={{
+                mt: 3,
+                mb: 2,
+                bgcolor: "chocolate",
+                ":hover": {
+                  bgcolor: "chocolate",
+                },
+              }}
+            >
+              Submit
+            </Button>
+          </Box>
+        </Box>
+      </Container>
+    </ThemeProvider>
+  );
+}

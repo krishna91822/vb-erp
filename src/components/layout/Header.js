@@ -143,7 +143,7 @@ const Header = () => {
                 <MenuItem
                   onClick={handleClose}
                   component={Link}
-                  to={"/settings/updatepassword"}
+                  to={"/settings"}
                 >
                   <ListItemIcon>
                     <Settings fontSize="small" />

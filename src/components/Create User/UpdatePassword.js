@@ -1,15 +1,25 @@
 import React, { useState } from "react";
+import {
+  Box,
+  Button,
+  Card,
+  CardContent,
+  CardHeader,
+  Divider,
+  TextField,
+} from "@mui/material";
 import { uiActions } from "../../store/ui-slice";
 import { useDispatch } from "react-redux";
-import { StyledTypography } from "../../assets/GlobalStyle/style";
-import { TextField, Grid, Button } from "@mui/material";
 
-const UpdatePassword = () => {
+const UpdateUserPassword = () => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const dispatch = useDispatch();
 
   const handleSubmit = (pass) => {
+    const password = { password: pass };
+    // dispatch(setUserPassword(id, password));
+    // navigate("/");
     alert(pass);
   };
 
@@ -27,96 +37,53 @@ const UpdatePassword = () => {
           })
         );
   };
+
   return (
-    <>
-      <Grid>
-        <Grid item>
-          <StyledTypography
-            style={{ borderBottom: "1px solid gray", padding: "5px 15px" }}
-          >
-            Update Password
-          </StyledTypography>
-        </Grid>
-      </Grid>
-
-      <form
-        onSubmit={validatePassword}
-        style={{
-          border: "1px solid gray",
-          margin: "100px",
-          padding: "50px",
-        }}
-      >
-        <div
-          style={{
-            display: "flex",
-            padding: "10px",
-          }}
-        >
-          <label
-            style={{ padding: "10px ", fontWeight: "600", width: "200px" }}
-          >
-            Password:
-          </label>
+    <form onSubmit={validatePassword}>
+      <Card sx={{ mx: 10, mt: 5, p: 3 }}>
+        <CardHeader subheader="Update password" title="Password" />
+        <Divider />
+        <CardContent>
           <TextField
-            type="password"
-            name="password"
+            fullWidth
+            required
+            label="Password"
+            margin="normal"
             id="password"
-            size="small"
-            variant="outlined"
-            placeholder="New Password "
+            name="password"
+            onChange={(event) => setPassword(event.target.value)}
+            type="password"
             value={password}
-            style={{ width: "80%" }}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-        </div>
-        <div
-          style={{
-            display: "flex",
-            padding: "10px",
-          }}
-        >
-          <label
-            style={{ padding: "10px ", fontWeight: "600", width: "200px" }}
-          >
-            Confirm Password:
-          </label>
-          <TextField
-            name="confirm_password"
-            id="confirm_password"
-            size="small"
             variant="outlined"
-            placeholder="Confirm Password "
-            value={confirmPassword}
-            style={{ width: "80%" }}
-            onChange={(e) => setConfirmPassword(e.target.value)}
           />
-        </div>
-
-        <div
-          style={{
+          <TextField
+            fullWidth
+            required
+            label="Confirm password"
+            margin="normal"
+            id="confirm_password"
+            name="confirm_password"
+            onChange={(event) => setConfirmPassword(event.target.value)}
+            value={confirmPassword}
+            variant="outlined"
+            autoComplete="none"
+          />
+        </CardContent>
+        <Divider />
+        <Box
+          sx={{
             display: "flex",
-            justifyContent: "center",
-            paddingTop: "20px",
+            justifyContent: "flex-end",
+            p: 2,
           }}
         >
-          <Button
-            type="submit"
-            variant="contained"
-            sx={{
-              backgroundColor: "chocolate",
-              ":hover": {
-                background: "chocolate",
-              },
-            }}
-            size="large"
-          >
-            Submit
+          <Button type="submit" color="primary" variant="contained">
+            Update
           </Button>
-        </div>
-      </form>
-    </>
+        </Box>
+      </Card>
+    </form>
   );
 };
 
-export default UpdatePassword;
+export default UpdateUserPassword;

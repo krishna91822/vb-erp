@@ -33,7 +33,8 @@ function App() {
         }
       });
     } else {
-      navigate("/");
+      location.pathname === "/:id/setpassword" && navigate("/:id/setpassword");
+      location.pathname === "/" && navigate("/");
     }
   }, []);
   return (
