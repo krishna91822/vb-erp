@@ -31,7 +31,6 @@ export const ContentTypo = styled("div")(({ theme }) => ({
   ...theme.typography.h5,
   color: theme.palette.textColor.main,
   fontSize: 16,
-  // fontWeight: 600,
   textTransform: "capitalize",
 }));
 
@@ -58,5 +57,4 @@ export const ModalBoxItem = styled(Box)({
 
 export const CustomeContainer = styled("div")({
   padding: "0.5em",
-  // height: "calc(100%-60px)",
 });

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { renderToString } from "react-dom/server";
 
 import { Box, Container, Button } from "@mui/material";
 
@@ -7,11 +8,11 @@ import { useParams } from "react-router-dom";
 import { CustomSwitch, TitleTypo } from "./viewProfile.styles";
 import jsPDF from "jspdf";
 import PictureAsPdfIcon from "@mui/icons-material/PictureAsPdf";
-import Template from "./pdfTemplate";
 import logo from "./pdf-logo";
 import ProfileContent from "../profileContent/profileContent.component";
 import WithSpinner from "../../hoc/withSpinner/withSpinner.component";
 import CreateProfile from "./../../../pages/createProfile/createProfile.component";
+import PdfTemplate from "./pdfTemplate/pdfTemplate.component";
 import Spinner from "./../../UI/spinner/spinner";
 import { useSelector } from "react-redux";
 
@@ -47,7 +48,7 @@ const ViewProfile = () => {
       unit: "px",
       format: "a4",
     });
-    doc.html(Template(viewedEmployee), {
+    doc.html(renderToString(<PdfTemplate viewedEmployee={viewedEmployee} />), {
       callback: function (doc) {
         doc.addImage(logo, "JPEG", 358, 2, 86, 16);
         doc.save(`${viewedEmployee.empName}_resume`);
@@ -70,7 +71,6 @@ const ViewProfile = () => {
             sx={{
               display: "flex",
               paddingRight: "1rem",
-              // position: editEmployee ? "absolute" : "relative",
               mt: editEmployee ? 4 : "",
               alignItems: "center",
             }}

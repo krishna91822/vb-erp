@@ -13,6 +13,7 @@ export const INVOICE_Read = () => {
     if (id) {
       dispatch(fetchSpecificINVOICE(id));
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
 
   return <Invoice editBtn={true} toggleState={false} />;

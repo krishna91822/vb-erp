@@ -182,6 +182,7 @@ const CreateProject = () => {
         allocationPercentage: 100 - percentageAllocated,
       },
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [percentageAllocated]);
 
   const handelAssociate = (value) => {

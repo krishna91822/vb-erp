@@ -102,7 +102,6 @@ const Profile = () => {
         {...profileContentProps}
         switch={
           <EditMode
-            // handleSubmit={handleSubmit}
             {...editModeProps}
             switchOnly={roundToNearestMinutes}
             btnsOnly={false}

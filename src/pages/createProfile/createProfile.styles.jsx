@@ -1,17 +1,15 @@
-import { Container, Box, Button, TextField, Switch } from "@mui/material";
+import { Box, Button, TextField, Switch } from "@mui/material";
 import { styled } from "@mui/system";
 import { blue, teal } from "@mui/material/colors";
 
 export const BoxStyle = styled(Box)(({ theme }) => ({
   width: "100%",
-  // paddingTop: theme.spacing(3),
   paddingBottom: theme.spacing(3),
 }));
 
 export const ContainerStyleTop = styled("div")(({ theme }) => ({
   minHeight: "40px",
   width: "100%",
-  // marginTop: theme.spacing(2),
   marginBottom: theme.spacing(2),
   display: "flex",
   flexDirection: "column",
@@ -19,8 +17,6 @@ export const ContainerStyleTop = styled("div")(({ theme }) => ({
 }));
 
 export const ContainerStyle = styled("div")(({ theme }) => ({
-  // minHeight: "calc(100vh - 50px)",
-  // width: "calc(100% - 48px)",
   border: "0.1em solid",
   borderRadius: "5px",
   borderColor: theme.palette.textColor.paletteGrey,

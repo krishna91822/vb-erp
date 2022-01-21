@@ -37,17 +37,10 @@ const PersonalEditable = (props) => {
   const { pathname } = useLocation();
   const { user } = useSelector((state) => state.user);
 
-  const {
-    empData,
-    setEmpData,
-    personalDetails,
-    setPersonalDetails,
-    // register,
-    errors,
-  } = props;
+  const { empData, setEmpData, personalDetails, setPersonalDetails, errors } =
+    props;
 
   const {
-    // empConnections,
     empDob,
     empHobbies,
     empPersonalEmail,
@@ -97,7 +90,6 @@ const PersonalEditable = (props) => {
   };
 
   const handleDelete = (i) => {
-    // setChipData((chips) => chips.filter((chip) => chip !== chipToDelete));
     const filteredHobbies = [...chipData];
     filteredHobbies.splice(i, 1);
     setChipData(filteredHobbies);
@@ -286,7 +278,6 @@ const PersonalEditable = (props) => {
                 name="empPersonalEmail"
                 onChange={(event) => handleChange(event)}
                 error={Boolean(errors?.empPersonalEmail)}
-                // helperText={errors.empPersonalEmail?.message}
               />
             </ContentTypo>
           </ContentBox>
@@ -351,26 +342,11 @@ const PersonalEditable = (props) => {
                   onKeyDown={keyPress}
                   type="text"
                   placeholder="Enter hobby"
-                  // onChange={handleChangeHobbies}
                 />
               </Box>
             </ContentTypo>
           </ContentBox>
         </Box>
-        {/* <ContentBox>
-            <ContentTypo>{personal.connections}</ContentTypo>
-            <CustomTextField
-              placeholder="enter no. of connections"
-              autoComplete="off"
-              required
-              id="outlined-basic"
-              variant="outlined"
-              value={empConnections ? empConnections : ""}
-              type="number"
-              name="empConnections"
-              onChange={handleChange}
-            />
-          </ContentBox> */}
         <Box>
           <ContentBox>
             <TitleTypo

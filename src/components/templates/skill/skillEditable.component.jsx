@@ -53,7 +53,6 @@ const SkillEditable = ({
     control: (provided, state) => ({
       ...provided,
       minHeight: "40px",
-      // height: "40px",
       display: "flex",
       alignContent: "center",
     }),

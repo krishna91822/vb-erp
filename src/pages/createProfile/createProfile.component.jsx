@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import { LocalizationProvider, DesktopDatePicker } from "@mui/lab";
 import AdapterDateFns from "@mui/lab/AdapterDateFns";
@@ -25,11 +25,9 @@ import {
 } from "./createProfile.constant";
 
 import {
-  ContainerStyle,
   BoxStyle,
   GreenButton,
   BlueButton,
-  TitleTypo,
   ContainerStyleTop,
   modalStyle,
   CustomTextField,
@@ -37,7 +35,6 @@ import {
 } from "./createProfile.styles";
 
 import { StyledTypography } from "../../assets/GlobalStyle/style";
-import NavigateBeforeIcon from "@mui/icons-material/NavigateBefore";
 import ProfileInfoEditable from "./../../components/templates/profileInfo/profileInfoEditable.component";
 import TabPanelCustom from "./../../components/templates/tabPanelCustom.component";
 import PersonalEditable from "../../components/templates/personal/personalEditable.component";
@@ -56,7 +53,6 @@ import axiosInstance from "./../../helpers/axiosInstance";
 import { uiActions } from "./../../store/ui-slice";
 import validator from "validator";
 
-import { useForm } from "react-hook-form";
 import ProjectTab from "../../components/templates/project/project.component";
 import PlagiarismIcon from "@mui/icons-material/Plagiarism";
 
@@ -72,7 +68,6 @@ const CreateProfile = ({
   const dispatch = useDispatch();
   const { toggleLoader, showNotification } = uiActions;
 
-  // const { register, handleSubmit, errors } = useForm();
   useEffect(() => {
     axiosInstance
       .get(`/employees?empEmail=${email}`)
@@ -308,7 +303,6 @@ const CreateProfile = ({
           setEmployee(empInitial);
           dispatch(toggleLoader());
           handleOpenModal();
-          // console.log(response);
         })
         .catch(function (error) {
           dispatch(toggleLoader());
@@ -335,11 +329,9 @@ const CreateProfile = ({
               message: "Employee has been updated.",
             })
           );
-          // handleOpenModal();
         })
         .catch(function (error) {
           dispatch(toggleLoader());
-          // handleOpenModalError();
           dispatch(
             showNotification({
               status: "error",
@@ -370,8 +362,6 @@ const CreateProfile = ({
         });
     }
   };
-  {
-  }
   return currentEmployee &&
     ["super_admin", "hr_admin"].some((el) => user.roles.includes(el)) ? (
     <BoxStyle data-test="create-profile-test">
@@ -382,7 +372,6 @@ const CreateProfile = ({
           employee={employee}
           setEmployee={setEmployee}
           profileProgress={profileProgress}
-          // register={register}
           errors={errors}
           validate={validate}
           editSwitch={editSwitch}
@@ -427,7 +416,6 @@ const CreateProfile = ({
                   setEmpData={setEmployee}
                   personalDetails={personalDetails}
                   setPersonalDetails={setPersonalDetails}
-                  // register={register}
                   errors={errors}
                 />
               </TabPanelCustom>
@@ -438,7 +426,6 @@ const CreateProfile = ({
                   setEmpData={setEmployee}
                   professionalDetails={professionalDetails}
                   setProfessionalDetails={setProfessionalDetails}
-                  // register={register}
                   errors={errors}
                 />
               </TabPanelCustom>
@@ -448,7 +435,6 @@ const CreateProfile = ({
                   setEmpData={setEmployee}
                   skillsDetails={skillsDetails}
                   setSkillsDetails={setSkillsDetails}
-                  // register={register}
                   errors={errors}
                 />
               </TabPanelCustom>
@@ -457,16 +443,11 @@ const CreateProfile = ({
                   editable={true}
                   empData={employee}
                   setEmpData={setEmployee}
-                  // projectDetails={skillsDetails}
-                  // setProjectDetails={setSkillsDetails}
                   errors={errors}
                   validate={validate}
                 />
               </TabPanelCustom>
               <ContainerStyleTop>
-                {/* <TitleTypo sx={{ textTransform: "capitalize", mb: 0.5 }}>
-          {currentEmployee ? currentEmployee.empName : ""}
-        </TitleTypo> */}
                 <Box
                   sx={{
                     display: "flex",
@@ -483,7 +464,6 @@ const CreateProfile = ({
                   <Box>
                     <GreenButton
                       data-test="confirm-button-test"
-                      // onClick={handleSubmit(handleConfirm)}
                       onClick={handleConfirm}
                       variant="contained"
                       size="small"
@@ -524,7 +504,6 @@ const CreateProfile = ({
                 required
                 id="outlined-basic"
                 variant="outlined"
-                // value={field.name}
                 type="text"
                 name="fieldName"
                 onChange={(event) => handleFieldChange(event)}

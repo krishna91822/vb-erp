@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Box, Modal, Pagination, Typography } from "@mui/material";
+import { Box, Modal, Pagination } from "@mui/material";
 import ProfileContent from "./../../components/templates/profileContent/profileContent.component";
 
 import {
