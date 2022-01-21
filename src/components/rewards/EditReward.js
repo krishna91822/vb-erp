@@ -36,6 +36,7 @@ const EditReward = () => {
     return () => {
       isCancelled = true;
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch, id]);
 
   const handleChangeName = (e) => {
@@ -121,28 +122,6 @@ const EditReward = () => {
       })
     );
   };
-
-  // const selectsenderChange = (e) => {
-  //   dispatch(
-  //     rewardsActions.addEditRewardData({
-  //       rewardData: {
-  //         ...rewardData,
-  //         sender_id: e.target.value,
-  //       },
-  //     })
-  //   );
-  // };
-
-  // const selectreceiverChange = (e) => {
-  //   dispatch(
-  //     rewardsActions.addEditRewardData({
-  //       rewardData: {
-  //         ...rewardData,
-  //         recipients_ids: e.target.value,
-  //       },
-  //     })
-  //   );
-  // };
 
   const announcementChange = (e) => {
     dispatch(

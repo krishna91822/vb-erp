@@ -6,11 +6,12 @@ import {
   MenuItem,
   FormControlLabel,
   Checkbox,
+  Card,
 } from "@mui/material";
 import UseForm from "./UseForm";
 import AddressFields from "./AddressFields";
 import ContactForm from "./ContactForm";
-import "../../assets/styles/ClientFormStyles.css";
+import "./styles/ClientFormStyles.css";
 import { useSelector } from "react-redux";
 
 export default function Form() {
@@ -95,30 +96,6 @@ export default function Form() {
               />
             </div>
           </Grid>
-
-          {/* Need confirmation about this field */}
-
-          {/* <Grid item xs={12} sm={6}>
-            <div className="align-form-fields">
-              <TextField
-                id=""
-                label="Base Location"
-                variant="outlined"
-                name="baseLocation"
-                fullWidth
-                value={formData.baseLocation}
-                required
-                disabled={!editMode}
-                size="small"
-                onChange={(e) => setformvalue(e)}
-                onBlur={(e) => setformvalue(e)}
-                {...(errors.baseLocation && {
-                  error: true,
-                  helperText: errors.baseLocation,
-                })}
-              />
-            </div>
-          </Grid> */}
         </Grid>
         <Grid container spacing={2} mb={3}>
           <Grid item xs={12}>
@@ -225,7 +202,9 @@ export default function Form() {
             Contacts
           </Typography>
         </Grid>
-        <ContactForm />
+        <Card>
+          <ContactForm />
+        </Card>
       </form>
     </div>
   );

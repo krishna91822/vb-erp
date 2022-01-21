@@ -10,8 +10,8 @@ import Collapse from "@mui/material/Collapse";
 import ExpandLess from "@mui/icons-material/ExpandLess";
 import ExpandMore from "@mui/icons-material/ExpandMore";
 import GridViewIcon from "@mui/icons-material/GridView";
+import NotificationsIcon from "@mui/icons-material/Notifications";
 import { styled } from "@mui/material/styles";
-import { Avatar } from "@mui/material";
 import { Grid } from "@mui/material";
 import { Link, useLocation } from "react-router-dom";
 import UseRoles from "../../helpers/roles";
@@ -24,7 +24,7 @@ import AccountTreeIcon from "@mui/icons-material/AccountTree";
 import AssessmentIcon from "@mui/icons-material/Assessment";
 import EmojiEventsIcon from "@mui/icons-material/EmojiEvents";
 import vbLogo from "../../assets/images/vb_logo.svg";
-import "../../assets/styles/imageStyles.css";
+import "../clients/styles/imageStyles.css";
 
 const SidebarNavigation = () => {
   const [openTasks, setOpenTasks] = useState(false);
@@ -42,8 +42,6 @@ const SidebarNavigation = () => {
 
   const boxStyles = {
     position: "fixed",
-    // top: "70px",
-    // left: "0",
     height: "100vh",
     backgroundColor: "white",
     width: lgUp ? "250px" : "50px",
@@ -202,61 +200,64 @@ const SidebarNavigation = () => {
   };
 
   const trackPathName = () => {
-    if (location.pathname === "my-profile") {
+    if (location.pathname.includes("my-profile")) {
       setSelectedIndex(0);
     }
 
-    if (location.pathname === "/create-profile") {
+    if (location.pathname.includes("/create-profile")) {
       setSelectedIndex(1);
       setSelectedListIndex(0);
       setOpenTasks(true);
     }
 
-    if (location.pathname === "/reviews") {
+    if (location.pathname.includes("/reviews")) {
       setSelectedIndex(1);
       setSelectedListIndex(1);
       setOpenTasks(true);
     }
 
-    if (location.pathname === "/network") {
+    if (location.pathname.includes("/network")) {
       setSelectedIndex(2);
     }
 
-    if (location.pathname === "/cims") {
+    if (location.pathname.includes("/cims")) {
       setSelectedIndex(3);
     }
 
-    if (location.pathname === "/pmo/projects") {
+    if (location.pathname.includes("/pmo/projects")) {
       setSelectedIndex(4);
       setSelectedListIndex(0);
       setOpenPMO(true);
     }
 
-    if (location.pathname === "/pmo/projects/create") {
+    if (location.pathname.includes("/pmo/projects/create")) {
       setSelectedIndex(4);
       setSelectedListIndex(1);
       setOpenPMO(true);
     }
 
-    if (location.pathname === "/pmo/allocations") {
+    if (location.pathname.includes("/pmo/allocations")) {
       setSelectedIndex(4);
       setSelectedListIndex(2);
       setOpenPMO(true);
     }
 
-    if (location.pathname === "/posow") {
+    if (location.pathname.includes("/posow")) {
       setSelectedIndex(5);
       setSelectedListIndex(0);
       setOpenCMS(true);
     }
 
-    if (location.pathname === "/invoices") {
+    if (
+      location.pathname.includes("/invoices") ||
+      location.pathname.includes("/invoice_details")
+    ) {
       setSelectedIndex(5);
       setSelectedListIndex(1);
       setOpenCMS(true);
     }
 
-    if (location.pathname === "/rewards") {
+    if (location.pathname.includes("/rewards")) {
       setSelectedIndex(6);
       setSelectedListIndex(0);
       setOpenRR(true);
@@ -265,11 +266,8 @@ const SidebarNavigation = () => {
 
   useEffect(() => {
     trackPathName();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  if (lgUp) {
-    console.log(lgUp);
-  }
 
   const {
     isUser,
@@ -457,6 +455,12 @@ const SidebarNavigation = () => {
       open: openRR,
       handle: handleClickRR,
       access: [isLeader, isHrAdmin, isSuperAdmin].some((x) => x),
+    },
+    {
+      name: "Status",
+      icon: <NotificationsIcon />,
+      link: "/status",
+      access: [isUser].some((x) => x),
     },
   ];
   if (lgUp) {

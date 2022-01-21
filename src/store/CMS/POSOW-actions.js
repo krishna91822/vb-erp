@@ -5,19 +5,19 @@ import { uiActions } from "../ui-slice";
 
 export const createNewPO_SOW = (formData) => {
   return async function (dispatch) {
-    dispatch(uiActions.toggleLoader())
+    dispatch(uiActions.toggleLoader());
     try {
       const response = await axios.post(`/poSow`, formData);
       if (response.status === 200) {
-        setTimeout(function(){
+        setTimeout(function () {
           dispatch(
             uiActions.showNotification({
               status: "success",
               title: "Success!",
               message: "PO/SOW captured successfully!",
             })
-          )
-        },1000)
+          );
+        }, 1000);
         dispatch(PoSowActions.setRedirect(true));
       } else {
         throw new Error("Could not Save data!");
@@ -34,27 +34,26 @@ export const createNewPO_SOW = (formData) => {
           })
         );
       }, 1000);
-    }
-    finally{
-      dispatch(uiActions.toggleLoader())
+    } finally {
+      dispatch(uiActions.toggleLoader());
     }
   };
 };
 export const UpdatePO_SOW = (formData, id) => {
   return async function (dispatch) {
-    dispatch(uiActions.toggleLoader())
+    dispatch(uiActions.toggleLoader());
     try {
       const response = await axios.patch(`/poSow/${id}`, formData);
       if (response.status === 200) {
-        setTimeout(function(){
+        setTimeout(function () {
           dispatch(
             uiActions.showNotification({
               status: "success",
               title: "Success!",
               message: response.data.message,
             })
-          )
-        },1000)
+          );
+        }, 1000);
         dispatch(PoSowActions.setRedirect(true));
       } else {
         throw new Error("Could not Save data!");
@@ -67,16 +66,17 @@ export const UpdatePO_SOW = (formData, id) => {
           message: "Could not update data",
         })
       );
-    }
-    finally{
-      dispatch(uiActions.toggleLoader())
+    } finally {
+      dispatch(uiActions.toggleLoader());
     }
   };
 };
 export const SendForApproval = (curr_status, id) => {
   return async function (dispatch) {
     try {
-      const response = await axios.patch(`/poSow/status/${id}?status=${curr_status}`);
+      const response = await axios.patch(
+        `/poSow/status/${id}?status=${curr_status}`
+      );
       if (response.status === 200) {
         dispatch(
           uiActions.showNotification({
@@ -102,7 +102,7 @@ export const SendForApproval = (curr_status, id) => {
 };
 export const fetchPO_SOW_data = (sortBy) => {
   return async function (dispatch) {
-    dispatch(uiActions.toggleLoader())
+    dispatch(uiActions.toggleLoader());
     try {
       const res = await axios.get(`poSow/sort/${sortBy}`);
       if (res.status === 200) {
@@ -121,14 +121,14 @@ export const fetchPO_SOW_data = (sortBy) => {
     }
   };
 };
-export const paginationFetchPosow = (filename, page, limit,keyword) => {
-  return async function (dispatch) {    
-    dispatch(uiActions.toggleLoader())
+export const paginationFetchPosow = (filename, page, limit, keyword) => {
+  return async function (dispatch) {
+    dispatch(uiActions.toggleLoader());
     try {
       const res = await axios.get(
         `/poSow/sort/${filename}/?keyword=${keyword}&page=${page}&limit=${limit}`
       );
-      if(res.status===200){
+      if (res.status === 200) {
         const total = res.data.data.totalCount;
         dispatch(PoSowActions.setTabViewData(res.data.data.results));
         dispatch(PoSowActions.setTotalCount(total));
@@ -141,15 +141,14 @@ export const paginationFetchPosow = (filename, page, limit,keyword) => {
           message: "Something went wrong",
         })
       );
-    }
-    finally{
-      dispatch(uiActions.toggleLoader())                                            
+    } finally {
+      dispatch(uiActions.toggleLoader());
     }
   };
 };
 export const fetchSpecificPO_SOW = (ROW_ID) => {
   return async function (dispatch) {
-    dispatch(uiActions.toggleLoader())
+    dispatch(uiActions.toggleLoader());
     try {
       const res = await axios.get(`/poSow/${ROW_ID}`);
       if (res.status === 200) {
@@ -165,9 +164,8 @@ export const fetchSpecificPO_SOW = (ROW_ID) => {
           message: "Could not update data",
         })
       );
-    }
-    finally{
-      dispatch(uiActions.toggleLoader())                                            
+    } finally {
+      dispatch(uiActions.toggleLoader());
     }
   };
 };
@@ -275,7 +273,7 @@ export const UnAssignThisEmp = (emp_id) => {
 
 export const fetchAllClients = () => {
   return async function (dispatch) {
-    dispatch(uiActions.toggleLoader())
+    dispatch(uiActions.toggleLoader());
     try {
       const res = await axios.get("poSow/capturePO/clients");
       if (res.status === 200) {
@@ -291,15 +289,14 @@ export const fetchAllClients = () => {
           message: "Something went wrong",
         })
       );
-    }
-    finally{
-      dispatch(uiActions.toggleLoader())
+    } finally {
+      dispatch(uiActions.toggleLoader());
     }
   };
 };
 export const fetchAllClientProjects = (clientName) => {
   return async function (dispatch) {
-    dispatch(uiActions.toggleLoader())
+    dispatch(uiActions.toggleLoader());
     try {
       const res = await axios.get(`poSow/capturePO/clients/${clientName}`);
       if (res.status === 200) {
@@ -315,15 +312,14 @@ export const fetchAllClientProjects = (clientName) => {
           message: "Something went wrong",
         })
       );
-    }
-    finally{
-      dispatch(uiActions.toggleLoader())
+    } finally {
+      dispatch(uiActions.toggleLoader());
     }
   };
 };
 export const fetchClientProjectSponsor = (projectId) => {
   return async function (dispatch) {
-    dispatch(uiActions.toggleLoader())
+    dispatch(uiActions.toggleLoader());
     try {
       const res = await axios.get(
         `poSow/capturePO/details?projectId=${projectId}`
@@ -354,9 +350,8 @@ export const fetchClientProjectSponsor = (projectId) => {
           message: "Resources not allocated for this project",
         })
       );
-    }
-    finally{
-      dispatch(uiActions.toggleLoader())
+    } finally {
+      dispatch(uiActions.toggleLoader());
     }
   };
 };

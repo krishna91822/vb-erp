@@ -2,7 +2,6 @@ import { TextField } from "@mui/material";
 import { styled } from "@mui/system";
 
 export const CustomGridBox = styled("div")(({ theme }) => ({
-  // width: "calc(100% - 8px)",
   padding: "0 5px",
   wordWrap: "break-word",
   wordBreak: "break-all",
@@ -39,6 +38,5 @@ export const CustomTextField = styled(TextField)({
 });
 
 export const CustomContainer = styled("div")({
-  // padding: "0.5em",
   height: "calc(100%-60px)",
 });
