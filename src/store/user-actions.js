@@ -12,7 +12,6 @@ export const validateUser = (username, password) => {
       const response = await axios.post("/login", userDetail);
       if (response.data.code === 200 || response.data.status === "success") {
         const data = response.data.data;
-        // localStorage.setItem("token", data.token);
         cookie.save("token", data.token, {
           secure: true,
           httpOnly: false,
@@ -90,6 +89,7 @@ export const logoutUser = () => {
 
     try {
       dispatch(uiActions.toggleLoader());
+      // eslint-disable-next-line no-unused-vars
       const data = await logout();
       dispatch(userActions.resetForm());
       cookie.remove("token");

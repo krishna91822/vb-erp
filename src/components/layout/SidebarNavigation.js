@@ -10,8 +10,8 @@ import Collapse from "@mui/material/Collapse";
 import ExpandLess from "@mui/icons-material/ExpandLess";
 import ExpandMore from "@mui/icons-material/ExpandMore";
 import GridViewIcon from "@mui/icons-material/GridView";
+import NotificationsIcon from "@mui/icons-material/Notifications";
 import { styled } from "@mui/material/styles";
-// import { Avatar } from "@mui/material";
 import { Grid } from "@mui/material";
 import { Link, useLocation } from "react-router-dom";
 import UseRoles from "../../helpers/roles";
@@ -42,8 +42,6 @@ const SidebarNavigation = () => {
 
   const boxStyles = {
     position: "fixed",
-    // top: "70px",
-    // left: "0",
     height: "100vh",
     backgroundColor: "white",
     width: lgUp ? "250px" : "50px",
@@ -268,6 +266,7 @@ const SidebarNavigation = () => {
 
   useEffect(() => {
     trackPathName();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const {
@@ -456,6 +455,12 @@ const SidebarNavigation = () => {
       open: openRR,
       handle: handleClickRR,
       access: [isLeader, isHrAdmin, isSuperAdmin].some((x) => x),
+    },
+    {
+      name: "Status",
+      icon: <NotificationsIcon />,
+      link: "/status",
+      access: [isUser].some((x) => x),
     },
   ];
   if (lgUp) {

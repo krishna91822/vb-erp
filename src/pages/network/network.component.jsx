@@ -107,7 +107,7 @@ const Network = () => {
   };
 
   return (
-    <div className="client-list-wrapper">
+    <div className="list-wrapper">
       <StyledTypography>{networkText.header}</StyledTypography>
       <Card>
         <CardContent>

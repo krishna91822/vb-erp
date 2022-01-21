@@ -13,7 +13,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { getAllocatedData } from "../../../store/pmo-actions";
 import Tpagination from "../../UI/Pagination";
 import NoDataFound from "../NoDataFound";
-import { Container, MiniHead, DateContainerStyled } from "./style";
+import { DateContainerStyled } from "./style";
 import {
   StyledTableCell,
   MiniHeadingTypography,

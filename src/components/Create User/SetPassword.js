@@ -112,7 +112,12 @@ const SetPassword = () => {
           <Button
             type="submit"
             variant="contained"
-            color="success"
+            sx={{
+              backgroundColor: "chocolate",
+              ":hover": {
+                background: "chocolate",
+              },
+            }}
             size="large"
           >
             Submit

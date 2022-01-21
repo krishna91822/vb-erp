@@ -4,7 +4,6 @@ import thunk from "redux-thunk";
 
 import uiSlice from "./ui-slice";
 import employeeSlice from "./employeeSlice";
-
 import contentsSlice from "./contents-slice";
 import pmoSlice from "./pmo-slice";
 import rewardSlice from "./rewards-slice";

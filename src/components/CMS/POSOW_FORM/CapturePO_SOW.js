@@ -144,10 +144,10 @@ export const CapturePO_SOW = (props) => {
     }
   }, [clientName]);
   useEffect(() => {
-    if ((!props.editBtn && projectName !== null) || editTglCheckedState) {
+    if (!props.editBtn && projectName !== null) {
       dispatch(fetchClientProjectSponsor(projectId));
     }
-  }, [projectName, editTglCheckedState]);
+  }, [projectName]);
 
   useEffect(() => {
     setclientProjectSponsor(clientSponsor);
@@ -252,12 +252,12 @@ export const CapturePO_SOW = (props) => {
       setDocName("");
     }
   };
-  const handleSendForApprovalBtnOnClk = (statusToChange) => {
-    dispatch(SendForApproval("Pending", params.id));
-  };
-  const handleApproveReject = (statusToChange) => {
-    dispatch(SendForApproval(statusToChange, params.id));
-  };
+  // const handleSendForApprovalBtnOnClk = (statusToChange) => {
+  //   dispatch(SendForApproval("Pending", params.id));
+  // };
+  // const handleApproveReject = (statusToChange) => {
+  //   dispatch(SendForApproval(statusToChange, params.id));
+  // };
   const submitForm = (event) => {
     event.preventDefault();
     let selectedTargetedRes = {};
@@ -323,7 +323,7 @@ export const CapturePO_SOW = (props) => {
               )}
             </Grid>
           </Grid>
-          <Box fixed>
+          <Box>
             <Box
               sx={{
                 bgcolor: "white",
@@ -424,7 +424,6 @@ export const CapturePO_SOW = (props) => {
                       option.clientName === value.clientName
                     }
                     data-testid="clientNameDropdown-ChangeTest"
-                    error={true}
                     renderInput={(params) => (
                       <TextField
                         className="finalinput"
@@ -516,7 +515,6 @@ export const CapturePO_SOW = (props) => {
                                   id={`custom-checkbox-${index}`}
                                   name={name}
                                   value={name}
-                                  data-test="targetedRes-chkBox-input"
                                   data-testid={`targetedRes${index}`}
                                   disabled={
                                     props.editBtn && !editTglCheckedState

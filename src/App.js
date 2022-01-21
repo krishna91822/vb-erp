@@ -1,5 +1,4 @@
 import { Route, Routes } from "react-router-dom";
-
 import RRoutes from "./routes/index";
 import Layout from "./components/layout/Layout";
 import Notification from "./components/UI/Notification";

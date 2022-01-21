@@ -10,7 +10,6 @@ import {
   TextField,
 } from "@mui/material";
 
-import { Container, MiniHead } from "./style";
 import BenchModal from "./BenchModal";
 import { getOnBench } from "../../../store/pmo-actions";
 import Tpagination from "../../UI/Pagination";

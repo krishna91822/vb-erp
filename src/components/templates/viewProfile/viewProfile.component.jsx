@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { renderToString } from "react-dom/server";
 
 import { Box, Container, Button } from "@mui/material";
 
@@ -7,11 +8,11 @@ import { useParams } from "react-router-dom";
 import { CustomSwitch, TitleTypo } from "./viewProfile.styles";
 import jsPDF from "jspdf";
 import PictureAsPdfIcon from "@mui/icons-material/PictureAsPdf";
-import Template from "./pdfTemplate";
 import logo from "./pdf-logo";
 import ProfileContent from "../profileContent/profileContent.component";
 import WithSpinner from "../../hoc/withSpinner/withSpinner.component";
 import CreateProfile from "./../../../pages/createProfile/createProfile.component";
+import PdfTemplate from "./pdfTemplate/pdfTemplate.component";
 import Spinner from "./../../UI/spinner/spinner";
 import { useSelector } from "react-redux";
 
@@ -35,7 +36,6 @@ const ViewProfile = () => {
       })
       .catch((err) => console.error(err));
   }, [empId]);
-
   const [editEmployee, setEditEmployee] = React.useState(false);
 
   const handleSwitchChange = (event) => {
@@ -48,7 +48,7 @@ const ViewProfile = () => {
       unit: "px",
       format: "a4",
     });
-    doc.html(Template(viewedEmployee), {
+    doc.html(renderToString(<PdfTemplate viewedEmployee={viewedEmployee} />), {
       callback: function (doc) {
         doc.addImage(logo, "JPEG", 358, 2, 86, 16);
         doc.save(`${viewedEmployee.empName}_resume`);
@@ -56,21 +56,12 @@ const ViewProfile = () => {
     });
   };
 
-  return Object.keys(viewedEmployee).length === 0 ? (
-    <Spinner />
-  ) : (
-    <Box
-      sx={{
-        pb: 1,
-        pt: 1,
-        position: "relative",
-      }}
-    >
+  const component = () => {
+    return (
       <Box
         sx={{
           display: "flex",
-          justifyContent: "space-between",
-          mb: 1,
+          justifyContent: "flex-end",
           alignItems: "center",
         }}
       >
@@ -79,14 +70,12 @@ const ViewProfile = () => {
           <Box
             sx={{
               display: "flex",
-              padding: 0,
-              position: editEmployee ? "absolute" : "relative",
+              paddingRight: "1rem",
               mt: editEmployee ? 4 : "",
+              alignItems: "center",
             }}
           >
-            <TitleTypo sx={{ textTransform: "capitalize", pr: 1 }}>
-              Edit Employee
-            </TitleTypo>
+            <TitleTypo>Edit Employee</TitleTypo>
             <CustomSwitch
               data-test="download-button-text"
               checked={editEmployee}
@@ -103,7 +92,9 @@ const ViewProfile = () => {
                 variant="contained"
                 onClick={handlePdfClick}
                 sx={{
-                  backgroundColor: "#1AAE9F",
+                  backgroundColor: "chocolate",
+                  paddingRight: "1rem",
+
                   "&:hover": {
                     backgroundColor: "hsl(173.9,74%,30%)",
                   },
@@ -118,14 +109,24 @@ const ViewProfile = () => {
           </Box>
         ) : null}
       </Box>
+    );
+  };
+  return Object.keys(viewedEmployee).length === 0 ? (
+    <Spinner />
+  ) : (
+    <Box>
       {editEmployee ? (
-        <CreateProfile editEmployeeData={viewedEmployee} />
+        <CreateProfile
+          editEmployeeData={viewedEmployee}
+          editSwitch={component()}
+        />
       ) : (
         <ProfileContentWithSpinner
           currentEmployee={viewedEmployee}
           toggleEditEmployee={editEmployee}
           setToggleEditEmployee={setEditEmployee}
           isLoading={loading}
+          switch={component()}
         />
       )}
     </Box>

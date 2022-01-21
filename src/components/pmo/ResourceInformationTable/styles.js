@@ -19,9 +19,4 @@ export const Container = styled.div`
       background: #f8f8f8;
     }
   }
-
-  //   @media (max-width: 450px) {
-  //     margin: 1rem;
-  //   }
-  //
 `;

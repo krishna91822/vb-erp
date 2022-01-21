@@ -15,6 +15,7 @@ import { useNavigate, Link } from "react-router-dom";
 import Popup from "./Popup";
 import EmployeesList from "../employees/EmployeesList";
 import { ToastContainer } from "react-toastify";
+import validateForm from "./ValidateCreateReward";
 
 const CreateReward = () => {
   const dispatch = useDispatch();
@@ -25,7 +26,9 @@ const CreateReward = () => {
   const [announcement, setAnnouncement] = React.useState("");
   const [subtype, setSubType] = React.useState("");
   const [receiver, setReceiver] = React.useState("");
+  // eslint-disable-next-line no-unused-vars
   const [multipleEmployeeData, setMultipleEmployeeData] = React.useState([]);
+  const [errors, setErrors] = React.useState({});
 
   const [formData, setFormData] = useState({});
   const updateRewardStatus = useSelector(
@@ -89,7 +92,12 @@ const CreateReward = () => {
   };
   const getFormData = (event) => {
     event.preventDefault();
-    dispatch(addRewardData(formData));
+    const validateError = validateForm(formData);
+    const noErrors = Object.keys(validateError).length === 0;
+    setErrors(validateError);
+    if (noErrors) {
+      dispatch(addRewardData(formData));
+    }
   };
 
   const [openSenderPopup, setOpenSenderPopup] = useState(false);
@@ -144,7 +152,9 @@ const CreateReward = () => {
           <hr />
           <br />
           <Grid item>
-            <label>Reward Display Name</label>
+            <label>
+              Reward Display Name <span style={{ color: "red" }}>*</span>
+            </label>
             <br />
             <TextField
               size="small"
@@ -152,12 +162,15 @@ const CreateReward = () => {
               placeholder="Enter Reward Name"
               name="reward_display_name"
               onChange={handleChangeForm}
+              error={errors.reward_display_name ? true : false}
               className="textfield1"
             />
           </Grid>
           <br />
           <Grid item>
-            <label>Reward Type</label>
+            <label>
+              Reward Type <span style={{ color: "red" }}>*</span>
+            </label>
             <br />
             <FormControl id="RType">
               <Select
@@ -166,6 +179,7 @@ const CreateReward = () => {
                 className="textfield"
                 name="reward_type"
                 value={type}
+                error={errors.reward_type ? true : false}
                 onChange={typeChange}
               >
                 <MenuItem value="Daily">Daily</MenuItem>
@@ -178,7 +192,9 @@ const CreateReward = () => {
           <br />
           {type === "Daily" && (
             <Grid item>
-              <label>Reward Sub Type</label>
+              <label>
+                Reward Sub Type <span style={{ color: "red" }}>*</span>
+              </label>
               <br />
               <FormControl id="RType">
                 <Select
@@ -217,7 +233,9 @@ const CreateReward = () => {
           )}
           <br />
           <Grid item>
-            <label>Reward Sender</label>
+            <label>
+              Reward Sender <span style={{ color: "red" }}>*</span>
+            </label>
             <br />
             <FormControl id="RSender">
               <Select
@@ -225,6 +243,7 @@ const CreateReward = () => {
                 justify="justify"
                 className="textfield"
                 name="reward_sender"
+                error={errors.reward_sender ? true : false}
                 value={send}
                 onChange={senderChange}
               >
@@ -242,7 +261,9 @@ const CreateReward = () => {
           </Grid>
           <br />
           <Grid item>
-            <label>Reward Receiver</label>
+            <label>
+              Reward Receiver <span style={{ color: "red" }}>*</span>
+            </label>
             <br />
             <FormControl id="Rreceiver">
               <Select
@@ -250,6 +271,7 @@ const CreateReward = () => {
                 size="small"
                 className="textfield"
                 value={receiver}
+                error={errors.reward_receiver ? true : false}
                 name="reward_receiver"
                 onChange={receiverChange}
               >
@@ -271,7 +293,9 @@ const CreateReward = () => {
           </Grid>
           <br />
           <Grid item>
-            <label>Reward Receiver</label>
+            <label>
+              Receiver Message <span style={{ color: "red" }}>*</span>
+            </label>
             <br />
             <TextField
               placeholder="hii <@receiver> you have some msg from <@sender>"
@@ -280,12 +304,15 @@ const CreateReward = () => {
               className="textfield1"
               rows={3}
               name="receiver_message"
+              error={errors.receiver_message ? true : false}
               onChange={handleChangeForm}
             />
           </Grid>
           <br />
           <Grid item>
-            <label>Announcement Type</label>
+            <label>
+              Announcement Type <span style={{ color: "red" }}>*</span>
+            </label>
             <br />
             <FormControl id="Atype">
               <Select
@@ -294,6 +321,7 @@ const CreateReward = () => {
                 size="small"
                 value={announcement}
                 name="announcement_type"
+                error={errors.announcement_type ? true : false}
                 onChange={announcementChange}
               >
                 <MenuItem value="public">Public</MenuItem>

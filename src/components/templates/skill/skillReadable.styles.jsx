@@ -3,7 +3,7 @@ import { styled } from "@mui/system";
 export const ContentBox = styled("div")(({ theme }) => ({
   padding: theme.spacing(1),
   display: "grid",
-  gridTemplateColumns: "1fr 3fr",
+  gridTemplateColumns: "1fr 1fr",
   gridColumnGap: 20,
   textTransform: "capitalize",
   color: "textColor.main",
@@ -11,20 +11,27 @@ export const ContentBox = styled("div")(({ theme }) => ({
 
 export const ContentTypo = styled("p")(({ theme }) => ({
   ...theme.typography.h5,
-  color: theme.palette.textColor.main,
-  fontSize: 16,
-  fontWeight: 600,
-  margin: 0,
+  fontSize: 13,
+  marginLeft: "1rem",
+  fontWeight: "600",
+  lineHeight: "1",
+  textTransform: "uppercase",
+  letterSpacing: "0.3px",
+  color: "rgb(55, 65, 81)",
+  fontFamily:
+    "Inter, -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji",
 }));
 export const ContentTypoList = styled("div")(({ theme }) => ({
   ...theme.typography.h5,
-  color: theme.palette.textColor.main,
-  fontSize: 16,
-  listStyle: "none",
-  display: "flex",
-  flexWrap: "wrap",
+  fontSize: 13,
+  fontWeight: "400",
+  lineHeight: "1",
+  letterSpacing: "0.5px",
+  color: "rgb(55, 65, 81)",
+  fontFamily:
+    "Inter, -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji",
 }));
 
 export const ListItem = styled("li")(({ theme }) => ({
-  margin: theme.spacing(0.5),
+  margin: theme.spacing(1),
 }));

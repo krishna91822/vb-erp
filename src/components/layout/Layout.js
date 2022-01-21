@@ -9,7 +9,7 @@ const Layout = (props) => {
   const myStyle = user.name ? classes.container : classes.signInContainer;
   return (
     <Fragment>
-      <Header />
+      {user.name && <Header />}
       {user.name && <SidebarNavigation />}
       <main className={classes.main}>
         <div className={myStyle}>{props.children}</div>

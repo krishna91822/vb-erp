@@ -247,7 +247,7 @@ function ClientsList() {
   }
 
   return (
-    <div className="client-list-wrapper">
+    <div className="list-wrapper">
       <StyledTypography>CIMS</StyledTypography>
       <Card>
         <CardContent>

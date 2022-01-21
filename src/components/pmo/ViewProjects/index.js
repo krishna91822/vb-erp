@@ -89,7 +89,7 @@ const ViewProjects = () => {
     dispatch(getAllProjects(filterProjects, value));
   };
   return (
-    <div className="client-list-wrapper">
+    <div className="list-wrapper">
       <StyledTypography data-test="main-heading">Projects</StyledTypography>
       <Card>
         <CardContent>
@@ -287,7 +287,11 @@ const ViewProjects = () => {
               )}
               {projects.results
                 ? projects.results.map((currElem, index) => (
-                    <TableRow key={index} onClick={() => entryLink(currElem)}>
+                    <TableRow
+                      key={index}
+                      onClick={() => entryLink(currElem)}
+                      className="table-row"
+                    >
                       <StyledTableCell align="center">
                         {index + parseInt(projects.currentPage) * 10 - 9}
                       </StyledTableCell>

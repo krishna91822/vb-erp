@@ -1,18 +1,12 @@
 import React, { useState } from "react";
 import "./rewardTableStyle.css";
-import {
-  Button,
-  FormControl,
-  FormControlLabel,
-  InputLabel,
-  Select,
-} from "@mui/material";
+import { Button, FormControl, InputLabel, Select } from "@mui/material";
 import { styled, alpha } from "@mui/material/styles";
 import Menu from "@mui/material/Menu";
 import { Link } from "react-router-dom";
 import RewardRowData from "./RewardRowData";
 import Header from "./SearchComponent";
-import { filterData, searchData } from "../../store/rewards-actions";
+import { filterData } from "../../store/rewards-actions";
 import { StyledTableCell } from "../../assets/GlobalStyle/style";
 import { useDispatch } from "react-redux";
 import "../clients/styles/ClientListStyles.css";
@@ -28,9 +22,7 @@ import {
   Box,
   Grid,
   MenuItem,
-  TextField,
 } from "@mui/material";
-// import "../../assets/styles/ClientListStyles.css";
 export const StyledMenu = styled((props) => (
   <Menu
     elevation={0}
