@@ -1,5 +1,4 @@
 import { uiActions } from "./ui-slice";
-// import { userActions } from "./user-slice";
 import { userAccountActions } from "./userAccount-slice";
 import axios from "../helpers/axiosInstance";
 
@@ -17,7 +16,6 @@ export const searchEmployees = (empName) => {
     };
 
     try {
-      dispatch(uiActions.toggleLoader());
       const data = await fetchData();
       dispatch(userAccountActions.setUserAccount(data));
     } catch (error) {
@@ -30,8 +28,6 @@ export const searchEmployees = (empName) => {
           })
         );
       }, 1000);
-    } finally {
-      dispatch(uiActions.toggleLoader());
     }
   };
 };

@@ -1,25 +1,16 @@
 import React, { useState } from "react";
 import { uiActions } from "../../store/ui-slice";
 import { useDispatch } from "react-redux";
-import { setUserPassword } from "../../store/userAccount-action";
-import { useParams } from "react-router-dom";
+import { StyledTypography } from "../../assets/GlobalStyle/style";
+import { TextField, Grid, Button } from "@mui/material";
 
-import {
-  StyledTypography,
-  MiniHeadingTypography,
-} from "../../assets/GlobalStyle/style";
-import { TextField, Grid, Button, Box } from "@mui/material";
-
-const SetPassword = () => {
+const UpdatePassword = () => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const dispatch = useDispatch();
-  let { id } = useParams();
-  console.log(id, "------------------");
 
   const handleSubmit = (pass) => {
-    const password = { password: pass };
-    dispatch(setUserPassword(id, password));
+    alert(pass);
   };
 
   const validatePassword = (event) => {
@@ -43,7 +34,7 @@ const SetPassword = () => {
           <StyledTypography
             style={{ borderBottom: "1px solid gray", padding: "5px 15px" }}
           >
-            Set Password
+            Update Password
           </StyledTypography>
         </Grid>
       </Grid>
@@ -128,4 +119,4 @@ const SetPassword = () => {
   );
 };
 
-export default SetPassword;
+export default UpdatePassword;

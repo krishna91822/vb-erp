@@ -5,15 +5,9 @@ import {
   LoginRounded as LoginRoundedIcon,
 } from "@mui/icons-material";
 import vbLogo from "../../assets/images/vb_logo.svg";
-// import {} from "@mui/material";
-// import Toolbar from "@mui/material/Toolbar";
-// import AppBar from "@mui/material/AppBar";
+import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettings";
 import { useState } from "react";
-// import Menu from "@mui/material/Menu";
-// import MenuItem from "@mui/material/MenuItem";
-// import Avatar from "@mui/material/Avatar";
-// import Divider from "@mui/material/Divider";
-// import ListItemIcon from "@mui/material/ListItemIcon";
+
 import {
   createTheme,
   ThemeProvider,
@@ -139,6 +133,16 @@ const Header = () => {
                   onClick={handleClose}
                   component={Link}
                   to="/createuserprofile"
+                >
+                  <ListItemIcon>
+                    <AdminPanelSettingsIcon fontSize="small" />
+                  </ListItemIcon>
+                  Admin Pannel
+                </MenuItem>
+                <MenuItem
+                  onClick={handleClose}
+                  component={Link}
+                  to={"/settings/updatepassword"}
                 >
                   <ListItemIcon>
                     <Settings fontSize="small" />
