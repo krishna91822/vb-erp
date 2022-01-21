@@ -416,6 +416,7 @@ const ProfileInfoEditable = (props) => {
                         </TitleTypo>
                         <ContentTypo>
                           <AsyncSelect
+                            maxMenuHeight={70}
                             value={reportingTo ? reportingTo : null}
                             styles={{
                               control: (provided, state) => ({
@@ -437,6 +438,7 @@ const ProfileInfoEditable = (props) => {
                             cacheOptions
                             loadOptions={loadEmployeeOptions}
                             defaultOptions
+                            overflow="scroll"
                             onChange={(value) => {
                               setReportingTo(value);
                               setEmployee({
