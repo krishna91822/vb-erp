@@ -26,7 +26,7 @@ export const searchEmployees = (empName) => {
           uiActions.showNotification({
             status: "error",
             title: "Error!",
-            message: "Could not fetch employeesName",
+            message: "No Records Found",
           })
         );
       }, 1000);
@@ -63,7 +63,7 @@ export const createUserAccount = (user) => {
           uiActions.showNotification({
             status: "error",
             title: "Error!",
-            message: "Could not fetch employeesName",
+            message: "Something Went Wrong",
           })
         );
       }, 1000);
@@ -103,7 +103,7 @@ export const setUserPassword = (id, password) => {
           uiActions.showNotification({
             status: "error",
             title: "Error!",
-            message: "Could not fetch employeesName",
+            message: "Something Went Wrong",
           })
         );
       }, 1000);
