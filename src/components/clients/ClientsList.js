@@ -48,7 +48,7 @@ import {
   ClearRounded as ClearRoundedIcon,
 } from "@mui/icons-material";
 import PageHeader from "./PageHeader";
-import "../../assets/styles/ClientListStyles.css";
+import "./styles/ClientListStyles.css";
 
 function ClientsList() {
   const {
@@ -247,7 +247,7 @@ function ClientsList() {
   }
 
   return (
-    <div className="client-list-wrapper">
+    <div className="list-wrapper">
       <StyledTypography>CIMS</StyledTypography>
       <Card>
         <CardContent>
@@ -261,6 +261,7 @@ function ClientsList() {
                     placeholder="Search Company Name / Associate Name / Location"
                     value={searchBy}
                     onChange={handelSearch}
+                    onKeyPress={handelSearch}
                     InputProps={{
                       startAdornment: (
                         <InputAdornment position="start">

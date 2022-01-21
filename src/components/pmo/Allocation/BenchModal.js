@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Backdrop, Box, Modal, Fade, Typography } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 const style = {
@@ -30,6 +30,7 @@ export default function BenchModal({
 
   const getProjects = () => {
     if (entryData.projects) {
+      // eslint-disable-next-line array-callback-return
       entryData.projects.filter((test) => {
         test.allocationEndDate > current_Day
           ? acitveArray.push(test)
@@ -97,8 +98,6 @@ export default function BenchModal({
                 height: "calc(100% - 68px)",
                 marginTop: "20px",
                 overflowY: "auto",
-                padding: "5px",
-                // boxShadow: "0px 0px 5px black",
                 border: "1px solid #afacacde",
                 borderRadius: "5px",
               }}

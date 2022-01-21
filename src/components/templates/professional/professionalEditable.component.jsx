@@ -2,6 +2,7 @@ import React, { useState } from "react";
 
 import { Grid, Box, TextField } from "@mui/material";
 import ClearIcon from "@mui/icons-material/Clear";
+import { TitleTypo } from "../../UI/commonStyles";
 
 import {
   CustomTextField,
@@ -97,11 +98,11 @@ const ProfessionalEditable = ({
   };
 
   return (
-    <Grid container spacing={0} sx={{ minHeight: 150 }}>
+    <Grid container mb={10} sx={{ minHeight: 150 }}>
       <Grid item sm={7}>
-        <Box sx={{ ml: 4, mb: 5 }}>
+        <Box>
           <ContentBox>
-            <ContentTypo>{professionalConstant.band}</ContentTypo>
+            <TitleTypo>{professionalConstant.band}</TitleTypo>
             <CustomTextField
               autoComplete="off"
               required
@@ -115,7 +116,7 @@ const ProfessionalEditable = ({
             />
           </ContentBox>
           <ContentBox>
-            <ContentTypo>{professionalConstant.graduation}</ContentTypo>
+            <TitleTypo>{professionalConstant.graduation}</TitleTypo>
             <CustomTextField
               autoComplete="off"
               required
@@ -129,7 +130,7 @@ const ProfessionalEditable = ({
             />
           </ContentBox>
           <ContentBox>
-            <ContentTypo
+            <TitleTypo
               sx={{
                 ...(UGDropdown?.value === "others" && {
                   display: "grid",
@@ -141,7 +142,7 @@ const ProfessionalEditable = ({
               }}
             >
               {professionalConstant.graduationUniversity}
-            </ContentTypo>
+            </TitleTypo>
             <Box
               sx={{
                 width: "100%",
@@ -186,7 +187,7 @@ const ProfessionalEditable = ({
             /> */}
           </ContentBox>
           <ContentBox>
-            <ContentTypo>{professionalConstant.postGraduation}</ContentTypo>
+            <TitleTypo>{professionalConstant.postGraduation}</TitleTypo>
             <CustomTextField
               autoComplete="off"
               required
@@ -200,7 +201,7 @@ const ProfessionalEditable = ({
             />
           </ContentBox>
           <ContentBox>
-            <ContentTypo
+            <TitleTypo
               sx={{
                 ...(UGDropdown?.value === "others" && {
                   display: "grid",
@@ -212,7 +213,7 @@ const ProfessionalEditable = ({
               }}
             >
               {professionalConstant.PgUniversity}
-            </ContentTypo>
+            </TitleTypo>
             <Box
               sx={{
                 width: "100%",
@@ -264,7 +265,7 @@ const ProfessionalEditable = ({
           </ContentBox>
           {professionalDetails.map((field, index) => (
             <ContentBox key={index} sx={{ position: "relative" }}>
-              <ContentTypo>{field.fieldName}</ContentTypo>
+              <TitleTypo>{field.fieldName}</TitleTypo>
               {field.fieldType === "date" ? (
                 <LocalizationProvider dateAdapter={AdapterDateFns}>
                   <DesktopDatePicker

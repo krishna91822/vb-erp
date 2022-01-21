@@ -147,7 +147,7 @@ export const Main = () => {
     }
   };
   return (
-    <div className="client-list-wrapper">
+    <div className="list-wrapper">
       <StyledTypography>PO/SOW's Information</StyledTypography>
       <Card>
         <CardContent>

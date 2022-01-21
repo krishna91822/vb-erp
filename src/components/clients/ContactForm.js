@@ -17,7 +17,7 @@ import {
 import UseForm from "./UseForm";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/material.css";
-import "../../assets/styles/ClientFormStyles.css";
+import "./styles/ClientFormStyles.css";
 import { useSelector } from "react-redux";
 
 export default function AddressFields() {

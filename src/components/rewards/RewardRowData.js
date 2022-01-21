@@ -16,7 +16,7 @@ import Popup from "./Popup";
 import EmployeesList from "../employees/EmployeesList";
 import { StyledTableCell } from "../../assets/GlobalStyle/style";
 import { TableRow, Tab } from "@mui/material";
-import "../../assets/styles/ClientListStyles.css";
+import "../clients/styles/ClientListStyles.css";
 
 const RewardRowData = ({ data, StyledMenu, open }) => {
   const dispatch = useDispatch();
@@ -77,7 +77,6 @@ const RewardRowData = ({ data, StyledMenu, open }) => {
         <StyledTableCell align="center">{data.reward_type}</StyledTableCell>
         <StyledTableCell align="center">
           {data.reward_sender === "selected" ? (
-            // <p>{data.sender_id[0].empName}</p>
             <>
               {data.sender_id[0] !== undefined
                 ? data.sender_id[0].empName
