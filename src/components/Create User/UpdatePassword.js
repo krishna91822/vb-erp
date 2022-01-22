@@ -9,18 +9,20 @@ import {
   TextField,
 } from "@mui/material";
 import { uiActions } from "../../store/ui-slice";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { setUserPassword } from "./../../store/userAccount-action";
+import { useNavigate } from "react-router-dom";
 
 const UpdateUserPassword = () => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const dispatch = useDispatch();
-
+  const user = useSelector((state) => state.user.user);
   const handleSubmit = (pass) => {
     const password = { password: pass };
-    // dispatch(setUserPassword(id, password));
-    // navigate("/");
-    alert(pass);
+    dispatch(setUserPassword(user.id, password));
+    navigate("/my-profile");
   };
 
   const validatePassword = (event) => {

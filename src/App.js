@@ -25,8 +25,8 @@ function App() {
       dispatch(tokenValidate()).then((res) => {
         if (res) {
           location.pathname === "/" && navigate("/my-profile");
+          location.pathname.includes("/setpassword") && navigate("/my-profile");
         }
-
         if (!res) {
           cookie.remove("token");
           navigate("/");

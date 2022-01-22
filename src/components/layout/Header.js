@@ -28,6 +28,8 @@ import { logoutUser } from "../../store/user-actions";
 const Header = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const users = useSelector((state) => state.user.user);
+  console.log(users);
   const lgUp = useMediaQuery((theme) => theme.breakpoints.up("sm"), {
     defaultMatches: true,
     noSsr: false,
@@ -130,16 +132,18 @@ const Header = () => {
                   <Avatar /> Profile
                 </MenuItem>
                 <Divider />
-                <MenuItem
-                  onClick={handleClose}
-                  component={Link}
-                  to="/createuserprofile"
-                >
-                  <ListItemIcon>
-                    <AdminPanelSettingsIcon fontSize="small" />
-                  </ListItemIcon>
-                  Admin Pannel
-                </MenuItem>
+                {users.permissions.includes("view_admin_panel") && (
+                  <MenuItem
+                    onClick={handleClose}
+                    component={Link}
+                    to="/createuserprofile"
+                  >
+                    <ListItemIcon>
+                      <AdminPanelSettingsIcon fontSize="small" />
+                    </ListItemIcon>
+                    Admin Pannel
+                  </MenuItem>
+                )}
                 <MenuItem
                   onClick={handleClose}
                   component={Link}
