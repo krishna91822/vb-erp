@@ -101,7 +101,7 @@ const Header = () => {
                     color: "rgb(17,24,39)",
                   }}
                 />
-                <Typography variant="h6">{user.name}</Typography>
+                <Typography variant="h6">{user.name.split(" ")[0]}</Typography>
               </IconButton>
               <Menu
                 id="profile-menu"

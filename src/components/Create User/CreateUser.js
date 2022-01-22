@@ -23,13 +23,13 @@ import {
 } from "../../store/userAccount-action";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { uiActions } from "../../store/ui-slice";
 
 const CreateUser = () => {
   const dispatch = useDispatch();
   const [username, setUsername] = useState("");
   const [useremail, setUseremail] = useState("");
   const [open, setOpen] = useState(false);
-  const [check, setCheck] = useState(false);
   const navigate = useNavigate();
 
   const handleSubmit = (event) => {
@@ -39,6 +39,7 @@ const CreateUser = () => {
     userDetail.first_name = data.get("username").split(" (")[0];
     userDetail.email = useremail;
     userDetail.role = [];
+
     data.get("user") && userDetail.role.push(data.get("user"));
     data.get("leader") && userDetail.role.push(data.get("leader"));
     data.get("approver") && userDetail.role.push(data.get("approver"));
@@ -49,11 +50,19 @@ const CreateUser = () => {
     data.get("super_admin") && userDetail.role.push(data.get("super_admin"));
     userDetail.password = "qwerty123";
     // console.log(userDetail);
-    dispatch(createUserAccount(userDetail));
-    navigate("/my-profile");
-    setUsername("");
-    setUseremail("");
-    setCheck(false);
+    if (userDetail.role.length === 0) {
+      dispatch(
+        uiActions.showNotification({
+          status: "error",
+          message: "Please select atleast 1 role",
+        })
+      );
+    } else {
+      dispatch(createUserAccount(userDetail));
+      navigate("/my-profile");
+      setUsername("");
+      setUseremail("");
+    }
   };
   const userAccount = useSelector((state) => state.createUser);
   useEffect(() => {
