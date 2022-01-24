@@ -31,7 +31,6 @@ import {
 } from "@mui/material";
 import { Search as SearchIcon } from "../../icons/search";
 // eslint-disable-next-line no-unused-vars
-import { ClearRounded as ClearRoundedIcon } from "@mui/icons-material";
 import { reviewText } from "./review.constant";
 import ProfileContent from "../../components/templates/profileContent/profileContent.component";
 
