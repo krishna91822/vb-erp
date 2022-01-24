@@ -5,7 +5,7 @@ import { Grid } from "@mui/material";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
-import { FormLabel } from "@mui/material";
+import { FormLabel, Card } from "@mui/material";
 import { useParams } from "react-router-dom";
 import "./rewardStyle.css";
 import Popup from "./Popup";
@@ -194,8 +194,8 @@ const EditReward = () => {
       />
       <Grid classes={{ root: { width: "100%" } }}>
         {rewardData && rewardData.reward_type && (
-          <form>
-            <Grid item>
+          <div className="rewards-form-header">
+            <div>
               <FormLabel
                 className="title"
                 style={{
@@ -205,224 +205,7 @@ const EditReward = () => {
                 }}
                 children="Edit Reward"
               />
-              <br />
-            </Grid>
-            <hr />
-            <br />
-            <Grid item>
-              <FormLabel
-                children="Reward Display Name"
-                style={{ color: " black " }}
-              />
-              <br />
-              <TextField
-                id="outlined-name"
-                className="textfield1"
-                name="reward_display_name"
-                value={rewardData.reward_display_name}
-                onChange={handleChangeName}
-              />
-            </Grid>
-            <br />
-            <Grid item>
-              <FormLabel children="Reward Type" style={{ color: " black " }} />
-              <br />
-              <FormControl id="RType">
-                <Select
-                  justify="justify"
-                  className="textfield"
-                  name="reward_type"
-                  value={rewardData.reward_type}
-                  onChange={typeChange}
-                >
-                  <MenuItem value="Daily">Daily</MenuItem>
-                  <MenuItem value="Monthly">Monthly</MenuItem>
-                  <MenuItem value="Yearly">Yearly</MenuItem>
-                  <MenuItem value="On-Demand">OnDemand</MenuItem>
-                </Select>
-              </FormControl>
-            </Grid>
-            <br />
-            {rewardData.reward_type === "Daily" && (
-              <Grid item>
-                <FormLabel
-                  children="Reward Sub Type"
-                  style={{ color: " black " }}
-                />
-                <br />
-                <FormControl id="RType">
-                  <Select
-                    justify="justify"
-                    className="textfield"
-                    name="reward_subType"
-                    value={rewardData.reward_subType}
-                    onChange={subtypeChange}
-                  >
-                    <MenuItem value="work-anniversary">
-                      Work Anniversary
-                    </MenuItem>
-                    <MenuItem value="birthday-celebration">
-                      Birthday Celebration
-                    </MenuItem>
-                  </Select>
-                </FormControl>
-              </Grid>
-            )}
-            {rewardData.reward_type === "Monthly" && (
-              <Grid item>
-                <FormLabel
-                  children="Reward Sub Type"
-                  style={{ color: " black " }}
-                />
-                <br />
-                <FormControl id="RType">
-                  <Select
-                    justify="justify"
-                    className="textfield"
-                    name="reward_subType"
-                    value={rewardData.reward_subType}
-                    onChange={subtypeChange}
-                  >
-                    <MenuItem value="starOfTheMonth">
-                      Star of the month
-                    </MenuItem>
-                    <MenuItem value="birthday-celebration">
-                      Birthday Celebration
-                    </MenuItem>
-                  </Select>
-                </FormControl>
-              </Grid>
-            )}
-            <br />
-            <Grid item>
-              <FormLabel
-                children="Reward Sender"
-                style={{ color: " black " }}
-              />
-              <br />
-              <FormControl id="RSender">
-                <Select
-                  justify="justify"
-                  className="textfield"
-                  name="reward_sender"
-                  value={rewardData.reward_sender}
-                  onChange={senderChange}
-                >
-                  <MenuItem value="CEO">CEO</MenuItem>
-                  <MenuItem value="Manager">Manager</MenuItem>
-                  <MenuItem
-                    value="selected"
-                    onClick={() => senderPopup()}
-                    disableRipple
-                  >
-                    :Selected
-                  </MenuItem>
-                </Select>
-              </FormControl>
-            </Grid>
-            <br />
-            <Grid item>
-              <FormLabel
-                children="Reward Receiver"
-                style={{ color: " black " }}
-              />
-              <br />
-              <FormControl id="Rreceiver">
-                <Select
-                  justify="justify"
-                  className="textfield"
-                  value={rewardData.reward_receiver}
-                  name="reward_receiver"
-                  onChange={receiverChange}
-                >
-                  {rewardData.reward_type === "On-Demand" && (
-                    <MenuItem value="Manager">Manager</MenuItem>
-                  )}
-
-                  <MenuItem value="Employees">Employee</MenuItem>
-                  <MenuItem
-                    value="selected"
-                    onClick={() => receiverPopup()}
-                    disableRipple
-                  >
-                    :Selected
-                  </MenuItem>
-                </Select>
-              </FormControl>
-            </Grid>
-            <br />
-            <Grid item>
-              <FormLabel
-                children="Receiver Message"
-                style={{ color: " black " }}
-              />
-              <br />
-              <TextField
-                placeholder="Congratulations Receiver for a great sales cycle"
-                multiline
-                className="textfield1"
-                value={rewardData.receiver_message}
-                rows={3}
-                name="receiver_message"
-                onChange={handleChangeReceiverMessage}
-              />
-            </Grid>
-            <br />
-            <Grid item>
-              <FormLabel
-                children="Announcement Type"
-                style={{ color: " black " }}
-              />
-              <br />
-              <FormControl id="Atype">
-                <Select
-                  className="textfield"
-                  justify="justify"
-                  value={rewardData.announcement_type}
-                  name="announcement_type"
-                  onChange={announcementChange}
-                >
-                  <MenuItem value="public">Public</MenuItem>
-                  <MenuItem value="private">Private</MenuItem>
-                </Select>
-              </FormControl>
-            </Grid>
-            <br />
-            {rewardData.announcement_type === "public" && (
-              <Grid item>
-                <FormLabel
-                  children="Slack Channel"
-                  style={{ color: " black " }}
-                />
-                <br />
-                <TextField
-                  id="outlined-name"
-                  className="textfield1"
-                  name="slack_channel"
-                  value={rewardData.slack_channel}
-                  onChange={handleChangeSlack}
-                />
-              </Grid>
-            )}
-            <br />
-            {rewardData.announcement_type === "public" && (
-              <Grid item>
-                <FormLabel
-                  children="Channel Message"
-                  style={{ color: " black " }}
-                />
-                <br />
-                <TextField
-                  placeholder="Please Join Us"
-                  multiline
-                  className="textfield1"
-                  name="channel_message"
-                  value={rewardData.channel_message}
-                  onChange={handleChangeChannel}
-                  rows={2}
-                />
-              </Grid>
-            )}
+            </div>
             <div className="btn-container">
               <Button
                 id="btn"
@@ -436,6 +219,233 @@ const EditReward = () => {
                 Cancel
               </Button>
             </div>
+          </div>
+        )}
+        <br />
+        <hr />
+        <br />
+        <Card mt={4}>
+          <form>
+            <Grid margin={"1rem"}>
+              <Grid item>
+                <FormLabel
+                  children="Reward Display Name"
+                  style={{ color: " black " }}
+                />
+                <br />
+                <TextField
+                  id="outlined-name"
+                  className="textfield1"
+                  name="reward_display_name"
+                  value={rewardData.reward_display_name}
+                  onChange={handleChangeName}
+                />
+              </Grid>
+              <br />
+              <Grid item>
+                <FormLabel
+                  children="Reward Type"
+                  style={{ color: " black " }}
+                />
+                <br />
+                <FormControl id="RType">
+                  <Select
+                    justify="justify"
+                    className="textfield"
+                    name="reward_type"
+                    value={rewardData.reward_type}
+                    onChange={typeChange}
+                  >
+                    <MenuItem value="Daily">Daily</MenuItem>
+                    <MenuItem value="Monthly">Monthly</MenuItem>
+                    <MenuItem value="Yearly">Yearly</MenuItem>
+                    <MenuItem value="On-Demand">OnDemand</MenuItem>
+                  </Select>
+                </FormControl>
+              </Grid>
+              <br />
+              {rewardData.reward_type === "Daily" && (
+                <Grid item>
+                  <FormLabel
+                    children="Reward Sub Type"
+                    style={{ color: " black " }}
+                  />
+                  <br />
+                  <FormControl id="RType">
+                    <Select
+                      justify="justify"
+                      className="textfield"
+                      name="reward_subType"
+                      value={rewardData.reward_subType}
+                      onChange={subtypeChange}
+                    >
+                      <MenuItem value="work-anniversary">
+                        Work Anniversary
+                      </MenuItem>
+                      <MenuItem value="birthday-celebration">
+                        Birthday Celebration
+                      </MenuItem>
+                    </Select>
+                  </FormControl>
+                </Grid>
+              )}
+              {rewardData.reward_type === "Monthly" && (
+                <Grid item>
+                  <FormLabel
+                    children="Reward Sub Type"
+                    style={{ color: " black " }}
+                  />
+                  <br />
+                  <FormControl id="RType">
+                    <Select
+                      justify="justify"
+                      className="textfield"
+                      name="reward_subType"
+                      value={rewardData.reward_subType}
+                      onChange={subtypeChange}
+                    >
+                      <MenuItem value="starOfTheMonth">
+                        Star of the month
+                      </MenuItem>
+                      <MenuItem value="birthday-celebration">
+                        Birthday Celebration
+                      </MenuItem>
+                    </Select>
+                  </FormControl>
+                </Grid>
+              )}
+              <br />
+              <Grid item>
+                <FormLabel
+                  children="Reward Sender"
+                  style={{ color: " black " }}
+                />
+                <br />
+                <FormControl id="RSender">
+                  <Select
+                    justify="justify"
+                    className="textfield"
+                    name="reward_sender"
+                    value={rewardData.reward_sender}
+                    onChange={senderChange}
+                  >
+                    <MenuItem value="CEO">CEO</MenuItem>
+                    <MenuItem value="Manager">Manager</MenuItem>
+                    <MenuItem
+                      value="selected"
+                      onClick={() => senderPopup()}
+                      disableRipple
+                    >
+                      :Selected
+                    </MenuItem>
+                  </Select>
+                </FormControl>
+              </Grid>
+              <br />
+              <Grid item>
+                <FormLabel
+                  children="Reward Receiver"
+                  style={{ color: " black " }}
+                />
+                <br />
+                <FormControl id="Rreceiver">
+                  <Select
+                    justify="justify"
+                    className="textfield"
+                    value={rewardData.reward_receiver}
+                    name="reward_receiver"
+                    onChange={receiverChange}
+                  >
+                    {rewardData.reward_type === "On-Demand" && (
+                      <MenuItem value="Manager">Manager</MenuItem>
+                    )}
+
+                    <MenuItem value="Employees">Employee</MenuItem>
+                    <MenuItem
+                      value="selected"
+                      onClick={() => receiverPopup()}
+                      disableRipple
+                    >
+                      :Selected
+                    </MenuItem>
+                  </Select>
+                </FormControl>
+              </Grid>
+              <br />
+              <Grid item>
+                <FormLabel
+                  children="Receiver Message"
+                  style={{ color: " black " }}
+                />
+                <br />
+                <TextField
+                  placeholder="Congratulations Receiver for a great sales cycle"
+                  multiline
+                  className="textfield1"
+                  value={rewardData.receiver_message}
+                  rows={3}
+                  name="receiver_message"
+                  onChange={handleChangeReceiverMessage}
+                />
+              </Grid>
+              <br />
+              <Grid item>
+                <FormLabel
+                  children="Announcement Type"
+                  style={{ color: " black " }}
+                />
+                <br />
+                <FormControl id="Atype">
+                  <Select
+                    className="textfield"
+                    justify="justify"
+                    value={rewardData.announcement_type}
+                    name="announcement_type"
+                    onChange={announcementChange}
+                  >
+                    <MenuItem value="public">Public</MenuItem>
+                    <MenuItem value="private">Private</MenuItem>
+                  </Select>
+                </FormControl>
+              </Grid>
+              <br />
+              {rewardData.announcement_type === "public" && (
+                <Grid item>
+                  <FormLabel
+                    children="Slack Channel"
+                    style={{ color: " black " }}
+                  />
+                  <br />
+                  <TextField
+                    id="outlined-name"
+                    className="textfield1"
+                    name="slack_channel"
+                    value={rewardData.slack_channel}
+                    onChange={handleChangeSlack}
+                  />
+                </Grid>
+              )}
+              <br />
+              {rewardData.announcement_type === "public" && (
+                <Grid item>
+                  <FormLabel
+                    children="Channel Message"
+                    style={{ color: " black " }}
+                  />
+                  <br />
+                  <TextField
+                    placeholder="Please Join Us"
+                    multiline
+                    className="textfield1"
+                    name="channel_message"
+                    value={rewardData.channel_message}
+                    onChange={handleChangeChannel}
+                    rows={2}
+                  />
+                </Grid>
+              )}
+            </Grid>
+
             {
               <Popup
                 title="Team Members"
@@ -469,7 +479,7 @@ const EditReward = () => {
               </Popup>
             }
           </form>
-        )}
+        </Card>
       </Grid>
     </>
   );

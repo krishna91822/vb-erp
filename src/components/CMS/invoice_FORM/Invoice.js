@@ -8,6 +8,7 @@ import {
   Button,
   OutlinedInput,
   Typography,
+  Card,
   Box,
   FormControl,
   InputLabel,
@@ -405,13 +406,12 @@ function Invoice(props) {
           </Grid>
         </Grid> */}
         <Box fixed>
-          <Box
+          <Card
             sx={{
               bgcolor: "white",
-              height: "75vh",
-              border: "2px solid grey",
               overflowY: "scroll",
               padding: "1rem",
+              margin: "0.5rem",
             }}
           >
             <Grid container>
@@ -752,7 +752,7 @@ function Invoice(props) {
                 </Grid>
               </div>
             </Grid>
-          </Box>
+          </Card>
         </Box>
       </React.Fragment>
     </div>
