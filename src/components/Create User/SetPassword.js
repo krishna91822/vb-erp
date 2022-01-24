@@ -47,7 +47,6 @@ export default function SetPassword() {
           sx={{
             marginTop: 8,
             padding: "50px",
-            border: "2px solid gray",
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
@@ -55,7 +54,7 @@ export default function SetPassword() {
         >
           <img
             style={{
-              width: "150px",
+              width: "130px",
               marginRight: "80px",
               borderRadius: "10px",
               filter: "grayscale(30%)",
@@ -65,7 +64,7 @@ export default function SetPassword() {
           />
 
           <Typography sx={{ fontWeight: "600" }} variant="h5">
-            Set password
+            Set Password
           </Typography>
           <Box
             component="form"
