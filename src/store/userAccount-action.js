@@ -143,3 +143,32 @@ export const SetRoles = () => {
     }
   };
 };
+
+export const getUserDetails = (id) => {
+  return async (dispatch) => {
+    const getUserData = async () => {
+      const response = await axios.get(`/users/${id}`);
+      if (response.status === "failure") {
+        throw new Error("Could not fetch employeesName");
+      }
+      const data = response.data.data;
+      return data;
+    };
+
+    try {
+      const data = await getUserData();
+      console.log(data, "data here");
+      dispatch(userAccountActions.setUserDetails(data));
+    } catch (error) {
+      setTimeout(function () {
+        dispatch(
+          uiActions.showNotification({
+            status: "error",
+            title: "Error!",
+            message: "No Records Found",
+          })
+        );
+      }, 1000);
+    }
+  };
+};

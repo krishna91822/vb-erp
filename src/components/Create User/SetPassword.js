@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
@@ -6,10 +6,13 @@ import { useParams } from "react-router-dom";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { ThemeProvider } from "@mui/material/styles";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { uiActions } from "../../store/ui-slice";
-import { setUserPassword } from "../../store/userAccount-action";
+import {
+  setUserPassword,
+  getUserDetails,
+} from "../../store/userAccount-action";
 import vbLogo from "../../assets/images/vb_logo.svg";
 
 export default function SetPassword() {
@@ -18,6 +21,12 @@ export default function SetPassword() {
   const [confirmPassword, setConfirmPassword] = useState("");
   const dispatch = useDispatch();
   let { id } = useParams();
+
+  const userDetails = useSelector((state) => state.createUser);
+
+  useEffect(() => {
+    dispatch(getUserDetails(id));
+  }, []);
 
   const handleSubmit = (pass) => {
     const password = { password: pass };
@@ -63,9 +72,16 @@ export default function SetPassword() {
             alt="vb-logo"
           />
 
-          <Typography sx={{ fontWeight: "600" }} variant="h5">
-            Set Password
-          </Typography>
+          {userDetails.userDetails ? (
+            <Typography variant="h5" sx={{ textTransform: "capitalize" }}>
+              {`Hi, ${userDetails.userDetails.first_name}`}
+            </Typography>
+          ) : (
+            <Typography variant="h5" sx={{ textTransform: "capitalize" }}>
+              {`Hi, ----------`}
+            </Typography>
+          )}
+
           <Box
             component="form"
             onSubmit={validatePassword}
@@ -100,6 +116,7 @@ export default function SetPassword() {
               fullWidth
               variant="contained"
               sx={{
+                textTransform: "capitalize",
                 mt: 3,
                 mb: 2,
                 bgcolor: "chocolate",
@@ -108,7 +125,7 @@ export default function SetPassword() {
                 },
               }}
             >
-              Submit
+              Set Password
             </Button>
           </Box>
         </Box>

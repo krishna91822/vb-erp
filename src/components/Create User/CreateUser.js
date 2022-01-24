@@ -14,7 +14,6 @@ import {
   Divider,
   FormControlLabel,
   Grid,
-  Typography,
   Autocomplete,
 } from "@mui/material";
 import {
@@ -103,26 +102,28 @@ const CreateUser = () => {
         New User
       </StyledTypography>
       <Card sx={{ mx: 15, px: 3 }}>
-        <Grid container spacing={2}>
-          <Grid item xs={8}>
-            <MiniHeadingTypography sx={{ p: 2 }}>Account</MiniHeadingTypography>
-          </Grid>
-          <Grid item xs={4}>
-            <Box
-              sx={{
-                display: "flex",
-                justifyContent: "flex-end",
-                p: 2,
-              }}
-            >
-              <Button type="submit" color="primary" variant="contained">
-                Save
-              </Button>
-            </Box>
-          </Grid>
-        </Grid>
-        <Divider />
         <form onSubmit={(e) => handleSubmit(e)}>
+          <Grid container spacing={2}>
+            <Grid item xs={4}>
+              <MiniHeadingTypography sx={{ p: 2 }}>
+                Account
+              </MiniHeadingTypography>
+            </Grid>
+            <Grid item xs={8}>
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "flex-end",
+                  p: 2,
+                }}
+              >
+                <Button type="submit" color="primary" variant="contained">
+                  Save
+                </Button>
+              </Box>
+            </Grid>
+          </Grid>
+          <Divider />
           <CardContent
             sx={{
               display: "flex",
@@ -190,9 +191,10 @@ const CreateUser = () => {
           <CardContent sx={{ mx: 20, padding: "10px" }}>
             <Grid container spacing={1} wrap="wrap">
               {userAccount.roles &&
-                userAccount.roles.map((currElem) => {
+                userAccount.roles.map((currElem, index) => {
                   return (
                     <Grid
+                      key={index}
                       item
                       sm={6}
                       sx={{
@@ -202,6 +204,7 @@ const CreateUser = () => {
                       xs={12}
                     >
                       <FormControlLabel
+                        sx={{ textTransform: "capitalize" }}
                         control={<Checkbox color="primary" />}
                         label={currElem.replace(/_/g, " ")}
                         value={currElem}

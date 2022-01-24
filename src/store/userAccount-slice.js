@@ -3,6 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   employees: [],
   roles: [],
+  userDetails: {},
 };
 
 const userAccountSlice = createSlice({
@@ -17,6 +18,9 @@ const userAccountSlice = createSlice({
     },
     setUserRole(state, action) {
       state.roles = action.payload;
+    },
+    setUserDetails(state, action) {
+      state.userDetails = action.payload;
     },
   },
 });
