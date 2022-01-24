@@ -102,7 +102,7 @@ const Header = () => {
                   }}
                 />
                 <Typography variant="h6" sx={{ textTransform: "capitalize" }}>
-                  {user.name.split(" ")[0]}
+                  {user.name}
                 </Typography>
               </IconButton>
               <Menu
