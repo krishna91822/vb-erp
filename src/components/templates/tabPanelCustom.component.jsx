@@ -8,9 +8,7 @@ const TabPanelCustom = (props) => {
       data-test="tab-panel-test"
       sx={{ display: "flex", justifyContent: "center" }}
     >
-      <Box sx={{ width: "60%", border: "1px solid black" }}>
-        {value === index && <h1>{children}</h1>}
-      </Box>
+      <Box sx={{ width: "50%" }}>{value === index && <h1>{children}</h1>}</Box>
     </Box>
   );
 };

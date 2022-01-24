@@ -16,6 +16,7 @@ import Tpagination from "../../UI/Pagination";
 import NoDataFound from "../NoDataFound";
 import {
   StyledTableCell,
+  StyledTableCell2,
   MiniHeadingTypography,
 } from "../../../assets/GlobalStyle/style";
 
@@ -96,8 +97,8 @@ const Bench = ({ pressed, benchSortValue }) => {
           <TableBody>
             {pressed && (
               <TableRow className="table-row">
-                <StyledTableCell align="center"></StyledTableCell>
-                <StyledTableCell align="center">
+                <StyledTableCell2 align="center"></StyledTableCell2>
+                <StyledTableCell2 align="center">
                   <TextField
                     variant="standard"
                     type="text"
@@ -108,8 +109,8 @@ const Bench = ({ pressed, benchSortValue }) => {
                     value={filters.empId}
                     inputProps={{ style: { fontSize: "small" } }}
                   />
-                </StyledTableCell>
-                <StyledTableCell align="center">
+                </StyledTableCell2>
+                <StyledTableCell2 align="center">
                   <TextField
                     variant="standard"
                     type="text"
@@ -120,10 +121,10 @@ const Bench = ({ pressed, benchSortValue }) => {
                     value={filters.employeeName}
                     inputProps={{ style: { fontSize: "small" } }}
                   />
-                </StyledTableCell>
+                </StyledTableCell2>
 
-                <StyledTableCell align="center"></StyledTableCell>
-                <StyledTableCell align="center">
+                <StyledTableCell2 align="center"></StyledTableCell2>
+                <StyledTableCell2 align="center">
                   <TextField
                     variant="standard"
                     type="number"
@@ -134,7 +135,7 @@ const Bench = ({ pressed, benchSortValue }) => {
                     value={filters.remainingAllocation}
                     inputProps={{ style: { fontSize: "small" }, min: 0 }}
                   />
-                </StyledTableCell>
+                </StyledTableCell2>
               </TableRow>
             )}
 
@@ -145,33 +146,33 @@ const Bench = ({ pressed, benchSortValue }) => {
                     onClick={() => entryLink(currElem)}
                     className="table-row"
                   >
-                    <StyledTableCell align="center">
+                    <StyledTableCell2 align="center">
                       {index + parseInt(data.currentPage) * 10 - 9}
-                    </StyledTableCell>
-                    <StyledTableCell align="center">
+                    </StyledTableCell2>
+                    <StyledTableCell2 align="center">
                       {currElem.empId}
-                    </StyledTableCell>
-                    <StyledTableCell
+                    </StyledTableCell2>
+                    <StyledTableCell2
                       align="center"
                       style={{ textTransform: "capitalize" }}
                     >
                       {currElem.empName}
-                    </StyledTableCell>
-                    <StyledTableCell align="center">
+                    </StyledTableCell2>
+                    <StyledTableCell2 align="center">
                       {`${currElem.empPrimaryCapability}` || "-----"}
-                    </StyledTableCell>
-                    <StyledTableCell align="center">
+                    </StyledTableCell2>
+                    <StyledTableCell2 align="center">
                       {`${currElem.empSkillSet}` || "-----"}
-                    </StyledTableCell>
-                    <StyledTableCell align="center">
+                    </StyledTableCell2>
+                    <StyledTableCell2 align="center">
                       {`${currElem.empDesignation}` || "-----"}
-                    </StyledTableCell>
-                    <StyledTableCell align="center">
+                    </StyledTableCell2>
+                    <StyledTableCell2 align="center">
                       {`${currElem.yearsOfExperience}` || "-----"}
-                    </StyledTableCell>
-                    <StyledTableCell align="center">
+                    </StyledTableCell2>
+                    <StyledTableCell2 align="center">
                       {currElem.remainingAllocation}
-                    </StyledTableCell>
+                    </StyledTableCell2>
                   </TableRow>
                 ))
               : null}

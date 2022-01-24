@@ -15,6 +15,10 @@ import { useNavigate, Link } from "react-router-dom";
 import Popup from "./Popup";
 import EmployeesList from "../employees/EmployeesList";
 import { ToastContainer } from "react-toastify";
+import {
+  StyledTypography,
+  MiniHeadingTypography,
+} from "../../assets/GlobalStyle/style";
 
 const CreateReward = () => {
   const dispatch = useDispatch();
@@ -127,234 +131,246 @@ const CreateReward = () => {
         hideProgressBar={true}
         autoClose={3000}
       />
-      <Grid classes={{ root: { width: "100%" } }}>
-        <div className="rewards-form-header">
-          <div>
-            <FormLabel
-              className="title"
-              style={{
-                fontSize: " 2rem ",
-                fontWeight: " 650 ",
-                color: " black ",
-              }}
-              children="New Reward"
-            />
-          </div>
-          <div className="btn-container">
-            <Button
-              id="btn"
-              variant="contained"
-              color="primary"
-              onClick={getFormData}
-            >
-              Save
-            </Button>
-            <Link to="/rewards" className="remove-underline">
-              <Button variant="contained" color="error">
-                Cancel
-              </Button>
-            </Link>
-          </div>
-        </div>
-        <br />
-        <hr />
-        <br />
-        <Card mt={4}>
+      <Grid container>
+        <Grid item>
+          <StyledTypography variant="h4">R&R</StyledTypography>
+        </Grid>
+      </Grid>
+      <Card mt={4}>
+        <Grid classes={{ root: { width: "100%" } }} sx={{ margin: "1rem" }}>
           <form>
-            <Grid margin={"1rem"}>
-              <Grid item>
-                <label>Reward Display Name</label>
-                <br />
-                <TextField
-                  size="small"
-                  id="outlined-name"
-                  placeholder="Enter Reward Name"
-                  name="reward_display_name"
-                  onChange={handleChangeForm}
-                  className="textfield1"
-                />
-              </Grid>
+            <div className="rewards-form-header">
+              <div>
+                <MiniHeadingTypography variant="h4">
+                  Create Reward
+                </MiniHeadingTypography>
+              </div>
+              <div className="btn-container">
+                <Button
+                  id="btn"
+                  variant="contained"
+                  color="primary"
+                  onClick={getFormData}
+                >
+                  Save
+                </Button>
+                <Link to="/rewards" className="remove-underline">
+                  <Button variant="contained" color="error">
+                    Cancel
+                  </Button>
+                </Link>
+              </div>
+            </div>
+            <hr />
+            <br />
+            <Grid item>
+              <FormLabel
+                children="Reward Display Name"
+                style={{ color: " black " }}
+              />
               <br />
+              <TextField
+                id="outlined-name"
+                name="reward_display_name"
+                onChange={handleChangeForm}
+                className="textfield1"
+              />
+            </Grid>
+            <br />
+            <Grid item>
+              <FormLabel children="Reward Type" style={{ color: " black " }} />
+              <br />
+              <FormControl id="RType">
+                <Select
+                  justify="justify"
+                  className="textfield"
+                  name="reward_type"
+                  value={type}
+                  onChange={typeChange}
+                >
+                  <MenuItem value="Daily">Daily</MenuItem>
+                  <MenuItem value="Monthly">Monthly</MenuItem>
+                  <MenuItem value="Yearly">Yearly</MenuItem>
+                  <MenuItem value="On-Demand">OnDemand</MenuItem>
+                </Select>
+              </FormControl>
+            </Grid>
+            <br />
+            {type === "Daily" && (
               <Grid item>
-                <label>Reward Type</label>
+                <FormLabel
+                  children="Reward Sub Type"
+                  style={{ color: " black " }}
+                />
                 <br />
                 <FormControl id="RType">
                   <Select
                     justify="justify"
-                    size="small"
                     className="textfield"
-                    name="reward_type"
-                    value={type}
-                    onChange={typeChange}
+                    name="reward_subType"
+                    value={subtype}
+                    onChange={subtypeChange}
                   >
-                    <MenuItem value="Daily">Daily</MenuItem>
-                    <MenuItem value="Monthly">Monthly</MenuItem>
-                    <MenuItem value="Yearly">Yearly</MenuItem>
-                    <MenuItem value="On-Demand">OnDemand</MenuItem>
+                    <MenuItem value="work-anniversary">
+                      Work Anniversary
+                    </MenuItem>
+                    <MenuItem value="birthday-celebration">
+                      Birthday Celebration
+                    </MenuItem>
                   </Select>
                 </FormControl>
               </Grid>
-              <br />
-              {type === "Daily" && (
-                <Grid item>
-                  <label>Reward Sub Type</label>
-                  <br />
-                  <FormControl id="RType">
-                    <Select
-                      size="small"
-                      justify="justify"
-                      className="textfield"
-                      name="reward_subType"
-                      value={subtype}
-                      onChange={subtypeChange}
-                    >
-                      <MenuItem value="work-anniversary">
-                        Work Anniversary
-                      </MenuItem>
-                      <MenuItem value="birthday-celebration">
-                        Birthday Celebration
-                      </MenuItem>
-                    </Select>
-                  </FormControl>
-                </Grid>
-              )}
-              {type === "Monthly" && (
-                <Grid item>
-                  <label>Reward Sub Type</label>
-                  <br />
-                  <FormControl id="RType">
-                    <Select
-                      size="small"
-                      justify="justify"
-                      className="textfield"
-                      name="reward_subType"
-                      value={subtype}
-                      onChange={subtypeChange}
-                    >
-                      <MenuItem value="starOfTheMonth">
-                        Star Of The Month
-                      </MenuItem>
-                    </Select>
-                  </FormControl>
-                </Grid>
-              )}
-              <br />
+            )}
+            {type === "Monthly" && (
               <Grid item>
-                <label>Reward Sender</label>
+                <FormLabel
+                  children="Reward Sub Type"
+                  style={{ color: " black " }}
+                />
                 <br />
-                <FormControl id="RSender">
+                <FormControl id="RType">
                   <Select
-                    size="small"
                     justify="justify"
                     className="textfield"
-                    name="reward_sender"
-                    value={send}
-                    onChange={senderChange}
+                    name="reward_subType"
+                    value={subtype}
+                    onChange={subtypeChange}
                   >
-                    <MenuItem value="CEO">CEO</MenuItem>
+                    <MenuItem value="starOfTheMonth">
+                      Star Of The Month
+                    </MenuItem>
+                  </Select>
+                </FormControl>
+              </Grid>
+            )}
+            <br />
+            <Grid item>
+              <FormLabel
+                children="Reward Sender"
+                style={{ color: " black " }}
+              />
+              <br />
+              <FormControl id="RSender">
+                <Select
+                  justify="justify"
+                  className="textfield"
+                  name="reward_sender"
+                  value={send}
+                  onChange={senderChange}
+                >
+                  <MenuItem value="CEO">CEO</MenuItem>
+                  <MenuItem value="Manager">Manager</MenuItem>
+                  <MenuItem
+                    value="selected"
+                    onClick={() => senderPopup()}
+                    disableRipple
+                  >
+                    :Selected
+                  </MenuItem>
+                </Select>
+              </FormControl>
+            </Grid>
+            <br />
+            <Grid item>
+              <FormLabel
+                children="Reward Receiver"
+                style={{ color: " black " }}
+              />
+              <br />
+              <FormControl id="Rreceiver">
+                <Select
+                  justify="justify"
+                  className="textfield"
+                  value={receiver}
+                  name="reward_receiver"
+                  onChange={receiverChange}
+                >
+                  {type === "On-Demand" && (
                     <MenuItem value="Manager">Manager</MenuItem>
-                    <MenuItem
-                      value="selected"
-                      onClick={() => senderPopup()}
-                      disableRipple
-                    >
-                      :Selected
-                    </MenuItem>
-                  </Select>
-                </FormControl>
-              </Grid>
-              <br />
-              <Grid item>
-                <label>Reward Receiver</label>
-                <br />
-                <FormControl id="Rreceiver">
-                  <Select
-                    justify="justify"
-                    size="small"
-                    className="textfield"
-                    value={receiver}
-                    name="reward_receiver"
-                    onChange={receiverChange}
-                  >
-                    {type === "On-Demand" && (
-                      <MenuItem value="Manager">Manager</MenuItem>
-                    )}
+                  )}
 
-                    <MenuItem value="Employees">All Employees</MenuItem>
-                    <MenuItem
-                      value="selected"
-                      onChange={handledata}
-                      onClick={() => receiverPopup()}
-                      disableRipple
-                    >
-                      :Selected
-                    </MenuItem>
-                  </Select>
-                </FormControl>
-              </Grid>
+                  <MenuItem value="Employees">Employee</MenuItem>
+                  <MenuItem
+                    value="selected"
+                    onChange={handledata}
+                    onClick={() => receiverPopup()}
+                    disableRipple
+                  >
+                    :Selected
+                  </MenuItem>
+                </Select>
+              </FormControl>
+            </Grid>
+            <br />
+            <Grid item>
+              <FormLabel
+                children="Receiver Message"
+                style={{ color: " black " }}
+              />
               <br />
+              <TextField
+                placeholder="hii <@receiver> you have some msg from <@sender>"
+                multiline
+                className="textfield1"
+                rows={3}
+                name="receiver_message"
+                onChange={handleChangeForm}
+              />
+            </Grid>
+            <br />
+            <Grid item>
+              <FormLabel
+                children="Announcement Type"
+                style={{ color: " black " }}
+              />
+              <br />
+              <FormControl id="Atype">
+                <Select
+                  className="textfield"
+                  justify="justify"
+                  value={announcement}
+                  name="announcement_type"
+                  onChange={announcementChange}
+                >
+                  <MenuItem value="public">Public</MenuItem>
+                  <MenuItem value="private">Private</MenuItem>
+                </Select>
+              </FormControl>
+            </Grid>
+            <br />
+            {announcement === "public" && (
               <Grid item>
-                <label>Reward Receiver</label>
+                <FormLabel
+                  children="Slack Channel"
+                  style={{ color: " black " }}
+                />
                 <br />
                 <TextField
-                  placeholder="hii <@receiver> you have some msg from <@sender>"
-                  multiline
-                  size="small"
+                  id="outlined-name"
                   className="textfield1"
-                  rows={3}
-                  name="receiver_message"
+                  name="slack_channel"
                   onChange={handleChangeForm}
                 />
               </Grid>
-              <br />
+            )}
+            <br />
+            {announcement === "public" && (
               <Grid item>
-                <label>Announcement Type</label>
+                <FormLabel
+                  children="Channel Message"
+                  style={{ color: " black " }}
+                />
                 <br />
-                <FormControl id="Atype">
-                  <Select
-                    className="textfield"
-                    justify="justify"
-                    size="small"
-                    value={announcement}
-                    name="announcement_type"
-                    onChange={announcementChange}
-                  >
-                    <MenuItem value="public">Public</MenuItem>
-                    <MenuItem value="private">Private</MenuItem>
-                  </Select>
-                </FormControl>
+                <TextField
+                  placeholder="Please Join Us"
+                  multiline
+                  className="textfield1"
+                  name="channel_message"
+                  onChange={handleChangeForm}
+                  rows={2}
+                />
               </Grid>
-              <br />
-              {announcement === "public" && (
-                <Grid item>
-                  <label>Slack Channel</label>
-                  <br />
-                  <TextField
-                    id="outlined-name"
-                    size="small"
-                    className="textfield1"
-                    name="slack_channel"
-                    onChange={handleChangeForm}
-                  />
-                </Grid>
-              )}
-              <br />
-              {announcement === "public" && (
-                <Grid item>
-                  <label htmlFor="">Channel Message</label>
-                  <br />
-                  <TextField
-                    placeholder="hii <@receiver> you have some msg from <@sender>"
-                    multiline
-                    size="small"
-                    className="textfield1"
-                    name="channel_message"
-                    onChange={handleChangeForm}
-                    rows={2}
-                  />
-                </Grid>
-              )}
-            </Grid>
+            )}
 
             {
               <Popup
@@ -369,10 +385,10 @@ const CreateReward = () => {
                   updateSenderData={updateSenderData}
                   openPopup={openSenderPopup}
                   setOpenPopup={setOpenSenderPopup}
-                  stateOfSelection="single"
                 />
               </Popup>
             }
+
             {
               <Popup
                 title="Team Members"
@@ -386,13 +402,12 @@ const CreateReward = () => {
                   updaterecipientsData={updaterecipientsData}
                   openPopup={openReceiverPopup}
                   setOpenPopup={setOpenReceiverPopup}
-                  stateOfSelection="multiple"
                 />
               </Popup>
             }
           </form>
-        </Card>
-      </Grid>
+        </Grid>
+      </Card>
     </>
   );
 };

@@ -12,6 +12,7 @@ export const ContentBox = styled("div")(({ theme }) => ({
 export const ContentTypo = styled("p")(({ theme }) => ({
   ...theme.typography.h5,
   fontSize: 13,
+  marginTop: "1rem",
   marginLeft: "1rem",
   fontWeight: "600",
   lineHeight: "1",
@@ -26,8 +27,7 @@ export const ContentTypoList = styled("div")(({ theme }) => ({
   fontSize: 13,
   fontWeight: "400",
   lineHeight: "1",
-  marginLeft: "1rem",
-  marginTop: "1rem",
+
   letterSpacing: "0.5px",
   color: "rgb(55, 65, 81)",
   fontFamily:

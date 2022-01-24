@@ -143,8 +143,8 @@ const ProjectTab = (props) => {
 
   return editable ? (
     <Grid container sx={{ minHeight: 150 }}>
-      <Grid item>
-        {projects.map((project, index) => (
+      {projects.map((project, index) => (
+        <Grid item mb={5} sx={{ width: "100%" }}>
           <Box
             key={index}
             sx={{
@@ -209,24 +209,24 @@ const ProjectTab = (props) => {
               />
             )}
           </Box>
-        ))}
-        <Grid
-          container
-          onClick={addProject}
-          sx={{ mt: 2, ml: 1, cursor: "pointer" }}
-        >
-          <Grid item>
-            <AddCircleOutlineIcon />
-          </Grid>
-          <Grid item sx={{ marginLeft: "5px" }}>
-            <ContentTypo>Add more</ContentTypo>
-          </Grid>
+        </Grid>
+      ))}
+      <Grid
+        container
+        onClick={addProject}
+        sx={{ mt: 2, ml: 1, cursor: "pointer" }}
+      >
+        <Grid item>
+          <AddCircleOutlineIcon />
+        </Grid>
+        <Grid item sx={{ marginLeft: "5px" }}>
+          <ContentTypo>Add more</ContentTypo>
         </Grid>
       </Grid>
     </Grid>
   ) : (
     <Grid container mb={10} sx={{ minHeight: 150 }}>
-      <Grid item sm={7}>
+      <Grid item sx={{ width: "100%" }}>
         <Box>
           {empData?.project &&
             empData.project.map(

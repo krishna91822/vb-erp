@@ -377,13 +377,14 @@ const CreateProfile = ({
           editSwitch={editSwitch}
         />
       </div>
-      <Box mt={3}>
+      <Box mt={1}>
         <Container maxWidth="xl">
-          <StyledGrid>
+          <StyledGrid item lg={8} md={6} xs={6}>
             <Card>
               <CardHeader
+                sx={{ overflow: "scroll" }}
                 title={
-                  <Grid item sm={11}>
+                  <Grid item>
                     <StyledTabs value={value} onChange={handleChange}>
                       <StyledTab
                         icon={<LocalCafeIcon />}

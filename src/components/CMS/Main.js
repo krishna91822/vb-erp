@@ -42,7 +42,10 @@ import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
 import InputLabel from "@mui/material/InputLabel";
 import NativeSelect from "@mui/material/NativeSelect";
-import { StyledTableCell } from "../../assets/GlobalStyle/style";
+import {
+  StyledTableCell,
+  StyledTableCell2,
+} from "../../assets/GlobalStyle/style";
 import { StyledTypography } from "../../assets/GlobalStyle/style";
 
 export const StyledMenu = styled((props) => (
@@ -292,43 +295,43 @@ export const Main = () => {
                   className="table-row"
                   data-test="row-click2"
                 >
-                  <StyledTableCell align="center" data-test="row-click3">
+                  <StyledTableCell2 align="center" data-test="row-click3">
                     {postPerPage * (currentPage - 1) + (index + 1)}
-                  </StyledTableCell>
-                  <StyledTableCell align="center">
+                  </StyledTableCell2>
+                  <StyledTableCell2 align="center">
                     {row.Client_Name}
-                  </StyledTableCell>
-                  <StyledTableCell align="center">
+                  </StyledTableCell2>
+                  <StyledTableCell2 align="center">
                     {row.Project_Name}
-                  </StyledTableCell>
-                  <StyledTableCell align="center">
+                  </StyledTableCell2>
+                  <StyledTableCell2 align="center">
                     {row.PO_Number}
-                  </StyledTableCell>
-                  <StyledTableCell align="center">
+                  </StyledTableCell2>
+                  <StyledTableCell2 align="center">
                     {row.PO_Amount}
-                  </StyledTableCell>
-                  <StyledTableCell align="center">
+                  </StyledTableCell2>
+                  <StyledTableCell2 align="center">
                     {row.Client_Sponser}
-                  </StyledTableCell>
+                  </StyledTableCell2>
 
                   {/* might be required in future versions */}
                   {/* {user.permissions.includes("upload_PO/SOW/contract") && (
                     <>
                       {row.Status === "Drafted" ? (
-                        <StyledTableCell align="center">
+                        <StyledTableCell2 align="center">
                           <EditIcon />
-                        </StyledTableCell>
+                        </StyledTableCell2>
                       ) : (
-                        <StyledTableCell align="center">
+                        <StyledTableCell2 align="center">
                           <EditOffIcon />
-                        </StyledTableCell>
+                        </StyledTableCell2>
                       )}
                     </>
                   )}
 
-                  <StyledTableCell align="center">
+                  <StyledTableCell2 align="center">
                     <strong>{row.Status}</strong>
-                  </StyledTableCell> */}
+                  </StyledTableCell2> */}
                 </TableRow>
               ))}
             </TableBody>

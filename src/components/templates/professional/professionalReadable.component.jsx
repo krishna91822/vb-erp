@@ -19,7 +19,7 @@ const ProfessionalReadable = ({ empData }) => {
   } = empData;
   return (
     <Grid container sx={{ minHeight: 150 }}>
-      <Grid item>
+      <Grid item mb={5} sx={{ width: "100%" }}>
         <ContentBox>
           <TitleTypo>{professionalConstant.band}</TitleTypo>
           <ContentTypo>{empBand}</ContentTypo>

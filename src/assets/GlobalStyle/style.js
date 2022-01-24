@@ -14,8 +14,18 @@ export const StyledTableCell = styled(TableCell)(({ theme }) => ({
       "Inter, -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji",
   },
   [`&.${tableCellClasses.body}`]: {
-    paddingTop: "20px",
     fontWeight: "400",
+    padding: "0",
+    color: "rgb(18 24 40)",
+    fontFamily:
+      "Inter, -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji",
+  },
+}));
+
+export const StyledTableCell2 = styled(TableCell)(({ theme }) => ({
+  [`&.${tableCellClasses.body}`]: {
+    fontWeight: "400",
+    padding: "9px",
     color: "rgb(18 24 40)",
     fontFamily:
       "Inter, -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji",

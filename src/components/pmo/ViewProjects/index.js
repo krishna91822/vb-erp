@@ -29,7 +29,10 @@ import EditIcon from "@mui/icons-material/Edit";
 import FilterListIcon from "@mui/icons-material/FilterList";
 import FilterListOffIcon from "@mui/icons-material/FilterListOff";
 import Tpagination from "../../UI/Pagination";
-import { StyledTableCell } from "../../../assets/GlobalStyle/style";
+import {
+  StyledTableCell,
+  StyledTableCell2,
+} from "../../../assets/GlobalStyle/style";
 import {
   getAllProjects,
   getAllFilterProjects,
@@ -229,8 +232,8 @@ const ViewProjects = () => {
             <TableBody>
               {pressed && (
                 <TableRow>
-                  <StyledTableCell align="center"></StyledTableCell>
-                  <StyledTableCell align="center">
+                  <StyledTableCell2 align="center"></StyledTableCell2>
+                  <StyledTableCell2 align="center">
                     <TextField
                       variant="standard"
                       type="text"
@@ -241,8 +244,8 @@ const ViewProjects = () => {
                       value={filters.clientName}
                       inputProps={{ style: { fontSize: "small" } }}
                     />
-                  </StyledTableCell>
-                  <StyledTableCell align="center">
+                  </StyledTableCell2>
+                  <StyledTableCell2 align="center">
                     <TextField
                       variant="standard"
                       type="text"
@@ -253,8 +256,8 @@ const ViewProjects = () => {
                       value={filters.projectName}
                       inputProps={{ style: { fontSize: "small" } }}
                     />
-                  </StyledTableCell>
-                  <StyledTableCell align="center">
+                  </StyledTableCell2>
+                  <StyledTableCell2 align="center">
                     <TextField
                       variant="standard"
                       type="text"
@@ -265,8 +268,8 @@ const ViewProjects = () => {
                       value={filters.vbProjectId}
                       inputProps={{ style: { fontSize: "small" } }}
                     />
-                  </StyledTableCell>
-                  <StyledTableCell align="center">
+                  </StyledTableCell2>
+                  <StyledTableCell2 align="center">
                     {filterProjects === "others" && (
                       <TextField
                         variant="standard"
@@ -279,9 +282,9 @@ const ViewProjects = () => {
                         inputProps={{ style: { fontSize: "small" } }}
                       />
                     )}
-                  </StyledTableCell>
+                  </StyledTableCell2>
                   {user.permissions.includes("update_project_in_PMO") && (
-                    <StyledTableCell align="center"></StyledTableCell>
+                    <StyledTableCell2 align="center"></StyledTableCell2>
                   )}
                 </TableRow>
               )}
@@ -292,26 +295,26 @@ const ViewProjects = () => {
                       onClick={() => entryLink(currElem)}
                       className="table-row"
                     >
-                      <StyledTableCell align="center">
+                      <StyledTableCell2 align="center">
                         {index + parseInt(projects.currentPage) * 10 - 9}
-                      </StyledTableCell>
-                      <StyledTableCell align="center">
+                      </StyledTableCell2>
+                      <StyledTableCell2 align="center">
                         {currElem.clientName}
-                      </StyledTableCell>
-                      <StyledTableCell
+                      </StyledTableCell2>
+                      <StyledTableCell2
                         align="center"
                         style={{ textTransform: "capitalize" }}
                       >
                         {currElem.projectName}
-                      </StyledTableCell>
-                      <StyledTableCell align="center">
+                      </StyledTableCell2>
+                      <StyledTableCell2 align="center">
                         {currElem.vbProjectId}
-                      </StyledTableCell>
-                      <StyledTableCell align="center">
+                      </StyledTableCell2>
+                      <StyledTableCell2 align="center">
                         {currElem.vbProjectStatus || "----"}
-                      </StyledTableCell>
+                      </StyledTableCell2>
                       {user.permissions.includes("update_project_in_PMO") && (
-                        <StyledTableCell align="center">
+                        <StyledTableCell2 align="center">
                           <Link
                             to={`/pmo/projects/${currElem.vbProjectId}/edit`}
                             onClick={stopClick}
@@ -332,7 +335,7 @@ const ViewProjects = () => {
                               Edit
                             </Button>
                           </Link>
-                        </StyledTableCell>
+                        </StyledTableCell2>
                       )}
                     </TableRow>
                   ))

@@ -229,8 +229,8 @@ const EditReward = () => {
                   </Button>
                 </div>
               </div>
-              <hr></hr>
-              <br></br>
+              <hr />
+              <br />
               <Grid item>
                 <FormLabel
                   children="Reward Display Name"
