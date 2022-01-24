@@ -143,7 +143,7 @@ const ProjectTab = (props) => {
 
   return editable ? (
     <Grid container sx={{ minHeight: 150 }}>
-      <Grid item sm={7}>
+      <Grid item>
         {projects.map((project, index) => (
           <Box
             key={index}

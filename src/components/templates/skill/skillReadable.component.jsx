@@ -38,82 +38,80 @@ const SkillReadable = ({ empData }) => {
 
   return (
     <Grid container sx={{ minHeight: 150 }}>
-      <Grid item sm={7}>
-        <Box>
-          <ContentBox>
-            <ContentTypo>{skillConstant.primaryCapability}</ContentTypo>
-            <ContentTypoList>
-              {/* {!!empPrimaryCapability
+      <Grid item>
+        <ContentBox>
+          <ContentTypo>{skillConstant.primaryCapability}</ContentTypo>
+          <ContentTypoList>
+            {/* {!!empPrimaryCapability
             ? empPrimaryCapability.map((data) => (
                 <ListItem key={data}>{data}</ListItem>
               ))
             : null} */}
-              <Box
-                sx={{
-                  listStyle: "none",
-                  display: "flex",
-                  flexWrap: "wrap",
-                }}
-              >
-                {empPrimaryCapability !== undefined &&
-                empPrimaryCapability.constructor === Array &&
-                empPrimaryCapability.length !== 0 &&
-                empPrimaryCapability[0] !== ""
-                  ? empPrimaryCapability.map((data, i) => (
-                      <ListItem key={i}>
-                        <Chip
-                          label={data}
-                          sx={{
-                            backgroundColor: chipColors[i],
-                            color: "#fff",
-                            height: 30,
-                            fontSize: 11,
-                            fontWeight: 500,
-                          }}
-                        />
-                      </ListItem>
-                    ))
-                  : ""}
-              </Box>
-            </ContentTypoList>
-          </ContentBox>
-          <ContentBox>
-            <ContentTypo>{skillConstant.skillSet}</ContentTypo>
+            <Box
+              sx={{
+                listStyle: "none",
+                display: "flex",
+                flexWrap: "wrap",
+              }}
+            >
+              {empPrimaryCapability !== undefined &&
+              empPrimaryCapability.constructor === Array &&
+              empPrimaryCapability.length !== 0 &&
+              empPrimaryCapability[0] !== ""
+                ? empPrimaryCapability.map((data, i) => (
+                    <ListItem key={i}>
+                      <Chip
+                        label={data}
+                        sx={{
+                          backgroundColor: chipColors[i],
+                          color: "#fff",
+                          height: 30,
+                          fontSize: 11,
+                          fontWeight: 500,
+                        }}
+                      />
+                    </ListItem>
+                  ))
+                : ""}
+            </Box>
+          </ContentTypoList>
+        </ContentBox>
+        <ContentBox>
+          <ContentTypo>{skillConstant.skillSet}</ContentTypo>
+          <ContentTypoList>
             <ContentTypoList>
-              <ContentTypoList>
-                {!!empSkillSet
-                  ? empSkillSet.map((data) => (
-                      <ListItem key={data}>{data}</ListItem>
-                    ))
-                  : null}
-              </ContentTypoList>
+              {!!empSkillSet
+                ? empSkillSet.map((data) => (
+                    <ListItem key={data}>{data}</ListItem>
+                  ))
+                : null}
             </ContentTypoList>
-          </ContentBox>
-          <ContentBox>
-            <ContentTypo>{skillConstant.certification}</ContentTypo>
+          </ContentTypoList>
+        </ContentBox>
+        <ContentBox>
+          <ContentTypo>{skillConstant.certification}</ContentTypo>
+          <ContentTypoList>
             <ContentTypoList>
-              <ContentTypoList>
-                {!!empCertifications
-                  ? empCertifications.map((data) => (
-                      <ListItem key={data}>{data}</ListItem>
-                    ))
-                  : null}
-              </ContentTypoList>
+              {!!empCertifications
+                ? empCertifications.map((data) => (
+                    <ListItem key={data}>{data}</ListItem>
+                  ))
+                : null}
             </ContentTypoList>
+          </ContentTypoList>
+        </ContentBox>
+        {skillsDetails.map((field) => (
+          <ContentBox key={field._id}>
+            <ContentTypo>{field.fieldName}:</ContentTypo>
+            {field.fieldType === "date" ? (
+              <ContentTypoList>
+                {new Date(field.fieldValue).toDateString().slice(4)}
+              </ContentTypoList>
+            ) : (
+              <ContentTypoList>{field.fieldValue}</ContentTypoList>
+            )}
           </ContentBox>
-          {skillsDetails.map((field) => (
-            <ContentBox key={field._id}>
-              <ContentTypo>{field.fieldName}:</ContentTypo>
-              {field.fieldType === "date" ? (
-                <ContentTypoList>
-                  {new Date(field.fieldValue).toDateString().slice(4)}
-                </ContentTypoList>
-              ) : (
-                <ContentTypoList>{field.fieldValue}</ContentTypoList>
-              )}
-            </ContentBox>
-          ))}
-        </Box>
+        ))}
       </Grid>
     </Grid>
   );

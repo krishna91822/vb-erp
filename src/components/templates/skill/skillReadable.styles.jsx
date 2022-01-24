@@ -26,6 +26,8 @@ export const ContentTypoList = styled("div")(({ theme }) => ({
   fontSize: 13,
   fontWeight: "400",
   lineHeight: "1",
+  marginLeft: "1rem",
+  marginTop: "1rem",
   letterSpacing: "0.5px",
   color: "rgb(55, 65, 81)",
   fontFamily:
