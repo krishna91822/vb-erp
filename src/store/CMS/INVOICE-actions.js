@@ -37,16 +37,19 @@ export const Update_INVOICE = (formData, id) => {
     try {
       const response = await axios.patch(`/invoice/${id}`, formData);
       if (response.status === 200) {
-        dispatch(
-          uiActions.showNotification({
-            status: "success",
-            title: "Success!",
-            message: "Updated Successfully!",
-          })
-        );
-        dispatch(invoiceActions.setPopupOpen());
-        dispatch(invoiceActions.setpopupVisibility());
-        dispatch(invoiceActions.setRedirect(true));
+        setTimeout(function () {
+          dispatch(invoiceActions.setPopupOpen());
+          dispatch(invoiceActions.setpopupVisibility());
+          dispatch(invoiceActions.setRedirect(true));
+          dispatch(invoiceActions.setReload());
+          dispatch(
+            uiActions.showNotification({
+              status: "success",
+              title: "Success!",
+              message: "Updated Successfully!",
+            })
+          );
+        }, 1000);
       } else {
         throw new Error("Could not Save data!");
       }

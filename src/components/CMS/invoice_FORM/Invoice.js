@@ -109,7 +109,7 @@ function Invoice(props) {
   let ReadVbBankAcc = "";
   let ReadDate = null;
   let readtargetedResources = "";
-  let readtargetedAllocation = "";
+  let readtargetedAllocation = {};
 
   const [personName, setPersonName] = React.useState(ReadPersonName);
   const [projectName, setProjectName] = React.useState(ReadProjectName);
@@ -147,6 +147,7 @@ function Invoice(props) {
   const [invoice_raised_yesno, setInvoiceRaisedYesNo] = React.useState("No");
   let [sum, setsum] = useState(0);
   const targetedResourcesName = Object.keys(TargettedAllocation);
+  console.log(TargettedAllocation);
   const percentageAllocation = Object.values(TargettedAllocation);
 
   useEffect(() => {
@@ -193,7 +194,7 @@ function Invoice(props) {
   }, [editTglCheckedState]);
   useEffect(() => {
     if (!invoicereceived) {
-      setinvoiceAmount(null);
+      setinvoiceAmount(0);
       setDate(null);
       setVbbankacc(null);
     }
@@ -279,37 +280,6 @@ function Invoice(props) {
     }
   };
 
-  // useEffect(() => {
-  //   if (projectName && !params.id) {
-  //     const filtered = allPOSOWs.filter((val) => {
-  //       return projectName === val.Project_Name;
-  //     });
-  //     setPO_number(filtered[0].PO_Number);
-  //     setPersonName(filtered[0].Client_Name);
-  //     setClientSponsorArr(filtered[0].Client_Sponser);
-  //     setClientFinControllerArr(filtered[0].Client_Finance_Controller);
-  //     setPOAmt(filtered[0].PO_Amount);
-  //     setPoCurr(filtered[0].Currency);
-  //     setPoId(filtered[0].PO_Id);
-  //   }
-  // }, [projectName]);
-  // const submitForm = async (event) => {
-  //   event.preventDefault();
-
-  //   const DataToSend = {
-  //     PO_Id: poId,
-  //     invoice_raised: invoice_raised,
-  //     invoice_amount_received: invoice_amount,
-  //     vb_bank_account: Vb_Bank_Acc,
-  //     amount_received_on: new Date(Date_),
-  //     invoice_received: invoicereceived ? "Yes" : "No",
-  //   };
-  //   if (!props.invoicereceived) {
-  //     dispatch(Update_INVOICE(DataToSend, params.id));
-  //   } else {
-  //     dispatch(createNew_INVOICE(DataToSend));
-  //   }
-  // };
   const filterinvoiceArr = allINVOICE.filter((val) => {
     return poId === val.purchase_orders._id;
   });
@@ -351,60 +321,6 @@ function Invoice(props) {
             )}
           </Grid>
         </Grid>
-
-        {/* <form onSubmit={submitForm}> */}
-        {/* <Grid container>
-          <Grid item lg={11} md={11} sm={12} xs={12}>
-            <h4 className="heading">PO Information</h4>
-          </Grid> */}
-
-        {/* {user.permissions.includes("upload_invoice") && (
-            <Grid item lg={1} md={1} sm={12} xs={12}>
-              <div className="posow-SaveButton">
-                <strong className="editTxt" data-test="editModeSwitch-label">
-                  Edit
-                </strong>
-                <label className="switch">
-                  <input
-                    type="checkbox"
-                    data-test="EditToggleBtn"
-                    data-testid="EditToggleBtn"
-                    checked={editTglCheckedState}
-                    onChange={handleEditTglChange}
-                    disabled={
-                      invoice_raised === "Yes" &&
-                      invoice_amount &&
-                      editTglCheckedState === false
-                    }
-                  />
-                  <span className="slider round"></span>
-                </label>
-              </div>
-            </Grid>
-          )} */}
-        {/* </Grid> */}
-
-        {/* <Grid container columnSpacing={3}>
-          <Grid item lg={6} md={6} sm={12} xs={12}>
-            <h3>Invoice</h3>
-          </Grid>
-          <Grid item lg={6} md={6} sm={12} xs={12}>
-            {props.editBtn && editTglCheckedState ? (
-              <div className="posow-SaveButton">
-                <Button
-                  variant="contained"
-                  color="success"
-                  onClick={updatehandler}
-                  data-test="UpdateBtn"
-                >
-                  Update{" "}
-                </Button>
-              </div>
-            ) : (
-              <div></div>
-            )}
-          </Grid>
-        </Grid> */}
         <Box fixed>
           <Card
             sx={{
@@ -452,11 +368,11 @@ function Invoice(props) {
                 <br />
                 <Box sx={{ minWidth: 120 }}>
                   <FormControl fullWidth>
-                    <TextField disabled={true} value={projectName}>
-                      {/* {allProjects.map((detail) => (
-                        <MenuItem value={detail}>{detail}</MenuItem>
-                      ))} */}
-                    </TextField>
+                    <TextField
+                      disabled={true}
+                      value={projectName}
+                      size="small"
+                    ></TextField>
                   </FormControl>
                 </Box>
               </Grid>
@@ -532,22 +448,6 @@ function Invoice(props) {
                       </FormControl>
                     </Box>
                   </Grid>
-                  {/* <Grid item lg={4} md={4} sm={12} xs={12}>
-                    {props.readonly ? (
-                      <></>
-                    ) : (
-                      <div>
-                        <label>PO Amount Left</label>
-                        <br />
-                        <Box sx={{ minWidth: 120 }}>
-                          <FormControl fullWidth>
-                            <TextField disabled={true} value={PO_amt - sum} />
-                          </FormControl>
-                        </Box>
-                        <span>{PoCurr}</span>
-                      </div>
-                    )}
-                  </Grid> */}
                 </Grid>
               </Grid>
               <Grid item lg={4} md={4} sm={12} xs={12}>
@@ -582,63 +482,6 @@ function Invoice(props) {
               </Grid>
             </Grid>
             <hr />
-
-            {/* <Accordion>
-          <AccordionSummary
-            expandIcon={<ExpandMoreIcon />}
-            aria-controls="panel1a-content"
-            id="panel1a-header"
-          >
-            <Typography>Related Invoices</Typography>
-          </AccordionSummary>
-          <AccordionDetails>
-            <Typography>
-              <TableContainer component={Paper}>
-                <Table sx={{ minWidth: 650 }} aria-label="simple table">
-                  <TableHead className="tablehead">
-                    <TableRow>
-                      <TableCell>PO/SOW Order</TableCell>
-                      <TableCell>Client Name</TableCell>
-                      <TableCell>Invoice raised</TableCell>
-                      <TableCell>Invoice Amount received</TableCell>
-                      <TableCell>Bank Account</TableCell>
-                    </TableRow>
-                  </TableHead>
-                  <TableBody>
-                    <TableCell>
-                      {filterinvoiceArr.map((detail) => (
-                        <TableRow>{detail.purchase_orders.PO_Number}</TableRow>
-                      ))}
-                    </TableCell>
-                    <TableCell>
-                      {filterinvoiceArr.map((detail) => (
-                        <TableRow>
-                          {detail.purchase_orders.Client_Name}
-                        </TableRow>
-                      ))}
-                    </TableCell>
-
-                    <TableCell>
-                      {filterinvoiceArr.map((detail) => (
-                        <TableRow>{detail.invoice_raised}</TableRow>
-                      ))}
-                    </TableCell>
-                    <TableCell>
-                      {filterinvoiceArr.map((detail) => (
-                        <TableRow>{detail.invoice_amount_received}</TableRow>
-                      ))}
-                    </TableCell>
-                    <TableCell>
-                      {filterinvoiceArr.map((detail) => (
-                        <TableRow>{detail.vb_bank_account}</TableRow>
-                      ))}
-                    </TableCell>
-                  </TableBody>
-                </Table>
-              </TableContainer>
-            </Typography>
-          </AccordionDetails>
-        </Accordion> */}
             <MiniHeadingTypography>Invoice Status</MiniHeadingTypography>
             <hr />
             <Grid container>
