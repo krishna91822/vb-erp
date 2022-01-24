@@ -72,11 +72,7 @@ export const createUserAccount = (user) => {
 export const setUserPassword = (id, password) => {
   return async (dispatch) => {
     const setPassword = async () => {
-      const user = {
-        password: " ",
-      };
       const response = await axios.put(`/${id}/setPassword`, password);
-      console.log(response.data.data, "=====CreateUSer");
       if (response.status === "failure") {
         throw new Error("Could not fetch employeesName");
       }
@@ -93,6 +89,45 @@ export const setUserPassword = (id, password) => {
           message: "password change successfully",
         })
       );
+    } catch (error) {
+      setTimeout(function () {
+        dispatch(
+          uiActions.showNotification({
+            status: "error",
+            title: "Error!",
+            message: "Something Went Wrong",
+          })
+        );
+      }, 1000);
+    } finally {
+      dispatch(uiActions.toggleLoader());
+    }
+  };
+};
+const sampledata = [
+  "user",
+  "super_admin",
+  "hr_admin_test",
+  "user",
+  "super_admin",
+  "hr_admin_test",
+  "hr_admin_test",
+];
+export const SetRoles = () => {
+  return async (dispatch) => {
+    const setUserRoles = async () => {
+      const response = await axios.get("/roles/getallroles");
+      if (response.status === "failure") {
+        throw new Error("Could not fetch roles");
+      }
+      const data = response.data.data;
+      return data;
+    };
+
+    try {
+      dispatch(uiActions.toggleLoader());
+      const data = await setUserRoles();
+      dispatch(userAccountActions.setUserRole(data));
     } catch (error) {
       setTimeout(function () {
         dispatch(
