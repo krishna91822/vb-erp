@@ -20,7 +20,6 @@ import {
   Box,
   Grid,
   InputAdornment,
-  IconButton,
 } from "@mui/material";
 import { Search as SearchIcon } from "../../../icons/search";
 

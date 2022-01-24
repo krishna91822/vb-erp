@@ -1,4 +1,4 @@
-import React, { useState, useLayoutEffect, useEffect } from "react";
+import React, { useState } from "react";
 import { TextField, Button, Card } from "@mui/material";
 import InputAdornment from "@mui/material/InputAdornment";
 import ResourceInformationTable from "../ResourceInformationTable";
@@ -11,7 +11,6 @@ import { getAllEmployees } from "../../../store/pmo-actions";
 import {
   Heading,
   Container,
-  ResourceInformationHeading,
   AllElementsContainer,
   ResourceForm,
   MultiElemContainer,
