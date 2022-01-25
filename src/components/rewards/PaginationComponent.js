@@ -1,5 +1,5 @@
 import React from "react";
-import "../clients/styles/ClientListStyles.css";
+import "../../assets/GlobalStyle/TableStyles.css";
 import { Stack, Pagination } from "@mui/material";
 import {
   filterData,

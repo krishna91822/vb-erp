@@ -1,7 +1,17 @@
 import React, { useState, useEffect } from "react";
-import { Box, Modal, Pagination } from "@mui/material";
+import {
+  Box,
+  Modal,
+  Pagination,
+  TableRow,
+  Table,
+  TableBody,
+  TableContainer,
+  TableHead,
+  Stack,
+} from "@mui/material";
 import ProfileContent from "./../../components/templates/profileContent/profileContent.component";
-
+import { StyledTableCell } from "../../assets/GlobalStyle/style";
 import {
   TitleTypo,
   CustomGridBox,
@@ -15,7 +25,7 @@ import { uiActions } from "../../store/ui-slice";
 import axiosInstance from "../../helpers/axiosInstance";
 
 import CloseIcon from "@mui/icons-material/Close";
-
+import "./../../assets/GlobalStyle/TableStyles.css";
 const Status = (props) => {
   const { user } = useSelector((state) => state.user);
   const { toggleLoader } = uiActions;
@@ -94,11 +104,7 @@ const Status = (props) => {
       return (
         <ContentTypo
           sx={{
-            backgroundColor: "#2AB3A6",
-            color: "white",
-            padding: "5px 15px",
-            borderRadius: "20px",
-            fontSize: "16px",
+            color: "#2AB3A6",
           }}
         >
           {status}
@@ -108,11 +114,7 @@ const Status = (props) => {
       return (
         <ContentTypo
           sx={{
-            backgroundColor: "#F7C839",
-            color: "white",
-            padding: "5px 15px",
-            borderRadius: "20px",
-            fontSize: "16px",
+            color: "#F7C839",
           }}
         >
           {status}
@@ -122,11 +124,7 @@ const Status = (props) => {
       return (
         <ContentTypo
           sx={{
-            backgroundColor: "#D3455B",
-            color: "white",
-            padding: "5px 15px",
-            borderRadius: "20px",
-            fontSize: "16px",
+            color: "#D3455B",
           }}
         >
           {status}
@@ -136,7 +134,7 @@ const Status = (props) => {
   };
 
   return (
-    <Box sx={{ width: 1 }}>
+    <div className="list-wrapper">
       <Box
         sx={{
           display: "flex",
@@ -157,117 +155,104 @@ const Status = (props) => {
           {statusConstants.pageTitle}
         </TitleTypo>
       </Box>
-      <Box
-        sx={{
-          padding: "0.5em",
-          border: "0.1em solid",
-          borderColor: "textColor.paletteGrey",
-          borderRadius: "5px",
-          pb: 3,
-          position: "relative",
-        }}
-      >
-        <Box
-          sx={{
-            width: "100%-1",
-            backgroundColor: "textColor.light",
-            padding: 1,
-            marginTop: 1,
-            borderRadius: "5px",
-          }}
-        >
-          <CustomGridBox
-            sx={{
-              height: 50,
-              backgroundColor: "#fff",
-              borderRadius: "5px",
-            }}
-          >
-            {
-              //title of the status table
-              statusConstants.tableTitle.map((item, i) => (
-                <TitleTypo key={i} sx={{ textTransform: "capitalize" }}>
-                  {item}
-                </TitleTypo>
-              ))
-            }
-          </CustomGridBox>
-          {reviewData.map((item) => (
-            <CustomGridBox
-              key={item.reqId}
-              sx={{
-                mt: 1,
-                mb: 1,
-                height: 40,
-                cursor: "pointer",
-              }}
-              onClick={(e) => handleClickReviewItem(item)}
-            >
-              <ContentTypo>{item.reqId}</ContentTypo>
-              <ContentTypo>{item.reqName}</ContentTypo>
-              <ContentTypo>
-                {new Date(item.createdAt).toISOString().slice(0, 10)}
-              </ContentTypo>
-              <ContentTypo>
-                {item.employeeDetails.empReportingManager}
-              </ContentTypo>
-              <ContentTypo>{item.reqType}</ContentTypo>
-              {renderChildStatus(item.status)}
-            </CustomGridBox>
-          ))}
-        </Box>
-        {/* pagination */}
-        <Box sx={{ width: 1, display: "flex", justifyContent: "center" }}>
+
+      <div className="ListContainer">
+        <TableContainer>
+          <Table>
+            <TableHead>
+              <TableRow className="table-header">
+                {
+                  //title of the status table
+                  statusConstants.tableTitle.map((item, i) => (
+                    <StyledTableCell align="center" key={i}>
+                      {item}
+                    </StyledTableCell>
+                  ))
+                }
+              </TableRow>
+            </TableHead>
+
+            <TableBody>
+              {reviewData.map((item) => (
+                <TableRow
+                  className="table-row"
+                  key={item.reqId}
+                  onClick={(e) => handleClickReviewItem(item)}
+                >
+                  <StyledTableCell align="center">{item.reqId}</StyledTableCell>
+                  <StyledTableCell align="center">
+                    {item.reqName}
+                  </StyledTableCell>
+                  <StyledTableCell align="center">
+                    {new Date(item.createdAt).toISOString().slice(0, 10)}
+                  </StyledTableCell>
+                  <StyledTableCell align="center">
+                    {item.employeeDetails.empReportingManager}
+                  </StyledTableCell>
+                  <StyledTableCell align="center">
+                    {item.reqType}
+                  </StyledTableCell>
+                  <StyledTableCell align="center">
+                    {renderChildStatus(item.status)}
+                  </StyledTableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </div>
+
+      {/* pagination */}
+
+      <div className="pagination">
+        <Stack spacing={2}>
           <Pagination
             data-test="pagination-test"
             count={paginationInfo.totalPage}
             page={paginationInfo.page}
             onChange={handlePagination}
-            showFirstButton
-            showLastButton
-            color="primary"
           />
-        </Box>
-        <Modal open={openModalForReview} onClose={handleCloseModalForReview}>
-          <ModalBoxItem sx={{ height: "auto" }}>
-            <Box
-              sx={{
-                width: 1,
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "space-between",
-              }}
-            >
-              {reviewItemData.message && (
-                <ContentTypo sx={{ display: "flex", alignItems: "center" }}>
-                  <NoteTypo>note:&nbsp;</NoteTypo>
-                  {reviewItemData.message}
-                </ContentTypo>
-              )}
-              <CloseIcon
-                fontSize="medium"
-                onClick={handleCloseModalForReview}
-                sx={{ cursor: "pointer" }}
-              />
-            </Box>
-            <Box
-              sx={{
-                width: 1,
-                height: "calc( 80vh - 90px )",
-                overflowY: "scroll",
-                outline: "1px solid",
-                outlineColor: "#9e9e9e",
-                borderRadius: "5px",
-                mt: 1,
-                backgroundColor: "rgb(249, 250, 252)",
-              }}
-            >
-              <ProfileContent currentEmployee={reviewItemData} />
-            </Box>
-          </ModalBoxItem>
-        </Modal>
-      </Box>
-    </Box>
+        </Stack>
+      </div>
+      <Modal open={openModalForReview} onClose={handleCloseModalForReview}>
+        <ModalBoxItem sx={{ height: "auto" }}>
+          <Box
+            sx={{
+              width: 1,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+            }}
+          >
+            {reviewItemData.message && (
+              <ContentTypo sx={{ display: "flex", alignItems: "center" }}>
+                <NoteTypo>note:&nbsp;</NoteTypo>
+                {reviewItemData.message}
+              </ContentTypo>
+            )}
+            <CloseIcon
+              fontSize="medium"
+              onClick={handleCloseModalForReview}
+              sx={{ cursor: "pointer" }}
+            />
+          </Box>
+          <Box
+            sx={{
+              width: 1,
+              height: "calc( 80vh - 90px )",
+              overflowY: "scroll",
+              outline: "1px solid",
+              outlineColor: "#9e9e9e",
+              borderRadius: "5px",
+              mt: 1,
+              backgroundColor: "rgb(249, 250, 252)",
+            }}
+          >
+            <ProfileContent currentEmployee={reviewItemData} />
+          </Box>
+        </ModalBoxItem>
+      </Modal>
+    </div>
   );
 };
 

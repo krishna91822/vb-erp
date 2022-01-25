@@ -161,7 +161,7 @@ export const fetchSpecificPO_SOW = (ROW_ID) => {
         uiActions.showNotification({
           status: "error",
           title: "Error",
-          message: "Could not update data",
+          message: "Could not get data",
         })
       );
     } finally {
@@ -201,69 +201,6 @@ export const AddEmpToThisPO = (formData) => {
             status: "error",
             title: "Error!",
             message: "Could not Save data!",
-          })
-        );
-      }, 1000);
-    }
-  };
-};
-export const UpdateEmpData = (formData, emp_id) => {
-  return async function (dispatch) {
-    try {
-      const response = await axios.patch(`/assign/${emp_id}`, formData);
-      if (response.status === 200) {
-        dispatch(
-          uiActions.showNotification({
-            status: "success",
-            title: "Success!",
-            message: "Updated Successfully!",
-          })
-        );
-        dispatch(PoSowActions.setRedirect(false));
-      } else {
-        throw new Error("Could not update!");
-      }
-    } catch (error) {
-      dispatch(uiActions.toggleLoader());
-      setTimeout(function () {
-        dispatch(uiActions.toggleLoader());
-        dispatch(
-          uiActions.showNotification({
-            status: "error",
-            title: "Error!",
-            message: "Could not update!",
-          })
-        );
-      }, 1000);
-    }
-  };
-};
-
-export const UnAssignThisEmp = (emp_id) => {
-  return async function (dispatch) {
-    try {
-      const response = await axios.patch(`/assign/unassign/${emp_id}`);
-      if (response.status === 200) {
-        dispatch(
-          uiActions.showNotification({
-            status: "success",
-            title: "Success!",
-            message: "Unassigned Employee",
-          })
-        );
-        dispatch(PoSowActions.setRedirect(false));
-      } else {
-        throw new Error("Could not Unassign!");
-      }
-    } catch (error) {
-      dispatch(uiActions.toggleLoader());
-      setTimeout(function () {
-        dispatch(uiActions.toggleLoader());
-        dispatch(
-          uiActions.showNotification({
-            status: "error",
-            title: "Error!",
-            message: "Something went wrong",
           })
         );
       }, 1000);
