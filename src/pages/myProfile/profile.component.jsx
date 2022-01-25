@@ -13,14 +13,13 @@ import axiosInstance from "../../helpers/axiosInstance";
 import { roundToNearestMinutes } from "date-fns/esm";
 
 const Profile = () => {
-  const { currentEmployee, inEditMode } = useSelector(
-    (state) => state.employee
-  );
+  const { currentEmployee } = useSelector((state) => state.employee);
   const { user } = useSelector((state) => state.user);
 
   const email = user.email;
 
   const [loading, setLoading] = useState(true);
+  const [inEditMode, setInEditMode] = useState(false);
   const dispatch = useDispatch();
 
   const [employeeUpdateCount, setEmployeeUpdateCount] = useState(0);
@@ -75,6 +74,7 @@ const Profile = () => {
     setUpdateRequest,
     currentEmployee,
     inEditMode,
+    setInEditMode,
     personalDetails,
     setPersonalDetails,
     professionalDetails,
@@ -90,6 +90,7 @@ const Profile = () => {
     setUpdateRequest,
     updateRequest,
     inEditMode,
+    setInEditMode,
     handleOpen,
     setEmployeeUpdateCount,
   };

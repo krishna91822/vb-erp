@@ -8,6 +8,7 @@ export const ListItem = styled("li")(({ theme }) => ({
 }));
 
 export const CustomTextField = styled(TextField)({
+  width: "100%",
   "& .MuiOutlinedInput-root": {
     width: "100%",
     height: "35px",

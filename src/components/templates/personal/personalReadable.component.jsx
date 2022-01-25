@@ -23,7 +23,7 @@ import {
 const PersonalReadable = ({ empData }) => {
   const {
     empDob,
-    empConnections,
+    slackMemId,
     empHobbies,
     empPersonalEmail,
     empAboutMe,
@@ -91,10 +91,10 @@ const PersonalReadable = ({ empData }) => {
             </Box>
           </ContentTypo>
         </ContentBox>
-        {/* <ContentBox>
-            <ContentTypo>{personal.connections}</ContentTypo>
-            <ContentTypo>{empConnections}</ContentTypo>
-          </ContentBox> */}
+        <ContentBox>
+          <TitleTypo>{personal.slackMemberId}</TitleTypo>
+          <ContentTypo>{slackMemId}</ContentTypo>
+        </ContentBox>
         <ContentBox>
           <TitleTypo>{personal.currentAddress}</TitleTypo>
           <Box sx={{ width: 1 }}>
