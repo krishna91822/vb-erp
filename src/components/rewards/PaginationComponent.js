@@ -62,11 +62,13 @@ const PaginationPage = () => {
         }
       })()}
       <Stack spacing={2}>
-        <Pagination
-          count={count}
-          defaultPage={defaultPage}
-          onChange={getPageNumber}
-        />
+        {count > 1 && (
+          <Pagination
+            count={count}
+            defaultPage={defaultPage}
+            onChange={getPageNumber}
+          />
+        )}
       </Stack>
     </div>
   );

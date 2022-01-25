@@ -26,7 +26,6 @@ const CreateReward = () => {
   const [announcement, setAnnouncement] = React.useState("");
   const [subtype, setSubType] = React.useState("");
   const [receiver, setReceiver] = React.useState("");
-  const [multipleEmployeeData, setMultipleEmployeeData] = React.useState([]);
   const [errors, setErrors] = React.useState({});
 
   const [formData, setFormData] = useState({});
