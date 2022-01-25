@@ -170,7 +170,9 @@ const CreateReward = () => {
           <form>
             <Grid margin={"1rem"}>
               <Grid item>
-                <label>Reward Display Name</label>
+                <label>
+                  Reward Display Name <span style={{ color: "red" }}>*</span>
+                </label>
                 <br />
                 <TextField
                   size="small"
@@ -184,7 +186,9 @@ const CreateReward = () => {
               </Grid>
               <br />
               <Grid item>
-                <label>Reward Type</label>
+                <label>
+                  Reward Type <span style={{ color: "red" }}>*</span>
+                </label>
                 <br />
                 <FormControl id="RType">
                   <Select
@@ -206,7 +210,7 @@ const CreateReward = () => {
               <br />
               {type === "Daily" && (
                 <Grid item>
-                  <label>Reward Sub Type</label>
+                  <label>Reward Sub Type </label>
                   <br />
                   <FormControl id="RType">
                     <Select
@@ -249,7 +253,9 @@ const CreateReward = () => {
               )}
               <br />
               <Grid item>
-                <label>Reward Sender</label>
+                <label>
+                  Reward Sender <span style={{ color: "red" }}>*</span>
+                </label>
                 <br />
                 <FormControl id="RSender">
                   <Select
@@ -275,7 +281,9 @@ const CreateReward = () => {
               </Grid>
               <br />
               <Grid item>
-                <label>Reward Receiver</label>
+                <label>
+                  Reward Receiver <span style={{ color: "red" }}>*</span>
+                </label>
                 <br />
                 <FormControl id="Rreceiver">
                   <Select
@@ -305,7 +313,9 @@ const CreateReward = () => {
               </Grid>
               <br />
               <Grid item>
-                <label>Receiver Message</label>
+                <label>
+                  Receiver Message <span style={{ color: "red" }}>*</span>
+                </label>
                 <br />
                 <TextField
                   placeholder="hii <@receiver> you have some msg from <@sender>"
@@ -320,7 +330,9 @@ const CreateReward = () => {
               </Grid>
               <br />
               <Grid item>
-                <label>Announcement Type</label>
+                <label>
+                  Announcement Type <span style={{ color: "red" }}>*</span>
+                </label>
                 <br />
                 <FormControl id="Atype">
                   <Select
