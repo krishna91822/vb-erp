@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import {
   Grid,
   Avatar,
@@ -10,11 +10,16 @@ import {
   Card,
   CardContent,
   Typography,
+  Badge,
+  IconButton,
+  Input,
 } from "@mui/material";
 import { StyledTypography } from "../../../assets/GlobalStyle/style";
 import { ContentBox } from "../personal/personalReadable.styles";
 import { TitleTypo, ContentTypo } from "./../../UI/commonStyles";
 import PersonIcon from "@mui/icons-material/Person";
+import CloudUploadIcon from "@material-ui/icons/CloudUpload";
+import { deepOrange } from "@mui/material/colors";
 
 import { profileInfoConstant } from "./profileInfo.constant";
 import CreatableSelect from "react-select/creatable";
@@ -78,6 +83,14 @@ const ProfileInfoEditable = (props) => {
     }),
   };
 
+  const ref = useRef();
+  const [profilePicture, setProfilePicture] = useState(null);
+  let avatarChar = empName.charAt(0).toUpperCase();
+  const handlePicture = (event) => {
+    const files = Array.from(event.target.files);
+    const file = files[0];
+    setProfilePicture(URL.createObjectURL(file));
+  };
   const [empDetails, setEmpDetails] = useState({});
   const [empNameLoading, setEmpNameLoading] = useState(true);
   const [reportingTo, setReportingTo] = useState(
@@ -183,22 +196,52 @@ const ProfileInfoEditable = (props) => {
                       flexDirection: "column",
                     }}
                   >
-                    <Avatar
-                      mt={2}
-                      sx={{
-                        height: 64,
-                        mb: 2,
-                        width: 64,
-                      }}
-                    >
-                      <PersonIcon
-                        sx={{
-                          height: "60%",
-                          width: "60%",
-                          color: "rgb(17,24,39)",
-                        }}
+                    <>
+                      <Input
+                        ref={ref}
+                        type="file"
+                        accept="image/*"
+                        onChange={handlePicture}
+                        id="uploadButton"
+                        style={{ display: "none" }}
                       />
-                    </Avatar>
+                      <label htmlFor="uploadButton">
+                        <IconButton component="span">
+                          <Badge
+                            anchorOrigin={{
+                              vertical: "bottom",
+                              horizontal: "right",
+                            }}
+                            badgeContent={<CloudUploadIcon />}
+                            overlap="circular"
+                          >
+                            <Avatar
+                              mt={2}
+                              sx={{
+                                height: 64,
+                                mb: 2,
+                                width: 64,
+                                background: deepOrange[500],
+                              }}
+                              src={profilePicture}
+                            >
+                              {avatarChar.length > 0 ? (
+                                avatarChar
+                              ) : (
+                                <PersonIcon
+                                  sx={{
+                                    height: "60%",
+                                    width: "60%",
+                                    color: "rgb(17,24,39)",
+                                  }}
+                                />
+                              )}
+                            </Avatar>
+                          </Badge>
+                        </IconButton>
+                      </label>
+                    </>
+
                     <TitleTypo sx={{ mt: 1, textTransform: "capitalize" }}>
                       <TextField
                         id="standard-basic"
