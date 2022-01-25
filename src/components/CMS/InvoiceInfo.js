@@ -331,7 +331,7 @@ function InvoiceInfo() {
         </TableContainer>
         <div className="pagination">
           <Stack spacing={2}>
-            {Math.ceil(totalCount / postPerPage) && (
+            {Math.ceil(totalCount / postPerPage) > 1 && (
               <Pagination
                 count={Math.ceil(totalCount / postPerPage)}
                 page={currentPage}
