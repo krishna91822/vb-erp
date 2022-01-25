@@ -19,6 +19,7 @@ import {
   StyledTypography,
   MiniHeadingTypography,
 } from "../../assets/GlobalStyle/style";
+import validateForm from "./ValidateCreateReward";
 
 const CreateReward = () => {
   const dispatch = useDispatch();
@@ -29,7 +30,7 @@ const CreateReward = () => {
   const [announcement, setAnnouncement] = React.useState("");
   const [subtype, setSubType] = React.useState("");
   const [receiver, setReceiver] = React.useState("");
-  const [multipleEmployeeData, setMultipleEmployeeData] = React.useState([]);
+  const [errors, setErrors] = React.useState({});
 
   const [formData, setFormData] = useState({});
   const updateRewardStatus = useSelector(
@@ -91,9 +92,15 @@ const CreateReward = () => {
       [event.target.name]: event.target.value,
     });
   };
+
   const getFormData = (event) => {
     event.preventDefault();
-    dispatch(addRewardData(formData));
+    const validateError = validateForm(formData);
+    const noErrors = Object.keys(validateError).length === 0;
+    setErrors(validateError);
+    if (noErrors) {
+      dispatch(addRewardData(formData));
+    }
   };
 
   const [openSenderPopup, setOpenSenderPopup] = useState(false);
@@ -168,17 +175,21 @@ const CreateReward = () => {
                 children="Reward Display Name"
                 style={{ color: " black " }}
               />
+              <span style={{ color: "red" }}>*</span>
               <br />
               <TextField
                 id="outlined-name"
                 name="reward_display_name"
                 onChange={handleChangeForm}
                 className="textfield1"
+                size="small"
+                error={errors.reward_display_name ? true : false}
               />
             </Grid>
             <br />
             <Grid item>
               <FormLabel children="Reward Type" style={{ color: " black " }} />
+              <span style={{ color: "red" }}>*</span>
               <br />
               <FormControl id="RType">
                 <Select
@@ -187,6 +198,8 @@ const CreateReward = () => {
                   name="reward_type"
                   value={type}
                   onChange={typeChange}
+                  error={errors.reward_type ? true : false}
+                  size="small"
                 >
                   <MenuItem value="Daily">Daily</MenuItem>
                   <MenuItem value="Monthly">Monthly</MenuItem>
@@ -210,6 +223,7 @@ const CreateReward = () => {
                     name="reward_subType"
                     value={subtype}
                     onChange={subtypeChange}
+                    size="small"
                   >
                     <MenuItem value="work-anniversary">
                       Work Anniversary
@@ -235,6 +249,7 @@ const CreateReward = () => {
                     name="reward_subType"
                     value={subtype}
                     onChange={subtypeChange}
+                    size="small"
                   >
                     <MenuItem value="starOfTheMonth">
                       Star Of The Month
@@ -249,6 +264,7 @@ const CreateReward = () => {
                 children="Reward Sender"
                 style={{ color: " black " }}
               />
+              <span style={{ color: "red" }}>*</span>
               <br />
               <FormControl id="RSender">
                 <Select
@@ -257,6 +273,8 @@ const CreateReward = () => {
                   name="reward_sender"
                   value={send}
                   onChange={senderChange}
+                  error={errors.reward_sender ? true : false}
+                  size="small"
                 >
                   <MenuItem value="CEO">CEO</MenuItem>
                   <MenuItem value="Manager">Manager</MenuItem>
@@ -276,6 +294,7 @@ const CreateReward = () => {
                 children="Reward Receiver"
                 style={{ color: " black " }}
               />
+              <span style={{ color: "red" }}>*</span>
               <br />
               <FormControl id="Rreceiver">
                 <Select
@@ -284,6 +303,8 @@ const CreateReward = () => {
                   value={receiver}
                   name="reward_receiver"
                   onChange={receiverChange}
+                  error={errors.reward_receiver ? true : false}
+                  size="small"
                 >
                   {type === "On-Demand" && (
                     <MenuItem value="Manager">Manager</MenuItem>
@@ -307,6 +328,7 @@ const CreateReward = () => {
                 children="Receiver Message"
                 style={{ color: " black " }}
               />
+              <span style={{ color: "red" }}>*</span>
               <br />
               <TextField
                 placeholder="hii <@receiver> you have some msg from <@sender>"
@@ -315,6 +337,8 @@ const CreateReward = () => {
                 rows={3}
                 name="receiver_message"
                 onChange={handleChangeForm}
+                error={errors.receiver_message ? true : false}
+                size="small"
               />
             </Grid>
             <br />
@@ -323,6 +347,7 @@ const CreateReward = () => {
                 children="Announcement Type"
                 style={{ color: " black " }}
               />
+              <span style={{ color: "red" }}>*</span>
               <br />
               <FormControl id="Atype">
                 <Select
@@ -331,6 +356,8 @@ const CreateReward = () => {
                   value={announcement}
                   name="announcement_type"
                   onChange={announcementChange}
+                  error={errors.announcement_type ? true : false}
+                  size="small"
                 >
                   <MenuItem value="public">Public</MenuItem>
                   <MenuItem value="private">Private</MenuItem>
@@ -350,6 +377,7 @@ const CreateReward = () => {
                   className="textfield1"
                   name="slack_channel"
                   onChange={handleChangeForm}
+                  size="small"
                 />
               </Grid>
             )}
@@ -368,6 +396,7 @@ const CreateReward = () => {
                   name="channel_message"
                   onChange={handleChangeForm}
                   rows={2}
+                  size="small"
                 />
               </Grid>
             )}
