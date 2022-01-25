@@ -1,36 +1,22 @@
 import React, { useState, useEffect } from "react";
 import {
   Box,
-  Card,
-  CardContent,
-  Grid,
-  InputAdornment,
-  MenuItem,
   Modal,
   Pagination,
-  Stack,
-  SvgIcon,
+  TableRow,
   Table,
   TableBody,
   TableContainer,
   TableHead,
-  TableRow,
-  TextField,
+  Stack,
 } from "@mui/material";
 import ProfileContent from "./../../components/templates/profileContent/profileContent.component";
-import {
-  StyledTypography,
-  StyledTableCell,
-} from "./../../assets/GlobalStyle/style";
-import { Search as SearchIcon } from "./../../icons/search";
-
+import { StyledTableCell } from "../../assets/GlobalStyle/style";
 import {
   TitleTypo,
-  CustomGridBox,
   ContentTypo,
   ModalBoxItem,
   NoteTypo,
-  CustomTextField,
 } from "./status.styles";
 import { statusConstants } from "./status.constant";
 import { useDispatch, useSelector } from "react-redux";
@@ -38,7 +24,7 @@ import { uiActions } from "../../store/ui-slice";
 import axiosInstance from "../../helpers/axiosInstance";
 
 import CloseIcon from "@mui/icons-material/Close";
-
+import "./../../assets/GlobalStyle/TableStyles.css";
 const Status = (props) => {
   const { user } = useSelector((state) => state.user);
   const { toggleLoader } = uiActions;
@@ -46,19 +32,6 @@ const Status = (props) => {
 
   const [reviewData, setReviewData] = useState([]);
   const [reviewItemData, setReviewItemData] = useState({});
-  const [sort, setSort] = useState("reqName");
-  const [search, setSearch] = useState("");
-
-  const handleSortChange = (e) => {
-    setSort(e.target.value);
-  };
-
-  const searchHandleChange = (e) => {
-    if (e.key === "Enter") {
-      setSearch((prev) => e.target.value);
-      console.log(search);
-    }
-  };
 
   //pagination
   const [paginationInfo, setPaginationInfo] = useState({
@@ -77,7 +50,7 @@ const Status = (props) => {
     dispatch(toggleLoader());
     axiosInstance
       .get(
-        `/reviews?sort=${sort},-reqId&reqEmail=${user.email}&search=${search}&page=${paginationInfo.page}&limit=${paginationInfo.limit}`
+        `/reviews?sort=-reqId&reqEmail=${user.email}&page=${paginationInfo.page}&limit=${paginationInfo.limit}`
       )
       .then((response) => {
         dispatch(toggleLoader());
@@ -100,7 +73,7 @@ const Status = (props) => {
         console.log(err);
       });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [paginationInfo.page, search, sort]);
+  }, [paginationInfo.page]);
 
   //modal
   const [openModalForReview, setOpenModalForReview] = useState(false);
@@ -125,11 +98,8 @@ const Status = (props) => {
       return (
         <ContentTypo
           sx={{
-            backgroundColor: "#2AB3A6",
-            color: "white",
-            padding: "5px 15px",
-            borderRadius: "20px",
-            fontSize: "16px",
+            color: "#2AB3A6",
+            fontWeight: "bold",
           }}
         >
           {status}
@@ -139,11 +109,8 @@ const Status = (props) => {
       return (
         <ContentTypo
           sx={{
-            backgroundColor: "#F7C839",
-            color: "white",
-            padding: "5px 15px",
-            borderRadius: "20px",
-            fontSize: "16px",
+            color: "#F7C839",
+            fontWeight: "bold",
           }}
         >
           {status}
@@ -153,11 +120,8 @@ const Status = (props) => {
       return (
         <ContentTypo
           sx={{
-            backgroundColor: "#D3455B",
-            color: "white",
-            padding: "5px 15px",
-            borderRadius: "20px",
-            fontSize: "16px",
+            color: "#D3455B",
+            fontWeight: "bold",
           }}
         >
           {status}
@@ -167,160 +131,125 @@ const Status = (props) => {
   };
 
   return (
-    <Box sx={{ width: 1 }}>
-      <div className="list-wrapper">
-        <StyledTypography>My Reviews</StyledTypography>
-        <Card>
-          <CardContent>
-            <Box sx={{ maxWidth: "100%" }}>
-              <Grid container spacing={2}>
-                <Grid item xs={4}>
-                  <TextField
-                    data-test="Search By Req Name-test"
-                    fullWidth
-                    onKeyPress={(e) => searchHandleChange(e)}
-                    placeholder="Search By Req Name"
-                    id="outlined-search"
-                    InputProps={{
-                      startAdornment: (
-                        <InputAdornment position="start">
-                          <SvgIcon color="action" fontSize="small">
-                            <SearchIcon />
-                          </SvgIcon>
-                        </InputAdornment>
-                      ),
-                    }}
-                    variant="outlined"
-                  />
-                </Grid>
-                <Grid
-                  item
-                  xs={8}
-                  container
-                  direction="row"
-                  justifyContent="flex-end"
-                  alignItems="center"
+    <div className="list-wrapper">
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "space-between",
+          mb: 1,
+          flexDirection: "row",
+          alignItems: "center",
+        }}
+      >
+        <TitleTypo
+          sx={{
+            fontSize: "1.5em",
+            textTransform: "capitalize",
+            mb: 0.5,
+            mr: 2,
+          }}
+        >
+          {statusConstants.pageTitle}
+        </TitleTypo>
+      </Box>
+
+      <div className="ListContainer">
+        <TableContainer>
+          <Table>
+            <TableHead>
+              <TableRow className="table-header">
+                {
+                  //title of the status table
+                  statusConstants.tableTitle.map((item, i) => (
+                    <StyledTableCell align="center" key={i}>
+                      {item}
+                    </StyledTableCell>
+                  ))
+                }
+              </TableRow>
+            </TableHead>
+
+            <TableBody>
+              {reviewData.map((item) => (
+                <TableRow
+                  className="table-row"
+                  key={item.reqId}
+                  onClick={(e) => handleClickReviewItem(item)}
                 >
-                  <Box m={1}>
-                    <CustomTextField
-                      data-test="Sort-test"
-                      label="Sort"
-                      id="outlined-select-currency"
-                      select
-                      value={sort}
-                      onChange={(e) => handleSortChange(e)}
-                      sx={{ width: "15vw" }}
-                    >
-                      {statusConstants.sortOption.map((option) => (
-                        <MenuItem key={option.value} value={option.value}>
-                          {option.label}
-                        </MenuItem>
-                      ))}
-                    </CustomTextField>
-                  </Box>
-                </Grid>
-              </Grid>
-            </Box>
-          </CardContent>
-        </Card>
-
-        <div className="ListContainer">
-          <TableContainer>
-            <Table>
-              <TableHead>
-                <TableRow className="table-header">
-                  <StyledTableCell align="center">Req Id</StyledTableCell>
+                  <StyledTableCell align="center">{item.reqId}</StyledTableCell>
                   <StyledTableCell align="center">
-                    Requester Name
+                    {item.reqName}
                   </StyledTableCell>
-                  <StyledTableCell align="center">Requested on</StyledTableCell>
-                  <StyledTableCell align="center">Reporting to</StyledTableCell>
-                  <StyledTableCell align="center">Request type</StyledTableCell>
-                  <StyledTableCell align="center">Status</StyledTableCell>
+                  <StyledTableCell align="center">
+                    {new Date(item.createdAt).toISOString().slice(0, 10)}
+                  </StyledTableCell>
+                  <StyledTableCell align="center">
+                    {item.employeeDetails.empReportingManager}
+                  </StyledTableCell>
+                  <StyledTableCell align="center">
+                    {item.reqType}
+                  </StyledTableCell>
+                  <StyledTableCell align="center">
+                    {renderChildStatus(item.status)}
+                  </StyledTableCell>
                 </TableRow>
-              </TableHead>
-
-              <TableBody>
-                {reviewData.map((item) => (
-                  <TableRow
-                    className="table-row"
-                    key={item.reqId}
-                    onClick={(e) => handleClickReviewItem(item)}
-                  >
-                    <StyledTableCell align="center">
-                      {item.reqId}
-                    </StyledTableCell>
-                    <StyledTableCell align="center">
-                      {item.reqName}
-                    </StyledTableCell>
-                    <StyledTableCell align="center">
-                      {new Date(item.createdAt).toISOString().slice(0, 10)}
-                    </StyledTableCell>
-                    <StyledTableCell align="center">
-                      {item.employeeDetails.empReportingManager}
-                    </StyledTableCell>
-                    <StyledTableCell align="center">
-                      {item.reqType}
-                    </StyledTableCell>
-                    <StyledTableCell align="center">
-                      {renderChildStatus(item.status)}
-                    </StyledTableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </TableContainer>
-        </div>
-        {/* pagination */}
-        <div className="pagination">
-          <Stack spacing={2}>
-            <Pagination
-              count={paginationInfo.totalPage}
-              page={paginationInfo.page}
-              onChange={handlePagination}
-            />
-          </Stack>
-        </div>
-        <Modal open={openModalForReview} onClose={handleCloseModalForReview}>
-          <ModalBoxItem sx={{ height: "auto" }}>
-            <Box
-              sx={{
-                width: 1,
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "space-between",
-              }}
-            >
-              {reviewItemData.message && (
-                <ContentTypo sx={{ display: "flex", alignItems: "center" }}>
-                  <NoteTypo>note:&nbsp;</NoteTypo>
-                  {reviewItemData.message}
-                </ContentTypo>
-              )}
-              <CloseIcon
-                fontSize="medium"
-                onClick={handleCloseModalForReview}
-                sx={{ cursor: "pointer" }}
-              />
-            </Box>
-            <Box
-              sx={{
-                width: 1,
-                height: "calc( 80vh - 90px )",
-                overflowY: "scroll",
-                outline: "1px solid",
-                outlineColor: "#9e9e9e",
-                borderRadius: "5px",
-                mt: 1,
-                backgroundColor: "rgb(249, 250, 252)",
-              }}
-            >
-              <ProfileContent currentEmployee={reviewItemData} />
-            </Box>
-          </ModalBoxItem>
-        </Modal>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
       </div>
-    </Box>
+
+      {/* pagination */}
+
+      <div className="pagination">
+        <Stack spacing={2}>
+          <Pagination
+            data-test="pagination-test"
+            count={paginationInfo.totalPage}
+            page={paginationInfo.page}
+            onChange={handlePagination}
+          />
+        </Stack>
+      </div>
+      <Modal open={openModalForReview} onClose={handleCloseModalForReview}>
+        <ModalBoxItem sx={{ height: "auto" }}>
+          <Box
+            sx={{
+              width: 1,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+            }}
+          >
+            {reviewItemData.message && (
+              <ContentTypo sx={{ display: "flex", alignItems: "center" }}>
+                <NoteTypo>note:&nbsp;</NoteTypo>
+                {reviewItemData.message}
+              </ContentTypo>
+            )}
+            <CloseIcon
+              fontSize="medium"
+              onClick={handleCloseModalForReview}
+              sx={{ cursor: "pointer" }}
+            />
+          </Box>
+          <Box
+            sx={{
+              width: 1,
+              height: "calc( 80vh - 90px )",
+              overflowY: "scroll",
+              outline: "1px solid",
+              outlineColor: "#9e9e9e",
+              borderRadius: "5px",
+              mt: 1,
+              backgroundColor: "rgb(249, 250, 252)",
+            }}
+          >
+            <ProfileContent currentEmployee={reviewItemData} />
+          </Box>
+        </ModalBoxItem>
+      </Modal>
+    </div>
   );
 };
 

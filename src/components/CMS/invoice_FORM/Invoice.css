@@ -40,16 +40,14 @@ h3 {
 }
 .invoice-editToggle {
   text-align: center;
-  margin-top: 15px;
   position: relative;
+  margin-bottom: 18px;
 }
 .invoiceForm-container {
   margin: 1rem;
 }
 .invoice-updateBtn {
   text-align: right;
-  margin-right: 10px;
-  margin-top: 15px;
 }
 .editTxt {
   width: fit-content;

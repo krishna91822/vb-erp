@@ -1,12 +1,7 @@
 import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
-import {
-  Switch,
-  Button,
-  Typography,
-  FormControlLabel,
-  Grid,
-} from "@mui/material";
+import { Button, Typography, FormControlLabel, Grid } from "@mui/material";
+import { CustomSwitch } from "../UI/commonStyles";
 import UseForm from "./UseForm";
 import Form from "./Form";
 import "./styles/ClientFormStyles.css";
@@ -41,59 +36,54 @@ function UpdateClientForm() {
       </Grid>
       <div className="CIMSFormContainer">
         <div className="cims-form-header">
-          <Grid container m={2} spacing={1}>
-            <Grid item md={4}>
-              <MiniHeadingTypography variant="h4">
-                Client Information
-              </MiniHeadingTypography>
-            </Grid>
-            <Grid item sm></Grid>
-            {user.permissions.includes("update_on_CIMS_module") ? (
-              <Grid container pt={1} md={5} spacing={4}>
-                <Grid item md={3}>
-                  <Link to="/cims" style={{ textDecoration: "none" }}>
-                    <Button variant="contained" color="error" id="cancel-btn">
-                      Cancel
-                    </Button>
-                  </Link>
-                </Grid>
-                <Grid item md={4}>
-                  <Button
-                    onClick={updateForm}
-                    type="submit"
-                    variant="contained"
-                    color="success"
-                    id="save-btn"
-                    disabled={!validateOnSubmit()}
-                  >
-                    Update
-                  </Button>
-                </Grid>
-                <Grid item md={5}>
-                  <FormControlLabel
-                    control={
-                      <Switch
-                        checked={editMode}
-                        onChange={() =>
-                          dispatch(cimsActions.toggleEditMode(!editMode))
-                        }
-                        color="success"
-                      />
+          <MiniHeadingTypography variant="h4">
+            Client Information
+          </MiniHeadingTypography>
+          {user.permissions.includes("update_on_CIMS_module") ? (
+            <div className="cims-header-end">
+              <Link
+                to="/cims"
+                style={{ textDecoration: "none", paddingRight: "10px" }}
+              >
+                <Button variant="contained" color="error" id="cancel-btn">
+                  Cancel
+                </Button>
+              </Link>
+
+              <Button
+                onClick={updateForm}
+                type="submit"
+                variant="contained"
+                color="success"
+                id="save-btn"
+                disabled={!validateOnSubmit()}
+                sx={{ marginRight: "10px" }}
+              >
+                Update
+              </Button>
+
+              <FormControlLabel
+                control={
+                  <CustomSwitch
+                    checked={editMode}
+                    onChange={() =>
+                      dispatch(cimsActions.toggleEditMode(!editMode))
                     }
-                    label="Edit mode"
+                    color="success"
                   />
-                </Grid>
-              </Grid>
-            ) : (
-              <Grid item md={1} mr={2}>
-                <Link to="/cims" style={{ textDecoration: "none" }}>
-                  <Button variant="contained" color="error" id="cancel-btn">
-                    Cancel
-                  </Button>
-                </Link>
-              </Grid>
-            )}
-          </Grid>
+                }
+                label="Edit mode"
+                labelPlacement="start"
+                sx={{ paddingRight: "12px" }}
+              />
+            </div>
+          ) : (
+            <Link to="/cims" style={{ textDecoration: "none" }}>
+              <Button variant="contained" color="error" id="cancel-btn">
+                Cancel
+              </Button>
+            </Link>
+          )}
         </div>
         <Form />
       </div>

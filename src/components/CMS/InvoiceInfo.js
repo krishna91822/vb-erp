@@ -40,6 +40,7 @@ import InputLabel from "@mui/material/InputLabel";
 import NativeSelect from "@mui/material/NativeSelect";
 import { StyledTypography } from "../../assets/GlobalStyle/style";
 import { StyledTableCell } from "../../assets/GlobalStyle/style";
+import { invoiceActions } from "../../store/CMS/INVOICE-slice";
 
 export const StyledMenu = styled((props) => (
   <Menu
@@ -90,6 +91,7 @@ function InvoiceInfo() {
   const post = useSelector((state) => state.INVOICE_state.invoiceData);
   const totalCount = useSelector((state) => state.INVOICE_state.totalCount);
   const user = useSelector((state) => state.user.user);
+  const isReload = useSelector((state) => state.INVOICE_state.reload);
 
   const [currentPage, setCurrentPage] = React.useState(1);
   const [postPerPage, setPostPerPage] = React.useState(5);
@@ -102,7 +104,10 @@ function InvoiceInfo() {
     dispatch(
       paginationFetchInvoice(filename, currentPage, postPerPage, searchKeyword)
     );
-  }, []);
+    if (isReload) {
+      dispatch(invoiceActions.setReload());
+    }
+  }, [isReload]);
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -141,9 +146,9 @@ function InvoiceInfo() {
 
   const renderChildStatus = (status) => {
     if (status === "Complete") {
-      return <ContentTypo sx={{ color: "#00e676" }}>{status}</ContentTypo>;
+      return <ContentTypo sx={{ color: "#2AB3A6" }}>{status}</ContentTypo>;
     } else if (status === "Invoice raised") {
-      return <ContentTypo sx={{ color: "#ff9800" }}>{status}</ContentTypo>;
+      return <ContentTypo sx={{ color: "#F7C839" }}>{status}</ContentTypo>;
     } else if (status === "Overdue") {
       return <ContentTypo sx={{ color: "#b2102f" }}>{status}</ContentTypo>;
     } else {
@@ -159,6 +164,7 @@ function InvoiceInfo() {
   };
   const searchHandler = (event) => {
     if (event.key === "Enter") {
+      setCurrentPage(1);
       dispatch(paginationFetchInvoice(filename, 1, 5, searchKeyword));
     }
   };
@@ -174,6 +180,7 @@ function InvoiceInfo() {
                   <TextField
                     fullWidth
                     id="outlined-basic"
+                    onChange={SearchTextHandler}
                     placeholder="Search by client/project name"
                     onKeyPress={searchHandler}
                     InputProps={{
@@ -250,30 +257,11 @@ function InvoiceInfo() {
       </Card>
 
       <div className="ListContainer">
-        {/* <div className="innerheader">
-          
-          will be required in future
-          <div className="buttondiv">
-            <Link
-              to="/invoice/create-invoice"
-              style={{ textDecoration: "none" }}
-            >
-              <Button
-                className="button1"
-                data-test="Capture-po-sow"
-                variant="contained"
-                color="success"
-              >
-                Capture Invoice{" "}
-              </Button>
-            </Link>
-          </div> */}
-
         <TableContainer>
           <Table>
             <TableHead>
               <TableRow className="table-header">
-                <StyledTableCell align="center"></StyledTableCell>
+                <StyledTableCell align="center">ID</StyledTableCell>
                 <StyledTableCell align="center">Client Name</StyledTableCell>
                 <StyledTableCell align="center">Project Name</StyledTableCell>
                 <StyledTableCell align="center">PO/SOW Order</StyledTableCell>
@@ -293,9 +281,6 @@ function InvoiceInfo() {
               {post.map((row, index) => (
                 <TableRow
                   style={{ textDecoration: "none" }}
-                  // component={Link}
-                  // to={`/invoice_details/${row._id}`}
-                  // onClick={() => handleRowOnClick(row._id)}
                   key={row.name}
                   className="table-row"
                 >
@@ -345,22 +330,6 @@ function InvoiceInfo() {
           </Table>
         </TableContainer>
         <div className="pagination">
-          {/* <Typography className="pagenumber">Page: {currentPage}</Typography> */}
-          {/* <div className="numbering"> */}
-          {/* <NativeSelect
-                value={postPerPage}
-                onChange={handlerowsPerpage}
-                defaultValue={30}
-              >
-                 <Select value={postPerPage} onChange={handlerowsPerpage}>
-                  <MenuItem value={5}>5</MenuItem>
-                  <MenuItem value={10}>10</MenuItem>
-                  <MenuItem value={15}>15</MenuItem>
-                </Select> 
-                <option value={5}>5</option>
-                <option value={10}>10</option>
-                <option value={15}>15</option>
-              </NativeSelect> */}
           <Stack spacing={2}>
             <Pagination
               count={Math.ceil(totalCount / postPerPage)}

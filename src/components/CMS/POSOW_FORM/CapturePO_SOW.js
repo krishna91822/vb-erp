@@ -2,12 +2,11 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import CssBaseline from "@mui/material/CssBaseline";
 import Box from "@mui/material/Box";
+import { Card } from "@mui/material";
 import Container from "@mui/material/Container";
 import Button from "@mui/material/Button";
 import { useTheme } from "@mui/material/styles";
 import OutlinedInput from "@mui/material/OutlinedInput";
-import InputLabel from "@mui/material/InputLabel";
-import Stack from "@mui/material/Stack";
 import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
 import Autocomplete from "@mui/material/Autocomplete";
@@ -62,6 +61,8 @@ export const CapturePO_SOW = (props) => {
 
   let filteredArr = useSelector((state) => state.CMS_state.dataByID);
   const isRedirect = useSelector((state) => state.CMS_state.redirect);
+  const clone = useSelector((state) => state.CMS_state.clone);
+
   useEffect(() => {
     if (isRedirect) {
       navigate("/posow");
@@ -95,19 +96,20 @@ export const CapturePO_SOW = (props) => {
   const allocationRateArr = useSelector(
     (state) => state.CMS_state.allocationRate
   );
+  console.log(allocationRateArr);
   const user = useSelector((state) => state.user.user);
 
-  let DefaultClientName = null;
-  let ReadProjectName = null;
-  let ReadPO_num = "";
-  let ReadPO_amt = "";
-  let ReadType = "PO";
-  let ReadCurr = "";
-  let init_Status = "Active";
-  let Readremarks = "";
-  let ReadDocName = "";
+  let initClientName = null;
+  let initProjectName = null;
+  let initPO_num = "";
+  let initPO_amt = "";
+  let initType = "PO";
+  let initCurr = "";
+  let initStatus = "Active";
+  let initremarks = "";
+  let initDocName = "";
   let initDocTypes = "";
-  let userTargetResCheckedElems = new Array(targetedResources.length).fill(
+  let initTargetResCheckedElems = new Array(targetedResources.length).fill(
     false
   );
 
@@ -115,36 +117,39 @@ export const CapturePO_SOW = (props) => {
   const [projectId, setProjectId] = useState("");
   const [selectedDate, setPOSOWEndDate] = useState(null);
   const [charsLeft, setCharsLeft] = useState(150);
-  const [clientName, setClientName] = React.useState(DefaultClientName);
-  const [projectName, setProjectName] = React.useState(ReadProjectName);
+  const [clientName, setClientName] = React.useState(initClientName);
+  const [projectName, setProjectName] = React.useState(initProjectName);
   const [clientProjectSponsor, setclientProjectSponsor] =
     React.useState(clientSponsor);
-  const [clientFinanceController, setClientFinanceController] =
-    React.useState(clientFinController);
-  const [typeName, setTypeName] = React.useState(ReadType);
-  const [CurrName, setCurrName] = React.useState(ReadCurr);
-  const [remarks, setRemarks] = React.useState(Readremarks);
-  const [PO_number, setPO_number] = React.useState(ReadPO_num);
-  const [PO_amt, setPOAmt] = React.useState(ReadPO_amt);
-  const [DocName, setDocName] = React.useState(ReadDocName);
+  const [clientFinanceController, setClientFinanceController] = React.useState(
+    clone ? filteredArr[0].Client_Finance_Controller : clientFinController
+  );
+  const [typeName, setTypeName] = React.useState(initType);
+  const [CurrName, setCurrName] = React.useState(initCurr);
+  const [remarks, setRemarks] = React.useState(initremarks);
+  const [PO_number, setPO_number] = React.useState(initPO_num);
+  const [PO_amt, setPOAmt] = React.useState(initPO_amt);
+  const [DocName, setDocName] = React.useState(initDocName);
   const [uploadFile, setUploadFile] = React.useState();
-  const [status, setStatus] = React.useState(init_Status);
+  const [status, setStatus] = React.useState(initStatus);
   const [editTglCheckedState, seteditTglCheckedState] = React.useState(
     props.toggleState
   );
 
   const [TargetedResChkBox, setTargetedResChkBox] = useState(
-    userTargetResCheckedElems
+    initTargetResCheckedElems
   );
+
   useEffect(() => {
-    if (clientName !== null && !params.id) {
+    if (clientName !== null && !params.id && !clone) {
       setProjectName(null);
       dispatch(PoSowActions.clearData());
       dispatch(fetchAllClientProjects(clientName.clientName));
     }
   }, [clientName]);
+
   useEffect(() => {
-    if (!props.editBtn && projectName !== null) {
+    if (!props.editBtn && projectName !== null && !clone) {
       dispatch(fetchClientProjectSponsor(projectId));
     }
   }, [projectName]);
@@ -184,7 +189,34 @@ export const CapturePO_SOW = (props) => {
     }
   }, [filteredArr]);
   useEffect(() => {
-    if (props.editBtn && params.id) {
+    if (clone) {
+      setClientName({ clientName: filteredArr[0].Client_Name });
+      setProjectName({ _id: "", projectName: filteredArr[0].Project_Name });
+      setPO_number(filteredArr[0].PO_Number);
+      setPOAmt(filteredArr[0].PO_Amount);
+      setTypeName(filteredArr[0].Type);
+      setCurrName(filteredArr[0].Currency);
+      setProjectId(filteredArr[0].Project_Id);
+
+      dispatch(
+        PoSowActions.setClientProjectSponsor(filteredArr[0].Client_Sponser)
+      );
+      dispatch(
+        PoSowActions.setClientFinanceController(
+          filteredArr[0].Client_Finance_Controller
+        )
+      );
+
+      dispatch(
+        PoSowActions.setTargetedResourcesOnReadPage(
+          Object.keys(filteredArr[0].Targetted_Resources)
+        )
+      );
+    }
+  }, [filteredArr]);
+
+  useEffect(() => {
+    if ((props.editBtn && params.id) || clone) {
       setTargetedResChkBox(Object.values(filteredArr[0].Targetted_Resources));
     } else {
       setTargetedResChkBox(new Array(targetedResources.length).fill(false));
@@ -194,7 +226,7 @@ export const CapturePO_SOW = (props) => {
     if (!!value) {
       setClientName(value);
     } else {
-      setClientName(DefaultClientName);
+      setClientName(initClientName);
     }
   };
   const handleProjectChange = (event, val) => {
@@ -202,7 +234,7 @@ export const CapturePO_SOW = (props) => {
       setProjectName(val);
       setProjectId(val._id);
     } else {
-      setProjectName(ReadProjectName);
+      setProjectName(initProjectName);
     }
   };
   const handleTypeChange = (event) => {
@@ -252,12 +284,7 @@ export const CapturePO_SOW = (props) => {
       setDocName("");
     }
   };
-  // const handleSendForApprovalBtnOnClk = (statusToChange) => {
-  //   dispatch(SendForApproval("Pending", params.id));
-  // };
-  // const handleApproveReject = (statusToChange) => {
-  //   dispatch(SendForApproval(statusToChange, params.id));
-  // };
+
   const submitForm = (event) => {
     event.preventDefault();
     let selectedTargetedRes = {};
@@ -324,14 +351,7 @@ export const CapturePO_SOW = (props) => {
             </Grid>
           </Grid>
           <Box>
-            <Box
-              sx={{
-                bgcolor: "white",
-                height: "75vh",
-                border: "2px solid grey",
-                overflowY: "scroll",
-              }}
-            >
+            <Card sx={{ margin: "0.5rem" }}>
               <Grid container>
                 <Grid
                   item
@@ -398,7 +418,7 @@ export const CapturePO_SOW = (props) => {
               </Grid>
               <hr className="projectInfoSeperator" />
 
-              <Grid container>
+              <Grid container pr={2} mt={2}>
                 <Grid item lg={6} md={6} sm={12} xs={12} className="finalgrid">
                   <label>
                     Client Name <span style={{ color: "red" }}>*</span>
@@ -414,9 +434,8 @@ export const CapturePO_SOW = (props) => {
                     }
                     disabled={
                       (props.editBtn && !editTglCheckedState) ||
-                      editTglCheckedState
-                        ? true
-                        : false
+                      (editTglCheckedState ? true : false) ||
+                      clone
                     }
                     value={clientName}
                     getOptionLabel={(option) => option.clientName}
@@ -448,9 +467,8 @@ export const CapturePO_SOW = (props) => {
                     }
                     disabled={
                       (props.editBtn && !editTglCheckedState) ||
-                      editTglCheckedState
-                        ? true
-                        : false
+                      (editTglCheckedState ? true : false) ||
+                      clone
                     }
                     value={projectName}
                     getOptionLabel={(option) => option.projectName}
@@ -537,7 +555,7 @@ export const CapturePO_SOW = (props) => {
                 </Grid>
               </Grid>
 
-              <Grid container>
+              <Grid container pr={2}>
                 <Grid item lg={6} md={6} sm={12} xs={12} className="finalgrid">
                   <label id="demo-multiple-name-label">
                     Type <span style={{ color: "red" }}>*</span>
@@ -643,9 +661,9 @@ export const CapturePO_SOW = (props) => {
                 </Grid>
               </Grid>
 
-              <hr className="projectInfoSeperator" />
+              <hr className="projectInfoSeperator2" />
 
-              <Grid container>
+              <Grid container mt={3}>
                 <Grid item lg={6} md={6} sm={12} xs={12} className="finalgrid">
                   <label id="demo-multiple-name-label">Uploaded Document</label>
                   <TextField
@@ -664,7 +682,10 @@ export const CapturePO_SOW = (props) => {
                       <Button
                         variant="contained"
                         component="label"
-                        style={{ backgroundColor: "#f57c00", color: "#FFFFFF" }}
+                        style={{
+                          backgroundColor: "chocolate",
+                          color: "#FFFFFF",
+                        }}
                         disabled={
                           props.editBtn && !editTglCheckedState ? true : false
                         }
@@ -719,7 +740,7 @@ export const CapturePO_SOW = (props) => {
                 </Grid>
               </Grid>
 
-              <Grid container>
+              <Grid container pr={2}>
                 <Grid
                   item
                   lg={12}
@@ -814,7 +835,7 @@ export const CapturePO_SOW = (props) => {
                   </Grid>
                 )} */}
               </Grid>
-            </Box>
+            </Card>
           </Box>
         </React.Fragment>
       </div>

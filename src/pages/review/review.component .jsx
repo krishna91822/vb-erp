@@ -31,7 +31,6 @@ import {
 } from "@mui/material";
 import { Search as SearchIcon } from "../../icons/search";
 // eslint-disable-next-line no-unused-vars
-import { ClearRounded as ClearRoundedIcon } from "@mui/icons-material";
 import { reviewText } from "./review.constant";
 import ProfileContent from "../../components/templates/profileContent/profileContent.component";
 
@@ -40,7 +39,7 @@ import axiosInstance from "./../../helpers/axiosInstance";
 import { useDispatch } from "react-redux";
 import { uiActions } from "./../../store/ui-slice";
 
-import "../../components/clients/styles/ClientListStyles.css";
+import "../../assets/GlobalStyle/TableStyles.css";
 
 const Review = () => {
   const { toggleLoader } = uiActions;
@@ -163,11 +162,8 @@ const Review = () => {
       return (
         <ContentTypo
           sx={{
-            backgroundColor: "#2AB3A6",
-            color: "white",
-            padding: "5px 15px",
-            borderRadius: "20px",
-            fontSize: "16px",
+            color: "#2AB3A6",
+            fontWeight: "bold",
           }}
         >
           {status}
@@ -177,11 +173,8 @@ const Review = () => {
       return (
         <ContentTypo
           sx={{
-            backgroundColor: "#F7C839",
-            color: "white",
-            padding: "5px 15px",
-            borderRadius: "20px",
-            fontSize: "16px",
+            color: "#F7C839",
+            fontWeight: "bold",
           }}
         >
           {status}
@@ -191,11 +184,8 @@ const Review = () => {
       return (
         <ContentTypo
           sx={{
-            backgroundColor: "#D3455B",
-            color: "white",
-            padding: "5px 15px",
-            borderRadius: "20px",
-            fontSize: "16px",
+            color: "#D3455B",
+            fontWeight: "bold",
           }}
         >
           {status}
