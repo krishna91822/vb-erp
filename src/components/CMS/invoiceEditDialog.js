@@ -24,7 +24,10 @@ import { invoiceActions } from "../../store/CMS/INVOICE-slice";
 import { useDispatch, useSelector } from "react-redux";
 import "./Main.css";
 import validateInvoice from "./invoice_FORM/validateInvoice";
-import { Update_INVOICE } from "../../store/CMS/INVOICE-actions";
+import {
+  Update_INVOICE,
+  fetch_INVOICE_data,
+} from "../../store/CMS/INVOICE-actions";
 import { paginationFetchInvoice } from "../../store/CMS/INVOICE-actions";
 import { useNavigate } from "react-router-dom";
 
@@ -112,6 +115,7 @@ export default function FormDialog(props) {
       amount_received_on:
         new Date(Date_).getFullYear() === 1970 ? null : new Date(Date_),
     };
+
     const DataToValidate = {
       invoice_raised: invoiceRaisedFlag,
       invoice_received: amountReceivedFlag,
@@ -244,8 +248,30 @@ export default function FormDialog(props) {
           <span className="cms-remarksCharCount">({charsLeft}/150)</span>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose}>Cancel</Button>
-          <Button onClick={handleUpdate}>Update</Button>
+          <Button
+            sx={{
+              backgroundColor: "chocolate",
+              ":hover": {
+                background: "chocolate",
+              },
+            }}
+            variant="contained"
+            onClick={handleClose}
+          >
+            Cancel
+          </Button>
+          <Button
+            sx={{
+              backgroundColor: "chocolate",
+              ":hover": {
+                background: "chocolate",
+              },
+            }}
+            variant="contained"
+            onClick={handleUpdate}
+          >
+            Update
+          </Button>
         </DialogActions>
       </Dialog>
     </div>

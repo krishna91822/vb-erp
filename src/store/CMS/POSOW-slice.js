@@ -24,7 +24,7 @@ export const SOW_init_state = {
     currencies: currencies,
     DocumentTypes: DocumentTypes,
   },
-  popup: false,
+  clone: false,
   redirect: false,
   allocationRate: initAllocationRate,
   response_message: "",
@@ -64,15 +64,11 @@ const POSOW_Slice = createSlice({
   name: "SOW_state",
   initialState: SOW_init_state,
   reducers: {
-    PopUpON(state, action) {
-      state.popup = !state.popup;
-      state.response_message = action.payload;
-    },
-    PopUpOF(state, action) {
-      state.popup = !state.popup;
-    },
     setRedirect(state, action) {
       state.redirect = action.payload;
+    },
+    setClone(state, action) {
+      state.clone = action.payload;
     },
     setTabViewData(state, action) {
       state.poSowData = action.payload;
@@ -87,6 +83,9 @@ const POSOW_Slice = createSlice({
     },
     SetSpecific(state, action) {
       state.dataByID = [...action.payload];
+      state.allocationRate = Object.values(
+        state.dataByID[0].Targeted_Res_AllocationRate
+      );
     },
     setDefaultEmpDataOnedit(state, action) {
       state.specificEmpData = state.employees.filter((employee) => {
