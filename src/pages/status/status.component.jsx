@@ -46,6 +46,19 @@ const Status = (props) => {
 
   const [reviewData, setReviewData] = useState([]);
   const [reviewItemData, setReviewItemData] = useState({});
+  const [sort, setSort] = useState("reqName");
+  const [search, setSearch] = useState("");
+
+  const handleSortChange = (e) => {
+    setSort(e.target.value);
+  };
+
+  const searchHandleChange = (e) => {
+    if (e.key === "Enter") {
+      setSearch((prev) => e.target.value);
+      console.log(search);
+    }
+  };
 
   //pagination
   const [paginationInfo, setPaginationInfo] = useState({
@@ -64,16 +77,11 @@ const Status = (props) => {
     dispatch(toggleLoader());
     axiosInstance
       .get(
-        `/reviews?sort=-reqId&page=${paginationInfo.page}&limit=${paginationInfo.limit}`
+        `/reviews?sort=${sort},-reqId&reqEmail=${user.email}&search=${search}&page=${paginationInfo.page}&limit=${paginationInfo.limit}`
       )
       .then((response) => {
         dispatch(toggleLoader());
-        // setReviewData(response.data.data.reviews);
-        setReviewData(
-          response.data.data.reviews.filter(
-            (el) => el.employeeDetails.empEmail === user.email
-          )
-        );
+        setReviewData(response.data.data.reviews);
         response.data.totalResult < paginationInfo.limit &&
         paginationInfo.page === 1
           ? setPaginationInfo({
@@ -92,7 +100,7 @@ const Status = (props) => {
         console.log(err);
       });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [paginationInfo.page]);
+  }, [paginationInfo.page, search, sort]);
 
   //modal
   const [openModalForReview, setOpenModalForReview] = useState(false);
@@ -170,8 +178,7 @@ const Status = (props) => {
                   <TextField
                     data-test="Search By Req Name-test"
                     fullWidth
-                    // onChange={searchHandleChange}
-                    // onKeyPress={searchHandleChange}
+                    onKeyPress={(e) => searchHandleChange(e)}
                     placeholder="Search By Req Name"
                     id="outlined-search"
                     InputProps={{
@@ -200,8 +207,8 @@ const Status = (props) => {
                       label="Sort"
                       id="outlined-select-currency"
                       select
-                      // value={sort}
-                      // onChange={handleChange}
+                      value={sort}
+                      onChange={(e) => handleSortChange(e)}
                       sx={{ width: "15vw" }}
                     >
                       {statusConstants.sortOption.map((option) => (
