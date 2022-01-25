@@ -14,6 +14,7 @@ import {
   getUserDetails,
 } from "../../store/userAccount-action";
 import vbLogo from "../../assets/images/vb_logo.svg";
+import { MiniHeadingTypography } from "../../assets/GlobalStyle/style";
 
 export default function SetPassword() {
   const navigate = useNavigate();
@@ -73,13 +74,13 @@ export default function SetPassword() {
           />
 
           {userDetails.userDetails ? (
-            <Typography variant="h5" sx={{ textTransform: "capitalize" }}>
-              {`Hi, ${userDetails.userDetails.first_name}`}
-            </Typography>
+            <MiniHeadingTypography sx={{ textTransform: "capitalize" }}>
+              {`Hi ${userDetails.userDetails.first_name}`}
+            </MiniHeadingTypography>
           ) : (
-            <Typography variant="h5" sx={{ textTransform: "capitalize" }}>
-              {`Hi, ----------`}
-            </Typography>
+            <MiniHeadingTypography sx={{ textTransform: "capitalize" }}>
+              {`Hi ----------`}
+            </MiniHeadingTypography>
           )}
 
           <Box
