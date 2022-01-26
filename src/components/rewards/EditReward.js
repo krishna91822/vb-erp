@@ -243,6 +243,7 @@ const EditReward = () => {
                   name="reward_display_name"
                   value={rewardData.reward_display_name}
                   onChange={handleChangeName}
+                  size="small"
                 />
               </Grid>
               <br />
@@ -259,6 +260,7 @@ const EditReward = () => {
                     name="reward_type"
                     value={rewardData.reward_type}
                     onChange={typeChange}
+                    size="small"
                   >
                     <MenuItem value="Daily">Daily</MenuItem>
                     <MenuItem value="Monthly">Monthly</MenuItem>
@@ -282,6 +284,7 @@ const EditReward = () => {
                       name="reward_subType"
                       value={rewardData.reward_subType}
                       onChange={subtypeChange}
+                      size="small"
                     >
                       <MenuItem value="work-anniversary">
                         Work Anniversary
@@ -307,6 +310,7 @@ const EditReward = () => {
                       name="reward_subType"
                       value={rewardData.reward_subType}
                       onChange={subtypeChange}
+                      size="small"
                     >
                       <MenuItem value="starOfTheMonth">
                         Star of the month
@@ -332,6 +336,7 @@ const EditReward = () => {
                     name="reward_sender"
                     value={rewardData.reward_sender}
                     onChange={senderChange}
+                    size="small"
                   >
                     <MenuItem value="CEO">CEO</MenuItem>
                     <MenuItem value="Manager">Manager</MenuItem>
@@ -359,6 +364,7 @@ const EditReward = () => {
                     value={rewardData.reward_receiver}
                     name="reward_receiver"
                     onChange={receiverChange}
+                    size="small"
                   >
                     {rewardData.reward_type === "On-Demand" && (
                       <MenuItem value="Manager">Manager</MenuItem>
@@ -390,6 +396,7 @@ const EditReward = () => {
                   rows={3}
                   name="receiver_message"
                   onChange={handleChangeReceiverMessage}
+                  size="small"
                 />
               </Grid>
               <br />
@@ -406,6 +413,7 @@ const EditReward = () => {
                     value={rewardData.announcement_type}
                     name="announcement_type"
                     onChange={announcementChange}
+                    size="small"
                   >
                     <MenuItem value="public">Public</MenuItem>
                     <MenuItem value="private">Private</MenuItem>
@@ -426,6 +434,7 @@ const EditReward = () => {
                     name="slack_channel"
                     value={rewardData.slack_channel}
                     onChange={handleChangeSlack}
+                    size="small"
                   />
                 </Grid>
               )}
@@ -445,6 +454,7 @@ const EditReward = () => {
                     value={rewardData.channel_message}
                     onChange={handleChangeChannel}
                     rows={2}
+                    size="small"
                   />
                 </Grid>
               )}

@@ -65,24 +65,61 @@ const Allocated = ({ pressed, allocatedSortedValue }) => {
         <Table data-test="list-table">
           <TableHead>
             <TableRow className="table-header">
-              <StyledTableCell align="center">SNO</StyledTableCell>
-              <StyledTableCell align="center">EmpID</StyledTableCell>
-              <StyledTableCell align="center">Associate Name</StyledTableCell>
-              <StyledTableCell align="center">
+              <StyledTableCell
+                sx={{ minWidth: 100, maxWidth: 100 }}
+                align="center"
+              >
+                SNO
+              </StyledTableCell>
+              <StyledTableCell
+                sx={{ minWidth: 100, maxWidth: 100 }}
+                align="center"
+              >
+                EmpID
+              </StyledTableCell>
+              <StyledTableCell
+                sx={{ minWidth: 100, maxWidth: 100 }}
+                align="center"
+              >
+                Associate Name
+              </StyledTableCell>
+              <StyledTableCell
+                sx={{ minWidth: 100, maxWidth: 100 }}
+                align="center"
+              >
                 Allocated Project
               </StyledTableCell>
-              <StyledTableCell align="center">
+              <StyledTableCell
+                sx={{ minWidth: 120, maxWidth: 120 }}
+                align="center"
+              >
                 Percentage Allocated
               </StyledTableCell>
-              <StyledTableCell align="center">Start Date</StyledTableCell>
-              <StyledTableCell align="center">End Date</StyledTableCell>
+              <StyledTableCell
+                sx={{ minWidth: 100, maxWidth: 100 }}
+                align="center"
+              >
+                Start Date
+              </StyledTableCell>
+              <StyledTableCell
+                sx={{ minWidth: 100, maxWidth: 100 }}
+                align="center"
+              >
+                End Date
+              </StyledTableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {pressed && (
               <TableRow>
-                <StyledTableCell2 align="center"></StyledTableCell2>
-                <StyledTableCell2 align="center">
+                <StyledTableCell2
+                  sx={{ minWidth: 100, maxWidth: 100 }}
+                  align="center"
+                ></StyledTableCell2>
+                <StyledTableCell2
+                  sx={{ minWidth: 100, maxWidth: 100 }}
+                  align="center"
+                >
                   <TextField
                     variant="standard"
                     type="text"
@@ -94,7 +131,10 @@ const Allocated = ({ pressed, allocatedSortedValue }) => {
                     inputProps={{ style: { fontSize: "small" } }}
                   />
                 </StyledTableCell2>
-                <StyledTableCell2 align="center">
+                <StyledTableCell2
+                  sx={{ minWidth: 100, maxWidth: 100 }}
+                  align="center"
+                >
                   <TextField
                     variant="standard"
                     type="text"
@@ -106,7 +146,10 @@ const Allocated = ({ pressed, allocatedSortedValue }) => {
                     inputProps={{ style: { fontSize: "small" } }}
                   />
                 </StyledTableCell2>
-                <StyledTableCell2 align="center">
+                <StyledTableCell2
+                  sx={{ minWidth: 100, maxWidth: 100 }}
+                  align="center"
+                >
                   <TextField
                     variant="standard"
                     type="text"
@@ -118,7 +161,10 @@ const Allocated = ({ pressed, allocatedSortedValue }) => {
                     inputProps={{ style: { fontSize: "small" } }}
                   />
                 </StyledTableCell2>
-                <StyledTableCell2 align="center">
+                <StyledTableCell2
+                  sx={{ minWidth: 100, maxWidth: 100 }}
+                  align="center"
+                >
                   <TextField
                     variant="standard"
                     type="Number"
@@ -134,7 +180,10 @@ const Allocated = ({ pressed, allocatedSortedValue }) => {
                   />
                 </StyledTableCell2>
 
-                <StyledTableCell2 align="center">
+                <StyledTableCell2
+                  sx={{ minWidth: 100, maxWidth: 100 }}
+                  align="center"
+                >
                   <DateContainerStyled
                     sColor={!filters.allocationStartDate ? "#a2a2a2" : "black"}
                   >
@@ -151,7 +200,10 @@ const Allocated = ({ pressed, allocatedSortedValue }) => {
                   </DateContainerStyled>
                 </StyledTableCell2>
 
-                <StyledTableCell2 align="center">
+                <StyledTableCell2
+                  sx={{ minWidth: 100, maxWidth: 100 }}
+                  align="center"
+                >
                   <DateContainerStyled
                     eColor={!filters.allocationEndDate ? "#a2a2a2" : "black"}
                   >

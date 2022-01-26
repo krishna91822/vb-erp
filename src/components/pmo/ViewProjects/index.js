@@ -105,7 +105,7 @@ const ViewProjects = () => {
       <StyledTypography data-test="main-heading">Projects</StyledTypography>
       <Card>
         <CardContent>
-          <Box sx={{ maxWidth: "100%" }}>
+          <Box>
             <Grid container spacing={2}>
               <Grid item xs={4}>
                 <TextField
@@ -228,21 +228,57 @@ const ViewProjects = () => {
           <Table data-test="list-table">
             <TableHead>
               <TableRow className="table-header">
-                <StyledTableCell align="center">SNO</StyledTableCell>
-                <StyledTableCell align="center">Client Name</StyledTableCell>
-                <StyledTableCell align="center">Project Name</StyledTableCell>
-                <StyledTableCell align="center">Project ID</StyledTableCell>
-                <StyledTableCell align="center">Status</StyledTableCell>
+                <StyledTableCell
+                  sx={{ minWidth: 50, maxWidth: 50 }}
+                  align="center"
+                >
+                  SNO
+                </StyledTableCell>
+                <StyledTableCell
+                  sx={{ minWidth: 100, maxWidth: 100 }}
+                  align="center"
+                >
+                  Client Name
+                </StyledTableCell>
+                <StyledTableCell
+                  sx={{ minWidth: 100, maxWidth: 100 }}
+                  align="center"
+                >
+                  Project Name
+                </StyledTableCell>
+                <StyledTableCell
+                  sx={{ minWidth: 100, maxWidth: 100 }}
+                  align="center"
+                >
+                  Project ID
+                </StyledTableCell>
+                <StyledTableCell
+                  sx={{ minWidth: 100, maxWidth: 100 }}
+                  align="center"
+                >
+                  Status
+                </StyledTableCell>
                 {user.permissions.includes("update_project_in_PMO") && (
-                  <StyledTableCell align="center">Actions</StyledTableCell>
+                  <StyledTableCell
+                    sx={{ minWidth: 100, maxWidth: 100 }}
+                    align="center"
+                  >
+                    Actions
+                  </StyledTableCell>
                 )}
               </TableRow>
             </TableHead>
             <TableBody>
               {pressed && (
                 <TableRow>
-                  <StyledTableCell align="center"></StyledTableCell>
-                  <StyledTableCell align="center">
+                  <StyledTableCell
+                    sx={{ minWidth: 50, maxWidth: 50 }}
+                    align="center"
+                  ></StyledTableCell>
+                  <StyledTableCell
+                    sx={{ minWidth: 100, maxWidth: 100 }}
+                    align="center"
+                  >
                     <TextField
                       variant="standard"
                       type="text"
@@ -254,7 +290,10 @@ const ViewProjects = () => {
                       inputProps={{ style: { fontSize: "small" } }}
                     />
                   </StyledTableCell>
-                  <StyledTableCell align="center">
+                  <StyledTableCell
+                    sx={{ minWidth: 100, maxWidth: 100 }}
+                    align="center"
+                  >
                     <TextField
                       variant="standard"
                       type="text"
@@ -266,7 +305,10 @@ const ViewProjects = () => {
                       inputProps={{ style: { fontSize: "small" } }}
                     />
                   </StyledTableCell>
-                  <StyledTableCell align="center">
+                  <StyledTableCell
+                    sx={{ minWidth: 100, maxWidth: 100 }}
+                    align="center"
+                  >
                     <TextField
                       variant="standard"
                       type="text"
@@ -278,7 +320,10 @@ const ViewProjects = () => {
                       inputProps={{ style: { fontSize: "small" } }}
                     />
                   </StyledTableCell>
-                  <StyledTableCell align="center">
+                  <StyledTableCell
+                    sx={{ minWidth: 100, maxWidth: 100 }}
+                    align="center"
+                  >
                     {filterProjects === "others" && (
                       <TextField
                         variant="standard"
@@ -293,7 +338,10 @@ const ViewProjects = () => {
                     )}
                   </StyledTableCell>
                   {user.permissions.includes("update_project_in_PMO") && (
-                    <StyledTableCell align="center"></StyledTableCell>
+                    <StyledTableCell
+                      sx={{ minWidth: 100, maxWidth: 100 }}
+                      align="center"
+                    ></StyledTableCell>
                   )}
                 </TableRow>
               )}

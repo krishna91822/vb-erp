@@ -23,7 +23,9 @@ axiosInstance.interceptors.response.use(
     }
 
     if (error.response.status === 403 || error.response.status === 401) {
-      window.location = "/";
+      window.location === "/:id/setpassword"
+        ? (window.location = "/:id/setpassword")
+        : (window.location = "/");
     } else {
       return new Promise((resolve, reject) => {
         reject(error);

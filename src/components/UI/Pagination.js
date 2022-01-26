@@ -17,7 +17,7 @@ export default function Tpagination({ count, changePage, visi }) {
           flexDirection: "row-reverse",
         }}
       >
-        <Pagination count={count} onChange={changePage} />
+        {count > 1 && <Pagination count={count} onChange={changePage} />}
       </div>
     </div>
   );

@@ -80,25 +80,67 @@ const Bench = ({ pressed, benchSortValue }) => {
         <Table data-test="list-table">
           <TableHead>
             <TableRow className="table-header">
-              <StyledTableCell align="center">SNO</StyledTableCell>
-              <StyledTableCell align="center">EmpID</StyledTableCell>
-              <StyledTableCell align="center">Associate Name</StyledTableCell>
-              <StyledTableCell align="center">
+              <StyledTableCell2
+                sx={{ minWidth: 100, maxWidth: 100 }}
+                align="center"
+              >
+                SNO
+              </StyledTableCell2>
+              <StyledTableCell2
+                sx={{ minWidth: 100, maxWidth: 100 }}
+                align="center"
+              >
+                EmpID
+              </StyledTableCell2>
+              <StyledTableCell2
+                sx={{ minWidth: 100, maxWidth: 100 }}
+                align="center"
+              >
+                Associate Name
+              </StyledTableCell2>
+              <StyledTableCell2
+                sx={{ minWidth: 100, maxWidth: 100 }}
+                align="center"
+              >
                 Primary Capabilities
-              </StyledTableCell>
-              <StyledTableCell align="center">Skill Set</StyledTableCell>
-              <StyledTableCell align="center">Designation</StyledTableCell>
-              <StyledTableCell align="center">YOE</StyledTableCell>
-              <StyledTableCell align="center">
+              </StyledTableCell2>
+              <StyledTableCell2
+                sx={{ minWidth: 100, maxWidth: 100 }}
+                align="center"
+              >
+                Skill Set
+              </StyledTableCell2>
+              <StyledTableCell2
+                sx={{ minWidth: 100, maxWidth: 100 }}
+                align="center"
+              >
+                Designation
+              </StyledTableCell2>
+              <StyledTableCell2
+                sx={{ minWidth: 100, maxWidth: 100 }}
+                align="center"
+              >
+                YOE
+              </StyledTableCell2>
+              <StyledTableCell2
+                sx={{ minWidth: 100, maxWidth: 100 }}
+                align="center"
+              >
                 Remaining Bandwidth
-              </StyledTableCell>
+              </StyledTableCell2>
             </TableRow>
           </TableHead>
           <TableBody>
             {pressed && (
               <TableRow className="table-row">
-                <StyledTableCell2 align="center"></StyledTableCell2>
-                <StyledTableCell2 align="center">
+                <StyledTableCell2
+                  sx={{ minWidth: 100, maxWidth: 100 }}
+                  align="center"
+                ></StyledTableCell2>
+                <StyledTableCell2
+                  sx={{ minWidth: 100, maxWidth: 100 }}
+                  align="center"
+                >
                   <TextField
                     variant="standard"
                     type="text"
@@ -110,7 +152,10 @@ const Bench = ({ pressed, benchSortValue }) => {
                     inputProps={{ style: { fontSize: "small" } }}
                   />
                 </StyledTableCell2>
-                <StyledTableCell2 align="center">
+                <StyledTableCell2
+                  sx={{ minWidth: 100, maxWidth: 100 }}
+                  align="center"
+                >
                   <TextField
                     variant="standard"
                     type="text"
@@ -123,8 +168,26 @@ const Bench = ({ pressed, benchSortValue }) => {
                   />
                 </StyledTableCell2>
 
-                <StyledTableCell2 align="center"></StyledTableCell2>
-                <StyledTableCell2 align="center">
+                <StyledTableCell2
+                  sx={{ minWidth: 100, maxWidth: 100 }}
+                  align="center"
+                ></StyledTableCell2>
+                <StyledTableCell2
+                  sx={{ minWidth: 100, maxWidth: 100 }}
+                  align="center"
+                ></StyledTableCell2>
+                <StyledTableCell2
+                  sx={{ minWidth: 100, maxWidth: 100 }}
+                  align="center"
+                ></StyledTableCell2>
+                <StyledTableCell2
+                  sx={{ minWidth: 100, maxWidth: 100 }}
+                  align="center"
+                ></StyledTableCell2>
+                <StyledTableCell2
+                  sx={{ minWidth: 100, maxWidth: 100 }}
+                  align="center"
+                >
                   <TextField
                     variant="standard"
                     type="number"

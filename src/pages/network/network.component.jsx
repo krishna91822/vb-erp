@@ -214,11 +214,13 @@ const Network = () => {
       {/* pagination */}
       <div className="pagination">
         <Stack spacing={2}>
-          <Pagination
-            count={paginationInfo.totalPage}
-            page={paginationInfo.page}
-            onChange={handlePagination}
-          />
+          {paginationInfo.totalPage > 1 && (
+            <Pagination
+              count={paginationInfo.totalPage}
+              page={paginationInfo.page}
+              onChange={handlePagination}
+            />
+          )}
         </Stack>
       </div>
     </div>

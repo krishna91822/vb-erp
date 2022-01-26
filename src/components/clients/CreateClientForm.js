@@ -12,15 +12,13 @@ import UseForm from "./UseForm";
 import Form from "./Form";
 import MidPopUp from "./MidPopUp";
 import "./styles/ClientFormStyles.css";
-import { cimsActions } from "../../store/cims-slice";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import {
   StyledTypography,
   MiniHeadingTypography,
 } from "../../assets/GlobalStyle/style";
 
 function CreateClientForm() {
-  const dispatch = useDispatch();
   const editMode = useSelector((state) => state.cims.editMode);
   const { submitForm, validateOnSubmit } = UseForm();
 

@@ -337,11 +337,13 @@ export const Main = () => {
         </TableContainer>
         <div className="pagination">
           <Stack spacing={2}>
-            <Pagination
-              count={Math.ceil(totalCount / postPerPage)}
-              page={currentPage}
-              onChange={handleChange}
-            />
+            {Math.ceil(totalCount / postPerPage) > 1 && (
+              <Pagination
+                count={Math.ceil(totalCount / postPerPage)}
+                page={currentPage}
+                onChange={handleChange}
+              />
+            )}
           </Stack>
         </div>
       </div>
