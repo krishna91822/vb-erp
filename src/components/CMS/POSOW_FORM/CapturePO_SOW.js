@@ -390,7 +390,6 @@ export const CapturePO_SOW = (props) => {
                       <div className="posow-SaveButton">
                         <Button
                           variant="contained"
-                          color="success"
                           type="submit"
                           onClick={(event) => submitForm(event)}
                           data-test="POSOW-save-btn"
@@ -405,7 +404,6 @@ export const CapturePO_SOW = (props) => {
                         <div className="posow-SaveButton">
                           <Button
                             variant="contained"
-                            color="success"
                             type="submit"
                             onClick={(event) => submitForm(event)}
                             data-test="UpdateBtn"
@@ -715,7 +713,7 @@ export const CapturePO_SOW = (props) => {
                         <Button
                           variant="contained"
                           style={{
-                            backgroundColor: "03A9F4",
+                            backgroundColor: "chocolate",
                             color: "#FFFFFF",
                           }}
                         >

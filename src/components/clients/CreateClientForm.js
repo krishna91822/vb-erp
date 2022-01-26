@@ -49,7 +49,6 @@ function CreateClientForm() {
                 onClick={submitForm}
                 type="submit"
                 variant="contained"
-                color="success"
                 id="save-btn"
                 disabled={!validateOnSubmit()}
               >

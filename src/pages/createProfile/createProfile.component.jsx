@@ -26,8 +26,6 @@ import {
 
 import {
   BoxStyle,
-  GreenButton,
-  BlueButton,
   ContainerStyleTop,
   modalStyle,
   CustomTextField,
@@ -463,22 +461,22 @@ const CreateProfile = ({
                     <StyledTypography></StyledTypography>
                   )}
                   <Box>
-                    <GreenButton
+                    <Button
                       data-test="confirm-button-test"
                       onClick={handleConfirm}
                       variant="contained"
-                      size="small"
+                      style={{ marginRight: "1rem" }}
                     >
                       {createProfileConstant.confirm}
-                    </GreenButton>
-                    <BlueButton
+                    </Button>
+                    <Button
                       data-test="custome-button-test"
                       onClick={handleOpen}
                       variant="contained"
-                      size="small"
+                      style={{ marginRight: "1rem" }}
                     >
                       {createProfileConstant.addCustomField}
-                    </BlueButton>
+                    </Button>
                   </Box>
                 </Box>
               </ContainerStyleTop>
@@ -525,13 +523,13 @@ const CreateProfile = ({
                 ))}
               </CustomTextField>
             </Box>
-            <GreenButton
+            <Button
               variant="contained"
               onClick={() => handleCreateNewField()}
               sx={{ width: "40%", mt: 1 }}
             >
               Add field
-            </GreenButton>
+            </Button>
           </Paper>
         </Modal>
       </div>

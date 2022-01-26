@@ -121,7 +121,7 @@ const EditMode = ({
       {inEditMode && !switchOnly && btnsOnly ? (
         <div>
           <Button
-            sx={{ margin: "0 1.5rem 1rem 0" }}
+            sx={{ margin: "0 1rem 1rem 0" }}
             variant="contained"
             onClick={handleOpen}
           >

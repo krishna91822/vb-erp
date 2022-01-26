@@ -19,6 +19,7 @@ import {
   Grid,
   MenuItem,
   Modal,
+  Button,
   Stack,
   Pagination,
   TextField,
@@ -359,20 +360,14 @@ const Review = () => {
                   Reject
                 </ColorButton>
               ) : (
-                <ColorButton
-                  size="medium"
+                <Button
+                  sx={{ marginRight: "1rem" }}
+                  color="error"
                   variant="contained"
                   onClick={handleReject}
-                  sx={{
-                    m: 1,
-                    backgroundColor: "hsl(350.7,61.7%,54.9%)",
-                    "&:hover": {
-                      backgroundColor: "hsl(350.7,61.7%,45.9%)",
-                    },
-                  }}
                 >
                   Reject
-                </ColorButton>
+                </Button>
               )}
               {reviewItemData.status === "accepted" ? (
                 <ColorButton
@@ -391,20 +386,9 @@ const Review = () => {
                   Approve
                 </ColorButton>
               ) : (
-                <ColorButton
-                  size="medium"
-                  variant="contained"
-                  onClick={handleApprove}
-                  sx={{
-                    m: 1,
-                    backgroundColor: "#1AAE9F",
-                    "&:hover": {
-                      backgroundColor: "hsl(173.9,74%,30%)",
-                    },
-                  }}
-                >
+                <Button variant="contained" onClick={handleApprove}>
                   Approve
-                </ColorButton>
+                </Button>
               )}
             </Box>
           </Box>

@@ -42,10 +42,7 @@ import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
 import InputLabel from "@mui/material/InputLabel";
 import NativeSelect from "@mui/material/NativeSelect";
-import {
-  StyledTableCell,
-  StyledTableCell2,
-} from "../../assets/GlobalStyle/style";
+import { StyledTableCell } from "../../assets/GlobalStyle/style";
 import { StyledTypography } from "../../assets/GlobalStyle/style";
 
 export const StyledMenu = styled((props) => (
@@ -290,46 +287,46 @@ export const Main = () => {
                   className="table-row"
                   data-test="row-click2"
                 >
-                  <StyledTableCell2 align="center" data-test="row-click3">
+                  <StyledTableCell align="center" data-test="row-click3">
                     {postPerPage * (currentPage - 1) + (index + 1)}
-                  </StyledTableCell2>
-                  <StyledTableCell2 align="center">
+                  </StyledTableCell>
+                  <StyledTableCell align="center">
                     {row.Client_Name}
-                  </StyledTableCell2>
-                  <StyledTableCell2 align="center">
+                  </StyledTableCell>
+                  <StyledTableCell align="center">
                     {row.Project_Name}
-                  </StyledTableCell2>
-                  <StyledTableCell2 align="center">
+                  </StyledTableCell>
+                  <StyledTableCell align="center">
                     {row.PO_Number}
-                  </StyledTableCell2>
-                  <StyledTableCell2 align="center">
+                  </StyledTableCell>
+                  <StyledTableCell align="center">
                     {row.PO_Amount}
-                  </StyledTableCell2>
-                  <StyledTableCell2 align="center">
+                  </StyledTableCell>
+                  <StyledTableCell align="center">
                     {row.Client_Sponser}
-                  </StyledTableCell2>
-                  <StyledTableCell2 align="center">
+                  </StyledTableCell>
+                  <StyledTableCell align="center">
                     <LongMenu posowID={row._id} />
-                  </StyledTableCell2>
+                  </StyledTableCell>
 
                   {/* might be required in future versions */}
                   {/* {user.permissions.includes("upload_PO/SOW/contract") && (
                     <>
                       {row.Status === "Drafted" ? (
-                        <StyledTableCell2 align="center">
+                        <StyledTableCell align="center">
                           <EditIcon />
-                        </StyledTableCell2>
+                        </StyledTableCell>
                       ) : (
-                        <StyledTableCell2 align="center">
+                        <StyledTableCell align="center">
                           <EditOffIcon />
-                        </StyledTableCell2>
+                        </StyledTableCell>
                       )}
                     </>
                   )}
 
-                  <StyledTableCell2 align="center">
+                  <StyledTableCell align="center">
                     <strong>{row.Status}</strong>
-                  </StyledTableCell2> */}
+                  </StyledTableCell> */}
                 </TableRow>
               ))}
             </TableBody>

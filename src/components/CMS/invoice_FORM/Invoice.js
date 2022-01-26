@@ -356,7 +356,6 @@ function Invoice(props) {
                       <div className="invoice-updateBtn">
                         <Button
                           variant="contained"
-                          color="success"
                           onClick={updatehandler}
                           data-test="UpdateBtn"
                         >
@@ -490,7 +489,7 @@ function Invoice(props) {
                 </Table>
               </Grid>
             </Grid>
-            <hr />
+
             <MiniHeadingTypography pt={4}>Invoice Status</MiniHeadingTypography>
             <hr />
             <Grid container pt={1}>
