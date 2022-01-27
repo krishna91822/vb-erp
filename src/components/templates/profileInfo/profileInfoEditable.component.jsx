@@ -24,6 +24,7 @@ import { deepOrange } from "@mui/material/colors";
 import { profileInfoConstant } from "./profileInfo.constant";
 import CreatableSelect from "react-select/creatable";
 import AsyncSelect from "react-select/async";
+import Select from "react-select";
 
 import { CustomTextField } from "./personalInfoEditable.styles";
 
@@ -99,27 +100,49 @@ const ProfileInfoEditable = (props) => {
       : null
   );
 
-  //dropdown
-  const department = profileInfoConstant.departmentDropdown;
-  const designation = profileInfoConstant.designationDropdown;
-  const departmentOptions = department.map((item) => {
-    return {
-      label: item,
-      value: item,
-    };
-  });
-  const designationOptions = designation.map((item) => {
-    return {
-      label: item,
-      value: item,
-    };
-  });
-  const [departmentDropdown, setDepartmentDropdown] = useState(
+  //dropdown department
+  const [department, setDepartment] = useState(
     empDepartment ? { label: empDepartment, value: empDepartment } : null
   );
-  const [designationDropdown, setDesignationDropdown] = useState(
+  const [departmentOption, setDepartmentOption] = useState([]);
+  const [departmentLoading, setDepartmentLoading] = useState(true);
+  useEffect(() => {
+    axiosInstance
+      .get(`/dropdowns?dropdownName=department`)
+      .then(function (response) {
+        setDepartmentLoading(false);
+        const filteredDepartmentOption =
+          response.data.data[0].dropdownArray.map((el) => {
+            return { label: el.label, value: el.value };
+          });
+        setDepartmentOption(filteredDepartmentOption);
+      })
+      .catch(function (err) {
+        console.log(err);
+      });
+  }, []);
+
+  //dropdown designation
+  const [designation, setDesignation] = useState(
     empDesignation ? { label: empDesignation, value: empDesignation } : null
   );
+  const [designationOption, setDesignationOption] = useState([]);
+  const [designationLoading, setDesignationLoading] = useState(true);
+  useEffect(() => {
+    axiosInstance
+      .get(`/dropdowns?dropdownName=designation`)
+      .then(function (response) {
+        setDesignationLoading(false);
+        const filteredDesignationOption =
+          response.data.data[0].dropdownArray.map((el) => {
+            return { label: el.label, value: el.value };
+          });
+        setDesignationOption(filteredDesignationOption);
+      })
+      .catch(function (err) {
+        console.log(err);
+      });
+  }, []);
 
   useEffect(() => {
     axiosInstance
@@ -317,10 +340,10 @@ const ProfileInfoEditable = (props) => {
                       <ContentBox>
                         <TitleTypo>{profileInfoConstant.department}</TitleTypo>
                         <ContentTypo>
-                          <CreatableSelect
-                            value={
-                              departmentDropdown ? departmentDropdown : null
-                            }
+                          <Select
+                            className="basic-single"
+                            classNamePrefix="select"
+                            value={department ? department : null}
                             styles={{
                               control: (provided, state) => ({
                                 ...provided,
@@ -338,11 +361,12 @@ const ProfileInfoEditable = (props) => {
                                 padding: "0",
                               }),
                             }}
+                            isLoading={departmentLoading}
                             isSearchable
                             name="empDepartment"
-                            options={departmentOptions}
+                            options={departmentOption}
                             onChange={(value) => {
-                              setDepartmentDropdown(value);
+                              setDepartment(value);
                               setEmployee({
                                 ...employee,
                                 empDepartment: value.value,
@@ -358,10 +382,10 @@ const ProfileInfoEditable = (props) => {
                       <ContentBox>
                         <TitleTypo>{profileInfoConstant.designation}</TitleTypo>
                         <ContentTypo>
-                          <CreatableSelect
-                            value={
-                              designationDropdown ? designationDropdown : null
-                            }
+                          <Select
+                            className="basic-single"
+                            classNamePrefix="select"
+                            value={designation ? designation : null}
                             styles={{
                               control: (provided, state) => ({
                                 ...provided,
@@ -369,7 +393,7 @@ const ProfileInfoEditable = (props) => {
                                 height: "35px",
                                 display: "flex",
                                 alignContent: "center",
-                                borderColor: errors?.empDesignation
+                                borderColor: errors?.empDepartment
                                   ? "#D32F2F"
                                   : "hsl(0, 0%, 80%)",
                               }),
@@ -379,11 +403,12 @@ const ProfileInfoEditable = (props) => {
                                 padding: "0",
                               }),
                             }}
+                            isLoading={designationLoading}
                             isSearchable
                             name="empDesignation"
-                            options={designationOptions}
+                            options={designationOption}
                             onChange={(value) => {
-                              setDesignationDropdown(value);
+                              setDesignation(value);
                               setEmployee({
                                 ...employee,
                                 empDesignation: value.value,
