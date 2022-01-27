@@ -121,8 +121,8 @@ const Body = (props) => {
                     <InputLabel id="sortBy">Sort By</InputLabel>
                     <Select
                       label="Status"
-                      value={currency}
                       onChange={handleChange}
+                      defaultValue="Default"
                     >
                       {currencies.map((option) => (
                         <MenuItem key={option.value} value={option.value}>

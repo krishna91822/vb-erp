@@ -57,10 +57,18 @@ const CreateUser = () => {
         })
       );
     } else {
-      dispatch(createUserAccount(userDetail));
-      navigate("/my-profile");
-      setUsername("");
-      setUseremail("");
+      dispatch(createUserAccount(userDetail)).then((res) => {
+        if (res) {
+          navigate("/my-profile");
+          dispatch(
+            uiActions.showNotification({
+              status: "success",
+              message:
+                "User created successfull and email sent to user to reset password",
+            })
+          );
+        }
+      });
     }
   };
   const userAccount = useSelector((state) => state.createUser);
@@ -69,15 +77,17 @@ const CreateUser = () => {
     dispatch(SetRoles());
   }, []);
 
-  useEffect(() => {
-    dispatch(searchEmployees(username));
-  }, [username]);
+  // useEffect(() => {
+  //   dispatch(searchEmployees(username));
+  // }, [username]);
 
   const handleUserName = (event, value) => {
     if (event) {
       setUsername(event.target.value);
+
       setOpen(false);
       if (event.target.value && event.target.value.length > 2) {
+        dispatch(searchEmployees(event.target.value));
         setOpen(true);
       }
     }
