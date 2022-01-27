@@ -255,7 +255,7 @@ const PersonalEditable = (props) => {
                     fontSize: "12px",
                     position: "absolute",
                     left: "0",
-                    bottom: "-20px",
+                    bottom: "-15px",
                     ...(aboutCount.current > 500 && { color: "#D32F2F" }),
                   }}
                 >{`${aboutCount.current}/500`}</Box>

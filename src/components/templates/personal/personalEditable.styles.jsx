@@ -36,4 +36,5 @@ export const ContentTypo = styled("div")(({ theme }) => ({
   color: theme.palette.textColor.main,
   fontSize: 16,
   fontWeight: 600,
+  position: "relative",
 }));

@@ -10,10 +10,6 @@ export const statusConstants = {
   ],
   sortOption: [
     {
-      value: "reqId",
-      label: "By ReqId",
-    },
-    {
       value: "reqName",
       label: "By Requester Name ",
     },
