@@ -32,6 +32,7 @@ import {
   ProfileNameTypo,
 } from "./../../UI/commonStyles";
 import { ContentBox } from "../personal/personalReadable.styles";
+import { deepOrange } from "@mui/material/colors";
 
 const ProfileInfoReadable = ({
   value,
@@ -103,15 +104,10 @@ const ProfileInfoReadable = ({
                         height: 64,
                         mb: 2,
                         width: 64,
+                        background: deepOrange[500],
                       }}
                     >
-                      <PersonIcon
-                        sx={{
-                          height: "60%",
-                          width: "60%",
-                          color: "rgb(17,24,39)",
-                        }}
-                      />
+                      {empName.charAt(0).toUpperCase()}
                     </Avatar>
 
                     <ProfileNameTypo>{empName}</ProfileNameTypo>
