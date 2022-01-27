@@ -161,11 +161,11 @@ const CreateReward = () => {
                 >
                   Save
                 </Button>
-                <Link to="/rewards" className="remove-underline">
+                {/* <Link to="/rewards" className="remove-underline">
                   <Button variant="contained" color="error">
                     Cancel
                   </Button>
-                </Link>
+                </Link> */}
               </div>
             </div>
             <hr />
