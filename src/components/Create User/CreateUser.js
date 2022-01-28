@@ -26,33 +26,29 @@ import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { uiActions } from "../../store/ui-slice";
 
+const initialState = {
+  userDetails: {
+    first_name: "",
+    email: "",
+    password: "defaultpassword@dontchange",
+    role: [],
+  },
+};
+
 const CreateUser = () => {
   const dispatch = useDispatch();
   const [username, setUsername] = useState("");
   const [useremail, setUseremail] = useState("");
-  const [check, setCheck] = useState([true, false]);
+  const [roles, setRoles] = useState([]);
   const [open, setOpen] = useState(false);
+
   const navigate = useNavigate();
+  const [state, setState] = useState(initialState);
 
   const handleSubmit = (event) => {
-    console.log(event.target, "================");
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    let userDetail = {};
-    userDetail.first_name = data.get("username").split(" (")[0];
-    userDetail.email = useremail;
-    userDetail.role = [];
-
-    data.get("user") && userDetail.role.push(data.get("user"));
-    data.get("leader") && userDetail.role.push(data.get("leader"));
-    data.get("approver") && userDetail.role.push(data.get("approver"));
-    data.get("hr_admin") && userDetail.role.push(data.get("hr_admin"));
-    data.get("finance_admin") &&
-      userDetail.role.push(data.get("finance_admin"));
-    data.get("pms_admin") && userDetail.role.push(data.get("pms_admin"));
-    data.get("super_admin") && userDetail.role.push(data.get("super_admin"));
-    userDetail.password = "qwerty123";
-    if (userDetail.role.length === 0) {
+    console.log({ userDetails: { ...state.userDetails } });
+    if (state.userDetails.role.length === 0) {
       dispatch(
         uiActions.showNotification({
           status: "error",
@@ -60,7 +56,7 @@ const CreateUser = () => {
         })
       );
     } else {
-      dispatch(createUserAccount(userDetail)).then((res) => {
+      dispatch(createUserAccount(state.userDetails)).then((res) => {
         if (res) {
           navigate("/my-profile");
           dispatch(
@@ -74,6 +70,36 @@ const CreateUser = () => {
       });
     }
   };
+  const handleChange = (event) => {
+    if (event.empName) {
+      setState({
+        ...state,
+        userDetails: {
+          ...state.userDetails,
+          first_name: event.empName,
+          email: event.empEmail,
+        },
+      });
+    }
+
+    if (event.target && event.target.name === "roles") {
+      let values = [...roles];
+      if (roles.includes(event.target.value)) {
+        values = values.filter((elem) => elem !== event.target.value);
+      } else {
+        values.push(event.target.value);
+      }
+      setRoles(values);
+      setState({
+        ...state,
+        userDetails: {
+          ...state.userDetails,
+          role: values,
+        },
+      });
+    }
+  };
+
   const userAccount = useSelector((state) => state.createUser);
 
   useEffect(() => {
@@ -85,6 +111,11 @@ const CreateUser = () => {
       dispatch(getUser(useremail));
     }
   }, [useremail]);
+  useEffect(() => {
+    if (userAccount.user.length) {
+      setRoles(userAccount.user[0].role);
+    }
+  }, [userAccount.user]);
 
   // useEffect(() => {
   //   dispatch(searchEmployees(username));
@@ -103,46 +134,19 @@ const CreateUser = () => {
   };
   const handleOnClick = (event, value) => {
     if (value) {
-      setUsername(value.empName);
+      handleChange(value);
       setUseremail(value.empEmail);
       setOpen(false);
     }
     setUsername("");
   };
 
-  // const handlecheck = (currElem) => {
-  //   if (userAccount.user.length != 0) {
-  //     userAccount.user[0].role.includes(currElem)
-  //       ? setCheck(true)
-  //       : setCheck(false);
-  //   }
-  // };
-  // const testing = () => {
-  //   // console.log(currelem, "==========");
-  //   if (userAccount.roles) {
-  //     userAccount.roles.filter((currElem) => {
-  //       console.log(currElem, "---------");
-  //       if (userAccount.user.length != 0) {
-  //         userAccount.user[0].role.includes(currElem)
-  //           ? setCheck(true)
-  //           : setCheck(false);
-  //       }
-  //     });
-  //   }
-  //   // if (userAccount.user.length != 0) {
-  //   //   userAccount.user[0].role.includes(currelem)
-  //   //     ? setCheck(true)
-  //   //     : setCheck(false);
-  //   // }
-  // };
-  // console.log(check, "check==============");
-  let checked = false;
   return (
     <>
       <StyledTypography
         sx={{
           mx: 15,
-          px: 3,
+          padding: "5px 0px",
         }}
       >
         New User
@@ -252,39 +256,16 @@ const CreateUser = () => {
                     >
                       <FormControlLabel
                         sx={{ textTransform: "capitalize" }}
-                        control={
-                          <Checkbox
-                            color="primary"
-                            // defaultChecked={
-                            // userAccount.user.length != 0
-                            //   ? userAccount.user[0].role.includes(currElem)
-                            //     ? true
-                            //     : false
-                            //   : false
-                            // check
-                            // }
-
-                            checked={
-                              userAccount.user.length != 0
-                                ? userAccount.user[0].role.includes(currElem)
-                                  ? !checked
-                                  : checked
-                                : checked
-                            }
-                            onChange={(event) =>
-                              setCheck([
-                                event.target.checked,
-                                event.target.checked,
-                              ])
-                            }
-                          />
-                        }
+                        control={<Checkbox color="primary" />}
                         className="hello"
                         label={currElem.replace(/_/g, " ")}
                         value={currElem}
+                        checked={roles.includes(currElem)}
                         id={currElem}
-                        name={currElem}
-                        // onChange={() => testing(currElem)}
+                        name="roles"
+                        onChange={(event) => {
+                          handleChange(event);
+                        }}
                       />
                     </Grid>
                   );

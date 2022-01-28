@@ -227,7 +227,10 @@ const SidebarNavigation = () => {
       setOpenTasks(true);
     }
 
-    if (location.pathname.includes("/network")) {
+    if (
+      location.pathname.includes("/network") ||
+      location.pathname.includes("my-profile/VB")
+    ) {
       setSelectedIndex(2);
     }
 

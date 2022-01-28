@@ -68,6 +68,7 @@ const Network = () => {
       .then((response) => {
         dispatch(toggleLoader());
         setEmployees(response.data.data);
+        console.log(paginationInfo.limit);
         response.data.totalResult < paginationInfo.limit &&
         paginationInfo.page === 1
           ? setPaginationInfo({
@@ -103,6 +104,10 @@ const Network = () => {
     const searchFields = event.target.value;
     if (event.key === "Enter") {
       setSearchEmp(searchFields);
+      setPaginationInfo({
+        ...paginationInfo,
+        page: 1,
+      });
     }
   };
 

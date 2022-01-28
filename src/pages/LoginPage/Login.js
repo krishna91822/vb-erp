@@ -12,6 +12,7 @@ import { validateUser } from "../../store/user-actions";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import vbLogo from "../../assets/images/vb_logo.svg";
+import { MiniHeadingTypography } from "../../assets/GlobalStyle/style";
 
 export default function SignIn() {
   const dispatch = useDispatch();
@@ -49,9 +50,7 @@ export default function SignIn() {
             src={vbLogo}
             alt="vb-logo"
           />
-          <Typography component="h1" variant="h5">
-            Log In
-          </Typography>
+          <MiniHeadingTypography>Log In</MiniHeadingTypography>
           <Box
             component="form"
             onSubmit={handleSubmit}
