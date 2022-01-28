@@ -55,7 +55,6 @@ export default function SetPassword() {
         <Box
           sx={{
             marginTop: 8,
-            padding: "50px",
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
@@ -82,12 +81,7 @@ export default function SetPassword() {
             </MiniHeadingTypography>
           )}
 
-          <Box
-            component="form"
-            onSubmit={validatePassword}
-            noValidate
-            sx={{ mt: 1 }}
-          >
+          <Box component="form" onSubmit={validatePassword} noValidate>
             <TextField
               margin="normal"
               required
@@ -119,10 +113,6 @@ export default function SetPassword() {
                 textTransform: "capitalize",
                 mt: 3,
                 mb: 2,
-                bgcolor: "chocolate",
-                ":hover": {
-                  bgcolor: "chocolate",
-                },
               }}
             >
               Set Password

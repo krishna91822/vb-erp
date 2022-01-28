@@ -14,7 +14,6 @@ import ProfileContent from "./../../components/templates/profileContent/profileC
 import { StyledTableCell } from "../../assets/GlobalStyle/style";
 import {
   TitleTypo,
-  CustomGridBox,
   ContentTypo,
   ModalBoxItem,
   NoteTypo,
@@ -206,12 +205,14 @@ const Status = (props) => {
 
       <div className="pagination">
         <Stack spacing={2}>
-          <Pagination
-            data-test="pagination-test"
-            count={paginationInfo.totalPage}
-            page={paginationInfo.page}
-            onChange={handlePagination}
-          />
+          {paginationInfo.page > 1 && (
+            <Pagination
+              data-test="pagination-test"
+              count={paginationInfo.totalPage}
+              page={paginationInfo.page}
+              onChange={handlePagination}
+            />
+          )}
         </Stack>
       </div>
       <Modal open={openModalForReview} onClose={handleCloseModalForReview}>

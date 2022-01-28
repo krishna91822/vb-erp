@@ -166,8 +166,9 @@ const Network = () => {
           <Table>
             <TableHead>
               <TableRow className="table-header">
-                <StyledTableCell align="center">Name</StyledTableCell>
+                <StyledTableCell align="center">SNo</StyledTableCell>
                 <StyledTableCell align="center">Emp Id</StyledTableCell>
+                <StyledTableCell align="center">Name</StyledTableCell>
                 <StyledTableCell align="center">Email</StyledTableCell>
                 <StyledTableCell align="center">Position</StyledTableCell>
                 <StyledTableCell align="center">Location</StyledTableCell>
@@ -176,16 +177,19 @@ const Network = () => {
             </TableHead>
 
             <TableBody>
-              {employees.map((item) => (
+              {employees.map((item, index) => (
                 <TableRow
                   key={item.empId}
                   className="table-row"
                   onClick={(e) => handleEmployeeClick(item)}
                 >
                   <StyledTableCell align="center">
-                    {item.empName}
+                    {index + parseInt(paginationInfo.page) * 10 - 9}
                   </StyledTableCell>
                   <StyledTableCell align="center">{item.empId}</StyledTableCell>
+                  <StyledTableCell align="center">
+                    {item.empName}
+                  </StyledTableCell>
                   <StyledTableCell align="center">
                     {item.empEmail}
                   </StyledTableCell>
