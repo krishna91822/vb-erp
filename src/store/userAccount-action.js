@@ -172,3 +172,30 @@ export const getUserDetails = (id) => {
     }
   };
 };
+export const getUser = (email) => {
+  return async (dispatch) => {
+    const getuserbyemail = async () => {
+      const response = await axios.get(`/users/?email=${email}`);
+      if (response.status === "failure") {
+        throw new Error("user not found");
+      }
+      const data = response.data.data.results;
+      return data;
+    };
+
+    try {
+      const data = await getuserbyemail();
+      dispatch(userAccountActions.setuser(data));
+    } catch (error) {
+      setTimeout(function () {
+        dispatch(
+          uiActions.showNotification({
+            status: "error",
+            title: "Error!",
+            message: "No Records Found",
+          })
+        );
+      }, 1000);
+    }
+  };
+};

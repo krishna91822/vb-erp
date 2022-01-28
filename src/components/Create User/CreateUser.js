@@ -20,6 +20,7 @@ import {
   searchEmployees,
   createUserAccount,
   SetRoles,
+  getUser,
 } from "../../store/userAccount-action";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -29,10 +30,12 @@ const CreateUser = () => {
   const dispatch = useDispatch();
   const [username, setUsername] = useState("");
   const [useremail, setUseremail] = useState("");
+  const [check, setCheck] = useState([true, false]);
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
 
   const handleSubmit = (event) => {
+    console.log(event.target, "================");
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     let userDetail = {};
@@ -70,6 +73,12 @@ const CreateUser = () => {
   }, []);
 
   useEffect(() => {
+    if (useremail != "") {
+      dispatch(getUser(useremail));
+    }
+  }, [useremail]);
+
+  useEffect(() => {
     dispatch(searchEmployees(username));
   }, [username]);
 
@@ -91,6 +100,33 @@ const CreateUser = () => {
     setUsername("");
   };
 
+  // const handlecheck = (currElem) => {
+  //   if (userAccount.user.length != 0) {
+  //     userAccount.user[0].role.includes(currElem)
+  //       ? setCheck(true)
+  //       : setCheck(false);
+  //   }
+  // };
+  // const testing = () => {
+  //   // console.log(currelem, "==========");
+  //   if (userAccount.roles) {
+  //     userAccount.roles.filter((currElem) => {
+  //       console.log(currElem, "---------");
+  //       if (userAccount.user.length != 0) {
+  //         userAccount.user[0].role.includes(currElem)
+  //           ? setCheck(true)
+  //           : setCheck(false);
+  //       }
+  //     });
+  //   }
+  //   // if (userAccount.user.length != 0) {
+  //   //   userAccount.user[0].role.includes(currelem)
+  //   //     ? setCheck(true)
+  //   //     : setCheck(false);
+  //   // }
+  // };
+  // console.log(check, "check==============");
+  let checked = false;
   return (
     <>
       <StyledTypography
@@ -182,6 +218,7 @@ const CreateUser = () => {
               placeholder="Enter Email Id"
               value={useremail}
               style={{ width: "100%" }}
+              // onChange={testing()}
             />
           </CardContent>
           <MiniHeadingTypography sx={{ p: 2 }}>Roles</MiniHeadingTypography>
@@ -205,11 +242,39 @@ const CreateUser = () => {
                     >
                       <FormControlLabel
                         sx={{ textTransform: "capitalize" }}
-                        control={<Checkbox color="primary" />}
+                        control={
+                          <Checkbox
+                            color="primary"
+                            // defaultChecked={
+                            // userAccount.user.length != 0
+                            //   ? userAccount.user[0].role.includes(currElem)
+                            //     ? true
+                            //     : false
+                            //   : false
+                            // check
+                            // }
+
+                            checked={
+                              userAccount.user.length != 0
+                                ? userAccount.user[0].role.includes(currElem)
+                                  ? !checked
+                                  : checked
+                                : checked
+                            }
+                            onChange={(event) =>
+                              setCheck([
+                                event.target.checked,
+                                event.target.checked,
+                              ])
+                            }
+                          />
+                        }
+                        className="hello"
                         label={currElem.replace(/_/g, " ")}
                         value={currElem}
                         id={currElem}
                         name={currElem}
+                        // onChange={() => testing(currElem)}
                       />
                     </Grid>
                   );
