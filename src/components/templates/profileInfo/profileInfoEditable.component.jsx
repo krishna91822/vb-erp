@@ -244,7 +244,7 @@ const ProfileInfoEditable = (props) => {
                                 height: 64,
                                 mb: 2,
                                 width: 64,
-                                background: deepOrange[500],
+                                background: "rgb(237,108,2)",
                               }}
                               src={profilePicture}
                             >
@@ -253,7 +253,7 @@ const ProfileInfoEditable = (props) => {
                               ) : (
                                 <PersonIcon
                                   sx={{
-                                    height: "60%",
+                                    height: "100%",
                                     width: "60%",
                                     color: "rgb(17,24,39)",
                                   }}

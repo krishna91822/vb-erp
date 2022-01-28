@@ -18,7 +18,10 @@ import {
   TextField,
 } from "@mui/material";
 import ProfileContent from "./../../components/templates/profileContent/profileContent.component";
-import { StyledTableCell } from "../../assets/GlobalStyle/style";
+import {
+  StyledTableCell,
+  StyledTableCell2,
+} from "../../assets/GlobalStyle/style";
 import { Search as SearchIcon } from "./../../icons/search";
 
 import {
@@ -185,22 +188,24 @@ const Status = (props) => {
                   key={item.reqId}
                   onClick={(e) => handleClickReviewItem(item)}
                 >
-                  <StyledTableCell align="center">{item.reqId}</StyledTableCell>
-                  <StyledTableCell align="center">
+                  <StyledTableCell2 align="center">
+                    {item.reqId}
+                  </StyledTableCell2>
+                  <StyledTableCell2 align="center">
                     {item.reqName}
-                  </StyledTableCell>
-                  <StyledTableCell align="center">
+                  </StyledTableCell2>
+                  <StyledTableCell2 align="center">
                     {new Date(item.createdAt).toISOString().slice(0, 10)}
-                  </StyledTableCell>
-                  <StyledTableCell align="center">
+                  </StyledTableCell2>
+                  <StyledTableCell2 align="center">
                     {item.employeeDetails.empReportingManager}
-                  </StyledTableCell>
-                  <StyledTableCell align="center">
+                  </StyledTableCell2>
+                  <StyledTableCell2 align="center">
                     {item.reqType}
-                  </StyledTableCell>
-                  <StyledTableCell align="center">
+                  </StyledTableCell2>
+                  <StyledTableCell2 align="center">
                     {renderChildStatus(item.status)}
-                  </StyledTableCell>
+                  </StyledTableCell2>
                 </TableRow>
               ))}
             </TableBody>

@@ -30,6 +30,7 @@ import {
   ContentBoldTypo,
   ContentTypo,
   ProfileNameTypo,
+  ProfileFirstLetter,
 } from "./../../UI/commonStyles";
 import { ContentBox } from "../personal/personalReadable.styles";
 import { deepOrange } from "@mui/material/colors";
@@ -104,10 +105,12 @@ const ProfileInfoReadable = ({
                         height: 64,
                         mb: 2,
                         width: 64,
-                        background: deepOrange[500],
+                        background: "rgb(237,108,2)",
                       }}
                     >
-                      {empName.charAt(0).toUpperCase()}
+                      <ProfileFirstLetter>
+                        {empName.charAt(0).toUpperCase()}
+                      </ProfileFirstLetter>
                     </Avatar>
 
                     <ProfileNameTypo>{empName}</ProfileNameTypo>

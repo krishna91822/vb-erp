@@ -220,13 +220,20 @@ const EditReward = () => {
                   >
                     Save
                   </Button>
-                  {/* <Button
+
+                  <Button
+                    variant="outlined"
                     onClick={cencelButton}
-                    variant="contained"
-                    color="error"
+                    sx={{
+                      color: "gray",
+                      border: "1px solid gray",
+                      ":hover": {
+                        border: "1px solid gray",
+                      },
+                    }}
                   >
                     Cancel
-                  </Button> */}
+                  </Button>
                 </div>
               </div>
               <hr />

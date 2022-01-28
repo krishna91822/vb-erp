@@ -54,14 +54,24 @@ function UpdateClientForm() {
           </MiniHeadingTypography>
           {user.permissions.includes("update_on_CIMS_module") ? (
             <div className="cims-header-end">
-              {/* <Link
+              <Link
                 to="/cims"
                 style={{ textDecoration: "none", paddingRight: "10px" }}
               >
-                <Button variant="contained" color="error" id="cancel-btn">
+                <Button
+                  variant="outlined"
+                  id="cancel-btn"
+                  sx={{
+                    color: "gray",
+                    border: "1px solid gray",
+                    ":hover": {
+                      border: "1px solid gray",
+                    },
+                  }}
+                >
                   Cancel
                 </Button>
-              </Link> */}
+              </Link>
 
               <Button
                 onClick={updateForm}
