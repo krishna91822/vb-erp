@@ -4,6 +4,7 @@ const initialState = {
   employees: [],
   roles: [],
   userDetails: {},
+  user: [],
 };
 
 const userAccountSlice = createSlice({
@@ -21,6 +22,9 @@ const userAccountSlice = createSlice({
     },
     setUserDetails(state, action) {
       state.userDetails = action.payload;
+    },
+    setuser(state, action) {
+      state.user = action.payload;
     },
   },
 });
