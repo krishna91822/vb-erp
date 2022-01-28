@@ -4,6 +4,7 @@ import MenuItem from "@mui/material/MenuItem";
 import React from "react";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { Link } from "react-router-dom";
+import { PoSowActions } from "../../store/CMS/POSOW-slice";
 import { useDispatch } from "react-redux";
 import { fetchSpecificPO_SOW } from "../../store/CMS/POSOW-actions";
 
@@ -21,6 +22,7 @@ export default function LongMenu(props) {
 
   const dispatch = useDispatch();
   const handleClone = () => {
+    dispatch(PoSowActions.setClone(true));
     dispatch(fetchSpecificPO_SOW(props.posowID));
   };
   return (
@@ -52,6 +54,9 @@ export default function LongMenu(props) {
       >
         <MenuItem component={Link} to={"/posow/create"} onClick={handleClone}>
           Clone
+        </MenuItem>
+        <MenuItem component={Link} to={`/posow/detail/${props.posowID}`}>
+          View
         </MenuItem>
       </Menu>
     </div>

@@ -29,7 +29,6 @@ const Header = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const users = useSelector((state) => state.user.user);
-  console.log(users);
   const lgUp = useMediaQuery((theme) => theme.breakpoints.up("sm"), {
     defaultMatches: true,
     noSsr: false,

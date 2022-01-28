@@ -25,6 +25,7 @@ export const invoice_init_state = {
   },
 
   popup: false,
+  reload: false,
   popupVisibility: false,
   redirect: false,
   response_message: "",
@@ -54,6 +55,9 @@ const invoice_Slice = createSlice({
   reducers: {
     setPopupOpen(state) {
       state.popup = !state.popup;
+    },
+    setReload(state) {
+      state.reload = !state.reload;
     },
     setpopupVisibility(state) {
       state.popupVisibility = !state.popupVisibility;

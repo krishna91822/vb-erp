@@ -13,10 +13,4 @@ export const Container = styled.div`
   th {
     font-weight: 600;
   }
-
-  tbody {
-    tr:nth-child(2n) {
-      background: #f8f8f8;
-    }
-  }
 `;

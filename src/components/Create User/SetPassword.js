@@ -3,7 +3,6 @@ import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
 import { useParams } from "react-router-dom";
-import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { ThemeProvider } from "@mui/material/styles";
 import { useDispatch, useSelector } from "react-redux";
@@ -14,6 +13,7 @@ import {
   getUserDetails,
 } from "../../store/userAccount-action";
 import vbLogo from "../../assets/images/vb_logo.svg";
+import { MiniHeadingTypography } from "../../assets/GlobalStyle/style";
 
 export default function SetPassword() {
   const navigate = useNavigate();
@@ -73,13 +73,13 @@ export default function SetPassword() {
           />
 
           {userDetails.userDetails ? (
-            <Typography variant="h5" sx={{ textTransform: "capitalize" }}>
-              {`Hi, ${userDetails.userDetails.first_name}`}
-            </Typography>
+            <MiniHeadingTypography sx={{ textTransform: "capitalize" }}>
+              {`Hi ${userDetails.userDetails.first_name}`}
+            </MiniHeadingTypography>
           ) : (
-            <Typography variant="h5" sx={{ textTransform: "capitalize" }}>
-              {`Hi, ----------`}
-            </Typography>
+            <MiniHeadingTypography sx={{ textTransform: "capitalize" }}>
+              {`Hi ----------`}
+            </MiniHeadingTypography>
           )}
 
           <Box

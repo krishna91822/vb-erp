@@ -94,7 +94,7 @@ export const Main = () => {
   const post = useSelector((state) => state.CMS_state.poSowData);
   const totalCount = useSelector((state) => state.CMS_state.totalCount);
   const [currentPage, setCurrentPage] = React.useState(1);
-  const [postPerPage, setPostPerPage] = React.useState(5);
+  const [postPerPage, setPostPerPage] = React.useState(10);
   const [filename, setFilename] = React.useState("Id");
   const [searchKeyword, setSearchKeyword] = useState("");
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -143,7 +143,8 @@ export const Main = () => {
   };
   const searchHandler = (event) => {
     if (event.key === "Enter") {
-      dispatch(paginationFetchPosow(filename, 1, 5, searchKeyword));
+      setCurrentPage(1);
+      dispatch(paginationFetchPosow(filename, 1, 10, searchKeyword));
     }
   };
   return (
@@ -158,6 +159,7 @@ export const Main = () => {
                   <TextField
                     fullWidth
                     id="outlined-basic"
+                    onChange={SearchTextHandler}
                     placeholder="Search by client/project name"
                     onKeyPress={searchHandler}
                     InputProps={{
@@ -274,20 +276,13 @@ export const Main = () => {
                 <StyledTableCell align="center">PO/SOW Number</StyledTableCell>
                 <StyledTableCell align="center">PO/SOW Amount</StyledTableCell>
                 <StyledTableCell align="center">Client Sponsor</StyledTableCell>
-
-                {/* {user.permissions.includes("upload_PO/SOW/contract") && (
-                  <StyledTableCell align="center">Action</StyledTableCell>
-                )}
-                <StyledTableCell align="center">Status</StyledTableCell> */}
+                <StyledTableCell align="center">Options</StyledTableCell>
               </TableRow>
             </TableHead>
             <TableBody className="table-row-posow" data-test="row-click1">
               {post.map((row, index) => (
                 <TableRow
-                  component={Link}
                   style={{ textDecoration: "none" }}
-                  to={`/posow/detail/${row._id}`}
-                  onClick={() => handleRowOnClick(row._id)}
                   key={row.name}
                   className="table-row"
                   data-test="row-click2"
@@ -309,6 +304,9 @@ export const Main = () => {
                   </StyledTableCell>
                   <StyledTableCell align="center">
                     {row.Client_Sponser}
+                  </StyledTableCell>
+                  <StyledTableCell align="center">
+                    <LongMenu posowID={row._id} />
                   </StyledTableCell>
 
                   {/* might be required in future versions */}
@@ -335,21 +333,14 @@ export const Main = () => {
           </Table>
         </TableContainer>
         <div className="pagination">
-          {/* <NativeSelect
-                value={postPerPage}
-                onChange={handlerowsPerpage}
-                defaultValue={30}
-              >
-                <option value={5}>5</option>
-                <option value={10}>10</option>
-                <option value={15}>15</option>
-              </NativeSelect> */}
           <Stack spacing={2}>
-            <Pagination
-              count={Math.ceil(totalCount / postPerPage)}
-              page={currentPage}
-              onChange={handleChange}
-            />
+            {Math.ceil(totalCount / postPerPage) > 1 && (
+              <Pagination
+                count={Math.ceil(totalCount / postPerPage)}
+                page={currentPage}
+                onChange={handleChange}
+              />
+            )}
           </Stack>
         </div>
       </div>

@@ -9,7 +9,7 @@ import Header from "./SearchComponent";
 import { filterData } from "../../store/rewards-actions";
 import { StyledTableCell } from "../../assets/GlobalStyle/style";
 import { useDispatch } from "react-redux";
-import "../clients/styles/ClientListStyles.css";
+import "../../assets/GlobalStyle/TableStyles.css";
 
 import {
   Table,
@@ -121,8 +121,8 @@ const Body = (props) => {
                     <InputLabel id="sortBy">Sort By</InputLabel>
                     <Select
                       label="Status"
-                      value={currency}
                       onChange={handleChange}
+                      defaultValue="Default"
                     >
                       {currencies.map((option) => (
                         <MenuItem key={option.value} value={option.value}>
