@@ -12,6 +12,10 @@ import { uiActions } from "../../store/ui-slice";
 import { useDispatch, useSelector } from "react-redux";
 import { setUserPassword } from "./../../store/userAccount-action";
 import { useNavigate } from "react-router-dom";
+import {
+  StyledTypography,
+  MiniHeadingTypography,
+} from "../../assets/GlobalStyle/style";
 
 const UpdateUserPassword = () => {
   const navigate = useNavigate();
@@ -44,8 +48,11 @@ const UpdateUserPassword = () => {
 
   return (
     <form onSubmit={validatePassword}>
-      <Card sx={{ mx: 10, mt: 5, p: 3 }}>
-        <CardHeader subheader="Update password" title="Password" />
+      <StyledTypography sx={{ margin: "0 10%", padding: "5px 0px" }}>
+        Password
+      </StyledTypography>
+      <Card sx={{ margin: "0 10%", p: 3 }}>
+        <MiniHeadingTypography>Update password</MiniHeadingTypography>
         <Divider />
         <CardContent>
           <TextField

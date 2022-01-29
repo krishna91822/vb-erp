@@ -137,10 +137,6 @@ const CreateUser = () => {
     }
   }, [userAccount.user]);
 
-  // useEffect(() => {
-  //   dispatch(searchEmployees(username));
-  // }, [username]);
-
   const handleUserName = (event, value) => {
     if (event) {
       setUsername(event.target.value);
@@ -164,13 +160,13 @@ const CreateUser = () => {
     <>
       <StyledTypography
         sx={{
-          mx: 15,
+          margin: "0 10%",
           padding: "5px 0px",
         }}
       >
         New User
       </StyledTypography>
-      <Card sx={{ mx: 15, px: 3 }}>
+      <Card sx={{ margin: "0 10%", px: 3 }}>
         <form onSubmit={(e) => handleSubmit(e)}>
           <Grid container spacing={2}>
             <Grid item xs={4}>
@@ -198,10 +194,10 @@ const CreateUser = () => {
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
-              padding: "10px 100px",
+              margin: "0 10%",
             }}
           >
-            <label style={{ padding: "10px " }}>Name:</label>
+            <label style={{ padding: "10px" }}>Name:</label>
             <Autocomplete
               size="small"
               onBlur={() => {
@@ -238,10 +234,10 @@ const CreateUser = () => {
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
-              padding: "10px 100px",
+              margin: "0 10%",
             }}
           >
-            <label style={{ padding: "10px " }}>Email:</label>
+            <label style={{ padding: "10px" }}>Email:</label>
             <TextField
               name="useremail"
               disabled
@@ -257,8 +253,7 @@ const CreateUser = () => {
           <MiniHeadingTypography sx={{ p: 2 }}>Roles</MiniHeadingTypography>
           <Divider />
           <CardHeader sx={{ padding: "10px" }} subheader="Select Roles:" />
-
-          <CardContent sx={{ mx: 20, padding: "10px" }}>
+          <CardContent sx={{ margin: "0 20%", padding: "10px" }}>
             <Grid container spacing={1} wrap="wrap">
               {userAccount.roles &&
                 userAccount.roles.map((currElem, index) => {
