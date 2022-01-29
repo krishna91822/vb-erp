@@ -21,10 +21,12 @@ import {
   createUserAccount,
   SetRoles,
   getUser,
+  updateUserAccount,
 } from "../../store/userAccount-action";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { uiActions } from "../../store/ui-slice";
+import { userAccountActions } from "../../store/userAccount-slice";
 
 const initialState = {
   userDetails: {
@@ -47,7 +49,6 @@ const CreateUser = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log({ userDetails: { ...state.userDetails } });
     if (state.userDetails.role.length === 0) {
       dispatch(
         uiActions.showNotification({
@@ -56,18 +57,37 @@ const CreateUser = () => {
         })
       );
     } else {
-      dispatch(createUserAccount(state.userDetails)).then((res) => {
-        if (res) {
-          navigate("/my-profile");
-          dispatch(
-            uiActions.showNotification({
-              status: "success",
-              message:
-                "User created successfull and email sent to user to reset password",
-            })
-          );
-        }
-      });
+      if (userAccount.user.length === 0) {
+        dispatch(createUserAccount(state.userDetails)).then((res) => {
+          if (res) {
+            navigate("/my-profile");
+            dispatch(
+              uiActions.showNotification({
+                status: "success",
+                message:
+                  "User created successfull and email sent to user to reset password",
+              })
+            );
+          }
+        });
+      } else {
+        dispatch(
+          updateUserAccount(userAccount.user[0]._id, {
+            role: state.userDetails.role,
+          })
+        ).then((res) => {
+          if (res) {
+            navigate("/my-profile");
+            dispatch(
+              uiActions.showNotification({
+                status: "success",
+                message: `${userAccount.user[0].first_name} roles updated`,
+              })
+            );
+            dispatch(userAccountActions.resetForm());
+          }
+        });
+      }
     }
   };
   const handleChange = (event) => {
@@ -140,7 +160,6 @@ const CreateUser = () => {
     }
     setUsername("");
   };
-
   return (
     <>
       <StyledTypography
