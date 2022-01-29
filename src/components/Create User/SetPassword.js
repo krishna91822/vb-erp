@@ -39,14 +39,16 @@ export default function SetPassword() {
     const data = new FormData(event.currentTarget);
     const password = data.get("password");
     const confirmPassword = data.get("confirm_password");
-    password === confirmPassword
-      ? handleSubmit(password)
-      : dispatch(
-          uiActions.showNotification({
-            status: "error",
-            message: "password not match with confirm password",
-          })
-        );
+    if (password === confirmPassword) {
+      handleSubmit(password);
+    } else {
+      dispatch(
+        uiActions.showNotification({
+          status: "error",
+          message: "Password and confirm password does not match",
+        })
+      );
+    }
   };
 
   return (
