@@ -13,6 +13,7 @@ const userAccountSlice = createSlice({
   reducers: {
     resetForm(state, action) {
       state.employees = initialState.employees;
+      state.user = initialState.user;
     },
     setUserAccount(state, action) {
       state.employees = action.payload;
