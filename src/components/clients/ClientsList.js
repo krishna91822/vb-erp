@@ -5,7 +5,6 @@ import {
   TableContainer,
   TableHead,
   TableRow,
-  Paper,
   IconButton,
   Menu,
   ListItemIcon,
@@ -48,7 +47,7 @@ import {
   ClearRounded as ClearRoundedIcon,
 } from "@mui/icons-material";
 import PageHeader from "./PageHeader";
-import "./styles/ClientListStyles.css";
+import "../../assets/GlobalStyle/TableStyles.css";
 
 function ClientsList() {
   const {
@@ -393,7 +392,13 @@ function ClientsList() {
       </div>
       <div className="pagination">
         <Stack spacing={2}>
-          <Pagination count={pages} page={pageNo} onChange={handelPageChange} />
+          {pages > 1 && (
+            <Pagination
+              count={pages}
+              page={pageNo}
+              onChange={handelPageChange}
+            />
+          )}
         </Stack>
       </div>
     </div>

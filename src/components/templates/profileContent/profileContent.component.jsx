@@ -10,6 +10,7 @@ import {
   Card,
   CardHeader,
   Divider,
+  Button,
 } from "@mui/material";
 import { StyledTabs, StyledTab } from "../../UI/commonStyles";
 import ProfileInfoReadable from "../profileInfo/profileInfoReadable.component";
@@ -266,7 +267,7 @@ const ProfileContent = (props) => {
   return (
     <Grid>
       <Grid item>
-        <Box sx={{ p: 2 }}>{renderProfileInfo()}</Box>
+        <Box sx={{ pb: 2 }}>{renderProfileInfo()}</Box>
       </Grid>
       <Grid item mt={1}>
         <Container maxWidth="xl">
@@ -409,13 +410,13 @@ const ProfileContent = (props) => {
                 ))}
               </CustomTextField>
             </Box>
-            <GreenButton
+            <Button
               variant="contained"
               onClick={() => handleCreateNewField()}
               sx={{ width: "40%", mt: 1 }}
             >
               Add field
-            </GreenButton>
+            </Button>
           </Paper>
         </Modal>
       </div>

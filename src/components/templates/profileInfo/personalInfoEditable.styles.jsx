@@ -2,6 +2,7 @@ import { TextField, Box } from "@mui/material";
 import { styled } from "@mui/system";
 
 export const CustomTextField = styled(TextField)({
+  width: "100%",
   "& .MuiOutlinedInput-input": {
     fontSize: "14px",
   },

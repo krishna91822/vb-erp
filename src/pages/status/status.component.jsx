@@ -1,13 +1,36 @@
 import React, { useState, useEffect } from "react";
-import { Box, Modal, Pagination } from "@mui/material";
+import {
+  Box,
+  Card,
+  CardContent,
+  Grid,
+  InputAdornment,
+  MenuItem,
+  Modal,
+  Pagination,
+  Stack,
+  SvgIcon,
+  Table,
+  TableBody,
+  TableContainer,
+  TableHead,
+  TableRow,
+  TextField,
+} from "@mui/material";
 import ProfileContent from "./../../components/templates/profileContent/profileContent.component";
+import {
+  StyledTypography,
+  StyledTableCell,
+  StyledTableCell2,
+} from "./../../assets/GlobalStyle/style";
+import { Search as SearchIcon } from "./../../icons/search";
 
 import {
   TitleTypo,
-  CustomGridBox,
   ContentTypo,
   ModalBoxItem,
   NoteTypo,
+  CustomTextField,
 } from "./status.styles";
 import { statusConstants } from "./status.constant";
 import { useDispatch, useSelector } from "react-redux";
@@ -15,7 +38,7 @@ import { uiActions } from "../../store/ui-slice";
 import axiosInstance from "../../helpers/axiosInstance";
 
 import CloseIcon from "@mui/icons-material/Close";
-
+import "./../../assets/GlobalStyle/TableStyles.css";
 const Status = (props) => {
   const { user } = useSelector((state) => state.user);
   const { toggleLoader } = uiActions;
@@ -94,11 +117,7 @@ const Status = (props) => {
       return (
         <ContentTypo
           sx={{
-            backgroundColor: "#2AB3A6",
-            color: "white",
-            padding: "5px 15px",
-            borderRadius: "20px",
-            fontSize: "16px",
+            color: "#2AB3A6",
           }}
         >
           {status}
@@ -108,11 +127,7 @@ const Status = (props) => {
       return (
         <ContentTypo
           sx={{
-            backgroundColor: "#F7C839",
-            color: "white",
-            padding: "5px 15px",
-            borderRadius: "20px",
-            fontSize: "16px",
+            color: "#F7C839",
           }}
         >
           {status}
@@ -122,11 +137,7 @@ const Status = (props) => {
       return (
         <ContentTypo
           sx={{
-            backgroundColor: "#D3455B",
-            color: "white",
-            padding: "5px 15px",
-            borderRadius: "20px",
-            fontSize: "16px",
+            color: "#D3455B",
           }}
         >
           {status}
@@ -137,97 +148,120 @@ const Status = (props) => {
 
   return (
     <Box sx={{ width: 1 }}>
-      <Box
-        sx={{
-          display: "flex",
-          justifyContent: "space-between",
-          mb: 1,
-          flexDirection: "row",
-          alignItems: "center",
-        }}
-      >
-        <TitleTypo
-          sx={{
-            fontSize: "1.5em",
-            textTransform: "capitalize",
-            mb: 0.5,
-            mr: 2,
-          }}
-        >
-          {statusConstants.pageTitle}
-        </TitleTypo>
-      </Box>
-      <Box
-        sx={{
-          padding: "0.5em",
-          border: "0.1em solid",
-          borderColor: "textColor.paletteGrey",
-          borderRadius: "5px",
-          pb: 3,
-          position: "relative",
-        }}
-      >
-        <Box
-          sx={{
-            width: "100%-1",
-            backgroundColor: "textColor.light",
-            padding: 1,
-            marginTop: 1,
-            borderRadius: "5px",
-          }}
-        >
-          <CustomGridBox
-            sx={{
-              height: 50,
-              backgroundColor: "#fff",
-              borderRadius: "5px",
-            }}
-          >
-            {
-              //title of the status table
-              statusConstants.tableTitle.map((item, i) => (
-                <TitleTypo key={i} sx={{ textTransform: "capitalize" }}>
-                  {item}
-                </TitleTypo>
-              ))
-            }
-          </CustomGridBox>
-          {reviewData.map((item) => (
-            <CustomGridBox
-              key={item.reqId}
-              sx={{
-                mt: 1,
-                mb: 1,
-                height: 40,
-                cursor: "pointer",
-              }}
-              onClick={(e) => handleClickReviewItem(item)}
-            >
-              <ContentTypo>{item.reqId}</ContentTypo>
-              <ContentTypo>{item.reqName}</ContentTypo>
-              <ContentTypo>
-                {new Date(item.createdAt).toISOString().slice(0, 10)}
-              </ContentTypo>
-              <ContentTypo>
-                {item.employeeDetails.empReportingManager}
-              </ContentTypo>
-              <ContentTypo>{item.reqType}</ContentTypo>
-              {renderChildStatus(item.status)}
-            </CustomGridBox>
-          ))}
-        </Box>
+      <div className="list-wrapper">
+        <StyledTypography>My Reviews</StyledTypography>
+        <Card>
+          <CardContent>
+            <Box sx={{ maxWidth: "100%" }}>
+              <Grid container spacing={2}>
+                <Grid item xs={4}>
+                  <TextField
+                    data-test="Search By Req Name-test"
+                    fullWidth
+                    // onChange={searchHandleChange}
+                    // onKeyPress={searchHandleChange}
+                    placeholder="Search By Req Name"
+                    id="outlined-search"
+                    InputProps={{
+                      startAdornment: (
+                        <InputAdornment position="start">
+                          <SvgIcon color="action" fontSize="small">
+                            <SearchIcon />
+                          </SvgIcon>
+                        </InputAdornment>
+                      ),
+                    }}
+                    variant="outlined"
+                  />
+                </Grid>
+                <Grid
+                  item
+                  xs={8}
+                  container
+                  direction="row"
+                  justifyContent="flex-end"
+                  alignItems="center"
+                >
+                  <Box>
+                    <CustomTextField
+                      data-test="Sort-test"
+                      label="Sort"
+                      id="outlined-select-currency"
+                      select
+                      // value={sort}
+                      // onChange={handleChange}
+                      sx={{ width: "15vw" }}
+                    >
+                      {statusConstants.sortOption.map((option) => (
+                        <MenuItem key={option.value} value={option.value}>
+                          {option.label}
+                        </MenuItem>
+                      ))}
+                    </CustomTextField>
+                  </Box>
+                </Grid>
+              </Grid>
+            </Box>
+          </CardContent>
+        </Card>
+
+        <div className="ListContainer">
+          <TableContainer>
+            <Table>
+              <TableHead>
+                <TableRow className="table-header">
+                  <StyledTableCell align="center">Req Id</StyledTableCell>
+                  <StyledTableCell align="center">
+                    Requester Name
+                  </StyledTableCell>
+                  <StyledTableCell align="center">Requested on</StyledTableCell>
+                  <StyledTableCell align="center">Reporting to</StyledTableCell>
+                  <StyledTableCell align="center">Request type</StyledTableCell>
+                  <StyledTableCell align="center">Status</StyledTableCell>
+                </TableRow>
+              </TableHead>
+
+              <TableBody>
+                {reviewData.map((item) => (
+                  <TableRow
+                    className="table-row"
+                    key={item.reqId}
+                    onClick={(e) => handleClickReviewItem(item)}
+                  >
+                    <StyledTableCell2 align="center">
+                      {item.reqId}
+                    </StyledTableCell2>
+                    <StyledTableCell2 align="center">
+                      {item.reqName}
+                    </StyledTableCell2>
+                    <StyledTableCell2 align="center">
+                      {new Date(item.createdAt).toISOString().slice(0, 10)}
+                    </StyledTableCell2>
+                    <StyledTableCell2 align="center">
+                      {item.employeeDetails.empReportingManager}
+                    </StyledTableCell2>
+                    <StyledTableCell2 align="center">
+                      {item.reqType}
+                    </StyledTableCell2>
+                    <StyledTableCell2 align="center">
+                      {renderChildStatus(item.status)}
+                    </StyledTableCell2>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </div>
         {/* pagination */}
-        <Box sx={{ width: 1, display: "flex", justifyContent: "center" }}>
-          <Pagination
-            data-test="pagination-test"
-            count={paginationInfo.totalPage}
-            page={paginationInfo.page}
-            onChange={handlePagination}
-            showFirstButton
-            showLastButton
-            color="primary"
-          />
-        </Box>
+        <div className="pagination">
+          <Stack spacing={2}>
+            <Pagination
+              count={paginationInfo.totalPage}
+              page={paginationInfo.page}
+              onChange={handlePagination}
+            />
+          </Stack>
+        </div>
         <Modal open={openModalForReview} onClose={handleCloseModalForReview}>
           <ModalBoxItem sx={{ height: "auto" }}>
             <Box
@@ -266,7 +300,7 @@ const Status = (props) => {
             </Box>
           </ModalBoxItem>
         </Modal>
-      </Box>
+      </div>
     </Box>
   );
 };

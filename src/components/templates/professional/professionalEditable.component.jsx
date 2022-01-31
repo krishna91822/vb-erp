@@ -4,11 +4,7 @@ import { Grid, Box, TextField } from "@mui/material";
 import ClearIcon from "@mui/icons-material/Clear";
 import { TitleTypo } from "../../UI/commonStyles";
 
-import {
-  CustomTextField,
-  ContentBox,
-  ContentTypo,
-} from "./professionalEditable.styles";
+import { CustomTextField, ContentBox } from "./professionalEditable.styles";
 
 import { professionalConstant } from "./professional.constant";
 import { DesktopDatePicker, LocalizationProvider } from "@mui/lab";
@@ -29,6 +25,7 @@ const ProfessionalEditable = ({
     empGraduationUniversity,
     empPostGraduation,
     empPostGraduationUniversity,
+    yearsOfExperience,
   } = empData;
 
   const [UGDropdown, setUGDropdown] = useState(
@@ -99,7 +96,7 @@ const ProfessionalEditable = ({
 
   return (
     <Grid container mb={10} sx={{ minHeight: 150 }}>
-      <Grid item sm={7}>
+      <Grid item sx={{ width: "100%" }}>
         <Box>
           <ContentBox>
             <TitleTypo>{professionalConstant.band}</TitleTypo>
@@ -175,16 +172,6 @@ const ProfessionalEditable = ({
                 />
               )}
             </Box>
-            {/* <CustomTextField
-              autoComplete="off"
-              required
-              id="outlined-basic"
-              variant="outlined"
-              value={empGraduationUniversity ? empGraduationUniversity : ""}
-              name="empGraduationUniversity"
-              onChange={handleChange}
-              type="text"
-            /> */}
           </ContentBox>
           <ContentBox>
             <TitleTypo>{professionalConstant.postGraduation}</TitleTypo>
@@ -250,18 +237,6 @@ const ProfessionalEditable = ({
                 />
               )}
             </Box>
-            {/* <CustomTextField
-              autoComplete="off"
-              required
-              id="outlined-basic"
-              variant="outlined"
-              value={
-                empPostGraduationUniversity ? empPostGraduationUniversity : ""
-              }
-              name="empPostGraduationUniversity"
-              onChange={handleChange}
-              type="text"
-            /> */}
           </ContentBox>
           {professionalDetails.map((field, index) => (
             <ContentBox key={index} sx={{ position: "relative" }}>
@@ -319,6 +294,20 @@ const ProfessionalEditable = ({
             </ContentBox>
           ))}
         </Box>
+        <ContentBox>
+          <TitleTypo>{professionalConstant.experience}</TitleTypo>
+          <CustomTextField
+            autoComplete="off"
+            required
+            id="outlined-basic"
+            variant="outlined"
+            value={yearsOfExperience ? yearsOfExperience : ""}
+            name="yearsOfExperience"
+            placeholder="Enter Number of Experience"
+            onChange={handleChange}
+            type="number"
+          />
+        </ContentBox>
       </Grid>
     </Grid>
   );

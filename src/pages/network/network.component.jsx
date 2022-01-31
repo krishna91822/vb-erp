@@ -26,7 +26,10 @@ import {
   IconButton,
   Divider,
 } from "@mui/material";
-import { StyledTableCell } from "../../assets/GlobalStyle/style";
+import {
+  StyledTableCell,
+  StyledTableCell2,
+} from "../../assets/GlobalStyle/style";
 import { StyledTypography } from "../../assets/GlobalStyle/style";
 import { Search as SearchIcon } from "../../icons/search";
 import { ClearRounded as ClearRoundedIcon } from "@mui/icons-material";
@@ -68,6 +71,7 @@ const Network = () => {
       .then((response) => {
         dispatch(toggleLoader());
         setEmployees(response.data.data);
+        console.log(paginationInfo.limit);
         response.data.totalResult < paginationInfo.limit &&
         paginationInfo.page === 1
           ? setPaginationInfo({
@@ -103,6 +107,10 @@ const Network = () => {
     const searchFields = event.target.value;
     if (event.key === "Enter") {
       setSearchEmp(searchFields);
+      setPaginationInfo({
+        ...paginationInfo,
+        page: 1,
+      });
     }
   };
 
@@ -166,8 +174,9 @@ const Network = () => {
           <Table>
             <TableHead>
               <TableRow className="table-header">
-                <StyledTableCell align="center">Name</StyledTableCell>
+                <StyledTableCell align="center">SNo</StyledTableCell>
                 <StyledTableCell align="center">Emp Id</StyledTableCell>
+                <StyledTableCell align="center">Name</StyledTableCell>
                 <StyledTableCell align="center">Email</StyledTableCell>
                 <StyledTableCell align="center">Position</StyledTableCell>
                 <StyledTableCell align="center">Location</StyledTableCell>
@@ -176,30 +185,36 @@ const Network = () => {
             </TableHead>
 
             <TableBody>
-              {employees.map((item) => (
+              {employees.map((item, index) => (
                 <TableRow
                   key={item.empId}
                   className="table-row"
                   onClick={(e) => handleEmployeeClick(item)}
                 >
-                  <StyledTableCell align="center">
+                  <StyledTableCell2 align="center">
+                    {index + parseInt(paginationInfo.page) * 10 - 9}
+                  </StyledTableCell2>
+                  <StyledTableCell2 align="center">
+                    {item.empId}
+                  </StyledTableCell2>
+                  <StyledTableCell2 align="center">
                     {item.empName}
-                  </StyledTableCell>
-                  <StyledTableCell align="center">{item.empId}</StyledTableCell>
-                  <StyledTableCell align="center">
+                  </StyledTableCell2>
+
+                  <StyledTableCell2 align="center">
                     {item.empEmail}
-                  </StyledTableCell>
-                  <StyledTableCell align="center">
+                  </StyledTableCell2>
+                  <StyledTableCell2 align="center">
                     {item.empDesignation}
-                  </StyledTableCell>
-                  <StyledTableCell align="center">
+                  </StyledTableCell2>
+                  <StyledTableCell2 align="center">
                     {item.empCurrentAddress
                       ? item.empCurrentAddress.empAddressCity
                       : ""}
-                  </StyledTableCell>
-                  <StyledTableCell align="center">
+                  </StyledTableCell2>
+                  <StyledTableCell2 align="center">
                     {item.empDepartment}
-                  </StyledTableCell>
+                  </StyledTableCell2>
                 </TableRow>
               ))}
             </TableBody>
@@ -209,11 +224,13 @@ const Network = () => {
       {/* pagination */}
       <div className="pagination">
         <Stack spacing={2}>
-          <Pagination
-            count={paginationInfo.totalPage}
-            page={paginationInfo.page}
-            onChange={handlePagination}
-          />
+          {paginationInfo.totalPage > 1 && (
+            <Pagination
+              count={paginationInfo.totalPage}
+              page={paginationInfo.page}
+              onChange={handlePagination}
+            />
+          )}
         </Stack>
       </div>
     </div>

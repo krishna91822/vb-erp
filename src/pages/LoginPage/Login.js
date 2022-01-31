@@ -11,6 +11,8 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { validateUser } from "../../store/user-actions";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import vbLogo from "../../assets/images/vb_logo.svg";
+import { MiniHeadingTypography } from "../../assets/GlobalStyle/style";
 
 export default function SignIn() {
   const dispatch = useDispatch();
@@ -38,12 +40,17 @@ export default function SignIn() {
             alignItems: "center",
           }}
         >
-          <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
-            <LockOutlinedIcon />
-          </Avatar>
-          <Typography component="h1" variant="h5">
-            Log In
-          </Typography>
+          <img
+            style={{
+              width: "130px",
+              marginRight: "80px",
+              borderRadius: "10px",
+              filter: "grayscale(30%)",
+            }}
+            src={vbLogo}
+            alt="vb-logo"
+          />
+          <MiniHeadingTypography>Log In</MiniHeadingTypography>
           <Box
             component="form"
             onSubmit={handleSubmit}

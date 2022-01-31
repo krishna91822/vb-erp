@@ -1,5 +1,8 @@
 import React, { useEffect, useState, useRef } from "react";
-import { StyledTableCell } from "../../assets/GlobalStyle/style";
+import {
+  StyledTableCell,
+  StyledTableCell2,
+} from "../../assets/GlobalStyle/style";
 import { StyledTypography } from "../../assets/GlobalStyle/style";
 
 import {
@@ -16,6 +19,7 @@ import {
   Grid,
   MenuItem,
   Modal,
+  Button,
   Stack,
   Pagination,
   TextField,
@@ -31,7 +35,6 @@ import {
 } from "@mui/material";
 import { Search as SearchIcon } from "../../icons/search";
 // eslint-disable-next-line no-unused-vars
-import { ClearRounded as ClearRoundedIcon } from "@mui/icons-material";
 import { reviewText } from "./review.constant";
 import ProfileContent from "../../components/templates/profileContent/profileContent.component";
 
@@ -40,7 +43,7 @@ import axiosInstance from "./../../helpers/axiosInstance";
 import { useDispatch } from "react-redux";
 import { uiActions } from "./../../store/ui-slice";
 
-import "../../components/clients/styles/ClientListStyles.css";
+import "../../assets/GlobalStyle/TableStyles.css";
 
 const Review = () => {
   const { toggleLoader } = uiActions;
@@ -163,11 +166,7 @@ const Review = () => {
       return (
         <ContentTypo
           sx={{
-            backgroundColor: "#2AB3A6",
-            color: "white",
-            padding: "5px 15px",
-            borderRadius: "20px",
-            fontSize: "16px",
+            color: "#2AB3A6",
           }}
         >
           {status}
@@ -177,11 +176,7 @@ const Review = () => {
       return (
         <ContentTypo
           sx={{
-            backgroundColor: "#F7C839",
-            color: "white",
-            padding: "5px 15px",
-            borderRadius: "20px",
-            fontSize: "16px",
+            color: "#F7C839",
           }}
         >
           {status}
@@ -191,11 +186,7 @@ const Review = () => {
       return (
         <ContentTypo
           sx={{
-            backgroundColor: "#D3455B",
-            color: "white",
-            padding: "5px 15px",
-            borderRadius: "20px",
-            fontSize: "16px",
+            color: "#D3455B",
           }}
         >
           {status}
@@ -283,36 +274,39 @@ const Review = () => {
                   key={item.reqId}
                   onClick={(e) => handleClickReviewItem(item)}
                 >
-                  <StyledTableCell align="center">{item.reqId}</StyledTableCell>
-                  <StyledTableCell align="center">
+                  <StyledTableCell2 align="center">
+                    {item.reqId}
+                  </StyledTableCell2>
+                  <StyledTableCell2 align="center">
                     {item.reqName}
-                  </StyledTableCell>
-                  <StyledTableCell align="center">
+                  </StyledTableCell2>
+                  <StyledTableCell2 align="center">
                     {new Date(item.createdAt).toISOString().slice(0, 10)}
-                  </StyledTableCell>
-                  <StyledTableCell align="center">
+                  </StyledTableCell2>
+                  <StyledTableCell2 align="center">
                     {item.employeeDetails.empReportingManager}
-                  </StyledTableCell>
-                  <StyledTableCell align="center">
+                  </StyledTableCell2>
+                  <StyledTableCell2 align="center">
                     {item.reqType}
-                  </StyledTableCell>
-                  <StyledTableCell align="center">
+                  </StyledTableCell2>
+                  <StyledTableCell2 align="center">
                     {renderChildStatus(item.status)}
-                  </StyledTableCell>
+                  </StyledTableCell2>
                 </TableRow>
               ))}
             </TableBody>
           </Table>
         </TableContainer>
       </div>
-      {/* pagination */}
       <div className="pagination">
         <Stack spacing={2}>
-          <Pagination
-            count={paginationInfo.totalPage}
-            page={paginationInfo.page}
-            onChange={handlePagination}
-          />
+          {paginationInfo.totalPage > 1 && (
+            <Pagination
+              count={paginationInfo.totalPage}
+              page={paginationInfo.page}
+              onChange={handlePagination}
+            />
+          )}
         </Stack>
       </div>
       <Modal open={openModalForReview} onClose={handleCloseModalForReview}>
@@ -366,20 +360,14 @@ const Review = () => {
                   Reject
                 </ColorButton>
               ) : (
-                <ColorButton
-                  size="medium"
+                <Button
+                  sx={{ marginRight: "1rem" }}
+                  color="error"
                   variant="contained"
                   onClick={handleReject}
-                  sx={{
-                    m: 1,
-                    backgroundColor: "hsl(350.7,61.7%,54.9%)",
-                    "&:hover": {
-                      backgroundColor: "hsl(350.7,61.7%,45.9%)",
-                    },
-                  }}
                 >
                   Reject
-                </ColorButton>
+                </Button>
               )}
               {reviewItemData.status === "accepted" ? (
                 <ColorButton
@@ -398,20 +386,9 @@ const Review = () => {
                   Approve
                 </ColorButton>
               ) : (
-                <ColorButton
-                  size="medium"
-                  variant="contained"
-                  onClick={handleApprove}
-                  sx={{
-                    m: 1,
-                    backgroundColor: "#1AAE9F",
-                    "&:hover": {
-                      backgroundColor: "hsl(173.9,74%,30%)",
-                    },
-                  }}
-                >
+                <Button variant="contained" onClick={handleApprove}>
                   Approve
-                </ColorButton>
+                </Button>
               )}
             </Box>
           </Box>

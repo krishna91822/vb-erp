@@ -6,6 +6,7 @@ const userFields = {
   roles: [],
   permissions: [],
   token: "",
+  id: "",
   has_permission: false,
 };
 

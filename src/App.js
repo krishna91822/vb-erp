@@ -1,5 +1,4 @@
 import { Route, Routes } from "react-router-dom";
-
 import RRoutes from "./routes/index";
 import Layout from "./components/layout/Layout";
 import Notification from "./components/UI/Notification";
@@ -11,25 +10,31 @@ import DescriptionAlerts from "./pages/LoginPage/Authorization";
 import { useEffect } from "react";
 import { tokenValidate } from "./store/user-actions";
 import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import cookie from "react-cookies";
 
 function App() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const location = useLocation();
   const notification = useSelector((state) => state.ui.notification);
   const loader = useSelector((state) => state.ui.loading);
   const { routes } = RRoutes();
   useEffect(() => {
     if (cookie.load("token")) {
       dispatch(tokenValidate()).then((res) => {
+        if (res) {
+          location.pathname === "/" && navigate("/my-profile");
+          location.pathname.includes("/setpassword") && navigate("/my-profile");
+        }
         if (!res) {
           cookie.remove("token");
           navigate("/");
         }
       });
     } else {
-      navigate("/");
+      location.pathname === "/:id/setpassword" && navigate("/:id/setpassword");
+      location.pathname === "/" && navigate("/");
     }
   }, []);
   return (
