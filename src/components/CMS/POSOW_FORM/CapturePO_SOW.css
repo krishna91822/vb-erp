@@ -6,8 +6,18 @@
   display: flex;
   justify-content: space-between;
 }
-.posow-topGrid {
-  padding: 0 0.8rem;
+.form-header {
+  display: flex;
+  align-items: center;
+  padding-bottom: 1rem;
+  justify-content: space-between;
+}
+
+.end-btns {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-direction: row;
 }
 .posow-SaveButton {
   margin: 1rem;
@@ -95,7 +105,7 @@ hr.projectInfoSeperator2 {
   margin-top: 0.5rem;
 }
 .switch {
-  position: absolute;
+  position: relative;
   display: inline-block;
   width: 60px;
   height: 34px;

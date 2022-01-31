@@ -26,7 +26,10 @@ import {
   IconButton,
   Divider,
 } from "@mui/material";
-import { StyledTableCell } from "../../assets/GlobalStyle/style";
+import {
+  StyledTableCell,
+  StyledTableCell2,
+} from "../../assets/GlobalStyle/style";
 import { StyledTypography } from "../../assets/GlobalStyle/style";
 import { Search as SearchIcon } from "../../icons/search";
 import { ClearRounded as ClearRoundedIcon } from "@mui/icons-material";
@@ -182,24 +185,26 @@ const Network = () => {
                   className="table-row"
                   onClick={(e) => handleEmployeeClick(item)}
                 >
-                  <StyledTableCell align="center">
+                  <StyledTableCell2 align="center">
                     {item.empName}
-                  </StyledTableCell>
-                  <StyledTableCell align="center">{item.empId}</StyledTableCell>
-                  <StyledTableCell align="center">
+                  </StyledTableCell2>
+                  <StyledTableCell2 align="center">
+                    {item.empId}
+                  </StyledTableCell2>
+                  <StyledTableCell2 align="center">
                     {item.empEmail}
-                  </StyledTableCell>
-                  <StyledTableCell align="center">
+                  </StyledTableCell2>
+                  <StyledTableCell2 align="center">
                     {item.empDesignation}
-                  </StyledTableCell>
-                  <StyledTableCell align="center">
+                  </StyledTableCell2>
+                  <StyledTableCell2 align="center">
                     {item.empCurrentAddress
                       ? item.empCurrentAddress.empAddressCity
                       : ""}
-                  </StyledTableCell>
-                  <StyledTableCell align="center">
+                  </StyledTableCell2>
+                  <StyledTableCell2 align="center">
                     {item.empDepartment}
-                  </StyledTableCell>
+                  </StyledTableCell2>
                 </TableRow>
               ))}
             </TableBody>
@@ -209,11 +214,13 @@ const Network = () => {
       {/* pagination */}
       <div className="pagination">
         <Stack spacing={2}>
-          <Pagination
-            count={paginationInfo.totalPage}
-            page={paginationInfo.page}
-            onChange={handlePagination}
-          />
+          {paginationInfo.totalPage > 1 && (
+            <Pagination
+              count={paginationInfo.totalPage}
+              page={paginationInfo.page}
+              onChange={handlePagination}
+            />
+          )}
         </Stack>
       </div>
     </div>

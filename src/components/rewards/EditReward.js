@@ -1,11 +1,11 @@
 import React, { useEffect } from "react";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
-import { Grid } from "@mui/material";
+import { Grid, Card } from "@mui/material";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
-import { FormLabel, Card } from "@mui/material";
+import { FormLabel } from "@mui/material";
 import { useParams } from "react-router-dom";
 import "./rewardStyle.css";
 import Popup from "./Popup";
@@ -17,6 +17,10 @@ import { UpdateRewardData } from "../../store/rewards-actions";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { ToastContainer } from "react-toastify";
+import {
+  StyledTypography,
+  MiniHeadingTypography,
+} from "../../assets/GlobalStyle/style";
 
 const EditReward = () => {
   let { id } = useParams();
@@ -192,41 +196,41 @@ const EditReward = () => {
         hideProgressBar={true}
         autoClose={3000}
       />
-      <Grid classes={{ root: { width: "100%" } }}>
-        {rewardData && rewardData.reward_type && (
-          <div className="rewards-form-header">
-            <div>
-              <FormLabel
-                className="title"
-                style={{
-                  fontSize: " 2rem ",
-                  fontWeight: " 650 ",
-                  color: " Black ",
-                }}
-                children="Edit Reward"
-              />
-            </div>
-            <div className="btn-container">
-              <Button
-                id="btn"
-                variant="contained"
-                color="primary"
-                onClick={saveFormData}
-              >
-                Save
-              </Button>
-              <Button onClick={cencelButton} variant="contained" color="error">
-                Cancel
-              </Button>
-            </div>
-          </div>
-        )}
-        <br />
-        <hr />
-        <br />
-        <Card mt={4}>
-          <form>
-            <Grid margin={"1rem"}>
+      <Grid container>
+        <Grid item>
+          <StyledTypography variant="h4">R&R</StyledTypography>
+        </Grid>
+      </Grid>
+      <Card mt={4}>
+        <Grid classes={{ root: { width: "100%" } }} sx={{ margin: "1rem" }}>
+          {rewardData && rewardData.reward_type && (
+            <form>
+              <div className="rewards-form-header">
+                <div>
+                  <MiniHeadingTypography variant="h4">
+                    Edit Reward
+                  </MiniHeadingTypography>
+                </div>
+                <div className="btn-container">
+                  <Button
+                    id="btn"
+                    variant="contained"
+                    color="primary"
+                    onClick={saveFormData}
+                  >
+                    Save
+                  </Button>
+                  <Button
+                    onClick={cencelButton}
+                    variant="contained"
+                    color="error"
+                  >
+                    Cancel
+                  </Button>
+                </div>
+              </div>
+              <hr />
+              <br />
               <Grid item>
                 <FormLabel
                   children="Reward Display Name"
@@ -239,6 +243,7 @@ const EditReward = () => {
                   name="reward_display_name"
                   value={rewardData.reward_display_name}
                   onChange={handleChangeName}
+                  size="small"
                 />
               </Grid>
               <br />
@@ -255,6 +260,7 @@ const EditReward = () => {
                     name="reward_type"
                     value={rewardData.reward_type}
                     onChange={typeChange}
+                    size="small"
                   >
                     <MenuItem value="Daily">Daily</MenuItem>
                     <MenuItem value="Monthly">Monthly</MenuItem>
@@ -278,6 +284,7 @@ const EditReward = () => {
                       name="reward_subType"
                       value={rewardData.reward_subType}
                       onChange={subtypeChange}
+                      size="small"
                     >
                       <MenuItem value="work-anniversary">
                         Work Anniversary
@@ -303,6 +310,7 @@ const EditReward = () => {
                       name="reward_subType"
                       value={rewardData.reward_subType}
                       onChange={subtypeChange}
+                      size="small"
                     >
                       <MenuItem value="starOfTheMonth">
                         Star of the month
@@ -328,6 +336,7 @@ const EditReward = () => {
                     name="reward_sender"
                     value={rewardData.reward_sender}
                     onChange={senderChange}
+                    size="small"
                   >
                     <MenuItem value="CEO">CEO</MenuItem>
                     <MenuItem value="Manager">Manager</MenuItem>
@@ -355,6 +364,7 @@ const EditReward = () => {
                     value={rewardData.reward_receiver}
                     name="reward_receiver"
                     onChange={receiverChange}
+                    size="small"
                   >
                     {rewardData.reward_type === "On-Demand" && (
                       <MenuItem value="Manager">Manager</MenuItem>
@@ -386,6 +396,7 @@ const EditReward = () => {
                   rows={3}
                   name="receiver_message"
                   onChange={handleChangeReceiverMessage}
+                  size="small"
                 />
               </Grid>
               <br />
@@ -402,6 +413,7 @@ const EditReward = () => {
                     value={rewardData.announcement_type}
                     name="announcement_type"
                     onChange={announcementChange}
+                    size="small"
                   >
                     <MenuItem value="public">Public</MenuItem>
                     <MenuItem value="private">Private</MenuItem>
@@ -422,6 +434,7 @@ const EditReward = () => {
                     name="slack_channel"
                     value={rewardData.slack_channel}
                     onChange={handleChangeSlack}
+                    size="small"
                   />
                 </Grid>
               )}
@@ -441,46 +454,47 @@ const EditReward = () => {
                     value={rewardData.channel_message}
                     onChange={handleChangeChannel}
                     rows={2}
+                    size="small"
                   />
                 </Grid>
               )}
-            </Grid>
 
-            {
-              <Popup
-                title="Team Members"
-                openPopup={openSenderPopup}
-                setOpenPopup={setOpenSenderPopup}
-              >
-                <EmployeesList
-                  sender={true}
-                  rewardId={rewardData._id}
-                  updateSenderData={updateSenderData}
+              {
+                <Popup
+                  title="Team Members"
                   openPopup={openSenderPopup}
                   setOpenPopup={setOpenSenderPopup}
-                  stateOfSelection="single"
-                />
-              </Popup>
-            }
-            {
-              <Popup
-                title="Team Members"
-                openPopup={openReceiverPopup}
-                setOpenPopup={setOpenReceiverPopup}
-              >
-                <EmployeesList
-                  receiver={true}
-                  rewardId={rewardData._id}
-                  updaterecipientsData={updaterecipientsData}
+                >
+                  <EmployeesList
+                    sender={true}
+                    rewardId={rewardData._id}
+                    updateSenderData={updateSenderData}
+                    openPopup={openSenderPopup}
+                    setOpenPopup={setOpenSenderPopup}
+                    stateOfSelection="single"
+                  />
+                </Popup>
+              }
+              {
+                <Popup
+                  title="Team Members"
                   openPopup={openReceiverPopup}
                   setOpenPopup={setOpenReceiverPopup}
-                  stateOfSelection="multiple"
-                />
-              </Popup>
-            }
-          </form>
-        </Card>
-      </Grid>
+                >
+                  <EmployeesList
+                    receiver={true}
+                    rewardId={rewardData._id}
+                    updaterecipientsData={updaterecipientsData}
+                    openPopup={openReceiverPopup}
+                    setOpenPopup={setOpenReceiverPopup}
+                    stateOfSelection="multiple"
+                  />
+                </Popup>
+              }
+            </form>
+          )}
+        </Grid>
+      </Card>
     </>
   );
 };

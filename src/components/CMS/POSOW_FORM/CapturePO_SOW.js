@@ -31,6 +31,10 @@ import {
   MiniHeadingTypography,
   StyledTypography,
 } from "../../../assets/GlobalStyle/style";
+import {
+  TitleTypo,
+  CustomSwitch,
+} from "./../../templates/editMode/editMode.styles";
 
 // materialUI stylings for select dropdowns.
 const ITEM_HEIGHT = 48;
@@ -330,41 +334,22 @@ export const CapturePO_SOW = (props) => {
       <div className="posowForm-container">
         <React.Fragment>
           <CssBaseline />
-          <StyledTypography data-test="Doc Heading">PO/SOW</StyledTypography>
           <Grid container className="posow-topGrid">
-            <Grid item lg={6} md={6} sm={12} xs={12} className="finalgrid ">
-              {props.editBtn && editTglCheckedState ? (
-                <div className="posow-SaveButton">
-                  <Button
-                    variant="contained"
-                    color="success"
-                    type="submit"
-                    onClick={(event) => submitForm(event)}
-                    data-test="UpdateBtn"
-                  >
-                    Update{" "}
-                  </Button>
-                </div>
-              ) : (
-                <div></div>
-              )}
+            <Grid item lg={10} md={10} sm={12} xs={12}>
+              <StyledTypography data-test="Doc Heading">
+                PO/SOW
+              </StyledTypography>
             </Grid>
           </Grid>
+
           <Box>
             <Card sx={{ margin: "0.5rem" }}>
-              <Grid container>
-                <Grid
-                  item
-                  lg={10}
-                  md={10}
-                  sm={10}
-                  xs={12}
-                  className="finalgrid"
-                >
+              <div className="form-header">
+                <div>
                   <MiniHeadingTypography className="cms-heading">
                     Project information
                   </MiniHeadingTypography>
-                </Grid>
+                </div>
                 {/* might be required in future versions. */}
                 {/* <Grid item lg={4} md={4} sm={4} xs={12} className="finalgrid">
                   {props.editBtn ? (
@@ -378,32 +363,33 @@ export const CapturePO_SOW = (props) => {
                     <div></div>
                   )}
                 </Grid> */}
+
                 {user.permissions.includes("upload_PO/SOW/contract") && (
-                  <Grid item lg={2} md={2} sm={2} xs={12} className="finalgrid">
+                  <div className="end-btns">
                     {props.editBtn ? (
-                      <div className="invoice-editToggle">
-                        <div
-                          className="editTxt"
+                      <div style={{ paddingRight: "1rem" }}>
+                        <TitleTypo
                           data-test="editModeSwitch-label"
+                          sx={{
+                            textTransform: "capitalize",
+                            pr: 1,
+                            display: "inline",
+                          }}
                         >
-                          Edit
-                        </div>
-                        <label className="switch">
-                          <input
-                            type="checkbox"
-                            data-test="EditToggleBtn"
-                            data-testid="EditToggleBtn"
-                            checked={editTglCheckedState}
-                            onChange={handleEditTglChange}
-                          />
-                          <span className="slider round"></span>
-                        </label>
+                          Edit Mode
+                        </TitleTypo>
+                        <CustomSwitch
+                          data-test="EditToggleBtn"
+                          data-testid="EditToggleBtn"
+                          checked={editTglCheckedState}
+                          onChange={handleEditTglChange}
+                          inputProps={{ "aria-label": "switch" }}
+                        />
                       </div>
                     ) : (
                       <div className="posow-SaveButton">
                         <Button
                           variant="contained"
-                          color="success"
                           type="submit"
                           onClick={(event) => submitForm(event)}
                           data-test="POSOW-save-btn"
@@ -413,9 +399,26 @@ export const CapturePO_SOW = (props) => {
                         </Button>
                       </div>
                     )}
-                  </Grid>
+                    <div>
+                      {props.editBtn && editTglCheckedState ? (
+                        <div className="posow-SaveButton">
+                          <Button
+                            variant="contained"
+                            type="submit"
+                            onClick={(event) => submitForm(event)}
+                            data-test="UpdateBtn"
+                          >
+                            Update{" "}
+                          </Button>
+                        </div>
+                      ) : (
+                        <div></div>
+                      )}
+                    </div>
+                  </div>
                 )}
-              </Grid>
+              </div>
+
               <hr className="projectInfoSeperator" />
 
               <Grid container pr={2} mt={2}>
@@ -710,7 +713,7 @@ export const CapturePO_SOW = (props) => {
                         <Button
                           variant="contained"
                           style={{
-                            backgroundColor: "03A9F4",
+                            backgroundColor: "chocolate",
                             color: "#FFFFFF",
                           }}
                         >

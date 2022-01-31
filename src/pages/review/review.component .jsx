@@ -1,5 +1,8 @@
 import React, { useEffect, useState, useRef } from "react";
-import { StyledTableCell } from "../../assets/GlobalStyle/style";
+import {
+  StyledTableCell,
+  StyledTableCell2,
+} from "../../assets/GlobalStyle/style";
 import { StyledTypography } from "../../assets/GlobalStyle/style";
 
 import {
@@ -16,6 +19,7 @@ import {
   Grid,
   MenuItem,
   Modal,
+  Button,
   Stack,
   Pagination,
   TextField,
@@ -270,36 +274,39 @@ const Review = () => {
                   key={item.reqId}
                   onClick={(e) => handleClickReviewItem(item)}
                 >
-                  <StyledTableCell align="center">{item.reqId}</StyledTableCell>
-                  <StyledTableCell align="center">
+                  <StyledTableCell2 align="center">
+                    {item.reqId}
+                  </StyledTableCell2>
+                  <StyledTableCell2 align="center">
                     {item.reqName}
-                  </StyledTableCell>
-                  <StyledTableCell align="center">
+                  </StyledTableCell2>
+                  <StyledTableCell2 align="center">
                     {new Date(item.createdAt).toISOString().slice(0, 10)}
-                  </StyledTableCell>
-                  <StyledTableCell align="center">
+                  </StyledTableCell2>
+                  <StyledTableCell2 align="center">
                     {item.employeeDetails.empReportingManager}
-                  </StyledTableCell>
-                  <StyledTableCell align="center">
+                  </StyledTableCell2>
+                  <StyledTableCell2 align="center">
                     {item.reqType}
-                  </StyledTableCell>
-                  <StyledTableCell align="center">
+                  </StyledTableCell2>
+                  <StyledTableCell2 align="center">
                     {renderChildStatus(item.status)}
-                  </StyledTableCell>
+                  </StyledTableCell2>
                 </TableRow>
               ))}
             </TableBody>
           </Table>
         </TableContainer>
       </div>
-      {/* pagination */}
       <div className="pagination">
         <Stack spacing={2}>
-          <Pagination
-            count={paginationInfo.totalPage}
-            page={paginationInfo.page}
-            onChange={handlePagination}
-          />
+          {paginationInfo.totalPage > 1 && (
+            <Pagination
+              count={paginationInfo.totalPage}
+              page={paginationInfo.page}
+              onChange={handlePagination}
+            />
+          )}
         </Stack>
       </div>
       <Modal open={openModalForReview} onClose={handleCloseModalForReview}>
@@ -353,20 +360,14 @@ const Review = () => {
                   Reject
                 </ColorButton>
               ) : (
-                <ColorButton
-                  size="medium"
+                <Button
+                  sx={{ marginRight: "1rem" }}
+                  color="error"
                   variant="contained"
                   onClick={handleReject}
-                  sx={{
-                    m: 1,
-                    backgroundColor: "hsl(350.7,61.7%,54.9%)",
-                    "&:hover": {
-                      backgroundColor: "hsl(350.7,61.7%,45.9%)",
-                    },
-                  }}
                 >
                   Reject
-                </ColorButton>
+                </Button>
               )}
               {reviewItemData.status === "accepted" ? (
                 <ColorButton
@@ -385,20 +386,9 @@ const Review = () => {
                   Approve
                 </ColorButton>
               ) : (
-                <ColorButton
-                  size="medium"
-                  variant="contained"
-                  onClick={handleApprove}
-                  sx={{
-                    m: 1,
-                    backgroundColor: "#1AAE9F",
-                    "&:hover": {
-                      backgroundColor: "hsl(173.9,74%,30%)",
-                    },
-                  }}
-                >
+                <Button variant="contained" onClick={handleApprove}>
                   Approve
-                </ColorButton>
+                </Button>
               )}
             </Box>
           </Box>

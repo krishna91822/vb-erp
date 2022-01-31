@@ -7,4 +7,5 @@ export const professionalConstant = {
   graduationUniversity: "graduation university:",
   postGraduation: "post graduation:",
   PgUniversity: "PG university:",
+  experience: "Number of Experience:",
 };

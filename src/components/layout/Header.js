@@ -3,7 +3,9 @@ import {
   Logout,
   LoginRounded as LoginRoundedIcon,
 } from "@mui/icons-material";
+import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettings";
 import { useState } from "react";
+
 import {
   createTheme,
   ThemeProvider,
@@ -26,6 +28,7 @@ import { logoutUser } from "../../store/user-actions";
 const Header = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const users = useSelector((state) => state.user.user);
   const lgUp = useMediaQuery((theme) => theme.breakpoints.up("sm"), {
     defaultMatches: true,
     noSsr: false,
@@ -97,7 +100,9 @@ const Header = () => {
                     color: "rgb(17,24,39)",
                   }}
                 />
-                <Typography variant="h6">{user.name}</Typography>
+                <Typography variant="h6" sx={{ textTransform: "capitalize" }}>
+                  {user.name}
+                </Typography>
               </IconButton>
               <Menu
                 id="profile-menu"
@@ -128,7 +133,23 @@ const Header = () => {
                   <Avatar /> Profile
                 </MenuItem>
                 <Divider />
-                <MenuItem onClick={handleClose}>
+                {users.permissions.includes("view_admin_panel") && (
+                  <MenuItem
+                    onClick={handleClose}
+                    component={Link}
+                    to="/createuserprofile"
+                  >
+                    <ListItemIcon>
+                      <AdminPanelSettingsIcon fontSize="small" />
+                    </ListItemIcon>
+                    Admin Pannel
+                  </MenuItem>
+                )}
+                <MenuItem
+                  onClick={handleClose}
+                  component={Link}
+                  to={"/settings"}
+                >
                   <ListItemIcon>
                     <Settings fontSize="small" />
                   </ListItemIcon>
