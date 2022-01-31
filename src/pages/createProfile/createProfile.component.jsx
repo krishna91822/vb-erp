@@ -59,6 +59,9 @@ const CreateProfile = ({
   toggleEditEmployee,
   setToggleEditEmployee,
   editSwitch,
+  editEmployee,
+  setEditEmployee,
+  setLoader,
 }) => {
   const { user } = useSelector((state) => state.user);
   const email = user.email;
@@ -73,7 +76,8 @@ const CreateProfile = ({
         dispatch(setCurrentEmployee(response.data.data[0]));
       })
       .catch((err) => console.log(err));
-  }, [dispatch]);
+  }, [dispatch, email]);
+
   const [value, setValue] = useState(0);
 
   const handleChange = (event, newValue) => {
@@ -102,6 +106,7 @@ const CreateProfile = ({
     empPostGraduation: "",
     empPostGraduationUniversity: "",
     empResidentialAddress: undefined,
+    project: [],
   };
 
   const [employee, setEmployee] = useState(
@@ -299,6 +304,7 @@ const CreateProfile = ({
         .post("/employees", createEmployee.employeeDetails)
         .then(function (response) {
           setEmployee(empInitial);
+          setValue(0);
           dispatch(toggleLoader());
           handleOpenModal();
         })
@@ -309,7 +315,7 @@ const CreateProfile = ({
         });
     } else if (
       createEmployee?.reqType === "profile-update" &&
-      ["hr_admin", "super_admin"].some((el) => user.roles.includes(el))
+      user.permissions.includes("create_employee_dashboard")
     ) {
       let employeeObject = { ...createEmployee.employeeDetails };
       ["_id", "empId", "createdAt", "updatedAt", "count"].map(
@@ -319,6 +325,8 @@ const CreateProfile = ({
         .patch(`/employees/${editEmployeeData._id}`, employeeObject)
         .then(function (response) {
           setEmployee(empInitial);
+          setEditEmployee && setEditEmployee(false);
+          setLoader && setLoader((prev) => prev + 1);
           dispatch(toggleLoader());
           dispatch(
             showNotification({
@@ -360,8 +368,9 @@ const CreateProfile = ({
         });
     }
   };
+
   return currentEmployee &&
-    ["super_admin", "hr_admin"].some((el) => user.roles.includes(el)) ? (
+    user.permissions.includes("create_employee_dashboard") ? (
     <BoxStyle data-test="create-profile-test">
       <div>
         <ProfileInfoEditable

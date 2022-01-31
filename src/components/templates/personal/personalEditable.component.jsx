@@ -219,7 +219,6 @@ const PersonalEditable = (props) => {
   const aboutCount = useRef(0);
   const handleAboutMe = (event) => {
     aboutCount.current = event.target.value.length;
-    console.log(`${aboutCount.current}/100`);
   };
 
   return (

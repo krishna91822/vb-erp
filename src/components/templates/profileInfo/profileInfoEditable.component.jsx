@@ -168,6 +168,20 @@ const ProfileInfoEditable = (props) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  useEffect(() => {
+    setReportingTo(
+      empReportingManager
+        ? { label: empReportingManager, value: empReportingManager }
+        : null
+    );
+    setDepartment(
+      empDepartment ? { label: empDepartment, value: empDepartment } : null
+    );
+    setDesignation(
+      empDesignation ? { label: empDesignation, value: empDesignation } : null
+    );
+  }, [empReportingManager, empDepartment, empDesignation]);
+
   const loadEmployeeOptions = (inputValue, callback) => {
     axiosInstance
       .get(`/employees?fields=empName,empId,-_id&search=${inputValue}`)

@@ -25,6 +25,7 @@ const ViewProfile = () => {
 
   const [loading, setLoading] = useState(true);
   const [viewedEmployee, setViewedEmployee] = useState({});
+  const [loader, setLoader] = useState(0);
 
   const { empId } = useParams();
   useEffect(() => {
@@ -35,8 +36,8 @@ const ViewProfile = () => {
         setLoading(false);
       })
       .catch((err) => console.error(err));
-  }, [empId]);
-  const [editEmployee, setEditEmployee] = React.useState(false);
+  }, [empId, loader]);
+  const [editEmployee, setEditEmployee] = useState(false);
 
   const handleSwitchChange = (event) => {
     setEditEmployee(event.target.checked);
@@ -70,7 +71,7 @@ const ViewProfile = () => {
         }}
       >
         {user.permissions.includes("edit_employee_dashboard") &&
-        ["hr_admin", "super_admin"].some((el) => user.roles.includes(el)) ? (
+        user.permissions.includes("create_employee_dashboard") ? (
           <Box
             sx={{
               display: "flex",
@@ -123,6 +124,9 @@ const ViewProfile = () => {
         <CreateProfile
           editEmployeeData={viewedEmployee}
           editSwitch={component()}
+          editEmployee={editEmployee}
+          setEditEmployee={setEditEmployee}
+          setLoader={setLoader}
         />
       ) : (
         <ProfileContentWithSpinner
