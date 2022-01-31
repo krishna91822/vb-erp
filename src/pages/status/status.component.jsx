@@ -50,16 +50,11 @@ const Status = (props) => {
     dispatch(toggleLoader());
     axiosInstance
       .get(
-        `/reviews?sort=-reqId&page=${paginationInfo.page}&limit=${paginationInfo.limit}`
+        `/reviews?sort=-reqId&reqEmail=${user.email}&page=${paginationInfo.page}&limit=${paginationInfo.limit}`
       )
       .then((response) => {
         dispatch(toggleLoader());
-        // setReviewData(response.data.data.reviews);
-        setReviewData(
-          response.data.data.reviews.filter(
-            (el) => el.employeeDetails.empEmail === user.email
-          )
-        );
+        setReviewData(response.data.data.reviews);
         response.data.totalResult < paginationInfo.limit &&
         paginationInfo.page === 1
           ? setPaginationInfo({
@@ -104,6 +99,7 @@ const Status = (props) => {
         <ContentTypo
           sx={{
             color: "#2AB3A6",
+            fontWeight: "bold",
           }}
         >
           {status}
@@ -114,6 +110,7 @@ const Status = (props) => {
         <ContentTypo
           sx={{
             color: "#F7C839",
+            fontWeight: "bold",
           }}
         >
           {status}
@@ -124,6 +121,7 @@ const Status = (props) => {
         <ContentTypo
           sx={{
             color: "#D3455B",
+            fontWeight: "bold",
           }}
         >
           {status}

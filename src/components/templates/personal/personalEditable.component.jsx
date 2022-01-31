@@ -43,6 +43,7 @@ const PersonalEditable = (props) => {
   const {
     empDob,
     empHobbies,
+    slackMemId,
     empPersonalEmail,
     empAboutMe,
     empCurrentAddress,
@@ -254,7 +255,7 @@ const PersonalEditable = (props) => {
                     fontSize: "12px",
                     position: "absolute",
                     left: "0",
-                    bottom: "-20px",
+                    bottom: "-15px",
                     ...(aboutCount.current > 500 && { color: "#D32F2F" }),
                   }}
                 >{`${aboutCount.current}/500`}</Box>
@@ -344,6 +345,24 @@ const PersonalEditable = (props) => {
                   placeholder="Enter hobby"
                 />
               </Box>
+            </ContentTypo>
+          </ContentBox>
+        </Box>
+        <Box>
+          <ContentBox>
+            <TitleTypo>{personal.slackMemberId}</TitleTypo>
+            <ContentTypo>
+              <CustomTextField
+                placeholder="Enter Slack Member ID"
+                autoComplete="off"
+                required
+                id="outlined-basic"
+                variant="outlined"
+                value={slackMemId ? slackMemId : ""}
+                type="email"
+                name="slackMemId"
+                onChange={(event) => handleChange(event)}
+              />
             </ContentTypo>
           </ContentBox>
         </Box>

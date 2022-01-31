@@ -18,5 +18,19 @@ export const networkText = {
       value: "empDepartment",
       label: "By Department",
     },
+    {
+      value: "empDepartment",
+      label: "By Department",
+    },
+  ],
+  employeeStatus: [
+    {
+      value: "active",
+      label: "Active Employee",
+    },
+    {
+      value: "inactive",
+      label: "Inactive Employee",
+    },
   ],
 };

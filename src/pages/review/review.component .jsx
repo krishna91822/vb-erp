@@ -163,6 +163,7 @@ const Review = () => {
         <ContentTypo
           sx={{
             color: "#2AB3A6",
+            fontWeight: "bold",
           }}
         >
           {status}
@@ -173,6 +174,7 @@ const Review = () => {
         <ContentTypo
           sx={{
             color: "#F7C839",
+            fontWeight: "bold",
           }}
         >
           {status}
@@ -183,6 +185,7 @@ const Review = () => {
         <ContentTypo
           sx={{
             color: "#D3455B",
+            fontWeight: "bold",
           }}
         >
           {status}

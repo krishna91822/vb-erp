@@ -7,4 +7,5 @@ export const personal = {
   currentAddress: "current address:",
   residentialAddress: "permanent address:",
   addressCheckbox: "permanent address same as current address:",
+  slackMemberId: "slack member ID",
 };

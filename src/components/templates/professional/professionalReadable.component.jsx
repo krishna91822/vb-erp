@@ -16,6 +16,7 @@ const ProfessionalReadable = ({ empData }) => {
     empPostGraduation,
     empPostGraduationUniversity,
     professionalDetails,
+    yearsOfExperience,
   } = empData;
   return (
     <Grid container sx={{ minHeight: 150 }}>
@@ -40,6 +41,10 @@ const ProfessionalReadable = ({ empData }) => {
           <ContentBox>
             <TitleTypo>{professionalConstant.PgUniversity}</TitleTypo>
             <ContentTypo>{empPostGraduationUniversity}</ContentTypo>
+          </ContentBox>
+          <ContentBox>
+            <TitleTypo>{professionalConstant.experience}</TitleTypo>
+            <ContentTypo>{yearsOfExperience} years</ContentTypo>
           </ContentBox>
           {professionalDetails.map((field) => (
             <ContentBox key={field._id}>

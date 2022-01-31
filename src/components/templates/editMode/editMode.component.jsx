@@ -11,27 +11,28 @@ import { uiActions } from "./../../../store/ui-slice";
 import axiosInstance from "./../../../helpers/axiosInstance";
 
 const EditMode = ({
+  setInEditMode,
+  inEditMode,
   updateRequest,
   handleOpen,
-  handleSubmit,
+  // handleSubmit,
   setEmployeeUpdateCount,
   switchOnly,
   btnsOnly,
 }) => {
-  const { inEditMode } = useSelector((state) => state.employee);
   const { user } = useSelector((state) => state.user);
   const { toggleLoader, showNotification } = uiActions;
   const dispatch = useDispatch();
 
   const [open, setOpen] = useState(false);
   const handleToggleClose = () => {
-    dispatch(toggleEditMode());
+    // dispatch(toggleEditMode());
+    setInEditMode((prev) => !prev);
     setOpen(false);
   };
   const handleToggleOpen = () => setOpen(true);
-
   const handleSubmitBtn = () => {
-    if (["hr_admin", "super_admin"].some((el) => user.roles.includes(el))) {
+    if (user.permissions.includes("approve_employee_edit_request")) {
       dispatch(toggleLoader());
 
       let employeeObject = { ...updateRequest };
@@ -51,7 +52,8 @@ const EditMode = ({
               message: "Employee has been updated.",
             })
           );
-          dispatch(toggleEditMode());
+          // dispatch(toggleEditMode());
+          setInEditMode((prev) => !prev);
         })
         .catch(function (error) {
           dispatch(toggleLoader());
@@ -71,17 +73,19 @@ const EditMode = ({
           reqName: updateRequest.empName,
           reqType: "profile-update",
           employeeDetails: { ...updateRequest },
+          reqEmail: user.email,
         })
         .then(function (response) {
           dispatch(toggleLoader());
           dispatch(
             showNotification({
               status: "success",
-              title: "Employee has been sent for review.",
-              message: "Employee has been sent for review.",
+              title: "request has been sent for review.",
+              message: "request has been sent for review.",
             })
           );
-          dispatch(toggleEditMode());
+          // dispatch(toggleEditMode());
+          setInEditMode((prev) => !prev);
         })
         .catch(function (error) {
           dispatch(toggleLoader());
@@ -99,7 +103,8 @@ const EditMode = ({
   };
 
   const handleChange = (event) => {
-    dispatch(toggleEditMode());
+    // dispatch(toggleEditMode());
+    setInEditMode((prev) => !prev);
   };
   return (
     <Box
@@ -126,7 +131,7 @@ const EditMode = ({
             variant="contained"
             onClick={handleSubmitBtn}
           >
-            {["hr_admin", "super_admin"].some((el) => user.roles.includes(el))
+            {user.permissions.includes("approve_employee_edit_request")
               ? editModeConstant.update
               : editModeConstant.SubmitRequest}
           </Button>
