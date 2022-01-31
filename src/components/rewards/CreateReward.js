@@ -431,6 +431,7 @@ const CreateReward = () => {
                   updaterecipientsData={updaterecipientsData}
                   openPopup={openReceiverPopup}
                   setOpenPopup={setOpenReceiverPopup}
+                  stateOfSelection="multiple"
                 />
               </Popup>
             }
