@@ -39,14 +39,16 @@ export default function SetPassword() {
     const data = new FormData(event.currentTarget);
     const password = data.get("password");
     const confirmPassword = data.get("confirm_password");
-    password === confirmPassword
-      ? handleSubmit(password)
-      : dispatch(
-          uiActions.showNotification({
-            status: "error",
-            message: "password not match with confirm password",
-          })
-        );
+    if (password === confirmPassword) {
+      handleSubmit(password);
+    } else {
+      dispatch(
+        uiActions.showNotification({
+          status: "error",
+          message: "Password and confirm password does not match",
+        })
+      );
+    }
   };
 
   return (
@@ -55,7 +57,6 @@ export default function SetPassword() {
         <Box
           sx={{
             marginTop: 8,
-            padding: "50px",
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
@@ -82,12 +83,7 @@ export default function SetPassword() {
             </MiniHeadingTypography>
           )}
 
-          <Box
-            component="form"
-            onSubmit={validatePassword}
-            noValidate
-            sx={{ mt: 1 }}
-          >
+          <Box component="form" onSubmit={validatePassword} noValidate>
             <TextField
               margin="normal"
               required
@@ -119,10 +115,6 @@ export default function SetPassword() {
                 textTransform: "capitalize",
                 mt: 3,
                 mb: 2,
-                bgcolor: "chocolate",
-                ":hover": {
-                  bgcolor: "chocolate",
-                },
               }}
             >
               Set Password

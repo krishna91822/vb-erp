@@ -71,6 +71,7 @@ const Network = () => {
       .then((response) => {
         dispatch(toggleLoader());
         setEmployees(response.data.data);
+        console.log(paginationInfo.limit);
         response.data.totalResult < paginationInfo.limit &&
         paginationInfo.page === 1
           ? setPaginationInfo({
@@ -106,6 +107,10 @@ const Network = () => {
     const searchFields = event.target.value;
     if (event.key === "Enter") {
       setSearchEmp(searchFields);
+      setPaginationInfo({
+        ...paginationInfo,
+        page: 1,
+      });
     }
   };
 
@@ -169,8 +174,9 @@ const Network = () => {
           <Table>
             <TableHead>
               <TableRow className="table-header">
-                <StyledTableCell align="center">Name</StyledTableCell>
+                <StyledTableCell align="center">SNo</StyledTableCell>
                 <StyledTableCell align="center">Emp Id</StyledTableCell>
+                <StyledTableCell align="center">Name</StyledTableCell>
                 <StyledTableCell align="center">Email</StyledTableCell>
                 <StyledTableCell align="center">Position</StyledTableCell>
                 <StyledTableCell align="center">Location</StyledTableCell>
@@ -179,18 +185,22 @@ const Network = () => {
             </TableHead>
 
             <TableBody>
-              {employees.map((item) => (
+              {employees.map((item, index) => (
                 <TableRow
                   key={item.empId}
                   className="table-row"
                   onClick={(e) => handleEmployeeClick(item)}
                 >
                   <StyledTableCell2 align="center">
-                    {item.empName}
+                    {index + parseInt(paginationInfo.page) * 10 - 9}
                   </StyledTableCell2>
                   <StyledTableCell2 align="center">
                     {item.empId}
                   </StyledTableCell2>
+                  <StyledTableCell2 align="center">
+                    {item.empName}
+                  </StyledTableCell2>
+
                   <StyledTableCell2 align="center">
                     {item.empEmail}
                   </StyledTableCell2>

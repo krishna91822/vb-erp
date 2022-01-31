@@ -27,7 +27,6 @@ import { Search as SearchIcon } from "./../../icons/search";
 
 import {
   TitleTypo,
-  CustomGridBox,
   ContentTypo,
   ModalBoxItem,
   NoteTypo,
