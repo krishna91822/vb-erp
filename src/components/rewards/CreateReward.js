@@ -99,7 +99,8 @@ const CreateReward = () => {
     const noErrors = Object.keys(validateError).length === 0;
     setErrors(validateError);
     if (noErrors) {
-      dispatch(addRewardData(formData));
+      console.log(formData, "++++++++++++++");
+      // dispatch(addRewardData(formData));
     }
   };
 
