@@ -58,7 +58,17 @@ function UpdateClientForm() {
                 to="/cims"
                 style={{ textDecoration: "none", paddingRight: "10px" }}
               >
-                <Button variant="contained" color="error" id="cancel-btn">
+                <Button
+                  variant="outlined"
+                  id="cancel-btn"
+                  sx={{
+                    color: "gray",
+                    border: "1px solid gray",
+                    ":hover": {
+                      border: "1px solid gray",
+                    },
+                  }}
+                >
                   Cancel
                 </Button>
               </Link>
@@ -89,11 +99,12 @@ function UpdateClientForm() {
               />
             </div>
           ) : (
-            <Link to="/cims" style={{ textDecoration: "none" }}>
-              <Button variant="contained" color="error" id="cancel-btn">
-                Cancel
-              </Button>
-            </Link>
+            <></>
+            // <Link to="/cims" style={{ textDecoration: "none" }}>
+            //   <Button variant="contained" color="error" id="cancel-btn">
+            //     Cancel
+            //   </Button>
+            // </Link>
           )}
         </div>
         <Form />

@@ -94,7 +94,7 @@ function InvoiceInfo() {
   const isReload = useSelector((state) => state.INVOICE_state.reload);
 
   const [currentPage, setCurrentPage] = React.useState(1);
-  const [postPerPage, setPostPerPage] = React.useState(5);
+  const [postPerPage, setPostPerPage] = React.useState(10);
   const [filename, setFilename] = React.useState("Id");
   const [searchKeyword, setSearchKeyword] = useState("");
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -165,7 +165,7 @@ function InvoiceInfo() {
   const searchHandler = (event) => {
     if (event.key === "Enter") {
       setCurrentPage(1);
-      dispatch(paginationFetchInvoice(filename, 1, 5, searchKeyword));
+      dispatch(paginationFetchInvoice(filename, 1, 10, searchKeyword));
     }
   };
   return (

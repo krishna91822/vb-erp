@@ -5,6 +5,7 @@ import { toast } from "react-toastify";
 
 export const getRewardsData = () => {
   return async (dispatch) => {
+    dispatch(uiActions.toggleLoader());
     const fetchData = async () => {
       const response = axios.get("/rewards");
 
@@ -26,8 +27,6 @@ export const getRewardsData = () => {
         })
       );
     } catch (error) {
-      dispatch(uiActions.toggleLoader());
-
       dispatch(
         uiActions.showNotification({
           status: "error",
@@ -35,12 +34,15 @@ export const getRewardsData = () => {
           message: "Fetching content data failed!",
         })
       );
+    } finally {
+      dispatch(uiActions.toggleLoader());
     }
   };
 };
 
 export const getRewardsDataWithPageNumber = (pageNumber) => {
   return async (dispatch) => {
+    dispatch(uiActions.toggleLoader());
     const fetchData = async () => {
       const response = axios.get(`/rewards?page=${pageNumber}`);
 
@@ -62,9 +64,7 @@ export const getRewardsDataWithPageNumber = (pageNumber) => {
         })
       );
     } catch (error) {
-      dispatch(uiActions.toggleLoader());
       setTimeout(function () {
-        dispatch(uiActions.toggleLoader());
         dispatch(
           uiActions.showNotification({
             status: "error",
@@ -73,6 +73,8 @@ export const getRewardsDataWithPageNumber = (pageNumber) => {
           })
         );
       }, 3000);
+    } finally {
+      dispatch(uiActions.toggleLoader());
     }
   };
 };

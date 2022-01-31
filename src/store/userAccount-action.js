@@ -45,24 +45,19 @@ export const createUserAccount = (user) => {
 
     try {
       dispatch(uiActions.toggleLoader());
-      const data = await createAccount();
-      dispatch(
-        uiActions.showNotification({
-          status: "success",
-          message:
-            "User created successfull and email sent to user to reset password",
-        })
-      );
+      await createAccount();
+      return true;
     } catch (error) {
       setTimeout(function () {
         dispatch(
           uiActions.showNotification({
             status: "error",
             title: "Error!",
-            message: "Something Went Wrong",
+            message: "User already exist!!!",
           })
         );
       }, 1000);
+      return false;
     } finally {
       dispatch(uiActions.toggleLoader());
     }
@@ -82,7 +77,7 @@ export const setUserPassword = (id, password) => {
 
     try {
       dispatch(uiActions.toggleLoader());
-      const data = await setPassword();
+      await setPassword();
       dispatch(
         uiActions.showNotification({
           status: "success",
@@ -104,15 +99,7 @@ export const setUserPassword = (id, password) => {
     }
   };
 };
-const sampledata = [
-  "user",
-  "super_admin",
-  "hr_admin_test",
-  "user",
-  "super_admin",
-  "hr_admin_test",
-  "hr_admin_test",
-];
+
 export const SetRoles = () => {
   return async (dispatch) => {
     const setUserRoles = async () => {
@@ -169,6 +156,65 @@ export const getUserDetails = (id) => {
           })
         );
       }, 1000);
+    }
+  };
+};
+export const getUser = (email) => {
+  return async (dispatch) => {
+    const getuserbyemail = async () => {
+      const response = await axios.get(`/users/?email=${email}`);
+      if (response.status === "failure") {
+        throw new Error("user not found");
+      }
+      const data = response.data.data.results;
+      return data;
+    };
+
+    try {
+      const data = await getuserbyemail();
+      dispatch(userAccountActions.setuser(data));
+    } catch (error) {
+      setTimeout(function () {
+        dispatch(
+          uiActions.showNotification({
+            status: "error",
+            title: "Error!",
+            message: "No Records Found",
+          })
+        );
+      }, 1000);
+    }
+  };
+};
+
+export const updateUserAccount = (id, updatedData) => {
+  return async (dispatch) => {
+    const updateUser = async () => {
+      const response = await axios.put(`/users/${id}`, updatedData);
+      if (response.status === "failure") {
+        throw new Error("user details not updated");
+      }
+      const data = response.data.data;
+      return data;
+    };
+
+    try {
+      dispatch(uiActions.toggleLoader());
+      await updateUser();
+      return true;
+    } catch (error) {
+      setTimeout(function () {
+        dispatch(
+          uiActions.showNotification({
+            status: "error",
+            title: "Error!",
+            message: "User already exist!!!",
+          })
+        );
+      }, 1000);
+      return false;
+    } finally {
+      dispatch(uiActions.toggleLoader());
     }
   };
 };

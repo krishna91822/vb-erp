@@ -113,6 +113,10 @@ const Network = () => {
     const searchFields = event.target.value;
     if (event.key === "Enter") {
       setSearchEmp(searchFields);
+      setPaginationInfo({
+        ...paginationInfo,
+        page: 1,
+      });
     }
   };
 
@@ -259,8 +263,9 @@ const Network = () => {
           <Table>
             <TableHead>
               <TableRow className="table-header">
-                <StyledTableCell align="center">Name</StyledTableCell>
+                <StyledTableCell align="center">SNo</StyledTableCell>
                 <StyledTableCell align="center">Emp Id</StyledTableCell>
+                <StyledTableCell align="center">Name</StyledTableCell>
                 <StyledTableCell align="center">Email</StyledTableCell>
                 <StyledTableCell align="center">Position</StyledTableCell>
                 <StyledTableCell align="center">Location</StyledTableCell>
@@ -272,32 +277,60 @@ const Network = () => {
             </TableHead>
 
             <TableBody>
-              {employees.map((item) => (
-                <TableRow
-                  key={item.empId}
-                  className="table-row"
-                  onClick={(e) => handleEmployeeClick(item)}
-                >
-                  <StyledTableCell2 align="center">
-                    {item.empName}
+              {employees.map((item, index) => (
+                <TableRow key={item.empId} className="table-row">
+                  <StyledTableCell2
+                    align="center"
+                    onClick={(e) => handleEmployeeClick(item)}
+                  >
+                    {index + parseInt(paginationInfo.page) * 10 - 9}
                   </StyledTableCell2>
-                  <StyledTableCell2 align="center">
+                  <StyledTableCell2
+                    align="center"
+                    onClick={(e) => handleEmployeeClick(item)}
+                  >
                     {item.empId}
                   </StyledTableCell2>
-                  <StyledTableCell2 align="center">
+                  <StyledTableCell2
+                    align="center"
+                    onClick={(e) => handleEmployeeClick(item)}
+                  >
+                    {item.empName}
+                  </StyledTableCell2>
+                  <StyledTableCell2
+                    align="center"
+                    onClick={(e) => handleEmployeeClick(item)}
+                  >
                     {item.empEmail}
                   </StyledTableCell2>
-                  <StyledTableCell2 align="center">
+                  <StyledTableCell2
+                    align="center"
+                    onClick={(e) => handleEmployeeClick(item)}
+                  >
                     {item.empDesignation}
                   </StyledTableCell2>
-                  <StyledTableCell2 align="center">
+                  <StyledTableCell2
+                    align="center"
+                    onClick={(e) => handleEmployeeClick(item)}
+                  >
                     {item.empCurrentAddress
                       ? item.empCurrentAddress.empAddressCity
                       : ""}
                   </StyledTableCell2>
-                  <StyledTableCell2 align="center">
+                  <StyledTableCell2
+                    align="center"
+                    onClick={(e) => handleEmployeeClick(item)}
+                  >
                     {item.empDepartment}
                   </StyledTableCell2>
+                  {user.permissions.includes("create_employee_dashboard") && (
+                    <StyledTableCell2
+                      onClick={() => handelMenu(item.status, item._id)}
+                      align="center"
+                    >
+                      {menuIcon()}
+                    </StyledTableCell2>
+                  )}
                 </TableRow>
               ))}
             </TableBody>
