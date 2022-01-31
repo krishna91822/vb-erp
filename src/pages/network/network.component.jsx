@@ -275,8 +275,14 @@ const Network = () => {
             </TableHead>
 
             <TableBody>
-              {employees.map((item) => (
+              {employees.map((item, index) => (
                 <TableRow key={item.empId} className="table-row">
+                  <StyledTableCell
+                    align="center"
+                    onClick={(e) => handleEmployeeClick(item)}
+                  >
+                    {index + parseInt(paginationInfo.page) * 10 - 9}
+                  </StyledTableCell>
                   <StyledTableCell
                     align="center"
                     onClick={(e) => handleEmployeeClick(item)}
