@@ -287,13 +287,13 @@ const Network = () => {
                     align="center"
                     onClick={(e) => handleEmployeeClick(item)}
                   >
-                    {item.empName}
+                    {item.empId}
                   </StyledTableCell>
                   <StyledTableCell
                     align="center"
                     onClick={(e) => handleEmployeeClick(item)}
                   >
-                    {item.empId}
+                    {item.empName}
                   </StyledTableCell>
                   <StyledTableCell
                     align="center"
