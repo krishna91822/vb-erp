@@ -1,13 +1,7 @@
 import React, { useState, useEffect } from "react";
 import {
   Box,
-  Card,
-  CardContent,
-  Grid,
-  InputAdornment,
-  MenuItem,
   Stack,
-  SvgIcon,
   Modal,
   Pagination,
   TableRow,
@@ -15,14 +9,12 @@ import {
   TableBody,
   TableContainer,
   TableHead,
-  TextField,
 } from "@mui/material";
 import ProfileContent from "./../../components/templates/profileContent/profileContent.component";
 import {
   StyledTableCell,
   StyledTableCell2,
 } from "../../assets/GlobalStyle/style";
-import { Search as SearchIcon } from "./../../icons/search";
 
 import {
   TitleTypo,
@@ -67,25 +59,18 @@ const Status = (props) => {
       .then((response) => {
         dispatch(toggleLoader());
         setReviewData(response.data.data.reviews);
-        response.data.totalResult < paginationInfo.limit &&
-        paginationInfo.page === 1
-          ? setPaginationInfo({
-              ...paginationInfo,
-              totalPage: 1,
-            })
-          : setPaginationInfo({
-              ...paginationInfo,
-              totalPage: Math.ceil(
-                response.data.totalDocuments / paginationInfo.limit
-              ),
-            });
+        setPaginationInfo({
+          ...paginationInfo,
+          totalPage: Math.ceil(response.data.totalCount / paginationInfo.limit),
+        });
+        console.log(paginationInfo);
       })
       .catch((err) => {
         dispatch(toggleLoader());
         console.log(err);
       });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [paginationInfo.page]);
+  }, [paginationInfo.page, paginationInfo.totalPage]);
 
   //modal
   const [openModalForReview, setOpenModalForReview] = useState(false);
@@ -214,10 +199,9 @@ const Status = (props) => {
       </div>
 
       {/* pagination */}
-
       <div className="pagination">
         <Stack spacing={2}>
-          {paginationInfo.page > 1 && (
+          {paginationInfo.totalPage > 1 && (
             <Pagination
               data-test="pagination-test"
               count={paginationInfo.totalPage}

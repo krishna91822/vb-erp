@@ -341,6 +341,7 @@ const ProfileInfoEditable = (props) => {
                         <TitleTypo>{profileInfoConstant.department}</TitleTypo>
                         <ContentTypo>
                           <Select
+                            maxMenuHeight={130}
                             className="basic-single"
                             classNamePrefix="select"
                             value={department ? department : null}
@@ -383,6 +384,7 @@ const ProfileInfoEditable = (props) => {
                         <TitleTypo>{profileInfoConstant.designation}</TitleTypo>
                         <ContentTypo>
                           <Select
+                            maxMenuHeight={130}
                             className="basic-single"
                             classNamePrefix="select"
                             value={designation ? designation : null}
