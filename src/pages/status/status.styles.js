@@ -1,5 +1,12 @@
-import { Box } from "@mui/material";
+import { Box, TextField } from "@mui/material";
 import { styled } from "@mui/system";
+
+export const CustomTextField = styled(TextField)({
+  "& .MuiOutlinedInput-root": {
+    width: "80%",
+    height: "3rem",
+  },
+});
 
 export const TitleTypo = styled("div")(({ theme }) => ({
   ...theme.typography.h5,

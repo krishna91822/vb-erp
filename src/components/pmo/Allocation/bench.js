@@ -16,6 +16,7 @@ import Tpagination from "../../UI/Pagination";
 import NoDataFound from "../NoDataFound";
 import {
   StyledTableCell,
+  StyledTableCell2,
   MiniHeadingTypography,
 } from "../../../assets/GlobalStyle/style";
 
@@ -79,64 +80,64 @@ const Bench = ({ pressed, benchSortValue }) => {
         <Table data-test="list-table">
           <TableHead>
             <TableRow className="table-header">
-              <StyledTableCell
+              <StyledTableCell2
                 sx={{ minWidth: 100, maxWidth: 100 }}
                 align="center"
               >
                 SNO
-              </StyledTableCell>
-              <StyledTableCell
+              </StyledTableCell2>
+              <StyledTableCell2
                 sx={{ minWidth: 100, maxWidth: 100 }}
                 align="center"
               >
                 EmpID
-              </StyledTableCell>
-              <StyledTableCell
+              </StyledTableCell2>
+              <StyledTableCell2
                 sx={{ minWidth: 100, maxWidth: 100 }}
                 align="center"
               >
                 Associate Name
-              </StyledTableCell>
-              <StyledTableCell
+              </StyledTableCell2>
+              <StyledTableCell2
                 sx={{ minWidth: 100, maxWidth: 100 }}
                 align="center"
               >
                 Primary Capabilities
-              </StyledTableCell>
-              <StyledTableCell
+              </StyledTableCell2>
+              <StyledTableCell2
                 sx={{ minWidth: 100, maxWidth: 100 }}
                 align="center"
               >
                 Skill Set
-              </StyledTableCell>
-              <StyledTableCell
+              </StyledTableCell2>
+              <StyledTableCell2
                 sx={{ minWidth: 100, maxWidth: 100 }}
                 align="center"
               >
                 Designation
-              </StyledTableCell>
-              <StyledTableCell
+              </StyledTableCell2>
+              <StyledTableCell2
                 sx={{ minWidth: 100, maxWidth: 100 }}
                 align="center"
               >
                 YOE
-              </StyledTableCell>
-              <StyledTableCell
+              </StyledTableCell2>
+              <StyledTableCell2
                 sx={{ minWidth: 100, maxWidth: 100 }}
                 align="center"
               >
                 Remaining Bandwidth
-              </StyledTableCell>
+              </StyledTableCell2>
             </TableRow>
           </TableHead>
           <TableBody>
             {pressed && (
               <TableRow className="table-row">
-                <StyledTableCell
+                <StyledTableCell2
                   sx={{ minWidth: 100, maxWidth: 100 }}
                   align="center"
-                ></StyledTableCell>
-                <StyledTableCell
+                ></StyledTableCell2>
+                <StyledTableCell2
                   sx={{ minWidth: 100, maxWidth: 100 }}
                   align="center"
                 >
@@ -150,8 +151,8 @@ const Bench = ({ pressed, benchSortValue }) => {
                     value={filters.empId}
                     inputProps={{ style: { fontSize: "small" } }}
                   />
-                </StyledTableCell>
-                <StyledTableCell
+                </StyledTableCell2>
+                <StyledTableCell2
                   sx={{ minWidth: 100, maxWidth: 100 }}
                   align="center"
                 >
@@ -165,25 +166,25 @@ const Bench = ({ pressed, benchSortValue }) => {
                     value={filters.employeeName}
                     inputProps={{ style: { fontSize: "small" } }}
                   />
-                </StyledTableCell>
+                </StyledTableCell2>
 
-                <StyledTableCell
+                <StyledTableCell2
                   sx={{ minWidth: 100, maxWidth: 100 }}
                   align="center"
-                ></StyledTableCell>
-                <StyledTableCell
+                ></StyledTableCell2>
+                <StyledTableCell2
                   sx={{ minWidth: 100, maxWidth: 100 }}
                   align="center"
-                ></StyledTableCell>
-                <StyledTableCell
+                ></StyledTableCell2>
+                <StyledTableCell2
                   sx={{ minWidth: 100, maxWidth: 100 }}
                   align="center"
-                ></StyledTableCell>
-                <StyledTableCell
+                ></StyledTableCell2>
+                <StyledTableCell2
                   sx={{ minWidth: 100, maxWidth: 100 }}
                   align="center"
-                ></StyledTableCell>
-                <StyledTableCell
+                ></StyledTableCell2>
+                <StyledTableCell2
                   sx={{ minWidth: 100, maxWidth: 100 }}
                   align="center"
                 >
@@ -197,7 +198,7 @@ const Bench = ({ pressed, benchSortValue }) => {
                     value={filters.remainingAllocation}
                     inputProps={{ style: { fontSize: "small" }, min: 0 }}
                   />
-                </StyledTableCell>
+                </StyledTableCell2>
               </TableRow>
             )}
 
@@ -208,33 +209,33 @@ const Bench = ({ pressed, benchSortValue }) => {
                     onClick={() => entryLink(currElem)}
                     className="table-row"
                   >
-                    <StyledTableCell align="center">
+                    <StyledTableCell2 align="center">
                       {index + parseInt(data.currentPage) * 10 - 9}
-                    </StyledTableCell>
-                    <StyledTableCell align="center">
+                    </StyledTableCell2>
+                    <StyledTableCell2 align="center">
                       {currElem.empId}
-                    </StyledTableCell>
-                    <StyledTableCell
+                    </StyledTableCell2>
+                    <StyledTableCell2
                       align="center"
                       style={{ textTransform: "capitalize" }}
                     >
                       {currElem.empName}
-                    </StyledTableCell>
-                    <StyledTableCell align="center">
+                    </StyledTableCell2>
+                    <StyledTableCell2 align="center">
                       {`${currElem.empPrimaryCapability}` || "-----"}
-                    </StyledTableCell>
-                    <StyledTableCell align="center">
+                    </StyledTableCell2>
+                    <StyledTableCell2 align="center">
                       {`${currElem.empSkillSet}` || "-----"}
-                    </StyledTableCell>
-                    <StyledTableCell align="center">
+                    </StyledTableCell2>
+                    <StyledTableCell2 align="center">
                       {`${currElem.empDesignation}` || "-----"}
-                    </StyledTableCell>
-                    <StyledTableCell align="center">
+                    </StyledTableCell2>
+                    <StyledTableCell2 align="center">
                       {`${currElem.yearsOfExperience}` || "-----"}
-                    </StyledTableCell>
-                    <StyledTableCell align="center">
+                    </StyledTableCell2>
+                    <StyledTableCell2 align="center">
                       {currElem.remainingAllocation}
-                    </StyledTableCell>
+                    </StyledTableCell2>
                   </TableRow>
                 ))
               : null}

@@ -8,4 +8,26 @@ export const statusConstants = {
     "request type",
     "status",
   ],
+  sortOption: [
+    {
+      value: "reqId",
+      label: "By ReqId",
+    },
+    {
+      value: "reqName",
+      label: "By Requester Name ",
+    },
+    {
+      value: "createdAt",
+      label: "By Requested On",
+    },
+    {
+      value: "reqType",
+      label: "By Requested Type",
+    },
+    {
+      value: "status",
+      label: "By Status",
+    },
+  ],
 };

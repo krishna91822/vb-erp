@@ -43,6 +43,7 @@ const PersonalEditable = (props) => {
   const {
     empDob,
     empHobbies,
+    slackMemId,
     empPersonalEmail,
     empAboutMe,
     empCurrentAddress,
@@ -223,7 +224,7 @@ const PersonalEditable = (props) => {
 
   return (
     <Grid container mb={5} spacing={0} sx={{ minHeight: 150 }}>
-      <Grid item sm={7}>
+      <Grid item sx={{ width: "100%" }}>
         <Box>
           <ContentBox>
             <TitleTypo>{personal.aboutMe}</TitleTypo>
@@ -344,6 +345,24 @@ const PersonalEditable = (props) => {
                   placeholder="Enter hobby"
                 />
               </Box>
+            </ContentTypo>
+          </ContentBox>
+        </Box>
+        <Box>
+          <ContentBox>
+            <TitleTypo>{personal.slackMemberId}</TitleTypo>
+            <ContentTypo>
+              <CustomTextField
+                placeholder="Enter Slack Member ID"
+                autoComplete="off"
+                required
+                id="outlined-basic"
+                variant="outlined"
+                value={slackMemId ? slackMemId : ""}
+                type="email"
+                name="slackMemId"
+                onChange={(event) => handleChange(event)}
+              />
             </ContentTypo>
           </ContentBox>
         </Box>

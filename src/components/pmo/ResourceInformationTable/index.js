@@ -8,7 +8,10 @@ import {
   TableHead,
 } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { StyledTableCell } from "./../../../assets/GlobalStyle/style";
+import {
+  StyledTableCell,
+  StyledTableCell2,
+} from "./../../../assets/GlobalStyle/style";
 import { Container } from "./styles";
 const ResourceInformationTable = ({ resources, removeResource, edit }) => {
   return (
@@ -17,12 +20,12 @@ const ResourceInformationTable = ({ resources, removeResource, edit }) => {
         <Table>
           <TableHead>
             <TableRow className="table-header">
-              <StyledTableCell align="left">SNO</StyledTableCell>
-              <StyledTableCell align="left">Associate Name</StyledTableCell>
-              <StyledTableCell align="left">Start Date</StyledTableCell>
-              <StyledTableCell align="left">End Date</StyledTableCell>
-              <StyledTableCell align="left">% Allocation</StyledTableCell>
-              <StyledTableCell align="left">Rack Rate</StyledTableCell>
+              <StyledTableCell align="center">SNO</StyledTableCell>
+              <StyledTableCell align="center">Associate Name</StyledTableCell>
+              <StyledTableCell align="center">Start Date</StyledTableCell>
+              <StyledTableCell align="center">End Date</StyledTableCell>
+              <StyledTableCell align="center">% Allocation</StyledTableCell>
+              <StyledTableCell align="center">Rack Rate</StyledTableCell>
               {edit && <StyledTableCell align="center">Remove</StyledTableCell>}
             </TableRow>
           </TableHead>
@@ -33,24 +36,26 @@ const ResourceInformationTable = ({ resources, removeResource, edit }) => {
                   key={index + 1}
                   sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                 >
-                  <StyledTableCell align="left">{index + 1}</StyledTableCell>
-                  <StyledTableCell align="left">
+                  <StyledTableCell2 align="center">
+                    {index + 1}
+                  </StyledTableCell2>
+                  <StyledTableCell2 align="center">
                     {eachData.empName}
-                  </StyledTableCell>
-                  <StyledTableCell align="left">
+                  </StyledTableCell2>
+                  <StyledTableCell2 align="center">
                     {eachData.allocationStartDate}
-                  </StyledTableCell>
-                  <StyledTableCell align="left">
+                  </StyledTableCell2>
+                  <StyledTableCell2 align="center">
                     {eachData.allocationEndDate}
-                  </StyledTableCell>
-                  <StyledTableCell align="left">
+                  </StyledTableCell2>
+                  <StyledTableCell2 align="center">
                     {eachData.allocationPercentage}
-                  </StyledTableCell>
-                  <StyledTableCell align="left">
+                  </StyledTableCell2>
+                  <StyledTableCell2 align="center">
                     {eachData.rackRate}
-                  </StyledTableCell>
+                  </StyledTableCell2>
                   {edit && (
-                    <StyledTableCell
+                    <StyledTableCell2
                       align="center"
                       onClick={() => {
                         removeResource(eachData.empId, eachData._id);
@@ -59,9 +64,10 @@ const ResourceInformationTable = ({ resources, removeResource, edit }) => {
                       <DeleteIcon
                         style={{
                           cursor: "pointer",
+                          color: "grey",
                         }}
                       />
-                    </StyledTableCell>
+                    </StyledTableCell2>
                   )}
                 </TableRow>
               ))}

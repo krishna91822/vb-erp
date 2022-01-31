@@ -8,6 +8,7 @@ export const ListItem = styled("li")(({ theme }) => ({
 }));
 
 export const CustomTextField = styled(TextField)({
+  width: "100%",
   "& .MuiOutlinedInput-root": {
     width: "100%",
     height: "35px",
@@ -24,7 +25,6 @@ export const CustomTextFieldForChip = styled(TextField)({
 export const ContentBox = styled("div")(({ theme }) => ({
   padding: theme.spacing(1),
   display: "grid",
-  alignItems: "center",
   gridTemplateColumns: "1fr 2fr",
   gridColumnGap: 20,
   textTransform: "capitalize",
