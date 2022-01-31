@@ -30,7 +30,7 @@ export const ContentTypo = styled("div")(({ theme }) => ({
 export const ContentBox = styled("div")(({ theme }) => ({
   padding: theme.spacing(1),
   display: "grid",
-  gridTemplateColumns: "1fr 1fr",
+  gridTemplateColumns: "1fr 2fr",
   gridColumnGap: 20,
   textTransform: "capitalize",
   color: "textColor.main",

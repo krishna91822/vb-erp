@@ -3,8 +3,8 @@ import { styled } from "@mui/system";
 
 export const CustomTextField = styled(TextField)({
   "& .MuiOutlinedInput-root": {
-    width: "100%",
-    height: "40px",
+    width: "80%",
+    height: "3rem",
   },
 });
 

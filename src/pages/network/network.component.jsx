@@ -23,7 +23,10 @@ import {
   ListItemText,
   Divider,
 } from "@mui/material";
-import { StyledTableCell } from "../../assets/GlobalStyle/style";
+import {
+  StyledTableCell,
+  StyledTableCell2,
+} from "../../assets/GlobalStyle/style";
 import { StyledTypography } from "../../assets/GlobalStyle/style";
 import { Search as SearchIcon } from "../../icons/search";
 import {
@@ -270,53 +273,31 @@ const Network = () => {
 
             <TableBody>
               {employees.map((item) => (
-                <TableRow key={item.empId} className="table-row">
-                  <StyledTableCell
-                    align="center"
-                    onClick={(e) => handleEmployeeClick(item)}
-                  >
+                <TableRow
+                  key={item.empId}
+                  className="table-row"
+                  onClick={(e) => handleEmployeeClick(item)}
+                >
+                  <StyledTableCell2 align="center">
                     {item.empName}
-                  </StyledTableCell>
-                  <StyledTableCell
-                    align="center"
-                    onClick={(e) => handleEmployeeClick(item)}
-                  >
+                  </StyledTableCell2>
+                  <StyledTableCell2 align="center">
                     {item.empId}
-                  </StyledTableCell>
-                  <StyledTableCell
-                    align="center"
-                    onClick={(e) => handleEmployeeClick(item)}
-                  >
+                  </StyledTableCell2>
+                  <StyledTableCell2 align="center">
                     {item.empEmail}
-                  </StyledTableCell>
-                  <StyledTableCell
-                    align="center"
-                    onClick={(e) => handleEmployeeClick(item)}
-                  >
+                  </StyledTableCell2>
+                  <StyledTableCell2 align="center">
                     {item.empDesignation}
-                  </StyledTableCell>
-                  <StyledTableCell
-                    align="center"
-                    onClick={(e) => handleEmployeeClick(item)}
-                  >
+                  </StyledTableCell2>
+                  <StyledTableCell2 align="center">
                     {item.empCurrentAddress
                       ? item.empCurrentAddress.empAddressCity
                       : ""}
-                  </StyledTableCell>
-                  <StyledTableCell
-                    align="center"
-                    onClick={(e) => handleEmployeeClick(item)}
-                  >
+                  </StyledTableCell2>
+                  <StyledTableCell2 align="center">
                     {item.empDepartment}
-                  </StyledTableCell>
-                  {user.permissions.includes("create_employee_dashboard") && (
-                    <StyledTableCell
-                      onClick={() => handelMenu(item.status, item._id)}
-                      align="center"
-                    >
-                      {menuIcon()}
-                    </StyledTableCell>
-                  )}
+                  </StyledTableCell2>
                 </TableRow>
               ))}
             </TableBody>
@@ -326,11 +307,13 @@ const Network = () => {
       {/* pagination */}
       <div className="pagination">
         <Stack spacing={2}>
-          <Pagination
-            count={paginationInfo.totalPage}
-            page={paginationInfo.page}
-            onChange={handlePagination}
-          />
+          {paginationInfo.totalPage > 1 && (
+            <Pagination
+              count={paginationInfo.totalPage}
+              page={paginationInfo.page}
+              onChange={handlePagination}
+            />
+          )}
         </Stack>
       </div>
     </div>

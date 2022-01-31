@@ -95,8 +95,8 @@ const ViewProfile = () => {
                 id="download"
                 variant="contained"
                 onClick={handlePdfClick}
+                style={{ backgroundColor: "chocolate" }}
                 sx={{
-                  backgroundColor: "chocolate",
                   paddingRight: "1rem",
 
                   "&:hover": {

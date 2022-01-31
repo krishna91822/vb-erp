@@ -224,7 +224,7 @@ const PersonalEditable = (props) => {
 
   return (
     <Grid container mb={5} spacing={0} sx={{ minHeight: 150 }}>
-      <Grid item sm={7}>
+      <Grid item sx={{ width: "100%" }}>
         <Box>
           <ContentBox>
             <TitleTypo>{personal.aboutMe}</TitleTypo>

@@ -114,7 +114,7 @@ const SkillEditable = ({
 
   return (
     <Grid container mb={5} sx={{ minHeight: 150 }}>
-      <Grid item sm={7}>
+      <Grid item sx={{ width: "100%" }}>
         <Box>
           <ContentBox>
             <ContentTypo>{skillConstant.primaryCapability}</ContentTypo>

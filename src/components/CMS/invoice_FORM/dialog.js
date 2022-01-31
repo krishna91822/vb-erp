@@ -26,12 +26,7 @@ export default function AlertDialog(props) {
 
   return (
     <div>
-      <Button
-        variant="contained"
-        color="success"
-        type="submit"
-        onClick={handleClickOpen}
-      >
+      <Button variant="contained" type="submit" onClick={handleClickOpen}>
         Save
       </Button>
       <Dialog
