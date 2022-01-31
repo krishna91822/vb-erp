@@ -230,13 +230,13 @@ export const Main = () => {
                     onClose={handleClose}
                     data-test="StyledMenu"
                   >
-                    <MenuItem
+                    {/* <MenuItem
                       onClick={() => handleSort("_id")}
                       disableRipple
                       className="menu-by-id"
                     >
                       By ID
-                    </MenuItem>
+                    </MenuItem> */}
 
                     <MenuItem
                       onClick={() => handleSort("Project_Name")}

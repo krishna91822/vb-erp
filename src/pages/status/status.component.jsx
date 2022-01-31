@@ -217,12 +217,14 @@ const Status = (props) => {
 
       <div className="pagination">
         <Stack spacing={2}>
-          <Pagination
-            data-test="pagination-test"
-            count={paginationInfo.totalPage}
-            page={paginationInfo.page}
-            onChange={handlePagination}
-          />
+          {paginationInfo.page > 1 && (
+            <Pagination
+              data-test="pagination-test"
+              count={paginationInfo.totalPage}
+              page={paginationInfo.page}
+              onChange={handlePagination}
+            />
+          )}
         </Stack>
       </div>
       <Modal open={openModalForReview} onClose={handleCloseModalForReview}>

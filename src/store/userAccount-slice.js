@@ -4,6 +4,7 @@ const initialState = {
   employees: [],
   roles: [],
   userDetails: {},
+  user: [],
 };
 
 const userAccountSlice = createSlice({
@@ -12,6 +13,7 @@ const userAccountSlice = createSlice({
   reducers: {
     resetForm(state, action) {
       state.employees = initialState.employees;
+      state.user = initialState.user;
     },
     setUserAccount(state, action) {
       state.employees = action.payload;
@@ -21,6 +23,9 @@ const userAccountSlice = createSlice({
     },
     setUserDetails(state, action) {
       state.userDetails = action.payload;
+    },
+    setuser(state, action) {
+      state.user = action.payload;
     },
   },
 });

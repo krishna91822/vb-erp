@@ -159,3 +159,62 @@ export const getUserDetails = (id) => {
     }
   };
 };
+export const getUser = (email) => {
+  return async (dispatch) => {
+    const getuserbyemail = async () => {
+      const response = await axios.get(`/users/?email=${email}`);
+      if (response.status === "failure") {
+        throw new Error("user not found");
+      }
+      const data = response.data.data.results;
+      return data;
+    };
+
+    try {
+      const data = await getuserbyemail();
+      dispatch(userAccountActions.setuser(data));
+    } catch (error) {
+      setTimeout(function () {
+        dispatch(
+          uiActions.showNotification({
+            status: "error",
+            title: "Error!",
+            message: "No Records Found",
+          })
+        );
+      }, 1000);
+    }
+  };
+};
+
+export const updateUserAccount = (id, updatedData) => {
+  return async (dispatch) => {
+    const updateUser = async () => {
+      const response = await axios.put(`/users/${id}`, updatedData);
+      if (response.status === "failure") {
+        throw new Error("user details not updated");
+      }
+      const data = response.data.data;
+      return data;
+    };
+
+    try {
+      dispatch(uiActions.toggleLoader());
+      await updateUser();
+      return true;
+    } catch (error) {
+      setTimeout(function () {
+        dispatch(
+          uiActions.showNotification({
+            status: "error",
+            title: "Error!",
+            message: "User already exist!!!",
+          })
+        );
+      }, 1000);
+      return false;
+    } finally {
+      dispatch(uiActions.toggleLoader());
+    }
+  };
+};

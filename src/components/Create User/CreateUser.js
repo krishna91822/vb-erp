@@ -20,36 +20,36 @@ import {
   searchEmployees,
   createUserAccount,
   SetRoles,
+  getUser,
+  updateUserAccount,
 } from "../../store/userAccount-action";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { uiActions } from "../../store/ui-slice";
+import { userAccountActions } from "../../store/userAccount-slice";
+
+const initialState = {
+  userDetails: {
+    first_name: "",
+    email: "",
+    password: "defaultpassword@dontchange",
+    role: [],
+  },
+};
 
 const CreateUser = () => {
   const dispatch = useDispatch();
   const [username, setUsername] = useState("");
   const [useremail, setUseremail] = useState("");
+  const [roles, setRoles] = useState([]);
   const [open, setOpen] = useState(false);
+
   const navigate = useNavigate();
+  const [state, setState] = useState(initialState);
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    let userDetail = {};
-    userDetail.first_name = data.get("username").split(" (")[0];
-    userDetail.email = useremail;
-    userDetail.role = [];
-
-    data.get("user") && userDetail.role.push(data.get("user"));
-    data.get("leader") && userDetail.role.push(data.get("leader"));
-    data.get("approver") && userDetail.role.push(data.get("approver"));
-    data.get("hr_admin") && userDetail.role.push(data.get("hr_admin"));
-    data.get("finance_admin") &&
-      userDetail.role.push(data.get("finance_admin"));
-    data.get("pms_admin") && userDetail.role.push(data.get("pms_admin"));
-    data.get("super_admin") && userDetail.role.push(data.get("super_admin"));
-    userDetail.password = "qwerty123";
-    if (userDetail.role.length === 0) {
+    if (state.userDetails.role.length === 0) {
       dispatch(
         uiActions.showNotification({
           status: "error",
@@ -57,29 +57,85 @@ const CreateUser = () => {
         })
       );
     } else {
-      dispatch(createUserAccount(userDetail)).then((res) => {
-        if (res) {
-          navigate("/my-profile");
-          dispatch(
-            uiActions.showNotification({
-              status: "success",
-              message:
-                "User created successfull and email sent to user to reset password",
-            })
-          );
-        }
+      if (userAccount.user.length === 0) {
+        dispatch(createUserAccount(state.userDetails)).then((res) => {
+          if (res) {
+            navigate("/my-profile");
+            dispatch(
+              uiActions.showNotification({
+                status: "success",
+                message:
+                  "User created successfull and email sent to user to reset password",
+              })
+            );
+          }
+        });
+      } else {
+        dispatch(
+          updateUserAccount(userAccount.user[0]._id, {
+            role: state.userDetails.role,
+          })
+        ).then((res) => {
+          if (res) {
+            navigate("/my-profile");
+            dispatch(
+              uiActions.showNotification({
+                status: "success",
+                message: `${userAccount.user[0].first_name} roles updated`,
+              })
+            );
+            dispatch(userAccountActions.resetForm());
+          }
+        });
+      }
+    }
+  };
+  const handleChange = (event) => {
+    if (event.empName) {
+      setState({
+        ...state,
+        userDetails: {
+          ...state.userDetails,
+          first_name: event.empName,
+          email: event.empEmail,
+        },
+      });
+    }
+
+    if (event.target && event.target.name === "roles") {
+      let values = [...roles];
+      if (roles.includes(event.target.value)) {
+        values = values.filter((elem) => elem !== event.target.value);
+      } else {
+        values.push(event.target.value);
+      }
+      setRoles(values);
+      setState({
+        ...state,
+        userDetails: {
+          ...state.userDetails,
+          role: values,
+        },
       });
     }
   };
+
   const userAccount = useSelector((state) => state.createUser);
 
   useEffect(() => {
     dispatch(SetRoles());
   }, []);
 
-  // useEffect(() => {
-  //   dispatch(searchEmployees(username));
-  // }, [username]);
+  useEffect(() => {
+    if (useremail != "") {
+      dispatch(getUser(useremail));
+    }
+  }, [useremail]);
+  useEffect(() => {
+    if (userAccount.user.length) {
+      setRoles(userAccount.user[0].role);
+    }
+  }, [userAccount.user]);
 
   const handleUserName = (event, value) => {
     if (event) {
@@ -94,24 +150,23 @@ const CreateUser = () => {
   };
   const handleOnClick = (event, value) => {
     if (value) {
-      setUsername(value.empName);
+      handleChange(value);
       setUseremail(value.empEmail);
       setOpen(false);
     }
     setUsername("");
   };
-
   return (
     <>
       <StyledTypography
         sx={{
-          mx: 15,
-          px: 3,
+          margin: "0 10%",
+          padding: "5px 0px",
         }}
       >
         New User
       </StyledTypography>
-      <Card sx={{ mx: 15, px: 3 }}>
+      <Card sx={{ margin: "0 10%", px: 3 }}>
         <form onSubmit={(e) => handleSubmit(e)}>
           <Grid container spacing={2}>
             <Grid item xs={4}>
@@ -139,10 +194,10 @@ const CreateUser = () => {
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
-              padding: "10px 100px",
+              margin: "0 10%",
             }}
           >
-            <label style={{ padding: "10px " }}>Name:</label>
+            <label style={{ padding: "10px" }}>Name:</label>
             <Autocomplete
               size="small"
               onBlur={() => {
@@ -179,10 +234,10 @@ const CreateUser = () => {
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
-              padding: "10px 100px",
+              margin: "0 10%",
             }}
           >
-            <label style={{ padding: "10px " }}>Email:</label>
+            <label style={{ padding: "10px" }}>Email:</label>
             <TextField
               name="useremail"
               disabled
@@ -192,13 +247,13 @@ const CreateUser = () => {
               placeholder="Enter Email Id"
               value={useremail}
               style={{ width: "100%" }}
+              // onChange={testing()}
             />
           </CardContent>
           <MiniHeadingTypography sx={{ p: 2 }}>Roles</MiniHeadingTypography>
           <Divider />
           <CardHeader sx={{ padding: "10px" }} subheader="Select Roles:" />
-
-          <CardContent sx={{ mx: 20, padding: "10px" }}>
+          <CardContent sx={{ margin: "0 20%", padding: "10px" }}>
             <Grid container spacing={1} wrap="wrap">
               {userAccount.roles &&
                 userAccount.roles.map((currElem, index) => {
@@ -216,10 +271,15 @@ const CreateUser = () => {
                       <FormControlLabel
                         sx={{ textTransform: "capitalize" }}
                         control={<Checkbox color="primary" />}
+                        className="hello"
                         label={currElem.replace(/_/g, " ")}
                         value={currElem}
+                        checked={roles.includes(currElem)}
                         id={currElem}
-                        name={currElem}
+                        name="roles"
+                        onChange={(event) => {
+                          handleChange(event);
+                        }}
                       />
                     </Grid>
                   );

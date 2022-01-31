@@ -9,7 +9,6 @@ import ListItemText from "@mui/material/ListItemText";
 import Collapse from "@mui/material/Collapse";
 import ExpandLess from "@mui/icons-material/ExpandLess";
 import ExpandMore from "@mui/icons-material/ExpandMore";
-import GridViewIcon from "@mui/icons-material/GridView";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import { styled } from "@mui/material/styles";
 import { Grid } from "@mui/material";
@@ -210,6 +209,10 @@ const SidebarNavigation = () => {
   const trackPathName = () => {
     if (location.pathname.includes("my-profile")) {
       setSelectedIndex(0);
+      setOpenTasks(false);
+      setOpenCMS(false);
+      setOpenPMO(false);
+      setOpenRR(false);
     }
 
     if (location.pathname.includes("/create-profile")) {
@@ -224,7 +227,10 @@ const SidebarNavigation = () => {
       setOpenTasks(true);
     }
 
-    if (location.pathname.includes("/network")) {
+    if (
+      location.pathname.includes("/network") ||
+      location.pathname.includes("my-profile/VB")
+    ) {
       setSelectedIndex(2);
     }
 

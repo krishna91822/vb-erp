@@ -113,6 +113,10 @@ const Network = () => {
     const searchFields = event.target.value;
     if (event.key === "Enter") {
       setSearchEmp(searchFields);
+      setPaginationInfo({
+        ...paginationInfo,
+        page: 1,
+      });
     }
   };
 
@@ -259,8 +263,9 @@ const Network = () => {
           <Table>
             <TableHead>
               <TableRow className="table-header">
-                <StyledTableCell align="center">Name</StyledTableCell>
+                <StyledTableCell align="center">SNo</StyledTableCell>
                 <StyledTableCell align="center">Emp Id</StyledTableCell>
+                <StyledTableCell align="center">Name</StyledTableCell>
                 <StyledTableCell align="center">Email</StyledTableCell>
                 <StyledTableCell align="center">Position</StyledTableCell>
                 <StyledTableCell align="center">Location</StyledTableCell>
@@ -272,19 +277,25 @@ const Network = () => {
             </TableHead>
 
             <TableBody>
-              {employees.map((item) => (
+              {employees.map((item, index) => (
                 <TableRow key={item.empId} className="table-row">
                   <StyledTableCell2
                     align="center"
                     onClick={(e) => handleEmployeeClick(item)}
                   >
-                    {item.empName}
+                    {index + parseInt(paginationInfo.page) * 10 - 9}
                   </StyledTableCell2>
                   <StyledTableCell2
                     align="center"
                     onClick={(e) => handleEmployeeClick(item)}
                   >
                     {item.empId}
+                  </StyledTableCell2>
+                  <StyledTableCell2
+                    align="center"
+                    onClick={(e) => handleEmployeeClick(item)}
+                  >
+                    {item.empName}
                   </StyledTableCell2>
                   <StyledTableCell2
                     align="center"
