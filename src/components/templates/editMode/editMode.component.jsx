@@ -152,10 +152,7 @@ const EditMode = ({
 
       {!btnsOnly && (
         <>
-          <TitleTypo
-            data-test="edit-text-test"
-            sx={{ textTransform: "capitalize", pr: 1 }}
-          >
+          <TitleTypo data-test="edit-text-test" sx={{ pr: 1 }}>
             {editModeConstant.editModeBtn}
           </TitleTypo>
           <CustomSwitch

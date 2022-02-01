@@ -242,7 +242,7 @@ const ProfileInfoEditable = (props) => {
                               mt={2}
                               sx={{
                                 height: 64,
-                                mb: 2,
+                                mb: 2.3,
                                 width: 64,
                                 background: "rgb(237,108,2)",
                               }}

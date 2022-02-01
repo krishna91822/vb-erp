@@ -98,6 +98,7 @@ const RewardRowData = ({ data, StyledMenu, open }) => {
               variant="contained"
               disableElevation
               onClick={handleClick}
+              disableRipple
             >
               <MoreVertIcon />
             </IconButton>

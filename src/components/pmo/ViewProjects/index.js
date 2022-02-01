@@ -392,6 +392,8 @@ const ViewProjects = () => {
                               aria-expanded={open ? "true" : undefined}
                               aria-haspopup="true"
                               onClick={handleClick}
+                              sx={{ height: "22px" }}
+                              disableRipple
                             >
                               <MoreVertIcon />
                             </IconButton>
