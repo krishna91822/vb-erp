@@ -1,9 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const clients = [];
-
-const AllAvailableEmp = [];
-const employees = [];
 const projects = [];
 const clientFinController = "";
 const targetedResources = [];
@@ -47,17 +44,6 @@ export const SOW_init_state = {
       Remarks: "",
     },
   ],
-  AllAvailableEmp: AllAvailableEmp,
-  employees: employees,
-  specificEmpData: [
-    {
-      Employee_Name: "",
-      Employee_Id: "",
-      Start_Date: "",
-      End_Date: "",
-      Allocation_Rate: null,
-    },
-  ],
 };
 
 const POSOW_Slice = createSlice({
@@ -76,21 +62,11 @@ const POSOW_Slice = createSlice({
     setTotalCount(state, action) {
       state.totalCount = action.payload;
     },
-    setPOEmpTabData(state, action) {
-      state.employees = [...action.payload].filter((emp) => {
-        return emp.Status === "assign";
-      });
-    },
     SetSpecific(state, action) {
       state.dataByID = [...action.payload];
       state.allocationRate = Object.values(
         state.dataByID[0].Targeted_Res_AllocationRate
       );
-    },
-    setDefaultEmpDataOnedit(state, action) {
-      state.specificEmpData = state.employees.filter((employee) => {
-        return employee._id === action.payload;
-      });
     },
     setClientsOptions(state, action) {
       state.inputFieldsData.clients = action.payload;

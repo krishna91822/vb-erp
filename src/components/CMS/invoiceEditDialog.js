@@ -4,15 +4,9 @@ import TextField from "@mui/material/TextField";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
-import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
-import EditIcon from "@mui/icons-material/Edit";
 import Box from "@mui/material/Box";
-import EditOffIcon from "@mui/icons-material/EditOff";
-import IconButton from "@mui/material/IconButton";
-import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
-import MoreVertIcon from "@mui/icons-material/MoreVert";
 import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
@@ -26,9 +20,8 @@ import "./Main.css";
 import validateInvoice from "./invoice_FORM/validateInvoice";
 import {
   Update_INVOICE,
-  fetch_INVOICE_data,
+  fetchVBBankAccount,
 } from "../../store/CMS/INVOICE-actions";
-import { paginationFetchInvoice } from "../../store/CMS/INVOICE-actions";
 import { useNavigate } from "react-router-dom";
 
 export default function FormDialog(props) {
@@ -91,6 +84,9 @@ export default function FormDialog(props) {
   };
   const handleAmountReceived = (event) => {
     setAmountReceivedFlag(event.target.value);
+    if (event.target.value === "Yes") {
+      dispatch(fetchVBBankAccount());
+    }
   };
   const handleAmount = (event) => {
     setAmount(event.target.value);
@@ -216,8 +212,10 @@ export default function FormDialog(props) {
                 value={Vb_Bank_Acc}
                 onChange={handlevbbankacc}
               >
-                {VbBankAcc.map((detail) => (
-                  <MenuItem value={detail}>{detail}</MenuItem>
+                {VbBankAcc.map((bank) => (
+                  <MenuItem value={bank.bank_account}>
+                    {bank.bank_account}
+                  </MenuItem>
                 ))}
               </Select>
             </FormControl>

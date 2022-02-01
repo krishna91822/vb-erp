@@ -2,12 +2,9 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import CssBaseline from "@mui/material/CssBaseline";
 import Box from "@mui/material/Box";
-import Container from "@mui/material/Container";
 import Button from "@mui/material/Button";
 import { useTheme } from "@mui/material/styles";
 import OutlinedInput from "@mui/material/OutlinedInput";
-import InputLabel from "@mui/material/InputLabel";
-import Stack from "@mui/material/Stack";
 import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
 import Autocomplete from "@mui/material/Autocomplete";
@@ -19,7 +16,6 @@ import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { createNewPO_SOW } from "../../../store/CMS/POSOW-actions";
 import { UpdatePO_SOW } from "../../../store/CMS/POSOW-actions";
-import { SendForApproval } from "../../../store/CMS/POSOW-actions";
 import { fetchAllClients } from "../../../store/CMS/POSOW-actions";
 import {
   fetchAllClientProjects,
@@ -306,7 +302,6 @@ export const CapturePO_SOW = (props) => {
       Client_Finance_Controller: clientFinanceController,
       Targetted_Resources: selectedTargetedRes,
       Targeted_Res_AllocationRate: selectedTargetedResAllocationRate,
-      // Status: status,
       Type: typeName,
       Document_Name: DocName,
       PO_Amount: PO_amt,
