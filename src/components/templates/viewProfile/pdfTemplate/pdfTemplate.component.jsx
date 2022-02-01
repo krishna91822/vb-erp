@@ -1,15 +1,12 @@
 import React from "react";
 import "./pdfTemplate.styles.css";
-import CatAvatar from "./../../../../assets/images/cat-avatar.png";
 
 const PdfTemplate = ({ viewedEmployee }) => {
   return (
     <div id="pdf">
       <div id="outer">
         <div id="left-bar">
-          <div id="imag">
-            {/* <img src={CatAvatar} alt="cat avatar" width="108px" /> */}
-          </div>
+          <div id="imag"></div>
           <br></br>
           <div id="contentbox">
             <div id="content-box2">
@@ -170,7 +167,6 @@ const PdfTemplate = ({ viewedEmployee }) => {
                         <p id="content1">{el.projectSkill.join(", ")}</p>
                       </div>
                       <div id="content-box2">
-                        {/* <p id="title2">Project Description: </p> */}
                         <p id="content1">
                           <strong>Project Description: </strong>
                           {el.projectDescription}

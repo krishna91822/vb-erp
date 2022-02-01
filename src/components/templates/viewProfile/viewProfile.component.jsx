@@ -52,11 +52,7 @@ const ViewProfile = () => {
     doc.html(renderToString(<PdfTemplate viewedEmployee={viewedEmployee} />), {
       callback: function (doc) {
         doc.addImage(logo, "JPEG", 358, 2, 86, 16);
-        //save generated pdf file
         doc.save(`${viewedEmployee.empName}_resume`);
-
-        //generate pdf in new tab for preview
-        // doc.output("dataurlnewwindow");
       },
     });
   };
