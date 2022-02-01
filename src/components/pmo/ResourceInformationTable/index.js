@@ -2,35 +2,30 @@ import React from "react";
 import {
   Table,
   TableBody,
-  TableCell,
   TableContainer,
   TableRow,
   TableHead,
 } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
-
+import {
+  StyledTableCell,
+  StyledTableCell2,
+} from "./../../../assets/GlobalStyle/style";
 import { Container } from "./styles";
 const ResourceInformationTable = ({ resources, removeResource, edit }) => {
   return (
-    <Container>
-      <TableContainer
-        data-test="associate-table"
-        sx={{
-          border: "0.1em solid #afacacde",
-          borderRadius: "6px",
-        }}
-        style={{ flexWrap: "wrap", marginTop: 5 }}
-      >
-        <Table sx={{ minWidth: 650 }} aria-label="simple table">
+    <Container sx={{ marginTop: "2rem" }}>
+      <TableContainer>
+        <Table>
           <TableHead>
-            <TableRow>
-              <TableCell align="left">SNO</TableCell>
-              <TableCell align="left">Associate Name</TableCell>
-              <TableCell align="left">Start Date</TableCell>
-              <TableCell align="left">End Date</TableCell>
-              <TableCell align="left">% Allocation</TableCell>
-              <TableCell align="left">Rack Rate</TableCell>
-              {edit && <TableCell align="center">Remove</TableCell>}
+            <TableRow className="table-header">
+              <StyledTableCell align="center">SNO</StyledTableCell>
+              <StyledTableCell align="center">Associate Name</StyledTableCell>
+              <StyledTableCell align="center">Start Date</StyledTableCell>
+              <StyledTableCell align="center">End Date</StyledTableCell>
+              <StyledTableCell align="center">% Allocation</StyledTableCell>
+              <StyledTableCell align="center">Rack Rate</StyledTableCell>
+              {edit && <StyledTableCell align="center">Remove</StyledTableCell>}
             </TableRow>
           </TableHead>
           {resources.length > 0 && (
@@ -40,20 +35,26 @@ const ResourceInformationTable = ({ resources, removeResource, edit }) => {
                   key={index + 1}
                   sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                 >
-                  <TableCell align="left">{index + 1}</TableCell>
-                  <TableCell align="left">{eachData.empName}</TableCell>
-                  <TableCell align="left">
+                  <StyledTableCell2 align="center">
+                    {index + 1}
+                  </StyledTableCell2>
+                  <StyledTableCell2 align="center">
+                    {eachData.empName}
+                  </StyledTableCell2>
+                  <StyledTableCell2 align="center">
                     {eachData.allocationStartDate}
-                  </TableCell>
-                  <TableCell align="left">
+                  </StyledTableCell2>
+                  <StyledTableCell2 align="center">
                     {eachData.allocationEndDate}
-                  </TableCell>
-                  <TableCell align="left">
+                  </StyledTableCell2>
+                  <StyledTableCell2 align="center">
                     {eachData.allocationPercentage}
-                  </TableCell>
-                  <TableCell align="left">{eachData.rackRate}</TableCell>
+                  </StyledTableCell2>
+                  <StyledTableCell2 align="center">
+                    {eachData.rackRate}
+                  </StyledTableCell2>
                   {edit && (
-                    <TableCell
+                    <StyledTableCell2
                       align="center"
                       onClick={() => {
                         removeResource(eachData.empId, eachData._id);
@@ -62,9 +63,10 @@ const ResourceInformationTable = ({ resources, removeResource, edit }) => {
                       <DeleteIcon
                         style={{
                           cursor: "pointer",
+                          color: "grey",
                         }}
                       />
-                    </TableCell>
+                    </StyledTableCell2>
                   )}
                 </TableRow>
               ))}

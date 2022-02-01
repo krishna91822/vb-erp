@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import "./rewardTableStyle.css";
 import MenuItem from "@mui/material/MenuItem";
+import IconButton from "@mui/material/IconButton";
+import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -16,7 +18,7 @@ import Popup from "./Popup";
 import EmployeesList from "../employees/EmployeesList";
 import { StyledTableCell } from "../../assets/GlobalStyle/style";
 import { TableRow, Tab } from "@mui/material";
-import "../clients/styles/ClientListStyles.css";
+import "../../assets/GlobalStyle/TableStyles.css";
 
 const RewardRowData = ({ data, StyledMenu, open }) => {
   const dispatch = useDispatch();
@@ -87,8 +89,19 @@ const RewardRowData = ({ data, StyledMenu, open }) => {
           )}
         </StyledTableCell>
         <StyledTableCell align="center">{data.status}</StyledTableCell>
-        <StyledTableCell>
-          <div className="actions">
+        <StyledTableCell align="center">
+          <>
+            <IconButton
+              aria-controls="demo-customized-menu"
+              aria-haspopup="true"
+              aria-expanded={open ? "true" : undefined}
+              variant="contained"
+              disableElevation
+              onClick={handleClick}
+              disableRipple
+            >
+              <MoreVertIcon />
+            </IconButton>
             <StyledMenu
               id={`demo-customized-menu-${data._id}`}
               keepMounted
@@ -145,23 +158,7 @@ const RewardRowData = ({ data, StyledMenu, open }) => {
                 Delete
               </MenuItem>
             </StyledMenu>
-            <p
-              style={{
-                cursor: "pointer",
-                display: "flex",
-                alignItems: "center",
-                marginLeft: "30px",
-              }}
-              aria-controls="demo-customized-menu"
-              aria-haspopup="true"
-              aria-expanded={open ? "true" : undefined}
-              variant="contained"
-              disableElevation
-              onClick={handleClick}
-            >
-              <FontAwesomeIcon icon={faEllipsisV} />
-            </p>
-          </div>
+          </>
           <Popup
             title="Team Members"
             openPopup={openPopup}

@@ -59,6 +59,16 @@ export const ProfileNameTypo = styled("div")(({ theme }) => ({
   color: "rgb(18, 24, 40)",
 }));
 
+export const ProfileFirstLetter = styled("div")(({ theme }) => ({
+  ...theme.typography.h5,
+  fontWeight: 400,
+  fontSize: "1.5rem",
+  color: "white",
+  textTransform: "capitalize",
+  fontFamily:
+    "Inter, -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji",
+}));
+
 //custom components for tabs
 export const StyledTabs = styled(Tabs)(({ theme }) => ({
   ".MuiTabs-flexContainer": {

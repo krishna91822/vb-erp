@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { renderToString } from "react-dom/server";
 
-import { Box, Container, Button } from "@mui/material";
+import { Box, Button } from "@mui/material";
 
 import { useParams } from "react-router-dom";
 
@@ -25,6 +25,7 @@ const ViewProfile = () => {
 
   const [loading, setLoading] = useState(true);
   const [viewedEmployee, setViewedEmployee] = useState({});
+  const [loader, setLoader] = useState(0);
 
   const { empId } = useParams();
   useEffect(() => {
@@ -35,8 +36,8 @@ const ViewProfile = () => {
         setLoading(false);
       })
       .catch((err) => console.error(err));
-  }, [empId]);
-  const [editEmployee, setEditEmployee] = React.useState(false);
+  }, [empId, loader]);
+  const [editEmployee, setEditEmployee] = useState(false);
 
   const handleSwitchChange = (event) => {
     setEditEmployee(event.target.checked);
@@ -66,7 +67,7 @@ const ViewProfile = () => {
         }}
       >
         {user.permissions.includes("edit_employee_dashboard") &&
-        ["hr_admin", "super_admin"].some((el) => user.roles.includes(el)) ? (
+        user.permissions.includes("create_employee_dashboard") ? (
           <Box
             sx={{
               display: "flex",
@@ -91,8 +92,8 @@ const ViewProfile = () => {
                 id="download"
                 variant="contained"
                 onClick={handlePdfClick}
+                style={{ backgroundColor: "chocolate" }}
                 sx={{
-                  backgroundColor: "chocolate",
                   paddingRight: "1rem",
 
                   "&:hover": {
@@ -119,6 +120,9 @@ const ViewProfile = () => {
         <CreateProfile
           editEmployeeData={viewedEmployee}
           editSwitch={component()}
+          editEmployee={editEmployee}
+          setEditEmployee={setEditEmployee}
+          setLoader={setLoader}
         />
       ) : (
         <ProfileContentWithSpinner

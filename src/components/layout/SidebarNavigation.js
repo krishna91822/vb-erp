@@ -9,7 +9,6 @@ import ListItemText from "@mui/material/ListItemText";
 import Collapse from "@mui/material/Collapse";
 import ExpandLess from "@mui/icons-material/ExpandLess";
 import ExpandMore from "@mui/icons-material/ExpandMore";
-import GridViewIcon from "@mui/icons-material/GridView";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import { styled } from "@mui/material/styles";
 import { Grid } from "@mui/material";
@@ -23,8 +22,17 @@ import AssignmentIndIcon from "@mui/icons-material/AssignmentInd";
 import AccountTreeIcon from "@mui/icons-material/AccountTree";
 import AssessmentIcon from "@mui/icons-material/Assessment";
 import EmojiEventsIcon from "@mui/icons-material/EmojiEvents";
+import PersonAddIcon from "@mui/icons-material/PersonAdd";
+import ContentPasteSearchIcon from "@mui/icons-material/ContentPasteSearch";
+import StackedBarChartIcon from "@mui/icons-material/StackedBarChart";
+import NoteAddIcon from "@mui/icons-material/NoteAdd";
+import TaskIcon from "@mui/icons-material/Task";
+import DescriptionIcon from "@mui/icons-material/Description";
+import ContentPasteIcon from "@mui/icons-material/ContentPaste";
+import GradeIcon from "@mui/icons-material/Grade";
 import vbLogo from "../../assets/images/vb_logo.svg";
 import "../clients/styles/imageStyles.css";
+import { useSelector } from "react-redux";
 
 const SidebarNavigation = () => {
   const [openTasks, setOpenTasks] = useState(false);
@@ -34,6 +42,7 @@ const SidebarNavigation = () => {
   const [selectedIndex, setSelectedIndex] = useState(0);
   const location = useLocation();
   const [selectedListIndex, setSelectedListIndex] = useState();
+  const user = useSelector((state) => state.user.user);
 
   const lgUp = useMediaQuery((theme) => theme.breakpoints.up("sm"), {
     defaultMatches: true,
@@ -202,6 +211,10 @@ const SidebarNavigation = () => {
   const trackPathName = () => {
     if (location.pathname.includes("my-profile")) {
       setSelectedIndex(0);
+      setOpenTasks(false);
+      setOpenCMS(false);
+      setOpenPMO(false);
+      setOpenRR(false);
     }
 
     if (location.pathname.includes("/create-profile")) {
@@ -216,7 +229,10 @@ const SidebarNavigation = () => {
       setOpenTasks(true);
     }
 
-    if (location.pathname.includes("/network")) {
+    if (
+      location.pathname.includes("/network") ||
+      location.pathname.includes("my-profile/VB")
+    ) {
       setSelectedIndex(2);
     }
 
@@ -262,14 +278,18 @@ const SidebarNavigation = () => {
       setSelectedListIndex(0);
       setOpenRR(true);
     }
+    if (location.pathname.includes("/status")) {
+      setSelectedIndex(7);
+    }
   };
 
   useEffect(() => {
     trackPathName();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [location.pathname]);
 
   const {
+    onlyUser,
     isUser,
     isApprover,
     isLeader,
@@ -301,11 +321,13 @@ const SidebarNavigation = () => {
         {
           name: "Create Profile",
           link: "/create-profile",
+          icon: <PersonAddIcon />,
           access: [isHrAdmin, isSuperAdmin].some((x) => x),
         },
         {
           name: "Reviews",
           link: "/reviews",
+          icon: <ContentPasteSearchIcon />,
           access: [
             isApprover,
             isLeader,
@@ -361,6 +383,7 @@ const SidebarNavigation = () => {
         {
           name: "Projects",
           link: "/pmo/projects",
+          icon: <StackedBarChartIcon />,
           access: [
             isApprover,
             isLeader,
@@ -373,6 +396,7 @@ const SidebarNavigation = () => {
         {
           name: "Create Projects",
           link: "/pmo/projects/create",
+          icon: <NoteAddIcon />,
           access: [isApprover, isLeader, isPMSAdmin, isSuperAdmin].some(
             (x) => x
           ),
@@ -380,6 +404,7 @@ const SidebarNavigation = () => {
         {
           name: "Allocations",
           link: "/pmo/allocations",
+          icon: <TaskIcon />,
           access: [
             isApprover,
             isLeader,
@@ -409,6 +434,7 @@ const SidebarNavigation = () => {
         {
           name: "PO/SOW",
           link: "/posow",
+          icon: <ContentPasteIcon />,
           access: [
             isApprover,
             isLeader,
@@ -421,6 +447,7 @@ const SidebarNavigation = () => {
         {
           name: "Invoicing",
           link: "/invoices",
+          icon: <DescriptionIcon />,
           access: [
             isApprover,
             isLeader,
@@ -444,11 +471,12 @@ const SidebarNavigation = () => {
     },
     {
       name: "R&R",
-      icon: <EmojiEventsIcon />,
+      icon: <GradeIcon />,
       dropDown: [
         {
           name: "Reward",
           link: "/rewards",
+          icon: <EmojiEventsIcon />,
           access: [isLeader, isHrAdmin, isSuperAdmin].some((x) => x),
         },
       ],
@@ -460,7 +488,7 @@ const SidebarNavigation = () => {
       name: "Status",
       icon: <NotificationsIcon />,
       link: "/status",
-      access: [isUser].some((x) => x),
+      access: [onlyUser].some((x) => x),
     },
   ];
   if (lgUp) {
@@ -528,9 +556,7 @@ const SidebarNavigation = () => {
                                   selected={selectedListIndex === i}
                                   onClick={() => checkNestedlist(i)}
                                 >
-                                  <ListItemIcon>
-                                    <GridViewIcon />
-                                  </ListItemIcon>
+                                  <ListItemIcon>{item.icon}</ListItemIcon>
                                   <ListItemText
                                     primary={item.name}
                                     style={{ color: "rgb(156,163,175)" }}
@@ -603,9 +629,7 @@ const SidebarNavigation = () => {
                                 selected={selectedListIndex === i}
                                 onClick={() => checkNestedlist(i)}
                               >
-                                <ListItemIcon>
-                                  <GridViewIcon />
-                                </ListItemIcon>
+                                <ListItemIcon>{item.icon}</ListItemIcon>
                               </NestedListItemButton>
                             )
                         )}

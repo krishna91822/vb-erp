@@ -247,27 +247,19 @@ export default function FormDialog(props) {
         </DialogContent>
         <DialogActions>
           <Button
+            variant="outlined"
+            onClick={handleClose}
             sx={{
-              backgroundColor: "chocolate",
+              color: "gray",
+              border: "1px solid gray",
               ":hover": {
-                background: "chocolate",
+                border: "1px solid gray",
               },
             }}
-            variant="contained"
-            onClick={handleClose}
           >
             Cancel
           </Button>
-          <Button
-            sx={{
-              backgroundColor: "chocolate",
-              ":hover": {
-                background: "chocolate",
-              },
-            }}
-            variant="contained"
-            onClick={handleUpdate}
-          >
+          <Button variant="contained" onClick={handleUpdate}>
             Update
           </Button>
         </DialogActions>

@@ -1,5 +1,5 @@
-import React, { useState, useLayoutEffect, useEffect } from "react";
-import { TextField, Button } from "@mui/material";
+import React, { useState } from "react";
+import { TextField, Button, Card } from "@mui/material";
 import InputAdornment from "@mui/material/InputAdornment";
 import ResourceInformationTable from "../ResourceInformationTable";
 import Autocomplete from "@mui/material/Autocomplete";
@@ -11,7 +11,6 @@ import { getAllEmployees } from "../../../store/pmo-actions";
 import {
   Heading,
   Container,
-  ResourceInformationHeading,
   AllElementsContainer,
   ResourceForm,
   MultiElemContainer,
@@ -90,145 +89,149 @@ const ResourceInformation = ({
         Resource Information
       </MiniHeadingTypography>
       {edit && (
-        <AllElementsContainer>
-          <ResourceForm>
-            <Heading>
-              Associate Name <span>*</span>
-              <small>(min 3 letters required)</small>
-            </Heading>
-            <Autocomplete
-              size="small"
-              onBlur={() => {
-                setTempEmpName("");
-                setOpen(false);
-                setFocused(false);
-              }}
-              onInputChange={handleInputChange}
-              getOptionLabel={(option) => `${option.empName} (${option.empId})`}
-              onChange={handleOnClick}
-              options={filteredEmployees}
-              open={open}
-              style={{ width: "100%" }}
-              inputValue={focused ? tempEmpName : empName}
-              renderInput={(params) => (
-                <TextField
-                  {...params}
-                  placeholder="associate name"
-                  error={resourceErrors.empName ? true : false}
-                />
-              )}
-            />
-          </ResourceForm>
-          <MultiElemContainer
-            sColor={!allocationStartDate ? "#a2a2a2" : "black"}
-            eColor={!allocationEndDate ? "#a2a2a2" : "black"}
-          >
+        <Card sx={{ margin: "1rem 0  1rem 0" }}>
+          <AllElementsContainer>
             <ResourceForm>
-              <Heading data-test="start-date">
-                Start Date <span>*</span>
+              <Heading>
+                Associate Name <span>*</span>
+                <small>(min 3 letters required)</small>
               </Heading>
-              <TextField
-                variant="outlined"
+              <Autocomplete
                 size="small"
-                type="date"
-                name="allocationStartDate"
-                error={resourceErrors.allocationStartDate ? true : false}
-                onChange={handleResourceChange}
-                value={allocationStartDate}
-                data-test="start-date-input"
+                onBlur={() => {
+                  setTempEmpName("");
+                  setOpen(false);
+                  setFocused(false);
+                }}
+                onInputChange={handleInputChange}
+                getOptionLabel={(option) =>
+                  `${option.empName} (${option.empId})`
+                }
+                onChange={handleOnClick}
+                options={filteredEmployees}
+                open={open}
+                style={{ width: "100%" }}
+                inputValue={focused ? tempEmpName : empName}
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    placeholder="associate name"
+                    error={resourceErrors.empName ? true : false}
+                  />
+                )}
               />
             </ResourceForm>
-            <ResourceForm>
-              <Heading data-test="end-date">
-                End Date <span>*</span>
-              </Heading>
-              <TextField
-                variant="outlined"
-                size="small"
-                type="date"
-                name="allocationEndDate"
-                error={resourceErrors.allocationEndDate ? true : false}
-                style={{ color: "blue" }}
-                onChange={handleResourceChange}
-                value={allocationEndDate}
-                data-test="end-date-input"
-              />
-            </ResourceForm>
-          </MultiElemContainer>
-          <MultiElemContainer>
-            <ResourceForm style={{ justifyContent: "space-between" }}>
-              <Heading data-test="allocation">
-                Allocation <span>*</span>
-              </Heading>
-              <AllocElemContainer
-                aColor={allocationPercentage > 0 ? "black" : "#a2a2a2"}
-              >
-                <input
-                  type="range"
-                  step={5}
-                  min="0"
-                  max={100 - percentageAllocated}
-                  name="allocationPercentage"
-                  value={allocationPercentage}
-                  onChange={handleResourceChange}
-                  onClick={testing}
-                  style={{ width: "60%" }}
-                />
+            <MultiElemContainer
+              sColor={!allocationStartDate ? "#a2a2a2" : "black"}
+              eColor={!allocationEndDate ? "#a2a2a2" : "black"}
+            >
+              <ResourceForm>
+                <Heading data-test="start-date">
+                  Start Date <span>*</span>
+                </Heading>
                 <TextField
-                  name="allocationPercentagetxt"
-                  readOnly
-                  placeholder="50%"
                   variant="outlined"
                   size="small"
-                  error={resourceErrors.allocationPercentage ? true : false}
-                  style={{ width: "30%" }}
+                  type="date"
+                  name="allocationStartDate"
+                  error={resourceErrors.allocationStartDate ? true : false}
                   onChange={handleResourceChange}
-                  value={`${allocationPercentage}%`}
-                  data-test="allocation-input"
+                  value={allocationStartDate}
+                  data-test="start-date-input"
                 />
-              </AllocElemContainer>
-            </ResourceForm>
-            <ResourceForm>
-              <Heading data-test="rack-rate">
-                Rack Rate <span>*</span>
-              </Heading>
-              <TextField
-                size="small"
-                type="number"
-                name="rackRate"
-                variant="outlined"
-                placeholder="Enter Rack Rate"
-                error={resourceErrors.rackRate ? true : false}
-                onChange={handleResourceChange}
-                value={rackRate}
-                style={{ marginTop: 3 }}
-                data-test="rack-rate-input"
-                InputProps={{
-                  startAdornment: (
-                    <InputAdornment position="start">₹</InputAdornment>
-                  ),
-                  inputProps: { min: 0 },
+              </ResourceForm>
+              <ResourceForm>
+                <Heading data-test="end-date">
+                  End Date <span>*</span>
+                </Heading>
+                <TextField
+                  variant="outlined"
+                  size="small"
+                  type="date"
+                  name="allocationEndDate"
+                  error={resourceErrors.allocationEndDate ? true : false}
+                  style={{ color: "blue" }}
+                  onChange={handleResourceChange}
+                  value={allocationEndDate}
+                  data-test="end-date-input"
+                />
+              </ResourceForm>
+            </MultiElemContainer>
+            <MultiElemContainer>
+              <ResourceForm style={{ justifyContent: "space-between" }}>
+                <Heading data-test="allocation">
+                  Allocation <span>*</span>
+                </Heading>
+                <AllocElemContainer
+                  aColor={allocationPercentage > 0 ? "black" : "#a2a2a2"}
+                >
+                  <input
+                    type="range"
+                    step={5}
+                    min="0"
+                    max={100 - percentageAllocated}
+                    name="allocationPercentage"
+                    value={allocationPercentage}
+                    onChange={handleResourceChange}
+                    onClick={testing}
+                    style={{ width: "60%" }}
+                  />
+                  <TextField
+                    name="allocationPercentagetxt"
+                    readOnly
+                    placeholder="50%"
+                    variant="outlined"
+                    size="small"
+                    error={resourceErrors.allocationPercentage ? true : false}
+                    style={{ width: "30%" }}
+                    onChange={handleResourceChange}
+                    value={`${allocationPercentage}%`}
+                    data-test="allocation-input"
+                  />
+                </AllocElemContainer>
+              </ResourceForm>
+              <ResourceForm>
+                <Heading data-test="rack-rate">
+                  Rack Rate <span>*</span>
+                </Heading>
+                <TextField
+                  size="small"
+                  type="number"
+                  name="rackRate"
+                  variant="outlined"
+                  placeholder="Enter Rack Rate"
+                  error={resourceErrors.rackRate ? true : false}
+                  onChange={handleResourceChange}
+                  value={rackRate}
+                  style={{ marginTop: 3 }}
+                  data-test="rack-rate-input"
+                  InputProps={{
+                    startAdornment: (
+                      <InputAdornment position="start">₹</InputAdornment>
+                    ),
+                    inputProps: { min: 0 },
+                  }}
+                />
+              </ResourceForm>
+            </MultiElemContainer>
+            <ResourceForm style={{ justifyContent: "start" }}>
+              <Button
+                onClick={() => {
+                  addResource();
                 }}
-              />
+                variant="contained"
+                color="primary"
+                style={{
+                  margin: "3.5em 0em 0em",
+                  width: "30%",
+                  alignSelf: "flex-end",
+                }}
+              >
+                Add
+              </Button>
             </ResourceForm>
-          </MultiElemContainer>
-          <ResourceForm style={{ justifyContent: "start" }}>
-            <Button
-              onClick={() => {
-                addResource();
-              }}
-              variant="contained"
-              color="primary"
-              style={{
-                margin: "3.5em 0em 0em",
-                width: "30%",
-                alignSelf: "flex-end",
-              }}
-            >
-              Add
-            </Button>
-          </ResourceForm>
-        </AllElementsContainer>
+          </AllElementsContainer>
+        </Card>
       )}
       <ResourceInformationTable
         edit={edit}

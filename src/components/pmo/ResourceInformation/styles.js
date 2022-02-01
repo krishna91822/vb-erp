@@ -36,7 +36,6 @@ export const AllElementsContainer = styled.div`
   flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
-  border: 0.1em solid #afacacde;
   border-radius: 5px;
   @media ${device.tablet} {
     flex-direction: column;

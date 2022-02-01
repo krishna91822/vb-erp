@@ -29,6 +29,9 @@ import Review from "./../pages/review/review.component ";
 import CreateProfile from "./../pages/createProfile/createProfile.component";
 
 import UseRoles from "../helpers/roles";
+import CreateUserProfile from "../pages/User/CreateUser";
+import SetUserPassword from "../pages/User/SetUserPassword";
+import UpdateUserPassword from "../pages/User/UpdateUserPassword";
 
 const Routes = () => {
   const {
@@ -39,6 +42,7 @@ const Routes = () => {
     isFinanceAdmin,
     isPMSAdmin,
     isSuperAdmin,
+    onlyUser,
   } = UseRoles();
 
   const routes = [
@@ -48,11 +52,17 @@ const Routes = () => {
       access: true,
     },
     {
+      path: "/:id/setpassword",
+      component: SetUserPassword,
+      access: true,
+    },
+    {
       path: "/login",
       title: "Login",
       component: SignIn,
       access: true,
     },
+
     {
       path: "my-profile",
       component: Profile,
@@ -99,7 +109,7 @@ const Routes = () => {
       path: "status",
       component: Status,
       title: "status",
-      access: [isUser].some((x) => x),
+      access: [onlyUser].some((x) => x),
     },
     {
       path: "reviews",
@@ -325,7 +335,32 @@ const Routes = () => {
     {
       path: "*",
       component: NotFound,
-      title: "Not Found",
+      access: [
+        isUser,
+        isApprover,
+        isLeader,
+        isHrAdmin,
+        isFinanceAdmin,
+        isPMSAdmin,
+        isSuperAdmin,
+      ].some((x) => x),
+    },
+    {
+      path: "/createuserprofile",
+      component: CreateUserProfile,
+      access: [
+        isUser,
+        isApprover,
+        isLeader,
+        isHrAdmin,
+        isFinanceAdmin,
+        isPMSAdmin,
+        isSuperAdmin,
+      ].some((x) => x),
+    },
+    {
+      path: "/settings",
+      component: UpdateUserPassword,
       access: [
         isUser,
         isApprover,

@@ -25,14 +25,18 @@ const PdfTemplate = ({ viewedEmployee }) => {
             <p id="title2">Primary Capability: </p>
             <div id="chip-box">
               {viewedEmployee.empPrimaryCapability.map((data, i) => (
-                <div id="chip">{data}</div>
+                <div id="chip" key={i}>
+                  {data}
+                </div>
               ))}
             </div>
             <br></br>
             <p id="title2">Hobbies:</p>
             <div id="chip-box">
               {viewedEmployee.empHobbies.map((data, i) => (
-                <div id="chip">{data}</div>
+                <div id="chip" key={i}>
+                  {data}
+                </div>
               ))}
             </div>
           </div>
@@ -70,24 +74,19 @@ const PdfTemplate = ({ viewedEmployee }) => {
                   {viewedEmployee.empResidentialAddress.empAddressState}
                 </p>
               </div>
-              {viewedEmployee.personalDetails ? (
-                viewedEmployee.personalDetails
-                  .map((data) => (
-                    <div id="content-box2">
-                      <p id="title2">{data.fieldName}:</p>
-                      {data.fieldType === "date" ? (
-                        <p id="content1">
-                          {new Date(data.fieldValue).toDateString().slice(4)}
-                        </p>
-                      ) : (
-                        <p id="content1">{data.fieldValue}</p>
-                      )}
-                    </div>
-                  ))
-                  .join(" ")
-              ) : (
-                <></>
-              )}
+              {viewedEmployee.personalDetails &&
+                viewedEmployee.personalDetails.map((data, i) => (
+                  <div id="content-box2" key={i}>
+                    <p id="title2">{data.fieldName}:</p>
+                    {data.fieldType === "date" ? (
+                      <p id="content1">
+                        {new Date(data.fieldValue).toDateString().slice(4)}
+                      </p>
+                    ) : (
+                      <p id="content1">{data.fieldValue}</p>
+                    )}
+                  </div>
+                ))}
               <br></br>
               <p id="title3">Professional Details</p>
               <div id="line"></div>
@@ -113,24 +112,19 @@ const PdfTemplate = ({ viewedEmployee }) => {
                   {viewedEmployee.empPostGraduationUniversity}
                 </p>
               </div>
-              {viewedEmployee.professionalDetails ? (
-                viewedEmployee.professionalDetails
-                  .map((data) => (
-                    <div id="content-box2">
-                      <p id="title2">{data.fieldName}:</p>
-                      {data.fieldType === "date" ? (
-                        <p id="content1">
-                          {new Date(data.fieldValue).toDateString().slice(4)}
-                        </p>
-                      ) : (
-                        <p id="content1">{data.fieldValue}</p>
-                      )}
-                    </div>
-                  ))
-                  .join(" ")
-              ) : (
-                <></>
-              )}
+              {viewedEmployee.professionalDetails &&
+                viewedEmployee.professionalDetails.map((data, i) => (
+                  <div id="content-box2" key={i}>
+                    <p id="title2">{data.fieldName}:</p>
+                    {data.fieldType === "date" ? (
+                      <p id="content1">
+                        {new Date(data.fieldValue).toDateString().slice(4)}
+                      </p>
+                    ) : (
+                      <p id="content1">{data.fieldValue}</p>
+                    )}
+                  </div>
+                ))}
               <br></br>
               <p id="title3">Skills and Qualifications</p>
               <div id="line"></div>
@@ -144,49 +138,43 @@ const PdfTemplate = ({ viewedEmployee }) => {
                   {viewedEmployee.empCertifications.join(", ")}
                 </p>
               </div>
-              {viewedEmployee.skillsDetails ? (
-                viewedEmployee.skillsDetails
-                  .map((data) => (
-                    <div id="content-box2">
-                      <p id="title2">{data.fieldName}:</p>
-                      {data.fieldType === "date" ? (
-                        <p id="content1">
-                          {new Date(data.fieldValue).toDateString().slice(4)}
-                        </p>
-                      ) : (
-                        <p id="content1">{data.fieldValue}</p>
-                      )}
-                    </div>
-                  ))
-                  .join(" ")
-              ) : (
-                <></>
-              )}
-              <br></br>
-              <p id="title3">Projects</p>
-              <div id="line"></div>
-              {viewedEmployee.project ? (
-                viewedEmployee.project.map((el) => (
-                  <div class="project-box">
-                    <div id="content-box2">
-                      <p id="title2">Project Name: </p>
-                      <p id="content1">{el.projectName}</p>
-                    </div>
-                    <div id="content-box2">
-                      <p id="title2">Skill Set: </p>
-                      <p id="content1">{el.projectSkill.join(", ")}</p>
-                    </div>
-                    <div id="content-box2">
-                      {/* <p id="title2">Project Description: </p> */}
+              {viewedEmployee.skillsDetails &&
+                viewedEmployee.skillsDetails.map((data, i) => (
+                  <div id="content-box2" key={i}>
+                    <p id="title2">{data.fieldName}:</p>
+                    {data.fieldType === "date" ? (
                       <p id="content1">
-                        <strong>Project Description: </strong>
-                        {el.projectDescription}
+                        {new Date(data.fieldValue).toDateString().slice(4)}
                       </p>
-                    </div>
+                    ) : (
+                      <p id="content1">{data.fieldValue}</p>
+                    )}
                   </div>
-                ))
-              ) : (
-                <></>
+                ))}
+              <br></br>
+              {viewedEmployee.project && (
+                <div>
+                  <p id="title3">Projects</p>
+                  <div id="line"></div>
+                  {viewedEmployee.project.map((el, i) => (
+                    <div class="project-box" key={i}>
+                      <div id="content-box2">
+                        <p id="title2">Project Name: </p>
+                        <p id="content1">{el.projectName}</p>
+                      </div>
+                      <div id="content-box2">
+                        <p id="title2">Skill Set: </p>
+                        <p id="content1">{el.projectSkill.join(", ")}</p>
+                      </div>
+                      <div id="content-box2">
+                        <p id="content1">
+                          <strong>Project Description: </strong>
+                          {el.projectDescription}
+                        </p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
               )}
             </div>
           </div>

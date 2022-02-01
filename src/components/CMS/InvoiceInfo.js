@@ -82,7 +82,7 @@ function InvoiceInfo() {
   const isReload = useSelector((state) => state.INVOICE_state.reload);
 
   const [currentPage, setCurrentPage] = React.useState(1);
-  const [postPerPage, setPostPerPage] = React.useState(5);
+  const [postPerPage, setPostPerPage] = React.useState(10);
   const [filename, setFilename] = React.useState("Id");
   const [searchKeyword, setSearchKeyword] = useState("");
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -123,9 +123,9 @@ function InvoiceInfo() {
 
   const renderChildStatus = (status) => {
     if (status === "Complete") {
-      return <ContentTypo sx={{ color: "#00e676" }}>{status}</ContentTypo>;
+      return <ContentTypo sx={{ color: "#2AB3A6" }}>{status}</ContentTypo>;
     } else if (status === "Invoice raised") {
-      return <ContentTypo sx={{ color: "#ff9800" }}>{status}</ContentTypo>;
+      return <ContentTypo sx={{ color: "#F7C839" }}>{status}</ContentTypo>;
     } else if (status === "Overdue") {
       return <ContentTypo sx={{ color: "#b2102f" }}>{status}</ContentTypo>;
     } else {
@@ -139,7 +139,7 @@ function InvoiceInfo() {
   const searchHandler = (event) => {
     if (event.key === "Enter") {
       setCurrentPage(1);
-      dispatch(paginationFetchInvoice(filename, 1, 5, searchKeyword));
+      dispatch(paginationFetchInvoice(filename, 1, 10, searchKeyword));
     }
   };
   return (
@@ -305,11 +305,13 @@ function InvoiceInfo() {
         </TableContainer>
         <div className="pagination">
           <Stack spacing={2}>
-            <Pagination
-              count={Math.ceil(totalCount / postPerPage)}
-              page={currentPage}
-              onChange={handleChange}
-            />
+            {Math.ceil(totalCount / postPerPage) > 1 && (
+              <Pagination
+                count={Math.ceil(totalCount / postPerPage)}
+                page={currentPage}
+                onChange={handleChange}
+              />
+            )}
           </Stack>
         </div>
       </div>

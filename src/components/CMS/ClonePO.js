@@ -34,6 +34,7 @@ export default function LongMenu(props) {
         aria-expanded={open ? "true" : undefined}
         aria-haspopup="true"
         onClick={handleClick}
+        disableRipple
       >
         <MoreVertIcon />
       </IconButton>

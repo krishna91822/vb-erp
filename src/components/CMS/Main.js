@@ -85,7 +85,7 @@ export const Main = () => {
   const post = useSelector((state) => state.CMS_state.poSowData);
   const totalCount = useSelector((state) => state.CMS_state.totalCount);
   const [currentPage, setCurrentPage] = React.useState(1);
-  const [postPerPage, setPostPerPage] = React.useState(5);
+  const [postPerPage, setPostPerPage] = React.useState(10);
   const [filename, setFilename] = React.useState("Id");
   const [searchKeyword, setSearchKeyword] = useState("");
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -124,7 +124,7 @@ export const Main = () => {
   const searchHandler = (event) => {
     if (event.key === "Enter") {
       setCurrentPage(1);
-      dispatch(paginationFetchPosow(filename, 1, 5, searchKeyword));
+      dispatch(paginationFetchPosow(filename, 1, 10, searchKeyword));
     }
   };
   return (
@@ -210,13 +210,13 @@ export const Main = () => {
                     onClose={handleClose}
                     data-test="StyledMenu"
                   >
-                    <MenuItem
+                    {/* <MenuItem
                       onClick={() => handleSort("_id")}
                       disableRipple
                       className="menu-by-id"
                     >
                       By ID
-                    </MenuItem>
+                    </MenuItem> */}
 
                     <MenuItem
                       onClick={() => handleSort("Project_Name")}
@@ -314,11 +314,13 @@ export const Main = () => {
         </TableContainer>
         <div className="pagination">
           <Stack spacing={2}>
-            <Pagination
-              count={Math.ceil(totalCount / postPerPage)}
-              page={currentPage}
-              onChange={handleChange}
-            />
+            {Math.ceil(totalCount / postPerPage) > 1 && (
+              <Pagination
+                count={Math.ceil(totalCount / postPerPage)}
+                page={currentPage}
+                onChange={handleChange}
+              />
+            )}
           </Stack>
         </div>
       </div>

@@ -6,6 +6,9 @@ import {
   Grid,
   TextField,
   Button,
+  OutlinedInput,
+  Typography,
+  Card,
   Box,
   FormControl,
   MenuItem,
@@ -32,6 +35,10 @@ import {
   StyledTypography,
   MiniHeadingTypography,
 } from "../../../assets/GlobalStyle/style";
+import {
+  TitleTypo,
+  CustomSwitch,
+} from "./../../templates/editMode/editMode.styles";
 
 function Invoice(props) {
   const params = useParams();
@@ -274,66 +281,69 @@ function Invoice(props) {
           <Grid item lg={10} md={10} sm={12} xs={12}>
             <StyledTypography>Invoice</StyledTypography>
           </Grid>
-          <Grid item lg={2} md={2} sm={12} xs={12}>
-            {props.editBtn && editTglCheckedState ? (
-              <div className="invoice-updateBtn">
-                <Button
-                  variant="contained"
-                  color="success"
-                  onClick={updatehandler}
-                  data-test="UpdateBtn"
-                >
-                  Update{" "}
-                </Button>
-              </div>
-            ) : (
-              <div></div>
-            )}
-          </Grid>
         </Grid>
         <Box fixed>
-          <Box
+          <Card
             sx={{
               bgcolor: "white",
-              height: "75vh",
-              border: "2px solid grey",
               overflowY: "scroll",
               padding: "1rem",
+              margin: "0.5rem",
             }}
           >
-            <Grid container>
-              <Grid item lg={10} md={10} sm={10} xs={12}>
+            <div className="form-header">
+              <div>
                 <MiniHeadingTypography className="heading">
                   PO Information
                 </MiniHeadingTypography>
-              </Grid>
+              </div>
               {user.permissions.includes("upload_invoice") && (
-                <Grid item lg={2} md={2} sm={2} xs={12}>
-                  <div className="invoice-editToggle">
-                    <div className="editTxt" data-test="editModeSwitch-label">
-                      Edit
-                    </div>
-                    <label className="switch">
-                      <input
-                        type="checkbox"
-                        data-test="EditToggleBtn"
-                        data-testid="EditToggleBtn"
-                        checked={editTglCheckedState}
-                        onChange={handleEditTglChange}
-                        disabled={
-                          invoice_raised === "Yes" &&
-                          invoice_amount &&
-                          editTglCheckedState === false
-                        }
-                      />
-                      <span className="slider round"></span>
-                    </label>
+                <div className="end-btns">
+                  <div style={{ paddingRight: "1rem" }}>
+                    <TitleTypo
+                      data-test="editModeSwitch-label"
+                      sx={{
+                        textTransform: "capitalize",
+                        pr: 1,
+                        display: "inline",
+                      }}
+                    >
+                      Edit Mode
+                    </TitleTypo>
+                    <CustomSwitch
+                      data-test="EditToggleBtn"
+                      data-testid="EditToggleBtn"
+                      checked={editTglCheckedState}
+                      onChange={handleEditTglChange}
+                      disabled={
+                        invoice_raised === "Yes" &&
+                        invoice_amount &&
+                        editTglCheckedState === false
+                      }
+                      inputProps={{ "aria-label": "switch" }}
+                    />
                   </div>
-                </Grid>
+
+                  <div>
+                    {props.editBtn && editTglCheckedState ? (
+                      <div className="invoice-updateBtn">
+                        <Button
+                          variant="contained"
+                          onClick={updatehandler}
+                          data-test="UpdateBtn"
+                        >
+                          Update{" "}
+                        </Button>
+                      </div>
+                    ) : (
+                      <div></div>
+                    )}
+                  </div>
+                </div>
               )}
-            </Grid>
+            </div>
             <hr />
-            <Grid container columnSpacing={3}>
+            <Grid container pt={2} columnSpacing={3}>
               <Grid item lg={6} md={6} sm={12} xs={12}>
                 <label>Project Name</label>
                 <br />
@@ -452,10 +462,10 @@ function Invoice(props) {
                 </Table>
               </Grid>
             </Grid>
+
+            <MiniHeadingTypography pt={4}>Invoice Status</MiniHeadingTypography>
             <hr />
-            <MiniHeadingTypography>Invoice Status</MiniHeadingTypography>
-            <hr />
-            <Grid container>
+            <Grid container pt={1}>
               <div className="gridcontainer">
                 <Grid item lg={12} md={12} sm={122} xs={12}>
                   <label>Invoice raised</label>
@@ -568,7 +578,7 @@ function Invoice(props) {
                 </Grid>
               </div>
             </Grid>
-          </Box>
+          </Card>
         </Box>
       </React.Fragment>
     </div>

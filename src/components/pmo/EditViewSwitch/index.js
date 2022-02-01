@@ -1,6 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import {
   Button,
   FormControlLabel,
@@ -8,7 +8,10 @@ import {
   Switch,
   styled,
 } from "@mui/material";
-
+import {
+  TitleTypo,
+  CustomSwitch,
+} from "../../templates/editMode/editMode.styles";
 import { EditViewSwitchStyled } from "./styles";
 import UpdateModal from "../UpdateModal";
 
@@ -89,7 +92,7 @@ const EditViewSwitchs = ({
     <>
       {user.permissions.includes("update_project_in_PMO") && (
         <EditViewSwitchStyled
-          style={{ display: id ? "flex" : "none", margin: "0" }}
+          style={{ display: id ? "flex" : "none", paddingRight: "1rem" }}
         >
           <UpdateModal
             setUpdateModal={setUpdateModal}
@@ -106,11 +109,11 @@ const EditViewSwitchs = ({
           >
             Save
           </Button>
-          <span data-test="edit-mode-title">Edit Mode</span>
+          <TitleTypo data-test="edit-mode-title">Edit Mode</TitleTypo>
           <FormGroup data-test="edit-mode-formgroup">
             <FormControlLabel
               control={
-                <IOSSwitch
+                <CustomSwitch
                   checked={edit}
                   onChange={handleChange}
                   name="checkedB"

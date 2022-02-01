@@ -25,7 +25,7 @@ export default function Form() {
     handelBrandName,
   } = UseForm();
 
-  const [checked, setChecked] = useState(false);
+  const [checked, setChecked] = useState(true);
   const handelAddressCheckbox = (e) => {
     setChecked(e.target.checked);
     handelComAddress(e.target.checked);
