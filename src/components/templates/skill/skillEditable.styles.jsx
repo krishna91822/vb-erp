@@ -20,7 +20,14 @@ export const ContentBox = styled("div")(({ theme }) => ({
 
 export const ContentTypo = styled("div")(({ theme }) => ({
   ...theme.typography.h5,
-  color: theme.palette.textColor.main,
-  fontSize: 16,
-  fontWeight: 600,
+  fontSize: 13,
+  marginTop: "1rem",
+  marginLeft: "1rem",
+  fontWeight: "600",
+  lineHeight: "1",
+  textTransform: "uppercase",
+  letterSpacing: "0.3px",
+  color: "rgb(55, 65, 81)",
+  fontFamily:
+    "Inter, -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji",
 }));

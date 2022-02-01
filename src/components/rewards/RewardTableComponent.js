@@ -156,7 +156,7 @@ const Body = (props) => {
                 <StyledTableCell align="center">Reward Type</StyledTableCell>
                 <StyledTableCell align="center">Issuer</StyledTableCell>
                 <StyledTableCell align="center">Status</StyledTableCell>
-                <StyledTableCell>Actions</StyledTableCell>
+                <StyledTableCell align="center">Actions</StyledTableCell>
               </TableRow>
             </TableHead>
             <TableBody>

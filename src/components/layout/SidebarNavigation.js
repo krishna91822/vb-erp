@@ -32,6 +32,7 @@ import ContentPasteIcon from "@mui/icons-material/ContentPaste";
 import GradeIcon from "@mui/icons-material/Grade";
 import vbLogo from "../../assets/images/vb_logo.svg";
 import "../clients/styles/imageStyles.css";
+import { useSelector } from "react-redux";
 
 const SidebarNavigation = () => {
   const [openTasks, setOpenTasks] = useState(false);
@@ -41,6 +42,7 @@ const SidebarNavigation = () => {
   const [selectedIndex, setSelectedIndex] = useState(0);
   const location = useLocation();
   const [selectedListIndex, setSelectedListIndex] = useState();
+  const user = useSelector((state) => state.user.user);
 
   const lgUp = useMediaQuery((theme) => theme.breakpoints.up("sm"), {
     defaultMatches: true,
@@ -276,6 +278,9 @@ const SidebarNavigation = () => {
       setSelectedListIndex(0);
       setOpenRR(true);
     }
+    if (location.pathname.includes("/status")) {
+      setSelectedIndex(7);
+    }
   };
 
   useEffect(() => {
@@ -478,12 +483,13 @@ const SidebarNavigation = () => {
       handle: handleClickRR,
       access: [isLeader, isHrAdmin, isSuperAdmin].some((x) => x),
     },
-    {
-      name: "Status",
-      icon: <NotificationsIcon />,
-      link: "/status",
-      access: [isUser].some((x) => x),
-    },
+    user.roles.length === 1 &&
+      user.roles[0] === "user" && {
+        name: "Status",
+        icon: <NotificationsIcon />,
+        link: "/status",
+        access: [isUser].some((x) => x),
+      },
   ];
   if (lgUp) {
     return (

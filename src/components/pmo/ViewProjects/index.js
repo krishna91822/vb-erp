@@ -21,15 +21,21 @@ import {
   Grid,
   InputAdornment,
   IconButton,
+  Menu,
+  ListItemIcon,
+  ListItemText,
 } from "@mui/material";
 import { Search as SearchIcon } from "../../../icons/search";
-
+import MoreVertIcon from "@mui/icons-material/MoreVert";
 import NoDataFound from "../NoDataFound";
 import EditIcon from "@mui/icons-material/Edit";
 import FilterListIcon from "@mui/icons-material/FilterList";
 import FilterListOffIcon from "@mui/icons-material/FilterListOff";
 import Tpagination from "../../UI/Pagination";
-import { StyledTableCell } from "../../../assets/GlobalStyle/style";
+import {
+  StyledTableCell,
+  StyledTableCell2,
+} from "../../../assets/GlobalStyle/style";
 import {
   getAllProjects,
   getAllFilterProjects,
@@ -51,6 +57,7 @@ const ViewProjects = () => {
     vbProjectId: "",
     vbProjectStatus: "",
   });
+  const [anchorEl, setAnchorEl] = useState(null);
 
   useEffect(() => {
     dispatch(getAllProjects(filterProjects, 1));
@@ -59,6 +66,14 @@ const ViewProjects = () => {
 
   const FilterProjects = (event) => {
     setFilterProjects(event.target.value);
+  };
+
+  const open = Boolean(anchorEl);
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
   };
 
   const entryValue = (event) => {
@@ -259,11 +274,11 @@ const ViewProjects = () => {
             <TableBody>
               {pressed && (
                 <TableRow>
-                  <StyledTableCell
+                  <StyledTableCell2
                     sx={{ minWidth: 50, maxWidth: 50 }}
                     align="center"
-                  ></StyledTableCell>
-                  <StyledTableCell
+                  ></StyledTableCell2>
+                  <StyledTableCell2
                     sx={{ minWidth: 100, maxWidth: 100 }}
                     align="center"
                   >
@@ -277,8 +292,8 @@ const ViewProjects = () => {
                       value={filters.clientName}
                       inputProps={{ style: { fontSize: "small" } }}
                     />
-                  </StyledTableCell>
-                  <StyledTableCell
+                  </StyledTableCell2>
+                  <StyledTableCell2
                     sx={{ minWidth: 100, maxWidth: 100 }}
                     align="center"
                   >
@@ -292,8 +307,8 @@ const ViewProjects = () => {
                       value={filters.projectName}
                       inputProps={{ style: { fontSize: "small" } }}
                     />
-                  </StyledTableCell>
-                  <StyledTableCell
+                  </StyledTableCell2>
+                  <StyledTableCell2
                     sx={{ minWidth: 100, maxWidth: 100 }}
                     align="center"
                   >
@@ -307,8 +322,8 @@ const ViewProjects = () => {
                       value={filters.vbProjectId}
                       inputProps={{ style: { fontSize: "small" } }}
                     />
-                  </StyledTableCell>
-                  <StyledTableCell
+                  </StyledTableCell2>
+                  <StyledTableCell2
                     sx={{ minWidth: 100, maxWidth: 100 }}
                     align="center"
                   >
@@ -324,63 +339,92 @@ const ViewProjects = () => {
                         inputProps={{ style: { fontSize: "small" } }}
                       />
                     )}
-                  </StyledTableCell>
+                  </StyledTableCell2>
                   {user.permissions.includes("update_project_in_PMO") && (
-                    <StyledTableCell
+                    <StyledTableCell2
                       sx={{ minWidth: 100, maxWidth: 100 }}
                       align="center"
-                    ></StyledTableCell>
+                    ></StyledTableCell2>
                   )}
                 </TableRow>
               )}
               {projects.results
                 ? projects.results.map((currElem, index) => (
-                    <TableRow
-                      key={index}
-                      onClick={() => entryLink(currElem)}
-                      className="table-row"
-                    >
-                      <StyledTableCell align="center">
-                        {index + parseInt(projects.currentPage) * 10 - 9}
-                      </StyledTableCell>
-                      <StyledTableCell align="center">
-                        {currElem.clientName}
-                      </StyledTableCell>
-                      <StyledTableCell
+                    <TableRow key={index} className="table-row">
+                      <StyledTableCell2
                         align="center"
+                        onClick={() => entryLink(currElem)}
+                      >
+                        {index + parseInt(projects.currentPage) * 10 - 9}
+                      </StyledTableCell2>
+                      <StyledTableCell2
+                        align="center"
+                        onClick={() => entryLink(currElem)}
+                      >
+                        {currElem.clientName}
+                      </StyledTableCell2>
+                      <StyledTableCell2
+                        align="center"
+                        onClick={() => entryLink(currElem)}
                         style={{ textTransform: "capitalize" }}
                       >
                         {currElem.projectName}
-                      </StyledTableCell>
-                      <StyledTableCell align="center">
+                      </StyledTableCell2>
+                      <StyledTableCell2
+                        align="center"
+                        onClick={() => entryLink(currElem)}
+                      >
                         {currElem.vbProjectId}
-                      </StyledTableCell>
-                      <StyledTableCell align="center">
+                      </StyledTableCell2>
+                      <StyledTableCell2
+                        align="center"
+                        onClick={() => entryLink(currElem)}
+                      >
                         {currElem.vbProjectStatus || "----"}
-                      </StyledTableCell>
+                      </StyledTableCell2>
                       {user.permissions.includes("update_project_in_PMO") && (
-                        <StyledTableCell align="center">
-                          <Link
-                            to={`/pmo/projects/${currElem.vbProjectId}/edit`}
-                            onClick={stopClick}
-                            style={{ textDecoration: "none" }}
-                          >
-                            <Button
-                              size="small"
-                              variant="text"
-                              endIcon={<EditIcon />}
-                              sx={{
-                                color: "chocolate",
-                                ":hover": {
-                                  fontWeight: "bold",
-                                  color: "rgb(130, 56, 4)",
+                        <StyledTableCell2 align="center">
+                          <>
+                            <IconButton
+                              aria-label="actions"
+                              id="actions-button"
+                              aria-controls="actions"
+                              aria-expanded={open ? "true" : undefined}
+                              aria-haspopup="true"
+                              onClick={handleClick}
+                            >
+                              <MoreVertIcon />
+                            </IconButton>
+
+                            <Menu
+                              id="actions"
+                              MenuListProps={{
+                                "aria-labelledby": "actions-button",
+                              }}
+                              anchorEl={anchorEl}
+                              open={open}
+                              onClose={handleClose}
+                              PaperProps={{
+                                style: {
+                                  width: "16ch",
                                 },
                               }}
                             >
-                              Edit
-                            </Button>
-                          </Link>
-                        </StyledTableCell>
+                              <Link
+                                to={`/pmo/projects/${currElem.vbProjectId}/edit`}
+                                onClick={stopClick}
+                                style={{
+                                  textDecoration: "none",
+                                  color: "black",
+                                }}
+                              >
+                                <MenuItem>
+                                  <ListItemText>Edit</ListItemText>
+                                </MenuItem>
+                              </Link>
+                            </Menu>
+                          </>
+                        </StyledTableCell2>
                       )}
                     </TableRow>
                   ))
