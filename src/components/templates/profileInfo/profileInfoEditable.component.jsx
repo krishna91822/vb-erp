@@ -18,7 +18,7 @@ import { StyledTypography } from "../../../assets/GlobalStyle/style";
 import { ContentBox } from "../personal/personalReadable.styles";
 import { TitleTypo, ContentTypo } from "./../../UI/commonStyles";
 import PersonIcon from "@mui/icons-material/Person";
-import CloudUploadIcon from "@material-ui/icons/CloudUpload";
+import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import { deepOrange } from "@mui/material/colors";
 
 import { profileInfoConstant } from "./profileInfo.constant";
@@ -167,6 +167,20 @@ const ProfileInfoEditable = (props) => {
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  useEffect(() => {
+    setReportingTo(
+      empReportingManager
+        ? { label: empReportingManager, value: empReportingManager }
+        : null
+    );
+    setDepartment(
+      empDepartment ? { label: empDepartment, value: empDepartment } : null
+    );
+    setDesignation(
+      empDesignation ? { label: empDesignation, value: empDesignation } : null
+    );
+  }, [empReportingManager, empDepartment, empDesignation]);
 
   const loadEmployeeOptions = (inputValue, callback) => {
     axiosInstance
@@ -341,6 +355,7 @@ const ProfileInfoEditable = (props) => {
                         <TitleTypo>{profileInfoConstant.department}</TitleTypo>
                         <ContentTypo>
                           <Select
+                            maxMenuHeight={130}
                             className="basic-single"
                             classNamePrefix="select"
                             value={department ? department : null}
@@ -383,6 +398,7 @@ const ProfileInfoEditable = (props) => {
                         <TitleTypo>{profileInfoConstant.designation}</TitleTypo>
                         <ContentTypo>
                           <Select
+                            maxMenuHeight={130}
                             className="basic-single"
                             classNamePrefix="select"
                             value={designation ? designation : null}

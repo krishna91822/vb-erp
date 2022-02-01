@@ -64,7 +64,9 @@ const ProjectTab = (props) => {
     });
 
   const [projects, setProjects] = useState(
-    empData?.project ? [...existingProjects] : [projectTemplate]
+    empData?.project && empData?.project.length !== 0
+      ? [...existingProjects]
+      : [projectTemplate]
   );
   const addProject = () => {
     setProjects([...projects, projectTemplate]);

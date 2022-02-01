@@ -21,7 +21,6 @@ import {
   Menu,
   ListItemIcon,
   ListItemText,
-  Divider,
 } from "@mui/material";
 import {
   StyledTableCell,
@@ -29,12 +28,7 @@ import {
 } from "../../assets/GlobalStyle/style";
 import { StyledTypography } from "../../assets/GlobalStyle/style";
 import { Search as SearchIcon } from "../../icons/search";
-import {
-  ClearRounded as ClearRoundedIcon,
-  Delete as DeleteIcon,
-  Edit as EditIcon,
-  MoreVert as MoreVertIcon,
-} from "@mui/icons-material";
+import { MoreVert as MoreVertIcon } from "@mui/icons-material";
 
 import DoneOutlineIcon from "@mui/icons-material/DoneOutline";
 import BlockIcon from "@mui/icons-material/Block";
@@ -77,18 +71,10 @@ const Network = () => {
       .then((response) => {
         dispatch(toggleLoader());
         setEmployees(response.data.data);
-        response.data.totalResult < paginationInfo.limit &&
-        paginationInfo.page === 1
-          ? setPaginationInfo({
-              ...paginationInfo,
-              totalPage: 1,
-            })
-          : setPaginationInfo({
-              ...paginationInfo,
-              totalPage: Math.ceil(
-                response.data.totalDocuments / paginationInfo.limit
-              ),
-            });
+        setPaginationInfo({
+          ...paginationInfo,
+          totalPage: Math.ceil(response.data.totalCount / paginationInfo.limit),
+        });
       })
       .catch((err) => {
         dispatch(toggleLoader());

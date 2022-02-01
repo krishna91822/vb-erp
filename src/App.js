@@ -36,6 +36,7 @@ function App() {
       location.pathname === "/:id/setpassword" && navigate("/:id/setpassword");
       location.pathname === "/" && navigate("/");
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
     <Fragment>
