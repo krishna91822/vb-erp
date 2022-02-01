@@ -2,7 +2,7 @@ import { useSelector } from "react-redux";
 
 export default function UseRoles() {
   const user = useSelector((state) => state.user.user);
-
+  const onlyUser = user.roles.length === 1 && user.roles[0] === "user" && true;
   const isUser = user.roles.includes("user");
   const isApprover = user.roles.includes("approver");
   const isLeader = user.roles.includes("leader");
@@ -12,6 +12,7 @@ export default function UseRoles() {
   const isSuperAdmin = user.roles.includes("super_admin");
 
   return {
+    onlyUser,
     isUser,
     isApprover,
     isLeader,

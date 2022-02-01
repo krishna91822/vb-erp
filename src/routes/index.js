@@ -42,6 +42,7 @@ const Routes = () => {
     isFinanceAdmin,
     isPMSAdmin,
     isSuperAdmin,
+    onlyUser,
   } = UseRoles();
 
   const routes = [
@@ -108,7 +109,7 @@ const Routes = () => {
       path: "status",
       component: Status,
       title: "status",
-      access: [isUser].some((x) => x),
+      access: [onlyUser].some((x) => x),
     },
     {
       path: "reviews",
