@@ -1,9 +1,8 @@
-import React, { useState } from "react";
+import React from "react";
 import "./searchStyle.css";
-import MenuItem from "@mui/material/MenuItem";
 import TextField from "@mui/material/TextField";
 import { useDispatch } from "react-redux";
-import { filterData, searchData } from "../../store/rewards-actions";
+import { searchData } from "../../store/rewards-actions";
 import { Box, InputAdornment, SvgIcon } from "@mui/material";
 import { Search as SearchIcon } from "../../icons/search";
 

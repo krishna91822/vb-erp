@@ -42,6 +42,7 @@ const SidebarNavigation = () => {
   const [selectedIndex, setSelectedIndex] = useState(0);
   const location = useLocation();
   const [selectedListIndex, setSelectedListIndex] = useState();
+  // eslint-disable-next-line no-unused-vars
   const user = useSelector((state) => state.user.user);
 
   const lgUp = useMediaQuery((theme) => theme.breakpoints.up("sm"), {

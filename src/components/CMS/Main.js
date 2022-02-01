@@ -1,19 +1,16 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable prettier/prettier */
 import * as React from "react";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import Paper from "@mui/material/Paper";
 import { styled, alpha } from "@mui/material/styles";
 import Button from "@mui/material/Button";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-import EditIcon from "@mui/icons-material/Edit";
-import EditOffIcon from "@mui/icons-material/EditOff";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
@@ -33,15 +30,10 @@ import "./Main.css";
 
 import {
   fetchSpecificPO_SOW,
-  sortProducts,
   paginationFetchPosow,
-  searchPoSow,
 } from "../../store/CMS/POSOW-actions";
-import { fetchPO_SOW_data } from "../../store/CMS/POSOW-actions";
 import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
-import InputLabel from "@mui/material/InputLabel";
-import NativeSelect from "@mui/material/NativeSelect";
 import { StyledTableCell } from "../../assets/GlobalStyle/style";
 import { StyledTypography } from "../../assets/GlobalStyle/style";
 
@@ -111,6 +103,7 @@ export const Main = () => {
   const handleClose = () => {
     setAnchorEl(null);
   };
+  // eslint-disable-next-line no-unused-vars
   const handleRowOnClick = (row_id) => {
     dispatch(fetchSpecificPO_SOW(row_id));
   };
@@ -127,6 +120,7 @@ export const Main = () => {
     setCurrentPage(value);
     dispatch(paginationFetchPosow(filename, value, postPerPage, searchKeyword));
   };
+  // eslint-disable-next-line no-unused-vars
   const handlerowsPerpage = (event) => {
     setPostPerPage(event.target.value);
     dispatch(

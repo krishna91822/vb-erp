@@ -33,6 +33,8 @@ import AdapterDateFns from "@mui/lab/AdapterDateFns";
 
 import axiosInstance from "./../../../helpers/axiosInstance";
 
+import validator from "validator";
+
 const ProfileInfoEditable = (props) => {
   const {
     tab,
@@ -40,8 +42,9 @@ const ProfileInfoEditable = (props) => {
     employee,
     setEmployee,
     profileProgress,
-    validate,
     errors,
+    setErrors,
+    validate,
     editSwitch,
   } = props;
 
@@ -200,6 +203,41 @@ const ProfileInfoEditable = (props) => {
       });
   };
 
+  //form validation
+  const validateName = (e) => {
+    const errorsObj = {};
+    const name = e.target.value;
+    if (name.length === 0) {
+      errorsObj.empName = "Full name is required";
+    }
+    setErrors(errorsObj);
+  };
+  const validateEmail = (e) => {
+    const errorsObj = {};
+    const email = e.target.value;
+    if (email.length === 0) {
+      errorsObj.empEmail = "Company Email is required";
+    }
+    if (email.length !== 0 && !validator.isEmail(email)) {
+      errorsObj.empEmail = "Invalid email";
+    }
+    setErrors(errorsObj);
+  };
+  const validateDepartmentDropdown = (value) => {
+    const errorsObj = {};
+    if (value === null) {
+      errorsObj.empDepartment = "Department is required";
+    }
+    setErrors(errorsObj);
+  };
+  const validateDesignationDropdown = (value) => {
+    const errorsObj = {};
+    if (value === null) {
+      errorsObj.empDesignation = "Designation is required";
+    }
+    setErrors(errorsObj);
+  };
+
   return (
     <div>
       <Box
@@ -289,7 +327,7 @@ const ProfileInfoEditable = (props) => {
                         value={empName}
                         onChange={(e) => {
                           handleChange(e);
-                          validate(employee);
+                          validateName(e);
                         }}
                         error={Boolean(errors.empName)}
                         sx={{
@@ -342,7 +380,7 @@ const ProfileInfoEditable = (props) => {
                             name="empEmail"
                             onChange={(e) => {
                               handleChange(e);
-                              validate(employee);
+                              validateEmail(e);
                             }}
                             error={Boolean(errors?.empEmail)}
                           />
@@ -382,11 +420,12 @@ const ProfileInfoEditable = (props) => {
                             options={departmentOption}
                             onChange={(value) => {
                               setDepartment(value);
-                              setEmployee({
-                                ...employee,
-                                empDepartment: value.value,
-                              });
-                              validate(employee);
+                              value &&
+                                setEmployee({
+                                  ...employee,
+                                  empDepartment: value.value,
+                                });
+                              validateDepartmentDropdown(value);
                             }}
                           />
                         </ContentTypo>
@@ -409,7 +448,7 @@ const ProfileInfoEditable = (props) => {
                                 height: "35px",
                                 display: "flex",
                                 alignContent: "center",
-                                borderColor: errors?.empDepartment
+                                borderColor: errors?.empDesignation
                                   ? "#D32F2F"
                                   : "hsl(0, 0%, 80%)",
                               }),
@@ -429,7 +468,7 @@ const ProfileInfoEditable = (props) => {
                                 ...employee,
                                 empDesignation: value.value,
                               });
-                              validate(employee);
+                              validateDesignationDropdown(value);
                             }}
                           />
                         </ContentTypo>

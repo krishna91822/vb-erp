@@ -1,9 +1,9 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable prettier/prettier */
 import * as React from "react";
 import Table from "@mui/material/Table";
 import { Grid } from "@mui/material";
 import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
@@ -12,32 +12,18 @@ import { Search as SearchIcon } from "../../icons/search";
 import TextField from "@mui/material/TextField";
 import { styled, alpha } from "@mui/material/styles";
 import Button from "@mui/material/Button";
-import EditIcon from "@mui/icons-material/Edit";
-import EditOffIcon from "@mui/icons-material/EditOff";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-import FormDialog from "./invoiceEditDialog";
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import LongMenu from "./invoiceOptions";
 import { ContentTypo } from "../../pages/review/review.styles";
 
-import {
-  fetch_INVOICE_data,
-  paginationFetchInvoice,
-  searchINVOICE,
-} from "../../store/CMS/INVOICE-actions";
-import Typography from "@mui/material/Typography";
+import { paginationFetchInvoice } from "../../store/CMS/INVOICE-actions";
 import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
-import { Link } from "react-router-dom";
-import {
-  fetchSpecificINVOICE,
-  sortProducts,
-} from "../../store/CMS/INVOICE-actions";
-import InputLabel from "@mui/material/InputLabel";
-import NativeSelect from "@mui/material/NativeSelect";
+import { fetchSpecificINVOICE } from "../../store/CMS/INVOICE-actions";
 import { StyledTypography } from "../../assets/GlobalStyle/style";
 import { StyledTableCell } from "../../assets/GlobalStyle/style";
 import { invoiceActions } from "../../store/CMS/INVOICE-slice";
@@ -90,6 +76,7 @@ function InvoiceInfo() {
 
   const post = useSelector((state) => state.INVOICE_state.invoiceData);
   const totalCount = useSelector((state) => state.INVOICE_state.totalCount);
+  // eslint-disable-next-line no-unused-vars
   const user = useSelector((state) => state.user.user);
   const isReload = useSelector((state) => state.INVOICE_state.reload);
 
@@ -132,6 +119,7 @@ function InvoiceInfo() {
       paginationFetchInvoice(filename, value, postPerPage, searchKeyword)
     );
   };
+  // eslint-disable-next-line no-unused-vars
   const handlerowsPerpage = (event) => {
     setPostPerPage(event.target.value);
     dispatch(
@@ -155,6 +143,7 @@ function InvoiceInfo() {
       return <ContentTypo sx={{ color: "#212121" }}>{status}</ContentTypo>;
     }
   };
+  // eslint-disable-next-line no-unused-vars
   const handleRowOnClick = (row_id) => {
     dispatch(fetchSpecificINVOICE(row_id));
   };

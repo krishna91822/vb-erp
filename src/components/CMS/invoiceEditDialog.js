@@ -4,15 +4,9 @@ import TextField from "@mui/material/TextField";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
-import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
-import EditIcon from "@mui/icons-material/Edit";
 import Box from "@mui/material/Box";
-import EditOffIcon from "@mui/icons-material/EditOff";
-import IconButton from "@mui/material/IconButton";
-import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
-import MoreVertIcon from "@mui/icons-material/MoreVert";
 import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
@@ -24,14 +18,11 @@ import { invoiceActions } from "../../store/CMS/INVOICE-slice";
 import { useDispatch, useSelector } from "react-redux";
 import "./Main.css";
 import validateInvoice from "./invoice_FORM/validateInvoice";
-import {
-  Update_INVOICE,
-  fetch_INVOICE_data,
-} from "../../store/CMS/INVOICE-actions";
-import { paginationFetchInvoice } from "../../store/CMS/INVOICE-actions";
+import { Update_INVOICE } from "../../store/CMS/INVOICE-actions";
 import { useNavigate } from "react-router-dom";
 
 export default function FormDialog(props) {
+  // eslint-disable-next-line no-unused-vars
   const [errors, setErrors] = useState({});
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -44,6 +35,7 @@ export default function FormDialog(props) {
       navigate("/invoices");
       dispatch(invoiceActions.setRedirect(false));
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isRedirect]);
 
   useEffect(() => {

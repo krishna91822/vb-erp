@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import {
   Container,
   Grid,
@@ -9,31 +8,17 @@ import {
   Card,
   CardContent,
   Typography,
-  Divider,
-  CardHeader,
 } from "@mui/material";
 import { StyledTypography } from "../../../assets/GlobalStyle/style";
-import { CustomGridBox } from "./profileInfoReadable.styles";
-import PersonIcon from "@mui/icons-material/Person";
-import LocalCafeIcon from "@mui/icons-material/LocalCafe";
-import ImportContactsIcon from "@mui/icons-material/ImportContacts";
-import BadgeIcon from "@mui/icons-material/Badge";
-import PlagiarismIcon from "@mui/icons-material/Plagiarism";
 
 import { profileInfoConstant } from "./profileInfo.constant";
-import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 import {
-  StyledTabs,
-  StyledTab,
   TitleTypo,
-  SubTitleTypo,
-  ContentBoldTypo,
   ContentTypo,
   ProfileNameTypo,
   ProfileFirstLetter,
 } from "./../../UI/commonStyles";
 import { ContentBox } from "../personal/personalReadable.styles";
-import { deepOrange } from "@mui/material/colors";
 
 const ProfileInfoReadable = ({
   value,
@@ -53,7 +38,7 @@ const ProfileInfoReadable = ({
   } = currentEmployee;
 
   const profilePercentage = profileProgress();
-  const dispatch = useDispatch();
+  // eslint-disable-next-line no-unused-vars
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };

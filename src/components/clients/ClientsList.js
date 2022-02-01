@@ -43,10 +43,10 @@ import {
   MoreVert as MoreVertIcon,
   Delete as DeleteIcon,
   Restore as RestoreIcon,
+  // eslint-disable-next-line no-unused-vars
   ManageSearchRounded as ManageSearchRoundedIcon,
   ClearRounded as ClearRoundedIcon,
 } from "@mui/icons-material";
-import PageHeader from "./PageHeader";
 import "../../assets/GlobalStyle/TableStyles.css";
 
 function ClientsList() {
@@ -280,6 +280,7 @@ function ClientsList() {
                         </InputAdornment>
                       ),
                     }}
+                    // eslint-disable-next-line react/jsx-no-duplicate-props
                     placeholder="Search customer"
                     variant="outlined"
                   />

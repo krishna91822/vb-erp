@@ -54,7 +54,6 @@ export default function UseForm() {
   const ComCcode = useSelector((state) => state.cims.ComCcode);
   const countries = useSelector((state) => state.cims.countries);
   const brandFocus = useSelector((state) => state.cims.brandFocus);
-  const editMode = useSelector((state) => state.cims.editMode);
   const user = useSelector((state) => state.user.user);
 
   const navigate = useNavigate();
@@ -63,6 +62,7 @@ export default function UseForm() {
   useEffect(() => {
     dispatch(fetchCountries());
     handelSetAddOthers(formData);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const locReg = useSelector((state) => state.cims.locReg);

@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
-import { Button, Typography, FormControlLabel, Grid } from "@mui/material";
+import { Button, FormControlLabel, Grid } from "@mui/material";
 import { CustomSwitch } from "../UI/commonStyles";
 import UseForm from "./UseForm";
 import Form from "./Form";
@@ -37,6 +37,7 @@ function UpdateClientForm() {
 
   useEffect(() => {
     if (navigateBack) handleClientData(id, false);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

@@ -1,3 +1,5 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable prettier/prettier */
 import { useParams } from "react-router-dom";
 import "./Invoice.css";
@@ -6,42 +8,26 @@ import {
   Grid,
   TextField,
   Button,
-  OutlinedInput,
-  Typography,
   Card,
   Box,
   FormControl,
-  InputLabel,
   MenuItem,
   Select,
   Switch,
 } from "@mui/material";
 import CssBaseline from "@mui/material/CssBaseline";
-import Container from "@mui/material/Container";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import Paper from "@mui/material/Paper";
-import Accordion from "@mui/material/Accordion";
-import AccordionSummary from "@mui/material/AccordionSummary";
-import AccordionDetails from "@mui/material/AccordionDetails";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import BasicDatePicker from "./date";
 import React, { useEffect } from "react";
-import {
-  createNew_INVOICE,
-  fetchSpecificINVOICE,
-  paginationFetchInvoice,
-} from "../../../store/CMS/INVOICE-actions";
+import { paginationFetchInvoice } from "../../../store/CMS/INVOICE-actions";
 import validateInvoice from "./validateInvoice";
 import { Update_INVOICE } from "../../../store/CMS/INVOICE-actions";
-import { fetchPO_SOW_data } from "../../../store/CMS/POSOW-actions";
-import { fetch_INVOICE_data } from "../../../store/CMS/INVOICE-actions";
 import { invoiceActions } from "../../../store/CMS/INVOICE-slice";
 import { paginationFetchPosow } from "../../../store/CMS/POSOW-actions";
 import {
@@ -291,6 +277,7 @@ function Invoice(props) {
   let count = 0;
   useEffect(() => {
     if (invoice_amount !== undefined) {
+      // eslint-disable-next-line array-callback-return
       const totalinvoiceamount = filterinvoiceArr.map((val) => {
         count = count + val.invoice_amount_received;
       });

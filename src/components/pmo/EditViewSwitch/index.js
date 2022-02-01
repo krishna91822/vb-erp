@@ -15,6 +15,7 @@ import {
 import { EditViewSwitchStyled } from "./styles";
 import UpdateModal from "../UpdateModal";
 
+// eslint-disable-next-line no-unused-vars
 const IOSSwitch = styled((props) => (
   <Switch focusVisibleClassName=".Mui-focusVisible" disableRipple {...props} />
 ))(({ theme }) => ({

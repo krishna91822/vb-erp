@@ -1,13 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import {
-  Switch,
-  Button,
-  FormControlLabel,
-  Grid,
-  Typography,
-  Card,
-} from "@mui/material";
+import { Button, Grid, Card } from "@mui/material";
 import UseForm from "./UseForm";
 import Form from "./Form";
 import MidPopUp from "./MidPopUp";
@@ -19,6 +12,7 @@ import {
 } from "../../assets/GlobalStyle/style";
 
 function CreateClientForm() {
+  // eslint-disable-next-line no-unused-vars
   const editMode = useSelector((state) => state.cims.editMode);
   const { submitForm, validateOnSubmit } = UseForm();
 
