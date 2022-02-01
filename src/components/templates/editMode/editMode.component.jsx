@@ -20,7 +20,6 @@ const EditMode = ({
   switchOnly,
   btnsOnly,
 }) => {
-  // const { inEditMode } = useSelector((state) => state.employee);
   const { user } = useSelector((state) => state.user);
   const { toggleLoader, showNotification } = uiActions;
   const dispatch = useDispatch();
@@ -32,9 +31,8 @@ const EditMode = ({
     setOpen(false);
   };
   const handleToggleOpen = () => setOpen(true);
-
   const handleSubmitBtn = () => {
-    if (["hr_admin", "super_admin"].some((el) => user.roles.includes(el))) {
+    if (user.permissions.includes("approve_employee_edit_request")) {
       dispatch(toggleLoader());
 
       let employeeObject = { ...updateRequest };
@@ -75,6 +73,7 @@ const EditMode = ({
           reqName: updateRequest.empName,
           reqType: "profile-update",
           employeeDetails: { ...updateRequest },
+          reqEmail: user.email,
         })
         .then(function (response) {
           dispatch(toggleLoader());
@@ -132,7 +131,7 @@ const EditMode = ({
             variant="contained"
             onClick={handleSubmitBtn}
           >
-            {["hr_admin", "super_admin"].some((el) => user.roles.includes(el))
+            {user.permissions.includes("approve_employee_edit_request")
               ? editModeConstant.update
               : editModeConstant.SubmitRequest}
           </Button>
@@ -153,10 +152,7 @@ const EditMode = ({
 
       {!btnsOnly && (
         <>
-          <TitleTypo
-            data-test="edit-text-test"
-            sx={{ textTransform: "capitalize", pr: 1 }}
-          >
+          <TitleTypo data-test="edit-text-test" sx={{ pr: 1 }}>
             {editModeConstant.editModeBtn}
           </TitleTypo>
           <CustomSwitch

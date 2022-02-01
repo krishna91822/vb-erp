@@ -191,6 +191,7 @@ function ClientsList() {
           aria-expanded={open ? "true" : undefined}
           aria-haspopup="true"
           onClick={handleClick}
+          disableRipple
         >
           <MoreVertIcon />
         </IconButton>
@@ -206,6 +207,8 @@ function ClientsList() {
           PaperProps={{
             style: {
               width: "16ch",
+              boxShadow:
+                "rgb(255, 255, 255) 0px 0px 0px 0px, rgba(0, 0, 0, 0.05) 0px 0px 0px 0px, rgba(0, 0, 0, 0.1) 0px 5px 5px -10px, rgba(0, 0, 0, 0.10) 0px 4px 6px -2px",
             },
           }}
         >

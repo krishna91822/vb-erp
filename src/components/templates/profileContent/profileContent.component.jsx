@@ -28,11 +28,7 @@ import ImportContactsIcon from "@mui/icons-material/ImportContacts";
 import BadgeIcon from "@mui/icons-material/Badge";
 import PlagiarismIcon from "@mui/icons-material/Plagiarism";
 
-import {
-  modalStyle,
-  CustomTextField,
-  GreenButton,
-} from "./profileContent.styles";
+import { modalStyle, CustomTextField } from "./profileContent.styles";
 
 import { addFieldOptions } from "./profileContent.constant";
 import { StyledGrid } from "../../UI/commonStyles";

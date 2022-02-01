@@ -162,7 +162,16 @@ const CreateReward = () => {
                   Save
                 </Button>
                 <Link to="/rewards" className="remove-underline">
-                  <Button variant="contained" color="error">
+                  <Button
+                    variant="outlined"
+                    sx={{
+                      color: "gray",
+                      border: "1px solid gray",
+                      ":hover": {
+                        border: "1px solid gray",
+                      },
+                    }}
+                  >
                     Cancel
                   </Button>
                 </Link>

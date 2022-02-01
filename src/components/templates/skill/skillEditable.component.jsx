@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import { Grid, Box, TextField } from "@mui/material";
 import ClearIcon from "@mui/icons-material/Clear";
@@ -14,6 +14,8 @@ import { DesktopDatePicker, LocalizationProvider } from "@mui/lab";
 import AdapterDateFns from "@mui/lab/AdapterDateFns";
 
 import CreatableSelect from "react-select/creatable";
+import axiosInstance from "../../../helpers/axiosInstance";
+import Select from "react-select";
 
 const SkillEditable = ({
   empData,
@@ -82,6 +84,34 @@ const SkillEditable = ({
     }),
   ]);
 
+  //dropdown certificate
+  const [certificate, setCertificate] = useState(
+    empCertifications && empCertifications.length !== 0
+      ? [
+          ...empCertifications.map((el) => {
+            return { label: el, value: el };
+          }),
+        ]
+      : null
+  );
+  const [certificateOption, setCertificateOption] = useState([]);
+  const [certificateLoading, setCertificateLoading] = useState(true);
+  useEffect(() => {
+    axiosInstance
+      .get(`/dropdowns?dropdownName=certificate`)
+      .then(function (response) {
+        setCertificateLoading(false);
+        const filteredDepartmentOption =
+          response.data.data[0].dropdownArray.map((el) => {
+            return { label: el.label, value: el.value };
+          });
+        setCertificateOption(filteredDepartmentOption);
+      })
+      .catch(function (err) {
+        console.log(err);
+      });
+  }, []);
+
   return (
     <Grid container mb={5} sx={{ minHeight: 150 }}>
       <Grid item sx={{ width: "100%" }}>
@@ -134,22 +164,47 @@ const SkillEditable = ({
           </ContentBox>
           <ContentBox>
             <ContentTypo>{skillConstant.certification}</ContentTypo>
-            <CustomTextField
-              autoComplete="off"
-              required
-              id="outlined-basic"
-              variant="outlined"
-              value={empCertifications ? empCertifications : ""}
-              name="empCertifications"
-              placeholder="Enter employee certificates"
-              onChange={handleChange}
-              type="text"
+            <Box
               sx={{
-                "& .MuiOutlinedInput-root": {
-                  width: "100%",
-                },
+                width: "100%",
+                fontSize: "16px",
+                fontWeight: "400",
               }}
-            />
+            >
+              <Select
+                maxMenuHeight={70}
+                className="basic-single"
+                classNamePrefix="select"
+                isMulti
+                isClearable={false}
+                value={certificate ? certificate : null}
+                styles={{
+                  control: (provided, state) => ({
+                    ...provided,
+                    minHeight: "35px",
+                    display: "flex",
+                    alignContent: "center",
+                    borderColor: "hsl(0, 0%, 80%)",
+                  }),
+                  indicatorsContainer: (provided, state) => ({
+                    ...provided,
+                    width: "30px",
+                    padding: "0",
+                  }),
+                }}
+                isLoading={certificateLoading}
+                isSearchable
+                name="empCertifications"
+                options={certificateOption}
+                onChange={(value) => {
+                  setCertificate(value);
+                  setEmpData({
+                    ...empData,
+                    empCertifications: value.map((item) => item.value),
+                  });
+                }}
+              />
+            </Box>
           </ContentBox>
           {skillsDetails.map((field, index) => (
             <ContentBox key={index} sx={{ position: "relative" }}>

@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import {
   Grid,
   Avatar,
@@ -10,15 +10,21 @@ import {
   Card,
   CardContent,
   Typography,
+  Badge,
+  IconButton,
+  Input,
 } from "@mui/material";
 import { StyledTypography } from "../../../assets/GlobalStyle/style";
 import { ContentBox } from "../personal/personalReadable.styles";
 import { TitleTypo, ContentTypo } from "./../../UI/commonStyles";
 import PersonIcon from "@mui/icons-material/Person";
+import CloudUploadIcon from "@mui/icons-material/CloudUpload";
+import { deepOrange } from "@mui/material/colors";
 
 import { profileInfoConstant } from "./profileInfo.constant";
 import CreatableSelect from "react-select/creatable";
 import AsyncSelect from "react-select/async";
+import Select from "react-select";
 
 import { CustomTextField } from "./personalInfoEditable.styles";
 
@@ -78,6 +84,14 @@ const ProfileInfoEditable = (props) => {
     }),
   };
 
+  const ref = useRef();
+  const [profilePicture, setProfilePicture] = useState(null);
+  let avatarChar = empName.charAt(0).toUpperCase();
+  const handlePicture = (event) => {
+    const files = Array.from(event.target.files);
+    const file = files[0];
+    setProfilePicture(URL.createObjectURL(file));
+  };
   const [empDetails, setEmpDetails] = useState({});
   const [empNameLoading, setEmpNameLoading] = useState(true);
   const [reportingTo, setReportingTo] = useState(
@@ -86,27 +100,49 @@ const ProfileInfoEditable = (props) => {
       : null
   );
 
-  //dropdown
-  const department = profileInfoConstant.departmentDropdown;
-  const designation = profileInfoConstant.designationDropdown;
-  const departmentOptions = department.map((item) => {
-    return {
-      label: item,
-      value: item,
-    };
-  });
-  const designationOptions = designation.map((item) => {
-    return {
-      label: item,
-      value: item,
-    };
-  });
-  const [departmentDropdown, setDepartmentDropdown] = useState(
+  //dropdown department
+  const [department, setDepartment] = useState(
     empDepartment ? { label: empDepartment, value: empDepartment } : null
   );
-  const [designationDropdown, setDesignationDropdown] = useState(
+  const [departmentOption, setDepartmentOption] = useState([]);
+  const [departmentLoading, setDepartmentLoading] = useState(true);
+  useEffect(() => {
+    axiosInstance
+      .get(`/dropdowns?dropdownName=department`)
+      .then(function (response) {
+        setDepartmentLoading(false);
+        const filteredDepartmentOption =
+          response.data.data[0].dropdownArray.map((el) => {
+            return { label: el.label, value: el.value };
+          });
+        setDepartmentOption(filteredDepartmentOption);
+      })
+      .catch(function (err) {
+        console.log(err);
+      });
+  }, []);
+
+  //dropdown designation
+  const [designation, setDesignation] = useState(
     empDesignation ? { label: empDesignation, value: empDesignation } : null
   );
+  const [designationOption, setDesignationOption] = useState([]);
+  const [designationLoading, setDesignationLoading] = useState(true);
+  useEffect(() => {
+    axiosInstance
+      .get(`/dropdowns?dropdownName=designation`)
+      .then(function (response) {
+        setDesignationLoading(false);
+        const filteredDesignationOption =
+          response.data.data[0].dropdownArray.map((el) => {
+            return { label: el.label, value: el.value };
+          });
+        setDesignationOption(filteredDesignationOption);
+      })
+      .catch(function (err) {
+        console.log(err);
+      });
+  }, []);
 
   useEffect(() => {
     axiosInstance
@@ -131,6 +167,20 @@ const ProfileInfoEditable = (props) => {
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  useEffect(() => {
+    setReportingTo(
+      empReportingManager
+        ? { label: empReportingManager, value: empReportingManager }
+        : null
+    );
+    setDepartment(
+      empDepartment ? { label: empDepartment, value: empDepartment } : null
+    );
+    setDesignation(
+      empDesignation ? { label: empDesignation, value: empDesignation } : null
+    );
+  }, [empReportingManager, empDepartment, empDesignation]);
 
   const loadEmployeeOptions = (inputValue, callback) => {
     axiosInstance
@@ -176,29 +226,59 @@ const ProfileInfoEditable = (props) => {
                 <CardContent>
                   <Box
                     mt={8}
-                    mb={7}
+                    mb={5}
                     sx={{
                       alignItems: "center",
                       display: "flex",
                       flexDirection: "column",
                     }}
                   >
-                    <Avatar
-                      mt={2}
-                      sx={{
-                        height: 64,
-                        mb: 2,
-                        width: 64,
-                      }}
-                    >
-                      <PersonIcon
-                        sx={{
-                          height: "60%",
-                          width: "60%",
-                          color: "rgb(17,24,39)",
-                        }}
+                    <>
+                      <Input
+                        ref={ref}
+                        type="file"
+                        accept="image/*"
+                        onChange={handlePicture}
+                        id="uploadButton"
+                        style={{ display: "none" }}
                       />
-                    </Avatar>
+                      <label htmlFor="uploadButton">
+                        <IconButton component="span">
+                          <Badge
+                            anchorOrigin={{
+                              vertical: "bottom",
+                              horizontal: "right",
+                            }}
+                            badgeContent={<CloudUploadIcon />}
+                            overlap="circular"
+                          >
+                            <Avatar
+                              mt={2}
+                              sx={{
+                                height: 64,
+                                mb: 2.3,
+                                width: 64,
+                                background: "rgb(237,108,2)",
+                              }}
+                              src={profilePicture}
+                            >
+                              {avatarChar.length > 0 ? (
+                                avatarChar
+                              ) : (
+                                <PersonIcon
+                                  sx={{
+                                    height: "100%",
+                                    width: "60%",
+                                    color: "rgb(17,24,39)",
+                                  }}
+                                />
+                              )}
+                            </Avatar>
+                          </Badge>
+                        </IconButton>
+                      </label>
+                    </>
+
                     <TitleTypo sx={{ mt: 1, textTransform: "capitalize" }}>
                       <TextField
                         id="standard-basic"
@@ -274,10 +354,11 @@ const ProfileInfoEditable = (props) => {
                       <ContentBox>
                         <TitleTypo>{profileInfoConstant.department}</TitleTypo>
                         <ContentTypo>
-                          <CreatableSelect
-                            value={
-                              departmentDropdown ? departmentDropdown : null
-                            }
+                          <Select
+                            maxMenuHeight={130}
+                            className="basic-single"
+                            classNamePrefix="select"
+                            value={department ? department : null}
                             styles={{
                               control: (provided, state) => ({
                                 ...provided,
@@ -295,11 +376,12 @@ const ProfileInfoEditable = (props) => {
                                 padding: "0",
                               }),
                             }}
+                            isLoading={departmentLoading}
                             isSearchable
                             name="empDepartment"
-                            options={departmentOptions}
+                            options={departmentOption}
                             onChange={(value) => {
-                              setDepartmentDropdown(value);
+                              setDepartment(value);
                               setEmployee({
                                 ...employee,
                                 empDepartment: value.value,
@@ -315,10 +397,11 @@ const ProfileInfoEditable = (props) => {
                       <ContentBox>
                         <TitleTypo>{profileInfoConstant.designation}</TitleTypo>
                         <ContentTypo>
-                          <CreatableSelect
-                            value={
-                              designationDropdown ? designationDropdown : null
-                            }
+                          <Select
+                            maxMenuHeight={130}
+                            className="basic-single"
+                            classNamePrefix="select"
+                            value={designation ? designation : null}
                             styles={{
                               control: (provided, state) => ({
                                 ...provided,
@@ -326,7 +409,7 @@ const ProfileInfoEditable = (props) => {
                                 height: "35px",
                                 display: "flex",
                                 alignContent: "center",
-                                borderColor: errors?.empDesignation
+                                borderColor: errors?.empDepartment
                                   ? "#D32F2F"
                                   : "hsl(0, 0%, 80%)",
                               }),
@@ -336,11 +419,12 @@ const ProfileInfoEditable = (props) => {
                                 padding: "0",
                               }),
                             }}
+                            isLoading={designationLoading}
                             isSearchable
                             name="empDesignation"
-                            options={designationOptions}
+                            options={designationOption}
                             onChange={(value) => {
-                              setDesignationDropdown(value);
+                              setDesignation(value);
                               setEmployee({
                                 ...employee,
                                 empDesignation: value.value,

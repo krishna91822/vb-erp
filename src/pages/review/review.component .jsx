@@ -95,18 +95,10 @@ const Review = () => {
       .then((response) => {
         dispatch(toggleLoader());
         setReviewData(response.data.data.reviews);
-        response.data.totalResult < paginationInfo.limit &&
-        paginationInfo.page === 1
-          ? setPaginationInfo({
-              ...paginationInfo,
-              totalPage: 1,
-            })
-          : setPaginationInfo({
-              ...paginationInfo,
-              totalPage: Math.ceil(
-                response.data.totalDocuments / paginationInfo.limit
-              ),
-            });
+        setPaginationInfo({
+          ...paginationInfo,
+          totalPage: Math.ceil(response.data.totalCount / paginationInfo.limit),
+        });
       })
       .catch((err) => {
         dispatch(toggleLoader());
@@ -167,6 +159,7 @@ const Review = () => {
         <ContentTypo
           sx={{
             color: "#2AB3A6",
+            fontWeight: "bold",
           }}
         >
           {status}
@@ -177,6 +170,7 @@ const Review = () => {
         <ContentTypo
           sx={{
             color: "#F7C839",
+            fontWeight: "bold",
           }}
         >
           {status}
@@ -187,6 +181,7 @@ const Review = () => {
         <ContentTypo
           sx={{
             color: "#D3455B",
+            fontWeight: "bold",
           }}
         >
           {status}

@@ -5,7 +5,7 @@ import { CustomSwitch } from "../UI/commonStyles";
 import UseForm from "./UseForm";
 import Form from "./Form";
 import { useParams } from "react-router-dom";
-
+import { TitleTypo } from "../templates/editMode/editMode.styles";
 import "./styles/ClientFormStyles.css";
 import { cimsActions } from "../../store/cims-slice";
 import { useDispatch, useSelector } from "react-redux";
@@ -93,14 +93,24 @@ function UpdateClientForm() {
                     color="success"
                   />
                 }
-                label="Edit mode"
+                label={<TitleTypo>Edit mode &nbsp;</TitleTypo>}
                 labelPlacement="start"
                 sx={{ paddingRight: "12px" }}
               />
             </div>
           ) : (
             <Link to="/cims" style={{ textDecoration: "none" }}>
-              <Button variant="contained" color="error" id="cancel-btn">
+              <Button
+                variant="outlined"
+                id="cancel-btn"
+                sx={{
+                  color: "gray",
+                  border: "1px solid gray",
+                  ":hover": {
+                    border: "1px solid gray",
+                  },
+                }}
+              >
                 Cancel
               </Button>
             </Link>
