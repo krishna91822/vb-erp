@@ -7,7 +7,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { searchEmployeeData } from "../../store/employees-actions";
 import { updateRewardEmployeeIdArray } from "../../store/rewards-actions";
 import { toast } from "react-toastify";
-import { color } from "@mui/system";
 
 const EmployeesList = (props) => {
   var collectedDataArray = [];
@@ -85,6 +84,7 @@ const EmployeesList = (props) => {
   };
 
   const onRowClicked = (rowData, rowIndex) => {
+    // eslint-disable-next-line eqeqeq
     if (props.stateOfSelection == "multiple") {
       let rowStatus = false;
       let rowEmployeeId;
@@ -110,6 +110,7 @@ const EmployeesList = (props) => {
         collectedDataArray.push(collectedDataObject);
       }
     } else {
+      // eslint-disable-next-line array-callback-return
       rows.map((data) => {
         if (data.employee_id === tickedEmployeeId) {
           data.selected = "";

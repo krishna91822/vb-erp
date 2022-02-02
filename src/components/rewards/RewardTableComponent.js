@@ -89,6 +89,7 @@ const Body = (props) => {
     },
   ];
 
+  // eslint-disable-next-line no-unused-vars
   const [currency, setCurrency] = useState("");
 
   const handleChange = (event) => {

@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable prettier/prettier */
 import * as React from "react";
 import Table from "@mui/material/Table";
@@ -19,11 +20,7 @@ import { useSelector, useDispatch } from "react-redux";
 import LongMenu from "./invoiceOptions";
 import { ContentTypo } from "../../pages/review/review.styles";
 
-import {
-  fetch_INVOICE_data,
-  paginationFetchInvoice,
-  searchINVOICE,
-} from "../../store/CMS/INVOICE-actions";
+import { paginationFetchInvoice } from "../../store/CMS/INVOICE-actions";
 import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
 import { StyledTypography } from "../../assets/GlobalStyle/style";
@@ -78,10 +75,12 @@ function InvoiceInfo() {
 
   const post = useSelector((state) => state.INVOICE_state.invoiceData);
   const totalCount = useSelector((state) => state.INVOICE_state.totalCount);
+  // eslint-disable-next-line no-unused-vars
   const user = useSelector((state) => state.user.user);
   const isReload = useSelector((state) => state.INVOICE_state.reload);
 
   const [currentPage, setCurrentPage] = React.useState(1);
+  // eslint-disable-next-line no-unused-vars
   const [postPerPage, setPostPerPage] = React.useState(10);
   const [filename, setFilename] = React.useState("Id");
   const [searchKeyword, setSearchKeyword] = useState("");

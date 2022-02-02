@@ -1,3 +1,5 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable prettier/prettier */
 import { useParams } from "react-router-dom";
 import "./Invoice.css";
@@ -6,8 +8,6 @@ import {
   Grid,
   TextField,
   Button,
-  OutlinedInput,
-  Typography,
   Card,
   Box,
   FormControl,
@@ -264,6 +264,7 @@ function Invoice(props) {
   let count = 0;
   useEffect(() => {
     if (invoice_amount !== undefined) {
+      // eslint-disable-next-line array-callback-return
       const totalinvoiceamount = filterinvoiceArr.map((val) => {
         count = count + val.invoice_amount_received;
       });

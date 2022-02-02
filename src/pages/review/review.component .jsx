@@ -48,6 +48,7 @@ import "../../assets/GlobalStyle/TableStyles.css";
 const Review = () => {
   const { toggleLoader } = uiActions;
   const dispatch = useDispatch();
+  // eslint-disable-next-line no-unused-vars
   const { title, sortOption } = reviewText;
 
   const [paginationInfo, setPaginationInfo] = useState({

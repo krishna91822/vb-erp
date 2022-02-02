@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import "./viewRewardStyle.css";
 import RewardTableComponent from "./RewardTableComponent";
-import SearchComponent from "./SearchComponent";
 import PaginationComponent from "./PaginationComponent";
 import { useDispatch, useSelector } from "react-redux";
 import { getRewardsData } from "../../store/rewards-actions";

@@ -33,6 +33,7 @@ export default function ClientHelpers() {
   useEffect(() => {
     dispatch(fetchCountries());
     dispatch(getClientsData(pageNo, sortBy, filterBy, sortingOrder, searchBy));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const clientsList = useSelector((state) => state.cims.clientsList);

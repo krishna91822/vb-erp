@@ -15,7 +15,6 @@ import { getOnBench } from "../../../store/pmo-actions";
 import Tpagination from "../../UI/Pagination";
 import NoDataFound from "../NoDataFound";
 import {
-  StyledTableCell,
   StyledTableCell2,
   MiniHeadingTypography,
 } from "../../../assets/GlobalStyle/style";

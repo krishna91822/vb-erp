@@ -1,35 +1,14 @@
+/* eslint-disable no-unused-vars */
 import React from "react";
-import {
-  Button,
-  Checkbox,
-  Divider,
-  FormControl,
-  FormControlLabel,
-  Grid,
-  InputLabel,
-  MenuItem,
-  Select,
-  Typography,
-} from "@mui/material";
-import { Link } from "react-router-dom";
+import { Grid, Typography } from "@mui/material";
 import { useDispatch } from "react-redux";
 import { cimsActions } from "../../store/cims-slice";
-import SortByAlphaIcon from "@mui/icons-material/SortByAlpha";
 import ClientHelpers from "./ClientHelpers";
 
 export default function PageHeader() {
   const dispatch = useDispatch();
 
-  const {
-    sortBy,
-    filterBy,
-    sortingOrder,
-    handelSortBy,
-    handelFilterBy,
-    handelSortingOrder,
-
-    user,
-  } = ClientHelpers();
+  const { handelSortBy, handelFilterBy, handelSortingOrder } = ClientHelpers();
 
   const sortByFields = [
     { id: "createdAt", label: "By Start Date" },

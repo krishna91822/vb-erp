@@ -124,12 +124,15 @@ const CreateUser = () => {
 
   useEffect(() => {
     dispatch(SetRoles());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
+    // eslint-disable-next-line eqeqeq
     if (useremail != "") {
       dispatch(getUser(useremail));
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [useremail]);
   useEffect(() => {
     if (userAccount.user.length) {

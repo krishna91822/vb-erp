@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable prettier/prettier */
 import * as React from "react";
 import Table from "@mui/material/Table";
@@ -85,6 +86,7 @@ export const Main = () => {
   const post = useSelector((state) => state.CMS_state.poSowData);
   const totalCount = useSelector((state) => state.CMS_state.totalCount);
   const [currentPage, setCurrentPage] = React.useState(1);
+  // eslint-disable-next-line no-unused-vars
   const [postPerPage, setPostPerPage] = React.useState(10);
   const [filename, setFilename] = React.useState("Id");
   const [searchKeyword, setSearchKeyword] = useState("");
@@ -102,6 +104,7 @@ export const Main = () => {
   const handleClose = () => {
     setAnchorEl(null);
   };
+  // eslint-disable-next-line no-unused-vars
   const handleRowOnClick = (row_id) => {
     dispatch(fetchSpecificPO_SOW(row_id));
   };

@@ -26,6 +26,7 @@ export default function SetPassword() {
 
   useEffect(() => {
     dispatch(getUserDetails(id));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleSubmit = (pass) => {

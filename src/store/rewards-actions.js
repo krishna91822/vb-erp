@@ -466,6 +466,7 @@ export const addselectedpopup = (employeeIdArrayData, reward) => {
       let employees_id = [];
       employeeIdArrayData.map((data) => employees_id.push(data.employee_id));
 
+      // eslint-disable-next-line no-unused-vars
       const data = {
         recipients_ids: employees_id,
       };

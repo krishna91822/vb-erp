@@ -233,6 +233,7 @@ const CreateProfile = ({
   };
 
   const [errors, setErrors] = useState({});
+  // const [validation, setValidation] = useState();
   const validate = (values) => {
     const errorsObj = {};
     if (values?.empName.length === 0) {
@@ -380,6 +381,7 @@ const CreateProfile = ({
           setEmployee={setEmployee}
           profileProgress={profileProgress}
           errors={errors}
+          setErrors={setErrors}
           validate={validate}
           editSwitch={editSwitch}
         />
