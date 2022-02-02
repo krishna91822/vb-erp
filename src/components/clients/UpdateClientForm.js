@@ -74,15 +74,19 @@ function UpdateClientForm() {
                 </Button>
               </Link>
 
-              <Button
-                onClick={updateForm}
-                type="submit"
-                variant="contained"
-                id="save-btn"
-                disabled={!validateOnSubmit()}
-              >
-                Update
-              </Button>
+              {editMode ? (
+                <Button
+                  onClick={updateForm}
+                  type="submit"
+                  variant="contained"
+                  id="save-btn"
+                  disabled={!validateOnSubmit()}
+                >
+                  Update
+                </Button>
+              ) : (
+                <></>
+              )}
 
               <FormControlLabel
                 control={
