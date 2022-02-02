@@ -18,7 +18,10 @@ import { invoiceActions } from "../../store/CMS/INVOICE-slice";
 import { useDispatch, useSelector } from "react-redux";
 import "./Main.css";
 import validateInvoice from "./invoice_FORM/validateInvoice";
-import { Update_INVOICE } from "../../store/CMS/INVOICE-actions";
+import {
+  Update_INVOICE,
+  fetchVBBankAccount,
+} from "../../store/CMS/INVOICE-actions";
 import { useNavigate } from "react-router-dom";
 
 export default function FormDialog(props) {
@@ -83,6 +86,9 @@ export default function FormDialog(props) {
   };
   const handleAmountReceived = (event) => {
     setAmountReceivedFlag(event.target.value);
+    if (event.target.value === "Yes") {
+      dispatch(fetchVBBankAccount());
+    }
   };
   const handleAmount = (event) => {
     setAmount(event.target.value);
@@ -208,8 +214,10 @@ export default function FormDialog(props) {
                 value={Vb_Bank_Acc}
                 onChange={handlevbbankacc}
               >
-                {VbBankAcc.map((detail) => (
-                  <MenuItem value={detail}>{detail}</MenuItem>
+                {VbBankAcc.map((bank) => (
+                  <MenuItem value={bank.bank_account}>
+                    {bank.bank_account}
+                  </MenuItem>
                 ))}
               </Select>
             </FormControl>

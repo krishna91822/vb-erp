@@ -309,7 +309,6 @@ export const CapturePO_SOW = (props) => {
       Client_Finance_Controller: clientFinanceController,
       Targetted_Resources: selectedTargetedRes,
       Targeted_Res_AllocationRate: selectedTargetedResAllocationRate,
-      // Status: status,
       Type: typeName,
       Document_Name: DocName,
       PO_Amount: PO_amt,

@@ -23,7 +23,6 @@ import { ContentTypo } from "../../pages/review/review.styles";
 import { paginationFetchInvoice } from "../../store/CMS/INVOICE-actions";
 import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
-import { fetchSpecificINVOICE } from "../../store/CMS/INVOICE-actions";
 import { StyledTypography } from "../../assets/GlobalStyle/style";
 import { StyledTableCell } from "../../assets/GlobalStyle/style";
 import { invoiceActions } from "../../store/CMS/INVOICE-slice";
@@ -81,6 +80,7 @@ function InvoiceInfo() {
   const isReload = useSelector((state) => state.INVOICE_state.reload);
 
   const [currentPage, setCurrentPage] = React.useState(1);
+  // eslint-disable-next-line no-unused-vars
   const [postPerPage, setPostPerPage] = React.useState(10);
   const [filename, setFilename] = React.useState("Id");
   const [searchKeyword, setSearchKeyword] = useState("");
@@ -119,22 +119,10 @@ function InvoiceInfo() {
       paginationFetchInvoice(filename, value, postPerPage, searchKeyword)
     );
   };
-  // eslint-disable-next-line no-unused-vars
-  const handlerowsPerpage = (event) => {
-    setPostPerPage(event.target.value);
-    dispatch(
-      paginationFetchInvoice(
-        filename,
-        currentPage,
-        event.target.value,
-        searchKeyword
-      )
-    );
-  };
 
   const renderChildStatus = (status) => {
     if (status === "Complete") {
-      return <ContentTypo sx={{ color: "#2AB3A6" }}>{status}</ContentTypo>;
+      return <ContentTypo sx={{ color: "#00a152" }}>{status}</ContentTypo>;
     } else if (status === "Invoice raised") {
       return <ContentTypo sx={{ color: "#F7C839" }}>{status}</ContentTypo>;
     } else if (status === "Overdue") {
@@ -142,10 +130,6 @@ function InvoiceInfo() {
     } else {
       return <ContentTypo sx={{ color: "#212121" }}>{status}</ContentTypo>;
     }
-  };
-  // eslint-disable-next-line no-unused-vars
-  const handleRowOnClick = (row_id) => {
-    dispatch(fetchSpecificINVOICE(row_id));
   };
 
   const SearchTextHandler = (event) => {

@@ -169,44 +169,6 @@ export const fetchSpecificPO_SOW = (ROW_ID) => {
     }
   };
 };
-export const fetchPOs_emp_data = (po_id) => {
-  return async function (dispatch) {
-    const res = await axios.get(`/assign/${po_id}`);
-    dispatch(PoSowActions.setPOEmpTabData(res.data.data.results));
-  };
-};
-
-export const AddEmpToThisPO = (formData) => {
-  return async function (dispatch) {
-    try {
-      const response = await axios.post(`/assign`, formData);
-      if (response.status === 200) {
-        dispatch(
-          uiActions.showNotification({
-            status: "success",
-            title: "Success!",
-            message: "Employee Added Successfully!",
-          })
-        );
-        dispatch(PoSowActions.setRedirect(false));
-      } else {
-        throw new Error("Request Failed");
-      }
-    } catch (error) {
-      dispatch(uiActions.toggleLoader());
-      setTimeout(function () {
-        dispatch(uiActions.toggleLoader());
-        dispatch(
-          uiActions.showNotification({
-            status: "error",
-            title: "Error!",
-            message: "Could not Save data!",
-          })
-        );
-      }, 1000);
-    }
-  };
-};
 
 export const fetchAllClients = () => {
   return async function (dispatch) {
