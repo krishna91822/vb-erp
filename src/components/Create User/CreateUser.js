@@ -14,41 +14,36 @@ import {
   Divider,
   FormControlLabel,
   Grid,
-  Autocomplete,
 } from "@mui/material";
-import {
-  searchEmployees,
-  createUserAccount,
-  SetRoles,
-  getUser,
-  updateUserAccount,
-} from "../../store/userAccount-action";
+import { createUserAccount, SetRoles } from "../../store/userAccount-action";
 import { useSelector, useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { uiActions } from "../../store/ui-slice";
-import { userAccountActions } from "../../store/userAccount-slice";
-
-const initialState = {
-  userDetails: {
-    first_name: "",
-    email: "",
-    password: "defaultpassword@dontchange",
-    role: [],
-  },
-};
 
 const CreateUser = () => {
   const dispatch = useDispatch();
   const [username, setUsername] = useState("");
   const [useremail, setUseremail] = useState("");
   const [roles, setRoles] = useState([]);
-  const [open, setOpen] = useState(false);
+  const location = useLocation();
+
+  const initialState = {
+    userDetails: {
+      first_name: location.state ? location.state.name : "",
+      email: location.state ? location.state.email : "",
+      password: "defaultpassword@dontchange",
+      role: [],
+    },
+  };
+
+  // const [open, setOpen] = useState(false);
 
   const navigate = useNavigate();
   const [state, setState] = useState(initialState);
 
   const handleSubmit = (event) => {
     event.preventDefault();
+
     if (state.userDetails.role.length === 0) {
       dispatch(
         uiActions.showNotification({
@@ -57,51 +52,43 @@ const CreateUser = () => {
         })
       );
     } else {
-      if (userAccount.user.length === 0) {
-        dispatch(createUserAccount(state.userDetails)).then((res) => {
-          if (res) {
-            navigate("/my-profile");
-            dispatch(
-              uiActions.showNotification({
-                status: "success",
-                message:
-                  "User created successfull and email sent to user to reset password",
-              })
-            );
-          }
-        });
-      } else {
-        dispatch(
-          updateUserAccount(userAccount.user[0]._id, {
-            role: state.userDetails.role,
-          })
-        ).then((res) => {
-          if (res) {
-            navigate("/my-profile");
-            dispatch(
-              uiActions.showNotification({
-                status: "success",
-                message: `${userAccount.user[0].first_name} roles updated`,
-              })
-            );
-            dispatch(userAccountActions.resetForm());
-          }
-        });
-      }
-    }
-  };
-  const handleChange = (event) => {
-    if (event.empName) {
-      setState({
-        ...state,
-        userDetails: {
-          ...state.userDetails,
-          first_name: event.empName,
-          email: event.empEmail,
-        },
+      dispatch(createUserAccount(state.userDetails)).then((res) => {
+        if (res) {
+          navigate("/my-profile");
+          dispatch(
+            uiActions.showNotification({
+              status: "success",
+              message:
+                "User created successfull and email sent to user to reset password",
+            })
+          );
+        }
       });
     }
+  };
+  const handleUsername = (event) => {
+    setUsername(event.target.value);
+    setState({
+      ...state,
+      userDetails: {
+        ...state.userDetails,
+        first_name: event.target.value,
+      },
+    });
+  };
 
+  const handleUserEmail = (event) => {
+    setUseremail(event.target.value);
+    setState({
+      ...state,
+      userDetails: {
+        ...state.userDetails,
+        email: event.target.value,
+      },
+    });
+  };
+
+  const handleChange = (event) => {
     if (event.target && event.target.name === "roles") {
       let values = [...roles];
       if (roles.includes(event.target.value)) {
@@ -128,37 +115,11 @@ const CreateUser = () => {
   }, []);
 
   useEffect(() => {
-    // eslint-disable-next-line eqeqeq
-    if (useremail != "") {
-      dispatch(getUser(useremail));
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [useremail]);
-  useEffect(() => {
     if (userAccount.user.length) {
       setRoles(userAccount.user[0].role);
     }
   }, [userAccount.user]);
 
-  const handleUserName = (event, value) => {
-    if (event) {
-      setUsername(event.target.value);
-
-      setOpen(false);
-      if (event.target.value && event.target.value.length > 2) {
-        dispatch(searchEmployees(event.target.value));
-        setOpen(true);
-      }
-    }
-  };
-  const handleOnClick = (event, value) => {
-    if (value) {
-      handleChange(value);
-      setUseremail(value.empEmail);
-      setOpen(false);
-    }
-    setUsername("");
-  };
   return (
     <>
       <StyledTypography
@@ -170,7 +131,7 @@ const CreateUser = () => {
         New User
       </StyledTypography>
       <Card sx={{ margin: "0 10%", px: 3 }}>
-        <form onSubmit={(e) => handleSubmit(e)}>
+        <form onSubmit={handleSubmit}>
           <Grid container spacing={2}>
             <Grid item xs={4}>
               <MiniHeadingTypography sx={{ p: 2 }}>
@@ -201,35 +162,16 @@ const CreateUser = () => {
             }}
           >
             <label style={{ padding: "10px" }}>Name:</label>
-            <Autocomplete
+
+            <TextField
+              required
+              id="username"
+              name="username"
+              value={location.state ? location.state.name : username}
+              onChange={handleUsername}
+              placeholder="Enter Name"
               size="small"
-              onBlur={() => {
-                setUsername("");
-                setOpen(false);
-              }}
-              onInputChange={handleUserName}
-              getOptionLabel={(option) => `${option.empName} (${option.empId})`}
-              onChange={handleOnClick}
-              options={userAccount.employees}
-              open={open}
               style={{ width: "100%" }}
-              inputValue={
-                userAccount.employees ? userAccount.employees.empName : username
-              }
-              renderInput={(params) => (
-                <TextField
-                  {...params}
-                  required
-                  id="username"
-                  name="username"
-                  value={
-                    userAccount.employees
-                      ? userAccount.employees.empName
-                      : username
-                  }
-                  placeholder="Enter Name"
-                />
-              )}
             />
           </CardContent>
           <CardContent
@@ -243,14 +185,13 @@ const CreateUser = () => {
             <label style={{ padding: "10px" }}>Email:</label>
             <TextField
               name="useremail"
-              disabled
               id="useremail"
               size="small"
               variant="outlined"
               placeholder="Enter Email Id"
-              value={useremail}
+              value={location.state ? location.state.email : useremail}
               style={{ width: "100%" }}
-              // onChange={testing()}
+              onChange={handleUserEmail}
             />
           </CardContent>
           <MiniHeadingTypography sx={{ p: 2 }}>Roles</MiniHeadingTypography>

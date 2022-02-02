@@ -53,6 +53,7 @@ import validator from "validator";
 
 import ProjectTab from "../../components/templates/project/project.component";
 import PlagiarismIcon from "@mui/icons-material/Plagiarism";
+import { useNavigate } from "react-router-dom";
 
 const CreateProfile = ({
   editEmployeeData,
@@ -68,7 +69,9 @@ const CreateProfile = ({
   const { currentEmployee } = useSelector((state) => state.employee);
   const dispatch = useDispatch();
   const { toggleLoader, showNotification } = uiActions;
-
+  const navigate = useNavigate();
+  const [emailUser, setEmailUser] = useState("");
+  const [nameUser, setNameUser] = useState("");
   useEffect(() => {
     axiosInstance
       .get(`/employees?empEmail=${email}`)
@@ -128,7 +131,12 @@ const CreateProfile = ({
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const handleOpenModal = () => setOpenModal(true);
-  const handleCloseModal = () => setOpenModal(false);
+  const handleCloseModal = () => {
+    setOpenModal(false);
+    navigate("/createuserprofile", {
+      state: { name: nameUser, email: emailUser },
+    });
+  };
   const handleOpenModalError = () => setOpenModalError(true);
   const handleCloseModalError = () => setOpenModalError(false);
 
@@ -301,6 +309,8 @@ const CreateProfile = ({
           },
         });
     if (createEmployee?.reqType === "profile-creation") {
+      setNameUser(createEmployee.employeeDetails.empName);
+      setEmailUser(createEmployee.employeeDetails.empEmail);
       axiosInstance
         .post("/employees", createEmployee.employeeDetails)
         .then(function (response) {
