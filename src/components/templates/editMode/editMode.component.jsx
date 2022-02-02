@@ -5,7 +5,6 @@ import { TitleTypo, CustomSwitch, ModalBoxItem } from "./editMode.styles";
 import { editModeConstant } from "./editMode.constant";
 
 import { useSelector, useDispatch } from "react-redux";
-import { toggleEditMode } from "../../../store/employeeSlice";
 import { uiActions } from "./../../../store/ui-slice";
 
 import axiosInstance from "./../../../helpers/axiosInstance";
@@ -30,6 +29,7 @@ const EditMode = ({
     setInEditMode((prev) => !prev);
     setOpen(false);
   };
+  // eslint-disable-next-line no-unused-vars
   const handleToggleOpen = () => setOpen(true);
   const handleSubmitBtn = () => {
     if (user.permissions.includes("approve_employee_edit_request")) {

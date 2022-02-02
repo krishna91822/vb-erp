@@ -5,8 +5,6 @@ import IconButton from "@mui/material/IconButton";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEllipsisV } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 import {
   deleteRewardData,
@@ -17,7 +15,7 @@ import { useDispatch, useSelector } from "react-redux";
 import Popup from "./Popup";
 import EmployeesList from "../employees/EmployeesList";
 import { StyledTableCell } from "../../assets/GlobalStyle/style";
-import { TableRow, Tab } from "@mui/material";
+import { TableRow } from "@mui/material";
 import "../../assets/GlobalStyle/TableStyles.css";
 
 const RewardRowData = ({ data, StyledMenu, open }) => {

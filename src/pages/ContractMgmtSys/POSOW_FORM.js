@@ -6,7 +6,9 @@ const POSOW_FORM = () => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(PoSowActions.clearData());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+  // eslint-disable-next-line react/jsx-pascal-case
   return <CapturePO_SOW editBtn={false} toggleState={false} />;
 };
 

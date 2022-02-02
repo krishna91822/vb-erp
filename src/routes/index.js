@@ -19,7 +19,6 @@ import { INVOICE_Read } from "../pages/ContractMgmtSys/invoice_READ";
 import invoice_EDIT from "../pages/ContractMgmtSys/invoice_EDIT";
 
 import SignIn from "../pages/LoginPage/Login";
-import DescriptionAlerts from "../pages/LoginPage/Authorization";
 
 import Profile from "../pages/myProfile/profile.component";
 import ViewProfile from "./../components/templates/viewProfile/viewProfile.component";

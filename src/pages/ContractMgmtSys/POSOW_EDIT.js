@@ -12,7 +12,9 @@ const POSOW_EDIT = () => {
     if (id) {
       dispatch(fetchSpecificPO_SOW(id));
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
+  // eslint-disable-next-line react/jsx-pascal-case
   return <CapturePO_SOW editBtn={true} toggleState={true} />;
 };
 

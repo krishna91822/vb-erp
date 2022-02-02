@@ -25,6 +25,7 @@ import {
 import { useNavigate } from "react-router-dom";
 
 export default function FormDialog(props) {
+  // eslint-disable-next-line no-unused-vars
   const [errors, setErrors] = useState({});
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -37,6 +38,7 @@ export default function FormDialog(props) {
       navigate("/invoices");
       dispatch(invoiceActions.setRedirect(false));
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isRedirect]);
 
   useEffect(() => {

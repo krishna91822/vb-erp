@@ -22,13 +22,11 @@ import {
   InputAdornment,
   IconButton,
   Menu,
-  ListItemIcon,
   ListItemText,
 } from "@mui/material";
 import { Search as SearchIcon } from "../../../icons/search";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import NoDataFound from "../NoDataFound";
-import EditIcon from "@mui/icons-material/Edit";
 import FilterListIcon from "@mui/icons-material/FilterList";
 import FilterListOffIcon from "@mui/icons-material/FilterListOff";
 import Tpagination from "../../UI/Pagination";

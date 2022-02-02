@@ -111,6 +111,7 @@ const CreateUser = () => {
 
   useEffect(() => {
     dispatch(SetRoles());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
