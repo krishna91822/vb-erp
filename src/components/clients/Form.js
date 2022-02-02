@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Typography,
   Grid,
@@ -25,11 +25,19 @@ export default function Form() {
     handelBrandName,
   } = UseForm();
 
-  const [checked, setChecked] = useState(true);
+  const [checked, setChecked] = useState(false);
   const handelAddressCheckbox = (e) => {
     setChecked(e.target.checked);
     handelComAddress(e.target.checked);
   };
+
+  useEffect(() => {
+    formData.communicationAddress.pincode !== "" &&
+      setChecked(
+        JSON.stringify(formData.communicationAddress) ===
+          JSON.stringify(formData.registeredAddress)
+      );
+  }, [formData]);
 
   return (
     <div className="cims-form-body">
