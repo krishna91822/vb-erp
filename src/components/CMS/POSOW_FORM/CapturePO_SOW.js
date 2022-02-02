@@ -18,7 +18,6 @@ import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { createNewPO_SOW } from "../../../store/CMS/POSOW-actions";
 import { UpdatePO_SOW } from "../../../store/CMS/POSOW-actions";
-import { SendForApproval } from "../../../store/CMS/POSOW-actions";
 import { fetchAllClients } from "../../../store/CMS/POSOW-actions";
 import {
   fetchAllClientProjects,
@@ -309,7 +308,6 @@ export const CapturePO_SOW = (props) => {
       Client_Finance_Controller: clientFinanceController,
       Targetted_Resources: selectedTargetedRes,
       Targeted_Res_AllocationRate: selectedTargetedResAllocationRate,
-      // Status: status,
       Type: typeName,
       Document_Name: DocName,
       PO_Amount: PO_amt,

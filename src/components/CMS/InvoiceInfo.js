@@ -3,7 +3,6 @@ import * as React from "react";
 import Table from "@mui/material/Table";
 import { Grid } from "@mui/material";
 import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
@@ -12,12 +11,9 @@ import { Search as SearchIcon } from "../../icons/search";
 import TextField from "@mui/material/TextField";
 import { styled, alpha } from "@mui/material/styles";
 import Button from "@mui/material/Button";
-import EditIcon from "@mui/icons-material/Edit";
-import EditOffIcon from "@mui/icons-material/EditOff";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-import FormDialog from "./invoiceEditDialog";
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import LongMenu from "./invoiceOptions";
@@ -28,16 +24,8 @@ import {
   paginationFetchInvoice,
   searchINVOICE,
 } from "../../store/CMS/INVOICE-actions";
-import Typography from "@mui/material/Typography";
 import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
-import { Link } from "react-router-dom";
-import {
-  fetchSpecificINVOICE,
-  sortProducts,
-} from "../../store/CMS/INVOICE-actions";
-import InputLabel from "@mui/material/InputLabel";
-import NativeSelect from "@mui/material/NativeSelect";
 import { StyledTypography } from "../../assets/GlobalStyle/style";
 import { StyledTableCell } from "../../assets/GlobalStyle/style";
 import { invoiceActions } from "../../store/CMS/INVOICE-slice";
@@ -132,21 +120,10 @@ function InvoiceInfo() {
       paginationFetchInvoice(filename, value, postPerPage, searchKeyword)
     );
   };
-  const handlerowsPerpage = (event) => {
-    setPostPerPage(event.target.value);
-    dispatch(
-      paginationFetchInvoice(
-        filename,
-        currentPage,
-        event.target.value,
-        searchKeyword
-      )
-    );
-  };
 
   const renderChildStatus = (status) => {
     if (status === "Complete") {
-      return <ContentTypo sx={{ color: "#2AB3A6" }}>{status}</ContentTypo>;
+      return <ContentTypo sx={{ color: "#00a152" }}>{status}</ContentTypo>;
     } else if (status === "Invoice raised") {
       return <ContentTypo sx={{ color: "#F7C839" }}>{status}</ContentTypo>;
     } else if (status === "Overdue") {
@@ -154,9 +131,6 @@ function InvoiceInfo() {
     } else {
       return <ContentTypo sx={{ color: "#212121" }}>{status}</ContentTypo>;
     }
-  };
-  const handleRowOnClick = (row_id) => {
-    dispatch(fetchSpecificINVOICE(row_id));
   };
 
   const SearchTextHandler = (event) => {

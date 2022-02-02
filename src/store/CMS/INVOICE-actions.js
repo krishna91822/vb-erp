@@ -134,6 +134,31 @@ export const fetchSpecificINVOICE = (ROW_ID) => {
   };
 };
 
+export const fetchVBBankAccount = () => {
+  return async function (dispatch) {
+    dispatch(uiActions.toggleLoader());
+    try {
+      const res = await axios.get("invoice/bankAccount");
+      if (res.status === 200) {
+        dispatch(invoiceActions.setBankAccount(res.data.data));
+        console.log(res.data.data);
+      } else {
+        throw new Error("Something went wrong!");
+      }
+    } catch (error) {
+      dispatch(
+        uiActions.showNotification({
+          status: "error",
+          title: "Error",
+          message: "Something went wrong",
+        })
+      );
+    } finally {
+      dispatch(uiActions.toggleLoader());
+    }
+  };
+};
+
 export const searchINVOICE = (keyword) => {
   return async function (dispatch) {
     try {

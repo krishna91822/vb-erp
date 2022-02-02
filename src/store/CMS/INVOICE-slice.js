@@ -9,7 +9,7 @@ const invoiceRaised = ["Yes", "No"];
 const invoiceRecieved = [];
 
 const invoiceAmount = [];
-const VbBankAcc = ["40141411111222", "1212334432234", "2324345434245"];
+const VbBankAcc = [];
 
 export const invoice_init_state = {
   inputFieldsData: {
@@ -73,6 +73,9 @@ const invoice_Slice = createSlice({
     },
     setRedirect(state, action) {
       state.redirect = action.payload;
+    },
+    setBankAccount(state, action) {
+      state.inputFieldsData.VbBankAcc = action.payload;
     },
   },
 });

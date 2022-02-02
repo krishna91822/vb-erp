@@ -11,39 +11,26 @@ import {
   Card,
   Box,
   FormControl,
-  InputLabel,
   MenuItem,
   Select,
   Switch,
 } from "@mui/material";
 import CssBaseline from "@mui/material/CssBaseline";
-import Container from "@mui/material/Container";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import Paper from "@mui/material/Paper";
-import Accordion from "@mui/material/Accordion";
-import AccordionSummary from "@mui/material/AccordionSummary";
-import AccordionDetails from "@mui/material/AccordionDetails";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import BasicDatePicker from "./date";
 import React, { useEffect } from "react";
-import {
-  createNew_INVOICE,
-  fetchSpecificINVOICE,
-  paginationFetchInvoice,
-} from "../../../store/CMS/INVOICE-actions";
 import validateInvoice from "./validateInvoice";
-import { Update_INVOICE } from "../../../store/CMS/INVOICE-actions";
-import { fetchPO_SOW_data } from "../../../store/CMS/POSOW-actions";
-import { fetch_INVOICE_data } from "../../../store/CMS/INVOICE-actions";
+import {
+  Update_INVOICE,
+  fetchVBBankAccount,
+} from "../../../store/CMS/INVOICE-actions";
 import { invoiceActions } from "../../../store/CMS/INVOICE-slice";
-import { paginationFetchPosow } from "../../../store/CMS/POSOW-actions";
 import {
   StyledTypography,
   MiniHeadingTypography,
@@ -59,8 +46,7 @@ function Invoice(props) {
   const navigate = useNavigate();
 
   useEffect(() => {
-    dispatch(paginationFetchPosow("id", 1, 50));
-    dispatch(paginationFetchInvoice("Id", 1, 50));
+    dispatch(fetchVBBankAccount());
   }, []);
   const isRedirect = useSelector((state) => state.INVOICE_state.redirect);
   const allPOSOWs = useSelector((state) => state.CMS_state.poSowData);
@@ -124,10 +110,7 @@ function Invoice(props) {
   );
   const [PoCurr, setPoCurr] = useState("");
   const [errors, setErrors] = useState({});
-  const [clientFinControllerArr, setClientFinControllerArr] =
-    useState(clientFinController);
   const [poId, setPoId] = useState("");
-  const [clientSponsorArr, setClientSponsorArr] = useState(clientSponsors);
   const [ClientSponsor, setClientSponsor] = React.useState(Readclientsponsor);
   const [invoice_raised, setInvoiceRaised] = React.useState(Readinvoiceraised);
   const [invoice_amount, setinvoiceAmount] = React.useState(Readinvoiceamount);
@@ -151,7 +134,6 @@ function Invoice(props) {
   const [invoice_raised_yesno, setInvoiceRaisedYesNo] = React.useState("No");
   let [sum, setsum] = useState(0);
   const targetedResourcesName = Object.keys(TargettedAllocation);
-  console.log(TargettedAllocation);
   const percentageAllocation = Object.values(TargettedAllocation);
 
   useEffect(() => {
@@ -204,12 +186,6 @@ function Invoice(props) {
     }
   }, [invoicereceived]);
 
-  const handleClientChange = (event) => {
-    setPersonName(event.target.value);
-  };
-  const handleProjectChange = (event) => {
-    setProjectName(event.target.value);
-  };
   const handlePoNumTxtBoxChange = (event) => {
     setPO_number(event.target.value);
   };
@@ -230,9 +206,6 @@ function Invoice(props) {
       setCharsLeft(maxCount - remarks.length);
     }
   }, [remarks]);
-  const handleClientFinController = (event) => {
-    setClientFinController(event.target.value);
-  };
   const handleClientSponsor = (event) => {
     setClientSponsor(event.target.value);
   };
@@ -558,8 +531,10 @@ function Invoice(props) {
                         value={Vb_Bank_Acc}
                         onChange={handlevbbankacc}
                       >
-                        {VbBankAcc.map((detail) => (
-                          <MenuItem value={detail}>{detail}</MenuItem>
+                        {VbBankAcc.map((bank) => (
+                          <MenuItem value={bank.bank_account}>
+                            {bank.bank_account}
+                          </MenuItem>
                         ))}
                       </Select>
                     </FormControl>
