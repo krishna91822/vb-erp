@@ -37,8 +37,14 @@ const PersonalEditable = (props) => {
   const { pathname } = useLocation();
   const { user } = useSelector((state) => state.user);
 
-  const { empData, setEmpData, personalDetails, setPersonalDetails, errors } =
-    props;
+  const {
+    empData,
+    setEmpData,
+    personalDetails,
+    setPersonalDetails,
+    errors,
+    validateForm,
+  } = props;
 
   const {
     empDob,
@@ -237,6 +243,7 @@ const PersonalEditable = (props) => {
                 onChange={(event) => {
                   handleChange(event);
                   handleAboutMe(event);
+                  validateForm(event);
                 }}
                 error={Boolean(aboutCount.current > 500)}
                 sx={{
@@ -276,8 +283,12 @@ const PersonalEditable = (props) => {
                 value={empPersonalEmail ? empPersonalEmail : ""}
                 type="email"
                 name="empPersonalEmail"
-                onChange={(event) => handleChange(event)}
+                onChange={(event) => {
+                  handleChange(event);
+                  validateForm(event);
+                }}
                 error={Boolean(errors?.empPersonalEmail)}
+                helperText={errors?.empPersonalEmail}
               />
             </ContentTypo>
           </ContentBox>

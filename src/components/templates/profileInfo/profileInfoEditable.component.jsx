@@ -42,10 +42,10 @@ const ProfileInfoEditable = (props) => {
     employee,
     setEmployee,
     profileProgress,
+    editSwitch,
     errors,
     setErrors,
-    validate,
-    editSwitch,
+    validateForm,
   } = props;
 
   const {
@@ -203,41 +203,6 @@ const ProfileInfoEditable = (props) => {
       });
   };
 
-  //form validation
-  const validateName = (e) => {
-    const errorsObj = {};
-    const name = e.target.value;
-    if (name.length === 0) {
-      errorsObj.empName = "Full name is required";
-    }
-    setErrors(errorsObj);
-  };
-  const validateEmail = (e) => {
-    const errorsObj = {};
-    const email = e.target.value;
-    if (email.length === 0) {
-      errorsObj.empEmail = "Company Email is required";
-    }
-    if (email.length !== 0 && !validator.isEmail(email)) {
-      errorsObj.empEmail = "Invalid email";
-    }
-    setErrors(errorsObj);
-  };
-  const validateDepartmentDropdown = (value) => {
-    const errorsObj = {};
-    if (value === null) {
-      errorsObj.empDepartment = "Department is required";
-    }
-    setErrors(errorsObj);
-  };
-  const validateDesignationDropdown = (value) => {
-    const errorsObj = {};
-    if (value === null) {
-      errorsObj.empDesignation = "Designation is required";
-    }
-    setErrors(errorsObj);
-  };
-
   return (
     <div>
       <Box
@@ -327,9 +292,10 @@ const ProfileInfoEditable = (props) => {
                         value={empName}
                         onChange={(e) => {
                           handleChange(e);
-                          validateName(e);
+                          validateForm(e);
                         }}
                         error={Boolean(errors.empName)}
+                        helperText={errors?.empName}
                         sx={{
                           "& .MuiInput-input": {
                             color: "textColor",
@@ -380,9 +346,10 @@ const ProfileInfoEditable = (props) => {
                             name="empEmail"
                             onChange={(e) => {
                               handleChange(e);
-                              validateEmail(e);
+                              validateForm(e);
                             }}
                             error={Boolean(errors?.empEmail)}
+                            helperText={errors?.empEmail}
                           />
                         </ContentTypo>
                       </ContentBox>
@@ -420,12 +387,11 @@ const ProfileInfoEditable = (props) => {
                             options={departmentOption}
                             onChange={(value) => {
                               setDepartment(value);
-                              value &&
-                                setEmployee({
-                                  ...employee,
-                                  empDepartment: value.value,
-                                });
-                              validateDepartmentDropdown(value);
+                              setEmployee({
+                                ...employee,
+                                empDepartment: value?.value,
+                              });
+                              validateForm(null, ["empDepartment", value]);
                             }}
                           />
                         </ContentTypo>
@@ -466,9 +432,9 @@ const ProfileInfoEditable = (props) => {
                               setDesignation(value);
                               setEmployee({
                                 ...employee,
-                                empDesignation: value.value,
+                                empDesignation: value?.value,
                               });
-                              validateDesignationDropdown(value);
+                              validateForm(null, ["empDesignation", value]);
                             }}
                           />
                         </ContentTypo>
@@ -490,12 +456,13 @@ const ProfileInfoEditable = (props) => {
                                   ...employee,
                                   empDoj: newValue,
                                 });
-                                validate(employee);
+                                validateForm(null, ["empDoj", newValue]);
                               }}
                               renderInput={(params) => (
                                 <CustomTextField
                                   {...params}
                                   name="empDoj"
+                                  helperText={errors?.empDoj}
                                   error={Boolean(errors?.empDoj)}
                                 />
                               )}
@@ -538,9 +505,12 @@ const ProfileInfoEditable = (props) => {
                               setReportingTo(value);
                               setEmployee({
                                 ...employee,
-                                empReportingManager: value.value,
+                                empReportingManager: value?.value,
                               });
-                              validate(employee);
+                              validateForm(null, [
+                                "empReportingManager",
+                                value,
+                              ]);
                             }}
                             name="empReportingManager"
                           />
@@ -562,13 +532,14 @@ const ProfileInfoEditable = (props) => {
                                   ...employee,
                                   empDob: newValue,
                                 });
-                                validate(employee);
+                                validateForm(null, ["empDob", newValue]);
                               }}
                               renderInput={(params) => (
                                 <CustomTextField
                                   {...params}
                                   name="empDob"
                                   error={Boolean(errors?.empDob)}
+                                  helperText={errors?.empDob}
                                 />
                               )}
                             />
