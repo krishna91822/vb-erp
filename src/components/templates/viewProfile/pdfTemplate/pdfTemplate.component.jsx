@@ -46,8 +46,9 @@ const PdfTemplate = ({ viewedEmployee }) => {
             <p id="title1">{viewedEmployee.empName}</p>
             <p id="email">{viewedEmployee.empEmail}</p>
             <p id="subtitle">
-              {viewedEmployee.empCurrentAddress.empAddressCity},{" "}
-              {viewedEmployee.empCurrentAddress.empAddressState}
+              {viewedEmployee.empCurrentAddress?.empAddressLineOne},
+              {viewedEmployee.empCurrentAddress?.empAddressCity},
+              {viewedEmployee.empCurrentAddress?.empAddressState}
             </p>
             <br></br>
             <p id="title3">About Me</p>
@@ -63,15 +64,16 @@ const PdfTemplate = ({ viewedEmployee }) => {
               <div id="content-box2">
                 <p id="title2">Date of birth: </p>
                 <p id="content1">
-                  {new Date(viewedEmployee.empDob).toDateString().slice(4)}
+                  {viewedEmployee.empDob &&
+                    new Date(viewedEmployee.empDob).toDateString().slice(4)}
                 </p>
               </div>
               <div id="content-box2">
                 <p id="content1">
                   <strong>Residential Address: </strong>
-                  {viewedEmployee.empResidentialAddress.empAddressLineOne},{" "}
-                  {viewedEmployee.empResidentialAddress.empAddressCity}.{" "}
-                  {viewedEmployee.empResidentialAddress.empAddressState}
+                  {viewedEmployee.empResidentialAddress?.empAddressLineOne},
+                  {viewedEmployee.empResidentialAddress?.empAddressCity},
+                  {viewedEmployee.empResidentialAddress?.empAddressState}
                 </p>
               </div>
               {viewedEmployee.personalDetails &&
