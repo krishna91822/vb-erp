@@ -240,50 +240,115 @@ const CreateProfile = ({
     handleClose();
   };
 
+  //form validation
   const [errors, setErrors] = useState({});
-  // const [validation, setValidation] = useState();
-  const validate = (values) => {
+  const validateForm = (event, value) => {
     const errorsObj = {};
-    if (values?.empName.length === 0) {
+    if (event) {
+      if (event.target?.name === "empName" && event.target.value.length === 0) {
+        errorsObj.empName = "Full name is required";
+      }
+      if (
+        event.target?.name === "empEmail" &&
+        event.target.value.length === 0
+      ) {
+        errorsObj.empEmail = "Company Email is required";
+      }
+      if (
+        event.target?.name === "empEmail" &&
+        event.target.value.length !== 0 &&
+        !validator.isEmail(event.target.value)
+      ) {
+        errorsObj.empEmail = "Invalid email";
+      }
+      if (
+        event.target?.name === "empPersonalEmail" &&
+        event.target.value.length !== 0 &&
+        !validator.isEmail(event.target.value)
+      ) {
+        errorsObj.empPersonalEmail = "Invalid email";
+      }
+      if (
+        event.target?.name === "empAboutMe" &&
+        event.target.value.length > 500
+      ) {
+        errorsObj.empName = "About me exceeded the limit";
+      }
+    }
+    if (value) {
+      if (value[0] === "empDepartment" && !value[1]) {
+        errorsObj.empDepartment = "Department is required";
+      }
+      if (value[0] === "empDesignation" && !value[1]) {
+        errorsObj.empDesignation = "Designation is required";
+      }
+      if (value[0] === "empDoj" && !value[1]) {
+        errorsObj.empDoj = "Date of joining is required";
+      }
+      if (value[0] === "empDoj" && value[1]?.toString() === "Invalid Date") {
+        errorsObj.empDoj = "Date of joining is invalid";
+      }
+      if (value[0] === "empReportingManager" && !value[1]) {
+        errorsObj.empReportingManager = "Reporting manager is required";
+      }
+      if (value[0] === "empDob" && !value[1]) {
+        errorsObj.empDob = "Date of birth is required";
+      }
+      if (value[0] === "empDob" && value[1]?.toString() === "Invalid Date") {
+        errorsObj.empDob = "Date of birth is invalid";
+      }
+    }
+    setErrors(errorsObj);
+  };
+
+  const validateData = (data) => {
+    const errorsObj = {};
+    if (data.empName.length === 0) {
       errorsObj.empName = "Full name is required";
     }
-    if (values?.empEmail.length === 0) {
-      errorsObj.empEmail = "Company Email is required";
+    if (data.empEmail.length === 0) {
+      errorsObj.empEmail = "Email is required";
     }
-    if (values?.empEmail.length !== 0 && !validator.isEmail(values?.empEmail)) {
+    if (data.empEmail.length !== 0 && !validator.isEmail(data.empEmail)) {
       errorsObj.empEmail = "Invalid email";
     }
-    if (values?.empDepartment.length === 0) {
+    if (!data.empDepartment || data.empDepartment.length === 0) {
       errorsObj.empDepartment = "Department is required";
     }
-    if (values?.empDesignation.length === 0) {
-      errorsObj.empDesignation = "Department is required";
+    if (!data.empDesignation || data.empDesignation.length === 0) {
+      errorsObj.empDesignation = "designation is required";
     }
-    if (!values?.empDoj) {
-      errorsObj.empDoj = "doj is required";
+    if (!data.empDoj) {
+      errorsObj.empDoj = "Date of joining is required";
     }
-    if (!values?.empReportingManager.length === 0) {
+    if (data.empDoj?.toString() === "Invalid Date") {
+      errorsObj.empDoj = "Date of joining is invalid";
+    }
+    if (!data.empReportingManager || data.empReportingManager.length === 0) {
       errorsObj.empReportingManager = "Reporting manager is required";
     }
-    if (!values?.empDob) {
-      errorsObj.empDob = "dob is required";
+    if (!data.empDob) {
+      errorsObj.empDob = "Date of birth is required";
     }
-    if (values?.empPersonalEmail.length === 0) {
-      errorsObj.empPersonalEmail = "Personal Email is required";
+    if (data.empDob?.toString() === "Invalid Date") {
+      errorsObj.empDob = "Date of birth is invalid";
     }
     if (
-      values?.empPersonalEmail.length !== 0 &&
-      !validator.isEmail(values?.empPersonalEmail)
+      data.empPersonalEmail?.length !== 0 &&
+      !validator.isEmail(data.empPersonalEmail)
     ) {
       errorsObj.empPersonalEmail = "Invalid email";
     }
-    setErrors(errorsObj);
+    if (data.empAboutMe.length > 500) {
+      errorsObj.empAboutMe = "About me exceeded the limit";
+    }
     return errorsObj;
   };
 
   const handleConfirm = (event) => {
-    setErrors(validate(employee));
-    if (Object.keys(validate(employee)).length !== 0) return;
+    const formErrors = validateData(employee);
+    setErrors(formErrors);
+    if (Object.keys(formErrors).length !== 0) return;
     dispatch(toggleLoader());
     // Profile - Update;
     let createEmployee;
@@ -390,10 +455,10 @@ const CreateProfile = ({
           employee={employee}
           setEmployee={setEmployee}
           profileProgress={profileProgress}
+          editSwitch={editSwitch}
           errors={errors}
           setErrors={setErrors}
-          validate={validate}
-          editSwitch={editSwitch}
+          validateForm={validateForm}
         />
       </div>
       <Box mt={1}>
@@ -437,6 +502,7 @@ const CreateProfile = ({
                   personalDetails={personalDetails}
                   setPersonalDetails={setPersonalDetails}
                   errors={errors}
+                  validateForm={validateForm}
                 />
               </TabPanelCustom>
 
@@ -446,7 +512,6 @@ const CreateProfile = ({
                   setEmpData={setEmployee}
                   professionalDetails={professionalDetails}
                   setProfessionalDetails={setProfessionalDetails}
-                  errors={errors}
                 />
               </TabPanelCustom>
               <TabPanelCustom value={value} index={2}>
@@ -455,7 +520,6 @@ const CreateProfile = ({
                   setEmpData={setEmployee}
                   skillsDetails={skillsDetails}
                   setSkillsDetails={setSkillsDetails}
-                  errors={errors}
                 />
               </TabPanelCustom>
               <TabPanelCustom value={value} index={3}>
@@ -463,8 +527,6 @@ const CreateProfile = ({
                   editable={true}
                   empData={employee}
                   setEmpData={setEmployee}
-                  errors={errors}
-                  validate={validate}
                 />
               </TabPanelCustom>
               <ContainerStyleTop>
