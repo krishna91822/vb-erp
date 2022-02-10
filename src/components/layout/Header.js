@@ -143,7 +143,7 @@ const Header = () => {
                     <ListItemIcon>
                       <AdminPanelSettingsIcon fontSize="small" />
                     </ListItemIcon>
-                    Admin Pannel
+                    Admin Panel
                   </MenuItem>
                 )}
                 <MenuItem

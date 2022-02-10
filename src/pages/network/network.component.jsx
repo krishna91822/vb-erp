@@ -28,7 +28,10 @@ import {
 } from "../../assets/GlobalStyle/style";
 import { StyledTypography } from "../../assets/GlobalStyle/style";
 import { Search as SearchIcon } from "../../icons/search";
-import { MoreVert as MoreVertIcon } from "@mui/icons-material";
+import {
+  MoreVert as MoreVertIcon,
+  ClearRounded as ClearRoundedIcon,
+} from "@mui/icons-material";
 
 import DoneOutlineIcon from "@mui/icons-material/DoneOutline";
 import BlockIcon from "@mui/icons-material/Block";
@@ -97,6 +100,7 @@ const Network = () => {
 
   const searchHandleChange = (event) => {
     const searchFields = event.target.value;
+    setSearchTerm(searchFields);
     if (event.key === "Enter") {
       setSearchEmp(searchFields);
       setPaginationInfo({
@@ -193,6 +197,15 @@ const Network = () => {
       </>
     );
   };
+  const [searchTerm, setSearchTerm] = useState("");
+  const handelClearSearch = () => {
+    setSearchEmp("");
+    setSearchTerm("");
+    setPaginationInfo({
+      ...paginationInfo,
+      page: 1,
+    });
+  };
 
   return (
     <div className="list-wrapper">
@@ -203,6 +216,7 @@ const Network = () => {
             <Grid item xs={4}>
               <TextField
                 fullWidth
+                value={searchTerm}
                 data-test="search-bar-test"
                 onChange={searchHandleChange}
                 onKeyPress={searchHandleChange}
@@ -214,6 +228,13 @@ const Network = () => {
                       <SvgIcon color="action" fontSize="small">
                         <SearchIcon />
                       </SvgIcon>
+                    </InputAdornment>
+                  ),
+                  endAdornment: searchTerm && (
+                    <InputAdornment position="end">
+                      <IconButton onClick={handelClearSearch}>
+                        <ClearRoundedIcon />
+                      </IconButton>
                     </InputAdornment>
                   ),
                 }}

@@ -272,7 +272,7 @@ function ClientsList() {
                           </SvgIcon>
                         </InputAdornment>
                       ),
-                      endAdornment: (
+                      endAdornment: searchBy && (
                         <InputAdornment position="end">
                           <IconButton onClick={handelClearSearch}>
                             <ClearRoundedIcon />

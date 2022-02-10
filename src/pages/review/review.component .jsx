@@ -13,6 +13,7 @@ import {
 } from "./review.styles";
 
 import CloseIcon from "@mui/icons-material/Close";
+import { ClearRounded as ClearRoundedIcon } from "@mui/icons-material";
 
 import {
   Box,
@@ -32,6 +33,7 @@ import {
   CardContent,
   SvgIcon,
   InputAdornment,
+  IconButton,
 } from "@mui/material";
 import { Search as SearchIcon } from "../../icons/search";
 // eslint-disable-next-line no-unused-vars
@@ -74,6 +76,7 @@ const Review = () => {
 
   const searchHandleChange = (event) => {
     const searchFileds = event.target.value;
+    setSearchTerm(searchFileds);
     if (event.key === "Enter") {
       setSearchEmp(searchFileds);
     }
@@ -191,6 +194,16 @@ const Review = () => {
     }
   };
 
+  const [searchTerm, setSearchTerm] = useState("");
+  const handelClearSearch = () => {
+    setSearchEmp("");
+    setSearchTerm("");
+    setPaginationInfo({
+      ...paginationInfo,
+      page: 1,
+    });
+  };
+
   return (
     <div className="list-wrapper">
       <StyledTypography>My Reviews</StyledTypography>
@@ -202,9 +215,10 @@ const Review = () => {
                 <TextField
                   data-test="Search By Req Name-test"
                   fullWidth
+                  value={searchTerm}
                   onChange={searchHandleChange}
                   onKeyPress={searchHandleChange}
-                  placeholder="Search By Req Name"
+                  placeholder="Search By Req Name, status"
                   id="outlined-search"
                   InputProps={{
                     startAdornment: (
@@ -212,6 +226,13 @@ const Review = () => {
                         <SvgIcon color="action" fontSize="small">
                           <SearchIcon />
                         </SvgIcon>
+                      </InputAdornment>
+                    ),
+                    endAdornment: searchTerm && (
+                      <InputAdornment position="end">
+                        <IconButton onClick={handelClearSearch}>
+                          <ClearRoundedIcon />
+                        </IconButton>
                       </InputAdornment>
                     ),
                   }}
@@ -248,7 +269,6 @@ const Review = () => {
           </Box>
         </CardContent>
       </Card>
-
       <div className="ListContainer">
         <TableContainer>
           <Table>
