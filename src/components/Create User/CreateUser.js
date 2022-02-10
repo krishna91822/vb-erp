@@ -161,7 +161,7 @@ const CreateUser = () => {
               margin: "0 10%",
             }}
           >
-            <label style={{ padding: "10px" }}>Name:</label>
+            <label style={{ padding: "10px" }}>Name</label>
 
             <TextField
               required
@@ -182,7 +182,7 @@ const CreateUser = () => {
               margin: "0 10%",
             }}
           >
-            <label style={{ padding: "10px" }}>Email:</label>
+            <label style={{ padding: "10px" }}>Email</label>
             <TextField
               name="useremail"
               id="useremail"
@@ -196,7 +196,7 @@ const CreateUser = () => {
           </CardContent>
           <MiniHeadingTypography sx={{ p: 2 }}>Roles</MiniHeadingTypography>
           <Divider />
-          <CardHeader sx={{ padding: "10px" }} subheader="Select Roles:" />
+          <CardHeader sx={{ padding: "10px" }} subheader="Select Roles" />
           <CardContent sx={{ margin: "0 20%", padding: "10px" }}>
             <Grid container spacing={1} wrap="wrap">
               {userAccount.roles &&

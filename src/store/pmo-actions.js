@@ -119,6 +119,7 @@ export const getAllProjects = (type, pageNo) => {
 
 export const getAllFilterProjects = (type, filters) => {
   return async (dispatch) => {
+    dispatch(uiActions.toggleLoader());
     const getData = async () => {
       let url = `/projects/${type}?limit=10`;
       if (filters.clientName) url += `&clientName=${filters.clientName}`;
@@ -142,6 +143,8 @@ export const getAllFilterProjects = (type, filters) => {
           message: error.message,
         })
       );
+    } finally {
+      dispatch(uiActions.toggleLoader());
     }
   };
 };

@@ -1,11 +1,11 @@
 export const professionalConstant = {
   department: "Department",
   designation: "designation",
-  band: "band:",
+  band: "band",
   reportingManager: "reporting manager",
-  graduation: "graduation:",
-  graduationUniversity: "graduation university:",
-  postGraduation: "post graduation:",
-  PgUniversity: "PG university:",
-  experience: "Number of Experience:",
+  graduation: "graduation",
+  graduationUniversity: "graduation university",
+  postGraduation: "post graduation",
+  PgUniversity: "PG university",
+  experience: "Experience",
 };

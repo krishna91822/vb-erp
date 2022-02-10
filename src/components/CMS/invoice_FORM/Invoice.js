@@ -300,6 +300,31 @@ function Invoice(props) {
               </div>
               {user.permissions.includes("upload_invoice") && (
                 <div className="end-btns">
+                  {invoice_raised === "Yes" &&
+                  invoice_amount &&
+                  editTglCheckedState === false ? (
+                    <div>
+                      <Button
+                        variant="contained"
+                        // type="button"
+                        onClick={() => navigate(-1)}
+                        sx={{ mr: 3 }}
+                      >
+                        Back
+                      </Button>
+                    </div>
+                  ) : (
+                    <div>
+                      <Button
+                        variant="contained"
+                        // type="button"
+                        onClick={() => navigate(-1)}
+                        sx={{ mr: 3 }}
+                      >
+                        Cancel
+                      </Button>
+                    </div>
+                  )}
                   <div style={{ paddingRight: "1rem" }}>
                     <TitleTypo
                       data-test="editModeSwitch-label"
@@ -324,7 +349,6 @@ function Invoice(props) {
                       inputProps={{ "aria-label": "switch" }}
                     />
                   </div>
-
                   <div>
                     {props.editBtn && editTglCheckedState ? (
                       <div className="invoice-updateBtn">

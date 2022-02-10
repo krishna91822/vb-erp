@@ -7,7 +7,15 @@ import TableBody from "@mui/material/TableBody";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import { Card, CardContent, Box, InputAdornment, SvgIcon } from "@mui/material";
+import {
+  Card,
+  CardContent,
+  Box,
+  InputAdornment,
+  SvgIcon,
+  IconButton,
+} from "@mui/material";
+import { ClearRounded as ClearRoundedIcon } from "@mui/icons-material";
 import { Search as SearchIcon } from "../../icons/search";
 import TextField from "@mui/material/TextField";
 import { styled, alpha } from "@mui/material/styles";
@@ -141,6 +149,13 @@ function InvoiceInfo() {
       dispatch(paginationFetchInvoice(filename, 1, 10, searchKeyword));
     }
   };
+
+  const handelClearSearch = () => {
+    setSearchKeyword("");
+    setCurrentPage(1);
+    dispatch(paginationFetchInvoice(filename, 1, 10, ""));
+  };
+
   return (
     <div className="list-wrapper">
       <StyledTypography>Invoice Information</StyledTypography>
@@ -154,6 +169,7 @@ function InvoiceInfo() {
                     fullWidth
                     id="outlined-basic"
                     onChange={SearchTextHandler}
+                    value={searchKeyword}
                     placeholder="Search by client/project name"
                     onKeyPress={searchHandler}
                     InputProps={{
@@ -162,6 +178,13 @@ function InvoiceInfo() {
                           <SvgIcon color="action" fontSize="small">
                             <SearchIcon />
                           </SvgIcon>
+                        </InputAdornment>
+                      ),
+                      endAdornment: searchKeyword && (
+                        <InputAdornment position="end">
+                          <IconButton onClick={handelClearSearch}>
+                            <ClearRoundedIcon />
+                          </IconButton>
                         </InputAdornment>
                       ),
                     }}

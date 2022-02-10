@@ -11,6 +11,7 @@ import Button from "@mui/material/Button";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+import { ClearRounded as ClearRoundedIcon } from "@mui/icons-material";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
@@ -21,6 +22,7 @@ import {
   Box,
   InputAdornment,
   SvgIcon,
+  IconButton,
 } from "@mui/material";
 import { Search as SearchIcon } from "../../icons/search";
 import LongMenu from "./ClonePO";
@@ -130,6 +132,13 @@ export const Main = () => {
       dispatch(paginationFetchPosow(filename, 1, 10, searchKeyword));
     }
   };
+
+  const handelClearSearch = () => {
+    setSearchKeyword("");
+    setCurrentPage(1);
+    dispatch(paginationFetchPosow(filename, 1, 10, ""));
+  };
+
   return (
     <div className="list-wrapper">
       <StyledTypography>PO/SOW's Information</StyledTypography>
@@ -142,6 +151,7 @@ export const Main = () => {
                   <TextField
                     fullWidth
                     id="outlined-basic"
+                    value={searchKeyword}
                     onChange={SearchTextHandler}
                     placeholder="Search by client/project name"
                     onKeyPress={searchHandler}
@@ -151,6 +161,13 @@ export const Main = () => {
                           <SvgIcon color="action" fontSize="small">
                             <SearchIcon />
                           </SvgIcon>
+                        </InputAdornment>
+                      ),
+                      endAdornment: searchKeyword && (
+                        <InputAdornment position="end">
+                          <IconButton onClick={handelClearSearch}>
+                            <ClearRoundedIcon />
+                          </IconButton>
                         </InputAdornment>
                       ),
                     }}

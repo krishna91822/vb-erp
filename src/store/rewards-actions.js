@@ -92,8 +92,8 @@ export const searchData = (data) => {
     };
 
     try {
+      dispatch(uiActions.toggleLoader());
       const data = await fetchData();
-
       dispatch(
         rewardsActions.addRewards({
           rewards: data.data.data.results || [],
@@ -115,6 +115,8 @@ export const searchData = (data) => {
           })
         );
       }, 3000);
+    } finally {
+      dispatch(uiActions.toggleLoader());
     }
   };
 };

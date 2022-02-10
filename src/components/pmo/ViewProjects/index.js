@@ -25,6 +25,7 @@ import {
   ListItemText,
 } from "@mui/material";
 import { Search as SearchIcon } from "../../../icons/search";
+import { ClearRounded as ClearRoundedIcon } from "@mui/icons-material";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import NoDataFound from "../NoDataFound";
 import FilterListIcon from "@mui/icons-material/FilterList";
@@ -93,6 +94,7 @@ const ViewProjects = () => {
 
   const filterData = (event) => {
     setFilters({ ...filters, [event.target.name]: event.target.value });
+    setSearchTerm(event.target.value);
     if (event.key === "Enter") {
       dispatch(getAllFilterProjects(filterProjects, filters));
     }
@@ -101,6 +103,16 @@ const ViewProjects = () => {
   const changePage = (event, value) => {
     dispatch(getAllProjects(filterProjects, value));
   };
+
+  const [searchTerm, setSearchTerm] = useState("");
+  const handelClearSearch = () => {
+    setFilters({ ...filters, projectName: "" });
+    setSearchTerm("");
+    dispatch(
+      getAllFilterProjects(filterProjects, { ...filters, projectName: "" })
+    );
+  };
+
   return (
     <div className="list-wrapper">
       <StyledTypography data-test="main-heading">Projects</StyledTypography>
@@ -123,6 +135,13 @@ const ViewProjects = () => {
                         <SvgIcon color="action" fontSize="small">
                           <SearchIcon />
                         </SvgIcon>
+                      </InputAdornment>
+                    ),
+                    endAdornment: searchTerm && (
+                      <InputAdornment position="end">
+                        <IconButton onClick={handelClearSearch}>
+                          <ClearRoundedIcon />
+                        </IconButton>
                       </InputAdornment>
                     ),
                   }}

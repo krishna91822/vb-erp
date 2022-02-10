@@ -6,7 +6,7 @@ export const profileInfoConstant = {
   designation: "designation",
   dateOfJoining: "date of joining",
   reportingManager: "reporting to",
-  dob: "DOB:",
+  dob: "DOB",
   tabs: {
     personal: "personal",
     professional: "professional",

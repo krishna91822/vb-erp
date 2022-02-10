@@ -17,10 +17,12 @@ import {
   SvgIcon,
   TextField,
   InputAdornment,
+  IconButton,
 } from "@mui/material";
 import FilterListIcon from "@mui/icons-material/FilterList";
 import FilterListOffIcon from "@mui/icons-material/FilterListOff";
 import { Search as SearchIcon } from "../../../icons/search";
+import { ClearRounded as ClearRoundedIcon } from "@mui/icons-material";
 
 import { SideButton } from "./style";
 import { StyledTypography } from "../../../assets/GlobalStyle/style";
@@ -50,6 +52,11 @@ const Allocation = () => {
     setSortValue(event.target.value);
   };
 
+  const [searchTerm, setSearchTerm] = useState("");
+  const handelClearSearch = () => {
+    setSearchTerm("");
+  };
+
   return (
     <div className="list-wrapper">
       <StyledTypography data-test="main-heading">Allocations</StyledTypography>
@@ -61,10 +68,14 @@ const Allocation = () => {
                 {!bench ? (
                   <TextField
                     fullWidth
+                    value={searchTerm}
                     id="outlined-basic"
                     placeholder="Search by Associate name"
                     name="employeeName"
-                    onChange={filterData}
+                    onChange={(event) => {
+                      filterData(event);
+                      setSearchTerm(event.target.value);
+                    }}
                     onKeyPress={(event) => filterData(event)}
                     InputProps={{
                       startAdornment: (
@@ -74,16 +85,27 @@ const Allocation = () => {
                           </SvgIcon>
                         </InputAdornment>
                       ),
+                      endAdornment: searchTerm && (
+                        <InputAdornment position="end">
+                          <IconButton onClick={handelClearSearch}>
+                            <ClearRoundedIcon />
+                          </IconButton>
+                        </InputAdornment>
+                      ),
                     }}
                     variant="outlined"
                   />
                 ) : (
                   <TextField
                     fullWidth
+                    value={searchTerm}
                     id="outlined-basic"
                     placeholder="Search by Associate name"
                     name="employeeName"
-                    onChange={filterBenchData}
+                    onChange={(event) => {
+                      filterBenchData(event);
+                      setSearchTerm(event.target.value);
+                    }}
                     onKeyPress={(event) => filterBenchData(event)}
                     InputProps={{
                       startAdornment: (
@@ -91,6 +113,13 @@ const Allocation = () => {
                           <SvgIcon color="action" fontSize="small">
                             <SearchIcon />
                           </SvgIcon>
+                        </InputAdornment>
+                      ),
+                      endAdornment: searchTerm && (
+                        <InputAdornment position="end">
+                          <IconButton onClick={handelClearSearch}>
+                            <ClearRoundedIcon />
+                          </IconButton>
                         </InputAdornment>
                       ),
                     }}

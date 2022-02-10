@@ -326,7 +326,6 @@ const ProfileInfoEditable = (props) => {
                 </CardContent>
               </Card>
             </Grid>
-
             <Grid item lg={8} md={12} xs={12}>
               <Card>
                 <CardContent>

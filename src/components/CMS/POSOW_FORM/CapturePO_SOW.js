@@ -100,7 +100,6 @@ export const CapturePO_SOW = (props) => {
   const allocationRateArr = useSelector(
     (state) => state.CMS_state.allocationRate
   );
-  console.log(allocationRateArr);
   const user = useSelector((state) => state.user.user);
 
   let initClientName = null;
@@ -365,6 +364,15 @@ export const CapturePO_SOW = (props) => {
 
                 {user.permissions.includes("upload_PO/SOW/contract") && (
                   <div className="end-btns">
+                    <div className="posow-SaveButton">
+                      <Button
+                        variant="contained"
+                        // type="button"
+                        onClick={() => navigate(-1)}
+                      >
+                        Cancel
+                      </Button>
+                    </div>
                     {props.editBtn ? (
                       <div style={{ paddingRight: "1rem" }}>
                         <TitleTypo
@@ -496,7 +504,7 @@ export const CapturePO_SOW = (props) => {
                       className="posow-projectInfoHeading"
                       data-test="client-sponsor-chkBox-label"
                     >
-                      Client Sponsor
+                      {clientProjectSponsor && "Client Sponsor"}
                     </MiniHeadingTypography>
                     <ul className="posow-ul">
                       <li>{clientProjectSponsor}</li>
@@ -509,7 +517,7 @@ export const CapturePO_SOW = (props) => {
                       className="posow-projectInfoHeading"
                       data-test="client-finController-chkBox-label"
                     >
-                      Client Finance Controller
+                      {clientFinanceController && "Client Finance Controller"}
                     </MiniHeadingTypography>
                     <ul className="posow-ul">
                       <li>{clientFinanceController}</li>
@@ -522,7 +530,7 @@ export const CapturePO_SOW = (props) => {
                       className="posow-projectInfoHeading"
                       data-test="TargetedRes-chkBox-label"
                     >
-                      Targeted Resources
+                      {targetedResources.length !== 0 && "Targeted Resources"}
                     </MiniHeadingTypography>
                     <ul className="posow-ul">
                       {targetedResources.map((name, index) => {
