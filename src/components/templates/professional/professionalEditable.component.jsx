@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-import { Grid, Box, TextField } from "@mui/material";
+import { Grid, Box } from "@mui/material";
 import ClearIcon from "@mui/icons-material/Clear";
 import { TitleTypo } from "../../UI/commonStyles";
 
@@ -238,8 +238,25 @@ const ProfessionalEditable = ({
               )}
             </Box>
           </ContentBox>
+          <ContentBox>
+            <TitleTypo>{professionalConstant.experience}</TitleTypo>
+            <CustomTextField
+              autoComplete="off"
+              required
+              id="outlined-basic"
+              variant="outlined"
+              value={yearsOfExperience ? yearsOfExperience : ""}
+              name="yearsOfExperience"
+              placeholder="Enter Number of Experience"
+              onChange={handleChange}
+              type="number"
+            />
+          </ContentBox>
           {professionalDetails.map((field, index) => (
-            <ContentBox key={index} sx={{ position: "relative" }}>
+            <ContentBox
+              key={index}
+              sx={{ position: "relative", alignItems: "center" }}
+            >
               <TitleTypo>{field.fieldName}</TitleTypo>
               {field.fieldType === "date" ? (
                 <LocalizationProvider dateAdapter={AdapterDateFns}>
@@ -259,12 +276,21 @@ const ProfessionalEditable = ({
                       setProfessionalDetails(updates);
                     }}
                     renderInput={(params) => (
-                      <CustomTextField {...params} name="fieldValue" />
+                      <CustomTextField
+                        {...params}
+                        name="fieldValue"
+                        sx={{
+                          "& .MuiOutlinedInput-root": {
+                            width: "80%",
+                            height: "40px",
+                          },
+                        }}
+                      />
                     )}
                   />
                 </LocalizationProvider>
               ) : (
-                <TextField
+                <CustomTextField
                   autoComplete="off"
                   required
                   id="outlined-basic"
@@ -294,20 +320,6 @@ const ProfessionalEditable = ({
             </ContentBox>
           ))}
         </Box>
-        <ContentBox>
-          <TitleTypo>{professionalConstant.experience}</TitleTypo>
-          <CustomTextField
-            autoComplete="off"
-            required
-            id="outlined-basic"
-            variant="outlined"
-            value={yearsOfExperience ? yearsOfExperience : ""}
-            name="yearsOfExperience"
-            placeholder="Enter Number of Experience"
-            onChange={handleChange}
-            type="number"
-          />
-        </ContentBox>
       </Grid>
     </Grid>
   );

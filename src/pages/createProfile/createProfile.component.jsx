@@ -54,6 +54,7 @@ import validator from "validator";
 import ProjectTab from "../../components/templates/project/project.component";
 import PlagiarismIcon from "@mui/icons-material/Plagiarism";
 import { useNavigate } from "react-router-dom";
+import { progressBarCalculation } from "./../../helpers/progressBar";
 
 const CreateProfile = ({
   editEmployeeData,
@@ -160,25 +161,7 @@ const CreateProfile = ({
 
   //calculate percentage progress
   const profileProgress = () => {
-    const totalFields =
-      Object.keys(employee).length +
-      personalDetails.length +
-      professionalDetails.length +
-      skillsDetails.length;
-    const completedFields =
-      Object.values(employee).filter(
-        (field) =>
-          field !== undefined &&
-          field !== null &&
-          field !== "" &&
-          field.length !== 0
-      ).length +
-      personalDetails.filter((field) => field.fieldValue !== "").length +
-      professionalDetails.filter((field) => field.fieldValue !== "").length +
-      skillsDetails.filter((field) => field.fieldValue !== "").length;
-
-    const percentage = Math.floor((completedFields / totalFields) * 100);
-    return percentage;
+    return progressBarCalculation(employee);
   };
 
   //render value input field according to types
@@ -232,10 +215,10 @@ const CreateProfile = ({
     ) {
       return;
     }
-    if (tab === 0) setPersonalDetails([...personalDetails, newFieldData]);
-    if (tab === 1)
+    if (value === 0) setPersonalDetails([...personalDetails, newFieldData]);
+    if (value === 1)
       setProfessionalDetails([...professionalDetails, newFieldData]);
-    if (tab === 2) setSkillsDetails([...skillsDetails, newFieldData]);
+    if (value === 2) setSkillsDetails([...skillsDetails, newFieldData]);
     setNewFieldData(newFieldTemplate);
     handleClose();
   };
@@ -373,6 +356,7 @@ const CreateProfile = ({
             skillsDetails,
           },
         });
+    console.log(createEmployee.employeeDetails);
     if (createEmployee?.reqType === "profile-creation") {
       setNameUser(createEmployee.employeeDetails.empName);
       setEmailUser(createEmployee.employeeDetails.empEmail);
@@ -552,14 +536,16 @@ const CreateProfile = ({
                     >
                       {createProfileConstant.confirm}
                     </Button>
-                    <Button
-                      data-test="custome-button-test"
-                      onClick={handleOpen}
-                      variant="contained"
-                      style={{ marginRight: "1rem" }}
-                    >
-                      {createProfileConstant.addCustomField}
-                    </Button>
+                    {value !== 3 && (
+                      <Button
+                        data-test="custome-button-test"
+                        onClick={handleOpen}
+                        variant="contained"
+                        style={{ marginRight: "1rem" }}
+                      >
+                        {createProfileConstant.addCustomField}
+                      </Button>
+                    )}
                   </Box>
                 </Box>
               </ContainerStyleTop>

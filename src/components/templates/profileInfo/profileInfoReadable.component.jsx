@@ -137,7 +137,7 @@ const ProfileInfoReadable = ({
                     <Box mt={2}>
                       <ContentBox>
                         <TitleTypo>{profileInfoConstant.emailId}</TitleTypo>
-                        <ContentTypo>{empEmail}</ContentTypo>
+                        <ContentTypo isEmail={true}>{empEmail}</ContentTypo>
                       </ContentBox>
                     </Box>
                     <Box mt={2}>

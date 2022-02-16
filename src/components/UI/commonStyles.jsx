@@ -30,13 +30,14 @@ export const SubTitleTypo = styled("div")(({ theme }) => ({
   fontSize: 13,
 }));
 
-export const ContentTypo = styled("div")(({ theme }) => ({
+export const ContentTypo = styled("div")(({ theme, isEmail }) => ({
   ...theme.typography.h5,
   fontSize: 13,
   fontWeight: "400",
   lineHeight: "1",
   letterSpacing: "0.5px",
   color: "rgb(55, 65, 81)",
+  textTransform: isEmail ? "none" : "inherit",
   fontFamily:
     "Inter, -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji",
 }));
