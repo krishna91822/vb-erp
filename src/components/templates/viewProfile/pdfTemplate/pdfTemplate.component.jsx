@@ -159,7 +159,7 @@ const PdfTemplate = ({ viewedEmployee }) => {
                   <p id="title3">Projects</p>
                   <div id="line"></div>
                   {viewedEmployee.project.map((el, i) => (
-                    <div class="project-box" key={i}>
+                    <div className="project-box" key={i}>
                       <div id="content-box2">
                         <p id="title2">Project Name: </p>
                         <p id="content1">{el.projectName}</p>
