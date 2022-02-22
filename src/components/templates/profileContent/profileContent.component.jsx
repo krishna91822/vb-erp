@@ -69,8 +69,6 @@ const ProfileContent = (props) => {
 
   profileProgress();
 
-  // const [value, setValue] = useState(0);
-
   const handleFieldChange = (event) => {
     setNewFieldData({
       ...newFieldData,
