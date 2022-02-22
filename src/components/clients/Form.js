@@ -23,6 +23,7 @@ export default function Form() {
     companyTypes,
     handelComAddress,
     handelBrandName,
+    handelLegalName,
   } = UseForm();
 
   const [checked, setChecked] = useState(false);
@@ -55,7 +56,7 @@ export default function Form() {
               value={formData.legalName}
               size="small"
               onChange={(e) => setformvalue(e)}
-              onBlur={(e) => setformvalue(e)}
+              onBlur={(e) => handelLegalName(e)}
               {...(errors.legalName && {
                 error: true,
                 helperText: errors.legalName,

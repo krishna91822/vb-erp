@@ -9,6 +9,7 @@ import {
   getAddressByPincode,
   addNewClient,
   updateClient,
+  checkLegalName,
 } from "../../store/cims-actions";
 
 const companyTypes = ["GST Registered", "GST Unregistered", "Overseas"];
@@ -306,6 +307,15 @@ export default function UseForm() {
     }
   };
 
+  const handelLegalName = async (e) => {
+    const legal = e.target.value;
+    console.log(legal, "---------");
+    setformvalue(e);
+    if (legal) {
+      dispatch(checkLegalName(legal));
+    }
+  };
+
   const validateAddress = (addType, fieldValues) => {
     let temp = JSON.parse(JSON.stringify(errors));
     if ("addressLine1" in fieldValues)
@@ -580,7 +590,7 @@ export default function UseForm() {
     handelComAddress,
     updateForm,
     handelBrandName,
-
+    handelLegalName,
     user,
   };
 }

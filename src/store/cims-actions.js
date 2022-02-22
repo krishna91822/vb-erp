@@ -390,3 +390,39 @@ export const changeActiveStatus = (clientId, clientStatus, brandName) => {
     }
   };
 };
+
+export const checkLegalName = (legal) => {
+  return async (dispatch) => {
+    const fetchData = async () => {
+      const response = await axios.get("/checklegalname", {
+        headers: {
+          legalname: legal,
+        },
+      });
+
+      if (response.data.code !== 200) {
+        throw new Error(
+          response.data.message || "Something went wrong! Please try again..."
+        );
+      }
+      return true;
+    };
+
+    try {
+      dispatch(uiActions.toggleLoader());
+      const data = await fetchData();
+      if (data) dispatch(cimsActions.setLegalFocus(false));
+    } catch (error) {
+      setTimeout(function () {
+        dispatch(
+          cimsActions.setPopUp({
+            popUpOpen: true,
+            message: error.message,
+          })
+        );
+      }, 1000);
+    } finally {
+      dispatch(uiActions.toggleLoader());
+    }
+  };
+};

@@ -232,7 +232,8 @@ const CreateProject = () => {
         dispatch(
           uiActions.showNotification({
             status: "error",
-            message: "Start Date need to be in range",
+            message:
+              "Start Date need to be in range between project start and end date",
           })
         );
       } else if (startDate === "" || endDate === "") {
@@ -256,7 +257,8 @@ const CreateProject = () => {
         dispatch(
           uiActions.showNotification({
             status: "error",
-            message: "End Date need to be in range",
+            message:
+              "End Date need to be in range between project start and end date",
           })
         );
       } else if (target.value < resource.startDate) {
