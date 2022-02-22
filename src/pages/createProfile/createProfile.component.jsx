@@ -356,7 +356,6 @@ const CreateProfile = ({
             skillsDetails,
           },
         });
-    console.log(createEmployee.employeeDetails);
     if (createEmployee?.reqType === "profile-creation") {
       setNameUser(createEmployee.employeeDetails.empName);
       setEmailUser(createEmployee.employeeDetails.empEmail);
