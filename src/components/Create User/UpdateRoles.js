@@ -218,7 +218,9 @@ const UpdateRoles = () => {
                 setOpen(false);
               }}
               onInputChange={handleUserName}
-              getOptionLabel={(option) => `${option.empName} (${option.empId})`}
+              getOptionLabel={(option) =>
+                `${option.empName} (${option.empId})` || option.empId
+              }
               onChange={handleOnClick}
               options={userAccount.employees}
               open={open}
