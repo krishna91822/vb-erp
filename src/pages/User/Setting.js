@@ -2,7 +2,7 @@ import UpdatePassword from "../../components/Create User/UpdatePassword";
 import UpdateRoles from "../../components/Create User/UpdateRoles";
 import { useSelector } from "react-redux";
 
-const UpdateUserPassword = () => {
+const Setting = () => {
   const user = useSelector((state) => state.user.user);
 
   return (
@@ -13,4 +13,4 @@ const UpdateUserPassword = () => {
   );
 };
 
-export default UpdateUserPassword;
+export default Setting;
