@@ -24,7 +24,7 @@ import {
   updateUserAccount,
 } from "../../store/userAccount-action";
 import { useSelector, useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { uiActions } from "../../store/ui-slice";
 import { userAccountActions } from "../../store/userAccount-slice";
 
@@ -39,6 +39,7 @@ const initialState = {
 
 const UpdateRoles = () => {
   const dispatch = useDispatch();
+  const location = useLocation().pathname;
   const [username, setUsername] = useState("");
   const [useremail, setUseremail] = useState("");
   const [roles, setRoles] = useState([]);
@@ -122,20 +123,31 @@ const UpdateRoles = () => {
   };
 
   const userAccount = useSelector((state) => state.createUser);
+  useEffect(() => {
+    if (userAccount.user.length) {
+      dispatch(userAccountActions.resetForm());
+    }
+    // eslint-disable-next-line
+  }, [location]);
 
   useEffect(() => {
     dispatch(SetRoles());
+    // eslint-disable-next-line
   }, []);
 
   useEffect(() => {
-    if (useremail != "") {
+    if (useremail !== "") {
       dispatch(getUser(useremail));
     }
+    // eslint-disable-next-line
   }, [useremail]);
   useEffect(() => {
-    if (userAccount.user.length) {
+    if (userAccount.user.length !== 0) {
       setRoles(userAccount.user[0].role);
+    } else {
+      setRoles([]);
     }
+    // eslint-disable-next-line
   }, [userAccount.user]);
 
   const handleUserName = (event, value) => {

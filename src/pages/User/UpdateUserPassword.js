@@ -1,6 +1,6 @@
 import UpdatePassword from "../../components/Create User/UpdatePassword";
 import UpdateRoles from "../../components/Create User/UpdateRoles";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 
 const UpdateUserPassword = () => {
   const user = useSelector((state) => state.user.user);
