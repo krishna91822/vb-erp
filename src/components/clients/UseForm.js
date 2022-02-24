@@ -309,7 +309,6 @@ export default function UseForm() {
 
   const handelLegalName = async (e) => {
     const legal = e.target.value;
-    console.log(legal, "---------");
     setformvalue(e);
     if (legal) {
       dispatch(checkLegalName(legal));

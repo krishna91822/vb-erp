@@ -426,3 +426,35 @@ export const checkLegalName = (legal) => {
     }
   };
 };
+
+export const setDomainSector = () => {
+  return async (dispatch) => {
+    const fetchData = async () => {
+      const response = await axios.get("/dropdowns?dropdownName=domain-sector");
+
+      if (response.data.code !== 200) {
+        throw new Error(
+          response.data.message || "Something went wrong! Please try again..."
+        );
+      }
+      return response.data;
+    };
+
+    try {
+      dispatch(uiActions.toggleLoader());
+      const data = await fetchData();
+      if (data) dispatch(cimsActions.setDomain(data));
+    } catch (error) {
+      setTimeout(function () {
+        dispatch(
+          cimsActions.setPopUp({
+            popUpOpen: true,
+            message: error.message,
+          })
+        );
+      }, 1000);
+    } finally {
+      dispatch(uiActions.toggleLoader());
+    }
+  };
+};

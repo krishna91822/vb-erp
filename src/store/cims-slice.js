@@ -78,6 +78,7 @@ const initialState = {
   popUpOpen: false,
   popUpMessage: "",
   popUpOk: "",
+  domain: {},
 };
 
 const cimsSlice = createSlice({
@@ -216,6 +217,9 @@ const cimsSlice = createSlice({
     },
     setLegalFocus(state, action) {
       state.legalFocus = action.payload;
+    },
+    setDomain(state, action) {
+      state.domain = action.payload;
     },
   },
 });
