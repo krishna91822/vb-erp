@@ -277,3 +277,23 @@ export const searchPoSow = (keyword) => {
     }
   };
 };
+
+export const uploadFileAction = (data) => {
+  return async function (dispatch) {
+    try {
+      await axios.post("poSow/file", data, {
+        headers: {
+          "Content-type": "multipart/form-data",
+        },
+      });
+    } catch (err) {
+      dispatch(
+        uiActions.showNotification({
+          status: "error",
+          title: "Error",
+          message: "Error while uploading file",
+        })
+      );
+    }
+  };
+};
