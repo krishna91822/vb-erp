@@ -5,13 +5,8 @@ import axios from "../helpers/axiosInstance";
 export const searchEmployees = (empName) => {
   return async (dispatch) => {
     const fetchData = async () => {
-      let empId = "";
-      if (empName.startsWith("vb") && typeof parseInt(empName.charAt(2))) {
-        empId = empName;
-        empName = "";
-      }
       const response = await axios.get(
-        `/employees?search=${empName}&status=active&sort=${empId}`
+        `/employees?search=${empName}&status=active`
       );
       if (response.status === "failure") {
         throw new Error("Could not fetch employeesName");
