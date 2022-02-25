@@ -39,8 +39,10 @@ import {
   TitleTypo,
   CustomSwitch,
 } from "./../../templates/editMode/editMode.styles";
+import useStyles from "../../UI/customStyle";
 
 function Invoice(props) {
+  const classes = useStyles();
   const params = useParams();
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -375,6 +377,7 @@ function Invoice(props) {
                 <Box sx={{ minWidth: 120 }}>
                   <FormControl fullWidth>
                     <TextField
+                      className={classes.input}
                       disabled={true}
                       value={projectName}
                       size="small"
@@ -388,6 +391,7 @@ function Invoice(props) {
                 <Box sx={{ minWidth: 120 }}>
                   <FormControl fullWidth>
                     <TextField
+                      className={classes.input}
                       disabled={true}
                       value={personName}
                       size="small"
@@ -406,6 +410,7 @@ function Invoice(props) {
                           size="small"
                           //
                           disabled={true}
+                          className={classes.input}
                           value={ClientSponsor}
                           onChange={handleClientSponsor}
                         />
@@ -420,6 +425,7 @@ function Invoice(props) {
                         <TextField
                           size="small"
                           disabled={true}
+                          className={classes.input}
                           value={Client_Fin_controller}
                         />
                       </FormControl>
@@ -433,6 +439,7 @@ function Invoice(props) {
                         <TextField
                           size="small"
                           disabled={true}
+                          className={classes.input}
                           value={PO_amt}
                           onChange={handlePOAmtTxtBoxChange}
                         />
@@ -448,6 +455,7 @@ function Invoice(props) {
                         <TextField
                           size="small"
                           disabled={true}
+                          className={classes.input}
                           value={PO_number}
                           onChange={handlePoNumTxtBoxChange}
                         />
@@ -500,6 +508,7 @@ function Invoice(props) {
                       <Select
                         size="small"
                         disabled={!editTglCheckedState}
+                        className={classes.div}
                         value={invoice_raised}
                         onChange={handleInvoiceRaised}
                       >
@@ -530,6 +539,7 @@ function Invoice(props) {
                     <FormControl fullWidth>
                       <TextField
                         size="small"
+                        className={classes.input}
                         disabled={
                           !invoicereceived ||
                           !editTglCheckedState ||
@@ -553,6 +563,7 @@ function Invoice(props) {
                           invoice_raised_yesno === "No" ||
                           !editTglCheckedState
                         }
+                        className={classes.div}
                         value={Vb_Bank_Acc}
                         onChange={handlevbbankacc}
                       >
@@ -572,6 +583,7 @@ function Invoice(props) {
                   <BasicDatePicker
                     onChange={handleDate}
                     value={Date_ ? new Date(Date_) : null}
+                    className={classes.input}
                     disabled={
                       !invoicereceived ||
                       invoice_raised_yesno === "No" ||
@@ -583,7 +595,7 @@ function Invoice(props) {
                 <Grid item lg={12} md={12} sm={122} xs={12}>
                   <label id="demo-multiple-name-label">Remarks</label>
                   <TextField
-                    className="finalinput"
+                    className={`${classes.div} finalinput`}
                     size="small"
                     id="outlined-multiline-static"
                     multiline

@@ -13,8 +13,10 @@ import AddressFields from "./AddressFields";
 import ContactForm from "./ContactForm";
 import "./styles/ClientFormStyles.css";
 import { useSelector } from "react-redux";
+import useStyles from "../UI/customStyle";
 
 export default function Form() {
+  const classes = useStyles();
   const editMode = useSelector((state) => state.cims.editMode);
   const {
     formData,
@@ -52,6 +54,7 @@ export default function Form() {
               fullWidth
               required
               disabled={!editMode}
+              className={classes.input}
               value={formData.legalName}
               size="small"
               onChange={(e) => setformvalue(e)}
@@ -72,6 +75,7 @@ export default function Form() {
                 fullWidth
                 required
                 disabled={!editMode}
+                className={classes.input}
                 value={formData.brandName}
                 size="small"
                 onChange={(e) => setformvalue(e)}
@@ -93,6 +97,7 @@ export default function Form() {
                 fullWidth
                 required
                 disabled={!editMode}
+                className={classes.input}
                 value={formData.domain}
                 size="small"
                 onChange={(e) => setformvalue(e)}
@@ -146,6 +151,7 @@ export default function Form() {
               size="small"
               required
               disabled={!editMode}
+              className={classes.div}
               fullWidth
               label="Company Type"
               value={formData.companyType}
@@ -175,6 +181,7 @@ export default function Form() {
               required
               disabled={!editMode || formData.companyType === "Overseas"}
               size="small"
+              className={classes.input}
               value={
                 formData[
                   formData.companyType === "GST Registered"

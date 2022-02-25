@@ -10,8 +10,10 @@ import {
 import UseForm from "./UseForm";
 import "./styles/ClientFormStyles.css";
 import { useSelector } from "react-redux";
+import useStyles from "../UI/customStyle";
 
 export default function AddressFields(props) {
+  const classes = useStyles();
   const {
     formData,
     setAddress,
@@ -39,6 +41,7 @@ export default function AddressFields(props) {
               value={formData[props.type][field.name]}
               label={field.label}
               disabled={!editMode}
+              className={classes.div}
               onChange={(e) => handelCountry(e, props.type)}
             >
               {Object.keys(countries).map((key) => (
@@ -71,6 +74,7 @@ export default function AddressFields(props) {
               value={formData[props.type][field.name]}
               label={field.label}
               disabled={!editMode}
+              className={classes.div}
               onChange={(e) => handelCountry(e, props.type)}
               onBlur={(e) => handelCountry(e, props.type)}
             >
@@ -101,6 +105,7 @@ export default function AddressFields(props) {
               value={formData[props.type][field.name]}
               label={field.label}
               disabled={!editMode}
+              className={classes.div}
               onChange={(e) => handelCountry(e, props.type)}
               onBlur={(e) => handelCountry(e, props.type)}
             >
@@ -130,6 +135,7 @@ export default function AddressFields(props) {
             field.name === "district" ||
             field.name === "area"
           }
+          className={classes.input}
           value={formData[props.type][field.name]}
           onChange={(e) => setAddress(e, props.type)}
           onBlur={(e) => handelAddressOnBlur(e, props.type)}
