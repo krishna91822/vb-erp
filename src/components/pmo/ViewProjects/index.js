@@ -172,24 +172,6 @@ const ViewProjects = () => {
                     )}
                   </Box>
                   <Box m={1}>
-                    {user.permissions.includes("create_project_in_PMO") && (
-                      <Button
-                        variant="contained"
-                        sx={{
-                          backgroundColor: "chocolate",
-                          ":hover": {
-                            background: "chocolate",
-                          },
-                        }}
-                        onClick={() => {
-                          navigate("/pmo/projects/create");
-                        }}
-                      >
-                        Create a project
-                      </Button>
-                    )}
-                  </Box>
-                  <Box m={1}>
                     <FormControl size="small">
                       <InputLabel id="filterBy">Sort By</InputLabel>
                       <Select
