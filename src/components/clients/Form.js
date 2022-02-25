@@ -52,14 +52,12 @@ export default function Form() {
 
   const handleOnClick = (event, value) => {
     if (value) {
-      // console.log(value);
       setSelectedValue(value.value);
     }
   };
 
   const handleInputChange = (event, value) => {
     if (event) {
-      console.log(value, "--------------------event vala");
       setSelectedValue(value);
     }
   };
@@ -69,8 +67,6 @@ export default function Form() {
       setformvalue(event);
     }
   };
-
-  console.log(selectedValue, "====================");
 
   const dropdownValue = domain.data ? domain.data[0].dropdownArray : "";
 
