@@ -306,10 +306,22 @@ const PersonalEditable = (props) => {
                     inputFormat="dd/MM/yyyy"
                     value={empDob}
                     onChange={(newValue) => {
-                      setEmpData({ ...empData, empDob: newValue });
+                      setEmpData({
+                        ...empData,
+                        empDob:
+                          newValue?.toString() === "Invalid Date"
+                            ? null
+                            : newValue,
+                      });
+                      validateForm(null, ["empDob", newValue]);
                     }}
                     renderInput={(params) => (
-                      <CustomTextField {...params} name="empDob" />
+                      <CustomTextField
+                        {...params}
+                        name="empDob"
+                        helperText={errors?.empDob}
+                        error={Boolean(errors?.empDob)}
+                      />
                     )}
                   />
                 </LocalizationProvider>
@@ -334,16 +346,16 @@ const PersonalEditable = (props) => {
               >
                 {chipData[0] !== ""
                   ? chipData.map((data, i) => (
-                      <ListItem key={i}>
+                      <ListItem key={i} sx={{ margin: "2px" }}>
                         <Chip
                           label={data}
+                          size="small"
                           onDelete={() => handleDelete(i)}
                           sx={{
                             backgroundColor: chipColor[i],
                             color: "#fff",
-                            height: 30,
                             fontSize: 12,
-                            fontWeight: 600,
+                            fontWeight: 400,
                           }}
                         />
                       </ListItem>
@@ -587,10 +599,12 @@ const PersonalEditable = (props) => {
             </ContentTypo>
           </ContentBox>
         </Box>
-
         {personalDetails.map((field, index) => (
-          <ContentBox key={index} sx={{ position: "relative" }}>
-            <ContentTypo>{field.fieldName}</ContentTypo>
+          <ContentBox
+            key={index}
+            sx={{ position: "relative", alignItems: "center" }}
+          >
+            <TitleTypo>{field.fieldName}</TitleTypo>
             {field.fieldType === "date" ? (
               <LocalizationProvider dateAdapter={AdapterDateFns}>
                 <DesktopDatePicker
@@ -608,12 +622,21 @@ const PersonalEditable = (props) => {
                     setPersonalDetails(updates);
                   }}
                   renderInput={(params) => (
-                    <CustomTextField {...params} name="fieldValue" />
+                    <CustomTextField
+                      {...params}
+                      name="fieldValue"
+                      sx={{
+                        "& .MuiOutlinedInput-root": {
+                          width: "80%",
+                          height: "40px",
+                        },
+                      }}
+                    />
                   )}
                 />
               </LocalizationProvider>
             ) : (
-              <TextField
+              <CustomTextField
                 autoComplete="off"
                 required
                 id="outlined-basic"

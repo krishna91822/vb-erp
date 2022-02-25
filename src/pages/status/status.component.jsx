@@ -127,6 +127,8 @@ const Status = (props) => {
     }
   };
 
+  const [value, setValue] = useState(0);
+
   return (
     <div className="list-wrapper">
       <Box
@@ -245,7 +247,11 @@ const Status = (props) => {
               backgroundColor: "rgb(249, 250, 252)",
             }}
           >
-            <ProfileContent currentEmployee={reviewItemData} />
+            <ProfileContent
+              value={value}
+              setValue={setValue}
+              currentEmployee={reviewItemData}
+            />
           </Box>
         </ModalBoxItem>
       </Modal>
