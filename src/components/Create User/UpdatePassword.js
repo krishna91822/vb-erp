@@ -100,17 +100,6 @@ const UpdateUserPassword = () => {
           />
         </CardContent>
         <Divider />
-        {/* <Box
-          sx={{
-            display: "flex",
-            justifyContent: "flex-end",
-            p: 2,
-          }}
-        >
-          <Button type="submit" color="primary" variant="contained">
-            Update
-          </Button>
-        </Box> */}
       </Card>
     </form>
   );
