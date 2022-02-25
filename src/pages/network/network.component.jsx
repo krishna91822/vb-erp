@@ -249,22 +249,24 @@ const Network = () => {
               justifyContent="flex-end"
               alignItems="center"
             >
-              <Box sx={{}}>
-                <CustomTextField
-                  data-test="sort-test"
-                  id="outlined-select-currency"
-                  select
-                  value={sort}
-                  onChange={sortHandleChange}
-                  sx={{ width: "15vw" }}
-                >
-                  {sortOptions.map((option) => (
-                    <MenuItem key={option.value} value={option.value}>
-                      {option.label}
-                    </MenuItem>
-                  ))}
-                </CustomTextField>
-              </Box>
+              {user.permissions.includes("create_employee_dashboard") && (
+                <Box>
+                  <CustomTextField
+                    data-test="sort-test"
+                    id="outlined-select-currency"
+                    select
+                    value={sort}
+                    onChange={sortHandleChange}
+                    sx={{ width: "15vw" }}
+                  >
+                    {sortOptions.map((option) => (
+                      <MenuItem key={option.value} value={option.value}>
+                        {option.label}
+                      </MenuItem>
+                    ))}
+                  </CustomTextField>
+                </Box>
+              )}
             </Grid>
           </Grid>
         </CardContent>
