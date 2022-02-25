@@ -18,7 +18,7 @@ export const ContentTypo = styled("div")(({ theme }) => ({
   fontSize: 13,
   marginTop: "1rem",
   fontWeight: "400",
-  lineHeight: "1",
+  lineHeight: "1.5",
   letterSpacing: "0.5px",
   color: "rgb(55, 65, 81)",
   fontFamily:

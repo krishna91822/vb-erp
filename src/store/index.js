@@ -1,6 +1,8 @@
 import { configureStore } from "@reduxjs/toolkit";
-import logger from "redux-logger";
-import thunk from "redux-thunk";
+
+//middlewares might require in future
+// import logger from "redux-logger";
+// import thunk from "redux-thunk";
 
 import uiSlice from "./ui-slice";
 import employeeSlice from "./employeeSlice";
@@ -13,7 +15,7 @@ import POSOW_Slice from "./CMS/POSOW-slice";
 import invoice_Slice from "./CMS/INVOICE-slice";
 import userAccountSlice from "./userAccount-slice";
 
-const middleware = [logger, thunk];
+// const middleware = [logger, thunk];
 
 export default configureStore({
   reducer: {
@@ -28,5 +30,5 @@ export default configureStore({
     employee: employeeSlice,
     createUser: userAccountSlice.reducer,
   },
-  middleware: [...middleware],
+  // middleware: [...middleware],
 });

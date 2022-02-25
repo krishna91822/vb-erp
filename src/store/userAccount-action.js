@@ -6,7 +6,7 @@ export const searchEmployees = (empName) => {
   return async (dispatch) => {
     const fetchData = async () => {
       const response = await axios.get(
-        `/employees/rewars/employeesearch?search=${empName}`
+        `/employees?search=${empName}&status=active`
       );
       if (response.status === "failure") {
         throw new Error("Could not fetch employeesName");
@@ -144,7 +144,6 @@ export const getUserDetails = (id) => {
 
     try {
       const data = await getUserData();
-      console.log(data, "data here");
       dispatch(userAccountActions.setUserDetails(data));
     } catch (error) {
       setTimeout(function () {

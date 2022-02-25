@@ -57,6 +57,8 @@ const ViewProfile = () => {
     });
   };
 
+  const [value, setValue] = useState(0);
+
   const component = () => {
     return (
       <Box
@@ -126,6 +128,8 @@ const ViewProfile = () => {
         />
       ) : (
         <ProfileContentWithSpinner
+          value={value}
+          setValue={setValue}
           currentEmployee={viewedEmployee}
           toggleEditEmployee={editEmployee}
           setToggleEditEmployee={setEditEmployee}

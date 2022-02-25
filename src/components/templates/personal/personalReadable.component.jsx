@@ -74,14 +74,14 @@ const PersonalReadable = ({ empData }) => {
               empHobbies.length !== 0 &&
               empHobbies[0] !== ""
                 ? empHobbies.map((data, i) => (
-                    <ListItem key={i}>
+                    <ListItem key={i} sx={{ margin: "2px" }}>
                       <Chip
                         label={data}
+                        size="small"
                         sx={{
                           backgroundColor: chipColors[i],
                           color: "#fff",
-                          height: 30,
-                          fontSize: 11,
+                          fontSize: 12,
                           fontWeight: 400,
                         }}
                       />
@@ -128,7 +128,7 @@ const PersonalReadable = ({ empData }) => {
                 <TitleTypo>{field.fieldName}:</TitleTypo>
                 {field.fieldType === "date" ? (
                   <ContentTypo>
-                    {new Date(field.fieldValue).toDateString().slice(4)}
+                    {new Date(field.fieldValue)?.toDateString().slice(4)}
                   </ContentTypo>
                 ) : (
                   <ContentTypo>{field.fieldValue}</ContentTypo>

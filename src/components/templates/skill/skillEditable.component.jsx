@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-import { Grid, Box, TextField } from "@mui/material";
+import { Grid, Box } from "@mui/material";
 import ClearIcon from "@mui/icons-material/Clear";
 
 import {
@@ -13,7 +13,6 @@ import { skillConstant } from "./skill.constant";
 import { DesktopDatePicker, LocalizationProvider } from "@mui/lab";
 import AdapterDateFns from "@mui/lab/AdapterDateFns";
 
-import CreatableSelect from "react-select/creatable";
 import axiosInstance from "../../../helpers/axiosInstance";
 import Select from "react-select";
 
@@ -40,49 +39,62 @@ const SkillEditable = ({
     setSkillsDetails(filteredFields);
   };
 
-  const handleChange = (event) => {
-    const { value, name } = event.target;
-    if (
-      name === "empPrimaryCapability" ||
-      name === "empSkillSet" ||
-      name === "empCertifications"
-    ) {
-      setEmpData({ ...empData, [name]: value.split(",") });
-    }
-  };
+  //dropdown primary capability
+  const [primaryCapability, setPrimaryCapability] = useState(
+    empPrimaryCapability && empPrimaryCapability.length !== 0
+      ? [
+          ...empPrimaryCapability.map((el) => {
+            return { label: el, value: el };
+          }),
+        ]
+      : null
+  );
+  const [primaryCapabilityOption, setPrimaryCapabilityOption] = useState([]);
+  const [primaryCapabilityLoading, setPrimaryCapabilityLoading] =
+    useState(true);
+  useEffect(() => {
+    axiosInstance
+      .get(`/dropdowns?dropdownName=primary-capability`)
+      .then(function (response) {
+        setPrimaryCapabilityLoading(false);
+        const filteredDepartmentOption =
+          response.data.data[0].dropdownArray.map((el) => {
+            return { label: el.label, value: el.value };
+          });
+        setPrimaryCapabilityOption(filteredDepartmentOption);
+      })
+      .catch(function (err) {
+        console.log(err);
+      });
+  }, []);
 
-  const customStyles = {
-    control: (provided, state) => ({
-      ...provided,
-      minHeight: "40px",
-      display: "flex",
-      alignContent: "center",
-    }),
-  };
-
-  //dropdowns
-  const primarySkill = [
-    "aws",
-    "full-stack",
-    "mern",
-    "mean",
-    "react-native",
-    "drupal",
-  ];
-  const primarySkillOptions = primarySkill.map((item) => {
-    return {
-      label: item,
-      value: item,
-    };
-  });
-  const [primarySkillDropdown, setPrimarySkillDropdown] = useState([
-    ...empPrimaryCapability.map((item) => {
-      return {
-        label: item,
-        value: item,
-      };
-    }),
-  ]);
+  //dropdown skill set
+  const [skillSet, setSkillSet] = useState(
+    empSkillSet && empSkillSet.length
+      ? [
+          ...empSkillSet.map((el) => {
+            return { label: el, value: el };
+          }),
+        ]
+      : null
+  );
+  const [skillSetOption, setSkillSetOption] = useState([]);
+  const [skillSetLoading, setSkillSetLoading] = useState(true);
+  useEffect(() => {
+    axiosInstance
+      .get(`/dropdowns?dropdownName=skill-set`)
+      .then(function (response) {
+        setSkillSetLoading(false);
+        const filteredDepartmentOption =
+          response.data.data[0].dropdownArray.map((el) => {
+            return { label: el.label, value: el.value };
+          });
+        setSkillSetOption(filteredDepartmentOption);
+      })
+      .catch(function (err) {
+        console.log(err);
+      });
+  }, []);
 
   //dropdown certificate
   const [certificate, setCertificate] = useState(
@@ -125,16 +137,33 @@ const SkillEditable = ({
                 fontWeight: "400",
               }}
             >
-              <CreatableSelect
-                value={primarySkillDropdown}
+              <Select
+                maxMenuHeight={70}
+                className="basic-single"
+                classNamePrefix="select"
                 isMulti
-                styles={customStyles}
+                isClearable={false}
+                value={primaryCapability ? primaryCapability : null}
+                styles={{
+                  control: (provided, state) => ({
+                    ...provided,
+                    minHeight: "35px",
+                    display: "flex",
+                    alignContent: "center",
+                    borderColor: "hsl(0, 0%, 80%)",
+                  }),
+                  indicatorsContainer: (provided, state) => ({
+                    ...provided,
+                    width: "30px",
+                    padding: "0",
+                  }),
+                }}
+                isLoading={primaryCapabilityLoading}
                 isSearchable
-                name="empPrimaryCapability"
-                options={primarySkillOptions}
-                placeholder="Select primary skills"
+                name="empCertifications"
+                options={primaryCapabilityOption}
                 onChange={(value) => {
-                  setPrimarySkillDropdown(value);
+                  setPrimaryCapability(value);
                   setEmpData({
                     ...empData,
                     empPrimaryCapability: value.map((item) => item.value),
@@ -145,22 +174,47 @@ const SkillEditable = ({
           </ContentBox>
           <ContentBox>
             <ContentTypo>{skillConstant.skillSet}</ContentTypo>
-            <CustomTextField
-              autoComplete="off"
-              required
-              id="outlined-basic"
-              variant="outlined"
-              value={empSkillSet ? empSkillSet : ""}
-              name="empSkillSet"
-              placeholder="Enter employee skillset"
-              onChange={handleChange}
-              type="text"
+            <Box
               sx={{
-                "& .MuiOutlinedInput-root": {
-                  width: "100%",
-                },
+                width: "100%",
+                fontSize: "16px",
+                fontWeight: "400",
               }}
-            />
+            >
+              <Select
+                maxMenuHeight={70}
+                className="basic-single"
+                classNamePrefix="select"
+                isMulti
+                isClearable={false}
+                value={skillSet ? skillSet : null}
+                styles={{
+                  control: (provided, state) => ({
+                    ...provided,
+                    minHeight: "35px",
+                    display: "flex",
+                    alignContent: "center",
+                    borderColor: "hsl(0, 0%, 80%)",
+                  }),
+                  indicatorsContainer: (provided, state) => ({
+                    ...provided,
+                    width: "30px",
+                    padding: "0",
+                  }),
+                }}
+                isLoading={skillSetLoading}
+                isSearchable
+                name="empCertifications"
+                options={skillSetOption}
+                onChange={(value) => {
+                  setSkillSet(value);
+                  setEmpData({
+                    ...empData,
+                    empSkillSet: value.map((item) => item.value),
+                  });
+                }}
+              />
+            </Box>
           </ContentBox>
           <ContentBox>
             <ContentTypo>{skillConstant.certification}</ContentTypo>
@@ -207,7 +261,10 @@ const SkillEditable = ({
             </Box>
           </ContentBox>
           {skillsDetails.map((field, index) => (
-            <ContentBox key={index} sx={{ position: "relative" }}>
+            <ContentBox
+              key={index}
+              sx={{ position: "relative", alignItems: "center" }}
+            >
               <ContentTypo>{field.fieldName}</ContentTypo>
               {field.fieldType === "date" ? (
                 <LocalizationProvider dateAdapter={AdapterDateFns}>
@@ -226,12 +283,21 @@ const SkillEditable = ({
                       setSkillsDetails(updates);
                     }}
                     renderInput={(params) => (
-                      <CustomTextField {...params} name="fieldValue" />
+                      <CustomTextField
+                        {...params}
+                        name="fieldValue"
+                        sx={{
+                          "& .MuiOutlinedInput-root": {
+                            width: "80%",
+                            height: "40px",
+                          },
+                        }}
+                      />
                     )}
                   />
                 </LocalizationProvider>
               ) : (
-                <TextField
+                <CustomTextField
                   autoComplete="off"
                   required
                   id="outlined-basic"
