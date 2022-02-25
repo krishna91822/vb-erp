@@ -158,6 +158,10 @@ const UpdateRoles = () => {
       if (event.target.value && event.target.value.length > 2) {
         dispatch(searchEmployees(event.target.value));
         setOpen(true);
+      } else {
+        // dispatch(searchEmployees(""));
+        setUseremail("");
+        setRoles([]);
       }
     }
   };
