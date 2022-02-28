@@ -30,7 +30,7 @@ import CreateProfile from "./../pages/createProfile/createProfile.component";
 import UseRoles from "../helpers/roles";
 import CreateUserProfile from "../pages/User/CreateUser";
 import SetUserPassword from "../pages/User/SetUserPassword";
-import UpdateUserPassword from "../pages/User/UpdateUserPassword";
+import Setting from "../pages/User/Setting";
 
 const Routes = () => {
   const {
@@ -359,7 +359,7 @@ const Routes = () => {
     },
     {
       path: "/settings",
-      component: UpdateUserPassword,
+      component: Setting,
       access: [
         isUser,
         isApprover,

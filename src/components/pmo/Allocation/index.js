@@ -54,6 +54,12 @@ const Allocation = () => {
 
   const [searchTerm, setSearchTerm] = useState("");
   const handelClearSearch = () => {
+    filterData("check");
+    setSearchTerm("");
+  };
+
+  const handleOnBenchClearSearch = () => {
+    filterBenchData("check");
     setSearchTerm("");
   };
 
@@ -117,7 +123,7 @@ const Allocation = () => {
                       ),
                       endAdornment: searchTerm && (
                         <InputAdornment position="end">
-                          <IconButton onClick={handelClearSearch}>
+                          <IconButton onClick={handleOnBenchClearSearch}>
                             <ClearRoundedIcon />
                           </IconButton>
                         </InputAdornment>

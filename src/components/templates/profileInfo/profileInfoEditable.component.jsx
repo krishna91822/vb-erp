@@ -453,7 +453,10 @@ const ProfileInfoEditable = (props) => {
                               onChange={(newValue) => {
                                 setEmployee({
                                   ...employee,
-                                  empDoj: newValue,
+                                  empDoj:
+                                    newValue?.toString() === "Invalid Date"
+                                      ? null
+                                      : newValue,
                                 });
                                 validateForm(null, ["empDoj", newValue]);
                               }}
@@ -529,7 +532,10 @@ const ProfileInfoEditable = (props) => {
                               onChange={(newValue) => {
                                 setEmployee({
                                   ...employee,
-                                  empDob: newValue,
+                                  empDob:
+                                    newValue?.toString() === "Invalid Date"
+                                      ? null
+                                      : newValue,
                                 });
                                 validateForm(null, ["empDob", newValue]);
                               }}

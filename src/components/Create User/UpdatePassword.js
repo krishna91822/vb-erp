@@ -6,6 +6,7 @@ import {
   CardContent,
   Divider,
   TextField,
+  Grid,
 } from "@mui/material";
 import { uiActions } from "../../store/ui-slice";
 import { useDispatch, useSelector } from "react-redux";
@@ -51,7 +52,26 @@ const UpdateUserPassword = () => {
         Password
       </StyledTypography>
       <Card sx={{ margin: "0 10%", p: 3 }}>
-        <MiniHeadingTypography>Update password</MiniHeadingTypography>
+        <Grid container spacing={2}>
+          <Grid item xs={4}>
+            <MiniHeadingTypography sx={{ p: 2 }}>
+              Update Password
+            </MiniHeadingTypography>
+          </Grid>
+          <Grid item xs={8}>
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "flex-end",
+                p: 2,
+              }}
+            >
+              <Button type="submit" color="primary" variant="contained">
+                Update
+              </Button>
+            </Box>
+          </Grid>
+        </Grid>
         <Divider />
         <CardContent>
           <TextField
@@ -80,17 +100,6 @@ const UpdateUserPassword = () => {
           />
         </CardContent>
         <Divider />
-        <Box
-          sx={{
-            display: "flex",
-            justifyContent: "flex-end",
-            p: 2,
-          }}
-        >
-          <Button type="submit" color="primary" variant="contained">
-            Update
-          </Button>
-        </Box>
       </Card>
     </form>
   );
