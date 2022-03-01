@@ -36,10 +36,14 @@ import { LocalizationProvider, DesktopDatePicker } from "@mui/lab";
 import AdapterDateFns from "@mui/lab/AdapterDateFns";
 import validator from "validator";
 import { useDispatch, useSelector } from "react-redux";
+import { progressBarCalculation } from "./../../../helpers/progressBar";
+
 const ProfileContent = (props) => {
   // eslint-disable-next-line no-unused-vars
   const dispatch = useDispatch();
   const {
+    value,
+    setValue,
     currentEmployee,
     inEditMode,
     updateRequest,
@@ -58,57 +62,12 @@ const ProfileContent = (props) => {
 
   //calculate percentage progress
   const profileProgress = () => {
-    const totalFields = inEditMode
-      ? Object.keys(updateRequest).length +
-        updateRequest?.personalDetails.length +
-        updateRequest?.professionalDetails.length +
-        updateRequest?.skillsDetails.length -
-        3
-      : Object.keys(currentEmployee).length +
-        currentEmployee?.personalDetails.length +
-        currentEmployee?.professionalDetails.length +
-        currentEmployee?.skillsDetails.length -
-        3;
-
-    const completedFields = inEditMode
-      ? Object.values(updateRequest).filter(
-          (field) =>
-            field !== undefined &&
-            field !== null &&
-            field !== "" &&
-            field.length !== 0
-        ).length +
-        updateRequest.personalDetails.filter((field) => field.fieldValue !== "")
-          .length +
-        updateRequest.professionalDetails.filter(
-          (field) => field.fieldValue !== ""
-        ).length +
-        updateRequest.skillsDetails.filter((field) => field.fieldValue !== "")
-          .length -
-        3
-      : Object.values(currentEmployee).filter(
-          (field) =>
-            field !== undefined &&
-            field !== null &&
-            field !== "" &&
-            field.length !== 0
-        ).length +
-        currentEmployee.personalDetails.filter(
-          (field) => field.fieldValue !== ""
-        ).length +
-        currentEmployee.professionalDetails.filter(
-          (field) => field.fieldValue !== ""
-        ).length +
-        currentEmployee.skillsDetails.filter((field) => field.fieldValue !== "")
-          .length -
-        3;
-    const percentage = Math.floor((completedFields / totalFields) * 100);
-    return percentage;
+    return inEditMode
+      ? progressBarCalculation(updateRequest)
+      : progressBarCalculation(currentEmployee);
   };
 
   profileProgress();
-
-  const [value, setValue] = useState(0);
 
   const handleFieldChange = (event) => {
     setNewFieldData({
@@ -181,44 +140,65 @@ const ProfileContent = (props) => {
     handleClose();
   };
 
+  //form validation
   const [errors, setErrors] = useState({});
-  const validate = (values) => {
+  const validateForm = (event, value) => {
     const errorsObj = {};
-    if (values?.empName.length === 0) {
-      errorsObj.empName = "Full name is required";
+    if (event) {
+      if (event.target?.name === "empName" && event.target.value.length === 0) {
+        errorsObj.empName = "Full name is required";
+      }
+      if (
+        event.target?.name === "empEmail" &&
+        event.target.value.length === 0
+      ) {
+        errorsObj.empEmail = "Company Email is required";
+      }
+      if (
+        event.target?.name === "empEmail" &&
+        event.target.value.length !== 0 &&
+        !validator.isEmail(event.target.value)
+      ) {
+        errorsObj.empEmail = "Invalid email";
+      }
+      if (
+        event.target?.name === "empPersonalEmail" &&
+        event.target.value.length !== 0 &&
+        !validator.isEmail(event.target.value)
+      ) {
+        errorsObj.empPersonalEmail = "Invalid email";
+      }
+      if (
+        event.target?.name === "empAboutMe" &&
+        event.target.value.length > 500
+      ) {
+        errorsObj.empName = "About me exceeded the limit";
+      }
     }
-    if (values?.empEmail.length === 0) {
-      errorsObj.empEmail = "Company Email is required";
-    }
-    if (values?.empEmail.length !== 0 && !validator.isEmail(values?.empEmail)) {
-      errorsObj.empEmail = "Invalid email";
-    }
-    if (values?.empDepartment.length === 0) {
-      errorsObj.empDepartment = "Department is required";
-    }
-    if (values?.empDesignation.length === 0) {
-      errorsObj.empDesignation = "Department is required";
-    }
-    if (!values?.empDoj) {
-      errorsObj.empDoj = "doj is required";
-    }
-    if (!values?.empReportingManager.length === 0) {
-      errorsObj.empReportingManager = "Reporting manager is required";
-    }
-    if (!values?.empDob) {
-      errorsObj.empDob = "dob is required";
-    }
-    if (values?.empPersonalEmail.length === 0) {
-      errorsObj.empPersonalEmail = "Personal Email is required";
-    }
-    if (
-      values?.empPersonalEmail.length !== 0 &&
-      !validator.isEmail(values?.empPersonalEmail)
-    ) {
-      errorsObj.empPersonalEmail = "Invalid email";
+    if (value) {
+      if (value[0] === "empDepartment" && !value[1]) {
+        errorsObj.empDepartment = "Department is required";
+      }
+      if (value[0] === "empDesignation" && !value[1]) {
+        errorsObj.empDesignation = "Designation is required";
+      }
+      if (value[0] === "empDoj" && !value[1]) {
+        errorsObj.empDoj = "Date of joining is required";
+      }
+      if (value[0] === "empDoj" && value[1]?.toString() === "Invalid Date") {
+        errorsObj.empDoj = "Date of joining is invalid";
+      }
+      if (value[0] === "empReportingManager" && !value[1]) {
+        errorsObj.empReportingManager = "Reporting manager is required";
+      }
+      if (value[0] === "empDob" && !value[1]) {
+        errorsObj.empDob = "Date of birth is required";
+      }
+      if (value[0] === "empDob" && value[1]?.toString() === "Invalid Date") {
+        errorsObj.empDob = "Date of birth is invalid";
+      }
     }
     setErrors(errorsObj);
-    return errorsObj;
   };
 
   const renderProfileInfo = () => {
@@ -231,9 +211,10 @@ const ProfileContent = (props) => {
             employee={updateRequest}
             setEmployee={setUpdateRequest}
             profileProgress={profileProgress}
-            errors={errors}
-            validate={validate}
             editSwitch={props.switch}
+            errors={errors}
+            setErrors={setErrors}
+            validateForm={validateForm}
           />
         );
       } else {
@@ -259,7 +240,6 @@ const ProfileContent = (props) => {
       );
     }
   };
-
   return (
     <Grid>
       <Grid item>
@@ -307,10 +287,10 @@ const ProfileContent = (props) => {
                     personalDetails={personalDetails}
                     setPersonalDetails={setPersonalDetails}
                     errors={errors}
-                    validate={validate}
+                    validateForm={validateForm}
                   />
                 ) : (
-                  <Grid item lg={12} md={6} xs={6}>
+                  <Grid item>
                     <Grid item>
                       <PersonalReadable empData={currentEmployee} />
                     </Grid>
@@ -325,10 +305,10 @@ const ProfileContent = (props) => {
                     professionalDetails={professionalDetails}
                     setProfessionalDetails={setProfessionalDetails}
                     errors={errors}
-                    validate={validate}
+                    validateForm={validateForm}
                   />
                 ) : (
-                  <Grid item lg={12} md={6} xs={6}>
+                  <Grid item>
                     <Grid item>
                       <ProfessionalReadable empData={currentEmployee} />
                     </Grid>
@@ -343,10 +323,10 @@ const ProfileContent = (props) => {
                     skillsDetails={skillsDetails}
                     setSkillsDetails={setSkillsDetails}
                     errors={errors}
-                    validate={validate}
+                    validateForm={validateForm}
                   />
                 ) : (
-                  <Grid item lg={12} md={6} xs={6}>
+                  <Grid item>
                     <Grid item>
                       <SkillReadable empData={currentEmployee} />
                     </Grid>
@@ -359,7 +339,7 @@ const ProfileContent = (props) => {
                   empData={inEditMode ? updateRequest : currentEmployee}
                   setEmpData={setUpdateRequest}
                   errors={errors}
-                  validate={validate}
+                  validateForm={validateForm}
                 />
               </TabPanelCustom>
               <Box>{inEditMode && props.btns}</Box>

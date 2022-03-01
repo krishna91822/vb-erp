@@ -21,7 +21,7 @@ export const modalStyle = {
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  width: "65%",
+  minWidth: "40%",
   minHeight: 40,
   p: 4,
 };

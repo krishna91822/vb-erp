@@ -253,9 +253,11 @@ const ProjectTab = (props) => {
                             label={el}
                             size="small"
                             sx={{
-                              margin: index === 0 ? "0 3px 0 0" : "0 3px",
+                              margin: index === 0 ? "0 2px 0 0" : "0 2px",
                               backgroundColor: chipColors[index],
                               color: "#fff",
+                              fontSize: 12,
+                              fontWeight: 400,
                             }}
                           />
                         ))}

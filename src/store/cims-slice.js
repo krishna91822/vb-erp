@@ -68,6 +68,7 @@ const initialState = {
   editMode: true,
   navigateBack: true,
   brandFocus: false,
+  legalFocus: false,
   pages: 1,
   pageNo: 1,
   sortBy: "createdAt",
@@ -77,6 +78,7 @@ const initialState = {
   popUpOpen: false,
   popUpMessage: "",
   popUpOk: "",
+  domain: {},
 };
 
 const cimsSlice = createSlice({
@@ -212,6 +214,12 @@ const cimsSlice = createSlice({
       state.popUpMessage = action.payload.message;
       state.popUpOpen = action.payload.popUpOpen;
       state.popUpOk = action.payload.ok || "";
+    },
+    setLegalFocus(state, action) {
+      state.legalFocus = action.payload;
+    },
+    setDomain(state, action) {
+      state.domain = action.payload;
     },
   },
 });

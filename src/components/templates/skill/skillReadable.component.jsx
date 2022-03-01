@@ -42,11 +42,6 @@ const SkillReadable = ({ empData }) => {
         <ContentBox>
           <ContentTypo>{skillConstant.primaryCapability}</ContentTypo>
           <ContentTypoList>
-            {/* {!!empPrimaryCapability
-            ? empPrimaryCapability.map((data) => (
-                <ListItem key={data}>{data}</ListItem>
-              ))
-            : null} */}
             <Box
               sx={{
                 listStyle: "none",
@@ -55,54 +50,91 @@ const SkillReadable = ({ empData }) => {
               }}
             >
               {empPrimaryCapability !== undefined &&
-              empPrimaryCapability.constructor === Array &&
-              empPrimaryCapability.length !== 0 &&
-              empPrimaryCapability[0] !== ""
-                ? empPrimaryCapability.map((data, i) => (
-                    <ListItem key={i}>
-                      <Chip
-                        label={data}
-                        sx={{
-                          backgroundColor: chipColors[i],
-                          color: "#fff",
-                          height: 30,
-                          fontSize: 11,
-                          fontWeight: 500,
-                        }}
-                      />
-                    </ListItem>
-                  ))
-                : ""}
+                empPrimaryCapability.constructor === Array &&
+                empPrimaryCapability.length !== 0 &&
+                empPrimaryCapability[0] !== "" &&
+                empPrimaryCapability.map((data, i) => (
+                  <ListItem key={i} sx={{ margin: "2px" }}>
+                    <Chip
+                      label={data}
+                      size="small"
+                      sx={{
+                        backgroundColor: chipColors[i],
+                        color: "#fff",
+                        fontSize: 12,
+                        fontWeight: 500,
+                      }}
+                    />
+                  </ListItem>
+                ))}
             </Box>
           </ContentTypoList>
         </ContentBox>
         <ContentBox>
           <ContentTypo>{skillConstant.skillSet}</ContentTypo>
           <ContentTypoList>
-            <ContentTypoList>
-              {!!empSkillSet
-                ? empSkillSet.map((data) => (
-                    <ListItem key={data}>{data}</ListItem>
-                  ))
-                : null}
-            </ContentTypoList>
+            <Box
+              sx={{
+                listStyle: "none",
+                display: "flex",
+                flexWrap: "wrap",
+              }}
+            >
+              {empSkillSet !== undefined &&
+                empSkillSet.constructor === Array &&
+                empSkillSet.length !== 0 &&
+                empSkillSet[0] !== "" &&
+                empSkillSet.map((data, i) => (
+                  <ListItem key={i} sx={{ margin: "2px" }}>
+                    <Chip
+                      label={data}
+                      size="small"
+                      sx={{
+                        backgroundColor: chipColors[i],
+                        color: "#fff",
+                        fontSize: 12,
+                        fontWeight: 500,
+                      }}
+                    />
+                  </ListItem>
+                ))}
+            </Box>
           </ContentTypoList>
         </ContentBox>
         <ContentBox>
           <ContentTypo>{skillConstant.certification}</ContentTypo>
           <ContentTypoList>
-            <ContentTypoList>
-              {!!empCertifications
-                ? empCertifications.map((data) => (
-                    <ListItem key={data}>{data}</ListItem>
-                  ))
-                : null}
-            </ContentTypoList>
+            <Box
+              sx={{
+                listStyle: "none",
+                display: "flex",
+                flexWrap: "wrap",
+              }}
+            >
+              {empCertifications !== undefined &&
+                empCertifications.constructor === Array &&
+                empCertifications.length !== 0 &&
+                empCertifications[0] !== "" &&
+                empCertifications.map((data, i) => (
+                  <ListItem key={i} sx={{ margin: "2px" }}>
+                    <Chip
+                      label={data}
+                      size="small"
+                      sx={{
+                        backgroundColor: chipColors[i],
+                        color: "#fff",
+                        fontSize: 12,
+                        fontWeight: 500,
+                      }}
+                    />
+                  </ListItem>
+                ))}
+            </Box>
           </ContentTypoList>
         </ContentBox>
         {skillsDetails.map((field) => (
           <ContentBox key={field._id}>
-            <ContentTypo>{field.fieldName}:</ContentTypo>
+            <ContentTypo sx={{ mt: 0 }}>{field.fieldName}:</ContentTypo>
             {field.fieldType === "date" ? (
               <ContentTypoList>
                 {new Date(field.fieldValue).toDateString().slice(4)}

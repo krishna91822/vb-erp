@@ -50,7 +50,7 @@ const ProfessionalReadable = ({ empData }) => {
             <TitleTypo>{field.fieldName}:</TitleTypo>
             {field.fieldType === "date" ? (
               <ContentTypo>
-                {new Date(field.fieldValue).toDateString().slice(4)}
+                {new Date(field.fieldValue)?.toDateString().slice(4)}
               </ContentTypo>
             ) : (
               <ContentTypo>{field.fieldValue}</ContentTypo>

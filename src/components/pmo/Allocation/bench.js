@@ -40,13 +40,30 @@ const Bench = ({ pressed, benchSortValue }) => {
   let data = benchData;
 
   filterBenchData = (event) => {
-    if (event.target.name === "empId") {
+    if (event === "check") {
       setFilters({
         ...filters,
-        [event.target.name]: event.target.value.toUpperCase(),
+        employeeName: "",
       });
+      dispatch(
+        getOnBench(
+          {
+            ...filters,
+            employeeName: "",
+          },
+          1,
+          benchSortValue
+        )
+      );
     } else {
-      setFilters({ ...filters, [event.target.name]: event.target.value });
+      if (event.target.name === "empId") {
+        setFilters({
+          ...filters,
+          [event.target.name]: event.target.value.toUpperCase(),
+        });
+      } else {
+        setFilters({ ...filters, [event.target.name]: event.target.value });
+      }
     }
     if (event.key === "Enter") {
       dispatch(getOnBench(filters, 1, benchSortValue));

@@ -124,6 +124,11 @@ export default function AddressFields() {
           {errors["contacts"][value][field.id] && (
             <p className="error">{errors["contacts"][value][field.id]}</p>
           )}
+          {(value === "primaryContact" || value === "secondaryContact") &&
+            field.id === "contactNumber" &&
+            !errors["contacts"][value][field.id] && (
+              <p className="error">This field is mandatory</p>
+            )}
         </Grid>
       );
     }
