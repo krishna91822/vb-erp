@@ -49,6 +49,7 @@ const Profile = () => {
   const [skillsDetails, setSkillsDetails] = useState([]);
 
   const [updateRequest, setUpdateRequest] = useState({});
+  const [value, setValue] = useState(0);
 
   useEffect(() => {
     setUpdateRequest({
@@ -66,6 +67,8 @@ const Profile = () => {
   const handleClose = () => setOpen(false);
 
   const profileContentProps = {
+    value,
+    setValue,
     updateRequest,
     setUpdateRequest,
     currentEmployee,
@@ -83,6 +86,7 @@ const Profile = () => {
   };
 
   const editModeProps = {
+    value,
     setUpdateRequest,
     updateRequest,
     inEditMode,

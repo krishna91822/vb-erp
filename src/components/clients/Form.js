@@ -7,15 +7,18 @@ import {
   FormControlLabel,
   Checkbox,
   Card,
+  Autocomplete,
 } from "@mui/material";
 import UseForm from "./UseForm";
 import AddressFields from "./AddressFields";
 import ContactForm from "./ContactForm";
 import "./styles/ClientFormStyles.css";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { setDomainSector } from "../../store/cims-actions";
 
 export default function Form() {
   const editMode = useSelector((state) => state.cims.editMode);
+  const { domain } = useSelector((state) => state.cims);
   const {
     formData,
     setformvalue,
@@ -23,9 +26,12 @@ export default function Form() {
     companyTypes,
     handelComAddress,
     handelBrandName,
+    handelLegalName,
   } = UseForm();
 
   const [checked, setChecked] = useState(false);
+  const [selectedValue, setSelectedValue] = useState("");
+  const dispatch = useDispatch();
   const handelAddressCheckbox = (e) => {
     setChecked(e.target.checked);
     handelComAddress(e.target.checked);
@@ -38,6 +44,31 @@ export default function Form() {
           JSON.stringify(formData.registeredAddress)
       );
   }, [formData]);
+
+  useEffect(() => {
+    dispatch(setDomainSector());
+    // eslint-disable-next-line
+  }, []);
+
+  const handleOnClick = (event, value) => {
+    if (value) {
+      setSelectedValue(value.value);
+    }
+  };
+
+  const handleInputChange = (event, value) => {
+    if (event) {
+      setSelectedValue(value);
+    }
+  };
+
+  const handleOnBlur = (event) => {
+    if (event) {
+      setformvalue(event);
+    }
+  };
+
+  const dropdownValue = domain.data ? domain.data[0].dropdownArray : "";
 
   return (
     <div className="cims-form-body">
@@ -55,7 +86,7 @@ export default function Form() {
               value={formData.legalName}
               size="small"
               onChange={(e) => setformvalue(e)}
-              onBlur={(e) => setformvalue(e)}
+              onBlur={(e) => handelLegalName(e)}
               {...(errors.legalName && {
                 error: true,
                 helperText: errors.legalName,
@@ -85,22 +116,33 @@ export default function Form() {
           </Grid>
           <Grid item xs={12} sm={6}>
             <div className="right-float-fields">
-              <TextField
-                id=""
-                label="Domain/Sector"
-                variant="outlined"
-                name="domain"
+              <Autocomplete
+                disablePortal
                 fullWidth
-                required
+                disableClearable
+                options={dropdownValue}
                 disabled={!editMode}
-                value={formData.domain}
+                id=""
+                getOptionLabel={(option) => option.label}
+                inputValue={selectedValue || formData.domain}
+                onChange={handleOnClick}
+                onInputChange={handleInputChange}
                 size="small"
-                onChange={(e) => setformvalue(e)}
-                onBlur={(e) => setformvalue(e)}
-                {...(errors.domain && {
-                  error: true,
-                  helperText: errors.domain,
-                })}
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    label="Domain/Sector"
+                    name="domain"
+                    required
+                    id=""
+                    onChange={(e) => handleOnBlur(e)}
+                    onBlur={(e) => handleOnBlur(e)}
+                    {...(errors.domain && {
+                      error: true,
+                      helperText: errors.domain,
+                    })}
+                  />
+                )}
               />
             </div>
           </Grid>

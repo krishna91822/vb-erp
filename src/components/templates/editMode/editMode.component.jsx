@@ -10,6 +10,7 @@ import { uiActions } from "./../../../store/ui-slice";
 import axiosInstance from "./../../../helpers/axiosInstance";
 
 const EditMode = ({
+  value,
   setInEditMode,
   inEditMode,
   updateRequest,
@@ -119,13 +120,15 @@ const EditMode = ({
     >
       {inEditMode && !switchOnly && btnsOnly ? (
         <div>
-          <Button
-            sx={{ margin: "0 1rem 1rem 0" }}
-            variant="contained"
-            onClick={handleOpen}
-          >
-            add Custom Field
-          </Button>
+          {value !== 3 && (
+            <Button
+              sx={{ margin: "0 1rem 1rem 0" }}
+              variant="contained"
+              onClick={handleOpen}
+            >
+              add Custom Field
+            </Button>
+          )}
           <Button
             sx={{ margin: "0 1.5rem 1rem 0" }}
             variant="contained"

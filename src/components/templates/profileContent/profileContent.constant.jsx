@@ -1,7 +1,7 @@
 export const addFieldOptions = [
   {
     value: "text",
-    label: "alphaNumeric",
+    label: "Text",
   },
   {
     value: "number",
