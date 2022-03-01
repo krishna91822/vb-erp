@@ -3,12 +3,13 @@ import { userActions } from "./user-slice";
 import axios from "../helpers/axiosInstance";
 import cookie from "react-cookies";
 
-export const validateUser = (username, password) => {
+export const validateUser = (username, password, idToken = " ") => {
   return async (dispatch) => {
     const fetchData = async () => {
       const userDetail = {};
       userDetail.email = username;
       userDetail.password = password;
+      userDetail.idToken = idToken;
       const response = await axios.post("/login", userDetail);
       if (response.data.code === 200 || response.data.status === "success") {
         const data = response.data.data;
@@ -37,7 +38,7 @@ export const validateUser = (username, password) => {
           uiActions.showNotification({
             status: "error",
             title: "Error!",
-            message: "Invalid Email Id or Password",
+            message: "Invalid Credentials",
           })
         );
       }, 1000);
