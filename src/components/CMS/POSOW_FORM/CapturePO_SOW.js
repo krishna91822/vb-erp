@@ -35,8 +35,10 @@ import {
   TitleTypo,
   CustomSwitch,
 } from "./../../templates/editMode/editMode.styles";
+import useStyles from "../../UI/customStyle";
 
 // materialUI stylings for select dropdowns.
+
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
 const MenuProps = {
@@ -58,6 +60,7 @@ function getStyles(name, personName, theme) {
 
 export const CapturePO_SOW = (props) => {
   const theme = useTheme();
+  const classes = useStyles();
 
   const dispatch = useDispatch();
   const params = useParams();
@@ -434,7 +437,7 @@ export const CapturePO_SOW = (props) => {
                     Client Name <span style={{ color: "red" }}>*</span>
                   </label>
                   <Autocomplete
-                    className="finalinput"
+                    className={`${classes.div} finalinput`}
                     disablePortal
                     size="small"
                     id="combo-box-demo"
@@ -468,6 +471,7 @@ export const CapturePO_SOW = (props) => {
                     Project Name <span style={{ color: "red" }}>*</span>
                   </label>
                   <Autocomplete
+                    className={`${classes.div} finalinput`}
                     disablePortal
                     size="small"
                     id="combo-box-demo"
@@ -571,7 +575,7 @@ export const CapturePO_SOW = (props) => {
                     Type <span style={{ color: "red" }}>*</span>
                   </label>
                   <Select
-                    className="finalinput"
+                    className={`${classes.div} finalinput`}
                     value={typeName}
                     size="small"
                     onChange={handleTypeChange}
@@ -599,7 +603,7 @@ export const CapturePO_SOW = (props) => {
                     Currency <span style={{ color: "red" }}>*</span>
                   </label>
                   <Select
-                    className="finalinput"
+                    className={`${classes.div} finalinput`}
                     value={CurrName}
                     size="small"
                     onChange={handleCurrencyChange}
@@ -631,7 +635,7 @@ export const CapturePO_SOW = (props) => {
                     {typeName} Amount <span style={{ color: "red" }}>*</span>
                   </label>
                   <TextField
-                    className="finalinput"
+                    className={`${classes.input} finalinput`}
                     variant="outlined"
                     placeholder="Enter Amount"
                     value={PO_amt}
@@ -652,7 +656,7 @@ export const CapturePO_SOW = (props) => {
                         {typeName} Number
                       </label>
                       <TextField
-                        className="finalinput"
+                        className={`${classes.input} finalinput`}
                         variant="outlined"
                         placeholder="Number"
                         value={PO_number}
@@ -677,7 +681,7 @@ export const CapturePO_SOW = (props) => {
                 <Grid item lg={6} md={6} sm={12} xs={12} className="finalgrid">
                   <label id="demo-multiple-name-label">Uploaded Document</label>
                   <TextField
-                    className="finalinput"
+                    className={`${classes.input} finalinput`}
                     id="outlined-basic"
                     variant="outlined"
                     placeholder="Enter Uploaded Document"
@@ -736,7 +740,7 @@ export const CapturePO_SOW = (props) => {
                   </label>
                   <br />
                   <BasicDatePicker
-                    className="finalinput"
+                    className={`${classes.input} finalinput`}
                     maxDate="POSOW"
                     label={typeName + " End Date"}
                     value={selectedDate}
@@ -761,7 +765,7 @@ export const CapturePO_SOW = (props) => {
                 >
                   <label id="demo-multiple-name-label">Remarks/Comments</label>
                   <TextField
-                    className="finalinput"
+                    className={`${classes.div} finalinput`}
                     id="outlined-multiline-static"
                     multiline
                     size="small"

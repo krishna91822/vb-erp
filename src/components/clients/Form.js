@@ -15,8 +15,10 @@ import ContactForm from "./ContactForm";
 import "./styles/ClientFormStyles.css";
 import { useSelector, useDispatch } from "react-redux";
 import { setDomainSector } from "../../store/cims-actions";
+import useStyles from "../UI/customStyle";
 
 export default function Form() {
+  const classes = useStyles();
   const editMode = useSelector((state) => state.cims.editMode);
   const { domain } = useSelector((state) => state.cims);
   const {
@@ -83,6 +85,7 @@ export default function Form() {
               fullWidth
               required
               disabled={!editMode}
+              className={classes.input}
               value={formData.legalName}
               size="small"
               onChange={(e) => setformvalue(e)}
@@ -103,6 +106,7 @@ export default function Form() {
                 fullWidth
                 required
                 disabled={!editMode}
+                className={classes.input}
                 value={formData.brandName}
                 size="small"
                 onChange={(e) => setformvalue(e)}
@@ -122,6 +126,7 @@ export default function Form() {
                 disableClearable
                 options={dropdownValue}
                 disabled={!editMode}
+                className={classes.input}
                 id=""
                 getOptionLabel={(option) => option.label}
                 inputValue={selectedValue || formData.domain}
@@ -188,6 +193,7 @@ export default function Form() {
               size="small"
               required
               disabled={!editMode}
+              className={classes.div}
               fullWidth
               label="Company Type"
               value={formData.companyType}
@@ -217,6 +223,7 @@ export default function Form() {
               required
               disabled={!editMode || formData.companyType === "Overseas"}
               size="small"
+              className={classes.input}
               value={
                 formData[
                   formData.companyType === "GST Registered"
