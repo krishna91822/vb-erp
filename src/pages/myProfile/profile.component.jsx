@@ -40,7 +40,11 @@ const Profile = () => {
         setSkillsDetails([...response.data.data[0].skillsDetails]);
         setLoading(false);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => console.log(err))
+      .finally(() => {
+        setLoading(false);
+      });
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch, employeeUpdateCount]);
 

@@ -222,8 +222,8 @@ const ProfileContent = (props) => {
           <ProfileInfoReadable
             value={value}
             setValue={setValue}
-            currentEmployee={currentEmployee}
-            profileProgress={profileProgress}
+            currentEmployee={currentEmployee || ""}
+            profileProgress={profileProgress || ""}
             editSwitch={props.switch}
           />
         );
@@ -233,8 +233,8 @@ const ProfileContent = (props) => {
         <ProfileInfoReadable
           value={value}
           setValue={setValue}
-          currentEmployee={currentEmployee}
-          profileProgress={profileProgress}
+          currentEmployee={currentEmployee || ""}
+          profileProgress={profileProgress || ""}
           editSwitch={props.switch}
         />
       );
@@ -282,17 +282,17 @@ const ProfileContent = (props) => {
               <TabPanelCustom value={value} index={0}>
                 {inEditMode ? (
                   <PersonalEditable
-                    empData={updateRequest}
-                    setEmpData={setUpdateRequest}
-                    personalDetails={personalDetails}
-                    setPersonalDetails={setPersonalDetails}
+                    empData={updateRequest || ""}
+                    setEmpData={setUpdateRequest || ""}
+                    personalDetails={personalDetails || ""}
+                    setPersonalDetails={setPersonalDetails || ""}
                     errors={errors}
                     validateForm={validateForm}
                   />
                 ) : (
                   <Grid item>
                     <Grid item>
-                      <PersonalReadable empData={currentEmployee} />
+                      <PersonalReadable empData={currentEmployee || ""} />
                     </Grid>
                   </Grid>
                 )}
@@ -300,17 +300,17 @@ const ProfileContent = (props) => {
               <TabPanelCustom value={value} index={1}>
                 {inEditMode ? (
                   <ProfessionalEditable
-                    empData={updateRequest}
-                    setEmpData={setUpdateRequest}
-                    professionalDetails={professionalDetails}
-                    setProfessionalDetails={setProfessionalDetails}
+                    empData={updateRequest || ""}
+                    setEmpData={setUpdateRequest || ""}
+                    professionalDetails={professionalDetails || ""}
+                    setProfessionalDetails={setProfessionalDetails || ""}
                     errors={errors}
                     validateForm={validateForm}
                   />
                 ) : (
                   <Grid item>
                     <Grid item>
-                      <ProfessionalReadable empData={currentEmployee} />
+                      <ProfessionalReadable empData={currentEmployee || ""} />
                     </Grid>
                   </Grid>
                 )}
@@ -318,17 +318,17 @@ const ProfileContent = (props) => {
               <TabPanelCustom value={value} index={2}>
                 {inEditMode ? (
                   <SkillEditable
-                    empData={updateRequest}
-                    setEmpData={setUpdateRequest}
-                    skillsDetails={skillsDetails}
-                    setSkillsDetails={setSkillsDetails}
+                    empData={updateRequest || ""}
+                    setEmpData={setUpdateRequest || ""}
+                    skillsDetails={skillsDetails || ""}
+                    setSkillsDetails={setSkillsDetails || ""}
                     errors={errors}
                     validateForm={validateForm}
                   />
                 ) : (
                   <Grid item>
                     <Grid item>
-                      <SkillReadable empData={currentEmployee} />
+                      <SkillReadable empData={currentEmployee || ""} />
                     </Grid>
                   </Grid>
                 )}
@@ -337,7 +337,7 @@ const ProfileContent = (props) => {
                 <ProjectTab
                   editable={inEditMode}
                   empData={inEditMode ? updateRequest : currentEmployee}
-                  setEmpData={setUpdateRequest}
+                  setEmpData={setUpdateRequest || ""}
                   errors={errors}
                   validateForm={validateForm}
                 />
