@@ -31,7 +31,7 @@ const PersonalReadable = ({ empData }) => {
     empResidentialAddress,
     personalDetails,
   } = empData;
-
+  console.log(empHobbies);
   const chipColors = [
     deepPurple[500],
     purple[500],
@@ -135,7 +135,7 @@ const PersonalReadable = ({ empData }) => {
                 )}
               </ContentBox>
             ))
-          : null}
+          : ""}
       </Grid>
     </Grid>
   );
