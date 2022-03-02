@@ -19,8 +19,11 @@ import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/material.css";
 import "./styles/ClientFormStyles.css";
 import { useSelector } from "react-redux";
+import useStyles from "../UI/customStyle";
 
 export default function AddressFields() {
+  const classes = useStyles();
+
   const editMode = useSelector((state) => state.cims.editMode);
 
   const {
@@ -114,6 +117,7 @@ export default function AddressFields() {
             specialLabel={field.label}
             country={ComCcode}
             disabled={!editMode}
+            className={classes.div}
             value={data[field.id]}
             onChange={(phone) => handelMobile(phone, field.id)}
           />
@@ -137,6 +141,7 @@ export default function AddressFields() {
           id={field.id}
           value={data[field.id]}
           disabled={!editMode}
+          className={classes.imput}
           onChange={(e) => setformvalue(e)}
           onBlur={(e) => setformvalue(e)}
           fullWidth

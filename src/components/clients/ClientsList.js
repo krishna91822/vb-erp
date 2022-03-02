@@ -74,7 +74,7 @@ function ClientsList() {
   const sortByFields = [
     { id: "createdAt", label: "By Start Date" },
     { id: "brandName", label: "By Company" },
-    { id: "contacts.primaryContact.firstName", label: "By Associate Name" },
+    { id: "contacts.primaryContact.firstName", label: "By Primary Contact" },
     { id: "registeredAddress.country", label: "By Location" },
   ];
 
@@ -260,7 +260,7 @@ function ClientsList() {
                   <TextField
                     fullWidth
                     id="search"
-                    placeholder="Search Company Name / Associate Name / Location"
+                    placeholder="Search Company Name / Primary Contact / Location"
                     value={searchBy}
                     onChange={handelSearch}
                     onKeyPress={handelSearch}
@@ -371,7 +371,9 @@ function ClientsList() {
               <TableRow className="table-header">
                 <StyledTableCell align="center">ID</StyledTableCell>
                 <StyledTableCell align="center">Company Name</StyledTableCell>
-                <StyledTableCell align="center">Associate Name</StyledTableCell>
+                <StyledTableCell align="center">
+                  Primary Contact
+                </StyledTableCell>
                 <StyledTableCell align="center">Location</StyledTableCell>
                 <StyledTableCell align="center">Status</StyledTableCell>
                 <StyledTableCell align="center">Registered On</StyledTableCell>
