@@ -86,27 +86,57 @@ export default function SignIn() {
             >
               Log In
             </Button>
-            <h4 style={{ textAlign: "center", paddingBottom: "7px" }}>OR</h4>
-            <GoogleLogin
-              clientId={process.env.REACT_APP_CLIENT_ID_WEBSITE}
-              render={(renderProps) => (
-                <GoogleButton
-                  onClick={renderProps.onClick}
-                  disabled={renderProps.disabled}
-                  style={{
-                    width: "100%",
-                    backgroundColor: "white",
-                    color: "black",
-                    paddingRight: "24px",
-                  }}
-                  label="Log In With Google"
-                />
-              )}
-              buttonText="Login WIth Google"
-              onSuccess={responseGoogle}
-              onFailure={responseGoogle}
-              cookiePolicy={"single_host_origin"}
-            />
+            {/* <p style={{ textAlign: "center", paddingBottom: "7px" }}>
+              <hr />
+              OR
+            </p> */}
+            <div
+              style={{
+                width: "100%",
+                height: "10px",
+                borderBottom: "2px solid black",
+                textAlign: "center",
+                marginBottom: "20px",
+              }}
+            >
+              <span
+                style={{
+                  // fontSize: "40px",
+                  backgroundColor: "#F9FAFC",
+                  padding: "0 10px",
+                }}
+              >
+                OR
+              </span>
+            </div>
+            <Box
+              sx={{
+                width: "100%",
+                display: "flex",
+                justifyContent: "center",
+              }}
+            >
+              <GoogleLogin
+                clientId={process.env.REACT_APP_CLIENT_ID_WEBSITE}
+                render={(renderProps) => (
+                  <GoogleButton
+                    onClick={renderProps.onClick}
+                    disabled={renderProps.disabled}
+                    style={{
+                      width: "150px",
+                      backgroundColor: "white",
+                      color: "black",
+                      paddingRight: "24px",
+                    }}
+                    label="Google"
+                  />
+                )}
+                buttonText="Google"
+                onSuccess={responseGoogle}
+                onFailure={responseGoogle}
+                cookiePolicy={"single_host_origin"}
+              />
+            </Box>
           </Box>
         </Box>
       </Container>
