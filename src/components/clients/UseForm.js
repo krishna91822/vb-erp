@@ -206,22 +206,26 @@ export default function UseForm() {
     //     : "This field is required.";
     if ("gstNumber" in fieldValues) {
       temp.gstNumber = fieldValues.gstNumber ? "" : "This field is required.";
-      if (fieldValues.gstNumber)
+      if (fieldValues.gstNumber) {
+        fieldValues.gstNumber = fieldValues.gstNumber.toUpperCase();
         temp.gstNumber =
           /^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}Z[0-9A-Z]{1}$/.test(
             fieldValues.gstNumber
           )
             ? ""
             : "Invalid GST Number.";
+      }
     }
     if ("panNumber" in fieldValues) {
       temp.panNumber = fieldValues.panNumber ? "" : "This field is required.";
-      if (fieldValues.panNumber)
+      if (fieldValues.panNumber) {
+        fieldValues.panNumber = fieldValues.panNumber.toUpperCase();
         temp.panNumber = /^[A-Z]{5}[0-9]{4}[A-Z]{1}$/.test(
           fieldValues.panNumber
         )
           ? ""
           : "Invalid PAN Number.";
+      }
     }
     if ("companyType" in fieldValues) {
       fieldValues.companyType === "GST Registered"
@@ -295,6 +299,8 @@ export default function UseForm() {
       validateOptional(e.target.name, new_form["contacts"][e.target.name]);
     if (!e.target.id) validateBasic({ [e.target.name]: e.target.value });
     handelSetAddOthers(new_form);
+    new_form.panNumber = new_form.panNumber.toUpperCase();
+    new_form.gstNumber = new_form.gstNumber.toUpperCase();
     dispatch(cimsActions.createForm(new_form));
   };
 

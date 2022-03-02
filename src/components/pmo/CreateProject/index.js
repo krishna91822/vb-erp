@@ -2,7 +2,7 @@ import React, { useState, useLayoutEffect, useEffect } from "react";
 import { useParams, useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { isEmpty } from "lodash";
-
+import useStyles from "../../UI/customStyle";
 import { uiActions } from "../../../store/ui-slice";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
@@ -421,6 +421,8 @@ const CreateProject = () => {
     }
   };
 
+  const classes = useStyles();
+
   return (
     <>
       <PmoContainer>
@@ -467,6 +469,7 @@ const CreateProject = () => {
                   data-test="client-name-input"
                   disabled={!edit}
                   size="small"
+                  className={classes.div}
                   onInputChange={handleInputChange}
                   onBlur={() => {
                     setTempClientName("");
@@ -502,6 +505,7 @@ const CreateProject = () => {
                   data-test="project-name-input"
                   size="small"
                   variant="outlined"
+                  className={classes.input}
                   disabled={!edit}
                   placeholder="Enter Project Name"
                   value={projectName}
@@ -521,6 +525,7 @@ const CreateProject = () => {
                   size="small"
                   variant="outlined"
                   disabled
+                  className={classes.input}
                   placeholder="Enter Client Primary Contact Name"
                   value={clientPrimaryContactName}
                   style={{ width: "100%" }}
@@ -533,6 +538,7 @@ const CreateProject = () => {
                 </label>
                 <PhoneInput
                   disabled
+                  className={classes.input}
                   error={errors.clientPrimaryContact ? true : false}
                   onChange={(e) => handlePhoneNumber(e)}
                   value={clientPrimaryContact.toString() || "+91"}
@@ -560,6 +566,7 @@ const CreateProject = () => {
                   defaultValue="1"
                   error={errors.clientProjectManager ? true : false}
                   disabled={!edit}
+                  className={classes.div}
                   value={clientProjectManager}
                   size="small"
                   variant="outlined"
@@ -589,6 +596,7 @@ const CreateProject = () => {
                   error={errors.clientProjectSponsor ? true : false}
                   value={clientProjectSponsor}
                   disabled={!edit}
+                  className={classes.div}
                   size="small"
                   variant="outlined"
                   displayEmpty
@@ -620,6 +628,7 @@ const CreateProject = () => {
                   error={errors.clientFinanceController ? true : false}
                   value={clientFinanceController}
                   disabled={!edit}
+                  className={classes.div}
                   size="small"
                   variant="outlined"
                   displayEmpty
@@ -647,6 +656,7 @@ const CreateProject = () => {
                   size="small"
                   variant="outlined"
                   disabled
+                  className={classes.input}
                   value={domainSector}
                   placeholder="Enter Domain/Sector"
                   style={{ width: "100%" }}
@@ -669,6 +679,7 @@ const CreateProject = () => {
                     size="small"
                     variant="outlined"
                     disabled={!edit}
+                    className={classes.input}
                     error={errors.startDate ? true : false}
                     value={startDate}
                     style={{ width: "100%" }}
@@ -687,6 +698,7 @@ const CreateProject = () => {
                     size="small"
                     variant="outlined"
                     disabled={!edit}
+                    className={classes.input}
                     error={errors.endDate ? true : false}
                     value={endDate}
                     style={{ width: "100%" }}
@@ -703,6 +715,7 @@ const CreateProject = () => {
                   id="cn"
                   data-test="client-name-input"
                   disabled={!edit}
+                  className={classes.div}
                   disableClearable
                   size="small"
                   onOpen={handleVbManOpen}
@@ -743,6 +756,7 @@ const CreateProject = () => {
                   size="small"
                   variant="outlined"
                   disabled={!edit}
+                  className={classes.div}
                   displayEmpty
                   style={{ width: "100%" }}
                   onChange={handleProjectChange}
