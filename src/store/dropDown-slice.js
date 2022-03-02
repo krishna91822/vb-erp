@@ -15,6 +15,9 @@ const dropDownSlice = createSlice({
     selectedDropDown(state, action) {
       state.selectedValue = action.payload;
     },
+    clearSelectedValue(state, action) {
+      state.selectedValue = initialState.selectedValue;
+    },
   },
 });
 

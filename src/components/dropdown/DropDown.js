@@ -15,6 +15,7 @@ import {
   RemoveDropDownName,
   getSelectedDropDownName,
 } from "../../store/dropDown-actions";
+import { dropDownActions } from "../../store/dropDown-slice";
 import { uiActions } from "../../store/ui-slice";
 import { StyledTypography } from "../../assets/GlobalStyle/style";
 
@@ -27,6 +28,7 @@ const DropDown = () => {
 
   useEffect(() => {
     dispatch(getAllDropDownName());
+    dispatch(dropDownActions.clearSelectedValue());
     // eslint-disable-next-line
   }, []);
 
@@ -83,7 +85,7 @@ const DropDown = () => {
           padding: "5px 0px",
         }}
       >
-        Add DropDown
+        Attribute Configurator
       </StyledTypography>
       <Card sx={{ margin: "0 10%", px: 3 }}>
         <CardContent>

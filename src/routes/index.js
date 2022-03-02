@@ -345,17 +345,11 @@ const Routes = () => {
       ].some((x) => x),
     },
     {
-      path: "/createuserprofile",
+      path: "/adminpannel",
       component: CreateUserProfile,
-      access: [
-        isUser,
-        isApprover,
-        isLeader,
-        isHrAdmin,
-        isFinanceAdmin,
-        isPMSAdmin,
-        isSuperAdmin,
-      ].some((x) => x),
+      access: [isHrAdmin, isFinanceAdmin, isPMSAdmin, isSuperAdmin].some(
+        (x) => x
+      ),
     },
     {
       path: "/settings",

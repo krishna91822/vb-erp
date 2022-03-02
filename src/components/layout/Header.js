@@ -138,7 +138,7 @@ const Header = () => {
                   <MenuItem
                     onClick={handleClose}
                     component={Link}
-                    to="/createuserprofile"
+                    to="/adminpannel"
                   >
                     <ListItemIcon>
                       <AdminPanelSettingsIcon fontSize="small" />

@@ -27,6 +27,7 @@ export const getAllDropDownName = () => {
 
 export const getSelectedDropDownName = (name) => {
   return async (dispatch) => {
+    dispatch(uiActions.toggleLoader());
     const fetchData = async () => {
       const response = await axios.get(`/dropdowns?dropdownName=${name}`);
       if (response.status === "failure") {
@@ -46,12 +47,15 @@ export const getSelectedDropDownName = (name) => {
         })
       );
       return false;
+    } finally {
+      dispatch(uiActions.toggleLoader());
     }
   };
 };
 
 export const updateDropDownName = (name, values) => {
   return async (dispatch) => {
+    dispatch(uiActions.toggleLoader());
     const fetchData = async () => {
       const response = await axios.put(
         `/dropdowns/update?name=${name}`,
@@ -73,12 +77,15 @@ export const updateDropDownName = (name, values) => {
         })
       );
       return false;
+    } finally {
+      dispatch(uiActions.toggleLoader());
     }
   };
 };
 
 export const RemoveDropDownName = (name, values) => {
   return async (dispatch) => {
+    dispatch(uiActions.toggleLoader());
     const fetchData = async () => {
       const response = await axios.put(
         `/dropdowns/remove?name=${name}`,
@@ -100,6 +107,8 @@ export const RemoveDropDownName = (name, values) => {
         })
       );
       return false;
+    } finally {
+      dispatch(uiActions.toggleLoader());
     }
   };
 };
