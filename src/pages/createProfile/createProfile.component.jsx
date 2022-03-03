@@ -87,10 +87,11 @@ const CreateProfile = ({
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
+  const location = useLocation();
 
   const empInitial = {
-    empName: "",
-    empEmail: "",
+    empName: location.state ? location.state.first_name : "",
+    empEmail: location.state ? location.state.email : "",
     empDepartment: "",
     empDesignation: "",
     empDoj: null,
@@ -121,17 +122,7 @@ const CreateProfile = ({
           empDoj: new Date(),
         }
   );
-  const location = useLocation();
-  useEffect(() => {
-    if (location.state) {
-      setEmployee({
-        ...employee,
-        empEmail: location.state.email,
-        empName: location.state.first_name,
-      });
-    }
-    // eslint-disable-next-line
-  }, [location.state]);
+
   const [tab, setTab] = useState(0);
 
   //modal
@@ -145,7 +136,7 @@ const CreateProfile = ({
   const handleCloseModal = () => {
     setOpenModal(false);
     !location.state
-      ? navigate("/createuserprofile", {
+      ? navigate("/adminpannel", {
           state: { name: nameUser, email: emailUser },
         })
       : navigate("/my-profile");

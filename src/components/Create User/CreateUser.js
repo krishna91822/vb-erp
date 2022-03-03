@@ -44,6 +44,7 @@ const CreateUser = () => {
 
   const navigate = useNavigate();
   const [state, setState] = useState(initialState);
+  const [disableButton, setDisableButton] = useState(false);
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -60,10 +61,7 @@ const CreateUser = () => {
         if (res) {
           dispatch(checkEmployeeProfile(state.userDetails.email)).then(
             (res) => {
-              console.log(res, "=====");
-              // res ? navigate("/my-profile") : navigate("/create-profile");
               if (res) {
-                console.log("hello");
                 navigate("/my-profile");
                 dispatch(
                   uiActions.showNotification({
@@ -73,7 +71,6 @@ const CreateUser = () => {
                   })
                 );
               } else {
-                console.log("hello2");
                 navigate("/create-profile", {
                   state: {
                     first_name: state.userDetails.first_name,
@@ -147,6 +144,24 @@ const CreateUser = () => {
     }
   }, [userAccount.user]);
 
+  const checkEmail = () => {
+    const check =
+      /^[a-zA-Z0-9_.+-]+@(?:(?:[a-zA-Z0-9-]+\.)?[a-zA-Z]+\.)?(gmail|valuebound)\.com$/.test(
+        state.userDetails.email
+      );
+    if (!check) {
+      dispatch(
+        uiActions.showNotification({
+          status: "error",
+          message: "Only valuebound Domain allow",
+        })
+      );
+      setDisableButton(true);
+    } else {
+      setDisableButton(false);
+    }
+  };
+
   return (
     <>
       <StyledTypography
@@ -173,7 +188,12 @@ const CreateUser = () => {
                   p: 2,
                 }}
               >
-                <Button type="submit" color="primary" variant="contained">
+                <Button
+                  disabled={disableButton}
+                  type="submit"
+                  color="primary"
+                  variant="contained"
+                >
                   Save
                 </Button>
               </Box>
@@ -212,10 +232,12 @@ const CreateUser = () => {
             <label style={{ padding: "10px" }}>Email</label>
             <TextField
               name="useremail"
+              type="email"
               id="useremail"
               size="small"
               variant="outlined"
               placeholder="Enter Email Id"
+              onBlur={checkEmail}
               value={location.state ? location.state.email : useremail}
               style={{ width: "100%" }}
               onChange={handleUserEmail}
