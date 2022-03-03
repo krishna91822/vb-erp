@@ -146,8 +146,8 @@ const CreateUser = () => {
 
   const checkEmail = () => {
     const check =
-      /^[a-zA-Z0-9_.+-]+@(?:(?:[a-zA-Z0-9-]+\.)?[a-zA-Z]+\.)?(gmail|valuebound)\.com$/.test(
-        state.userDetails.email
+      /^[a-zA-Z0-9_.+-]+@(?:(?:[a-zA-Z0-9-]+\.)?[a-zA-Z]+\.)?(valuebound)\.com$/.test(
+        useremail
       );
     if (!check) {
       dispatch(
