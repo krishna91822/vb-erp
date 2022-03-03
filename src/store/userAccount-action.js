@@ -186,6 +186,41 @@ export const getUser = (email) => {
   };
 };
 
+export const checkEmployeeProfile = (email) => {
+  return async (dispatch) => {
+    const checkEmail = async () => {
+      const response = await axios.get(`/employees?empEmail=${email}`);
+      if (response.status === "failure") {
+        throw new Error("user details not updated");
+      }
+      console.log(response.data.data);
+      if (response.data.data.length !== 0) return true;
+      else return false;
+      // const data = response.data.data;
+      // return data;
+    };
+
+    try {
+      dispatch(uiActions.toggleLoader());
+      const data = await checkEmail();
+      console.log(data);
+      return data;
+    } catch (error) {
+      setTimeout(function () {
+        dispatch(
+          uiActions.showNotification({
+            status: "error",
+            title: "Error!",
+            message: "User already exist!!!",
+          })
+        );
+      }, 1000);
+      return false;
+    } finally {
+      dispatch(uiActions.toggleLoader());
+    }
+  };
+};
 export const updateUserAccount = (id, updatedData) => {
   return async (dispatch) => {
     const updateUser = async () => {

@@ -32,6 +32,7 @@ import { LocalizationProvider, DesktopDatePicker } from "@mui/lab";
 import AdapterDateFns from "@mui/lab/AdapterDateFns";
 
 import axiosInstance from "./../../../helpers/axiosInstance";
+import { useLocation } from "react-router-dom";
 
 import validator from "validator";
 
@@ -89,7 +90,7 @@ const ProfileInfoEditable = (props) => {
 
   const ref = useRef();
   const [profilePicture, setProfilePicture] = useState(null);
-  let avatarChar = empName.charAt(0).toUpperCase();
+  let avatarChar = empName ? empName.charAt(0).toUpperCase() : "";
   const handlePicture = (event) => {
     const files = Array.from(event.target.files);
     const file = files[0];

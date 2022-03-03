@@ -53,7 +53,7 @@ import validator from "validator";
 
 import ProjectTab from "../../components/templates/project/project.component";
 import PlagiarismIcon from "@mui/icons-material/Plagiarism";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { progressBarCalculation } from "./../../helpers/progressBar";
 
 const CreateProfile = ({
@@ -121,7 +121,17 @@ const CreateProfile = ({
           empDoj: new Date(),
         }
   );
-
+  const location = useLocation();
+  useEffect(() => {
+    if (location.state) {
+      setEmployee({
+        ...employee,
+        empEmail: location.state.email,
+        empName: location.state.first_name,
+      });
+    }
+    // eslint-disable-next-line
+  }, [location.state]);
   const [tab, setTab] = useState(0);
 
   //modal
@@ -134,9 +144,11 @@ const CreateProfile = ({
   const handleOpenModal = () => setOpenModal(true);
   const handleCloseModal = () => {
     setOpenModal(false);
-    navigate("/createuserprofile", {
-      state: { name: nameUser, email: emailUser },
-    });
+    !location.state
+      ? navigate("/createuserprofile", {
+          state: { name: nameUser, email: emailUser },
+        })
+      : navigate("/my-profile");
   };
   const handleOpenModalError = () => setOpenModalError(true);
   const handleCloseModalError = () => setOpenModalError(false);

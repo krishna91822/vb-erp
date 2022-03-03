@@ -15,7 +15,11 @@ import {
   FormControlLabel,
   Grid,
 } from "@mui/material";
-import { createUserAccount, SetRoles } from "../../store/userAccount-action";
+import {
+  createUserAccount,
+  SetRoles,
+  checkEmployeeProfile,
+} from "../../store/userAccount-action";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate, useLocation } from "react-router-dom";
 import { uiActions } from "../../store/ui-slice";
@@ -54,13 +58,36 @@ const CreateUser = () => {
     } else {
       dispatch(createUserAccount(state.userDetails)).then((res) => {
         if (res) {
-          navigate("/my-profile");
-          dispatch(
-            uiActions.showNotification({
-              status: "success",
-              message:
-                "User created successfull and email sent to user to reset password",
-            })
+          dispatch(checkEmployeeProfile(state.userDetails.email)).then(
+            (res) => {
+              console.log(res, "=====");
+              // res ? navigate("/my-profile") : navigate("/create-profile");
+              if (res) {
+                console.log("hello");
+                navigate("/my-profile");
+                dispatch(
+                  uiActions.showNotification({
+                    status: "success",
+                    message:
+                      "User created successfull and email sent to user to reset password",
+                  })
+                );
+              } else {
+                console.log("hello2");
+                navigate("/create-profile", {
+                  state: {
+                    first_name: state.userDetails.first_name,
+                    email: state.userDetails.email,
+                  },
+                });
+                dispatch(
+                  uiActions.showNotification({
+                    status: "success",
+                    message: "User created successfull and create user profile",
+                  })
+                );
+              }
+            }
           );
         }
       });

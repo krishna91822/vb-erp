@@ -106,14 +106,18 @@ const Profile = () => {
       <ProfileContent
         {...profileContentProps}
         switch={
-          <EditMode
-            {...editModeProps}
-            switchOnly={roundToNearestMinutes}
-            btnsOnly={false}
-          />
+          currentEmployee && (
+            <EditMode
+              {...editModeProps}
+              switchOnly={roundToNearestMinutes}
+              btnsOnly={false}
+            />
+          )
         }
         btns={
-          <EditMode {...editModeProps} switchOnly={false} btnsOnly={true} />
+          currentEmployee && (
+            <EditMode {...editModeProps} switchOnly={false} btnsOnly={true} />
+          )
         }
       />
     </Box>
