@@ -14,6 +14,7 @@ import userSlice from "./user-slice";
 import POSOW_Slice from "./CMS/POSOW-slice";
 import invoice_Slice from "./CMS/INVOICE-slice";
 import userAccountSlice from "./userAccount-slice";
+import dropDownSlice from "./dropDown-slice";
 
 // const middleware = [logger, thunk];
 
@@ -29,6 +30,7 @@ export default configureStore({
     INVOICE_state: invoice_Slice.reducer,
     employee: employeeSlice,
     createUser: userAccountSlice.reducer,
+    dropdown: dropDownSlice.reducer,
   },
   // middleware: [...middleware],
 });
