@@ -8,6 +8,8 @@ import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import vbLogo from "../../assets/images/vb_logo.svg";
 import { MiniHeadingTypography } from "../../assets/GlobalStyle/style";
+import GoogleLogin from "react-google-login";
+import GoogleButton from "react-google-button";
 
 export default function SignIn() {
   const dispatch = useDispatch();
@@ -21,6 +23,11 @@ export default function SignIn() {
     const email = data.get("username");
     const password = data.get("password");
     dispatch(validateUser(email, password)).then((res) => {
+      res && navigate("/my-profile");
+    });
+  };
+  const responseGoogle = (response) => {
+    dispatch(validateUser("", " ", response.tokenObj.id_token)).then((res) => {
       res && navigate("/my-profile");
     });
   };
@@ -60,7 +67,6 @@ export default function SignIn() {
               id="username"
               label="Email"
               name="username"
-              //   autoComplete="username"
               autoFocus
             />
             <TextField
@@ -71,7 +77,6 @@ export default function SignIn() {
               label="Password"
               type="password"
               id="password"
-              //   autoComplete="current-password"
             />
             <Button
               type="submit"
@@ -81,6 +86,57 @@ export default function SignIn() {
             >
               Log In
             </Button>
+            {/* <p style={{ textAlign: "center", paddingBottom: "7px" }}>
+              <hr />
+              OR
+            </p> */}
+            <div
+              style={{
+                width: "100%",
+                height: "10px",
+                borderBottom: "2px solid black",
+                textAlign: "center",
+                marginBottom: "20px",
+              }}
+            >
+              <span
+                style={{
+                  // fontSize: "40px",
+                  backgroundColor: "#F9FAFC",
+                  padding: "0 10px",
+                }}
+              >
+                OR
+              </span>
+            </div>
+            <Box
+              sx={{
+                width: "100%",
+                display: "flex",
+                justifyContent: "center",
+              }}
+            >
+              <GoogleLogin
+                clientId={process.env.REACT_APP_CLIENT_ID_WEBSITE}
+                render={(renderProps) => (
+                  <GoogleButton
+                    onClick={renderProps.onClick}
+                    disabled={renderProps.disabled}
+                    style={{
+                      width: "150px",
+                      backgroundColor: "white",
+                      color: "black",
+                      paddingRight: "24px",
+                    }}
+                    label="Google"
+                  />
+                )}
+                buttonText="Google"
+                onSuccess={responseGoogle}
+                onFailure={responseGoogle}
+                cookiePolicy={"single_host_origin"}
+              />
+            </Box>
           </Box>
         </Box>
       </Container>

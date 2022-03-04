@@ -15,7 +15,11 @@ import {
   FormControlLabel,
   Grid,
 } from "@mui/material";
-import { createUserAccount, SetRoles } from "../../store/userAccount-action";
+import {
+  createUserAccount,
+  SetRoles,
+  checkEmployeeProfile,
+} from "../../store/userAccount-action";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate, useLocation } from "react-router-dom";
 import { uiActions } from "../../store/ui-slice";
@@ -40,6 +44,7 @@ const CreateUser = () => {
 
   const navigate = useNavigate();
   const [state, setState] = useState(initialState);
+  const [disableButton, setDisableButton] = useState(false);
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -54,13 +59,32 @@ const CreateUser = () => {
     } else {
       dispatch(createUserAccount(state.userDetails)).then((res) => {
         if (res) {
-          navigate("/my-profile");
-          dispatch(
-            uiActions.showNotification({
-              status: "success",
-              message:
-                "User created successfull and email sent to user to reset password",
-            })
+          dispatch(checkEmployeeProfile(state.userDetails.email)).then(
+            (res) => {
+              if (res) {
+                navigate("/my-profile");
+                dispatch(
+                  uiActions.showNotification({
+                    status: "success",
+                    message:
+                      "User created successfull and email sent to user to reset password",
+                  })
+                );
+              } else {
+                navigate("/create-profile", {
+                  state: {
+                    first_name: state.userDetails.first_name,
+                    email: state.userDetails.email,
+                  },
+                });
+                dispatch(
+                  uiActions.showNotification({
+                    status: "success",
+                    message: "User created successfull and create user profile",
+                  })
+                );
+              }
+            }
           );
         }
       });
@@ -120,6 +144,24 @@ const CreateUser = () => {
     }
   }, [userAccount.user]);
 
+  const checkEmail = () => {
+    const check =
+      /^[a-zA-Z0-9_.+-]+@(?:(?:[a-zA-Z0-9-]+\.)?[a-zA-Z]+\.)?(valuebound)\.com$/.test(
+        useremail
+      );
+    if (!check) {
+      dispatch(
+        uiActions.showNotification({
+          status: "error",
+          message: "Only valuebound Domain allow",
+        })
+      );
+      setDisableButton(true);
+    } else {
+      setDisableButton(false);
+    }
+  };
+
   return (
     <>
       <StyledTypography
@@ -146,7 +188,12 @@ const CreateUser = () => {
                   p: 2,
                 }}
               >
-                <Button type="submit" color="primary" variant="contained">
+                <Button
+                  disabled={disableButton}
+                  type="submit"
+                  color="primary"
+                  variant="contained"
+                >
                   Save
                 </Button>
               </Box>
@@ -185,10 +232,12 @@ const CreateUser = () => {
             <label style={{ padding: "10px" }}>Email</label>
             <TextField
               name="useremail"
+              type="email"
               id="useremail"
               size="small"
               variant="outlined"
               placeholder="Enter Email Id"
+              onBlur={checkEmail}
               value={location.state ? location.state.email : useremail}
               style={{ width: "100%" }}
               onChange={handleUserEmail}

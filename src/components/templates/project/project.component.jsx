@@ -25,7 +25,7 @@ const ProjectTab = (props) => {
   const { editable, empData, setEmpData } = props;
 
   // eslint-disable-next-line no-unused-vars
-  const { project } = empData;
+  const { project } = empData || "";
 
   const customStyles = {
     control: (provided, state) => ({

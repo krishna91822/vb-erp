@@ -45,18 +45,19 @@ const ProfessionalReadable = ({ empData }) => {
           <TitleTypo>{professionalConstant.experience}</TitleTypo>
           <ContentTypo>{yearsOfExperience} years</ContentTypo>
         </ContentBox>
-        {professionalDetails.map((field) => (
-          <ContentBox key={field._id}>
-            <TitleTypo>{field.fieldName}:</TitleTypo>
-            {field.fieldType === "date" ? (
-              <ContentTypo>
-                {new Date(field.fieldValue)?.toDateString().slice(4)}
-              </ContentTypo>
-            ) : (
-              <ContentTypo>{field.fieldValue}</ContentTypo>
-            )}
-          </ContentBox>
-        ))}
+        {professionalDetails &&
+          professionalDetails.map((field) => (
+            <ContentBox key={field._id}>
+              <TitleTypo>{field.fieldName}:</TitleTypo>
+              {field.fieldType === "date" ? (
+                <ContentTypo>
+                  {new Date(field.fieldValue)?.toDateString().slice(4)}
+                </ContentTypo>
+              ) : (
+                <ContentTypo>{field.fieldValue}</ContentTypo>
+              )}
+            </ContentBox>
+          ))}
       </Grid>
     </Grid>
   );

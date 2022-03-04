@@ -66,7 +66,7 @@ const PersonalEditable = (props) => {
     blue[500],
   ];
 
-  const [chipData, setChipData] = useState([...empHobbies]);
+  const [chipData, setChipData] = useState(empHobbies && [...empHobbies]);
 
   const handleNewFieldChange = (event, index) => {
     const updates = personalDetails.map((personalDetail, i) =>
@@ -84,7 +84,8 @@ const PersonalEditable = (props) => {
   };
 
   useEffect(() => {
-    if (chipData.length !== 0) setEmpData({ ...empData, empHobbies: chipData });
+    if (chipData && chipData.length !== 0)
+      setEmpData({ ...empData, empHobbies: chipData });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [chipData]);
 
@@ -344,7 +345,7 @@ const PersonalEditable = (props) => {
                   alignItems: "center",
                 }}
               >
-                {chipData[0] !== ""
+                {chipData && chipData[0] !== ""
                   ? chipData.map((data, i) => (
                       <ListItem key={i} sx={{ margin: "2px" }}>
                         <Chip

@@ -40,7 +40,11 @@ const Profile = () => {
         setSkillsDetails([...response.data.data[0].skillsDetails]);
         setLoading(false);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => console.log(err))
+      .finally(() => {
+        setLoading(false);
+      });
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch, employeeUpdateCount]);
 
@@ -102,14 +106,18 @@ const Profile = () => {
       <ProfileContent
         {...profileContentProps}
         switch={
-          <EditMode
-            {...editModeProps}
-            switchOnly={roundToNearestMinutes}
-            btnsOnly={false}
-          />
+          currentEmployee && (
+            <EditMode
+              {...editModeProps}
+              switchOnly={roundToNearestMinutes}
+              btnsOnly={false}
+            />
+          )
         }
         btns={
-          <EditMode {...editModeProps} switchOnly={false} btnsOnly={true} />
+          currentEmployee && (
+            <EditMode {...editModeProps} switchOnly={false} btnsOnly={true} />
+          )
         }
       />
     </Box>

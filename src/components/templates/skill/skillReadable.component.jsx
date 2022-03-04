@@ -132,18 +132,19 @@ const SkillReadable = ({ empData }) => {
             </Box>
           </ContentTypoList>
         </ContentBox>
-        {skillsDetails.map((field) => (
-          <ContentBox key={field._id}>
-            <ContentTypo sx={{ mt: 0 }}>{field.fieldName}:</ContentTypo>
-            {field.fieldType === "date" ? (
-              <ContentTypoList>
-                {new Date(field.fieldValue).toDateString().slice(4)}
-              </ContentTypoList>
-            ) : (
-              <ContentTypoList>{field.fieldValue}</ContentTypoList>
-            )}
-          </ContentBox>
-        ))}
+        {skillsDetails &&
+          skillsDetails.map((field) => (
+            <ContentBox key={field._id}>
+              <ContentTypo sx={{ mt: 0 }}>{field.fieldName}:</ContentTypo>
+              {field.fieldType === "date" ? (
+                <ContentTypoList>
+                  {new Date(field.fieldValue).toDateString().slice(4)}
+                </ContentTypoList>
+              ) : (
+                <ContentTypoList>{field.fieldValue}</ContentTypoList>
+              )}
+            </ContentBox>
+          ))}
       </Grid>
     </Grid>
   );

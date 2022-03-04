@@ -19,6 +19,7 @@ import {
   ProfileFirstLetter,
 } from "./../../UI/commonStyles";
 import { ContentBox } from "../personal/personalReadable.styles";
+import { useSelector } from "react-redux";
 
 const ProfileInfoReadable = ({
   value,
@@ -36,7 +37,7 @@ const ProfileInfoReadable = ({
     empDoj,
     empReportingManager,
   } = currentEmployee;
-
+  const user = useSelector((state) => state.user.user);
   const profilePercentage = profileProgress();
   // eslint-disable-next-line no-unused-vars
   const handleChange = (event, newValue) => {
@@ -94,11 +95,13 @@ const ProfileInfoReadable = ({
                       }}
                     >
                       <ProfileFirstLetter>
-                        {empName.charAt(0).toUpperCase()}
+                        {empName
+                          ? empName.charAt(0).toUpperCase()
+                          : user.name.charAt(0).toUpperCase()}
                       </ProfileFirstLetter>
                     </Avatar>
 
-                    <ProfileNameTypo>{empName}</ProfileNameTypo>
+                    <ProfileNameTypo>{empName || user.name}</ProfileNameTypo>
 
                     <Box sx={{ width: "75%", margin: "15px 0" }}>
                       <LinearProgress

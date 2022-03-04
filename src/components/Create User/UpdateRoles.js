@@ -162,6 +162,7 @@ const UpdateRoles = () => {
         // dispatch(searchEmployees(""));
         setUseremail("");
         setRoles([]);
+        dispatch(userAccountActions.resetForm());
       }
     }
   };

@@ -53,7 +53,7 @@ import validator from "validator";
 
 import ProjectTab from "../../components/templates/project/project.component";
 import PlagiarismIcon from "@mui/icons-material/Plagiarism";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { progressBarCalculation } from "./../../helpers/progressBar";
 
 const CreateProfile = ({
@@ -87,10 +87,11 @@ const CreateProfile = ({
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
+  const location = useLocation();
 
   const empInitial = {
-    empName: "",
-    empEmail: "",
+    empName: location.state ? location.state.first_name : "",
+    empEmail: location.state ? location.state.email : "",
     empDepartment: "",
     empDesignation: "",
     empDoj: null,
@@ -134,9 +135,11 @@ const CreateProfile = ({
   const handleOpenModal = () => setOpenModal(true);
   const handleCloseModal = () => {
     setOpenModal(false);
-    navigate("/createuserprofile", {
-      state: { name: nameUser, email: emailUser },
-    });
+    !location.state
+      ? navigate("/adminpannel", {
+          state: { name: nameUser, email: emailUser },
+        })
+      : navigate("/my-profile");
   };
   const handleOpenModalError = () => setOpenModalError(true);
   const handleCloseModalError = () => setOpenModalError(false);
