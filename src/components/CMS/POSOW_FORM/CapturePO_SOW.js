@@ -25,6 +25,7 @@ import {
   fetchClientProjectSponsor,
 } from "../../../store/CMS/POSOW-actions";
 import { PoSowActions } from "../../../store/CMS/POSOW-slice";
+import { uploadFileAction } from "../../../store/CMS/POSOW-actions";
 import { useNavigate } from "react-router-dom";
 import validateForm from "./validateForm";
 import {
@@ -136,7 +137,7 @@ export const CapturePO_SOW = (props) => {
   const [PO_number, setPO_number] = React.useState(initPO_num);
   const [PO_amt, setPOAmt] = React.useState(initPO_amt);
   const [DocName, setDocName] = React.useState(initDocName);
-  const [uploadFile, setUploadFile] = React.useState();
+  const [uploadFile, setUploadFile] = React.useState("");
   const [status, setStatus] = React.useState(initStatus);
   const [editTglCheckedState, seteditTglCheckedState] = React.useState(
     props.toggleState
@@ -283,9 +284,9 @@ export const CapturePO_SOW = (props) => {
   };
 
   const handleUploadBtnClick = (e) => {
-    setUploadFile(e.target.files[0]);
     if (e.target.files[0] !== undefined) {
       setDocName(e.target.files[0].name);
+      setUploadFile(e.target.files[0]);
     } else {
       setDocName("");
     }
@@ -323,10 +324,14 @@ export const CapturePO_SOW = (props) => {
 
     setErrors(all_errors);
     if (Object.keys(all_errors).length === 0) {
+      const data = new FormData();
+      data.append("file", uploadFile);
       if (props.editBtn && editTglCheckedState) {
         dispatch(UpdatePO_SOW(DataToSend, params.id));
+        dispatch(uploadFileAction(data));
       } else {
         dispatch(createNewPO_SOW(DataToSend));
+        dispatch(uploadFileAction(data));
       }
     }
   };
@@ -707,6 +712,7 @@ export const CapturePO_SOW = (props) => {
                         Browse File
                         <input
                           type="file"
+                          accept=".doc,.docx,.pdf"
                           hidden
                           onChange={handleUploadBtnClick}
                           data-test="upload-file-input"
